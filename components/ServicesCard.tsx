@@ -42,14 +42,13 @@ function ServicesCard({id}: ServicesCardProps) {
             onPressIn={handlePressIn}
         >
             <Card containerStyle={[styles.card, isPressed && styles.pressedCard]}>
-                <View>
+                <View style={styles.cardIcons}>
                     <Text>icon</Text>
                     <Text>icon2</Text>
                 </View>
-                <Text>adjective</Text>
-                <Text>
-                    well meaning and kindly.
-                    {'"a benevolent smile"'}
+                <Text style={styles.serviceTitle}>Oil change</Text>
+                <Text style={styles.serviceDesc}>
+                    Your vehicle will get its oil changed.
                 </Text>
             </Card>
         </TouchableWithoutFeedback>
@@ -67,6 +66,20 @@ const styles = StyleSheet.create({
     },
     pressedCard: {
         borderColor: Colors.green.drive,
+    },
+    cardIcons: {
+        flexDirection:'row',
+        justifyContent: 'space-between',
+        marginBottom: 5
+    },
+    serviceTitle: {
+        fontWeight: '500',
+        fontSize: 16,
+        marginBottom: 10
+    },
+    serviceDesc: {
+        opacity: 0.6,
+        marginBottom: 25
     }
 });
 
