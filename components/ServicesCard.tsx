@@ -12,27 +12,25 @@ interface ServicesCardProps {
     description: string,
 }
 
-function ServicesCard({id, title, description}: ServicesCardProps) {
+function ServicesCard({ id, title, description }: ServicesCardProps) {
     const [isPressed, setIsPressed] = useState(false);
-    const {servicesState, setServicesState} = useContext(servicesContext)
+    const { servicesState, setServicesState } = useContext(servicesContext)
 
     useEffect(() => {
-        if(servicesState.servicePressed === id) {
+        if (servicesState.servicePressed === id) {
             setIsPressed(true)
-        }
-        else {
+        } else {
             setIsPressed(false)
         }
     }, [servicesState])
 
     const handlePressIn = () => {
-        if(servicesState.servicePressed === id) { //true if the service is already pressed
+        if (servicesState.servicePressed === id) { //true if the service is already pressed
             setIsPressed(false)
             setServicesState({
                 servicePressed: -1
             })
-        }
-        else {
+        } else {
             setIsPressed(true);
             setServicesState({
                 servicePressed: id
@@ -47,7 +45,10 @@ function ServicesCard({id, title, description}: ServicesCardProps) {
             <Card containerStyle={[styles.card, isPressed && styles.pressedCard]}>
                 <View style={styles.cardIcons}>
                     <Text>icon1</Text>
-                    {isPressed && <CheckCircle width={20} height={20} />}
+                    {/* Create a fixed-sized container for the icon */}
+                    <View style={styles.iconContainer}>
+                        {isPressed && <CheckCircle width={20} height={20} />}
+                    </View>
                 </View>
                 <Text style={styles.serviceTitle}>{title}</Text>
                 <Text style={styles.serviceDesc} numberOfLines={4} ellipsizeMode="tail">
@@ -72,9 +73,15 @@ const styles = StyleSheet.create({
         borderColor: Colors.green.drive,
     },
     cardIcons: {
-        flexDirection:'row',
+        flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: 5
+    },
+    iconContainer: {
+        width: 20,
+        height: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     serviceTitle: {
         fontWeight: '500',
@@ -84,7 +91,7 @@ const styles = StyleSheet.create({
     serviceDesc: {
         opacity: 0.6,
         marginBottom: 25,
-        fontSize:12
+        fontSize: 12
     }
 });
 
