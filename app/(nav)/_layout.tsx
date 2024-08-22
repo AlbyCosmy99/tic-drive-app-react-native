@@ -1,10 +1,10 @@
 import TicDriveButton from "@/components/TicDriveButton";
-import TicDriveNavbar from "@/components/TicDriveNavbar";
 import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Colors } from "@/constants/Colors";
 import ServicesCards from "@/components/ServicesCards";
+import TicDriveNavbar from "@/components/navigation/TicDriveNavbar";
+import SegmentedControl from "@/components/SegmentedControl";
 
 export default function Nav() {
     return (
