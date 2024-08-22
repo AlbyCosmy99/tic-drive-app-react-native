@@ -50,7 +50,7 @@ function ServicesCard({id, title, description}: ServicesCardProps) {
                     <Text>icon2</Text>
                 </View>
                 <Text style={styles.serviceTitle}>{title}</Text>
-                <Text style={styles.serviceDesc} numberOfLines={3} ellipsizeMode="tail">
+                <Text style={styles.serviceDesc} numberOfLines={4} ellipsizeMode="tail">
                     {description}
                 </Text>
             </Card>
@@ -83,7 +83,8 @@ const styles = StyleSheet.create({
     },
     serviceDesc: {
         opacity: 0.6,
-        marginBottom: 25
+        marginBottom: 25,
+        fontSize:12
     }
 });
 
