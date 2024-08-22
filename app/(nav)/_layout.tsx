@@ -9,7 +9,7 @@ import SegmentedControl from "@/components/SegmentedControl";
 export default function Nav() {
     return (
         <SafeAreaView style={styles.safeArea}>
-            <TicDriveNavbar onPress={() => alert('ciao')} />
+            <TicDriveNavbar onPress={() => alert('options')} />
             <View style={styles.contentContainer}>
                 <LinearGradient
                     colors={['#FFFFFF', '#FBFBFB']}

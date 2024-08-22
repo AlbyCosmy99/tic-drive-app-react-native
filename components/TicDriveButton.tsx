@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from '@rneui/themed';
 import { StyleProp, ViewStyle } from 'react-native';
 import { Colors } from "@/constants/Colors";
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 interface TicDriveButtonProps {
   text: string;
   customButtonStyle?: StyleProp<ViewStyle>;
