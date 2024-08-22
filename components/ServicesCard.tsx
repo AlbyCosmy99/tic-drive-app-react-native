@@ -4,12 +4,15 @@ import { Button, Card, Text } from "@rneui/themed";
 import { StyleSheet, View } from "react-native";
 import { TouchableWithoutFeedback } from 'react-native';
 import servicesContext from "@/app/stateManagement/contexts/servicesContext";
+import Svg, { Path } from 'react-native-svg';
 
 interface ServicesCardProps {
     id: number;
+    title: string,
+    description: string,
 }
 
-function ServicesCard({id}: ServicesCardProps) {
+function ServicesCard({id, title, description}: ServicesCardProps) {
     const [isPressed, setIsPressed] = useState(false);
     const {servicesState, setServicesState} = useContext(servicesContext)
 
@@ -43,12 +46,12 @@ function ServicesCard({id}: ServicesCardProps) {
         >
             <Card containerStyle={[styles.card, isPressed && styles.pressedCard]}>
                 <View style={styles.cardIcons}>
-                    <Text>icon</Text>
+                    <Text>icon1</Text>
                     <Text>icon2</Text>
                 </View>
-                <Text style={styles.serviceTitle}>Oil change</Text>
-                <Text style={styles.serviceDesc}>
-                    Your vehicle will get its oil changed.
+                <Text style={styles.serviceTitle}>{title}</Text>
+                <Text style={styles.serviceDesc} numberOfLines={3} ellipsizeMode="tail">
+                    {description}
                 </Text>
             </Card>
         </TouchableWithoutFeedback>
@@ -63,6 +66,7 @@ const styles = StyleSheet.create({
         padding: 15,
         elevation: 1,
         borderWidth: 1,
+        height: 160
     },
     pressedCard: {
         borderColor: Colors.green.drive,
