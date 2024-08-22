@@ -1,15 +1,14 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { router, Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
-import { StyleSheet } from 'react-native';
-
+import { Button, StyleSheet } from 'react-native';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { GestureHandlerRootView, TouchableOpacity } from 'react-native-gesture-handler';
+import { Ionicons } from '@expo/vector-icons';
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -33,6 +32,20 @@ export default function RootLayout() {
       <GestureHandlerRootView>
         <Stack>
           <Stack.Screen name="(nav)" options={{ headerShown: false }} />
+          <Stack.Screen 
+            name="screens/RegisterVehicle" 
+            options={{ 
+              title: 'Register Vehicle', 
+              headerShown: true,
+              headerTintColor: '#fff', //hide title
+              headerBackVisible: false,
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => router.back()}>
+                  <Ionicons name="arrow-back" size={30} color="#000" />
+                </TouchableOpacity>
+                
+              ),
+            }} />
           <Stack.Screen name="+not-found" />
         </Stack>
       </GestureHandlerRootView>
@@ -44,4 +57,4 @@ const styles = StyleSheet.create({
   safeArea: {
     backgroundColor: '#FFFFFF',
   },
-})
+});
