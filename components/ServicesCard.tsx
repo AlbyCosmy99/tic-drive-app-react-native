@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Colors } from "@/constants/Colors";
-import { Button, Card, Text } from "@rneui/themed";
+import { Card, Text } from "@rneui/themed";
 import { StyleSheet, View } from "react-native";
 import { TouchableWithoutFeedback } from 'react-native';
 import servicesContext from "@/app/stateManagement/contexts/servicesContext";
-import Svg, { Path } from 'react-native-svg';
 
 interface ServicesCardProps {
     id: number;
