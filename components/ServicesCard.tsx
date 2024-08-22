@@ -4,6 +4,7 @@ import { Card, Text } from "@rneui/themed";
 import { StyleSheet, View } from "react-native";
 import { TouchableWithoutFeedback } from 'react-native';
 import servicesContext from "@/app/stateManagement/contexts/servicesContext";
+import CheckCircle from '../assets/svg/check_circle.svg'
 
 interface ServicesCardProps {
     id: number;
@@ -46,7 +47,7 @@ function ServicesCard({id, title, description}: ServicesCardProps) {
             <Card containerStyle={[styles.card, isPressed && styles.pressedCard]}>
                 <View style={styles.cardIcons}>
                     <Text>icon1</Text>
-                    <Text>icon2</Text>
+                    {isPressed && <CheckCircle width={20} height={20} />}
                 </View>
                 <Text style={styles.serviceTitle}>{title}</Text>
                 <Text style={styles.serviceDesc} numberOfLines={4} ellipsizeMode="tail">
