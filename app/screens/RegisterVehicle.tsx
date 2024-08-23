@@ -4,6 +4,7 @@ import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Ionicons } from '@expo/vector-icons';
 import {router} from 'expo-router'
+import SegmentedControl from "@/components/SegmentedControl";
 function RegisterVehicle() {
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -12,11 +13,12 @@ function RegisterVehicle() {
             </TouchableOpacity>
             <View style={styles.contentContainer}>
                 <Text style={styles.headerText}>Register your vehicle for service bookings</Text>
+                <SegmentedControl />
+                <View style={styles.bookingDetailsContainer}>
+                    <Text>content</Text>
+                </View>
             </View>
-            <View>
-                
-            </View>
-            <TicDriveButton text="Confirm"/>
+            <TicDriveButton text="Confirm" path="../(tabs)/index" />
         </SafeAreaView>
     )
 }
@@ -43,6 +45,16 @@ const styles = StyleSheet.create({
     backButton: {
         margin: 8,
         marginBottom: 30,
+    },
+    bookingDetailsContainer: {
+        flex:1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: Colors.light.background,
+        margin: 15,
+        borderColor: Colors.light.SegmentedControlBackground,
+        borderWidth: 2,
+        borderRadius: 10
     }
 });
 

@@ -19,7 +19,7 @@ export default function Nav() {
                     <ServicesCards />
                 </LinearGradient>
             </View>
-            <TicDriveButton text="Book a service"/>
+            <TicDriveButton text="Book a service" path="/screens/RegisterVehicle"/>
         </SafeAreaView>
     );
 }

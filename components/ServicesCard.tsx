@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         height: 160
     },
     pressedCard: {
-        borderColor: Colors.green.drive,
+        borderColor: Colors.light.green.drive,
     },
     cardIcons: {
         flexDirection: 'row',

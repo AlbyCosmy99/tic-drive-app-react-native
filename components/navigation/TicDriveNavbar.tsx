@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     color: '#737373'
   },
   driveText: {
-    color: Colors.green.drive
+    color: Colors.light.green.drive
   }
 });
 

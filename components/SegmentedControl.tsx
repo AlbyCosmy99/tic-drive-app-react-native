@@ -1,15 +1,14 @@
+import { Colors } from '@/constants/Colors';
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Animated, StyleSheet } from 'react-native';
 
-// Type definitions for props and state (if needed)
 interface SegmentedControlProps {}
 
 const SegmentedControl: React.FC<SegmentedControlProps> = () => {
-  // Define state with useState hook and types
   const [selectedOption, setSelectedOption] = useState<number>(0);
-  const animatedValue = useState<Animated.Value>(new Animated.Value(0))[0]; // For sliding animation
+  const animatedValue = useState<Animated.Value>(new Animated.Value(0))[0];
 
-  const options: string[] = ['Option 1', 'Option 2', 'Option 3'];
+  const options: string[] = ['Licence Plate', 'Model', 'VIN'];
 
   const handleOptionPress = (index: number): void => {
     setSelectedOption(index);
@@ -23,7 +22,7 @@ const SegmentedControl: React.FC<SegmentedControlProps> = () => {
   const slidingIndicatorStyle = {
     left: animatedValue.interpolate({
       inputRange: [0, 1, 2],
-      outputRange: ['0%', '33.33%', '66.66%'], // 3 options, so each occupies 33.33% of width
+      outputRange: ['0%', '33.33%', '66.66%'],
     }),
   };
 
@@ -52,19 +51,16 @@ const SegmentedControl: React.FC<SegmentedControlProps> = () => {
   );
 };
 
-// Styles remain the same
 const styles = StyleSheet.create({
   container: {
-    margin: 20,
+    margin: 15,
   },
   segmentContainer: {
     flexDirection: 'row',
-    height: 40,
-    backgroundColor: '#e0e0e0',
-    borderRadius: 20,
+    height: 60,
+    backgroundColor: Colors.light.SegmentedControlBackground,
+    borderRadius: 50,
     justifyContent: 'space-between',
-    position: 'relative',
-    overflow: 'hidden',
   },
   touchable: {
     flex: 1,
@@ -74,19 +70,19 @@ const styles = StyleSheet.create({
   },
   optionText: {
     fontSize: 16,
-    color: '#7f8c8d',
+    color: '#7c7c7c',
   },
   selectedText: {
-    color: '#ffffff',
+    color: Colors.light.text,
     fontWeight: 'bold',
   },
   slidingIndicator: {
     position: 'absolute',
-    top: 0,
-    bottom: 0,
-    width: '33.33%', // 3 options, so each occupies 33.33%
-    backgroundColor: '#3498db',
-    borderRadius: 20,
+    top: 4,
+    bottom: 4,
+    width: '33.33%',
+    backgroundColor: Colors.light.background,
+    borderRadius: 30,
     zIndex: 0,
   },
 });

@@ -2,14 +2,15 @@ import React from "react";
 import { Button } from '@rneui/themed';
 import { StyleProp, ViewStyle } from 'react-native';
 import { Colors } from "@/constants/Colors";
-import { useRouter } from "expo-router";
+import { useRouter, Href } from "expo-router";
 interface TicDriveButtonProps {
   text: string;
   customButtonStyle?: StyleProp<ViewStyle>;
   customContainerStyle?: StyleProp<ViewStyle>;
+  path: Href
 }
 
-const TicDriveButton: React.FC<TicDriveButtonProps> = ({ text, customButtonStyle, customContainerStyle }) => {
+const TicDriveButton: React.FC<TicDriveButtonProps> = ({ text, customButtonStyle, customContainerStyle, path }) => {
   const router = useRouter()
   return (
     <Button
@@ -18,7 +19,7 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({ text, customButtonStyle
           {
               borderRadius: 40,
               height: 60,
-              backgroundColor: Colors.green.drive
+              backgroundColor: Colors.light.green.drive
           },
           customButtonStyle
         ]}
@@ -29,7 +30,7 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({ text, customButtonStyle
           },
           customContainerStyle
         ]}
-        onPress={() => router.push('/screens/RegisterVehicle')}
+        onPress={() => router.push(path)}
       />
   );
 }
