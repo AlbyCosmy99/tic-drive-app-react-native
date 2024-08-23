@@ -1,21 +1,47 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
+import {Colors} from '../../constants/Colors'
+import HomeIcon from '../../assets/svg/homeIcon.svg'
+import BookingsIcon from '../../assets/svg/bookingsIcon.svg'
+import FavouriteIcon from '../../assets/svg/favouriteIcon.svg'
+import ChatIcon from '../../assets/svg/chatIcon.svg'
+import AccountIcon from '../../assets/svg/accountIcon.svg'
 
 export default function TabLayout() {
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: 'blue' }}>
+    <Tabs screenOptions={{ tabBarActiveTintColor: Colors.light.green.drive }}>
       <Tabs.Screen
-        name="index"
+        name="Home"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
+          tabBarIcon: ({ color }) => <HomeIcon width={28} fill={color} name="Home"/>,
         }}
       />
       <Tabs.Screen
-        name="settings"
+        name="Bookings"
         options={{
-          title: 'Settings',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
+          title: 'Bookings',
+          tabBarIcon: ({ color }) => <BookingsIcon width={28} fill={color} name="Home"/>
+        }}
+      />
+      <Tabs.Screen
+        name="Favourite"
+        options={{
+          title: 'Favourite',
+          tabBarIcon: ({ color }) => <FavouriteIcon width={28} fill={color} name="Home"/>,
+        }}
+      />
+      <Tabs.Screen
+        name="Chat"
+        options={{
+          title: 'Chat',
+          tabBarIcon: ({ color }) => <ChatIcon width={28} fill={color} name="Home"/>,
+        }}
+      />
+      <Tabs.Screen
+        name="Account"
+        options={{
+          title: 'Account',
+          tabBarIcon: ({ color }) => <AccountIcon width={28} fill={color} name="Home"/>,
         }}
       />
     </Tabs>

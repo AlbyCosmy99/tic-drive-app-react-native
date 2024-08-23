@@ -18,7 +18,7 @@ function RegisterVehicle() {
                     <Text>content</Text>
                 </View>
             </View>
-            <TicDriveButton text="Confirm" path="../(tabs)/index" />
+            <TicDriveButton text="Confirm" path="../(tabs)/Home" />
         </SafeAreaView>
     )
 }
