@@ -4,13 +4,13 @@ import { Icon, Input } from '@rneui/themed';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import FilterIcon from '../../assets/svg/discover_tune.svg';
+import ServicesMap from '@/components/ServicesMap';
 
 export default function Tab() {
   return (
     <SafeAreaView style={styles.safeArea}>
       <TicDriveNavbar />
-      <View>
-        <View style={styles.headerServicesHomeContainer}>
+      <View style={styles.headerServicesHomeContainer}>
           <View style={styles.inputWrapper}>
             <Input
               placeholder="Search workshop"
@@ -31,10 +31,9 @@ export default function Tab() {
               <FilterIcon width={22} height={22} />
             </TouchableOpacity>
           </View>
-        </View>
-        <View style={styles.cards}>
-          
-        </View>
+      </View>
+      <View style={styles.cards}>
+        <ServicesMap />
       </View>
     </SafeAreaView>
   );

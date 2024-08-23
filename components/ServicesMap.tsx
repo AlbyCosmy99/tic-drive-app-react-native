@@ -1,0 +1,129 @@
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity, Alert } from 'react-native';
+import { Region, LatLng } from 'react-native-maps';
+import Feather from '@expo/vector-icons/Feather';
+import Fontisto from '@expo/vector-icons/Fontisto';
+import Entypo from '@expo/vector-icons/Entypo';
+import * as Location from 'expo-location';
+import ServicesMapModal from './ServiceMapModal';
+import { Colors } from '@/constants/Colors';
+
+interface POIMarker {
+  coordinate: LatLng;
+  name: string;
+  price: number;
+  icon?: string;
+}
+
+const ServicesMap: React.FC = () => {
+  const [isMapVisible, setIsMapVisible] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState<LatLng | null>(null);
+  const [locationName, setLocationName] = useState<string | null>(null);
+  const [poiMarkers, setPoiMarkers] = useState<POIMarker[]>([]);
+  const [initialRegion, setInitialRegion] = useState<Region | null>(null);
+
+const customPOIs = [
+    { name: 'Precision Works Garage', price: 50, latitudeOffset: 0.010, longitudeOffset: 0.015 },
+    { name: 'Steel & Torque Mechanics', price: 100, latitudeOffset: -0.020, longitudeOffset: -0.025 },
+    { name: 'Fusion Auto Repair', price: 150, latitudeOffset: 0.030, longitudeOffset: -0.035 },
+    { name: 'Engine Craftworks', price: 120, latitudeOffset: -0.050, longitudeOffset: 0.045 },
+    { name: 'MasterWrench Garage', price: 80, latitudeOffset: 0.060, longitudeOffset: -0.010 },
+    { name: 'RevLine Motorshop', price: 90, latitudeOffset: -0.070, longitudeOffset: 0.020 },
+];
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert('Permission to access location was denied');
+        return;
+      }
+
+      const location = await Location.getCurrentPositionAsync({});
+      const { latitude, longitude } = location.coords;
+
+      setInitialRegion({
+        latitude,
+        longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      });
+
+      // Add custom POIs near the user's location
+      addCustomPOIs(latitude, longitude);
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (selectedLocation) {
+      addCustomPOIs(selectedLocation.latitude, selectedLocation.longitude);
+    }
+  }, [selectedLocation]);
+
+  // Add custom POIs based on the user's current location
+  const addCustomPOIs = (latitude: number, longitude: number) => {
+    const markers = customPOIs.map((poi) => ({
+      coordinate: {
+        latitude: latitude + poi.latitudeOffset,
+        longitude: longitude + poi.longitudeOffset,
+      },
+      name: poi.name,
+      price: poi.price,
+    }));
+    setPoiMarkers(markers);
+  };
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.inputContainer}>
+        <Entypo name="location-pin" size={24} color={Colors.light.ticText} style={styles.icon} />
+        <TouchableOpacity
+          style={styles.input}
+          onPress={() => setIsMapVisible(true)}
+        >
+          <Text style={styles.placeholderText}>
+            {locationName || 'Select location'}
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      <ServicesMapModal
+        isMapVisible={isMapVisible}
+        setIsMapVisible={setIsMapVisible}
+        selectedLocation={selectedLocation}
+        setSelectedLocation={setSelectedLocation}
+        locationName={locationName}
+        setLocationName={setLocationName}
+        poiMarkers={poiMarkers}
+        setPoiMarkers={setPoiMarkers}
+        initialRegion={initialRegion}
+        setInitialRegion={setInitialRegion}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    marginHorizontal: 15
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  icon: {
+    
+  },
+  input: {
+    flex: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 8,
+    fontSize: 16,
+  },
+  placeholderText: {
+    color: '#808080',
+    fontSize: 18,
+  },
+});
+
+export default ServicesMap;
