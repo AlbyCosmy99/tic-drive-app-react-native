@@ -32,7 +32,9 @@ export default function Tab() {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.cards}></View>
+        <View style={styles.cards}>
+          
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -53,7 +55,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
     marginTop: 20,
     height:55,
-    marginHorizontal: 8,
     width: '100%',
   },
   inputText: {
