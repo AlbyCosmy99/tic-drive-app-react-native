@@ -5,7 +5,7 @@ import { StyleSheet, View } from "react-native";
 import { TouchableWithoutFeedback } from 'react-native';
 import servicesContext from "@/app/stateManagement/contexts/servicesContext";
 import CheckCircle from '../assets/svg/check_circle.svg'
-import OilChangeIcon from '../assets/svg/oilChange.svg'
+import iconMap from '../constants/servicesIconsMap'
 interface ServicesCardProps {
     id: number;
     title: string,
@@ -38,13 +38,15 @@ function ServicesCard({ id, title, description }: ServicesCardProps) {
         }
     };
 
+    const ServiceIcon = iconMap[id] || iconMap[0];
+
     return (
         <TouchableWithoutFeedback
             onPressIn={handlePressIn}
         >
             <Card containerStyle={[styles.card, isPressed && styles.pressedCard]}>
                 <View style={styles.cardIcons}>
-                    <OilChangeIcon width={20} height={20} />
+                    <ServiceIcon width={20} height={20} />
                     <View style={styles.iconContainer}>
                         {isPressed && <CheckCircle width={20} height={20} />}
                     </View>
