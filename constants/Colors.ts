@@ -20,6 +20,8 @@ export const Colors = {
     green: {
       drive: '#00BF63'
     },
+    bookingsOptionsText: '#7c7c7c',
+    ticText: '#737373'
   },
   dark: {
     text: '#ECEDEE',

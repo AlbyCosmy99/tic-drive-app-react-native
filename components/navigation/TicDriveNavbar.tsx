@@ -4,11 +4,7 @@ import { Icon } from 'react-native-elements'
 import { SafeAreaView } from 'react-native';
 import { Colors } from '@/constants/Colors';
 
-interface TicDriveNavbarProps {
-  onPress: () => void;
-}
-
-const TicDriveNavbar: React.FC<TicDriveNavbarProps>  = ({ onPress }) => {
+const TicDriveNavbar = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
         <View style={styles.navbar}>
@@ -16,7 +12,7 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps>  = ({ onPress }) => {
                 <Text style={[styles.title, styles.ticText]}>Tic</Text>
                 <Text style={[styles.title, styles.driveText]}>Drive</Text>
             </View>
-            <TouchableOpacity onPress={onPress} style={styles.navButton}>
+            <TouchableOpacity onPress={() => alert('menu')} style={styles.navButton}>
                 <Icon name="menu" size={30} color="#737373" />
             </TouchableOpacity>
         </View>
@@ -52,7 +48,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   ticText: {
-    color: '#737373'
+    color: Colors.light.ticText
   },
   driveText: {
     color: Colors.light.green.drive

@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   },
   optionText: {
     fontSize: 16,
-    color: '#7c7c7c',
+    color: Colors.light.bookingsOptionsText,
   },
   selectedText: {
     color: Colors.light.text,

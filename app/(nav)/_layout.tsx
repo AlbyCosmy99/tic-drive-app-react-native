@@ -9,7 +9,7 @@ import { Colors } from "@/constants/Colors";
 export default function Nav() {
     return (
         <SafeAreaView style={styles.safeArea}>
-            <TicDriveNavbar onPress={() => alert('options')} />
+            <TicDriveNavbar />
             <View style={styles.contentContainer}>
                 <LinearGradient
                     colors={['#FFFFFF', '#FBFBFB']}
