@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import ServicesCards from "@/components/ServicesCards";
 import TicDriveNavbar from "@/components/navigation/TicDriveNavbar";
-import SegmentedControl from "@/components/SegmentedControl";
+import { Colors } from "@/constants/Colors";
 
 export default function Nav() {
     return (
@@ -27,7 +27,7 @@ export default function Nav() {
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: Colors.light.background,
     },
     contentContainer: {
         flex: 1,

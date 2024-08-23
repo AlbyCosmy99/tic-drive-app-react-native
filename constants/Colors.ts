@@ -25,5 +25,5 @@ export const Colors = {
   },
   green: {
     drive: '#00BF63'
-  }
+  },
 };

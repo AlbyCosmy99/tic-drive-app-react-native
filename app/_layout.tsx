@@ -8,6 +8,7 @@ import { Button, StyleSheet } from 'react-native';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { GestureHandlerRootView, TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
+import { Colors } from '@/constants/Colors';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -36,15 +37,7 @@ export default function RootLayout() {
             name="screens/RegisterVehicle" 
             options={{ 
               title: 'Register Vehicle', 
-              headerShown: true,
-              headerTintColor: '#fff', //hide title
-              headerBackVisible: false,
-              headerLeft: () => (
-                <TouchableOpacity onPress={() => router.back()}>
-                  <Ionicons name="arrow-back" size={30} color="#000" />
-                </TouchableOpacity>
-                
-              ),
+              headerShown: false,
             }} />
           <Stack.Screen name="+not-found" />
         </Stack>
@@ -55,6 +48,6 @@ export default function RootLayout() {
 
 const styles = StyleSheet.create({
   safeArea: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.light.background,
   },
 });
