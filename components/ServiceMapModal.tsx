@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   markerText: {
-    fontSize: 25,
+    fontSize: 22,
     fontWeight: 'bold',
     color: 'black',
   },
