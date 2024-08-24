@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Modal, Button, Text } from 'react-native';
-import MapView, { Marker, Region, LatLng, MapPressEvent } from 'react-native-maps';
+import MapView, { Marker, Region, LatLng } from 'react-native-maps';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import * as Location from 'expo-location';
 
 interface POIMarker {
   coordinate: LatLng;
@@ -35,18 +36,29 @@ export default function ServicesMapModal({
   initialRegion,
   setInitialRegion,
 }: ServicesMapModalProps) {
-  
-  const handleMapPress = (event: MapPressEvent) => {
-    const { coordinate } = event.nativeEvent;
-    setSelectedLocation(coordinate);
-    setInitialRegion({
-      latitude: coordinate.latitude,
-      longitude: coordinate.longitude,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
-    });
-    setIsMapVisible(false);
-  };
+  const [userLocation, setUserLocation] = useState<LatLng | null>(null);
+
+  // Fetch user's current location on mount
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        alert('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      const { latitude, longitude } = location.coords;
+
+      setUserLocation({ latitude, longitude });
+      setInitialRegion({
+        latitude,
+        longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      });
+    })();
+  }, []);
 
   const handlePOISelect = (poi: POIMarker) => {
     setSelectedLocation(poi.coordinate);
@@ -68,7 +80,7 @@ export default function ServicesMapModal({
             setIsMapVisible(false);
           }}
           query={{
-            key: 'AIzaSyBpJqSqJaYw7xrmzjPxfLZhqU9M7R5ZRVk',
+            key: 'YOUR_GOOGLE_API_KEY',
             language: 'en',
           }}
           styles={{
@@ -82,15 +94,28 @@ export default function ServicesMapModal({
           <MapView
             style={StyleSheet.absoluteFillObject}
             initialRegion={initialRegion}
-            onPress={handleMapPress}
+            scrollEnabled={true}
+            zoomEnabled={true}
           >
-            {selectedLocation && (
+            {/* Show the user's location with a red marker */}
+            {userLocation && (
               <Marker
-                coordinate={selectedLocation}
-                title={locationName || 'Selected Location'}
+                coordinate={userLocation}
+                title="Your Location"
+                pinColor="red"  // Only the user's location has a red pointer
               />
             )}
 
+            {/* Show the selected location marker (e.g., from search or POI) */}
+            {selectedLocation && selectedLocation !== userLocation && (
+              <Marker
+                coordinate={selectedLocation}
+                title={locationName || 'Selected Location'}
+                pinColor="blue"  // Different color to distinguish from user location
+              />
+            )}
+
+            {/* Render custom POI markers */}
             {poiMarkers.map((poi, index) => (
               <Marker
                 key={index}
