@@ -82,7 +82,7 @@ export default function ServicesMapModal({
             setIsMapVisible(false);
           }}
           query={{
-            key: 'YOUR_GOOGLE_API_KEY',
+            key: 'AIzaSyBpJqSqJaYw7xrmzjPxfLZhqU9M7R5ZRVk',
             language: 'en',
           }}
           styles={{

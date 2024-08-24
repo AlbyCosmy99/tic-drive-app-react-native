@@ -82,7 +82,7 @@ const customPOIs = [
           onPress={() => setIsMapVisible(true)}
         >
           <Text style={styles.placeholderText}>
-            {locationName || 'Select location'}
+            {locationName || 'Select workshop on map'}
           </Text>
         </TouchableOpacity>
       </View>
