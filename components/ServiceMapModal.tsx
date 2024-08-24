@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Modal, Button, Text } from 'react-native';
+import { StyleSheet, View, Modal, Button, Text, Image } from 'react-native';
 import MapView, { Marker, Region, LatLng } from 'react-native-maps';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import * as Location from 'expo-location';
@@ -99,12 +99,16 @@ export default function ServicesMapModal({
             scrollEnabled={true}
             zoomEnabled={true}
           >
-            {userLocation && ( //user location
-              <Marker
-                coordinate={userLocation}
-                title="Your Location"
-                pinColor="red" 
-              />
+            {userLocation && ( // User location
+              <Marker coordinate={userLocation} title="Your Location">
+                <View style={styles.userIconContainer}>
+                  <Image
+                    source={require('../assets/images/react-logo.png')}
+                    style={styles.userIcon}
+                    resizeMode="contain"
+                  />
+                </View>
+              </Marker>
             )}
 
             {selectedLocation && selectedPrice !== null && ( //selected location
@@ -195,6 +199,14 @@ const styles = StyleSheet.create({
   priceText: {
     fontSize: 25,
     fontWeight: 'bold',
-    color: 'blue'
+    color: 'blue',
+  },
+  userIconContainer: {
+    justifyContent: 'center',
+    alignItems: 'center', 
+  },
+  userIcon: {
+    width: 45,
+    height: 45,
   },
 });
