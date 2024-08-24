@@ -1,19 +1,27 @@
 import { Colors } from '@/constants/Colors';
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Animated, StyleSheet } from 'react-native';
+import options from '../constants/VehicleRegistrationOptions'
+import { StructuredFormatting } from 'react-native-google-places-autocomplete';
 
-interface SegmentedControlProps {}
+interface Option {
+  index: number, 
+  name: string, 
+  placeholder: string, 
+  inputLabel: string
+}
+interface SegmentedControlProps {
+  segmentedControlSelection: Option,
+  setSegmentedControlSelection: (selection: Option) => void
+}
 
-const SegmentedControl: React.FC<SegmentedControlProps> = () => {
-  const [selectedOption, setSelectedOption] = useState<number>(0);
+const SegmentedControl: React.FC<SegmentedControlProps> = ({segmentedControlSelection, setSegmentedControlSelection}) => {
   const animatedValue = useState<Animated.Value>(new Animated.Value(0))[0];
 
-  const options: string[] = ['Licence Plate', 'Model', 'VIN'];
-
-  const handleOptionPress = (index: number): void => {
-    setSelectedOption(index);
+  const handleOptionPress = (option: Option): void => {
+    setSegmentedControlSelection(option);
     Animated.timing(animatedValue, {
-      toValue: index,
+      toValue: option.index,
       duration: 200,
       useNativeDriver: false,
     }).start();
@@ -33,15 +41,15 @@ const SegmentedControl: React.FC<SegmentedControlProps> = () => {
           <TouchableOpacity
             key={index}
             style={styles.touchable}
-            onPress={() => handleOptionPress(index)}
+            onPress={() => handleOptionPress(option)}
           >
             <Text
               style={[
                 styles.optionText,
-                selectedOption === index && styles.selectedText,
+                segmentedControlSelection.index === index && styles.selectedText,
               ]}
             >
-              {option}
+              {option.name}
             </Text>
           </TouchableOpacity>
         ))}

@@ -6,7 +6,18 @@ import { Ionicons } from '@expo/vector-icons';
 import {router} from 'expo-router'
 import SegmentedControl from "@/components/SegmentedControl";
 import TicDriveInput from "@/components/TicDriveInput";
+import { useState } from "react";
+import options from '../../constants/VehicleRegistrationOptions';
+
 function RegisterVehicle() {
+    const [segmentedControlSelection, setSegmentedControlSelection] = useState(
+        {
+            index: 0,
+            name: "Licence Plate",
+            placeholder: "E.g. AA123BB",
+            inputLabel: "Plate number"
+        }
+    )
     return (
         <SafeAreaView style={styles.safeArea}>
             <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
@@ -14,13 +25,20 @@ function RegisterVehicle() {
             </TouchableOpacity>
             <View style={styles.contentContainer}>
                 <Text style={styles.headerText}>Register your vehicle for service bookings</Text>
-                <SegmentedControl />
-                <View style={styles.bookingDetailsContainer}>
-                    <Text style={styles.plateNumberLabel}>Plate number</Text>
-                    <View>
-                        <TicDriveInput placeholder="E.g AA123BB" isRightIcon={true} />
-                    </View>
-                </View>
+                <SegmentedControl segmentedControlSelection={segmentedControlSelection} setSegmentedControlSelection={setSegmentedControlSelection} />
+                {
+                    options.map((option,index) => {
+                        return segmentedControlSelection.name === option.name &&
+                            (
+                                <View style={styles.bookingDetailsContainer} key={index}>
+                                    <Text style={styles.plateNumberLabel}>{option.inputLabel}</Text>
+                                    <View>
+                                        <TicDriveInput placeholder={option.placeholder} isRightIcon={true} />
+                                    </View>
+                                </View> 
+                            )
+                    })
+                }
             </View>
             <TicDriveButton text="Confirm" path="../(tabs)/Home" />
         </SafeAreaView>
