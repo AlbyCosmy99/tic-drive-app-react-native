@@ -37,6 +37,7 @@ export default function ServicesMapModal({
   setInitialRegion,
 }: ServicesMapModalProps) {
   const [userLocation, setUserLocation] = useState<LatLng | null>(null);
+  const [selectedPrice, setSelectedPrice] = useState<number | null>(null); // For showing price in blue
 
   // Fetch user's current location on mount
   useEffect(() => {
@@ -62,6 +63,7 @@ export default function ServicesMapModal({
 
   const handlePOISelect = (poi: POIMarker) => {
     setSelectedLocation(poi.coordinate);
+    setSelectedPrice(poi.price);
     setLocationName(poi.name);
     setIsMapVisible(false);
   };
@@ -97,25 +99,22 @@ export default function ServicesMapModal({
             scrollEnabled={true}
             zoomEnabled={true}
           >
-            {/* Show the user's location with a red marker */}
-            {userLocation && (
+            {userLocation && ( //user location
               <Marker
                 coordinate={userLocation}
                 title="Your Location"
-                pinColor="red"  // Only the user's location has a red pointer
+                pinColor="red" 
               />
             )}
 
-            {/* Show the selected location marker (e.g., from search or POI) */}
-            {selectedLocation && selectedLocation !== userLocation && (
-              <Marker
-                coordinate={selectedLocation}
-                title={locationName || 'Selected Location'}
-                pinColor="blue"  // Different color to distinguish from user location
-              />
+            {selectedLocation && selectedPrice !== null && ( //selected location
+              <Marker coordinate={selectedLocation}>
+                <View style={styles.selectedMarker}>
+                  <Text style={styles.priceText}>${selectedPrice}</Text>
+                </View>
+              </Marker>
             )}
 
-            {/* Render custom POI markers */}
             {poiMarkers.map((poi, index) => (
               <Marker
                 key={index}
@@ -187,5 +186,15 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     color: 'black',
+  },
+  selectedMarker: {
+    backgroundColor: 'transparent',
+    borderRadius: 20,
+    padding: 5,
+  },
+  priceText: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: 'blue'
   },
 });
