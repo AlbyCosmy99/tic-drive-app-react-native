@@ -5,6 +5,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { Ionicons } from '@expo/vector-icons';
 import {router} from 'expo-router'
 import SegmentedControl from "@/components/SegmentedControl";
+import TicDriveInput from "@/components/TicDriveInput";
 function RegisterVehicle() {
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -15,7 +16,10 @@ function RegisterVehicle() {
                 <Text style={styles.headerText}>Register your vehicle for service bookings</Text>
                 <SegmentedControl />
                 <View style={styles.bookingDetailsContainer}>
-                    <Text>content</Text>
+                    <Text style={styles.plateNumberLabel}>Plate number</Text>
+                    <View>
+                        <TicDriveInput placeholder="E.g AA123BB" isRightIcon={true} />
+                    </View>
                 </View>
             </View>
             <TicDriveButton text="Confirm" path="../(tabs)/Home" />
@@ -48,14 +52,19 @@ const styles = StyleSheet.create({
     },
     bookingDetailsContainer: {
         flex:1,
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: Colors.light.background,
         margin: 15,
         borderColor: Colors.light.SegmentedControlBackground,
         borderWidth: 2,
         borderRadius: 10
-    }
+    },
+    plateNumberLabel: {
+        fontSize: 16,
+        fontWeight: '600',
+        marginHorizontal: 15,
+        marginTop: 15,
+        marginBottom: 0
+    },
 });
 
 export default RegisterVehicle;

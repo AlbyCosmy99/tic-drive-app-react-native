@@ -60,7 +60,6 @@ const customPOIs = [
     }
   }, [selectedLocation]);
 
-  // Add custom POIs based on the user's current location
   const addCustomPOIs = (latitude: number, longitude: number) => {
     const markers = customPOIs.map((poi) => ({
       coordinate: {
@@ -76,7 +75,7 @@ const customPOIs = [
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
-        <Entypo name="location-pin" size={24} color={Colors.light.ticText} style={styles.icon} />
+        <Entypo name="location-pin" size={24} color={Colors.light.ticText} />
         <TouchableOpacity
           style={styles.input}
           onPress={() => setIsMapVisible(true)}
@@ -113,9 +112,6 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  icon: {
-    
   },
   input: {
     flex: 1,

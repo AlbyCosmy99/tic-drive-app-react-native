@@ -5,27 +5,14 @@ import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import FilterIcon from '../../assets/svg/discover_tune.svg';
 import ServicesMap from '@/components/ServicesMap';
+import TicDriveInput from '@/components/TicDriveInput';
 
 export default function Tab() {
   return (
     <SafeAreaView style={styles.safeArea}>
       <TicDriveNavbar />
       <View style={styles.headerServicesHomeContainer}>
-          <View style={styles.inputWrapper}>
-            <Input
-              placeholder="Search workshop"
-              leftIcon={
-                <Icon
-                  name="search"
-                  size={24}
-                  color={Colors.light.ticText}
-                />
-              }
-              inputContainerStyle={styles.inputContainer}
-              inputStyle={styles.inputText}
-              placeholderTextColor='#8b8b8b'
-            />
-          </View>
+          <TicDriveInput isLeftIcon={true} isRightIcon={true} placeholder='Search workshop'/>
           <View style={styles.filterButtonContainer}>
             <TouchableOpacity style={styles.filterButton} onPress={() => alert('filter services')}>
               <FilterIcon width={22} height={22} />
