@@ -136,7 +136,7 @@ export default function ServicesMapModal({
           </MapView>
         )}
         <View style={styles.closeButtonContainer}>
-          <Button style={styles.closeButton} title="Close" onPress={() => setIsMapVisible(false)} />
+          <Button title="Close" onPress={() => setIsMapVisible(false)} />
         </View>
       </View>
     </Modal>
@@ -181,9 +181,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 10,
     borderRadius: 8,
-  },
-  closeButton: {
-    color: 'black'
   },
   markerContent: {
     alignItems: 'center',
