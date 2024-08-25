@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
   markerContent: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'black',
+    backgroundColor: 'white',
     borderRadius: 5,
     padding: 2,
     paddingHorizontal: 3
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
   markerText: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: 'white',
+    color: 'black',
   },
   selectedMarker: {
     backgroundColor: 'white',
