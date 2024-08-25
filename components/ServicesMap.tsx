@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Alert } from 'react-native';
 import { Region, LatLng } from 'react-native-maps';
-import Feather from '@expo/vector-icons/Feather';
-import Fontisto from '@expo/vector-icons/Fontisto';
 import Entypo from '@expo/vector-icons/Entypo';
 import * as Location from 'expo-location';
 import ServicesMapModal from './ServiceMapModal';
 import { Colors } from '@/constants/Colors';
-
+import LocationPin from '../assets/svg/location_on.svg'
 interface POIMarker {
   coordinate: LatLng;
   name: string;
@@ -75,7 +73,7 @@ const customPOIs = [
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
-        <Entypo name="location-pin" size={24} color={Colors.light.ticText} />
+        <LocationPin width={24} name="location-pin" fill={Colors.light.ticText}/>
         <TouchableOpacity
           style={styles.input}
           onPress={() => setIsMapVisible(true)}
@@ -105,8 +103,6 @@ const customPOIs = [
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 15,
-    borderBottomColor: Colors.light.SegmentedControlBackground,
-    borderBottomWidth: 2,
     paddingBottom: 8
   },
   inputContainer: {
@@ -120,7 +116,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   placeholderText: {
-    color: '#808080',
+    color: Colors.light.placeholderText,
     fontSize: 18,
   },
 });

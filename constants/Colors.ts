@@ -21,7 +21,8 @@ export const Colors = {
       drive: '#00BF63'
     },
     bookingsOptionsText: '#7c7c7c',
-    ticText: '#737373'
+    ticText: '#737373',
+    placeholderText: '#808080'
   },
   dark: {
     text: '#ECEDEE',

@@ -1,11 +1,12 @@
 import { Colors } from '@/constants/Colors';
-import { View, StyleSheet, SafeAreaView } from 'react-native';
+import { View, StyleSheet, SafeAreaView, Text } from 'react-native';
 import { Icon, Input } from '@rneui/themed';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import FilterIcon from '../../assets/svg/discover_tune.svg';
 import ServicesMap from '@/components/ServicesMap';
 import TicDriveInput from '@/components/TicDriveInput';
+import WorkshopCards from '@/components/WorkshopCards';
 
 export default function Tab() {
   return (
@@ -21,6 +22,9 @@ export default function Tab() {
       </View>
       <View style={styles.cards}>
         <ServicesMap />
+        <View>
+          <WorkshopCards />
+        </View>
       </View>
     </SafeAreaView>
   );
