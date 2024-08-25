@@ -23,7 +23,7 @@ function ServicesCards() {
         .then(res => res.json())
         .then(res => {
            setServices(res)
-           setLoading(true)
+           setLoading(false)
         })
     }, [])
     if (loading) {
