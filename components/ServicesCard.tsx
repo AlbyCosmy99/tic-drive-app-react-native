@@ -6,6 +6,7 @@ import { TouchableWithoutFeedback } from 'react-native';
 import servicesContext from "@/app/stateManagement/contexts/servicesContext";
 import CheckCircle from '../assets/svg/check_circle.svg'
 import iconMap from '../constants/servicesIconsMap'
+import GlobalContext from "@/app/stateManagement/contexts/GlobalContext";
 interface ServicesCardProps {
     id: number;
     title: string,
@@ -14,29 +15,23 @@ interface ServicesCardProps {
 
 function ServicesCard({ id, title, description }: ServicesCardProps) {
     const [isPressed, setIsPressed] = useState(false);
-    const { servicesState, setServicesState } = useContext(servicesContext)
-
-    useEffect(() => {
-        if (servicesState.servicePressed === id) {
-            setIsPressed(true)
-        } else {
-            setIsPressed(false)
-        }
-    }, [servicesState])
+    const {servicesChoosen, setServicesChoosen} = useContext(GlobalContext)
 
     const handlePressIn = () => {
-        if (servicesState.servicePressed === id) { //true if the service is already pressed
+        if(servicesChoosen.includes(title)) {
             setIsPressed(false)
-            setServicesState({
-                servicePressed: -1
-            })
+            setServicesChoosen([])
         } else {
             setIsPressed(true);
-            setServicesState({
-                servicePressed: id
-            })
+            setServicesChoosen([title])
         }
     };
+
+    useEffect(() => {
+        if(!servicesChoosen.includes(title)) {
+            setIsPressed(false)
+        } 
+    },[servicesChoosen])
 
     const ServiceIcon = iconMap[id] || iconMap[0];
 

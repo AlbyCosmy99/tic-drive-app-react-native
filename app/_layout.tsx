@@ -8,6 +8,7 @@ import { StyleSheet } from 'react-native';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Colors } from '@/constants/Colors';
+import GlobalProvider from './stateManagement/contexts/GlobalProvider';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -29,19 +30,21 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <GestureHandlerRootView>
-        <Stack>
-          <Stack.Screen name="(nav)" options={{ headerShown: false }} />
-          <Stack.Screen 
-            name="screens/RegisterVehicle" 
-            options={{ 
-              title: 'Register Vehicle', 
-              headerShown: false,
-            }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-      </GestureHandlerRootView>
+      <GlobalProvider>
+        <GestureHandlerRootView>
+          <Stack>
+            <Stack.Screen name="(nav)" options={{ headerShown: false }} />
+            <Stack.Screen 
+              name="screens/RegisterVehicle" 
+              options={{ 
+                title: 'Register Vehicle', 
+                headerShown: false,
+              }} />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+        </GestureHandlerRootView>
+      </GlobalProvider>
     </ThemeProvider>
   );
 }

@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import ServicesCard from './ServicesCard';
 import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
-import servicesContext from '@/app/stateManagement/contexts/servicesContext';
 import { Colors } from '@/constants/Colors';
 
 interface Service {
@@ -12,9 +11,6 @@ interface Service {
   }
 
 function ServicesCards() {
-    const [servicesState, setServicesState] = useState({
-        servicePressed: -1
-    })
     const [services, setServices] = useState<Service[]>([])
     const [loading, setLoading] = useState(true)
 
@@ -35,19 +31,17 @@ function ServicesCards() {
     }
 
     return (
-        <servicesContext.Provider value={{servicesState, setServicesState}}>
-            <ScrollView contentContainerStyle={styles.container}>
-                {services.map((elem, index) => (
-                    <View key={index} style={styles.cardContainer}>
-                        <ServicesCard 
-                            id={elem.id} 
-                            title={elem.title} 
-                            description={elem.description} 
-                        />
-                    </View>
-                ))}
-            </ScrollView>
-        </servicesContext.Provider>
+        <ScrollView contentContainerStyle={styles.container}>
+            {services.map((elem, index) => (
+                <View key={index} style={styles.cardContainer}>
+                    <ServicesCard 
+                        id={elem.id} 
+                        title={elem.title} 
+                        description={elem.description} 
+                    />
+                </View>
+            ))}
+        </ScrollView>
     );
 }
 

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button } from '@rneui/themed';
 import { StyleProp, ViewStyle } from 'react-native';
 import { Colors } from "@/constants/Colors";
 import { useRouter, Href } from "expo-router";
+import GlobalContext from "@/app/stateManagement/contexts/GlobalContext";
 interface TicDriveButtonProps {
   text: string;
   customButtonStyle?: StyleProp<ViewStyle>;
@@ -12,9 +13,12 @@ interface TicDriveButtonProps {
 
 const TicDriveButton: React.FC<TicDriveButtonProps> = ({ text, customButtonStyle, customContainerStyle, path }) => {
   const router = useRouter()
+  const {servicesChoosen} = useContext(GlobalContext)
+
   return (
     <Button
         title={text}
+        disabled={servicesChoosen.length === 0}
         buttonStyle={[
           {
               borderRadius: 40,
