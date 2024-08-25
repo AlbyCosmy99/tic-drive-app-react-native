@@ -86,7 +86,7 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
         inputStyle={styles.inputText}
         placeholderTextColor="#8b8b8b"
         value={value}
-        onChangeText={(text) => setValue(text.toUpperCase())}
+        onChangeText={(text) => setValue(setCarSelected ? text.toUpperCase() : text)}
         onSubmitEditing={handleSubmitEditing}
       />
     </View>
