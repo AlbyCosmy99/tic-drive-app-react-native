@@ -6,6 +6,8 @@ import * as Location from 'expo-location';
 import ServicesMapModal from './ServiceMapModal';
 import { Colors } from '@/constants/Colors';
 import LocationPin from '../assets/svg/location_on.svg'
+import workshops from '../constants/temp/Workshops'
+
 interface POIMarker {
   coordinate: LatLng;
   name: string;
@@ -59,12 +61,12 @@ const customPOIs = [
   }, [selectedLocation]);
 
   const addCustomPOIs = (latitude: number, longitude: number) => {
-    const markers = customPOIs.map((poi) => ({
+    const markers = customPOIs.map((poi, index) => ({
       coordinate: {
         latitude: latitude + poi.latitudeOffset,
         longitude: longitude + poi.longitudeOffset,
       },
-      name: poi.name,
+      name: workshops[index].title,
       price: poi.price,
     }));
     setPoiMarkers(markers);

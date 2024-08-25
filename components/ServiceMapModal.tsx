@@ -195,16 +195,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
   },
-  selectedMarker: {
-    backgroundColor: 'white',
+  selectedMarker: { //container selected marker
+    backgroundColor: 'black',
     borderRadius: 5,
     padding: 2,
     paddingHorizontal: 3
   },
-  priceText: {
+  priceText: { //text selected marker
     fontSize: 25,
     fontWeight: 'bold',
-    color: 'black',
+    color: 'white',
   },
   userIconContainer: {
     justifyContent: 'center',
