@@ -10,7 +10,10 @@ function WorkshopCards() {
     const {workshopFilter, servicesChoosen} = useContext(GlobalContext)
 
     const handleCardPress = (workshop: Workshop) => {
-        router.push('../screens/WorkshopDetails')
+        router.push({
+            pathname: '../screens/WorkshopDetails',
+            params: { id: workshop.id }
+        })
     }
 
     const anyService = (services: string[]) => {

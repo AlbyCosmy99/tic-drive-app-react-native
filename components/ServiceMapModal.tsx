@@ -3,12 +3,14 @@ import { StyleSheet, View, Modal, Button, Text, Image } from 'react-native';
 import MapView, { Marker, Region, LatLng } from 'react-native-maps';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import * as Location from 'expo-location';
+import { router } from 'expo-router';
 
 interface POIMarker {
   coordinate: LatLng;
   name: string;
   price: number;
   icon?: string;
+  id: number;
 }
 
 interface ServicesMapModalProps {
@@ -37,9 +39,8 @@ export default function ServicesMapModal({
   setInitialRegion,
 }: ServicesMapModalProps) {
   const [userLocation, setUserLocation] = useState<LatLng | null>(null);
-  const [selectedPrice, setSelectedPrice] = useState<number | null>(null); // For showing price in blue
+  const [selectedPrice, setSelectedPrice] = useState<number | null>(null);
 
-  // Fetch user's current location on mount
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -66,6 +67,10 @@ export default function ServicesMapModal({
     setSelectedPrice(poi.price);
     setLocationName(poi.name);
     setIsMapVisible(false);
+    router.push({
+      pathname: '../screens/WorkshopDetails',
+      params: { id: poi.id }
+    })
   };
 
   return (

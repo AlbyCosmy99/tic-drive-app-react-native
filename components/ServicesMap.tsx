@@ -13,6 +13,7 @@ interface POIMarker {
   name: string;
   price: number;
   icon?: string;
+  id: number;
 }
 
 const ServicesMap: React.FC = () => {
@@ -68,6 +69,7 @@ const customPOIs = [
       },
       name: workshops[index].title,
       price: poi.price,
+      id: workshops[index].id
     }));
     setPoiMarkers(markers);
   };
