@@ -12,7 +12,7 @@ export interface Workshop {
     discount: number;
     freeService: string;
     verified: boolean;
-    services: string[];  // New services array
+    services: string[];
 }
 
 const workshops: Workshop[] = [
