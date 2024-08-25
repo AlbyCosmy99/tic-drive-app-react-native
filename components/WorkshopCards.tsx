@@ -1,12 +1,18 @@
 import { View } from "react-native";
 import WorkshopCard from "./WorkshopCard";
 import { ScrollView } from "react-native-gesture-handler";
-import workshop from '../constants/temp/Workshops'
+import workshops from '../constants/temp/Workshops'
+import GlobalContext from "@/app/stateManagement/contexts/GlobalContext";
+import { useContext, useEffect } from "react";
 
 function WorkshopCards() {
+    const {workshopFilter, setWorkshopFilter} = useContext(GlobalContext)
+
     return (
         <ScrollView>
-            {workshop.map((workshop, index) => {
+            {workshops
+                .filter(workshop => workshopFilter.length === 0 || workshop.title.toLowerCase().includes(workshopFilter.toLowerCase().trim()))
+                .map((workshop, index) => {
                 return <WorkshopCard workshop={workshop} key={index}/>
             })}
         </ScrollView>

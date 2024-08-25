@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
 import { Icon, Input } from '@rneui/themed';
 import { Colors } from "@/constants/Colors";
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {Car} from '../constants/temp/Cars'
 import cars from "../constants/temp/Cars";
+import GlobalContext from "@/app/stateManagement/contexts/GlobalContext";
 
 
 interface TicDriveInputProps {
@@ -23,7 +24,9 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
   option = "plateNumber",
   setIsCarSearched,
 }) => {
+
   const [value, setValue] = useState<string>('');
+  const {workshopFilter, setWorkshopFilter} = useContext(GlobalContext)
 
   const defaultCar = {
     id: 0,
@@ -51,8 +54,9 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
         plateNumber: "",
         model: ""
       });
+      setIsCarSearched(false)
     }
-    setIsCarSearched(false)
+    setWorkshopFilter('')
   };
 
   const handleSubmitEditing = () => {
@@ -90,7 +94,10 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
         inputStyle={styles.inputText}
         placeholderTextColor="#8b8b8b"
         value={value}
-        onChangeText={(text) => setValue(setCarSelected ? text.toUpperCase() : text)}
+        onChangeText={(text) => {
+          setValue(setCarSelected ? text.toUpperCase() : text)
+          setWorkshopFilter(text)
+        }}
         onSubmitEditing={handleSubmitEditing}
       />
     </View>

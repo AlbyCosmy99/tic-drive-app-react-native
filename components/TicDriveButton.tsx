@@ -19,7 +19,7 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({
   path,
 }) => {
   const router = useRouter();
-  const { servicesChoosen, carNotFound } = useContext(GlobalContext);
+  const { servicesChoosen, carNotFound, setWorkshopFilter } = useContext(GlobalContext);
 
   const whenDisabled: Record<string, boolean> = {
     "book a service": servicesChoosen.length === 0,
@@ -45,7 +45,12 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({
         },
         customContainerStyle,
       ]}
-      onPress={() => router.push(path)}
+      onPress={() => {
+        router.push(path)
+        if(text.toLowerCase() === 'confirm') {
+          setWorkshopFilter('')
+        }
+      }}
     />
   );
 };
