@@ -4,6 +4,7 @@ import GlobalContext from "./GlobalContext";
 const GlobalProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const [workshopFilter, setWorkshopFilter] = useState<string>("");
     const [servicesChoosen, setServicesChoosen] = useState<string[]>([]);
+    const [carNotFound, setCarNotFound] = useState<boolean>(true);
   
     return (
       <GlobalContext.Provider
@@ -12,6 +13,8 @@ const GlobalProvider: FC<{ children: ReactNode }> = ({ children }) => {
           setWorkshopFilter,
           servicesChoosen,
           setServicesChoosen,
+          carNotFound,
+          setCarNotFound
         }}
       >
         {children}

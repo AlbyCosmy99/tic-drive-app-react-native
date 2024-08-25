@@ -6,8 +6,9 @@ import { Ionicons } from '@expo/vector-icons';
 import {router} from 'expo-router'
 import SegmentedControl from "@/components/SegmentedControl";
 import TicDriveInput from "@/components/TicDriveInput";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import options from '../../constants/VehicleRegistrationOptions';
+import GlobalContext from "../stateManagement/contexts/GlobalContext";
 
 function RegisterVehicle() {
     const [segmentedControlSelection, setSegmentedControlSelection] = useState(
@@ -31,9 +32,11 @@ function RegisterVehicle() {
             model: ""
         }
     )
-    const [carNotFound, setCarNotFound] = useState(false)
+    const {carNotFound, setCarNotFound} = useContext(GlobalContext)
+    const [isCarSearched, setIsCarSearched] = useState(false)
+
     useEffect(() => {
-        if(carSelected.id === -1) {
+        if(carSelected.id === 0) {
             setCarNotFound(true)
         }
         else {
@@ -61,8 +64,9 @@ function RegisterVehicle() {
                                             isRightIcon={true} 
                                             setCarSelected={setCarSelected}
                                             option={option.keyString}
+                                            setIsCarSearched={setIsCarSearched}
                                         />
-                                        {carNotFound && <Text style={styles.carNotFound}>Car not found. Try again.</Text>}
+                                        {carNotFound && isCarSearched && <Text style={styles.carNotFound}>Car not found. Try again.</Text>}
                                     </View>
                                     
                                 )

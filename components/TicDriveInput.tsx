@@ -11,7 +11,8 @@ interface TicDriveInputProps {
   isRightIcon?: boolean;
   placeholder: string;
   setCarSelected?: (carSelected: Car) => void;
-  option?: keyof Car
+  option?: keyof Car,
+  setIsCarSearched: (carSearched: boolean) => void
 }
 
 const TicDriveInput: React.FC<TicDriveInputProps> = ({ 
@@ -19,12 +20,13 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
   isRightIcon = false, 
   placeholder, 
   setCarSelected,
-  option = "plateNumber"
+  option = "plateNumber",
+  setIsCarSearched,
 }) => {
   const [value, setValue] = useState<string>('');
 
   const defaultCar = {
-    id: -1,
+    id: 0,
     liters: 0,
     energy: "",
     engineCode: "",
@@ -50,12 +52,14 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
         model: ""
       });
     }
+    setIsCarSearched(false)
   };
 
   const handleSubmitEditing = () => {
     if (value && setCarSelected) {
       const car = cars.find(car => typeof car[option] === 'string' && car[option]?.toLowerCase() === value.toLowerCase())
       setCarSelected(car ? car : defaultCar);
+      setIsCarSearched(true)
     }
   };
 
