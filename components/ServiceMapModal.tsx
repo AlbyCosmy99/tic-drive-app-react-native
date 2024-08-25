@@ -185,21 +185,26 @@ const styles = StyleSheet.create({
   markerContent: {
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'black',
+    borderRadius: 5,
+    padding: 2,
+    paddingHorizontal: 3
   },
   markerText: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: 'black',
+    color: 'white',
   },
   selectedMarker: {
-    backgroundColor: 'transparent',
-    borderRadius: 20,
-    padding: 5,
+    backgroundColor: 'white',
+    borderRadius: 5,
+    padding: 2,
+    paddingHorizontal: 3
   },
   priceText: {
     fontSize: 25,
     fontWeight: 'bold',
-    color: 'blue',
+    color: 'black',
   },
   userIconContainer: {
     justifyContent: 'center',

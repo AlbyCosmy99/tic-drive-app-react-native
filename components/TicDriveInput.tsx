@@ -2,45 +2,93 @@ import { StyleSheet, Text, View } from "react-native";
 import { Icon, Input } from '@rneui/themed';
 import { Colors } from "@/constants/Colors";
 import React, { useState } from 'react';
+import {Car} from '../constants/temp/Cars'
+import cars from "../constants/temp/Cars";
+
 
 interface TicDriveInputProps {
   isLeftIcon?: boolean;
   isRightIcon?: boolean;
   placeholder: string;
+  setCarSelected?: (carSelected: Car) => void;
+  option?: keyof Car
 }
 
-const TicDriveInput: React.FC<TicDriveInputProps> = ({ isLeftIcon = false, isRightIcon = false, placeholder }) => {
+const TicDriveInput: React.FC<TicDriveInputProps> = ({ 
+  isLeftIcon = false, 
+  isRightIcon = false, 
+  placeholder, 
+  setCarSelected,
+  option = "plateNumber"
+}) => {
   const [value, setValue] = useState<string>('');
 
+  const defaultCar = {
+    id: -1,
+    liters: 0,
+    energy: "",
+    engineCode: "",
+    enginePower: 0,
+    engineDisplacement: 0,
+    vin: "",
+    plateNumber: "",
+    model: ""
+  }
+
+  const handleOnPress = () => {
+    setValue('');
+    if (setCarSelected) {
+      setCarSelected({
+        id: 0,
+        liters: 0,
+        energy: "",
+        engineCode: "",
+        enginePower: 0,
+        engineDisplacement: 0,
+        vin: "",
+        plateNumber: "",
+        model: ""
+      });
+    }
+  };
+
+  const handleSubmitEditing = () => {
+    if (value && setCarSelected) {
+      const car = cars.find(car => typeof car[option] === 'string' && car[option]?.toLowerCase() === value.toLowerCase())
+      setCarSelected(car ? car : defaultCar);
+    }
+  };
+
   return (
-    <View style={styles.inputWrapper}>
-        <Input
-            placeholder={placeholder}
-            leftIcon={
-              isLeftIcon ? (
-                <Icon
-                  name="search"
-                  size={24}
-                  color={Colors.light.ticText}
-                />
-              ) : undefined
-            }
-            rightIcon={
-              isRightIcon && value ? (
-                  <Icon
-                    name="cancel"
-                    size={24}
-                    color={Colors.light.ticText}
-                    onPress={() => setValue('')}
-                  />
-              ) : undefined
-            }
-            inputContainerStyle={styles.inputContainer}
-            inputStyle={styles.inputText}
-            placeholderTextColor="#8b8b8b"
-            value={value}
-            onChangeText={(text) => setValue(text)}
-        />
+    <View style={!setCarSelected && styles.inputWrapper}>
+      <Input
+        placeholder={placeholder}
+        leftIcon={
+          isLeftIcon ? (
+            <Icon
+              name="search"
+              size={24}
+              color={Colors.light.ticText}
+            />
+          ) : undefined
+        }
+        rightIcon={
+          isRightIcon && value ? (
+            <Icon
+              name="cancel"
+              size={24}
+              color={Colors.light.ticText}
+              onPress={handleOnPress}
+            />
+          ) : undefined
+        }
+        inputContainerStyle={styles.inputContainer}
+        inputStyle={styles.inputText}
+        placeholderTextColor="#8b8b8b"
+        value={value}
+        onChangeText={(text) => setValue(text.toUpperCase())}
+        onSubmitEditing={handleSubmitEditing}
+      />
     </View>
   );
 };
