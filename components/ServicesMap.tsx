@@ -103,7 +103,9 @@ const customPOIs = [
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 15,
-    paddingBottom: 8
+    paddingBottom: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.light.SegmentedControlBackground
   },
   inputContainer: {
     flexDirection: 'row',
@@ -111,7 +113,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    paddingVertical: 10,
+    paddingVertical: 5,
     paddingHorizontal: 8,
     fontSize: 16,
   },

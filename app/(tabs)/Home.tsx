@@ -22,9 +22,7 @@ export default function Tab() {
       </View>
       <View style={styles.cards}>
         <ServicesMap />
-        <View>
-          <WorkshopCards />
-        </View>
+        <WorkshopCards />
       </View>
     </SafeAreaView>
   );

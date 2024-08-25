@@ -11,74 +11,55 @@ import Acute from '../assets/svg/acute.svg'
 import FreeCancellation from '../assets/svg/free_cancellation.svg'
 import AssistantDirection from '../assets/svg/assistant_direction'
 import CalendarIcon from '../assets/svg/calendar_add_on.svg'
-
-const service = {
-    id: 5,
-    title: 'Full Car Maintenance Package',
-    imageUrl: 'https://prodiags.com/wp-content/uploads/2021/01/Korjaamopaallikko_Tyontekijat_1000X341.jpg',
-    favourite: true,
-    position: 'San Francisco, USA',
-    stars: 4.8,
-    reviews: [
-    {
-        stars: 5,
-        text: 'Top-notch service! My car runs smoothly now.',
-        authorName: 'Linda Grey',
-        authorImageUrl: 'https://example.com/lindagrey.jpg',
-        when: new Date('2023-08-20'),
-    },
-    {
-        stars: 4,
-        text: 'Great experience, but had to wait a bit longer than expected.',
-        authorName: 'Tom Brown',
-        authorImageUrl: 'https://example.com/tombrown.jpg',
-        when: new Date('2023-08-10'),
-    },
-    ],
-    freeCancellation: true,
-    price: '$180',
-    discount: 20,
-    freeService: 'Free oil change',
-    verified: true
-}
-
+import Review from "@/constants/temp/Review";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { Workshop } from "@/constants/temp/Services";
 const calculateDiscountPrice = (price: string, discount: number) => {
     const priceValue = parseInt(price.slice(1))
     return priceValue - priceValue*discount/100
 }
 
-function WorkshopCard() {
+const calculateWorkshopStars = (reviews: Review[]) => {
+    let sumReviewStars = 0
+    reviews.forEach(review => {
+        sumReviewStars += review.stars
+    })
+    return sumReviewStars/ reviews.length
+
+}
+
+function WorkshopCard({ workshop }: { workshop: Workshop }) {
     return (
         <View style={styles.container}>
             <View style={styles.cardContainer}>
                 <Image
-                    source={{uri: service.imageUrl}}
+                    source={{uri: workshop.imageUrl}}
                     containerStyle={styles.image}
                     PlaceholderContent={<ActivityIndicator size="large" color={Colors.light.bookingsOptionsText} />}
                 />
                 {
-                    service.favourite ? (
+                    workshop.favourite ? (
                         <Icon name="heart" size={30} color="red" style={styles.heartIcon} />
                     ) : (<Icon name="heart" size={30} color="white" style={styles.heartIcon} />)
                 }
                 <View style={styles.titleContainer}>
-                    <Text style={styles.title}>{service.title}</Text>
-                    {service.verified && <Verified width={24} name="verified" />}
+                    <Text style={styles.title}>{workshop.title}</Text>
+                    {workshop.verified && <Verified width={24} name="verified" />}
                 </View>
                 <View style={styles.servicePositionContainer}>
                     <LocationPin width={24} name="location-pin" fill={Colors.light.ticText}/>
-                    <Text style={styles.serviceInfo}>{service.position}</Text>
+                    <Text style={styles.serviceInfo}>{workshop.position}</Text>
                 </View>
                 <View style={styles.servicePositionContainer}>
                     <Star width={24} name="location-pin" fill={Colors.light.ticText}/>
-                    <Text style={styles.serviceInfo}>{service.stars} ({service.reviews.length} reviews)</Text>
+                    <Text style={styles.serviceInfo}>{calculateWorkshopStars(workshop.reviews)} ({workshop.reviews.length} reviews)</Text>
                 </View>
                 <View style={styles.extraServicesContainer}>
                     <View style={styles.expressServiceContainer}>
                         <Acute width={24} name="acute"/>
                         <Text style={styles.extraService}>Express service</Text>
                     </View>
-                    {service.freeCancellation && (
+                    {workshop.freeCancellation && (
                         <View style={styles.expressServiceContainer}>
                             <FreeCancellation width={24} name="acute"/>
                             <Text style={styles.extraService}>Free cancellation</Text>
@@ -87,20 +68,20 @@ function WorkshopCard() {
                 </View>
                 <View style={styles.priceContainer}>
                     <View>
-                        <Text style={[styles.priceDetail, service.discount!==0 && styles.priceWithDiscount]}>{service.price}</Text>
-                        {service.discount !==0 && <View style={styles.strikethroughLine} />}
+                        <Text style={[styles.priceDetail, workshop.discount!==0 && styles.priceWithDiscount]}>{workshop.price}</Text>
+                        {workshop.discount !==0 && <View style={styles.strikethroughLine} />}
                     </View>
-                    {service.discount !== 0 && <Text style={styles.priceDetail}>${calculateDiscountPrice(service.price, service.discount)}</Text>}
+                    {workshop.discount !== 0 && <Text style={styles.priceDetail}>${calculateDiscountPrice(workshop.price, workshop.discount)}</Text>}
                 </View>
                 <View style={styles.cardOptionsContainer}>
-                    <View style={styles.cardOptionContainer}>
+                    <TouchableOpacity style={styles.cardOptionContainer} onPress={() => alert('directions')}>
                         <AssistantDirection width={24} />
                         <Text style={styles.cardOption}>Directions</Text>
-                    </View>
-                    <View style={styles.cardOptionContainer}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.cardOptionContainer} onPress={()=> alert('check availability')}>
                         <CalendarIcon width={24} />
                         <Text style={styles.cardOption}>Check availability</Text>
-                    </View>
+                    </TouchableOpacity>
                 </View>
             </View>
         </View>
@@ -112,13 +93,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 10,
-        borderBottomColor: Colors.light.SegmentedControlBackground,
-        borderBottomWidth: 2,
-        paddingBottom: 15
     },
     cardContainer: {
         position: 'relative',
-        width: '100%'
+        width: '100%',
+        borderBottomColor: Colors.light.SegmentedControlBackground,
+        borderBottomWidth: 2,
     },
     image: {
         width: '100%',
@@ -206,7 +186,8 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         gap: 10,
-        marginTop: 10
+        marginTop: 10,
+        marginBottom: 15
     }
 });
 
