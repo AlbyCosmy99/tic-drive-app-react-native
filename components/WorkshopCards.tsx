@@ -4,12 +4,13 @@ import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import workshops, { Workshop } from '../constants/temp/Workshops'
 import GlobalContext from "@/app/stateManagement/contexts/GlobalContext";
 import { useContext, useEffect } from "react";
+import { router } from "expo-router";
 
 function WorkshopCards() {
     const {workshopFilter, setWorkshopFilter} = useContext(GlobalContext)
 
     const handleCardPress = (workshop: Workshop) => {
-        alert('pressed ' + workshop.title)
+        router.push('../screens/WorkshopDetails')
     }
 
     return (
