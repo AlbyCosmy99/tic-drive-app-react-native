@@ -3,7 +3,7 @@ import Review from './Review';
 export interface Workshop {
     id: number;
     title: string;
-    imageUrl: string;
+    imageUrl: string; // immagine principale
     favourite: boolean;
     position: string;
     reviews: Review[];
@@ -13,6 +13,7 @@ export interface Workshop {
     freeService: string;
     verified: boolean;
     services: string[];
+    images: string[]; // array di immagini
 }
 
 const workshops: Workshop[] = [
@@ -44,6 +45,11 @@ const workshops: Workshop[] = [
         freeService: 'Free oil change',
         verified: true,
         services: ['oil change', 'vehicle inspection', 'tires'],
+        images: [
+            'https://example.com/car-repair-1.jpg',
+            'https://example.com/car-repair-2.jpg',
+            'https://example.com/car-repair-3.jpg'
+        ],
     },
     {
         id: 6,
@@ -73,6 +79,10 @@ const workshops: Workshop[] = [
         freeService: 'Free tire balancing',
         verified: false,
         services: ['tires', 'battery'],
+        images: [
+            'https://example.com/auto-shop-1.jpg',
+            'https://example.com/auto-shop-2.jpg'
+        ],
     },
     {
         id: 7,
@@ -102,6 +112,10 @@ const workshops: Workshop[] = [
         freeService: 'Free brake inspection',
         verified: true,
         services: ['vehicle inspection', 'tires', 'service'],
+        images: [
+            'https://example.com/brake-repair-1.jpg',
+            'https://example.com/brake-repair-2.jpg',
+        ],
     },
     {
         id: 8,
@@ -131,6 +145,10 @@ const workshops: Workshop[] = [
         freeService: 'Free engine light check',
         verified: false,
         services: ['oil change', 'battery'],
+        images: [
+            'https://example.com/diagnostics-1.jpg',
+            'https://example.com/diagnostics-2.jpg',
+        ],
     },
     {
         id: 9,
@@ -160,6 +178,10 @@ const workshops: Workshop[] = [
         freeService: 'Free car wash with repair',
         verified: true,
         services: ['vehicle inspection', 'service', 'battery'],
+        images: [
+            'https://example.com/paint-shop-1.jpg',
+            'https://example.com/paint-shop-2.jpg',
+        ],
     },
     {
         id: 10,
@@ -189,6 +211,10 @@ const workshops: Workshop[] = [
         freeService: 'Free AC system check',
         verified: false,
         services: ['air conditioning', 'vehicle inspection', 'service'],
+        images: [
+            'https://example.com/ac-repair-1.jpg',
+            'https://example.com/ac-repair-2.jpg',
+        ],
     },
 ];
 

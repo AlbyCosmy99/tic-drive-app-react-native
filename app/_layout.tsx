@@ -45,7 +45,13 @@ export default function RootLayout() {
               name="screens/WorkshopDetails" 
               options={{ 
                 title: 'Workshop details', 
-                headerShown: true,
+                headerShown: false,
+              }} />
+              <Stack.Screen 
+              name="screens/BookingConfirmation" 
+              options={{ 
+                title: 'Booking Confirmation', 
+                headerShown: false,
               }} />
             <Stack.Screen name="+not-found" />
           </Stack>

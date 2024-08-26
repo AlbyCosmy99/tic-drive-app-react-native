@@ -13,7 +13,7 @@ interface TicDriveInputProps {
   placeholder: string;
   setCarSelected?: (carSelected: Car) => void;
   option?: keyof Car,
-  setIsCarSearched: (carSearched: boolean) => void
+  setIsCarSearched?: (carSearched: boolean) => void
 }
 
 const TicDriveInput: React.FC<TicDriveInputProps> = ({ 
@@ -22,7 +22,7 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
   placeholder, 
   setCarSelected,
   option = "plateNumber",
-  setIsCarSearched,
+  setIsCarSearched = () => {},
 }) => {
 
   const [value, setValue] = useState<string>('');
