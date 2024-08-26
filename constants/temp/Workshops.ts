@@ -3,7 +3,7 @@ import Review from './Review';
 export interface Workshop {
     id: number;
     title: string;
-    imageUrl: string; // immagine principale
+    imageUrl: string;
     favourite: boolean;
     position: string;
     reviews: Review[];
@@ -13,7 +13,7 @@ export interface Workshop {
     freeService: string;
     verified: boolean;
     services: string[];
-    images: string[]; // array di immagini
+    images: string[];
 }
 
 const workshops: Workshop[] = [
@@ -28,14 +28,14 @@ const workshops: Workshop[] = [
                 stars: 5,
                 text: 'Top-notch service! My car runs smoothly now.',
                 authorName: 'Linda Grey',
-                authorImageUrl: 'https://example.com/lindagrey.jpg',
+                authorImageUrl: 'https://media.licdn.com/dms/image/v2/D4D08AQE0CXu4hnoe7g/croft-frontend-shrinkToFit1024/croft-frontend-shrinkToFit1024/0/1646754728586?e=2147483647&v=beta&t=qLLnAorOkCKvbPAVBJgmyYhxQUt6YWeU0qJRV5cCgYQ',
                 when: new Date('2023-08-20'),
             },
             {
                 stars: 4,
                 text: 'Great experience, but had to wait a bit longer than expected.',
                 authorName: 'Tom Brown',
-                authorImageUrl: 'https://example.com/tombrown.jpg',
+                authorImageUrl: 'https://www.elitesingles.co.uk/wp-content/uploads/sites/59/2019/11/2b_en_articleslide_sm2-350x264.jpg',
                 when: new Date('2023-08-10'),
             },
         ],
@@ -62,14 +62,14 @@ const workshops: Workshop[] = [
                 stars: 4,
                 text: 'Tires were replaced quickly, and the alignment is perfect!',
                 authorName: 'Patricia Blue',
-                authorImageUrl: 'https://example.com/patriciablue.jpg',
+                authorImageUrl: 'https://media.licdn.com/dms/image/v2/D4D08AQE0CXu4hnoe7g/croft-frontend-shrinkToFit1024/croft-frontend-shrinkToFit1024/0/1646754728586?e=2147483647&v=beta&t=qLLnAorOkCKvbPAVBJgmyYhxQUt6YWeU0qJRV5cCgYQ',
                 when: new Date('2023-07-22'),
             },
             {
                 stars: 3,
                 text: 'Good service but communication could be better.',
                 authorName: 'Henry Gold',
-                authorImageUrl: 'https://example.com/henrygold.jpg',
+                authorImageUrl: 'https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg',
                 when: new Date('2023-06-17'),
             },
         ],
@@ -95,14 +95,14 @@ const workshops: Workshop[] = [
                 stars: 5,
                 text: 'Best brake service I’ve ever had!',
                 authorName: 'Nicole White',
-                authorImageUrl: 'https://example.com/nicolewhite.jpg',
+                authorImageUrl: 'https://media.licdn.com/dms/image/v2/D4D08AQE0CXu4hnoe7g/croft-frontend-shrinkToFit1024/croft-frontend-shrinkToFit1024/0/1646754728586?e=2147483647&v=beta&t=qLLnAorOkCKvbPAVBJgmyYhxQUt6YWeU0qJRV5cCgYQ',
                 when: new Date('2023-08-05'),
             },
             {
                 stars: 4,
                 text: 'Good value for the price, brakes feel great now.',
                 authorName: 'George Black',
-                authorImageUrl: 'https://example.com/georgeblack.jpg',
+                authorImageUrl: 'https://www.elitesingles.co.uk/wp-content/uploads/sites/59/2019/11/2b_en_articleslide_sm2-350x264.jpg',
                 when: new Date('2023-07-30'),
             },
         ],
@@ -128,14 +128,14 @@ const workshops: Workshop[] = [
                 stars: 3,
                 text: 'Average service. The issue wasn’t fully resolved.',
                 authorName: 'Olivia Green',
-                authorImageUrl: 'https://example.com/oliviagreen.jpg',
+                authorImageUrl: 'https://media.licdn.com/dms/image/v2/D4D08AQE0CXu4hnoe7g/croft-frontend-shrinkToFit1024/croft-frontend-shrinkToFit1024/0/1646754728586?e=2147483647&v=beta&t=qLLnAorOkCKvbPAVBJgmyYhxQUt6YWeU0qJRV5cCgYQ',
                 when: new Date('2023-05-20'),
             },
             {
                 stars: 2,
                 text: 'The diagnostics took too long, and I wasn’t fully satisfied.',
                 authorName: 'Daniel Red',
-                authorImageUrl: 'https://example.com/danielred.jpg',
+                authorImageUrl: 'https://www.elitesingles.co.uk/wp-content/uploads/sites/59/2019/11/2b_en_articleslide_sm2-350x264.jpg',
                 when: new Date('2023-04-14'),
             },
         ],
@@ -161,14 +161,14 @@ const workshops: Workshop[] = [
                 stars: 5,
                 text: 'Amazing job! My car looks brand new.',
                 authorName: 'Sophia Violet',
-                authorImageUrl: 'https://example.com/sophiaviolet.jpg',
+                authorImageUrl: 'https://media.licdn.com/dms/image/v2/D4D08AQE0CXu4hnoe7g/croft-frontend-shrinkToFit1024/croft-frontend-shrinkToFit1024/0/1646754728586?e=2147483647&v=beta&t=qLLnAorOkCKvbPAVBJgmyYhxQUt6YWeU0qJRV5cCgYQ',
                 when: new Date('2023-09-01'),
             },
             {
                 stars: 5,
                 text: 'The paint job was flawless. Highly recommend!',
                 authorName: 'James Silver',
-                authorImageUrl: 'https://example.com/jamessilver.jpg',
+                authorImageUrl: 'https://www.elitesingles.co.uk/wp-content/uploads/sites/59/2019/11/2b_en_articleslide_sm2-350x264.jpg',
                 when: new Date('2023-08-28'),
             },
         ],
@@ -194,14 +194,14 @@ const workshops: Workshop[] = [
                 stars: 4,
                 text: 'Great service, but it took a while to get my car back.',
                 authorName: 'Megan Orange',
-                authorImageUrl: 'https://example.com/meganorange.jpg',
+                authorImageUrl: 'https://media.licdn.com/dms/image/v2/D4D08AQE0CXu4hnoe7g/croft-frontend-shrinkToFit1024/croft-frontend-shrinkToFit1024/0/1646754728586?e=2147483647&v=beta&t=qLLnAorOkCKvbPAVBJgmyYhxQUt6YWeU0qJRV5cCgYQ',
                 when: new Date('2023-07-12'),
             },
             {
                 stars: 3,
                 text: 'Air conditioning works now, but the price was a bit steep.',
                 authorName: 'Lucas Blue',
-                authorImageUrl: 'https://example.com/lucasblue.jpg',
+                authorImageUrl: 'https://media.istockphoto.com/id/1388253782/it/foto/positivo-successo-millennial-business-professionista-uomo-daffari-ritratto-colpo-di-testa.jpg?s=612x612&w=0&k=20&c=TAUjH3Qs18KFd-N-A615YPgqIFh5Ak8H4rjK31ZiccE=',
                 when: new Date('2023-06-05'),
             },
         ],

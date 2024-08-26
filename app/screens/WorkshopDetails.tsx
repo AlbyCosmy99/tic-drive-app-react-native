@@ -17,6 +17,7 @@ import Review from "@/constants/temp/Review";
 import ChatIcon from '../../assets/svg/chat.svg'
 import { Ionicons } from "@expo/vector-icons";
 import TicDriveButton from "@/components/TicDriveButton";
+import ClientReviewCards from "@/components/ClientReviewCards";
 
 export default function WorkshopDetails() {
     const { id } = useLocalSearchParams();
@@ -115,6 +116,7 @@ export default function WorkshopDetails() {
                             <Star width={24} name="location-pin" fill={Colors.light.ticText}/>
                             <Text style={styles.serviceInfo}>{calculateWorkshopStars(workshop.reviews)} ({workshop.reviews.length} reviews)</Text>
                         </View>
+                        <ClientReviewCards id={Array.isArray(id) ? id[0] : id}/>
                     </View>
                 </View>
             </ScrollView>
@@ -144,7 +146,7 @@ const styles = StyleSheet.create({
         flex: 1
     },
     bottom: {
-        flex: 1,
+
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginHorizontal: 10,
