@@ -52,13 +52,14 @@ const styles = StyleSheet.create({
         marginTop: 20,
         borderTopWidth: 2,
         borderTopColor: '#ebebeb',
-        paddingTop: 15
+        paddingTop: 15,
     },
     servicePositionContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: 3,
-        marginTop: 10
+        marginTop: 10,
+        marginRight: 15
     },
     serviceInfo: {
         fontSize: 18,
