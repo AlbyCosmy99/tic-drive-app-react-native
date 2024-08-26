@@ -108,7 +108,7 @@ export default function ServicesMapModal({
               <Marker coordinate={userLocation} title="Your Location">
                 <View style={styles.userIconContainer}>
                   <Image
-                    source={require('../assets/images/react-logo.png')}
+                    source={require('../assets/images/favicon.png')}
                     style={styles.userIcon}
                     resizeMode="contain"
                   />
@@ -119,7 +119,7 @@ export default function ServicesMapModal({
             {selectedLocation && selectedPrice !== null && ( //selected location
               <Marker coordinate={selectedLocation}>
                 <View style={styles.selectedMarker}>
-                  <Text style={styles.priceText}>${selectedPrice}</Text>
+                  <Text style={styles.priceText}>{selectedPrice}</Text>
                 </View>
               </Marker>
             )}
@@ -129,12 +129,12 @@ export default function ServicesMapModal({
                 key={index}
                 coordinate={poi.coordinate}
                 title={poi.name}
-                description={`Price: $${poi.price}`}
+                description={`Price: ${poi.price}`}
                 image={poi.icon ? { uri: poi.icon } : undefined}
                 onPress={() => handlePOISelect(poi)}
               >
                 <View style={styles.markerContent}>
-                  <Text style={styles.markerText}>${poi.price}</Text>
+                  <Text style={styles.markerText}>{poi.price}</Text>
                 </View>
               </Marker>
             ))}

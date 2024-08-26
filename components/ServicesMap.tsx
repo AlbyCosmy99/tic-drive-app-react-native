@@ -11,7 +11,7 @@ import workshops from '../constants/temp/Workshops'
 interface POIMarker {
   coordinate: LatLng;
   name: string;
-  price: number;
+  price: string;
   icon?: string;
   id: number;
 }
@@ -24,12 +24,12 @@ const ServicesMap: React.FC = () => {
   const [initialRegion, setInitialRegion] = useState<Region | null>(null);
 
 const customPOIs = [
-    { name: 'Precision Works Garage', price: 50, latitudeOffset: 0.010, longitudeOffset: 0.015 },
-    { name: 'Steel & Torque Mechanics', price: 100, latitudeOffset: -0.020, longitudeOffset: -0.025 },
-    { name: 'Fusion Auto Repair', price: 150, latitudeOffset: 0.030, longitudeOffset: -0.035 },
-    { name: 'Engine Craftworks', price: 120, latitudeOffset: -0.050, longitudeOffset: 0.045 },
-    { name: 'MasterWrench Garage', price: 80, latitudeOffset: 0.060, longitudeOffset: -0.010 },
-    { name: 'RevLine Motorshop', price: 90, latitudeOffset: -0.070, longitudeOffset: 0.020 },
+    { name: 'Precision Works Garage', latitudeOffset: 0.010, longitudeOffset: 0.015 },
+    { name: 'Steel & Torque Mechanics', latitudeOffset: -0.020, longitudeOffset: -0.025 },
+    { name: 'Fusion Auto Repair', latitudeOffset: 0.030, longitudeOffset: -0.035 },
+    { name: 'Engine Craftworks', latitudeOffset: -0.050, longitudeOffset: 0.045 },
+    { name: 'MasterWrench Garage', latitudeOffset: 0.060, longitudeOffset: -0.010 },
+    { name: 'RevLine Motorshop', latitudeOffset: -0.070, longitudeOffset: 0.020 },
 ];
 
   useEffect(() => {
@@ -68,7 +68,7 @@ const customPOIs = [
         longitude: longitude + poi.longitudeOffset,
       },
       name: workshops[index].title,
-      price: poi.price,
+      price: workshops[index].price,
       id: workshops[index].id
     }));
     setPoiMarkers(markers);
