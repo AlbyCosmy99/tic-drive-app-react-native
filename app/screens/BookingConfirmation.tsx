@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     success: {
-        color: 'black',
+        color: Colors.light.ticText,
         fontSize: 25,
         fontWeight: '800',
         textAlign:'center',

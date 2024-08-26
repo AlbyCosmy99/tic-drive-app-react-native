@@ -142,11 +142,10 @@ export default function WorkshopDetails() {
 const styles = StyleSheet.create({
     container: {
         padding: 10,
-        backgroundColor: Colors.light.ticText,
+        backgroundColor: Colors.light.background,
         flex: 1
     },
     bottom: {
-
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginHorizontal: 10,
