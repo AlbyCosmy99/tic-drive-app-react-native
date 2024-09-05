@@ -28,12 +28,12 @@ function WorkshopCards() {
     return (
         <ScrollView>
             {workshops
-                // .filter(workshop => 
-                //     (workshopFilter.length === 0 
-                //     || workshop.title.toLowerCase().includes(workshopFilter.toLowerCase().trim()))
-                //     && (anyService(workshop.services))
+                .filter(workshop => 
+                    (workshopFilter.length === 0 
+                    || workshop.title.toLowerCase().includes(workshopFilter.toLowerCase().trim()))
+                    && (anyService(workshop.services))
 
-                // )
+                )
                 .map((workshop, index) => {
                 return (
                     <TouchableOpacity key={index} onPress={() => handleCardPress(workshop)}>
