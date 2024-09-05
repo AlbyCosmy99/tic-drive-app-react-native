@@ -124,7 +124,7 @@ export default function WorkshopDetails() {
                 <View style={styles.priceContainer}>
                     <Text style={styles.startingFrom}>Starting from</Text>
                     <View style={styles.priceDiscountContainer}>
-                        <View style={styles.priceDiscount}>
+                        <View>
                             <Text style={[styles.priceDetail, workshop.discount!==0 && styles.priceWithDiscount]}>{workshop.price}</Text>
                             {workshop.discount !==0 && <View style={styles.strikethroughLine} />}
                         </View>
@@ -173,12 +173,6 @@ const styles = StyleSheet.create({
         width: '100%',
         borderBottomColor: Colors.light.SegmentedControlBackground,
         borderBottomWidth: 2,
-    },
-    heartIcon: {
-        position: 'absolute',
-        top: 20,
-        right: 25,
-        zIndex: 1,
     },
     servicePositionContainer: {
         flex: 1,
@@ -291,7 +285,4 @@ const styles = StyleSheet.create({
     customButtonStyle: {
         height: 50
     },
-    priceDiscount: {
-      
-    }
 });
