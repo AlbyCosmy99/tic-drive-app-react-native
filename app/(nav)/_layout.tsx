@@ -15,7 +15,7 @@ export default function Nav() {
                     colors={['#FFFFFF', '#FBFBFB']}
                     style={styles.content}
                 >
-                    <Text style={styles.headerText}>What service are you looking for?</Text>
+                    <Text style={styles.headerText} className="font-medium text-3xl  mx-3.5">What service are you looking for?</Text>
                     <ServicesCards />
                 </LinearGradient>
             </View>
@@ -35,9 +35,6 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     headerText: {
-        fontWeight: '500',
-        fontSize: 30,
-        marginHorizontal: 15,
         marginBottom: 8,
     }
 });
