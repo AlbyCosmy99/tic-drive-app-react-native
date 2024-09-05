@@ -8,9 +8,9 @@ import { Colors } from "@/constants/Colors";
 
 export default function Nav() {
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <SafeAreaView className="flex-1">
             <TicDriveNavbar />
-            <View style={styles.contentContainer}>
+            <View style={styles.contentContainer} className="flex-1 justify-between	flex-1 border-b" >
                 <LinearGradient
                     colors={['#FFFFFF', '#FBFBFB']}
                     style={styles.content}
@@ -26,13 +26,9 @@ export default function Nav() {
 
 const styles = StyleSheet.create({
     safeArea: {
-        flex: 1,
         backgroundColor: Colors.light.background,
     },
     contentContainer: {
-        flex: 1,
-        justifyContent: 'space-between',
-        borderBottomWidth: 1,
         borderBottomColor: '#ededed',
     },
     content: {
