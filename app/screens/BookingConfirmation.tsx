@@ -6,7 +6,7 @@ export default function BookingConfirmation() {
     return (
         <>
             <TicDriveNavbar />
-            <SafeAreaView style={styles.container}>
+            <SafeAreaView style={styles.container} className="flex-1 justify-center items-center">
                 <Text style={styles.success}>Service booked successfully!</Text>
                 <Text style={styles.success}>Thank you for booking with TicDrive. You will soon receive a PIN code via email to present to the mechanic.</Text>
             </SafeAreaView>
@@ -17,9 +17,6 @@ export default function BookingConfirmation() {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: Colors.light.background,
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     success: {
         color: Colors.light.ticText,
