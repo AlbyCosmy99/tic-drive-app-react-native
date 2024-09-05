@@ -45,14 +45,14 @@ function RegisterVehicle() {
     },[carSelected])
 
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <SafeAreaView style={styles.safeArea} className="flex-1">
             <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
                   <Ionicons name="arrow-back" size={30} color="#000" />
             </TouchableOpacity>
-            <View style={styles.contentContainer}>
-                <Text style={styles.headerText}>Register your vehicle for service bookings</Text>
+            <View className="flex-1 justify-between">
+                <Text className="font-medium mb-2 text-3xl mx-3.5">Register your vehicle for service bookings</Text>
                 <SegmentedControl segmentedControlSelection={segmentedControlSelection} setSegmentedControlSelection={setSegmentedControlSelection} />
-                <View style={styles.bookingDetailsContainer}>
+                <View style={styles.bookingDetailsContainer} className="flex-1 m-3.5">
                     {
                         options.map((option,index) => {
                             return segmentedControlSelection.name === option.name &&
@@ -117,31 +117,14 @@ function RegisterVehicle() {
 
 const styles = StyleSheet.create({
     safeArea: {
-        flex: 1,
         backgroundColor: Colors.light.background,
-    },
-    mainContainer: {
-        flex: 1,
-        backgroundColor: Colors.light.background,
-    },
-    contentContainer: {
-        flex: 1,
-        justifyContent: 'space-between',
-    },
-    headerText: {
-        fontWeight: '500',
-        fontSize: 30,
-        marginHorizontal: 15,
-        marginBottom: 8,
     },
     backButton: {
         margin: 8,
         marginBottom: 30,
     },
     bookingDetailsContainer: {
-        flex:1,
         backgroundColor: Colors.light.background,
-        margin: 15,
         borderColor: Colors.light.SegmentedControlBackground,
         borderWidth: 2,
         borderRadius: 10,
