@@ -13,9 +13,9 @@ export default function Nav() {
             <View style={styles.contentContainer} className="flex-1 justify-between	flex-1 border-b" >
                 <LinearGradient
                     colors={['#FFFFFF', '#FBFBFB']}
-                    style={styles.content}
+                    className="flex-1"
                 >
-                    <Text style={styles.headerText} className="font-medium text-3xl  mx-3.5">What service are you looking for?</Text>
+                    <Text className="font-medium text-3xl mx-3.5 mb-2">What service are you looking for?</Text>
                     <ServicesCards />
                 </LinearGradient>
             </View>
@@ -31,10 +31,4 @@ const styles = StyleSheet.create({
     contentContainer: {
         borderBottomColor: '#ededed',
     },
-    content: {
-        flex: 1,
-    },
-    headerText: {
-        marginBottom: 8,
-    }
 });
