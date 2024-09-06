@@ -1,5 +1,5 @@
 import TicDriveButton from "@/components/TicDriveButton";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, useColorScheme, View } from "react-native";
 import { SafeAreaView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import ServicesCards from "@/components/ServicesCards";
@@ -7,12 +7,18 @@ import TicDriveNavbar from "@/components/navigation/TicDriveNavbar";
 import { Colors } from "@/constants/Colors";
 
 export default function Nav() {
+    const colorScheme = useColorScheme()
+
+    const backgroundStyle = {
+        backgroundColor: colorScheme === 'light' ? Colors.light.background : Colors.dark.background
+    }
+
     return (
-        <SafeAreaView className="flex-1">
+        <SafeAreaView className="flex-1" style={backgroundStyle}>
             <TicDriveNavbar />
-            <View style={styles.contentContainer} className="flex-1 justify-between	flex-1 border-b" >
+            <View style={colorScheme === 'light' ? {borderBottomColor: '#ededed'} : {}} className="flex-1 justify-between	flex-1 border-b" >
                 <LinearGradient
-                    colors={['#FFFFFF', '#FBFBFB']}
+                    colors={colorScheme === 'light' ? ['#FFFFFF', '#FBFBFB'] : ['#FBFBFB', 'black']}
                     className="flex-1"
                 >
                     <Text className="font-medium text-3xl mx-3.5 mb-2">What service are you looking for?</Text>
@@ -25,10 +31,4 @@ export default function Nav() {
 }
 
 const styles = StyleSheet.create({
-    safeArea: {
-        backgroundColor: Colors.light.background,
-    },
-    contentContainer: {
-        borderBottomColor: '#ededed',
-    },
 });

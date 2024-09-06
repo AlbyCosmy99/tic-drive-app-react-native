@@ -55,7 +55,7 @@ export default function WorkshopDetails() {
                 <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
                     <Ionicons name="arrow-back" size={30} color="#000" />
                 </TouchableOpacity>
-                <Text style={styles.workshopText}>Workshop</Text>
+                <Text className="font-bold" style={styles.workshopText}>Workshop</Text>
                 <View>
                     {
                         workshop.favourite ? (
@@ -120,8 +120,8 @@ export default function WorkshopDetails() {
                     </View>
                 </View>
             </ScrollView>
-            <View style={styles.bottom} className="flex-row justify-between items-center mx-2.5 border-t mb-2">
-                <View style={styles.priceContainer} className="flex-1 flex-col mt-1.5">
+            <View style={styles.bottom} className="flex-row justify-between items-center mx-2.5 border-t">
+                <View style={styles.priceContainer} className="flex-1 flex-col mt-2">
                     <Text style={styles.startingFrom}>Starting from</Text>
                     <View style={styles.priceDiscountContainer}>
                         <View>
@@ -210,11 +210,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginRight: 10
+        marginRight: 10,
     },
     workshopText: {
         fontSize: 18,
-        fontWeight: '700'
     },
     startingFrom: {
         color: Colors.light.placeholderText,
