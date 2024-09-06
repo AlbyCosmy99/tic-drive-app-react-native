@@ -43,14 +43,14 @@ export default function WorkshopDetails() {
 
     if (!workshop) {
         return (
-            <View style={styles.errorContainer}>
-                <Text style={styles.errorText}>Workshop not found.</Text>
+            <View className="flex-1 justify-center items-center">
+                <Text className="text-red-600 text-xl">Workshop not found.</Text>
             </View>
         );
     }
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={styles.container} className="flex-1 p-2.5">
             <View style={styles.top}>
                 <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
                     <Ionicons name="arrow-back" size={30} color="#000" />
@@ -65,24 +65,24 @@ export default function WorkshopDetails() {
                 </View>
             </View>
             <ScrollView>
-                <View style={styles.container}>
+                <View style={styles.container} className="flex-1 p-2.5">
                     <View style={styles.cardContainer}>
                         <Image
                             source={{uri: workshop.imageUrl}}
                             containerStyle={styles.image}
                             PlaceholderContent={<ActivityIndicator size="large" color={Colors.light.bookingsOptionsText} />}
                         />
-                        <View style={styles.titleContainer}>
+                        <View style={styles.titleContainer} className="flex-1">
                             <Text style={styles.title}>{workshop.title}</Text>
                             {workshop.verified && <Verified width={24} name="verified" />}
                         </View>
                         <View style={styles.extraServicesContainer}>
-                            <View style={styles.expressServiceContainer}>
+                            <View style={styles.expressServiceContainer} className="flex-1">
                                 <Acute width={24} name="acute"/>
                                 <Text style={styles.extraService}>Express service</Text>
                             </View>
                             {workshop.freeCancellation && (
-                                <View style={styles.expressServiceContainer}>
+                                <View style={styles.expressServiceContainer} className="flex-1">
                                     <FreeCancellation width={24} name="acute"/>
                                     <Text style={styles.extraService}>Free cancellation</Text>
                                 </View>
@@ -105,14 +105,14 @@ export default function WorkshopDetails() {
                     </View>
                     <View style={styles.locationContainer}>
                         <Text style={styles.locationLabel}>Location</Text>
-                        <View style={styles.servicePositionContainer}>
+                        <View style={styles.servicePositionContainer} className="flex-1">
                             <LocationPin width={24} name="location-pin" fill={Colors.light.ticText}/>
                             <Text style={styles.serviceInfo}>{workshop.position}</Text>
                         </View>
                     </View>
                     <View style={styles.locationContainer}>
                         <Text style={styles.locationLabel}>What people say</Text>
-                        <View style={styles.servicePositionContainer}>
+                        <View style={styles.servicePositionContainer} className="flex-1">
                             <Star width={24} name="location-pin" fill={Colors.light.ticText}/>
                             <Text style={styles.serviceInfo}>{calculateWorkshopStars(workshop.reviews)} ({workshop.reviews.length} reviews)</Text>
                         </View>
@@ -120,8 +120,8 @@ export default function WorkshopDetails() {
                     </View>
                 </View>
             </ScrollView>
-            <View style={styles.bottom}>
-                <View style={styles.priceContainer}>
+            <View style={styles.bottom} className="flex-row justify-between items-center mx-2.5 border-t">
+                <View style={styles.priceContainer} className="flex-1">
                     <Text style={styles.startingFrom}>Starting from</Text>
                     <View style={styles.priceDiscountContainer}>
                         <View>
@@ -141,16 +141,9 @@ export default function WorkshopDetails() {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 10,
         backgroundColor: Colors.light.background,
-        flex: 1
     },
     bottom: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginHorizontal: 10,
-        alignItems: 'center',
-        borderTopWidth: 1,
         borderTopColor: Colors.light.SegmentedControlBackground
     },
     image: {
@@ -159,15 +152,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginBottom: 16,
     },
-    errorContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    errorText: {
-        fontSize: 20,
-        color: 'red',
-    },
     cardContainer: {
         position: 'relative',
         width: '100%',
@@ -175,14 +159,12 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
     },
     servicePositionContainer: {
-        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         gap: 3,
         marginTop: 10
     },
     titleContainer: {
-        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         gap: 3,
@@ -196,7 +178,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
     },
     expressServiceContainer: {
-        flex: 1,
         flexDirection: 'row',
         alignItems:'center',
         gap: 3,
@@ -210,7 +191,6 @@ const styles = StyleSheet.create({
         fontSize: 18
     },
     priceContainer: {
-        flex: 1,
         flexDirection: 'column',
         gap: 5,
         marginTop: 5
