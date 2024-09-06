@@ -127,11 +127,11 @@ export default function WorkshopDetails() {
                         <View>
                             <Text className={[
                                     workshop.discount !== 0 ? 'text-red-500' : '',
-                                    'font-bold text-2xl mx-1.5'
+                                    'font-bold text-2xl mx-1'
                                 ].join(' ')}>{workshop.price}</Text>
                             {workshop.discount !==0 && <View style={styles.strikethroughLine} />}
                         </View>
-                        {workshop.discount !== 0 && <Text className="font-bold text-2xl mx-1.5">${calculateDiscountPrice(workshop.price, workshop.discount)}</Text>}
+                        {workshop.discount !== 0 && <Text className="font-bold text-2xl mx-1">${calculateDiscountPrice(workshop.price, workshop.discount)}</Text>}
                     </View>
                 </View>
                 <View>
