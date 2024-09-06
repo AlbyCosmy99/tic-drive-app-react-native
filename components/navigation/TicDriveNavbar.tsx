@@ -7,15 +7,19 @@ import { Colors } from '@/constants/Colors';
 const TicDriveNavbar = () => {
   const colorScheme = useColorScheme()
 
+  const backgroundStyle = {
+    backgroundColor: colorScheme === 'light' ? Colors.light.background : Colors.dark.background,
+  }
+
   return (
     <SafeAreaView>
-        <View style={[styles.navbar]}>
+        <View style={[styles.navbar, backgroundStyle]}>
             <View style={styles.logo}>
                 <Text style={[styles.title, styles.ticText]}>Tic</Text>
                 <Text style={[styles.title, styles.driveText]}>Drive</Text>
             </View>
             <TouchableOpacity onPress={() => alert(colorScheme)} style={styles.navButton}>
-                <Icon name="menu" size={30} color={colorScheme === 'light' ? '#737373' : Colors.light.ticText} />
+                <Icon name="menu" size={30} color={colorScheme === 'light' ? '#737373' : Colors.dark.text} />
             </TouchableOpacity>
         </View>
     </SafeAreaView>  
@@ -24,7 +28,6 @@ const TicDriveNavbar = () => {
 
 const styles = StyleSheet.create({
   navbar: {
-    backgroundColor: Colors.light.background,
     height: 60,
     flexDirection: 'row',
     alignItems: 'center',

@@ -16,12 +16,12 @@ export default function Nav() {
     return (
         <SafeAreaView className="flex-1" style={backgroundStyle}>
             <TicDriveNavbar />
-            <View style={colorScheme === 'light' ? {borderBottomColor: '#ededed'} : {}} className="flex-1 justify-between	flex-1 border-b" >
+            <View style={colorScheme === 'light' ? {borderBottomColor: '#ededed'} : {}} className="flex-1 justify-between flex-1 border-b" >
                 <LinearGradient
-                    colors={colorScheme === 'light' ? ['#FFFFFF', '#FBFBFB'] : ['#FBFBFB', 'black']}
+                    colors={colorScheme === 'light' ? ['#FFFFFF', '#FBFBFB'] : [Colors.dark.background, Colors.dark.background]}
                     className="flex-1"
                 >
-                    <Text className="font-medium text-3xl mx-3.5 mb-2">What service are you looking for?</Text>
+                    <Text style={colorScheme === 'light' ? {color:  Colors.light.text} : {color: Colors.dark.text}} className="font-medium text-3xl mx-3.5 mb-2">What service are you looking for?</Text>
                     <ServicesCards />
                 </LinearGradient>
             </View>
@@ -29,6 +29,3 @@ export default function Nav() {
         </SafeAreaView>
     );
 }
-
-const styles = StyleSheet.create({
-});
