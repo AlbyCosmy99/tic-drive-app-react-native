@@ -20,7 +20,11 @@ export const Colors = {
     },
     bookingsOptionsText: '#7c7c7c',
     ticText: '#737373',
-    placeholderText: '#808080'
+    placeholderText: '#808080',
+    backgroundLinearGradient: {
+      start: '#FFFFFF',
+      end: '#FBFBFB'
+    }
   },
   dark: {
     text: '#ECEDEE',
@@ -29,5 +33,9 @@ export const Colors = {
     icon: '#9BA1A6',
     tabIconDefault: '#9BA1A6',
     tabIconSelected: tintColorDark,
+    backgroundLinearGradient: {
+      start: '#151718',
+      end: '#151718'
+    }
   },
 };

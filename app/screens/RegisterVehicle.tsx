@@ -1,6 +1,6 @@
 import TicDriveButton from "@/components/TicDriveButton";
 import { Colors } from "@/constants/Colors";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, useColorScheme, View } from "react-native";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { Ionicons } from '@expo/vector-icons';
 import {router} from 'expo-router'
@@ -35,6 +35,12 @@ function RegisterVehicle() {
     const {carNotFound, setCarNotFound} = useContext(GlobalContext)
     const [isCarSearched, setIsCarSearched] = useState(false)
 
+    const colorScheme = useColorScheme()
+
+    const backgroundStyle = {
+        backgroundColor: colorScheme === 'light' ? Colors.light.backgroundLinearGradient.end : Colors.dark.background
+    }
+
     useEffect(() => {
         if(carSelected.id === 0) {
             setCarNotFound(true)
@@ -45,12 +51,14 @@ function RegisterVehicle() {
     },[carSelected])
 
     return (
-        <SafeAreaView style={styles.safeArea} className="flex-1">
+        <SafeAreaView style={backgroundStyle} className="flex-1">
             <TouchableOpacity onPress={() => router.back()} className="m-2 mb-7">
                   <Ionicons name="arrow-back" size={30} color="#000" />
             </TouchableOpacity>
             <View className="flex-1 justify-between">
-                <Text className="font-medium mb-2 text-3xl mx-3.5">Register your vehicle for service bookings</Text>
+                <Text style={colorScheme === 'light' ? 
+                    {color:  Colors.light.text} : 
+                    {color: Colors.dark.text}} className="font-medium mb-2 text-3xl mx-3.5">Register your vehicle for service bookings</Text>
                 <SegmentedControl segmentedControlSelection={segmentedControlSelection} setSegmentedControlSelection={setSegmentedControlSelection} />
                 <View style={styles.bookingDetailsContainer} className="flex-1 m-3.5 border-2 rounded-xl">
                     {
@@ -116,9 +124,6 @@ function RegisterVehicle() {
 }
 
 const styles = StyleSheet.create({
-    safeArea: {
-        backgroundColor: Colors.light.background,
-    },
     bookingDetailsContainer: {
         backgroundColor: Colors.light.background,
         borderColor: Colors.light.SegmentedControlBackground,
