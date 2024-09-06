@@ -53,7 +53,7 @@ function RegisterVehicle() {
     return (
         <SafeAreaView style={backgroundStyle} className="flex-1">
             <TouchableOpacity onPress={() => router.back()} className="m-2 mb-7">
-                  <Ionicons name="arrow-back" size={30} color="#000" />
+                  <Ionicons name="arrow-back" size={30} color={colorScheme === 'light' ? '#000' : '#fff'} />
             </TouchableOpacity>
             <View className="flex-1 justify-between">
                 <Text style={colorScheme === 'light' ? 
