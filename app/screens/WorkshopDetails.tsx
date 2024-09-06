@@ -105,14 +105,14 @@ export default function WorkshopDetails() {
                     </View>
                     <View style={styles.locationContainer}>
                         <Text style={styles.locationLabel}>Location</Text>
-                        <View style={styles.servicePositionContainer} className="flex-1">
+                        <View className="flex-1 flex-row items-center gap-0.5 mt-2.5">
                             <LocationPin width={24} name="location-pin" fill={Colors.light.ticText}/>
                             <Text style={styles.serviceInfo}>{workshop.position}</Text>
                         </View>
                     </View>
                     <View style={styles.locationContainer}>
                         <Text style={styles.locationLabel}>What people say</Text>
-                        <View style={styles.servicePositionContainer} className="flex-1">
+                        <View className="flex-1 flex-row items-center gap-0.5 mt-2.5">
                             <Star width={24} name="location-pin" fill={Colors.light.ticText}/>
                             <Text style={styles.serviceInfo}>{calculateWorkshopStars(workshop.reviews)} ({workshop.reviews.length} reviews)</Text>
                         </View>
@@ -157,12 +157,6 @@ const styles = StyleSheet.create({
         width: '100%',
         borderBottomColor: Colors.light.SegmentedControlBackground,
         borderBottomWidth: 2,
-    },
-    servicePositionContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 3,
-        marginTop: 10
     },
     titleContainer: {
         flexDirection: 'row',
