@@ -66,14 +66,14 @@ export default function WorkshopDetails() {
             </View>
             <ScrollView>
                 <View style={styles.container} className="flex-1 p-2.5">
-                    <View style={styles.cardContainer}>
+                    <View className="w-full relative border-b-2" style={styles.cardContainer}>
                         <Image
                             source={{uri: workshop.imageUrl}}
                             containerStyle={styles.image}
                             PlaceholderContent={<ActivityIndicator size="large" color={Colors.light.bookingsOptionsText} />}
                         />
-                        <View style={styles.titleContainer} className="flex-1">
-                            <Text style={styles.title}>{workshop.title}</Text>
+                        <View className="flex-1 flex-row items-center gap-0.5 mt-2">
+                            <Text className="text-2xl font-bold">{workshop.title}</Text>
                             {workshop.verified && <Verified width={24} name="verified" />}
                         </View>
                         <View style={styles.extraServicesContainer}>
@@ -153,20 +153,7 @@ const styles = StyleSheet.create({
         marginBottom: 16,
     },
     cardContainer: {
-        position: 'relative',
-        width: '100%',
         borderBottomColor: Colors.light.SegmentedControlBackground,
-        borderBottomWidth: 2,
-    },
-    titleContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 3,
-        marginTop: 8
-    },
-    title: {
-        fontSize: 25,
-        fontWeight:'700'
     },
     serviceInfo: {
         fontSize: 18,
