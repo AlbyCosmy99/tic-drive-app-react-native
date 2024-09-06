@@ -10,13 +10,13 @@ export default function Nav() {
     const colorScheme = useColorScheme()
 
     const backgroundStyle = {
-        backgroundColor: colorScheme === 'light' ? Colors.light.background : Colors.dark.background
+        backgroundColor: colorScheme === 'light' ? '#FBFBFB' : Colors.dark.background
     }
 
     return (
         <SafeAreaView className="flex-1" style={backgroundStyle}>
             <TicDriveNavbar />
-            <View style={colorScheme === 'light' ? {borderBottomColor: '#ededed'} : {}} className="flex-1 justify-between flex-1 border-b" >
+            <View style={colorScheme === 'light' ? {borderBottomColor: '#ededed'} : {}} className="flex-1 justify-between flex-1" >
                 <LinearGradient
                     colors={colorScheme === 'light' ? ['#FFFFFF', '#FBFBFB'] : [Colors.dark.background, Colors.dark.background]}
                     className="flex-1"
