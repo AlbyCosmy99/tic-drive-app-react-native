@@ -120,8 +120,8 @@ export default function WorkshopDetails() {
                     </View>
                 </View>
             </ScrollView>
-            <View style={styles.bottom} className="flex-row justify-between items-center mx-2.5 border-t">
-                <View style={styles.priceContainer} className="flex-1">
+            <View style={styles.bottom} className="flex-row justify-between items-center mx-2.5 border-t mb-2">
+                <View style={styles.priceContainer} className="flex-1 flex-col mt-1.5">
                     <Text style={styles.startingFrom}>Starting from</Text>
                     <View style={styles.priceDiscountContainer}>
                         <View>
@@ -159,8 +159,6 @@ const styles = StyleSheet.create({
         borderBottomColor: Colors.light.SegmentedControlBackground,
     },
     priceContainer: {
-        flexDirection: 'column',
-        gap: 5,
         marginTop: 5
     },
     priceDiscountContainer: {
