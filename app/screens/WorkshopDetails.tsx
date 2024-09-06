@@ -76,15 +76,15 @@ export default function WorkshopDetails() {
                             <Text className="text-2xl font-bold">{workshop.title}</Text>
                             {workshop.verified && <Verified width={24} name="verified" />}
                         </View>
-                        <View style={styles.extraServicesContainer}>
-                            <View style={styles.expressServiceContainer} className="flex-1">
+                        <View className="flex-1 flex-row mt-2.5">
+                            <View className="flex-1 flex-row items-center gap-0.5">
                                 <Acute width={24} name="acute"/>
-                                <Text style={styles.extraService}>Express service</Text>
+                                <Text className="text-lg">Express service</Text>
                             </View>
                             {workshop.freeCancellation && (
-                                <View style={styles.expressServiceContainer} className="flex-1">
+                                <View className="flex-1 flex-row items-center gap-0.5">
                                     <FreeCancellation width={24} name="acute"/>
-                                    <Text style={styles.extraService}>Free cancellation</Text>
+                                    <Text className="text-lg">Free cancellation</Text>
                                 </View>
                             )}
                         </View>
@@ -107,14 +107,14 @@ export default function WorkshopDetails() {
                         <Text style={styles.locationLabel}>Location</Text>
                         <View className="flex-1 flex-row items-center gap-0.5 mt-2.5">
                             <LocationPin width={24} name="location-pin" fill={Colors.light.ticText}/>
-                            <Text style={styles.serviceInfo}>{workshop.position}</Text>
+                            <Text className="text-lg">{workshop.position}</Text>
                         </View>
                     </View>
                     <View style={styles.locationContainer}>
                         <Text style={styles.locationLabel}>What people say</Text>
                         <View className="flex-1 flex-row items-center gap-0.5 mt-2.5">
                             <Star width={24} name="location-pin" fill={Colors.light.ticText}/>
-                            <Text style={styles.serviceInfo}>{calculateWorkshopStars(workshop.reviews)} ({workshop.reviews.length} reviews)</Text>
+                            <Text className="text-lg">{calculateWorkshopStars(workshop.reviews)} ({workshop.reviews.length} reviews)</Text>
                         </View>
                         <ClientReviewCards id={Array.isArray(id) ? id[0] : id}/>
                     </View>
@@ -125,10 +125,13 @@ export default function WorkshopDetails() {
                     <Text style={styles.startingFrom}>Starting from</Text>
                     <View style={styles.priceDiscountContainer}>
                         <View>
-                            <Text style={[styles.priceDetail, workshop.discount!==0 && styles.priceWithDiscount]}>{workshop.price}</Text>
+                            <Text className={[
+                                    workshop.discount !== 0 ? 'text-red-500' : '',
+                                    'font-bold text-2xl mx-1.5'
+                                ].join(' ')}>{workshop.price}</Text>
                             {workshop.discount !==0 && <View style={styles.strikethroughLine} />}
                         </View>
-                        {workshop.discount !== 0 && <Text style={styles.priceDetail}>${calculateDiscountPrice(workshop.price, workshop.discount)}</Text>}
+                        {workshop.discount !== 0 && <Text className="font-bold text-2xl mx-1.5">${calculateDiscountPrice(workshop.price, workshop.discount)}</Text>}
                     </View>
                 </View>
                 <View>
@@ -150,26 +153,10 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 200,
         borderRadius: 10,
-        marginBottom: 16,
+        marginBottom: 12,
     },
     cardContainer: {
         borderBottomColor: Colors.light.SegmentedControlBackground,
-    },
-    serviceInfo: {
-        fontSize: 18,
-    },
-    expressServiceContainer: {
-        flexDirection: 'row',
-        alignItems:'center',
-        gap: 3,
-    },
-    extraServicesContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        marginTop: 10
-    },
-    extraService: {
-        fontSize: 18
     },
     priceContainer: {
         flexDirection: 'column',
@@ -180,11 +167,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
-    priceDetail: {
-        fontSize: 26,
-        fontWeight: '700',
-        marginHorizontal: 5
-    },
     strikethroughLine: {
         position: 'absolute',
         top: '50%',
@@ -192,9 +174,6 @@ const styles = StyleSheet.create({
         right: 0,
         height: 2,
         backgroundColor: 'red',
-    },
-    priceWithDiscount: {
-        color: 'red'
     },
     cardOptionContainer: {
         flexDirection: 'row',
