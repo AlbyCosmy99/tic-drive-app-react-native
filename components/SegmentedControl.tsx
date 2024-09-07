@@ -2,23 +2,17 @@ import { Colors } from '@/constants/Colors';
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Animated, StyleSheet } from 'react-native';
 import options from '../constants/VehicleRegistrationOptions'
-import { StructuredFormatting } from 'react-native-google-places-autocomplete';
+import { SegmentedControlSelection } from '@/app/types/interfaces';
 
-interface Option {
-  index: number, 
-  name: string, 
-  placeholder: string, 
-  inputLabel: string
-}
 interface SegmentedControlProps {
-  segmentedControlSelection: Option,
-  setSegmentedControlSelection: (selection: Option) => void
+  segmentedControlSelection: SegmentedControlSelection | null,
+  setSegmentedControlSelection: (selection: SegmentedControlSelection) => void
 }
 
 const SegmentedControl: React.FC<SegmentedControlProps> = ({segmentedControlSelection, setSegmentedControlSelection}) => {
   const animatedValue = useState<Animated.Value>(new Animated.Value(0))[0];
 
-  const handleOptionPress = (option: Option): void => {
+  const handleOptionPress = (option: SegmentedControlSelection): void => {
     setSegmentedControlSelection(option);
     Animated.timing(animatedValue, {
       toValue: option.index,
@@ -46,7 +40,7 @@ const SegmentedControl: React.FC<SegmentedControlProps> = ({segmentedControlSele
             <Text
               style={[
                 styles.optionText,
-                segmentedControlSelection.index === index && styles.selectedText,
+                (!segmentedControlSelection && index === 0 || segmentedControlSelection?.index === index) && styles.selectedText,
               ]}
             >
               {option.name}

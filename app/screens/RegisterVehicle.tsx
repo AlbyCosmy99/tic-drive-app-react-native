@@ -9,16 +9,10 @@ import TicDriveInput from "@/components/TicDriveInput";
 import { useContext, useEffect, useState } from "react";
 import options from '../../constants/VehicleRegistrationOptions';
 import GlobalContext from "../stateManagement/contexts/GlobalContext";
+import { SegmentedControlSelection } from "../types/interfaces";
 
 function RegisterVehicle() {
-    const [segmentedControlSelection, setSegmentedControlSelection] = useState(
-        {
-            index: 0,
-            name: "Licence Plate",
-            placeholder: "E.g. AA123BB",
-            inputLabel: "Plate number"
-        }
-    )
+    const [segmentedControlSelection, setSegmentedControlSelection] = useState<SegmentedControlSelection | null>(null)
     const [carSelected, setCarSelected] = useState(
         {
             id: 0,
@@ -65,8 +59,10 @@ function RegisterVehicle() {
                 <View style={styles.bookingDetailsContainer} className="flex-1 m-3.5 border-2 rounded-xl">
                     {
                         options.map((option,index) => {
-                            return segmentedControlSelection.name === option.name &&
-                                (
+                            return (
+                                    !segmentedControlSelection && index === 0 
+                                    || segmentedControlSelection && segmentedControlSelection.name === option.name) 
+                                    && (
                                     <View key={index}>
                                         <Text className="font-semibold mx-3.5 mt-3.5 mb-0 text-lg" key={index}>{option.inputLabel}</Text>
                                         <TicDriveInput 
@@ -77,8 +73,7 @@ function RegisterVehicle() {
                                             setIsCarSearched={setIsCarSearched}
                                         />
                                         {carNotFound && isCarSearched && <Text className="text-base mx-auto text-red-600">Car not found. Try again.</Text>}
-                                    </View>
-                                    
+                                    </View>                          
                                 )
                         })
                     }
