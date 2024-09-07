@@ -51,11 +51,11 @@ export default function WorkshopDetails() {
 
     return (
         <SafeAreaView style={styles.container} className="flex-1 p-2.5">
-            <View style={styles.top}>
-                <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+            <View className="flex-row items-center justify-between mr-2.5">
+                <TouchableOpacity onPress={() => router.back()} className="m-2 mb-2.5">
                     <Ionicons name="arrow-back" size={30} color="#000" />
                 </TouchableOpacity>
-                <Text className="font-bold" style={styles.workshopText}>Workshop</Text>
+                <Text className="font-bold text-lg">Workshop</Text>
                 <View>
                     {
                         workshop.favourite ? (
@@ -103,15 +103,15 @@ export default function WorkshopDetails() {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <View style={styles.locationContainer}>
-                        <Text style={styles.locationLabel}>Location</Text>
+                    <View className="mt-2.5">
+                        <Text className="text-xl font-bold">Location</Text>
                         <View className="flex-1 flex-row items-center gap-0.5 mt-2.5">
                             <LocationPin width={24} name="location-pin" fill={Colors.light.ticText}/>
                             <Text className="text-lg">{workshop.position}</Text>
                         </View>
                     </View>
-                    <View style={styles.locationContainer}>
-                        <Text style={styles.locationLabel}>What people say</Text>
+                    <View className="mt-2.5">
+                        <Text className="text-xl font-bold">What people say</Text>
                         <View className="flex-1 flex-row items-center gap-0.5 mt-2.5">
                             <Star width={24} name="location-pin" fill={Colors.light.ticText}/>
                             <Text className="text-lg">{calculateWorkshopStars(workshop.reviews)} ({workshop.reviews.length} reviews)</Text>
@@ -122,7 +122,7 @@ export default function WorkshopDetails() {
             </ScrollView>
             <View style={styles.bottom} className="flex-row justify-between items-center mx-2.5 border-t">
                 <View className="flex-1 flex-col mt-2.5">
-                    <Text style={styles.startingFrom}>Starting from</Text>
+                    <Text className="text-lg" style={styles.startingFrom}>Starting from</Text>
                     <View className="flex-row items-center">
                         <View>
                             <Text className={[
@@ -169,29 +169,8 @@ const styles = StyleSheet.create({
     cardOptionContainer: {
         borderColor: Colors.light.green.drive,
     },
-    locationLabel: {
-        fontSize: 20,
-        fontWeight: '700'
-    },
-    locationContainer: {
-        marginTop: 10
-    },
-    backButton: {
-        margin: 8,
-        marginBottom: 10,
-    },
-    top: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginRight: 10,
-    },
-    workshopText: {
-        fontSize: 18,
-    },
     startingFrom: {
         color: Colors.light.placeholderText,
-        fontSize:18
     },
     customButtonStyle: {
         height: 50
