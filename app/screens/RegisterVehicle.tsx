@@ -53,12 +53,14 @@ function RegisterVehicle() {
     return (
         <SafeAreaView style={backgroundStyle} className="flex-1">
             <TouchableOpacity onPress={() => router.back()} className="m-2 mb-7">
-                  <Ionicons name="arrow-back" size={30} color={colorScheme === 'light' ? '#000' : '#fff'} />
+                  <Ionicons name="arrow-back" size={30} color={colorScheme === 'light' ? Colors.white : Colors.black} />
             </TouchableOpacity>
             <View className="flex-1 justify-between">
-                <Text style={colorScheme === 'light' ? 
-                    {color:  Colors.light.text} : 
-                    {color: Colors.dark.text}} className="font-medium mb-2 text-3xl mx-3.5">Register your vehicle for service bookings</Text>
+                <Text 
+                    style={{color: colorScheme === 'light' ? Colors.light.text : Colors.dark.text}} 
+                    className="font-medium mb-2 text-3xl mx-3.5">
+                        Register your vehicle for service bookings
+                </Text>
                 <SegmentedControl segmentedControlSelection={segmentedControlSelection} setSegmentedControlSelection={setSegmentedControlSelection} />
                 <View style={styles.bookingDetailsContainer} className="flex-1 m-3.5 border-2 rounded-xl">
                     {

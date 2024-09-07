@@ -1,6 +1,5 @@
 import { Colors } from '@/constants/Colors';
-import { View, StyleSheet, SafeAreaView, Text, useColorScheme } from 'react-native';
-import { Icon, Input } from '@rneui/themed';
+import { View, StyleSheet, SafeAreaView, useColorScheme } from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import FilterIcon from '../../assets/svg/discover_tune.svg';

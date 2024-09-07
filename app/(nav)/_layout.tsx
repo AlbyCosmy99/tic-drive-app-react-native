@@ -23,9 +23,7 @@ export default function Nav() {
                         [Colors.dark.background, Colors.dark.background]}
                     className="flex-1"
                 >
-                    <Text style={colorScheme === 'light' ? 
-                        {color:  Colors.light.text} : 
-                        {color: Colors.dark.text}} className="font-medium text-3xl mx-3.5 mb-2">What service are you looking for?</Text>
+                    <Text style={{color: colorScheme === 'light' ? Colors.light.text : Colors.dark.text}} className="font-medium text-3xl mx-3.5 mb-2">What service are you looking for?</Text>
                     <ServicesCards />
                 </LinearGradient>
             </View>
