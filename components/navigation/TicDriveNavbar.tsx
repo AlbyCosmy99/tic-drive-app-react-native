@@ -13,12 +13,12 @@ const TicDriveNavbar = () => {
 
   return (
     <SafeAreaView>
-        <View style={[styles.navbar, backgroundStyle]}>
-            <View style={styles.logo}>
-                <Text style={[styles.title, styles.ticText]}>Tic</Text>
-                <Text style={[styles.title, styles.driveText]}>Drive</Text>
+        <View className='flex-row items-center justify-between px-2.5 h-14' style={backgroundStyle}>
+            <View className='flex-row'>
+                <Text className='font-bold text-3xl' style={[styles.title, styles.ticText]}>Tic</Text>
+                <Text className='font-bold text-3xl' style={[styles.title, styles.driveText]}>Drive</Text>
             </View>
-            <TouchableOpacity onPress={() => alert(colorScheme)} style={styles.navButton}>
+            <TouchableOpacity onPress={() => alert(colorScheme)} className='p-2.5'>
                 <Icon name="menu" size={30} color={colorScheme === 'light' ? '#737373' : Colors.dark.text} />
             </TouchableOpacity>
         </View>
@@ -27,27 +27,8 @@ const TicDriveNavbar = () => {
 };
 
 const styles = StyleSheet.create({
-  navbar: {
-    height: 60,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 10,
-  },
   title: {
-    color: '#fff',
-    fontSize: 30,
-    fontWeight: 'bold',
-  },
-  navButton: {
-    padding: 10,
-  },
-  navButtonText: {
-    color: '#fff',
-    fontSize: 16,
-  },
-  logo: {
-    flexDirection: 'row',
+    color: Colors.black,
   },
   ticText: {
     color: Colors.light.ticText
