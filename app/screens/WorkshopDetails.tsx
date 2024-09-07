@@ -88,18 +88,18 @@ export default function WorkshopDetails() {
                                 </View>
                             )}
                         </View>
-                        <View style={styles.cardOptionsContainer}>
-                            <TouchableOpacity className="flex-row items-center gap-0.5 border" style={styles.cardOptionContainer} onPress={() => alert('directions')}>
+                        <View className="flex-1 flex-row gap-2.5 mt-2.5 mb-3.5 flex-wrap">
+                            <TouchableOpacity className="flex-row items-center gap-0.5 border px-2.5 py-1.5 rounded-3xl" style={styles.cardOptionContainer} onPress={() => alert('directions')}>
                                 <AssistantDirection width={24} />
-                                <Text style={styles.cardOption}>Directions</Text>
+                                <Text className="font-medium text-base">Directions</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity className="flex-row items-center gap-0.5 border" style={styles.cardOptionContainer} onPress={()=> alert('check availability')}>
+                            <TouchableOpacity className="flex-row items-center gap-0.5 border px-2.5 py-1.5 rounded-3xl" style={styles.cardOptionContainer} onPress={()=> alert('check availability')}>
                                 <CalendarIcon width={24} />
-                                <Text style={styles.cardOption}>Check availability</Text>
+                                <Text className="font-medium text-base">Check availability</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity className="flex-row items-center gap-0.5 border" style={styles.cardOptionContainer} onPress={()=> alert('message')}>
+                            <TouchableOpacity className="flex-row items-center gap-0.5 border px-2.5 py-1.5 rounded-3xl" style={styles.cardOptionContainer} onPress={()=> alert('message')}>
                                 <ChatIcon width={24} />
-                                <Text style={styles.cardOption}>Message</Text>
+                                <Text className="font-medium text-base">Message</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -168,21 +168,6 @@ const styles = StyleSheet.create({
     },
     cardOptionContainer: {
         borderColor: Colors.light.green.drive,
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        borderRadius: 50
-    },
-    cardOption: {
-        fontWeight: '500',
-        fontSize: 16
-    },
-    cardOptionsContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        gap: 10,
-        marginTop: 10,
-        marginBottom: 15,
-        flexWrap: 'wrap'
     },
     locationLabel: {
         fontSize: 20,
