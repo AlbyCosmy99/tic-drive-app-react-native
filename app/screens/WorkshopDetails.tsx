@@ -89,15 +89,15 @@ export default function WorkshopDetails() {
                             )}
                         </View>
                         <View style={styles.cardOptionsContainer}>
-                            <TouchableOpacity style={styles.cardOptionContainer} onPress={() => alert('directions')}>
+                            <TouchableOpacity className="flex-row items-center gap-0.5 border" style={styles.cardOptionContainer} onPress={() => alert('directions')}>
                                 <AssistantDirection width={24} />
                                 <Text style={styles.cardOption}>Directions</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.cardOptionContainer} onPress={()=> alert('check availability')}>
+                            <TouchableOpacity className="flex-row items-center gap-0.5 border" style={styles.cardOptionContainer} onPress={()=> alert('check availability')}>
                                 <CalendarIcon width={24} />
                                 <Text style={styles.cardOption}>Check availability</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.cardOptionContainer} onPress={()=> alert('message')}>
+                            <TouchableOpacity className="flex-row items-center gap-0.5 border" style={styles.cardOptionContainer} onPress={()=> alert('message')}>
                                 <ChatIcon width={24} />
                                 <Text style={styles.cardOption}>Message</Text>
                             </TouchableOpacity>
@@ -121,9 +121,9 @@ export default function WorkshopDetails() {
                 </View>
             </ScrollView>
             <View style={styles.bottom} className="flex-row justify-between items-center mx-2.5 border-t">
-                <View style={styles.priceContainer} className="flex-1 flex-col mt-2">
+                <View className="flex-1 flex-col mt-2.5">
                     <Text style={styles.startingFrom}>Starting from</Text>
-                    <View style={styles.priceDiscountContainer}>
+                    <View className="flex-row items-center">
                         <View>
                             <Text className={[
                                     workshop.discount !== 0 ? 'text-red-500' : '',
@@ -158,26 +158,15 @@ const styles = StyleSheet.create({
     cardContainer: {
         borderBottomColor: Colors.light.SegmentedControlBackground,
     },
-    priceContainer: {
-        marginTop: 5
-    },
-    priceDiscountContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
     strikethroughLine: {
         position: 'absolute',
-        top: '50%',
         left: 0,
         right: 0,
+        top: '50%',
         height: 2,
         backgroundColor: 'red',
     },
     cardOptionContainer: {
-        flexDirection: 'row',
-        alignItems:'center',
-        gap: 2,
-        borderWidth: 1,
         borderColor: Colors.light.green.drive,
         paddingHorizontal: 10,
         paddingVertical: 5,
