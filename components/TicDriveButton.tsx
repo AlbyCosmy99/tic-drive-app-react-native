@@ -21,7 +21,7 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({
   const router = useRouter();
   const { servicesChoosen, carNotFound, setWorkshopFilter } = useContext(GlobalContext);
 
-  const whenDisabled: Record<string, boolean> = {
+  const whenIsDisabled: Record<string, boolean> = {
     "book a service": servicesChoosen.length === 0,
     "confirm": carNotFound, 
   };
@@ -29,7 +29,7 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({
   return (
     <Button
       title={text}
-      disabled={whenDisabled[text.toLowerCase() ?? false]}
+      disabled={whenIsDisabled[text.toLowerCase() ?? false]}
       buttonStyle={[
         {
           borderRadius: 40,

@@ -1,11 +1,4 @@
-interface VehicleRegistrationOption {
-    index: number;
-    name: string;
-    placeholder: string;
-    inputLabel: string;
-    keyString: string
-
-}
+import { VehicleRegistrationOption } from "@/app/types/interfaces";
 
 const vehicleRegistrationOptions: VehicleRegistrationOption[] = [
     {
