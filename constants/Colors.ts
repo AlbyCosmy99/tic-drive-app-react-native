@@ -38,6 +38,6 @@ export const Colors = {
       end: '#151718'
     }
   },
-  white: '#fff',
-  black: '#000'
+  white: '#000',
+  black: '#fff'
 };
