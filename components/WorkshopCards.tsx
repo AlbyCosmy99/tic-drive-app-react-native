@@ -16,10 +16,9 @@ function WorkshopCards() {
         })
     }
 
+    //check if servicesChoosen are in the services offered by a workshop
     const anyService = (services: string[]) => {
-        console.log(services)
         for(let serviceChoosen of servicesChoosen) {
-            console.log(services.includes(serviceChoosen.toLowerCase()))
             if(services.includes(serviceChoosen.toLowerCase())) return true
         }
         return false
