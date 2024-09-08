@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Colors } from "@/constants/Colors";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { Image } from "react-native-elements";
@@ -190,4 +190,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default WorkshopCard;
+export default memo(WorkshopCard);

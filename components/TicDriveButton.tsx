@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { memo, useContext } from "react";
 import { Button } from '@rneui/themed';
 import { StyleProp, ViewStyle } from 'react-native';
 import { Colors } from "@/constants/Colors";
@@ -55,4 +55,4 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({
   );
 };
 
-export default TicDriveButton;
+export default memo(TicDriveButton);

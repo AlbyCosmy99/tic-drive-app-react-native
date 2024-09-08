@@ -3,12 +3,13 @@ import { StyleSheet, Text, View } from "react-native";
 import Star from '../assets/svg/star.svg'
 import { Image } from "@rneui/themed";
 import Review from '../constants/temp/Review'
+import { memo } from "react";
 
 type ClientReviewCardProps = {
     review: Review;
 };
 
-export default function ClientReviewCard({review}: ClientReviewCardProps) {
+function ClientReviewCard({review}: ClientReviewCardProps) {
     const calculateTimeFromReview = (when: Date) => {
         const days = (Date.now() - when.getTime()) / (1000 * 60 * 60 * 24)
         if(days < 30) return Math.floor(days) + " days ago"
@@ -65,3 +66,5 @@ const styles = StyleSheet.create({
         color: Colors.light.ticText
     }
 })
+
+export default memo(ClientReviewCard)

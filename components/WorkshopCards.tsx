@@ -1,9 +1,8 @@
-import { View } from "react-native";
 import WorkshopCard from "./WorkshopCard";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import workshops, { Workshop } from '../constants/temp/Workshops'
 import GlobalContext from "@/app/stateManagement/contexts/GlobalContext";
-import { useContext, useEffect } from "react";
+import { memo, useContext, useEffect } from "react";
 import { router } from "expo-router";
 
 function WorkshopCards() {
@@ -44,4 +43,4 @@ function WorkshopCards() {
     )
 }
 
-export default WorkshopCards
+export default memo(WorkshopCards)

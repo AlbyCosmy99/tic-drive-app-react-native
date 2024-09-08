@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { memo, useContext, useEffect, useState } from "react";
 import { Colors } from "@/constants/Colors";
 import { Card, Text } from "@rneui/themed";
 import { StyleSheet, View } from "react-native";
@@ -91,4 +91,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default ServicesCard;
+export default memo(ServicesCard);
