@@ -51,7 +51,7 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
 
   const handleSubmitEditing = () => {
     if (value && setCarSelected) {
-      const car = cars.find(car => car[option as CarKeys]?.toLowerCase() === value.toLowerCase());
+      const car = cars.find(car => car[option as CarKeys]?.toLowerCase().trim() === value.toLowerCase().trim());
       setCarSelected(car ? car : defaultCar);
       setIsCarSearched(true)
     }
