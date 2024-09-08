@@ -3,7 +3,6 @@ import { Colors } from "@/constants/Colors";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { Image } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { Entypo } from "@expo/vector-icons";
 import LocationPin from '../assets/svg/location_on.svg'
 import Verified from '../assets/svg/verified.svg'
 import Star from '../assets/svg/star.svg'
