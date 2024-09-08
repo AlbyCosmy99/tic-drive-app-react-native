@@ -29,12 +29,12 @@ const SegmentedControl: React.FC<SegmentedControlProps> = ({segmentedControlSele
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.segmentContainer}>
+    <View className='m-3.5'>
+      <View className='flex-row h-16 justify-between' style={styles.segmentContainer}>
         {options.map((option, index) => (
           <TouchableOpacity
             key={index}
-            style={styles.touchable}
+            className='flex-1 items-center justify-center z-10'
             onPress={() => handleOptionPress(option)}
           >
             <Text
@@ -47,28 +47,16 @@ const SegmentedControl: React.FC<SegmentedControlProps> = ({segmentedControlSele
             </Text>
           </TouchableOpacity>
         ))}
-        <Animated.View style={[styles.slidingIndicator, slidingIndicatorStyle]} />
+        <Animated.View className="absolute inset-y-1 z-0" style={[styles.slidingIndicator, slidingIndicatorStyle]} />
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    margin: 15,
-  },
   segmentContainer: {
-    flexDirection: 'row',
-    height: 60,
     backgroundColor: Colors.light.SegmentedControlBackground,
     borderRadius: 50,
-    justifyContent: 'space-between',
-  },
-  touchable: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 1,
   },
   optionText: {
     fontSize: 16,
@@ -79,13 +67,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   slidingIndicator: {
-    position: 'absolute',
-    top: 4,
-    bottom: 4,
     width: '33.33%',
     backgroundColor: Colors.light.background,
     borderRadius: 30,
-    zIndex: 0,
   },
 });
 
