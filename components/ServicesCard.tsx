@@ -3,7 +3,6 @@ import { Colors } from "@/constants/Colors";
 import { Card, Text } from "@rneui/themed";
 import { StyleSheet, View } from "react-native";
 import { TouchableWithoutFeedback } from 'react-native';
-import servicesContext from "@/app/stateManagement/contexts/servicesContext";
 import CheckCircle from '../assets/svg/check_circle.svg'
 import iconMap from '../constants/servicesIconsMap'
 import GlobalContext from "@/app/stateManagement/contexts/GlobalContext";

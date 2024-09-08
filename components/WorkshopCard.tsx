@@ -13,19 +13,9 @@ import CalendarIcon from '../assets/svg/calendar_add_on.svg'
 import Review from "@/constants/temp/Review";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Workshop } from "@/constants/temp/Services";
+import { calculateDiscountPrice, calculateWorkshopStars } from "@/app/utils";
 
-const calculateDiscountPrice = (price: string, discount: number) => {
-    const priceValue = parseInt(price.slice(1))
-    return priceValue - priceValue*discount/100
-}
 
-const calculateWorkshopStars = (reviews: Review[]) => {
-    let sumReviewStars = 0
-    reviews.forEach(review => {
-        sumReviewStars += review.stars
-    })
-    return sumReviewStars/ reviews.length
-}
 
 function WorkshopCard({ workshop }: { workshop: Workshop }) {
     return (
