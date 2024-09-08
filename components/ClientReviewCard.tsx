@@ -19,27 +19,27 @@ export default function ClientReviewCard({review}: ClientReviewCardProps) {
     }
 
     return (
-        <View style={styles.reviewContainer}>
-            <View style={styles.clientDetailsContainer}>
-                <View style={styles.clientDetails}>
+        <View className="flex-1 mt-5 pt-3.5 border-t-2" style={styles.reviewContainer}>
+            <View className="flex-row items-center justify-between">
+                <View className="flex-row">
                     <View>
                         <Image 
                             source={{uri: review.authorImageUrl}}
                             style={styles.image}
                         />
                     </View>
-                    <View style={styles.nameWhenContainer}>
-                        <Text style={styles.authorName}>{review.authorName}</Text>
-                        <Text style={styles.when}>{calculateTimeFromReview(review.when)}</Text>
+                    <View className="justify-center ml-2.5">
+                        <Text className="text-base font-medium">{review.authorName}</Text>
+                        <Text className="text-base">{calculateTimeFromReview(review.when)}</Text>
 
                     </View>
                 </View>
-                <View style={styles.servicePositionContainer}>
+                <View className="flex-row items-center mt-2.5 mr-3.5 gap-0.5">
                     <Star width={24} name="location-pin" fill={Colors.light.ticText}/>
-                    <Text style={styles.serviceInfo}>{review.stars}</Text>
+                    <Text className="text-lg">{review.stars}</Text>
                 </View>
             </View>
-            <View style={styles.reviewTextContainer}>
+            <View className="mt-2.5">
                 <Text style={styles.reviewText}>{review.text}</Text>
             </View>
         </View>
@@ -48,49 +48,17 @@ export default function ClientReviewCard({review}: ClientReviewCardProps) {
 
 const styles = StyleSheet.create({
     reviewContainer: {
-        flex: 1,
-        marginTop: 20,
-        borderTopWidth: 2,
         borderTopColor: '#ebebeb',
-        paddingTop: 15,
-    },
-    servicePositionContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 3,
-        marginTop: 10,
-        marginRight: 15
-    },
-    serviceInfo: {
-        fontSize: 18,
-    },
-    clientDetailsContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    clientDetails: {
-        flexDirection: 'row'
     },
     image: {
         width: 45,
         height: 45,
         borderRadius: 50
     },
-    authorName: {
-        fontWeight: '500',
-        fontSize: 16
-    },
     when: {
-        fontSize: 15,
         color: Colors.light.placeholderText
     },
-    nameWhenContainer: {
-        justifyContent: 'center',
-        marginLeft: 10
-    },
     reviewTextContainer: {
-        marginTop: 10,
         color: Colors.light.placeholderText
     },
     reviewText: {
