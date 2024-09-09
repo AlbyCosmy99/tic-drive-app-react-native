@@ -6,15 +6,14 @@ import { SafeAreaView, Text } from "react-native";
 import { saveLoginStatus } from "../utils";
 
 export default function Login() {
-
     const handleLoginPressed = () => {
         saveLoginStatus(true);
-        router.push('/');
+        router.replace('/');
     }
 
     return (
         <SafeAreaView className="flex-1">
-            <ToPreviousPage />
+            <ToPreviousPage path={'/'}/>
             <Button onPress={handleLoginPressed}>
                 <Text className="text-emerald-500 text-3xl">Login</Text>
             </Button>

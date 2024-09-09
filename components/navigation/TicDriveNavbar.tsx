@@ -34,7 +34,7 @@ const TicDriveNavbar = () =>  {
                   <Text className='text-xl' style={styles.login}>Logout</Text>
                 </View>
               </TouchableOpacity>) : (
-                <TouchableOpacity onPress={() => router.push('../screens/Login')} className='p-2.5'>
+                <TouchableOpacity onPress={() => router.replace('../screens/Login')} className='p-2.5'>
                   <View className='flex-row gap-1 items-center justify-center'>
                     <Entypo name="login" size={24} color={Colors.light.text} />
                     <Text className='text-xl' style={styles.login}>Login</Text>
