@@ -9,11 +9,7 @@ import WorkshopCards from '@/components/WorkshopCards';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function HomeTab() {
-  const colorScheme = useColorScheme()
-
-  // const backgroundStyle = {
-  //     backgroundColor: colorScheme === 'light' ? Colors.light.backgroundLinearGradient.end : Colors.dark.background
-  // }
+  
   return (
     <LinearGradient
       colors={[Colors.light.backgroundLinearGradient.start, Colors.light.backgroundLinearGradient.end]}

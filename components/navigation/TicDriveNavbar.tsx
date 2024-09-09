@@ -26,26 +26,29 @@ const TicDriveNavbar = ({isLoginAvailable = true}: TicDriveNavbarProps) =>  {
 
   return (
     <SafeAreaView>
-        <View className='flex-row items-center justify-between px-2.5 h-14' style={backgroundStyle}>
-            <View className='flex-row'>
-                <Text className='font-bold text-3xl' style={[styles.title, styles.ticText]}>Tic</Text>
-                <Text className='font-bold text-3xl' style={[styles.title, styles.driveText]}>Drive</Text>
-            </View>
-            {isLoginAvailable && (isUserLogged ? (
-              <TouchableOpacity onPress={handleLogout} className='p-2.5'>
+        <View 
+          className={`flex-row items-center ${!isLoginAvailable ? 'justify-center' : 'justify-between'} px-2.5 h-14`} 
+          style={backgroundStyle}
+        >
+          <View className='flex-row'>
+              <Text className='font-bold text-3xl' style={[styles.title, styles.ticText]}>Tic</Text>
+              <Text className='font-bold text-3xl' style={[styles.title, styles.driveText]}>Drive</Text>
+          </View>
+          {isLoginAvailable && (isUserLogged ? (
+            <TouchableOpacity onPress={handleLogout} className='p-2.5'>
+              <View className='flex-row gap-1 items-center justify-center'>
+                <Entypo name="login" size={24} color={Colors.light.text} />
+                <Text className='text-xl' style={styles.login}>Logout</Text>
+              </View>
+            </TouchableOpacity>) : (
+              <TouchableOpacity onPress={() => router.replace('../screens/Login')} className='p-2.5'>
                 <View className='flex-row gap-1 items-center justify-center'>
                   <Entypo name="login" size={24} color={Colors.light.text} />
-                  <Text className='text-xl' style={styles.login}>Logout</Text>
+                  <Text className='text-xl' style={styles.login}>Login</Text>
                 </View>
-              </TouchableOpacity>) : (
-                <TouchableOpacity onPress={() => router.replace('../screens/Login')} className='p-2.5'>
-                  <View className='flex-row gap-1 items-center justify-center'>
-                    <Entypo name="login" size={24} color={Colors.light.text} />
-                    <Text className='text-xl' style={styles.login}>Login</Text>
-                  </View>
-                </TouchableOpacity>
-              ))
-            }
+              </TouchableOpacity>
+            ))
+          }
         </View>
     </SafeAreaView>  
   );
