@@ -19,7 +19,12 @@ export default function Tab() {
       <View className='flex-row items-center'>
           <TicDriveInput isLeftIcon={true} isRightIcon={true} placeholder='Search workshop'/>
           <View className='justify-center items-center ml-2 mb-1 border-2 rounded-xl mx-3.5 w-14 h-14' style={styles.filterButtonContainer}>
-            <TouchableOpacity className='justify-center items-center h-full w-full' onPress={() => alert('filter services')}>
+            <TouchableOpacity 
+              className='justify-center items-center h-full w-full' 
+              onPress={() => alert('filter services')}
+              accessible={true}
+              accessibilityLabel="Filter workshops"
+            >
               <FilterIcon width={22} height={22} />
             </TouchableOpacity>
           </View>

@@ -36,6 +36,8 @@ const SegmentedControl: React.FC<SegmentedControlProps> = ({segmentedControlSele
             key={index}
             className='flex-1 items-center justify-center z-10'
             onPress={() => handleOptionPress(option)}
+            accessible={true}
+            accessibilityLabel={"register car by " + option.name}
           >
             <Text
               style={[

@@ -52,7 +52,12 @@ export default function WorkshopDetails() {
     return (
         <SafeAreaView style={styles.container} className="flex-1 p-2.5">
             <View className="flex-row items-center justify-between mr-2.5">
-                <TouchableOpacity onPress={() => router.back()} className="m-2 mb-2.5">
+                <TouchableOpacity 
+                    onPress={() => router.back()} 
+                    className="m-2 mb-2.5"
+                    accessible={true}
+                    accessibilityLabel="Back to previous page"
+                >
                     <Ionicons name="arrow-back" size={30} color="#000" />
                 </TouchableOpacity>
                 <Text className="font-bold text-lg">Workshop</Text>
@@ -89,15 +94,31 @@ export default function WorkshopDetails() {
                             )}
                         </View>
                         <View className="flex-1 flex-row gap-2.5 mt-2.5 mb-3.5 flex-wrap">
-                            <TouchableOpacity className="flex-row items-center gap-0.5 border px-2.5 py-1.5 rounded-3xl" style={styles.cardOptionContainer} onPress={() => alert('directions')}>
+                            <TouchableOpacity 
+                                className="flex-row items-center gap-0.5 border px-2.5 py-1.5 rounded-3xl" 
+                                style={styles.cardOptionContainer} onPress={() => alert('directions')}
+                                accessible={true}
+                                accessibilityLabel="Map directions"
+                            >
                                 <AssistantDirection width={24} />
                                 <Text className="font-medium text-base">Directions</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity className="flex-row items-center gap-0.5 border px-2.5 py-1.5 rounded-3xl" style={styles.cardOptionContainer} onPress={()=> alert('check availability')}>
+                            <TouchableOpacity 
+                                className="flex-row items-center gap-0.5 border px-2.5 py-1.5 rounded-3xl" 
+                                style={styles.cardOptionContainer} onPress={()=> alert('check availability')}
+                                accessible={true}
+                                accessibilityLabel="Check availability"
+                            >
                                 <CalendarIcon width={24} />
                                 <Text className="font-medium text-base">Check availability</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity className="flex-row items-center gap-0.5 border px-2.5 py-1.5 rounded-3xl" style={styles.cardOptionContainer} onPress={()=> alert('message')}>
+                            <TouchableOpacity 
+                                className="flex-row items-center gap-0.5 border px-2.5 py-1.5 rounded-3xl" 
+                                style={styles.cardOptionContainer} 
+                                onPress={()=> alert('message')}
+                                accessible={true}
+                                accessibilityLabel="Message"
+                            >
                                 <ChatIcon width={24} />
                                 <Text className="font-medium text-base">Message</Text>
                             </TouchableOpacity>

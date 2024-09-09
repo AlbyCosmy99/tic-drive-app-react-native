@@ -2,14 +2,13 @@ import TicDriveButton from "@/components/TicDriveButton";
 import { Colors } from "@/constants/Colors";
 import { SafeAreaView, StyleSheet, Text, useColorScheme, View } from "react-native";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import { Ionicons } from '@expo/vector-icons';
-import {router} from 'expo-router'
 import SegmentedControl from "@/components/SegmentedControl";
 import TicDriveInput from "@/components/TicDriveInput";
 import { useContext, useEffect, useState } from "react";
 import options from '../../constants/VehicleRegistrationOptions';
 import GlobalContext from "../stateManagement/contexts/GlobalContext";
 import { SegmentedControlSelection } from "../types/interfaces";
+import ToPreviousPage from "@/components/navigation/ToPreviousPage";
 
 function RegisterVehicle() {
     const [segmentedControlSelection, setSegmentedControlSelection] = useState<SegmentedControlSelection | null>(null)
@@ -46,9 +45,7 @@ function RegisterVehicle() {
 
     return (
         <SafeAreaView style={backgroundStyle} className="flex-1">
-            <TouchableOpacity onPress={() => router.back()} className="m-2 mb-7">
-                  <Ionicons name="arrow-back" size={30} color={colorScheme === 'light' ? Colors.white : Colors.black} />
-            </TouchableOpacity>
+            <ToPreviousPage />
             <View className="flex-1 justify-between">
                 <Text 
                     style={{color: colorScheme === 'light' ? Colors.light.text : Colors.dark.text}} 

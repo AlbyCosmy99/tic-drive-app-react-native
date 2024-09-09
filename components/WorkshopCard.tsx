@@ -63,11 +63,17 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
                     {workshop.discount !== 0 && <Text style={styles.priceDetail}>${calculateDiscountPrice(workshop.price, workshop.discount)}</Text>}
                 </View>
                 <View style={styles.cardOptionsContainer}>
-                    <TouchableOpacity style={styles.cardOptionContainer} onPress={() => alert('directions')}>
+                    <TouchableOpacity 
+                        style={styles.cardOptionContainer} 
+                        onPress={() => alert('directions')}
+                    >
                         <AssistantDirection width={24} />
                         <Text style={styles.cardOption}>Directions</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.cardOptionContainer} onPress={()=> alert('check availability')}>
+                    <TouchableOpacity 
+                        style={styles.cardOptionContainer} 
+                        onPress={()=> alert('check availability')}
+                    >
                         <CalendarIcon width={24} />
                         <Text style={styles.cardOption}>Check availability</Text>
                     </TouchableOpacity>

@@ -37,6 +37,8 @@ function ServicesCard({ id, title, description }: ServicesCardProps) {
     return (
         <TouchableWithoutFeedback
             onPressIn={handlePressIn}
+            accessible={true}
+            accessibilityLabel={title}
         >
             <Card containerStyle={[styles.card, isPressed && styles.pressedCard]}>
                 <View style={styles.cardIcons}>

@@ -6,7 +6,9 @@ interface GlobalServiceType {
   servicesChoosen: string[];
   setServicesChoosen: (servicesChoosen: string[]) => void;
   carNotFound: boolean,
-  setCarNotFound: (carNotFound: boolean) => void
+  setCarNotFound: (carNotFound: boolean) => void,
+  isUserLogged: boolean,
+  setIsUserLogged: (isUserlogged: boolean) => void
 }
 
 const defaultContextValue: GlobalServiceType = {
@@ -15,7 +17,9 @@ const defaultContextValue: GlobalServiceType = {
   servicesChoosen: [],
   setServicesChoosen: () => {},
   carNotFound: true,
-  setCarNotFound: () => {}
+  setCarNotFound: () => {},
+  isUserLogged: false,
+  setIsUserLogged: () => {}
 };
 
 const GlobalContext = createContext<GlobalServiceType>(defaultContextValue);

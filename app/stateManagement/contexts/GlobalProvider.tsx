@@ -5,6 +5,7 @@ const GlobalProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const [workshopFilter, setWorkshopFilter] = useState<string>("");
     const [servicesChoosen, setServicesChoosen] = useState<string[]>([]);
     const [carNotFound, setCarNotFound] = useState<boolean>(true);
+    const [isUserLogged, setIsUserLogged] = useState(false)
   
     return (
       <GlobalContext.Provider
@@ -14,7 +15,9 @@ const GlobalProvider: FC<{ children: ReactNode }> = ({ children }) => {
           servicesChoosen,
           setServicesChoosen,
           carNotFound,
-          setCarNotFound
+          setCarNotFound,
+          isUserLogged,
+          setIsUserLogged
         }}
       >
         {children}

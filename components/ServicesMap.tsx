@@ -81,6 +81,8 @@ const customPOIs = [
         <TouchableOpacity
           style={styles.input}
           onPress={() => setIsMapVisible(true)}
+          accessible={true}
+          accessibilityLabel={locationName || 'location name'}
         >
           <Text style={styles.placeholderText}>
             {locationName || 'Select workshop on map'}
