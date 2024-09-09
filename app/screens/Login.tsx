@@ -1,7 +1,7 @@
 
 import ToPreviousPage from "@/components/navigation/ToPreviousPage";
 import { Button } from "@rneui/themed";
-import { Link, router } from "expo-router";
+import { router } from "expo-router";
 import { SafeAreaView, Text } from "react-native";
 import { saveLoginStatus } from "../utils";
 

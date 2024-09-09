@@ -5,7 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import ServicesCards from "@/components/ServicesCards";
 import TicDriveNavbar from "@/components/navigation/TicDriveNavbar";
 import { Colors } from "@/constants/Colors";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { getLoginStatus } from "../utils";
 import GlobalContext from "../stateManagement/contexts/GlobalContext";
 
