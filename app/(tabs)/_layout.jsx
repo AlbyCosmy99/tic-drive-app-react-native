@@ -1,12 +1,22 @@
-import { Tabs } from 'expo-router';
+import { router, Tabs } from 'expo-router';
 import {Colors} from '../../constants/Colors'
 import HomeIcon from '../../assets/svg/homeIcon.svg'
 import BookingsIcon from '../../assets/svg/bookingsIcon.svg'
 import FavouriteIcon from '../../assets/svg/favouriteIcon.svg'
 import ChatIcon from '../../assets/svg/chatIcon.svg'
 import AccountIcon from '../../assets/svg/accountIcon.svg'
+import HomeTab from './Home'
+import {View} from 'react-native'
+import { useContext } from 'react';
+import GlobalContext from '../stateManagement/contexts/GlobalContext'
 
 export default function TabLayout() {
+  const {isUserLogged} = useContext(GlobalContext)
+  if(!isUserLogged) {
+    return (
+      <HomeTab />
+    )
+  }
   return (
     <Tabs screenOptions={{ tabBarActiveTintColor: Colors.light.green.drive }}>
       <Tabs.Screen

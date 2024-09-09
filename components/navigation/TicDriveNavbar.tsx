@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { FC, useContext } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, useColorScheme } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import { Colors } from '@/constants/Colors';
@@ -7,7 +7,11 @@ import { router } from 'expo-router';
 import { saveLoginStatus } from '@/app/utils';
 import GlobalContext from '@/app/stateManagement/contexts/GlobalContext';
 
-const TicDriveNavbar = () =>  {
+interface TicDriveNavbarProps {
+  isLoginAvailable?: boolean;
+}
+
+const TicDriveNavbar = ({isLoginAvailable = true}: TicDriveNavbarProps) =>  {
   const colorScheme = useColorScheme()
   const {isUserLogged, setIsUserLogged} = useContext(GlobalContext)
 
@@ -27,7 +31,7 @@ const TicDriveNavbar = () =>  {
                 <Text className='font-bold text-3xl' style={[styles.title, styles.ticText]}>Tic</Text>
                 <Text className='font-bold text-3xl' style={[styles.title, styles.driveText]}>Drive</Text>
             </View>
-            {isUserLogged ? (
+            {isLoginAvailable && (isUserLogged ? (
               <TouchableOpacity onPress={handleLogout} className='p-2.5'>
                 <View className='flex-row gap-1 items-center justify-center'>
                   <Entypo name="login" size={24} color={Colors.light.text} />
@@ -40,7 +44,7 @@ const TicDriveNavbar = () =>  {
                     <Text className='text-xl' style={styles.login}>Login</Text>
                   </View>
                 </TouchableOpacity>
-              )
+              ))
             }
         </View>
     </SafeAreaView>  

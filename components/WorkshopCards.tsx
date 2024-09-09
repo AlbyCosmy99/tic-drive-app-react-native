@@ -6,7 +6,7 @@ import { memo, useContext, useEffect } from "react";
 import { router } from "expo-router";
 
 function WorkshopCards() {
-    const {workshopFilter, servicesChoosen} = useContext(GlobalContext)
+    const {workshopFilter, servicesChoosen, isUserLogged} = useContext(GlobalContext)
 
     const handleCardPress = (workshop: Workshop) => {
         router.push({
@@ -15,7 +15,7 @@ function WorkshopCards() {
         })
     }
 
-    //check if servicesChoosen are in the services offered by a workshop
+    //checking if servicesChoosen are in the services offered by a workshop
     const anyService = (services: string[]) => {
         for(let serviceChoosen of servicesChoosen) {
             if(services.includes(serviceChoosen.toLowerCase())) return true
@@ -24,7 +24,7 @@ function WorkshopCards() {
     } 
 
     return (
-        <ScrollView>
+        <ScrollView className={!isUserLogged ? "mb-2" : ''}>
             {workshops
                 .filter(workshop => 
                     (workshopFilter.length === 0 
