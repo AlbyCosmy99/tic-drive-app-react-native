@@ -1,3 +1,4 @@
+import { Href } from "expo-router";
 import { createContext} from "react";
 
 interface GlobalServiceType {
@@ -8,7 +9,9 @@ interface GlobalServiceType {
   carNotFound: boolean,
   setCarNotFound: (carNotFound: boolean) => void,
   isUserLogged: boolean,
-  setIsUserLogged: (isUserlogged: boolean) => void
+  setIsUserLogged: (isUserlogged: boolean) => void,
+  loginBtnCustomPath?: Href,
+  setLoginBtnCustomPath: (loginBtnCustomPath?: Href) => void
 }
 
 const defaultContextValue: GlobalServiceType = {
@@ -19,7 +22,9 @@ const defaultContextValue: GlobalServiceType = {
   carNotFound: true,
   setCarNotFound: () => {},
   isUserLogged: false,
-  setIsUserLogged: () => {}
+  setIsUserLogged: () => {},
+  loginBtnCustomPath: undefined,
+  setLoginBtnCustomPath: () => {}
 };
 
 const GlobalContext = createContext<GlobalServiceType>(defaultContextValue);

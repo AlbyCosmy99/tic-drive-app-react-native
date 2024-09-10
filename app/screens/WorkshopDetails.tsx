@@ -156,7 +156,7 @@ export default function WorkshopDetails() {
                     </View>
                 </View>
                 <View>
-                    <TicDriveButton text="Book a service" path={'../screens/BookingConfirmation'} customButtonStyle={styles.customButtonStyle}/>
+                    <TicDriveButton text="Book a service" path={'../screens/CalendarDateSelection'} customButtonStyle={styles.customButtonStyle}/>
                 </View>
             </View>
         </SafeAreaView>

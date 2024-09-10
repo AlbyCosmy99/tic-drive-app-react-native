@@ -51,14 +51,26 @@ export default function RootLayout() {
               name="screens/WorkshopDetails" 
               options={{ 
                 title: 'Workshop details', 
-                headerShown: false,
-              }} />
-              <Stack.Screen 
+                headerShown: false }} 
+            />
+            <Stack.Screen 
+              name="screens/CalendarDateSelection" 
+              options={{ 
+                title: 'Calendar Date Selection', 
+                headerShown: false }} 
+            />
+            <Stack.Screen 
               name="screens/BookingConfirmation" 
               options={{ 
                 title: 'Booking Confirmation', 
-                headerShown: false,
-              }} />
+                headerShown: false }} 
+            />
+            <Stack.Screen 
+              name="screens/UserDashboard" 
+              options={{ 
+                title: 'User Dashboard', 
+                headerShown: false }} 
+            />
             <Stack.Screen name="+not-found" />
           </Stack>
         </GestureHandlerRootView>

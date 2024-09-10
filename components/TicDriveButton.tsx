@@ -10,6 +10,8 @@ interface TicDriveButtonProps {
   customButtonStyle?: StyleProp<ViewStyle>;
   customContainerStyle?: StyleProp<ViewStyle>;
   path: Href;
+  replace?: boolean,
+  onClick?: () => void
 }
 
 const TicDriveButton: React.FC<TicDriveButtonProps> = ({
@@ -17,6 +19,8 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({
   customButtonStyle,
   customContainerStyle,
   path,
+  replace = false,
+  onClick
 }) => {
   const router = useRouter();
   const { servicesChoosen, carNotFound, setWorkshopFilter } = useContext(GlobalContext);
@@ -46,9 +50,17 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({
         customContainerStyle,
       ]}
       onPress={() => {
-        router.push(path)
+        if(!replace) {
+          router.push(path)
+        }
+        else {
+          router.replace(path)
+        }
         if(text.toLowerCase() === 'confirm') {
           setWorkshopFilter('')
+        }
+        if(onClick) {
+          onClick()
         }
       }}
     />
