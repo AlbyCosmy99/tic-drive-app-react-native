@@ -6,6 +6,7 @@ import Entypo from '@expo/vector-icons/Entypo';
 import { router } from 'expo-router';
 import { saveLoginStatus } from '@/app/utils';
 import GlobalContext from '@/app/stateManagement/contexts/GlobalContext';
+import { StackActions, useNavigation } from '@react-navigation/native';
 
 interface TicDriveNavbarProps {
   isLoginAvailable?: boolean;
@@ -14,6 +15,8 @@ interface TicDriveNavbarProps {
 const TicDriveNavbar = ({isLoginAvailable = true}: TicDriveNavbarProps) =>  {
   const colorScheme = useColorScheme()
   const {isUserLogged, setIsUserLogged} = useContext(GlobalContext)
+
+  const navigation = useNavigation()
 
   const backgroundStyle = {
     backgroundColor: colorScheme === 'light' ? Colors.light.background : Colors.dark.background,
@@ -41,7 +44,12 @@ const TicDriveNavbar = ({isLoginAvailable = true}: TicDriveNavbarProps) =>  {
                 <Text className='text-xl' style={styles.login}>Logout</Text>
               </View>
             </TouchableOpacity>) : (
-              <TouchableOpacity onPress={() => router.replace('../screens/Login')} className='p-2.5'>
+              <TouchableOpacity onPress={() => {
+                if(navigation.canGoBack()) {
+                  navigation.dispatch(StackActions.popToTop());
+                }
+                router.push('../screens/Login')
+              }} className='p-2.5'>
                 <View className='flex-row gap-1 items-center justify-center'>
                   <Entypo name="login" size={24} color={Colors.light.text} />
                   <Text className='text-xl' style={styles.login}>Login</Text>

@@ -6,7 +6,7 @@ import { SafeAreaView, Text } from "react-native";
 import { saveLoginStatus } from "../utils";
 import { useContext } from "react";
 import GlobalContext from "../stateManagement/contexts/GlobalContext";
-import { useNavigation } from "@react-navigation/native";
+import { StackActions, useNavigation } from "@react-navigation/native";
 
 export default function Login() {
     const {setServicesChoosen, loginBtnCustomPath, setLoginBtnCustomPath,setIsUserLogged} = useContext(GlobalContext)
@@ -17,6 +17,9 @@ export default function Login() {
         setIsUserLogged(true)
         setServicesChoosen([])
         if(loginBtnCustomPath) {
+            if(navigation.canGoBack()){
+                navigation.dispatch(StackActions.popToTop())
+            }
             router.replace(loginBtnCustomPath)
             setLoginBtnCustomPath(undefined)
         }

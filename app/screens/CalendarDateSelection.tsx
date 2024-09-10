@@ -5,9 +5,11 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useContext } from "react";
 import { SafeAreaView, Text, View } from "react-native";
 import GlobalContext from "../stateManagement/contexts/GlobalContext";
+import { StackActions, useNavigation } from "@react-navigation/native";
 
 export default function CalendarDateSelection() {
     const {isUserLogged, setLoginBtnCustomPath} = useContext(GlobalContext)
+    const navigation = useNavigation()
 
     return (
         <LinearGradient 
@@ -22,9 +24,13 @@ export default function CalendarDateSelection() {
                 <TicDriveButton 
                     text={"Confirm " + (!isUserLogged ? "and login": "")} 
                     path={isUserLogged ? '../screens/BookingConfirmation' : '../screens/Login'}
-                    onClick={() => setLoginBtnCustomPath('../screens/BookingConfirmation')}   
-                    replace={true}
-                    toTop={true}     
+                    toTop={isUserLogged ? true : false}
+                    replace={isUserLogged ? true : false}
+                    onClick={isUserLogged ? (
+                        () => {}
+                    ) : (
+                        () => setLoginBtnCustomPath('../screens/BookingConfirmation')
+                    )}      
                 />
             </SafeAreaView>
         </LinearGradient>
