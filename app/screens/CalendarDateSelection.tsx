@@ -22,7 +22,8 @@ export default function CalendarDateSelection() {
                 <TicDriveButton 
                     text={"Confirm " + (!isUserLogged ? "and login": "")} 
                     path={isUserLogged ? '../screens/BookingConfirmation' : '../screens/Login'}
-                    onClick={() => setLoginBtnCustomPath('../screens/BookingConfirmation')}               
+                    onClick={() => setLoginBtnCustomPath('../screens/BookingConfirmation')}   
+                    replace={true}            
                 />
             </SafeAreaView>
         </LinearGradient>

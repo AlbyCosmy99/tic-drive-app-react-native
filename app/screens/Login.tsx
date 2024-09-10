@@ -21,7 +21,6 @@ export default function Login() {
             setLoginBtnCustomPath(undefined)
         }
         else if(navigation.canGoBack()) {
-            alert('here')
             navigation.goBack()
         }
         else {
