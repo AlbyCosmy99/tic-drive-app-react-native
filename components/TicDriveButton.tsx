@@ -4,6 +4,7 @@ import { StyleProp, ViewStyle } from 'react-native';
 import { Colors } from "@/constants/Colors";
 import { useRouter, Href } from "expo-router";
 import GlobalContext from "@/app/stateManagement/contexts/GlobalContext";
+import { StackActions, useNavigation } from '@react-navigation/native';
 
 interface TicDriveButtonProps {
   text: string;
@@ -11,7 +12,8 @@ interface TicDriveButtonProps {
   customContainerStyle?: StyleProp<ViewStyle>;
   path: Href;
   replace?: boolean,
-  onClick?: () => void
+  onClick?: () => void,
+  toTop?: boolean
 }
 
 const TicDriveButton: React.FC<TicDriveButtonProps> = ({
@@ -20,10 +22,12 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({
   customContainerStyle,
   path,
   replace = false,
-  onClick
+  onClick,
+  toTop = false
 }) => {
   const router = useRouter();
-  const { servicesChoosen, carNotFound, setWorkshopFilter } = useContext(GlobalContext);
+  const { servicesChoosen, carNotFound, setWorkshopFilter } = useContext(GlobalContext)
+  const navigation = useNavigation()
 
   const whenIsDisabled: Record<string, boolean> = {
     "book a service": servicesChoosen.length === 0,
@@ -50,12 +54,16 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({
         customContainerStyle,
       ]}
       onPress={() => {
+        if(toTop){
+          navigation.dispatch(StackActions.popToTop());
+        }
         if(!replace) {
           router.push(path)
         }
         else {
           router.replace(path)
         }
+        
         if(text.toLowerCase() === 'confirm') {
           setWorkshopFilter('')
         }

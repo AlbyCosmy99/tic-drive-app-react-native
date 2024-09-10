@@ -23,7 +23,8 @@ export default function CalendarDateSelection() {
                     text={"Confirm " + (!isUserLogged ? "and login": "")} 
                     path={isUserLogged ? '../screens/BookingConfirmation' : '../screens/Login'}
                     onClick={() => setLoginBtnCustomPath('../screens/BookingConfirmation')}   
-                    replace={true}            
+                    replace={true}
+                    toTop={true}     
                 />
             </SafeAreaView>
         </LinearGradient>

@@ -16,7 +16,7 @@ export default function BookingConfirmation() {
                     <Text style={styles.success} className="font-extrabold text-center p-5 pt-0 text-3xl">Service booked successfully!</Text>
                     <Text style={styles.success} className="font-extrabold text-center p-5 pt-0 text-3xl">Thank you for booking with TicDrive. You will soon receive a PIN code via email to present to the mechanic.</Text>
                 </View>
-                <TicDriveButton text="Dashboard" path={'../screens/UserDashboard'} />
+                <TicDriveButton replace={true} text="Dashboard" path={'../screens/UserDashboard'} />
             </SafeAreaView>
         </LinearGradient>
     )
