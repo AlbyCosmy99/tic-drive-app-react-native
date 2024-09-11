@@ -8,6 +8,7 @@ import { Colors } from "@/constants/Colors";
 import { useContext, useEffect } from "react";
 import { getLoginStatus } from "../utils";
 import GlobalContext from "../stateManagement/contexts/GlobalContext";
+import user from "@/constants/temp/UserLogged";
 
 export default function Nav() {
     const colorScheme = useColorScheme();
@@ -32,7 +33,7 @@ export default function Nav() {
                     <TicDriveNavbar />
                     <View className="flex-1 justify-between">
                         <Text style={{ color: colorScheme === 'light' ? Colors.light.text : Colors.dark.text }} className="font-medium text-3xl mx-3.5 mb-2">
-                            {isUserLogged ? 'Andrei, w' : 'W'}hat service are you looking for?
+                            {isUserLogged ? `${user.name}, w` : 'W'}hat service are you looking for?
                         </Text>
                         <ServicesCards />
                     </View>

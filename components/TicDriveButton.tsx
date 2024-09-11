@@ -54,7 +54,7 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({
         customContainerStyle,
       ]}
       onPress={() => {
-        if(toTop){
+        if(toTop && navigation.canGoBack()){
           navigation.dispatch(StackActions.popToTop());
         }
         if(!replace) {
