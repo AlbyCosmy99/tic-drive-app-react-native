@@ -10,7 +10,7 @@ interface TicDriveButtonProps {
   text: string;
   customButtonStyle?: StyleProp<ViewStyle>;
   customContainerStyle?: StyleProp<ViewStyle>;
-  path: Href;
+  path?: Href;
   replace?: boolean,
   onClick?: () => void,
   toTop?: boolean
@@ -54,18 +54,20 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({
         customContainerStyle,
       ]}
       onPress={() => {
-        if(toTop && navigation.canGoBack()){
-          navigation.dispatch(StackActions.popToTop());
-        }
-        if(!replace) {
-          router.push(path)
-        }
-        else {
-          router.replace(path)
-        }
-        
-        if(text.toLowerCase() === 'confirm') {
-          setWorkshopFilter('')
+        if(path) {
+          if(toTop && navigation.canGoBack()){
+            navigation.dispatch(StackActions.popToTop());
+          }
+          if(!replace) {
+            router.push(path ?? '/')
+          }
+          else {
+            router.replace(path ?? '/')
+          }
+          
+          if(text.toLowerCase() === 'confirm') {
+            setWorkshopFilter('')
+          }
         }
         if(onClick) {
           onClick()
