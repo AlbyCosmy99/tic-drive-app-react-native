@@ -8,6 +8,7 @@ import GlobalContext from "../stateManagement/contexts/GlobalContext";
 import { StackActions, useNavigation } from "@react-navigation/native";
 import TicDriveButton from "@/components/TicDriveButton";
 import { Colors } from "@/constants/Colors";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function Login() {
     const {setServicesChoosen, loginBtnCustomPath, setLoginBtnCustomPath,setIsUserLogged} = useContext(GlobalContext)
@@ -41,9 +42,11 @@ export default function Login() {
                 </View>
                 <View className="" style={styles.loginData}>
                     <Text className="text-center text-3xl font-medium m-1.5">Welcome</Text>
-                    <View className="flex-row justify-center gap-0.5">
+                    <View className="flex-row justify-center gap-1">
                         <Text>Don't have an account?</Text>
-                        <Text className="font-medium">Register here</Text>
+                        <TouchableOpacity>
+                            <Text className="font-medium">Register here</Text>  
+                        </TouchableOpacity>
                     </View>
                     <View>
                         <Text className="text-center m-4">Form</Text>
