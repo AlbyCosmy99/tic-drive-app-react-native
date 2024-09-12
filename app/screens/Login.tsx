@@ -35,7 +35,7 @@ export default function Login() {
 
     return (
         <SafeAreaView className="flex-1">
-            <ToPreviousPage path={'/'}/>
+            <ToPreviousPage />
             <View className="flex-1">
                 <View style={styles.logo} className="justify-center items-center">
                     <Text>Image</Text>
