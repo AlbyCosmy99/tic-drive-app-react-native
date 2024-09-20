@@ -54,7 +54,7 @@ export default function Login() {
                 <View style={styles.logo} className="justify-center items-center">
                     <Text>Image</Text>
                 </View>
-                <View className="" style={styles.loginData}>
+                <View>
                     <Text className="text-center text-3xl font-medium m-1.5">Welcome</Text>
                     <View className="flex-row justify-center gap-1">
                         <Text>Don't have an account?</Text>
@@ -74,9 +74,19 @@ export default function Login() {
                         <Text className="text-center" style={styles.continueWithText}>Or continue with</Text>
                         <View style={styles.hr} />
                     </View>
-                    <View className="bg-black flex-row">
+                    <View className="flex-row mx-3.5">
                         <OAuth2Button text="Google" icon={<GoogleIcon />} />
                         <OAuth2Button text="Apple ID" icon={<AppleIcon />} />
+                    </View>
+                    <View className="flex-row justify-center gap-1 flex-wrap text-center mx-3.5 my-3">
+                        <Text style={styles.footerText}>By clicking Login, you agree to our</Text>
+                            <TouchableOpacity>
+                                <Text style={styles.link}>Terms of Service</Text>    
+                            </TouchableOpacity> 
+                            <Text style={styles.footerText}>and</Text>
+                            <TouchableOpacity>
+                                <Text style={styles.link}>Privacy Policy</Text>    
+                            </TouchableOpacity>  
                     </View>
                 </View>
             </View>
@@ -86,10 +96,7 @@ export default function Login() {
 
 const styles = StyleSheet.create({
     logo: {
-        flex: 4,
-    },
-    loginData: {
-        flex: 6,
+        flex: 1,
     },
     hr: {
         borderBottomColor: '#e6e6e6',
@@ -100,4 +107,10 @@ const styles = StyleSheet.create({
     continueWithText: {
         color: Colors.light.placeholderText,
     },
+    link: {
+        color: 'black'
+    },
+    footerText: {
+        color: Colors.light.placeholderText
+    }
 });

@@ -24,7 +24,8 @@ export const Colors = {
     backgroundLinearGradient: {
       start: '#FFFFFF',
       end: '#FBFBFB'
-    }
+    },
+    OAuth2BorderButton: '#ECECEC'
   },
   dark: {
     text: '#ECEDEE',

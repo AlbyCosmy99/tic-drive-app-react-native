@@ -7,8 +7,8 @@ import TicDriveInput from "@/components/ui/inputs/TicDriveInput";
 import { useContext, useEffect, useState } from "react";
 import options from '../../constants/VehicleRegistrationOptions';
 import GlobalContext from "../stateManagement/contexts/GlobalContext";
-import { SegmentedControlSelection } from "../types/interfaces";
 import ToPreviousPage from "@/components/navigation/ToPreviousPage";
+import SegmentedControlSelection from "../types/SegmentedControlSelection";
 
 function RegisterVehicle() {
     const [segmentedControlSelection, setSegmentedControlSelection] = useState<SegmentedControlSelection | null>(null)

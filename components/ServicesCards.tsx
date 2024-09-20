@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import ServicesCard from './ServicesCard';
 import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';

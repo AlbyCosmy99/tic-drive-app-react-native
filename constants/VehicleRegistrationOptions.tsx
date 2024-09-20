@@ -1,4 +1,5 @@
-import { VehicleRegistrationOption } from "@/app/types/interfaces";
+import VehicleRegistrationOption from "@/app/types/VehicleRegistrationOption";
+
 
 const vehicleRegistrationOptions: VehicleRegistrationOption[] = [
     {
