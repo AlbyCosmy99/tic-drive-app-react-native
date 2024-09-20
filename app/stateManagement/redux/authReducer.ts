@@ -1,11 +1,11 @@
+import AuthState from "@/app/types/redux/states/AuthState";
 
-
-const initialState = {
+const initialState: AuthState = {
     isAuthenticated: false,
     user: null,
 };
   
-  const authReducer = (state = initialState, action) => {
+  const authReducer = (state: AuthState = initialState, action) => {
     switch (action.type) {
       case 'LOGIN':
         return { ...state, isAuthenticated: true, user: action.payload };
