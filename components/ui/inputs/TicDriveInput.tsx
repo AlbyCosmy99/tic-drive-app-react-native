@@ -65,7 +65,7 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
           isLeftIcon ? (
             <Icon
               name="search"
-              size={24}
+              size={25}
               color={Colors.light.ticText}
             />
           ) : undefined
