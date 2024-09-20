@@ -1,4 +1,4 @@
-import AuthState from "@/app/types/redux/states/AuthState";
+import AuthState from "@/app/types/reduxTypes/states/AuthState";
 
 const initialState: AuthState = {
     isAuthenticated: false,
