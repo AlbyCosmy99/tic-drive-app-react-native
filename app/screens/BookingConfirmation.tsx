@@ -1,5 +1,5 @@
 import TicDriveNavbar from "@/components/navigation/TicDriveNavbar";
-import TicDriveButton from "@/components/TicDriveButton";
+import TicDriveButton from "@/components/ui/buttons/TicDriveButton";
 import { Colors } from "@/constants/Colors";
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";

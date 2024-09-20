@@ -16,7 +16,7 @@ import CalendarIcon from '../../assets/svg/calendar_add_on.svg'
 import Review from "@/constants/temp/Review";
 import ChatIcon from '../../assets/svg/chat.svg'
 import { Ionicons } from "@expo/vector-icons";
-import TicDriveButton from "@/components/TicDriveButton";
+import TicDriveButton from "@/components/ui/buttons/TicDriveButton";
 import ClientReviewCards from "@/components/ClientReviewCards";
 
 export default function WorkshopDetails() {

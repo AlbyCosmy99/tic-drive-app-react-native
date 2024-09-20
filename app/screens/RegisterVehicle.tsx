@@ -1,9 +1,9 @@
-import TicDriveButton from "@/components/TicDriveButton";
+import TicDriveButton from "@/components/ui/buttons/TicDriveButton";
 import { Colors } from "@/constants/Colors";
 import { SafeAreaView, StyleSheet, Text, useColorScheme, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import SegmentedControl from "@/components/SegmentedControl";
-import TicDriveInput from "@/components/TicDriveInput";
+import TicDriveInput from "@/components/ui/inputs/TicDriveInput";
 import { useContext, useEffect, useState } from "react";
 import options from '../../constants/VehicleRegistrationOptions';
 import GlobalContext from "../stateManagement/contexts/GlobalContext";

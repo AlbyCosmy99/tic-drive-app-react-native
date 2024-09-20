@@ -1,5 +1,5 @@
 import TicDriveNavbar from "@/components/navigation/TicDriveNavbar";
-import TicDriveButton from "@/components/TicDriveButton";
+import TicDriveButton from "@/components/ui/buttons/TicDriveButton";
 import { SafeAreaView, Text, View } from "react-native";
 
 export default function UserDashboard() {

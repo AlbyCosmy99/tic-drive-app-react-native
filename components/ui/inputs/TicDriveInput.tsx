@@ -2,8 +2,8 @@ import { StyleSheet, View } from "react-native";
 import { Icon, Input } from '@rneui/themed';
 import { Colors } from "@/constants/Colors";
 import React, { memo, useContext, useState } from 'react';
-import {Car} from '../constants/temp/Cars'
-import cars from "../constants/temp/Cars";
+import {Car} from '../../../constants/temp/Cars'
+import cars from "../../../constants/temp/Cars";
 import GlobalContext from "@/app/stateManagement/contexts/GlobalContext";
 import defaultCar from "@/constants/defaultRegistrationCar";
 

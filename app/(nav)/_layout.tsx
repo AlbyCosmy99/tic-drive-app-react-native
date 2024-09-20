@@ -1,4 +1,4 @@
-import TicDriveButton from "@/components/TicDriveButton";
+import TicDriveButton from "@/components/ui/buttons/TicDriveButton";
 import { Text, useColorScheme, View } from "react-native";
 import { SafeAreaView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
