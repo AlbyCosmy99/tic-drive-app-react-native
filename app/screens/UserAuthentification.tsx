@@ -3,7 +3,7 @@ import OAuth2Button from '@/components/ui/buttons/OAuth2Button';
 import { router } from "expo-router";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { saveLoginStatus } from "../utils";
-import { useContext } from "react";
+import { useContext, useMemo, useState } from "react";
 import GlobalContext from "../stateManagement/contexts/GlobalContext";
 import { StackActions, useNavigation } from "@react-navigation/native";
 import TicDriveButton from "@/components/ui/buttons/TicDriveButton";
@@ -18,6 +18,11 @@ export default function UserAuthentification() {
     const { setServicesChoosen, loginBtnCustomPath, setLoginBtnCustomPath } = useContext(GlobalContext);
     const navigation = useNavigation();
     const dispatch = useAppDispatch()
+    const [isUserRegistering, setIsUserRegistering] = useState<boolean>(false)
+
+    const action = useMemo<"Login" | "Register">(() => {
+        return isUserRegistering ? "Register" : "Login"
+    }, [isUserRegistering])
 
     const handleLoginPressed = async () => {
         dispatch(login({
@@ -51,16 +56,20 @@ export default function UserAuthentification() {
                 <View>
                     <Text className="text-center text-3xl font-medium m-1.5">Welcome</Text>
                     <View className="flex-row justify-center gap-1">
-                        <Text>Don't have an account?</Text>
-                        <TouchableOpacity>
-                            <Text className="font-medium">Register here</Text>
+                        {
+                            action === "Login" ?
+                            (<Text>Don't have an account?</Text>) :
+                            (<Text>Already have an account?</Text>)
+                        }
+                        <TouchableOpacity onPress={() => setIsUserRegistering(!isUserRegistering)}>
+                            <Text className="font-medium">{action === "Login" ? "Register" : "Login"} here</Text>
                         </TouchableOpacity>
                     </View>
                     <View>
                         <Text className="text-center m-4">Form</Text>
                     </View>
                     <TicDriveButton
-                        text="Login"
+                        text={action}
                         onClick={handleLoginPressed}
                     />
                     <View className="flex-row justify-center items-center my-3.5">
@@ -73,7 +82,7 @@ export default function UserAuthentification() {
                         <OAuth2Button text="Apple ID" icon={<AppleIcon />} />
                     </View>
                     <View className="flex-row justify-center gap-1 flex-wrap text-center mx-3.5 my-3">
-                        <Text style={styles.footerText}>By clicking Login, you agree to our</Text>
+                        <Text style={styles.footerText}>By clicking {action}, you agree to our</Text>
                         <TouchableOpacity>
                             <Text style={styles.link}>Terms of Service</Text>    
                         </TouchableOpacity> 
