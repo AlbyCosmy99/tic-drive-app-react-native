@@ -30,7 +30,7 @@ export default function HomeTab() {
             </View>
         </View>
         <View className='flex-1'>
-          <ServicesMap />
+          {/* <ServicesMap /> */}
           <WorkshopCards />
         </View>
       </SafeAreaView>

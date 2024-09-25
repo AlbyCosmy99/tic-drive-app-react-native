@@ -13,6 +13,7 @@ import { useAppDispatch } from "../stateManagement/redux/hooks";
 import { login } from "../stateManagement/redux/slices/authSlice";
 import GoogleIcon from "@/assets/svg/OAuth2Icons/GoogleIcon";
 import AppleIcon from "@/assets/svg/OAuth2Icons/AppleIcon";
+import UserAuthenticationForm from "@/components/forms/UserAuthenticationForm";
 
 export default function UserAuthentification() {
     const { setServicesChoosen, loginBtnCustomPath, setLoginBtnCustomPath } = useContext(GlobalContext);
@@ -66,7 +67,7 @@ export default function UserAuthentification() {
                         </TouchableOpacity>
                     </View>
                     <View>
-                        <Text className="text-center m-4">Form</Text>
+                        <UserAuthenticationForm />
                     </View>
                     <TicDriveButton
                         text={action}
