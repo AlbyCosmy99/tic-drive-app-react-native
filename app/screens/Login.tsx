@@ -2,7 +2,7 @@ import ToPreviousPage from "@/components/navigation/ToPreviousPage";
 import OAuth2Button from '@/components/ui/buttons/OAuth2Button';
 import { router } from "expo-router";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { saveLoginStatus } from "../utils";
+import { getLoginStatus, saveLoginStatus } from "../utils";
 import { useContext } from "react";
 import GlobalContext from "../stateManagement/contexts/GlobalContext";
 import { StackActions, useNavigation } from "@react-navigation/native";
@@ -18,12 +18,13 @@ export default function Login() {
     const navigation = useNavigation();
     const dispatch = useAppDispatch()
 
-    const handleLoginPressed =() => {
+    const handleLoginPressed = async () => {
         dispatch(login({
             name: "Andrei",
             surname: "Albu"
         }))
-        saveLoginStatus(true)
+        await saveLoginStatus(true)
+        
         //sostituire con react-thunk
 
         setServicesChoosen([]);

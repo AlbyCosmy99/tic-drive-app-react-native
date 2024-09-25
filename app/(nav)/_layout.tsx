@@ -5,23 +5,32 @@ import { LinearGradient } from 'expo-linear-gradient';
 import ServicesCards from "@/components/ServicesCards";
 import TicDriveNavbar from "@/components/navigation/TicDriveNavbar";
 import { Colors } from "@/constants/Colors";
-import { useContext, useEffect } from "react";
+import {  useEffect } from "react";
 import { getLoginStatus } from "../utils";
-import GlobalContext from "../stateManagement/contexts/GlobalContext";
 import user from "@/constants/temp/UserLogged";
+import { useAppDispatch, useAppSelector } from "../stateManagement/redux/hooks";
+import { login, logout } from "../stateManagement/redux/slices/authSlice";
 
 export default function Nav() {
     const colorScheme = useColorScheme();
-    const {isUserLogged, setIsUserLogged} = useContext(GlobalContext)
+    const isUserLogged = useAppSelector((state) => state.auth.isAuthenticated)
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         const checkLoginStatus = async () => {
-            const isLogged = await getLoginStatus();
-            setIsUserLogged(isLogged); 
-        };
-
-        checkLoginStatus();
-    }, []);
+          const isUserLogged = await getLoginStatus()
+          if(isUserLogged) {
+            dispatch(login({
+                name: "Andrei",
+                surname: "Albu"
+            }))
+          } else {
+            dispatch(logout())
+          }
+        }
+    
+        checkLoginStatus()
+      }, [])
 
     return (
         <View className="flex-1">
