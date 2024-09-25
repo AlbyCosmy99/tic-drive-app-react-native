@@ -38,9 +38,9 @@ export default function RootLayout() {
             <Stack>
               <Stack.Screen name="(nav)" options={{ headerShown: false }} />
               <Stack.Screen 
-                name="screens/Login" 
+                name="screens/UserAuthentification" 
                 options={{ 
-                  title: 'Login', 
+                  title: 'UserAuthentification', 
                   headerShown: false,
               }} />
               <Stack.Screen 

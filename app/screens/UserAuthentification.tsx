@@ -2,20 +2,19 @@ import ToPreviousPage from "@/components/navigation/ToPreviousPage";
 import OAuth2Button from '@/components/ui/buttons/OAuth2Button';
 import { router } from "expo-router";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { getLoginStatus, saveLoginStatus } from "../utils";
+import { saveLoginStatus } from "../utils";
 import { useContext } from "react";
 import GlobalContext from "../stateManagement/contexts/GlobalContext";
 import { StackActions, useNavigation } from "@react-navigation/native";
 import TicDriveButton from "@/components/ui/buttons/TicDriveButton";
 import { Colors } from "@/constants/Colors";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import Svg, { Path } from "react-native-svg"; // Import the SVG library
 import { useAppDispatch } from "../stateManagement/redux/hooks";
 import { login } from "../stateManagement/redux/slices/authSlice";
 import GoogleIcon from "@/assets/svg/OAuth2Icons/GoogleIcon";
 import AppleIcon from "@/assets/svg/OAuth2Icons/AppleIcon";
 
-export default function Login() {
+export default function UserAuthentification() {
     const { setServicesChoosen, loginBtnCustomPath, setLoginBtnCustomPath } = useContext(GlobalContext);
     const navigation = useNavigation();
     const dispatch = useAppDispatch()
@@ -75,13 +74,13 @@ export default function Login() {
                     </View>
                     <View className="flex-row justify-center gap-1 flex-wrap text-center mx-3.5 my-3">
                         <Text style={styles.footerText}>By clicking Login, you agree to our</Text>
-                            <TouchableOpacity>
-                                <Text style={styles.link}>Terms of Service</Text>    
-                            </TouchableOpacity> 
-                            <Text style={styles.footerText}>and</Text>
-                            <TouchableOpacity>
-                                <Text style={styles.link}>Privacy Policy</Text>    
-                            </TouchableOpacity>  
+                        <TouchableOpacity>
+                            <Text style={styles.link}>Terms of Service</Text>    
+                        </TouchableOpacity> 
+                        <Text style={styles.footerText}>and</Text>
+                        <TouchableOpacity>
+                            <Text style={styles.link}>Privacy Policy</Text>    
+                        </TouchableOpacity>  
                     </View>
                 </View>
             </View>

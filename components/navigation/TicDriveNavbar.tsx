@@ -52,7 +52,7 @@ const TicDriveNavbar = ({isLoginAvailable = true}: TicDriveNavbarProps) =>  {
                 if(navigation.canGoBack()) {
                   navigation.dispatch(StackActions.popToTop());
                 }
-                router.push('../screens/Login')
+                router.push('../screens/UserAuthentification')
               }} className='p-2.5'>
                 <View className='flex-row gap-1 items-center justify-center'>
                   <Entypo name="login" size={24} color={Colors.light.text} />
