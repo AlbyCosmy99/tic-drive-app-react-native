@@ -7,6 +7,8 @@ import { router } from 'expo-router';
 import { saveLoginStatus } from '@/app/utils';
 import GlobalContext from '@/app/stateManagement/contexts/GlobalContext';
 import { StackActions, useNavigation } from '@react-navigation/native';
+import { useAppDispatch } from '@/app/stateManagement/redux/hooks';
+import { logout } from '@/app/stateManagement/redux/slices/authSlice';
 
 interface TicDriveNavbarProps {
   isLoginAvailable?: boolean;
@@ -14,17 +16,19 @@ interface TicDriveNavbarProps {
 
 const TicDriveNavbar = ({isLoginAvailable = true}: TicDriveNavbarProps) =>  {
   const colorScheme = useColorScheme()
-  const {isUserLogged, setIsUserLogged} = useContext(GlobalContext)
+  const {isUserLogged} = useContext(GlobalContext)
 
   const navigation = useNavigation()
+  const dispatch = useAppDispatch()
 
   const backgroundStyle = {
     backgroundColor: colorScheme === 'light' ? Colors.light.background : Colors.dark.background,
   }
 
   const handleLogout = async () => {
-    await saveLoginStatus(false)
-    setIsUserLogged(false)
+    dispatch(logout())
+    saveLoginStatus(false)
+    //sostituire con redux thunk
   }
 
   return (

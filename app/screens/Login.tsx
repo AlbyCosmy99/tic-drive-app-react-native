@@ -10,14 +10,22 @@ import TicDriveButton from "@/components/ui/buttons/TicDriveButton";
 import { Colors } from "@/constants/Colors";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Svg, { Path } from "react-native-svg"; // Import the SVG library
+import { useAppDispatch } from "../stateManagement/redux/hooks";
+import { login } from "../stateManagement/redux/slices/authSlice";
 
 export default function Login() {
-    const { setServicesChoosen, loginBtnCustomPath, setLoginBtnCustomPath, setIsUserLogged } = useContext(GlobalContext);
+    const { setServicesChoosen, loginBtnCustomPath, setLoginBtnCustomPath } = useContext(GlobalContext);
     const navigation = useNavigation();
+    const dispatch = useAppDispatch()
 
-    const handleLoginPressed = () => {
-        saveLoginStatus(true);
-        setIsUserLogged(true);
+    const handleLoginPressed =() => {
+        dispatch(login({
+            name: "Andrei",
+            surname: "Albu"
+        }))
+        saveLoginStatus(true)
+        //sostituire con react-thunk
+
         setServicesChoosen([]);
         if (loginBtnCustomPath) {
             if (navigation.canGoBack()) {
