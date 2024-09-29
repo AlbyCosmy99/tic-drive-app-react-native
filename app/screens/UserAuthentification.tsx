@@ -8,12 +8,14 @@ import GlobalContext from "../stateManagement/contexts/GlobalContext";
 import { StackActions, useNavigation } from "@react-navigation/native";
 import TicDriveButton from "@/components/ui/buttons/TicDriveButton";
 import { Colors } from "@/constants/Colors";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { useAppDispatch } from "../stateManagement/redux/hooks";
 import { login } from "../stateManagement/redux/slices/authSlice";
 import GoogleIcon from "@/assets/svg/OAuth2Icons/GoogleIcon";
 import AppleIcon from "@/assets/svg/OAuth2Icons/AppleIcon";
 import UserAuthenticationForm from "@/components/forms/UserAuthenticationForm";
+import { Image } from "@rneui/themed";
+import TicDriveLogo from '../../assets/images/TicDriveLogo.jpeg';
 
 export default function UserAuthentification() {
     const { setServicesChoosen, loginBtnCustomPath, setLoginBtnCustomPath } = useContext(GlobalContext);
@@ -48,14 +50,17 @@ export default function UserAuthentification() {
     };
 
     return (
-        <SafeAreaView className="flex-1">
+        <SafeAreaView className="flex-1 bg-white">
             <ToPreviousPage />
-            <View className="flex-1">
+            <View className="flex-1 justify-between">
                 <View style={styles.logo} className="justify-center items-center">
-                    <Text>Image</Text>
+                    <Image 
+                        source={TicDriveLogo}
+                        style={styles.logoImage}
+                    />
                 </View>
-                <View>
-                    <Text className="text-center text-3xl font-medium m-1.5">Welcome</Text>
+                <ScrollView style={styles.content}>
+                    <Text className="text-center text-3xl font-medium m-1.5 mb-3">Welcome</Text>
                     <View className="flex-row justify-center gap-1">
                         {
                             action === "Login" ?
@@ -71,30 +76,32 @@ export default function UserAuthentification() {
                             isUserRegistering={isUserRegistering}
                         />
                     </View>
-                    <TicDriveButton
-                        text={action}
-                        onClick={handleLoginPressed}
-                    />
-                    <View className="flex-row justify-center items-center my-3.5">
-                        <View style={styles.hr} />
-                        <Text className="text-center" style={styles.continueWithText}>Or continue with</Text>
-                        <View style={styles.hr} />
+                    <View>
+                        <TicDriveButton
+                            text={action}
+                            onClick={handleLoginPressed}
+                        />
+                        <View className="flex-row justify-center items-center my-3.5">
+                            <View style={styles.hr} />
+                            <Text className="text-center" style={styles.continueWithText}>Or continue with</Text>
+                            <View style={styles.hr} />
+                        </View>
+                        <View className="flex-row mx-3.5">
+                            <OAuth2Button text="Google" icon={<GoogleIcon />} />
+                            <OAuth2Button text="Apple ID" icon={<AppleIcon />} />
+                        </View>
+                        <View className="flex-row justify-center gap-1 flex-wrap text-center mx-3.5 my-3">
+                            <Text style={styles.footerText}>By clicking {action}, you agree to our</Text>
+                            <TouchableOpacity>
+                                <Text style={styles.link}>Terms of Service</Text>    
+                            </TouchableOpacity> 
+                            <Text style={styles.footerText}>and</Text>
+                            <TouchableOpacity>
+                                <Text style={styles.link}>Privacy Policy</Text>    
+                            </TouchableOpacity>  
+                        </View>
                     </View>
-                    <View className="flex-row mx-3.5">
-                        <OAuth2Button text="Google" icon={<GoogleIcon />} />
-                        <OAuth2Button text="Apple ID" icon={<AppleIcon />} />
-                    </View>
-                    <View className="flex-row justify-center gap-1 flex-wrap text-center mx-3.5 my-3">
-                        <Text style={styles.footerText}>By clicking {action}, you agree to our</Text>
-                        <TouchableOpacity>
-                            <Text style={styles.link}>Terms of Service</Text>    
-                        </TouchableOpacity> 
-                        <Text style={styles.footerText}>and</Text>
-                        <TouchableOpacity>
-                            <Text style={styles.link}>Privacy Policy</Text>    
-                        </TouchableOpacity>  
-                    </View>
-                </View>
+                </ScrollView>
             </View>
         </SafeAreaView>
     );
@@ -102,6 +109,9 @@ export default function UserAuthentification() {
 
 const styles = StyleSheet.create({
     logo: {
+        
+    },
+    content: {
         flex: 1,
     },
     hr: {
@@ -118,5 +128,10 @@ const styles = StyleSheet.create({
     },
     footerText: {
         color: Colors.light.placeholderText
-    }
+    },
+    logoImage: {
+        width: 180,
+        height: 180,
+        resizeMode: 'contain',
+    },
 });

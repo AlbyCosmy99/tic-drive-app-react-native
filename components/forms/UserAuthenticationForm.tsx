@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, Button, StyleSheet } from "react-native";
+import { Text, Button, StyleSheet, View, KeyboardAvoidingView } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { ScrollView } from "react-native-gesture-handler";
 import TicDriveInput from "../ui/inputs/TicDriveInput";
@@ -30,7 +30,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={[styles.container, isUserRegistering && styles.containerUserRegistering]}>
       <Controller
         control={control}
         name="email"
@@ -55,7 +55,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
             rules={{ required: "Name is required" }}
             render={({ field: { onChange, value, onBlur } }) => (
               <TicDriveInput 
-                placeholder="name"
+                placeholder="Name"
                 isRightIcon={true}
                 customValue={value}
                 inputContainerStyle={styles.inputContainerStyle}
@@ -91,7 +91,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
               rules={{ required: "Repeated password is required" }}
               render={({ field: { onChange, value, onBlur } }) => (
                 <TicDriveInput 
-                  placeholder="Repeated password"
+                  placeholder="Repeat password"
                   isRightIcon={true}
                   customValue={value}
                   inputContainerStyle={styles.inputContainerStyle}
@@ -103,8 +103,8 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
         )
       }
 
-      <Button title="Submit" onPress={handleSubmit(onSubmit)} />
-    </ScrollView>
+      {/* <Button title="Submit" onPress={handleSubmit(onSubmit)} /> */}
+    </View>
   );
 }
 
@@ -125,6 +125,9 @@ const styles = StyleSheet.create({
   },
   inputContainerStyle: {
     marginTop: 0,
+  },
+  containerUserRegistering: {
+    paddingBottom: 0
   }
 });
 
