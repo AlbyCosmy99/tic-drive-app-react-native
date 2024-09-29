@@ -28,24 +28,13 @@ export default function UserAuthentification() {
                             style={styles.logoImage}
                         />
                     </View>
-                    {
-                        isUserRegistering ? (
-                            <ScrollView style={styles.content}>
-                                <UserAuthenticationContent 
-                                    action={action}
-                                    isUserRegistering={isUserRegistering}
-                                    setIsUserRegistering={setIsUserRegistering}
-                                />
-                            </ScrollView>) : (
-                            <View style={styles.content}>
-                                <UserAuthenticationContent 
-                                    action={action}
-                                    isUserRegistering={isUserRegistering}
-                                    setIsUserRegistering={setIsUserRegistering}
-                                />
-                            </View>
-                        )
-                    }
+                    <ScrollView style={styles.content}>
+                        <UserAuthenticationContent 
+                            action={action}
+                            isUserRegistering={isUserRegistering}
+                            setIsUserRegistering={setIsUserRegistering}
+                        />
+                    </ScrollView>
                 </View>
             </SafeAreaView>
         </KeyboardAvoidingView>
