@@ -1,9 +1,8 @@
 import * as React from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { Text, Button, StyleSheet } from "react-native";
 import { useForm, Controller } from "react-hook-form";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import { MaterialIcons } from "@expo/vector-icons";
-import { Input } from "@rneui/themed";
+import { ScrollView } from "react-native-gesture-handler";
+import TicDriveInput from "../ui/inputs/TicDriveInput";
 
 type FormData = {
   email: string;
@@ -12,7 +11,13 @@ type FormData = {
   repeatedPassword?: string;
 };
 
-export default function App() {
+interface UserAuthenticationFormProps {
+  isUserRegistering: boolean;
+}
+
+const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
+  isUserRegistering,
+}) => {
   const {
     control,
     setValue,
@@ -31,64 +36,72 @@ export default function App() {
         name="email"
         rules={{ required: "Email is required" }}
         render={({ field: { onChange, value, onBlur } }) => (
-          <Input 
-            placeholder="email"
-            onSubmitEditing={() => alert('email')}
-            style={{backgroundColor: '#F3F3F3'}}
-            />
+          <TicDriveInput 
+            placeholder="Email"
+            isRightIcon={true}
+            customValue={value}
+            inputContainerStyle={styles.inputContainerStyle}
+          />
         )}
       />
       {errors.email && <Text style={styles.error}>{errors.email.message}</Text>}
 
-      <Controller
-        control={control}
-        name="name"
-        rules={{ required: "Name is required" }}
-        render={({ field: { onChange, value, onBlur } }) => (
-          <TextInput
-            style={styles.input}
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            placeholder="Name"
+     {
+      isUserRegistering && (
+        <>
+          <Controller
+            control={control}
+            name="name"
+            rules={{ required: "Name is required" }}
+            render={({ field: { onChange, value, onBlur } }) => (
+              <TicDriveInput 
+                placeholder="name"
+                isRightIcon={true}
+                customValue={value}
+                inputContainerStyle={styles.inputContainerStyle}
+            />
+          )}
           />
-        )}
-      />
-      {errors.name && <Text style={styles.error}>{errors.name.message}</Text>}
+          {errors.name && <Text style={styles.error}>{errors.name.message}</Text>}
+        </>
+      )
+     } 
 
       <Controller
         control={control}
         name="password"
         rules={{ required: "Password is required" }}
         render={({ field: { onChange, value, onBlur } }) => (
-          <TextInput
-            style={styles.input}
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
+          <TicDriveInput 
             placeholder="Password"
-            secureTextEntry={true}
+            isRightIcon={true}
+            customValue={value}
+            inputContainerStyle={styles.inputContainerStyle}
           />
         )}
       />
       {errors.password && <Text style={styles.error}>{errors.password.message}</Text>}
 
-      <Controller
-        control={control}
-        name="repeatedPassword"
-        rules={{ required: "Repeated password is required" }}
-        render={({ field: { onChange, value, onBlur } }) => (
-          <TextInput
-            style={styles.input}
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            placeholder="Repeat password"
-            secureTextEntry={true}
-          />
-        )}
-      />
-      {errors.repeatedPassword && <Text style={styles.error}>{errors.repeatedPassword.message}</Text>}
+      {
+        isUserRegistering && (
+          <>
+            <Controller
+              control={control}
+              name="repeatedPassword"
+              rules={{ required: "Repeated password is required" }}
+              render={({ field: { onChange, value, onBlur } }) => (
+                <TicDriveInput 
+                  placeholder="Repeated password"
+                  isRightIcon={true}
+                  customValue={value}
+                  inputContainerStyle={styles.inputContainerStyle}
+                />
+              )}
+            />
+            {errors.repeatedPassword && <Text style={styles.error}>{errors.repeatedPassword.message}</Text>}
+          </>
+        )
+      }
 
       <Button title="Submit" onPress={handleSubmit(onSubmit)} />
     </ScrollView>
@@ -110,4 +123,9 @@ const styles = StyleSheet.create({
     color: "red",
     marginBottom: 10,
   },
+  inputContainerStyle: {
+    marginTop: 0,
+  }
 });
+
+export default UserAuthenticationForm

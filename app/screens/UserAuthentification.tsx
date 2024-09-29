@@ -67,7 +67,9 @@ export default function UserAuthentification() {
                         </TouchableOpacity>
                     </View>
                     <View>
-                        <UserAuthenticationForm />
+                        <UserAuthenticationForm 
+                            isUserRegistering={isUserRegistering}
+                        />
                     </View>
                     <TicDriveButton
                         text={action}

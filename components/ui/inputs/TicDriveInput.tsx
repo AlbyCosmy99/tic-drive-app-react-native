@@ -1,17 +1,19 @@
-import { StyleSheet, View } from "react-native";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { Icon, Input } from '@rneui/themed';
 import { Colors } from "@/constants/Colors";
 import React, { memo, useContext, useState } from 'react';
 import GlobalContext from "@/app/stateManagement/contexts/GlobalContext";
 
 interface TicDriveInputProps {
+  placeholder: string;
   isLeftIcon?: boolean;
   isRightIcon?: boolean;
   onRightIcon?: () => void;
-  placeholder: string;
   onSubmit?: (value: string) => void;
   isTextUppercase?: boolean;
   containerViewStyleTailwind?: string;
+  customValue?:string;
+  inputContainerStyle?: StyleProp<ViewStyle>
 }
 
 const TicDriveInput: React.FC<TicDriveInputProps> = ({ 
@@ -21,10 +23,12 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
   placeholder, 
   onSubmit,
   isTextUppercase = false,
-  containerViewStyleTailwind = ""
+  containerViewStyleTailwind = "",
+  customValue = "",
+  inputContainerStyle = {}
 }) => {
 
-  const [value, setValue] = useState<string>('');
+  const [value, setValue] = useState<string>(customValue);
   const {workshopFilter, setWorkshopFilter} = useContext(GlobalContext)
 
   const handleOnPress = () => {
@@ -60,7 +64,7 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
             />
           ) : undefined
         }
-        inputContainerStyle={styles.inputContainer}
+        inputContainerStyle={[styles.inputContainer, inputContainerStyle]}
         inputStyle={styles.inputText}
         placeholderTextColor="#8b8b8b"
         value={value}
