@@ -6,10 +6,11 @@ import { useContext } from "react";
 import { SafeAreaView, Text, View } from "react-native";
 import GlobalContext from "../stateManagement/contexts/GlobalContext";
 import { StackActions, useNavigation } from "@react-navigation/native";
+import { useAppSelector } from "../stateManagement/redux/hooks";
 
 export default function CalendarDateSelection() {
-    const {isUserLogged, setLoginBtnCustomPath} = useContext(GlobalContext)
-    const navigation = useNavigation()
+    const {setLoginBtnCustomPath} = useContext(GlobalContext)
+    const isUserLogged = useAppSelector(state => state.auth.isAuthenticated)
 
     return (
         <LinearGradient 

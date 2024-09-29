@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { useForm, Controller } from "react-hook-form";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Input } from "@rneui/themed";
 
@@ -25,15 +25,16 @@ export default function App() {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Controller
         control={control}
         name="email"
         rules={{ required: "Email is required" }}
         render={({ field: { onChange, value, onBlur } }) => (
           <Input 
-            placeholder="test"
-            onSubmitEditing={() => alert('ciao')}
+            placeholder="email"
+            onSubmitEditing={() => alert('email')}
+            style={{backgroundColor: '#F3F3F3'}}
             />
         )}
       />
@@ -90,7 +91,7 @@ export default function App() {
       {errors.repeatedPassword && <Text style={styles.error}>{errors.repeatedPassword.message}</Text>}
 
       <Button title="Submit" onPress={handleSubmit(onSubmit)} />
-    </View>
+    </ScrollView>
   );
 }
 

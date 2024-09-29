@@ -10,6 +10,7 @@ import defaultCar from "@/constants/defaultRegistrationCar";
 interface TicDriveInputProps {
   isLeftIcon?: boolean;
   isRightIcon?: boolean;
+  onRightIcon?: () => void;
   placeholder: string;
   setCarSelected?: (carSelected: Car) => void;
   option?: string,
@@ -21,6 +22,7 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
   isRightIcon = false, 
   placeholder, 
   setCarSelected,
+  onRightIcon,
   option = "plateNumber", //car registration default option
   setIsCarSearched = () => {},
 }) => {
@@ -28,30 +30,32 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
   const [value, setValue] = useState<string>('');
   const {workshopFilter, setWorkshopFilter} = useContext(GlobalContext)
 
-  type CarKeys = 'vin' | 'plateNumber' | 'model' //car registration options
+  type CarRegistrationOptions = 'vin' | 'plateNumber' | 'model'
 
   const handleOnPress = () => {
     setValue('');
-    if (setCarSelected) {
-      setCarSelected({
-        id: 0,
-        liters: 0,
-        energy: "",
-        engineCode: "",
-        enginePower: 0,
-        engineDisplacement: 0,
-        vin: "",
-        plateNumber: "",
-        model: ""
-      });
-      setIsCarSearched(false)
-    }
+    onRightIcon && onRightIcon()
+    
+    // if (setCarSelected) {
+    //   setCarSelected({
+    //     id: 0,
+    //     liters: 0,
+    //     energy: "",
+    //     engineCode: "",
+    //     enginePower: 0,
+    //     engineDisplacement: 0,
+    //     vin: "",
+    //     plateNumber: "",
+    //     model: ""
+    //   });
+    //   setIsCarSearched(false)
+    // }
     setWorkshopFilter('')
   };
 
   const handleSubmitEditing = () => {
     if (value && setCarSelected) {
-      const car = cars.find(car => car[option as CarKeys]?.toLowerCase().trim() === value.toLowerCase().trim());
+      const car = cars.find(car => car[option as CarRegistrationOptions]?.toLowerCase().trim() === value.toLowerCase().trim());
       setCarSelected(car ? car : defaultCar);
       setIsCarSearched(true)
     }

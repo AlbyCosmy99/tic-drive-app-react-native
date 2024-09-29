@@ -9,10 +9,11 @@ import options from '../../constants/VehicleRegistrationOptions';
 import GlobalContext from "../stateManagement/contexts/GlobalContext";
 import ToPreviousPage from "@/components/navigation/ToPreviousPage";
 import SegmentedControlSelection from "../types/SegmentedControlSelection";
+import Car from "../types/Car";
 
 function RegisterVehicle() {
     const [segmentedControlSelection, setSegmentedControlSelection] = useState<SegmentedControlSelection | null>(null)
-    const [carSelected, setCarSelected] = useState(
+    const [carSelected, setCarSelected] = useState<Car>(
         {
             id: 0,
             liters: 0,
@@ -62,7 +63,7 @@ function RegisterVehicle() {
                                     && (
                                     <View key={index}>
                                         <Text className="font-semibold mx-3.5 mt-3.5 mb-0 text-lg" key={index}>{option.inputLabel}</Text>
-                                        <TicDriveInput 
+                                        <TicDriveInput
                                             placeholder={option.placeholder} 
                                             isRightIcon={true} 
                                             setCarSelected={setCarSelected}

@@ -20,6 +20,7 @@ export default function Nav() {
         const checkLoginStatus = async () => {
           const isUserLogged = await getLoginStatus()
           if(isUserLogged) {
+            //mock data
             dispatch(login({
                 name: "Andrei",
                 surname: "Albu"
