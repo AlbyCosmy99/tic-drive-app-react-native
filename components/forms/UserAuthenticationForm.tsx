@@ -41,6 +41,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
             isRightIcon={true}
             customValue={value}
             inputContainerStyle={styles.inputContainerStyle}
+            returnKeyType="send"
           />
         )}
       />
@@ -59,6 +60,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
                 isRightIcon={true}
                 customValue={value}
                 inputContainerStyle={styles.inputContainerStyle}
+                returnKeyType="send"
             />
           )}
           />
@@ -77,6 +79,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
             isRightIcon={true}
             customValue={value}
             inputContainerStyle={styles.inputContainerStyle}
+            returnKeyType="send"
           />
         )}
       />
@@ -95,6 +98,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
                   isRightIcon={true}
                   customValue={value}
                   inputContainerStyle={styles.inputContainerStyle}
+                  returnKeyType="send"
                 />
               )}
             />

@@ -1,4 +1,4 @@
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { ReturnKeyTypeOptions, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { Icon, Input } from '@rneui/themed';
 import { Colors } from "@/constants/Colors";
 import React, { memo, useContext, useState } from 'react';
@@ -13,7 +13,8 @@ interface TicDriveInputProps {
   isTextUppercase?: boolean;
   containerViewStyleTailwind?: string;
   customValue?:string;
-  inputContainerStyle?: StyleProp<ViewStyle>
+  inputContainerStyle?: StyleProp<ViewStyle>;
+  returnKeyType?: ReturnKeyTypeOptions
 }
 
 const TicDriveInput: React.FC<TicDriveInputProps> = ({ 
@@ -25,7 +26,8 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
   isTextUppercase = false,
   containerViewStyleTailwind = "",
   customValue = "",
-  inputContainerStyle = {}
+  inputContainerStyle = {},
+  returnKeyType="default"
 }) => {
 
   const [value, setValue] = useState<string>(customValue);
@@ -73,6 +75,7 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
           setWorkshopFilter(text)
         }}
         onSubmitEditing={handleSubmitEditing}
+        returnKeyType={returnKeyType}
       />
     </View>
   );
