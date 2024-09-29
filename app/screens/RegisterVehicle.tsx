@@ -15,19 +15,7 @@ import cars from "@/constants/temp/Cars";
 
 function RegisterVehicle() {
     const [segmentedControlSelection, setSegmentedControlSelection] = useState<SegmentedControlSelection | null>(null)
-    const [carSelected, setCarSelected] = useState<Car>(
-        {
-            id: 0,
-            liters: 0,
-            energy: "",
-            engineCode: "",
-            enginePower: 0,
-            engineDisplacement: 0,
-            vin: "",
-            plateNumber: "",
-            model: ""
-        }
-    )
+    const [carSelected, setCarSelected] = useState<Car>(defaultCar)
     const {carNotFound, setCarNotFound} = useContext(GlobalContext)
     const [isCarSearched, setIsCarSearched] = useState(false)
 
@@ -47,17 +35,7 @@ function RegisterVehicle() {
     },[carSelected])
 
     const handleOnRightIcon = () => {
-        setCarSelected({
-            id: 0,
-            liters: 0,
-            energy: "",
-            engineCode: "",
-            enginePower: 0,
-            engineDisplacement: 0,
-            vin: "",
-            plateNumber: "",
-            model: ""
-          });
+        setCarSelected(defaultCar);
           setIsCarSearched(false)
     }
 
@@ -83,10 +61,7 @@ function RegisterVehicle() {
                                         <TicDriveInput
                                             placeholder={option.placeholder} 
                                             isRightIcon={true} 
-                                            setCarSelected={setCarSelected}
-                                            option={option.keyString}
-                                            setIsCarSearched={setIsCarSearched}
-                                            isChangeTextUppercase={true}
+                                            isTextUppercase={true}
                                             onRightIcon={handleOnRightIcon}
                                             onSubmit={(value)=> {
                                                 const car = cars.find(car => car[option.keyString as CarRegistrationOptions]?.toLowerCase().trim() === value.toLowerCase().trim());

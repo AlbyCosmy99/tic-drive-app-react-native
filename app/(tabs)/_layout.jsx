@@ -1,4 +1,4 @@
-import { router, Tabs } from 'expo-router';
+import { Tabs } from 'expo-router';
 import {Colors} from '../../constants/Colors'
 import HomeIcon from '../../assets/svg/homeIcon.svg'
 import BookingsIcon from '../../assets/svg/bookingsIcon.svg'
