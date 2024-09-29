@@ -128,7 +128,10 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
             <Controller
               control={control}
               name="repeatedPassword"
-              rules={{ required: "Repeated password is required" }}
+              rules={{ 
+                required: "Repeated password is required",
+                validate: (value) => value === control._getWatch("password") || "Passwords do not match"
+              }}
               render={({ field: { onChange, value, onBlur } }) => (
                 <TicDriveInput 
                   placeholder="Repeat password"
@@ -161,8 +164,13 @@ const styles = StyleSheet.create({
   },
   error: {
     color: "red",
-    marginBottom: 10,
+    marginBottom: 30,
     marginHorizontal: 10,
+    fontSize: 14,
+    fontWeight: "bold",
+    backgroundColor: "#fdd",
+    paddingVertical: 5,
+    paddingHorizontal: 10,
   },
   inputContainerStyle: {
     marginTop: 0,
