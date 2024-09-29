@@ -14,7 +14,8 @@ interface TicDriveInputProps {
   containerViewStyleTailwind?: string;
   customValue?:string;
   inputContainerStyle?: StyleProp<ViewStyle>;
-  returnKeyType?: ReturnKeyTypeOptions
+  returnKeyType?: ReturnKeyTypeOptions;
+  onChange?: (text: string) => void;
 }
 
 const TicDriveInput: React.FC<TicDriveInputProps> = ({ 
@@ -27,7 +28,8 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
   containerViewStyleTailwind = "",
   customValue = "",
   inputContainerStyle = {},
-  returnKeyType="default"
+  returnKeyType="default",
+  onChange,
 }) => {
 
   const [value, setValue] = useState<string>(customValue);
@@ -37,6 +39,7 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
     setValue('');
     onRightIcon && onRightIcon()
     setWorkshopFilter('')
+    onChange && onChange("")
   };
 
   const handleSubmitEditing = () => {
@@ -73,6 +76,7 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
         onChangeText={(text) => {
           setValue(isTextUppercase ? text.toUpperCase() : text)
           setWorkshopFilter(text)
+          onChange && onChange(text.trim())
         }}
         onSubmitEditing={handleSubmitEditing}
         returnKeyType={returnKeyType}

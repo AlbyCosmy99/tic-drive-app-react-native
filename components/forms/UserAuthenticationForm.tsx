@@ -1,8 +1,13 @@
 import * as React from "react";
-import { Text, Button, StyleSheet, View, KeyboardAvoidingView } from "react-native";
+import { Text, StyleSheet, View } from "react-native";
 import { useForm, Controller } from "react-hook-form";
-import { ScrollView } from "react-native-gesture-handler";
 import TicDriveInput from "../ui/inputs/TicDriveInput";
+import { router, useNavigation } from "expo-router";
+import { useAppDispatch } from "@/app/stateManagement/redux/hooks";
+import GlobalContext from "@/app/stateManagement/contexts/GlobalContext";
+import { login } from "@/app/stateManagement/redux/slices/authSlice";
+import { saveLoginStatus } from "@/app/utils";
+import { StackActions } from "@react-navigation/native";
 
 type FormData = {
   email: string;
@@ -13,10 +18,12 @@ type FormData = {
 
 interface UserAuthenticationFormProps {
   isUserRegistering: boolean;
+  setOnFormSubmit: (onSubmit: () => void) => void;
 }
 
 const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
   isUserRegistering,
+  setOnFormSubmit
 }) => {
   const {
     control,
@@ -25,9 +32,36 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
     formState: { errors },
   } = useForm<FormData>();
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
+  const { setServicesChoosen, loginBtnCustomPath, setLoginBtnCustomPath } = React.useContext(GlobalContext);
+  const navigation = useNavigation();
+  const dispatch = useAppDispatch()
+
+  const onSubmit =async (data: FormData) => {
+    dispatch(login({
+      name: "Andrei",
+      surname: "Albu"
+    }))
+    
+    await saveLoginStatus(true)
+    //sostituire con react-thunk
+
+    setServicesChoosen([]);
+    if (loginBtnCustomPath) {
+        if (navigation.canGoBack()) {
+            navigation.dispatch(StackActions.popToTop());
+        }
+        router.replace(loginBtnCustomPath);
+        setLoginBtnCustomPath(undefined);
+    } else if (navigation.canGoBack()) {
+        navigation.goBack();
+    } else {
+        router.replace('/');
+    }
   };
+
+  React.useEffect(() => {
+    setOnFormSubmit(() => handleSubmit(onSubmit))
+  }, [])
 
   return (
     <View style={[styles.container, isUserRegistering && styles.containerUserRegistering]}>
@@ -40,6 +74,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
             placeholder="Email"
             isRightIcon={true}
             customValue={value}
+            onChange={onChange}
             inputContainerStyle={styles.inputContainerStyle}
             returnKeyType="send"
           />
@@ -59,6 +94,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
                 placeholder="Name"
                 isRightIcon={true}
                 customValue={value}
+                onChange={onChange}
                 inputContainerStyle={styles.inputContainerStyle}
                 returnKeyType="send"
             />
@@ -78,6 +114,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
             placeholder="Password"
             isRightIcon={true}
             customValue={value}
+            onChange={onChange}
             inputContainerStyle={styles.inputContainerStyle}
             returnKeyType="send"
           />
@@ -97,6 +134,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
                   placeholder="Repeat password"
                   isRightIcon={true}
                   customValue={value}
+                  onChange={onChange}
                   inputContainerStyle={styles.inputContainerStyle}
                   returnKeyType="send"
                 />
@@ -106,8 +144,6 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
           </>
         )
       }
-
-      {/* <Button title="Submit" onPress={handleSubmit(onSubmit)} /> */}
     </View>
   );
 }
@@ -126,6 +162,7 @@ const styles = StyleSheet.create({
   error: {
     color: "red",
     marginBottom: 10,
+    marginHorizontal: 10,
   },
   inputContainerStyle: {
     marginTop: 0,

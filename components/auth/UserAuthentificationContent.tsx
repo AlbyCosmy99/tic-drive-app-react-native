@@ -6,13 +6,7 @@ import OAuth2Button from "../ui/buttons/OAuth2Button"
 import GoogleIcon from "@/assets/svg/OAuth2Icons/GoogleIcon"
 import AppleIcon from "@/assets/svg/OAuth2Icons/AppleIcon"
 import { Colors } from "@/constants/Colors"
-import React, { useContext } from "react"
-import { useAppDispatch } from "@/app/stateManagement/redux/hooks"
-import { login } from "@/app/stateManagement/redux/slices/authSlice"
-import { saveLoginStatus } from "@/app/utils"
-import GlobalContext from "@/app/stateManagement/contexts/GlobalContext"
-import { router, useNavigation } from "expo-router"
-import { StackActions } from "@react-navigation/native"
+import React, { useState } from "react"
 
 interface UserAuthenticationContentProps {
     action: "Login" | "Register";
@@ -20,37 +14,17 @@ interface UserAuthenticationContentProps {
     setIsUserRegistering: (isUserRegistering: boolean) => void
 }
 
-const handleLoginPressed = async () => {
-    const { setServicesChoosen, loginBtnCustomPath, setLoginBtnCustomPath } = useContext(GlobalContext);
-    const navigation = useNavigation();
-    const dispatch = useAppDispatch()
-    
-    dispatch(login({
-        name: "Andrei",
-        surname: "Albu"
-    }))
-    await saveLoginStatus(true)
-    //sostituire con react-thunk
-
-    setServicesChoosen([]);
-    if (loginBtnCustomPath) {
-        if (navigation.canGoBack()) {
-            navigation.dispatch(StackActions.popToTop());
-        }
-        router.replace(loginBtnCustomPath);
-        setLoginBtnCustomPath(undefined);
-    } else if (navigation.canGoBack()) {
-        navigation.goBack();
-    } else {
-        router.replace('/');
-    }
-};
-
 const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
     action,
     isUserRegistering,
     setIsUserRegistering
 }) => {
+    const [onFormSubmit, setOnFormSubmit] = useState<(() => void) | null>(null)
+
+    const handleLoginPressed = async () => {
+        onFormSubmit && onFormSubmit()
+    };
+    
     return (
         <>
             <Text className="text-center text-3xl font-medium m-1.5 mb-3">Welcome</Text>
@@ -67,6 +41,7 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
             <View>
                 <UserAuthenticationForm 
                     isUserRegistering={isUserRegistering}
+                    setOnFormSubmit={setOnFormSubmit}
                 />
             </View>
             <View>
