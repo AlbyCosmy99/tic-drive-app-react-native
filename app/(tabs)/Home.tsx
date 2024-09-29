@@ -16,7 +16,12 @@ export default function HomeTab() {
       <SafeAreaView className='flex-1'>
         <TicDriveNavbar isLoginAvailable={false} />
         <View className='flex-row items-center'>
-            <TicDriveInput isLeftIcon={true} isRightIcon={true} placeholder='Search workshop'/>
+            <TicDriveInput 
+              isLeftIcon={true} 
+              isRightIcon={true} 
+              placeholder='Search workshop' 
+              containerViewStyleTailwind="flex-1 justify-center items-center"
+            />
             <View className='justify-center items-center ml-2 mb-1 border-2 rounded-xl mx-3.5 w-14 h-14' style={styles.filterButtonContainer}>
               <TouchableOpacity 
                 className='justify-center items-center h-full w-full' 

@@ -25,4 +25,8 @@ const vehicleRegistrationOptions: VehicleRegistrationOption[] = [
     },
 ];
 
+export type CarRegistrationOptions = 'vin' | 'plateNumber' | 'model'
+
 export default vehicleRegistrationOptions;
+
+

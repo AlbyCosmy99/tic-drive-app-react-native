@@ -5,11 +5,13 @@ import { ScrollView } from "react-native-gesture-handler";
 import SegmentedControl from "@/components/SegmentedControl";
 import TicDriveInput from "@/components/ui/inputs/TicDriveInput";
 import { useContext, useEffect, useState } from "react";
-import options from '../../constants/VehicleRegistrationOptions';
+import options, { CarRegistrationOptions } from '../../constants/VehicleRegistrationOptions';
 import GlobalContext from "../stateManagement/contexts/GlobalContext";
 import ToPreviousPage from "@/components/navigation/ToPreviousPage";
 import SegmentedControlSelection from "../types/SegmentedControlSelection";
 import Car from "../types/Car";
+import defaultCar from "@/constants/defaultRegistrationCar";
+import cars from "@/constants/temp/Cars";
 
 function RegisterVehicle() {
     const [segmentedControlSelection, setSegmentedControlSelection] = useState<SegmentedControlSelection | null>(null)
@@ -44,6 +46,21 @@ function RegisterVehicle() {
         }
     },[carSelected])
 
+    const handleOnRightIcon = () => {
+        setCarSelected({
+            id: 0,
+            liters: 0,
+            energy: "",
+            engineCode: "",
+            enginePower: 0,
+            engineDisplacement: 0,
+            vin: "",
+            plateNumber: "",
+            model: ""
+          });
+          setIsCarSearched(false)
+    }
+
     return (
         <SafeAreaView style={backgroundStyle} className="flex-1">
             <ToPreviousPage />
@@ -69,6 +86,13 @@ function RegisterVehicle() {
                                             setCarSelected={setCarSelected}
                                             option={option.keyString}
                                             setIsCarSearched={setIsCarSearched}
+                                            isChangeTextUppercase={true}
+                                            onRightIcon={handleOnRightIcon}
+                                            onSubmit={(value)=> {
+                                                const car = cars.find(car => car[option.keyString as CarRegistrationOptions]?.toLowerCase().trim() === value.toLowerCase().trim());
+                                                setCarSelected(car ? car : defaultCar);
+                                                setIsCarSearched(true)
+                                            }}
                                         />
                                         {carNotFound && isCarSearched && <Text className="text-base mx-auto text-red-600">Car not found. Try again.</Text>}
                                     </View>                          

@@ -2,67 +2,43 @@ import { StyleSheet, View } from "react-native";
 import { Icon, Input } from '@rneui/themed';
 import { Colors } from "@/constants/Colors";
 import React, { memo, useContext, useState } from 'react';
-import {Car} from '../../../constants/temp/Cars'
-import cars from "../../../constants/temp/Cars";
 import GlobalContext from "@/app/stateManagement/contexts/GlobalContext";
-import defaultCar from "@/constants/defaultRegistrationCar";
 
 interface TicDriveInputProps {
   isLeftIcon?: boolean;
   isRightIcon?: boolean;
   onRightIcon?: () => void;
   placeholder: string;
-  setCarSelected?: (carSelected: Car) => void;
-  option?: string,
-  setIsCarSearched?: (carSearched: boolean) => void
+  onSubmit?: (value: string) => void;
+  isTextUppercase?: boolean;
+  containerViewStyleTailwind?: string;
 }
 
 const TicDriveInput: React.FC<TicDriveInputProps> = ({ 
   isLeftIcon = false, 
   isRightIcon = false, 
-  placeholder, 
-  setCarSelected,
   onRightIcon,
-  option = "plateNumber", //car registration default option
-  setIsCarSearched = () => {},
+  placeholder, 
+  onSubmit,
+  isTextUppercase = false,
+  containerViewStyleTailwind = ""
 }) => {
 
   const [value, setValue] = useState<string>('');
   const {workshopFilter, setWorkshopFilter} = useContext(GlobalContext)
 
-  type CarRegistrationOptions = 'vin' | 'plateNumber' | 'model'
-
   const handleOnPress = () => {
     setValue('');
     onRightIcon && onRightIcon()
-    
-    // if (setCarSelected) {
-    //   setCarSelected({
-    //     id: 0,
-    //     liters: 0,
-    //     energy: "",
-    //     engineCode: "",
-    //     enginePower: 0,
-    //     engineDisplacement: 0,
-    //     vin: "",
-    //     plateNumber: "",
-    //     model: ""
-    //   });
-    //   setIsCarSearched(false)
-    // }
     setWorkshopFilter('')
   };
 
   const handleSubmitEditing = () => {
-    if (value && setCarSelected) {
-      const car = cars.find(car => car[option as CarRegistrationOptions]?.toLowerCase().trim() === value.toLowerCase().trim());
-      setCarSelected(car ? car : defaultCar);
-      setIsCarSearched(true)
-    }
+    onSubmit && onSubmit(value);
   };
 
   return (
-    <View className={!setCarSelected ? "flex-1 justify-center items-center" : ''}>
+    <View className={containerViewStyleTailwind && containerViewStyleTailwind}>
       <Input
         placeholder={placeholder}
         leftIcon={
@@ -89,7 +65,7 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
         placeholderTextColor="#8b8b8b"
         value={value}
         onChangeText={(text) => {
-          setValue(setCarSelected ? text.toUpperCase() : text)
+          setValue(isTextUppercase ? text.toUpperCase() : text)
           setWorkshopFilter(text)
         }}
         onSubmitEditing={handleSubmitEditing}
