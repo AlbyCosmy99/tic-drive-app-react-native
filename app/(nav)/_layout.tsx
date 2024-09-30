@@ -1,5 +1,5 @@
 import TicDriveButton from "@/components/ui/buttons/TicDriveButton";
-import { Text, useColorScheme, View } from "react-native";
+import { Platform, StatusBar, StyleSheet, Text, useColorScheme, View } from "react-native";
 import { SafeAreaView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import ServicesCards from "@/components/ServicesCards";
@@ -10,6 +10,7 @@ import { getLoginStatus } from "../utils";
 import user from "@/constants/temp/UserLogged";
 import { useAppDispatch, useAppSelector } from "../stateManagement/redux/hooks";
 import { login, logout } from "../stateManagement/redux/slices/authSlice";
+import { globalStyles } from "../globalStyles";
 
 export default function Nav() {
     const colorScheme = useColorScheme();
@@ -18,7 +19,6 @@ export default function Nav() {
 
     useEffect(() => {
         const checkLoginStatus = async () => {
-          const isUserLogged = await getLoginStatus()
           if(isUserLogged) {
             //mock data
             dispatch(login({
@@ -39,7 +39,7 @@ export default function Nav() {
                 colors={[Colors.light.backgroundLinearGradient.start, Colors.light.backgroundLinearGradient.end]}
                 className="flex-1 absolute w-full h-full"
             />
-                <SafeAreaView className="flex-1">
+                <SafeAreaView className="flex-1" style={globalStyles.safeAreaView}>
                     <TicDriveNavbar />
                     <View className="flex-1 justify-between">
                         <Text style={{ color: colorScheme === 'light' ? Colors.light.text : Colors.dark.text }} className="font-medium text-3xl mx-3.5 mb-2">
@@ -52,3 +52,4 @@ export default function Nav() {
         </View>
     );
 }
+

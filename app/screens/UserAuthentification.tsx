@@ -1,11 +1,12 @@
 import ToPreviousPage from "@/components/navigation/ToPreviousPage";
-import { KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet, View } from "react-native";
 import { useMemo, useState } from "react";
 import { Colors } from "@/constants/Colors";
 import { ScrollView } from "react-native-gesture-handler";
 import { Image } from "@rneui/themed";
 import TicDriveLogo from '../../assets/images/TicDriveLogo.jpeg';
 import UserAuthenticationContent from "@/components/auth/UserAuthentificationContent";
+import { globalStyles } from "../globalStyles";
 
 export default function UserAuthentification() {
     const [isUserRegistering, setIsUserRegistering] = useState<boolean>(false)
@@ -19,7 +20,7 @@ export default function UserAuthentification() {
             className="flex-1"
             behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-            <SafeAreaView className="flex-1 bg-white">
+            <SafeAreaView className="flex-1 bg-white" style={globalStyles.safeAreaView}>
                 <ToPreviousPage />
                 <View className="flex-1 justify-between">
                     <View style={styles.logo} className="justify-center items-center">

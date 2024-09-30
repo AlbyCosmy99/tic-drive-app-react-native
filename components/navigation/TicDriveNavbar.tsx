@@ -1,11 +1,9 @@
-import React, { FC, useContext } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, useColorScheme } from 'react-native';
-import { SafeAreaView } from 'react-native';
 import { Colors } from '@/constants/Colors';
 import Entypo from '@expo/vector-icons/Entypo';
 import { router } from 'expo-router';
 import { saveLoginStatus } from '@/app/utils';
-import GlobalContext from '@/app/stateManagement/contexts/GlobalContext';
 import { StackActions, useNavigation } from '@react-navigation/native';
 import { useAppDispatch, useAppSelector } from '@/app/stateManagement/redux/hooks';
 import { logout } from '@/app/stateManagement/redux/slices/authSlice';
@@ -32,37 +30,35 @@ const TicDriveNavbar = ({isLoginAvailable = true}: TicDriveNavbarProps) =>  {
   }
 
   return (
-    <SafeAreaView>
-        <View 
-          className={`flex-row items-center ${!isLoginAvailable ? 'justify-center' : 'justify-between'} px-2.5 h-14`} 
-          style={backgroundStyle}
-        >
-          <View className='flex-row'>
-              <Text className='font-bold text-3xl' style={[styles.title, styles.ticText]}>Tic</Text>
-              <Text className='font-bold text-3xl' style={[styles.title, styles.driveText]}>Drive</Text>
+    <View 
+      className={`flex-row items-center ${!isLoginAvailable ? 'justify-center' : 'justify-between'} px-2.5 h-14`} 
+      style={backgroundStyle}
+    >
+      <View className='flex-row'>
+          <Text className='font-bold text-3xl' style={[styles.title, styles.ticText]}>Tic</Text>
+          <Text className='font-bold text-3xl' style={[styles.title, styles.driveText]}>Drive</Text>
+      </View>
+      {isLoginAvailable && (isUserLogged ? (
+        <TouchableOpacity onPress={handleLogout} className='p-2.5'>
+          <View className='flex-row gap-1 items-center justify-center'>
+            <Entypo name="login" size={24} color={Colors.light.text} />
+            <Text className='text-xl' style={styles.login}>Logout</Text>
           </View>
-          {isLoginAvailable && (isUserLogged ? (
-            <TouchableOpacity onPress={handleLogout} className='p-2.5'>
-              <View className='flex-row gap-1 items-center justify-center'>
-                <Entypo name="login" size={24} color={Colors.light.text} />
-                <Text className='text-xl' style={styles.login}>Logout</Text>
-              </View>
-            </TouchableOpacity>) : (
-              <TouchableOpacity onPress={() => {
-                if(navigation.canGoBack()) {
-                  navigation.dispatch(StackActions.popToTop());
-                }
-                router.push('../screens/UserAuthentification')
-              }} className='p-2.5'>
-                <View className='flex-row gap-1 items-center justify-center'>
-                  <Entypo name="login" size={24} color={Colors.light.text} />
-                  <Text className='text-xl' style={styles.login}>Login</Text>
-                </View>
-              </TouchableOpacity>
-            ))
-          }
-        </View>
-    </SafeAreaView>  
+        </TouchableOpacity>) : (
+          <TouchableOpacity onPress={() => {
+            if(navigation.canGoBack()) {
+              navigation.dispatch(StackActions.popToTop());
+            }
+            router.push('../screens/UserAuthentification')
+          }} className='p-2.5'>
+            <View className='flex-row gap-1 items-center justify-center'>
+              <Entypo name="login" size={24} color={Colors.light.text} />
+              <Text className='text-xl' style={styles.login}>Login</Text>
+            </View>
+          </TouchableOpacity>
+        ))
+      }
+    </View> 
   );
 };
 

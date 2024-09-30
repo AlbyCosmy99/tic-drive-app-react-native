@@ -6,6 +6,7 @@ import FilterIcon from '../../assets/svg/discover_tune.svg';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
 import WorkshopCards from '@/components/WorkshopCards';
 import { LinearGradient } from 'expo-linear-gradient';
+import { globalStyles } from '../globalStyles';
 
 export default function HomeTab() {
   
@@ -13,7 +14,7 @@ export default function HomeTab() {
     <LinearGradient
       colors={[Colors.light.backgroundLinearGradient.start, Colors.light.backgroundLinearGradient.end]}
       className="flex-1 w-full h-full">
-      <SafeAreaView className='flex-1'>
+      <SafeAreaView className='flex-1' style={globalStyles.safeAreaView}>
         <TicDriveNavbar isLoginAvailable={false} />
         <View className='flex-row items-center'>
             <TicDriveInput 

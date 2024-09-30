@@ -18,6 +18,7 @@ import ChatIcon from '../../assets/svg/chat.svg'
 import { Ionicons } from "@expo/vector-icons";
 import TicDriveButton from "@/components/ui/buttons/TicDriveButton";
 import ClientReviewCards from "@/components/ClientReviewCards";
+import { globalStyles } from "../globalStyles";
 
 export default function WorkshopDetails() {
     const { id } = useLocalSearchParams();
@@ -50,7 +51,7 @@ export default function WorkshopDetails() {
     }
 
     return (
-        <SafeAreaView style={styles.container} className="flex-1 p-2.5">
+        <SafeAreaView style={[styles.container, globalStyles.safeAreaView]} className="flex-1 p-2.5">
             <View className="flex-row items-center justify-between mr-2.5">
                 <TouchableOpacity 
                     onPress={() => router.back()} 

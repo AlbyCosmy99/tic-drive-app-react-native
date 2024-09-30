@@ -12,6 +12,7 @@ import SegmentedControlSelection from "../types/SegmentedControlSelection";
 import Car from "../types/Car";
 import defaultCar from "@/constants/defaultRegistrationCar";
 import cars from "@/constants/temp/Cars";
+import { globalStyles } from "../globalStyles";
 
 function RegisterVehicle() {
     const [segmentedControlSelection, setSegmentedControlSelection] = useState<SegmentedControlSelection | null>(null)
@@ -40,7 +41,7 @@ function RegisterVehicle() {
     }
 
     return (
-        <SafeAreaView style={backgroundStyle} className="flex-1">
+        <SafeAreaView style={[backgroundStyle, globalStyles.safeAreaView]} className="flex-1">
             <ToPreviousPage />
             <View className="flex-1 justify-between">
                 <Text 

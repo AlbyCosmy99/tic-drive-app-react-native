@@ -1,10 +1,11 @@
 import TicDriveNavbar from "@/components/navigation/TicDriveNavbar";
 import TicDriveButton from "@/components/ui/buttons/TicDriveButton";
 import { SafeAreaView, Text, View } from "react-native";
+import { globalStyles } from "../globalStyles";
 
 export default function UserDashboard() {
     return (
-        <SafeAreaView className="flex-1">
+        <SafeAreaView className="flex-1" style={globalStyles.safeAreaView}>
             <TicDriveNavbar />
             <View className="flex-1 justify-center items-center">
                 <Text>user dashboard</Text>
