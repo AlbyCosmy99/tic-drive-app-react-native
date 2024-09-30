@@ -7,6 +7,7 @@ import { Image } from "@rneui/themed";
 import TicDriveLogo from '../../assets/images/TicDriveLogo.jpeg';
 import UserAuthenticationContent from "@/components/auth/UserAuthentificationContent";
 import { globalStyles } from "../globalStyles";
+import isIOSPlatform from "../utils/IsIOSPlatform";
 
 export default function UserAuthentification() {
     const [isUserRegistering, setIsUserRegistering] = useState<boolean>(false)
@@ -18,7 +19,7 @@ export default function UserAuthentification() {
     return (
         <KeyboardAvoidingView
             className="flex-1"
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            behavior={isIOSPlatform() ? "padding" : "height"}
         >
             <SafeAreaView className="flex-1 bg-white" style={globalStyles.safeAreaView}>
                 <ToPreviousPage />

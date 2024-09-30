@@ -4,12 +4,13 @@ import { Colors } from "@/constants/Colors";
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { globalStyles } from "../globalStyles";
+import necessaryDeviceBottomInset from "../utils/necessaryDeviceBottomInset";
 
 export default function BookingConfirmation() {
     return (
         <LinearGradient
             colors={[Colors.light.backgroundLinearGradient.start, Colors.light.backgroundLinearGradient.end]}
-            className="flex-1 w-full h-full"
+            className={`flex-1 w-full h-full ${necessaryDeviceBottomInset()}`}
         >
             <SafeAreaView style={[styles.container, globalStyles.safeAreaView]} className="flex-1">
                 <TicDriveNavbar isLoginAvailable={false}/>

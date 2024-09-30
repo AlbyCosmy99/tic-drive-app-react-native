@@ -19,6 +19,7 @@ import { Ionicons } from "@expo/vector-icons";
 import TicDriveButton from "@/components/ui/buttons/TicDriveButton";
 import ClientReviewCards from "@/components/ClientReviewCards";
 import { globalStyles } from "../globalStyles";
+import necessaryDeviceBottomInset from "../utils/necessaryDeviceBottomInset";
 
 export default function WorkshopDetails() {
     const { id } = useLocalSearchParams();
@@ -51,7 +52,7 @@ export default function WorkshopDetails() {
     }
 
     return (
-        <SafeAreaView style={[styles.container, globalStyles.safeAreaView]} className="flex-1 p-2.5">
+        <SafeAreaView style={[styles.container, globalStyles.safeAreaView]} className={`flex-1 p-2.5 ${necessaryDeviceBottomInset()}`}>
             <View className="flex-row items-center justify-between mr-2.5">
                 <TouchableOpacity 
                     onPress={() => router.back()} 

@@ -1,7 +1,8 @@
-import { Platform, StatusBar, StyleSheet } from "react-native";
+import { StatusBar, StyleSheet } from "react-native";
+import isIOSPlatform from "./utils/IsIOSPlatform";
 
 export const globalStyles = StyleSheet.create({
     safeAreaView: {
-        paddingTop: Platform.OS === "ios" ? 0 : StatusBar.currentHeight
+        paddingTop: isIOSPlatform() ? 0 : StatusBar.currentHeight
     }
 })
