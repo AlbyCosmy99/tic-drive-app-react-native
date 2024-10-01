@@ -28,7 +28,7 @@ const hasNotchDevices = [
   
 
 const isIphoneWithHomeIndicator = () => {
-  if (Device.brand === 'Apple' && hasNotchDevices.includes(Device.modelName)) {
+  if (Device.brand === 'Apple' && hasNotchDevices.includes(Device?.modelName ?? "")) {
     return true;
   }
   return false;
