@@ -49,6 +49,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
   }, [isUserRegistering])
   
   const onSubmit =async (data: FormData) => {
+    //mock data
     dispatch(login({
       name: "Andrei",
       surname: "Albu"
@@ -80,7 +81,13 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
       <Controller
         control={control}
         name="email"
-        rules={{ required: "Email is required" }}
+        rules={{
+          required: "Email is required",
+          pattern: {
+            value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, //is an email
+            message: "Please enter a valid email address"
+          }
+        }}
         render={({ field: { onChange, value, onBlur } }) => (
           <TicDriveInput 
             placeholder="Email"
@@ -120,7 +127,13 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
       <Controller
         control={control}
         name="password"
-        rules={{ required: "Password is required" }}
+        rules={{
+          required: "Password is required",
+          pattern: {
+            value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/,
+            message: "Password must be at least 8 characters long and include letters and numbers"
+          }
+        }}
         render={({ field: { onChange, value, onBlur } }) => (
           <TicDriveInput 
             placeholder="Password"
@@ -129,6 +142,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
             onChange={onChange}
             inputContainerStyle={styles.inputContainerStyle}
             returnKeyType="send"
+            isPassword={true}
           />
         )}
       />
@@ -152,6 +166,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
                   onChange={onChange}
                   inputContainerStyle={styles.inputContainerStyle}
                   returnKeyType="send"
+                  isPassword={true}
                 />
               )}
             />

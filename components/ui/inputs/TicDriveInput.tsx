@@ -16,6 +16,7 @@ interface TicDriveInputProps {
   inputContainerStyle?: StyleProp<ViewStyle>;
   returnKeyType?: ReturnKeyTypeOptions;
   onChange?: (text: string) => void;
+  isPassword?: boolean;
 }
 
 const TicDriveInput: React.FC<TicDriveInputProps> = ({ 
@@ -29,6 +30,7 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
   customValue = "",
   inputContainerStyle = {},
   returnKeyType="default",
+  isPassword = false,
   onChange,
 }) => {
 
@@ -80,6 +82,7 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
         }}
         onSubmitEditing={handleSubmitEditing}
         returnKeyType={returnKeyType}
+        secureTextEntry={isPassword}
       />
     </View>
   );
