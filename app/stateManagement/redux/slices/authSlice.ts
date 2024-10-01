@@ -5,6 +5,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 const initialState: AuthState = {
     isAuthenticated: false,
     user: null,
+    areFormErrors: false,
 };
 
 const authSlice = createSlice({
@@ -18,11 +19,14 @@ const authSlice = createSlice({
     logout: (state:AuthState) => {
       state.isAuthenticated = false,
       state.user = null
+    },
+    setAreFormErrors: (state: AuthState, action: PayloadAction<boolean>) => {
+      state.areFormErrors = action.payload
     }
    }
 })
   
-export const {login, logout} = authSlice.actions
+export const {login, logout, setAreFormErrors} = authSlice.actions
 
 export default authSlice.reducer;
   

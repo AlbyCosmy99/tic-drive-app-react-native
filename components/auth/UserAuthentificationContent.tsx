@@ -7,6 +7,8 @@ import GoogleIcon from "@/assets/svg/OAuth2Icons/GoogleIcon"
 import AppleIcon from "@/assets/svg/OAuth2Icons/AppleIcon"
 import { Colors } from "@/constants/Colors"
 import React, { useState } from "react"
+import { useAppDispatch } from "@/app/stateManagement/redux/hooks"
+import { setAreFormErrors } from "@/app/stateManagement/redux/slices/authSlice"
 
 interface UserAuthenticationContentProps {
     action: "Login" | "Register";
@@ -20,10 +22,16 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
     setIsUserRegistering
 }) => {
     const [onFormSubmit, setOnFormSubmit] = useState<(() => void) | null>(null)
+    const dispatch = useAppDispatch()
 
     const handleLoginPressed = async () => {
         onFormSubmit && onFormSubmit()
+        dispatch(setAreFormErrors(false))
     };
+
+    const handleSwitchLoginRegister = () => {
+        setIsUserRegistering(!isUserRegistering)
+    }
     
     return (
         <>
@@ -34,7 +42,7 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
                     (<Text>Don't have an account?</Text>) :
                     (<Text>Already have an account?</Text>)
                 }
-                <TouchableOpacity onPress={() => setIsUserRegistering(!isUserRegistering)}>
+                <TouchableOpacity onPress={handleSwitchLoginRegister}>
                     <Text className="font-medium">{action === "Login" ? "Register" : "Login"} here</Text>
                 </TouchableOpacity>
             </View>

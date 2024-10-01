@@ -5,9 +5,10 @@ import TicDriveInput from "../ui/inputs/TicDriveInput";
 import { router, useNavigation } from "expo-router";
 import { useAppDispatch } from "@/app/stateManagement/redux/hooks";
 import GlobalContext from "@/app/stateManagement/contexts/GlobalContext";
-import { login } from "@/app/stateManagement/redux/slices/authSlice";
+
 import { saveLoginStatus } from "@/app/utils";
 import { StackActions } from "@react-navigation/native";
+import { login, setAreFormErrors } from "@/app/stateManagement/redux/slices/authSlice";
 
 type FormData = {
   email: string;
@@ -29,6 +30,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
     control,
     setValue,
     handleSubmit,
+    clearErrors,
     formState: { errors },
   } = useForm<FormData>();
 
@@ -36,6 +38,16 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
   const navigation = useNavigation();
   const dispatch = useAppDispatch()
 
+  React.useEffect(() => {
+    const areThereErrors: boolean = !!(errors?.email || errors?.name || errors?.password || errors?.repeatedPassword);
+    dispatch(setAreFormErrors(areThereErrors));
+  }, [errors?.email, errors?.name, errors?.password, errors?.repeatedPassword]);
+
+  
+  React.useEffect(() => {
+    clearErrors()
+  }, [isUserRegistering])
+  
   const onSubmit =async (data: FormData) => {
     dispatch(login({
       name: "Andrei",

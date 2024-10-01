@@ -24,7 +24,7 @@ export default function UserAuthentification() {
             <SafeAreaView className="flex-1 bg-white" style={globalStyles.safeAreaView}>
                 <ToPreviousPage />
                 <View className="flex-1 justify-between">
-                    <View style={styles.logo} className="justify-center items-center">
+                    <View className="justify-center items-center">
                         <Image 
                             source={TicDriveLogo}
                             style={styles.logoImage}
@@ -44,9 +44,6 @@ export default function UserAuthentification() {
 }
 
 const styles = StyleSheet.create({
-    logo: {
-        
-    },
     content: {
         flex: 1,
     },
