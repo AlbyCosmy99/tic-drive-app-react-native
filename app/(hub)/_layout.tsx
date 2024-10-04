@@ -67,7 +67,7 @@ const ChooseUserModeScreen = () => {
                     </View>
                     <View>
                         <LottieView
-                            source={require('@/assets/json/animations/carPhoneSliding.json')}
+                            source={require('@/assets/json/animations/ticDriveAnimation.json')}
                             autoPlay
                             loop
                             style={styles.lottieAnimation}
