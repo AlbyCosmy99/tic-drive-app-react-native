@@ -42,7 +42,7 @@ function RegisterVehicle() {
     }
 
     return (
-        <SafeAreaView style={[backgroundStyle, globalStyles.safeAreaView]} className={`flex-1 ${necessaryDeviceBottomInset()}`}>
+        <SafeAreaView style={[backgroundStyle, globalStyles().safeAreaView]} className={`flex-1 ${necessaryDeviceBottomInset()}`}>
             <ToPreviousPage containerClassName="m-2 mb-7"/>
             <View className="flex-1 justify-between">
                 <Text 

@@ -6,7 +6,7 @@ import necessaryDeviceBottomInset from "../utils/necessaryDeviceBottomInset";
 
 export default function UserDashboard() {
     return (
-        <SafeAreaView className={`flex-1 ${necessaryDeviceBottomInset()}`} style={globalStyles.safeAreaView}>
+        <SafeAreaView className={`flex-1 ${necessaryDeviceBottomInset()}`} style={globalStyles().safeAreaView}>
             <TicDriveNavbar />
             <View className="flex-1 justify-center items-center">
                 <Text>user dashboard</Text>

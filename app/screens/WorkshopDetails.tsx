@@ -52,7 +52,7 @@ export default function WorkshopDetails() {
     }
 
     return (
-        <SafeAreaView style={[styles.container, globalStyles.safeAreaView]} className={`flex-1 p-2.5 ${necessaryDeviceBottomInset()}`}>
+        <SafeAreaView style={[styles.container, globalStyles().safeAreaView]} className={`flex-1 p-2.5 ${necessaryDeviceBottomInset()}`}>
             <View className="flex-row items-center justify-between mr-2.5">
                 <TouchableOpacity 
                     onPress={() => router.back()} 

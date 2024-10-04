@@ -13,6 +13,7 @@ import { logout } from "../stateManagement/redux/slices/authSlice";
 import { saveLoginStatus } from "../utils";
 import { Entypo } from "@expo/vector-icons";
 import { StackActions } from "@react-navigation/native";
+import TicDriveNavbar from "@/components/navigation/TicDriveNavbar";
 
 const ChooseUserModeScreen = () => {
 
@@ -34,24 +35,49 @@ const ChooseUserModeScreen = () => {
                 locations={[0, 0.45, 1]} 
                 className="flex-1 absolute w-full h-full"
             >
-                <View className="flex-1 justify-between" style={globalStyles.safeAreaView}>
-                    <View className="justify-center items-center flex-1">
+                <View className="flex-1 justify-between" style={globalStyles().safeAreaView}>
+                    <View className='justify-end flex-row mx-3'>
+                        {isUserLogged ? (
+                                <TouchableOpacity onPress={handleLogout} className='p-2.5'>
+                                    <View className='flex-row gap-1 items-center justify-center'>
+                                        <Entypo name="login" size={24} color={Colors.light.text} />
+                                        <Text className='text-xl' style={styles.login}>Logout</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            ) : (
+                                <TouchableOpacity onPress={() => {
+                                    if(navigation.canGoBack()) {
+                                        navigation.dispatch(StackActions.popToTop());
+                                    }
+                                    router.push('../screens/UserAuthentification')
+                                }} className='p-2.5 pl-0 flex-row gap-2'>
+                                    <View className='flex-row gap-1 items-center justify-center'>
+                                        <Entypo name="login" size={24} color={Colors.light.text} />
+                                        <Text className='text-xl' style={styles.login}>Login</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            )
+                        }
+                    </View>
+                    <View className="items-center justify-center">
                         <Image 
                             source={TicDriveLogo}
                             style={styles.logoImage}
                         />
                     </View>
-                    <LottieView
-                        source={require('@/assets/json/animations/carPhoneSliding.json')}
-                        autoPlay
-                        loop
-                        style={styles.lottieAnimation}
-                    />
+                    <View>
+                        <LottieView
+                            source={require('@/assets/json/animations/carPhoneSliding.json')}
+                            autoPlay
+                            loop
+                            style={styles.lottieAnimation}
+                        />
+                    </View>
                     <LinearGradient
                         colors={[Colors.light.backgroundLinearGradient.start, Colors.light.green.drive, Colors.light.green.drive]} // Define your gradient colors here
                         style={styles.content} // Apply gradient to the content view
                         locations={[0, 0.4, 1]} // Adjust the position of the gradient transition
-                        className="p-2 items-end"
+                        className="p-2 items-end justify-center"
                     >
                         <View className="flex-row justify-center items-center p-2">
                             <View className="flex-1">
@@ -82,29 +108,6 @@ const ChooseUserModeScreen = () => {
                                     isCheckIconAvailable={false}
                                 />
                             </View>
-                        </View>
-                        <View className='flex-1 justify-end flex-row mx-5'>
-                            {isUserLogged ? (
-                                    <TouchableOpacity onPress={handleLogout} className='p-2.5'>
-                                    <View className='flex-row gap-1 items-center justify-center'>
-                                        <Entypo name="login" size={24} color={Colors.light.text} />
-                                        <Text className='text-xl' style={styles.login}>Logout</Text>
-                                    </View>
-                                    </TouchableOpacity>
-                                ) : (
-                                    <TouchableOpacity onPress={() => {
-                                    if(navigation.canGoBack()) {
-                                        navigation.dispatch(StackActions.popToTop());
-                                    }
-                                    router.push('../screens/UserAuthentification')
-                                    }} className='p-2.5 pl-0 flex-row gap-2'>
-                                    <View className='flex-row gap-1 items-center justify-center'>
-                                        <Entypo name="login" size={24} color={Colors.light.text} />
-                                        <Text className='text-xl' style={styles.login}>Login</Text>
-                                    </View>
-                                    </TouchableOpacity>
-                                )
-                            }
                         </View>
                     </LinearGradient>
                 </View>

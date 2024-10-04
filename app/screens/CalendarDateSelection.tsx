@@ -18,7 +18,7 @@ export default function CalendarDateSelection() {
             colors={[Colors.light.backgroundLinearGradient.start, Colors.light.backgroundLinearGradient.end]}
             className={`flex-1 w-full h-full ${necessaryDeviceBottomInset()}`}
         >
-            <SafeAreaView className="flex-1 justify-between" style={globalStyles.safeAreaView}>
+            <SafeAreaView className="flex-1 justify-between" style={globalStyles().safeAreaView}>
                 <TicDriveNavbar isLoginAvailable={false}/>
                 <View className="items-center justify-center flex-1">
                     <Text>select date and hour</Text>
