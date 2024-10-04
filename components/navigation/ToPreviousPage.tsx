@@ -1,16 +1,23 @@
 import { Colors } from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import React from "react";
 import { useColorScheme } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const ToPreviousPage = () => {
+interface ToPreviousPageProps {
+  containerClassName?: string
+} 
+
+const ToPreviousPage: React.FC<ToPreviousPageProps> = ({
+  containerClassName = ""
+}) => {
   const colorScheme = useColorScheme();
 
   return (
     <TouchableOpacity
       onPress={() => router.back()}
-      className="m-2 mb-7"
+      className={containerClassName}
       accessible={true}
       accessibilityLabel="Back to previous page"
     >

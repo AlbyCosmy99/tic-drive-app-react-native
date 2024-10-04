@@ -22,7 +22,7 @@ export default function UserAuthentification() {
             behavior={isIOSPlatform() ? "padding" : "height"}
         >
             <SafeAreaView className="flex-1 bg-white" style={globalStyles.safeAreaView}>
-                <ToPreviousPage />
+                <ToPreviousPage containerClassName="m-2 mb-7" />
                 <View className="flex-1 justify-between">
                     <View className="justify-center items-center">
                         <Image 

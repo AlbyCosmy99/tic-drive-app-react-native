@@ -43,7 +43,7 @@ function RegisterVehicle() {
 
     return (
         <SafeAreaView style={[backgroundStyle, globalStyles.safeAreaView]} className={`flex-1 ${necessaryDeviceBottomInset()}`}>
-            <ToPreviousPage />
+            <ToPreviousPage containerClassName="m-2 mb-7"/>
             <View className="flex-1 justify-between">
                 <Text 
                     style={{color: colorScheme === 'light' ? Colors.light.text : Colors.dark.text}} 

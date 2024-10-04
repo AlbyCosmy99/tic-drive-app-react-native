@@ -36,7 +36,13 @@ export default function RootLayout() {
         <GlobalProvider>
           <GestureHandlerRootView>
             <Stack>
-              <Stack.Screen name="(nav)" options={{ headerShown: false }} />
+              <Stack.Screen name="(hub)" options={{ headerShown: false }} />
+              <Stack.Screen 
+                name="screens/ChooseServicesScreen" 
+                options={{ 
+                  title: 'ChooseServicesScreen', 
+                  headerShown: false,
+              }} />
               <Stack.Screen 
                 name="screens/UserAuthentification" 
                 options={{ 

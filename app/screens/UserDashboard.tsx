@@ -11,7 +11,7 @@ export default function UserDashboard() {
             <View className="flex-1 justify-center items-center">
                 <Text>user dashboard</Text>
             </View>
-            <TicDriveButton text="Book a new service" path={'/'} replace={true} toTop={true} />
+            <TicDriveButton text="Book a new service" path={'/screens/ChooseServicesScreen'} />
         </SafeAreaView>
     )
 }
