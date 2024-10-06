@@ -13,7 +13,6 @@ import { logout } from "../stateManagement/redux/slices/authSlice";
 import { saveLoginStatus } from "../utils";
 import { Entypo } from "@expo/vector-icons";
 import { StackActions } from "@react-navigation/native";
-import TicDriveNavbar from "@/components/navigation/TicDriveNavbar";
 
 const ChooseUserModeScreen = () => {
 
