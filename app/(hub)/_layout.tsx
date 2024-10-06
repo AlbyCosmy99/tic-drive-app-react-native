@@ -17,6 +17,7 @@ import Feather from '@expo/vector-icons/Feather';
 import CarRepairService from '../../assets/svg/carRepairService.svg'
 import { MotiView } from 'moti'
 import { useState } from "react";
+import TicDriveNavbar from "@/components/navigation/TicDriveNavbar";
 
 const ChooseUserModeScreen = () => {
 
