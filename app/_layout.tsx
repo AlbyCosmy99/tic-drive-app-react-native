@@ -48,13 +48,16 @@ export default function RootLayout() {
                 options={{ 
                   title: 'UserAuthentification', 
                   headerShown: false,
-              }} />
+                  presentation: 'modal',
+                }} 
+              />
               <Stack.Screen 
                 name="screens/RegisterVehicle" 
                 options={{ 
                   title: 'Register Vehicle', 
                   headerShown: false,
-                }} />
+                }} 
+              />
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
               <Stack.Screen 
                 name="screens/WorkshopDetails" 

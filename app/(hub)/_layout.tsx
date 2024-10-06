@@ -6,7 +6,7 @@ import { Colors } from "@/constants/Colors";
 import { Image } from "@rneui/themed";
 import TicDriveLogo from '../../assets/images/TicDriveLogo.jpeg';
 import LottieView from 'lottie-react-native'
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity, TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { useAppDispatch, useAppSelector } from "../stateManagement/redux/hooks";
 import { logout } from "../stateManagement/redux/slices/authSlice";
 import { saveLoginStatus } from "../utils";
@@ -98,7 +98,7 @@ const ChooseUserModeScreen = () => {
                                         type: 'timing',
                                     }}
                                 >
-                                    <TouchableOpacity
+                                    <TouchableWithoutFeedback
                                         onPressIn={() => setIsSearchButtonPressed(true)}
                                         onPressOut={() => setIsSearchButtonPressed(false)}
                                         onPress={()=> router.push('../screens/ChooseServicesScreen')}
@@ -116,11 +116,14 @@ const ChooseUserModeScreen = () => {
                                             icon={() => <Feather name="search" size={50} />}
                                             disabledPressIn={true}
                                         />
-                                    </TouchableOpacity>
+                                    </TouchableWithoutFeedback>
                                 </MotiView>
                             </View>
                             <View className="flex-1">
                             <MotiView
+                                from={{
+                                    scale: 0.8,
+                                }}
                                 animate={{
                                     scale: isOfferButtonPressed ? 0.95 : 1,
                                 }}
@@ -129,7 +132,7 @@ const ChooseUserModeScreen = () => {
                                     duration: 150,
                                 }}
                             >
-                                <TouchableOpacity
+                                <TouchableWithoutFeedback
                                     onPressIn={() => setIsOfferButtonPressed(true)}
                                     onPressOut={() => setIsOfferButtonPressed(false)}
                                     onPress={() => alert('Service offering pressed')}
@@ -148,7 +151,7 @@ const ChooseUserModeScreen = () => {
                                         isCheckIconAvailable={false}
                                         icon={() => <CarRepairService width={50} height={50} />}
                                     />
-                                </TouchableOpacity>
+                                </TouchableWithoutFeedback>
                             </MotiView>
                             </View>
                         </View>
