@@ -5,7 +5,6 @@ import { globalStyles } from "../globalStyles";
 import { Colors } from "@/constants/Colors";
 import { Image } from "@rneui/themed";
 import TicDriveLogo from '../../assets/images/TicDriveLogo.jpeg';
-import ServicesCard from "@/components/ServicesCard";
 import LottieView from 'lottie-react-native'
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useAppDispatch, useAppSelector } from "../stateManagement/redux/hooks";
@@ -13,6 +12,9 @@ import { logout } from "../stateManagement/redux/slices/authSlice";
 import { saveLoginStatus } from "../utils";
 import { Entypo } from "@expo/vector-icons";
 import { StackActions } from "@react-navigation/native";
+import ServicesCard from "@/components/ServicesCard";
+import Feather from '@expo/vector-icons/Feather';
+import CarRepairService from '../../assets/svg/carRepairService.svg'
 
 const ChooseUserModeScreen = () => {
 
@@ -88,9 +90,8 @@ const ChooseUserModeScreen = () => {
                                     titleStyle={styles.cardTitle}
                                     descriptionStyle={styles.cardDescription}
                                     iconStyle={styles.cardIcon}
-                                    iconWidth={40}
-                                    iconHeight={40}
                                     isCheckIconAvailable={false}
+                                    icon={() => <Feather name="search" size={50} />}
                                 />
                             </View>
                             <View className="flex-1">
@@ -105,6 +106,7 @@ const ChooseUserModeScreen = () => {
                                     iconWidth={40}
                                     iconHeight={40}
                                     isCheckIconAvailable={false}
+                                    icon={() => <CarRepairService width={50} height={50} />}
                                 />
                             </View>
                         </View>
@@ -137,8 +139,8 @@ const styles = StyleSheet.create({
         color: Colors.light.placeholderText
     },
     logoImage: {
-        width: 200,
-        height: 200,
+        width: 180,
+        height: 180,
         resizeMode: 'contain',
     },
     cardIcon: {
@@ -146,11 +148,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     cardDescription: {
-        color:'green',
+        color: 'black',
         textAlign: 'center'
     },
     cardTitle: {
-        color: 'green',
+        color: 'black',
         textAlign: 'center'
     },
     card: {

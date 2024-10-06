@@ -4,7 +4,6 @@ import { Card, Text } from "@rneui/themed";
 import { StyleProp, StyleSheet, TextStyle, View, ViewStyle } from "react-native";
 import { TouchableWithoutFeedback } from 'react-native';
 import CheckCircle from '../assets/svg/check_circle.svg'
-import iconMap from '../constants/servicesIconsMap'
 import GlobalContext from "@/app/stateManagement/contexts/GlobalContext";
 import CarRepair from '../assets/svg/servicesIcons/car_repair.svg' //default icon
 
@@ -15,7 +14,7 @@ interface ServicesCardProps {
     cardStyle?: StyleProp<ViewStyle>;
     titleStyle?: StyleProp<TextStyle>;
     descriptionStyle?: StyleProp<TextStyle>;
-    icon?:  React.FC<{ width: number, height: number }>;
+    icon?:  React.FC<{ width: number, height: number }>; //is <Feather name="search" size={24} color="black" />
     iconStyle?: StyleProp<ViewStyle>;
     iconWidth?: number;
     iconHeight?: number;
@@ -61,6 +60,7 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
             onPressIn={handlePressIn}
             accessible={true}
             accessibilityLabel={title}
+            accessibilityRole="button"
         >
             <Card containerStyle={[styles.card, cardStyle, isPressed && styles.pressedCard]}>
                 <View style={styles.cardIcons}>
