@@ -19,6 +19,8 @@ interface ServicesCardProps {
     iconWidth?: number;
     iconHeight?: number;
     isCheckIconAvailable?: boolean;
+    pressIn?: () => void;
+    disabledPressIn?: boolean;
 }
 
 const ServicesCard: React.FC<ServicesCardProps> = ({ 
@@ -32,10 +34,22 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
     iconStyle = {},
     iconWidth = 20,
     iconHeight = 20,
-    isCheckIconAvailable = true
+    isCheckIconAvailable = true,
+    pressIn,
+    disabledPressIn = false,
 }) => {
     const [isPressed, setIsPressed] = useState(false);
     const {servicesChoosen, setServicesChoosen} = useContext(GlobalContext)
+
+    const handleOnPressIn = () => {
+        if (disabledPressIn) return;
+
+        if (pressIn) {
+            pressIn();
+        } else {
+            handlePressIn();
+        }
+    };
 
     const handlePressIn = () => {
         if(servicesChoosen.includes(title)) {
@@ -57,7 +71,7 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
 
     return (
         <TouchableWithoutFeedback
-            onPressIn={handlePressIn}
+            onPressIn={handleOnPressIn}
             accessible={true}
             accessibilityLabel={title}
             accessibilityRole="button"

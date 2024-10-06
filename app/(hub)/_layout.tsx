@@ -15,12 +15,17 @@ import { StackActions } from "@react-navigation/native";
 import ServicesCard from "@/components/ServicesCard";
 import Feather from '@expo/vector-icons/Feather';
 import CarRepairService from '../../assets/svg/carRepairService.svg'
+import { MotiView } from 'moti'
+import { MotiPressable } from "moti/interactions";
+import { useState } from "react";
 
 const ChooseUserModeScreen = () => {
 
     const navigation = useNavigation()
     const dispatch = useAppDispatch()
     const isUserLogged = useAppSelector((state) => state.auth.isAuthenticated)
+    const [isSearchButtonPressed, setIsSearchButtonPressed] = useState(false);
+    const [isOfferButtonPressed, setIsOfferButtonPressed] = useState(false);
 
     const handleLogout = async () => {
         dispatch(logout())
@@ -76,38 +81,75 @@ const ChooseUserModeScreen = () => {
                     </View>
                     <LinearGradient
                         colors={[Colors.light.backgroundLinearGradient.start, Colors.light.green.drive, Colors.light.green.drive]} // Define your gradient colors here
-                        style={styles.content} // Apply gradient to the content view
-                        locations={[0, 0.4, 1]} // Adjust the position of the gradient transition
+                        style={styles.content} 
+                        locations={[0, 0.4, 1]}
                         className="p-2 items-end justify-center"
                     >
                         <View className="flex-row justify-center items-center p-2">
                             <View className="flex-1">
-                                <ServicesCard 
-                                    id={1} 
-                                    title="Search a service" 
-                                    description="What service are you looking for?"
-                                    cardStyle={styles.card}
-                                    titleStyle={styles.cardTitle}
-                                    descriptionStyle={styles.cardDescription}
-                                    iconStyle={styles.cardIcon}
-                                    isCheckIconAvailable={false}
-                                    icon={() => <Feather name="search" size={50} />}
-                                />
+                                <MotiView
+                                    from={{
+                                        scale: 0.8,
+                                    }}
+                                    animate={{
+                                        scale: isSearchButtonPressed ? 0.95 : 1,
+                                    }}
+                                    transition={{
+                                        type: 'timing',
+                                    }}
+                                >
+                                    <TouchableOpacity
+                                        onPressIn={() => setIsSearchButtonPressed(true)}
+                                        onPressOut={() => setIsSearchButtonPressed(false)}
+                                        onPress={()=> router.push('../screens/ChooseServicesScreen')}
+                                        onLongPress={() => alert('long press')}
+                                    >
+                                        <ServicesCard 
+                                            id={1} 
+                                            title="Search a service" 
+                                            description="What service are you looking for?"
+                                            cardStyle={styles.card}
+                                            titleStyle={styles.cardTitle}
+                                            descriptionStyle={styles.cardDescription}
+                                            iconStyle={styles.cardIcon}
+                                            isCheckIconAvailable={false}
+                                            icon={() => <Feather name="search" size={50} />}
+                                            disabledPressIn={true}
+                                        />
+                                    </TouchableOpacity>
+                                </MotiView>
                             </View>
                             <View className="flex-1">
-                                <ServicesCard 
-                                    id={2} 
-                                    title="Offer a service" 
-                                    description="What services do you want to offer?"
-                                    cardStyle={styles.card}
-                                    titleStyle={styles.cardTitle}
-                                    descriptionStyle={styles.cardDescription}
-                                    iconStyle={styles.cardIcon}
-                                    iconWidth={40}
-                                    iconHeight={40}
-                                    isCheckIconAvailable={false}
-                                    icon={() => <CarRepairService width={50} height={50} />}
-                                />
+                            <MotiView
+                                animate={{
+                                    scale: isOfferButtonPressed ? 0.95 : 1,
+                                }}
+                                transition={{
+                                    type: 'timing',
+                                    duration: 150,
+                                }}
+                            >
+                                <TouchableOpacity
+                                    onPressIn={() => setIsOfferButtonPressed(true)}
+                                    onPressOut={() => setIsOfferButtonPressed(false)}
+                                    onPress={() => alert('Service offering pressed')}
+                                    onLongPress={() => alert('Service offering long pressed')}
+                                >
+                                    <ServicesCard 
+                                        id={2} 
+                                        title="Offer a service" 
+                                        description="What services do you want to offer?"
+                                        cardStyle={styles.card}
+                                        titleStyle={styles.cardTitle}
+                                        descriptionStyle={styles.cardDescription}
+                                        iconStyle={styles.cardIcon}
+                                        iconWidth={40}
+                                        iconHeight={40}
+                                        isCheckIconAvailable={false}
+                                        icon={() => <CarRepairService width={50} height={50} />}
+                                    />
+                                </TouchableOpacity>
+                            </MotiView>
                             </View>
                         </View>
                     </LinearGradient>
