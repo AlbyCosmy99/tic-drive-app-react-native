@@ -36,7 +36,7 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
       style={backgroundStyle}
     >
       <View className='flex-1 justify-start flex-row'>
-        <ToPreviousPage />
+        {navigation.canGoBack() && <ToPreviousPage />}
       </View>
       <View className='flex-row flex-1 justify-center'>
           <Text className='font-bold text-3xl' style={[styles.title, styles.ticText]}>Tic</Text>
@@ -52,10 +52,8 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
             </TouchableOpacity>
           ) : (
             <TouchableOpacity onPress={() => {
-              if(navigation.canGoBack()) {
-                navigation.dispatch(StackActions.popToTop());
-              }
               router.push('/screens/UserAuthentification')
+              
             }} className='p-2.5 pl-0 flex-row gap-2'>
               <View className='flex-row gap-1 items-center justify-center'>
                 <Entypo name="login" size={24} color={Colors.light.text} />
