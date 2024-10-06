@@ -48,7 +48,7 @@ export default function RootLayout() {
                 options={{ 
                   title: 'UserAuthentification', 
                   headerShown: false,
-                  presentation: 'modal',
+                  presentation: 'card',
                 }} 
               />
               <Stack.Screen 

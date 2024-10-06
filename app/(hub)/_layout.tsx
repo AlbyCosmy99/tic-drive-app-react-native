@@ -1,5 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { router, useNavigation } from "expo-router";
+import { router } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";;
 import { globalStyles } from "../globalStyles";
 import { Colors } from "@/constants/Colors";
@@ -11,12 +11,11 @@ import { useAppDispatch, useAppSelector } from "../stateManagement/redux/hooks";
 import { logout } from "../stateManagement/redux/slices/authSlice";
 import { saveLoginStatus } from "../utils";
 import { Entypo } from "@expo/vector-icons";
-import { StackActions } from "@react-navigation/native";
+import { StackActions, useNavigation } from "@react-navigation/native";
 import ServicesCard from "@/components/ServicesCard";
 import Feather from '@expo/vector-icons/Feather';
 import CarRepairService from '../../assets/svg/carRepairService.svg'
 import { MotiView } from 'moti'
-import { MotiPressable } from "moti/interactions";
 import { useState } from "react";
 
 const ChooseUserModeScreen = () => {
@@ -55,7 +54,7 @@ const ChooseUserModeScreen = () => {
                                     if(navigation.canGoBack()) {
                                         navigation.dispatch(StackActions.popToTop());
                                     }
-                                    router.push('../screens/UserAuthentification')
+                                    router.push('/screens/UserAuthentification')
                                 }} className='p-2.5 pl-0 flex-row gap-2'>
                                     <View className='flex-row gap-1 items-center justify-center'>
                                         <Entypo name="login" size={24} color={Colors.light.text} />
@@ -101,7 +100,7 @@ const ChooseUserModeScreen = () => {
                                     <TouchableWithoutFeedback
                                         onPressIn={() => setIsSearchButtonPressed(true)}
                                         onPressOut={() => setIsSearchButtonPressed(false)}
-                                        onPress={()=> router.push('../screens/ChooseServicesScreen')}
+                                        onPress={()=> router.push("/screens/ChooseServicesScreen")}
                                         onLongPress={() => alert('long press')}
                                     >
                                         <ServicesCard 

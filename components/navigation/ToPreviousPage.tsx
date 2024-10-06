@@ -1,5 +1,6 @@
 import { Colors } from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import { router } from "expo-router";
 import React from "react";
 import { useColorScheme } from "react-native";
@@ -13,10 +14,11 @@ const ToPreviousPage: React.FC<ToPreviousPageProps> = ({
   containerClassName = ""
 }) => {
   const colorScheme = useColorScheme();
+  const navigation = useNavigation()
 
   return (
     <TouchableOpacity
-      onPress={() => router.back()}
+      onPress={() => navigation.goBack()}
       className={containerClassName}
       accessible={true}
       accessibilityLabel="Back to previous page"

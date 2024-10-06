@@ -1,5 +1,5 @@
 import TicDriveButton from "@/components/ui/buttons/TicDriveButton";
-import { StyleSheet, Text, useColorScheme, View } from "react-native";
+import { Pressable, StyleSheet, Text, useColorScheme, View } from "react-native";
 import { SafeAreaView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import ServicesCards from "@/components/ServicesCards";
@@ -11,7 +11,6 @@ import { login, logout } from "../stateManagement/redux/slices/authSlice";
 import { globalStyles } from "../globalStyles";
 import necessaryDeviceBottomInset from "../utils/necessaryDeviceBottomInset";
 import UserLogged from "@/mock/UserLogged";
-import ToPreviousPage from "@/components/navigation/ToPreviousPage";
 
 export default function ChooseServicesScreen() {
     const colorScheme = useColorScheme();
