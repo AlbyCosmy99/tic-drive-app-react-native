@@ -87,53 +87,41 @@ const ChooseUserModeScreen = () => {
                         locations={[0, 0.4, 1]}
                         className="p-2 items-end justify-center flex-1"
                     >
-                        <View className="flex-row justify-center items-center p-2">
+                        <MotiView 
+                            className="flex-row justify-center items-center p-2"
+                            from={{
+                                scale: 0.8,
+                            }}
+                            animate={{
+                                scale: isOfferButtonPressed ? 0.95 : 1,
+                            }}
+                            transition={{
+                                type: 'timing',
+                                duration: 150,
+                            }}
+                        >
                             <View className="flex-1">
-                                <MotiView
-                                    from={{
-                                        scale: 0.8,
-                                    }}
-                                    animate={{
-                                        scale: isSearchButtonPressed ? 0.95 : 1,
-                                    }}
-                                    transition={{
-                                        type: 'timing',
-                                    }}
-                                >
-                                    <TouchableWithoutFeedback
+                                <TouchableWithoutFeedback
                                         onPressIn={() => setIsSearchButtonPressed(true)}
                                         onPressOut={() => setIsSearchButtonPressed(false)}
                                         onPress={()=> router.push("/screens/ChooseServicesScreen")}
                                         onLongPress={() => alert('long press')}
-                                    >
-                                        <ServicesCard 
-                                            id={1} 
-                                            title="Search a service" 
-                                            description="What service are you looking for?"
-                                            cardStyle={styles.card}
-                                            titleStyle={styles.cardTitle}
-                                            descriptionStyle={styles.cardDescription}
-                                            iconStyle={styles.cardIcon}
-                                            isCheckIconAvailable={false}
-                                            icon={() => <Feather name="search" size={50} />}
-                                            disabledPressIn={true}
-                                        />
-                                    </TouchableWithoutFeedback>
-                                </MotiView>
+                                >
+                                    <ServicesCard 
+                                        id={1} 
+                                        title="Search a service" 
+                                        description="What service are you looking for?"
+                                        cardStyle={styles.card}
+                                        titleStyle={styles.cardTitle}
+                                        descriptionStyle={styles.cardDescription}
+                                        iconStyle={styles.cardIcon}
+                                        isCheckIconAvailable={false}
+                                        icon={() => <Feather name="search" size={50} />}
+                                        disabledPressIn={true}
+                                    />
+                                </TouchableWithoutFeedback>
                             </View>
                             <View className="flex-1">
-                            <MotiView
-                                from={{
-                                    scale: 0.8,
-                                }}
-                                animate={{
-                                    scale: isOfferButtonPressed ? 0.95 : 1,
-                                }}
-                                transition={{
-                                    type: 'timing',
-                                    duration: 150,
-                                }}
-                            >
                                 <TouchableWithoutFeedback
                                     onPressIn={() => setIsOfferButtonPressed(true)}
                                     onPressOut={() => setIsOfferButtonPressed(false)}
@@ -154,9 +142,8 @@ const ChooseUserModeScreen = () => {
                                         icon={() => <CarRepairService width={50} height={50} />}
                                     />
                                 </TouchableWithoutFeedback>
-                            </MotiView>
                             </View>
-                        </View>
+                        </MotiView>
                     </LinearGradient>
                 </View>
             </LinearGradient>
