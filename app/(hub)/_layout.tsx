@@ -88,20 +88,32 @@ const ChooseUserModeScreen = () => {
                         locations={[0, 0.4, 1]}
                         className="p-2 items-end justify-center flex-1"
                     >
-                        <MotiView 
+                        <MotiView
                             className="flex-row justify-center items-center p-2"
                             from={{
                                 scale: 0.8,
                             }}
                             animate={{
-                                scale: isOfferButtonPressed ? 0.95 : 1,
+                                scale: 1,
                             }}
                             transition={{
                                 type: 'timing',
                                 duration: 150,
                             }}
                         >
-                            <View className="flex-1">
+                            <MotiView 
+                                className="flex-1" 
+                                from={{
+                                    scale: 0.8,
+                                }}
+                                animate={{
+                                    scale: isSearchButtonPressed ? 0.95 : 1,
+                                }}
+                                transition={{
+                                    type: 'timing',
+                                    duration: 150,
+                                }}
+                            >
                                 <TouchableWithoutFeedback
                                         onPressIn={() => setIsSearchButtonPressed(true)}
                                         onPressOut={() => setIsSearchButtonPressed(false)}
@@ -121,8 +133,20 @@ const ChooseUserModeScreen = () => {
                                         disabledPressIn={true}
                                     />
                                 </TouchableWithoutFeedback>
-                            </View>
-                            <View className="flex-1">
+                            </MotiView>
+                            <MotiView 
+                                className="flex-1"
+                                from={{
+                                    scale: 0.8,
+                                }}
+                                animate={{
+                                    scale: isOfferButtonPressed ? 0.95 : 1,
+                                }}
+                                transition={{
+                                    type: 'timing',
+                                    duration: 150,
+                                }}
+                            >
                                 <TouchableWithoutFeedback
                                     onPressIn={() => setIsOfferButtonPressed(true)}
                                     onPressOut={() => setIsOfferButtonPressed(false)}
@@ -148,7 +172,7 @@ const ChooseUserModeScreen = () => {
                                         }
                                     />
                                 </TouchableWithoutFeedback>
-                            </View>
+                            </MotiView>
                         </MotiView>
                     </LinearGradient>
                 </View>
