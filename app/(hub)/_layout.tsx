@@ -75,7 +75,7 @@ const ChooseUserModeScreen = () => {
                     </View>
                     <View>
                         <LottieView
-                            source={require('@/assets/json/animations/ticDriveAnimation.json')}
+                            source={require('@/assets/json/animations/ticDriveAnimation2.json')}
                             autoPlay
                             loop
                             style={styles.lottieAnimation}
@@ -85,7 +85,7 @@ const ChooseUserModeScreen = () => {
                         colors={[Colors.light.backgroundLinearGradient.start, Colors.light.green.drive, Colors.light.green.drive]} // Define your gradient colors here
                         style={styles.content} 
                         locations={[0, 0.4, 1]}
-                        className="p-2 items-end justify-center"
+                        className="p-2 items-end justify-center flex-1"
                     >
                         <View className="flex-row justify-center items-center p-2">
                             <View className="flex-1">
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     lottieAnimation: {
         width: '100%',
         alignSelf: 'flex-end',
-        height: 250,
+        height: 200
     },
     login: {
         color: Colors.light.text,  
