@@ -16,11 +16,13 @@ import ServicesCard from "@/components/ServicesCard";
 import Feather from '@expo/vector-icons/Feather';
 import CarRepairService from '../../assets/svg/carRepairService.svg'
 import { MotiView } from 'moti'
-import { useState } from "react";
-import TicDriveNavbar from "@/components/navigation/TicDriveNavbar";
+import { useEffect, useState } from "react";
+
+import { Dimensions } from 'react-native';
+import smallDevicebreakpointHeight from "@/constants/smallDevicebreakpointHeight";
+const { width, height } = Dimensions.get('window');
 
 const ChooseUserModeScreen = () => {
-
     const navigation = useNavigation()
     const dispatch = useAppDispatch()
     const isUserLogged = useAppSelector((state) => state.auth.isAuthenticated)
@@ -31,8 +33,7 @@ const ChooseUserModeScreen = () => {
         dispatch(logout())
         await saveLoginStatus(false)
         //sostituire con redux thunk?
-      }
-    
+    }
 
     return (
         <View className={`flex-1`}>
@@ -116,7 +117,7 @@ const ChooseUserModeScreen = () => {
                                         descriptionStyle={styles.cardDescription}
                                         iconStyle={styles.cardIcon}
                                         isCheckIconAvailable={false}
-                                        icon={() => <Feather name="search" size={50} />}
+                                        icon={() => <Feather name="search" size={height > smallDevicebreakpointHeight ? 50 : 40} />}
                                         disabledPressIn={true}
                                     />
                                 </TouchableWithoutFeedback>
@@ -139,7 +140,12 @@ const ChooseUserModeScreen = () => {
                                         iconWidth={40}
                                         iconHeight={40}
                                         isCheckIconAvailable={false}
-                                        icon={() => <CarRepairService width={50} height={50} />}
+                                        icon={() => 
+                                            <CarRepairService 
+                                                width={height > smallDevicebreakpointHeight ? 50 : 40} 
+                                                height={height > smallDevicebreakpointHeight ? 50 : 40} 
+                                            />
+                                        }
                                     />
                                 </TouchableWithoutFeedback>
                             </View>
@@ -173,8 +179,8 @@ const styles = StyleSheet.create({
         color: Colors.light.placeholderText
     },
     logoImage: {
-        width: 180,
-        height: 180,
+        width: height > smallDevicebreakpointHeight ? 180 : 150 ,
+        height: height > smallDevicebreakpointHeight ? 180 : 150,
         resizeMode: 'contain',
     },
     cardIcon: {
@@ -191,7 +197,7 @@ const styles = StyleSheet.create({
     },
     card: {
         backgroundColor: 'lightgreen',
-        borderColor: Colors.light.green.drive
+        borderColor: Colors.light.green.drive,
     },
     lottieAnimation: {
         width: '100%',

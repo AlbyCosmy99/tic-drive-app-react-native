@@ -6,6 +6,10 @@ import { TouchableWithoutFeedback } from 'react-native';
 import CheckCircle from '../assets/svg/check_circle.svg'
 import GlobalContext from "@/app/stateManagement/contexts/GlobalContext";
 import CarRepair from '../assets/svg/servicesIcons/car_repair.svg' //default icon
+import smallDevicebreakpointHeight from "@/constants/smallDevicebreakpointHeight";
+
+import { Dimensions } from 'react-native';
+const { width, height } = Dimensions.get('window');
 
 interface ServicesCardProps {
     id: number;
@@ -106,7 +110,7 @@ const styles = StyleSheet.create({
         padding: 15,
         elevation: 1,
         borderWidth: 1,
-        height: 160,
+        height: height > smallDevicebreakpointHeight ? 160 : 150,
     },
     pressedCard: {
         borderColor: Colors.light.green.drive,
@@ -124,7 +128,7 @@ const styles = StyleSheet.create({
     },
     serviceTitle: {
         fontWeight: '500',
-        fontSize: 16,
+        fontSize: height > smallDevicebreakpointHeight ? 16 : 14,
         marginBottom: 10,
     },
     serviceDesc: {

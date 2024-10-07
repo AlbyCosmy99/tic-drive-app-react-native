@@ -8,6 +8,10 @@ import TicDriveLogo from '../../assets/images/TicDriveLogo.jpeg';
 import UserAuthenticationContent from "@/components/auth/UserAuthentificationContent";
 import { globalStyles } from "../globalStyles";
 import isIOSPlatform from "../utils/IsIOSPlatform";
+import smallDevicebreakpointHeight from "@/constants/smallDevicebreakpointHeight";
+
+import { Dimensions } from 'react-native';
+const { width, height } = Dimensions.get('window');
 
 export default function UserAuthentification() {
     const [isUserRegistering, setIsUserRegistering] = useState<boolean>(false)
@@ -67,8 +71,8 @@ const styles = StyleSheet.create({
         color: Colors.light.placeholderText
     },
     logoImage: {
-        width: 180,
-        height: 180,
+        width: height > smallDevicebreakpointHeight ? 180 : 150 ,
+        height: height > smallDevicebreakpointHeight ? 180 : 150,
         resizeMode: 'contain',
     },
 });
