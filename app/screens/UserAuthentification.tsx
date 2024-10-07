@@ -22,13 +22,17 @@ export default function UserAuthentification() {
             behavior={isIOSPlatform() ? "padding" : "height"}
         >
             <SafeAreaView className="flex-1 bg-white" style={globalStyles().safeAreaView}>
-                <ToPreviousPage containerClassName="m-2 mb-7" />
                 <View className="flex-1 justify-between">
-                    <View className="justify-center items-center">
-                        <Image 
-                            source={TicDriveLogo}
-                            style={styles.logoImage}
-                        />
+                    <View>
+                        <View style={{height: 60}}>
+                            <ToPreviousPage containerClassName="m-2 mb-7" />
+                        </View>
+                        <View className="justify-center items-center">
+                            <Image 
+                                source={TicDriveLogo}
+                                style={styles.logoImage}
+                            />
+                        </View>
                     </View>
                     <ScrollView style={styles.content}>
                         <UserAuthenticationContent 

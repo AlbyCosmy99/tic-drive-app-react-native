@@ -42,34 +42,36 @@ const ChooseUserModeScreen = () => {
                 className="flex-1 absolute w-full h-full"
             >
                 <View className="flex-1 justify-between" style={globalStyles().safeAreaView}>
-                    <View className='justify-end flex-row mx-3'>
-                        {isUserLogged ? (
-                                <TouchableOpacity onPress={handleLogout} className='p-2.5'>
-                                    <View className='flex-row gap-1 items-center justify-center'>
-                                        <Entypo name="login" size={24} color={Colors.light.text} />
-                                        <Text className='text-xl' style={styles.login}>Logout</Text>
-                                    </View>
-                                </TouchableOpacity>
-                            ) : (
-                                <TouchableOpacity onPress={() => {
-                                    if(navigation.canGoBack()) {
-                                        navigation.dispatch(StackActions.popToTop());
-                                    }
-                                    router.push('/screens/UserAuthentification')
-                                }} className='p-2.5 pl-0 flex-row gap-2'>
-                                    <View className='flex-row gap-1 items-center justify-center'>
-                                        <Entypo name="login" size={24} color={Colors.light.text} />
-                                        <Text className='text-xl' style={styles.login}>Login</Text>
-                                    </View>
-                                </TouchableOpacity>
-                            )
-                        }
-                    </View>
-                    <View className="items-center justify-center">
-                        <Image 
-                            source={TicDriveLogo}
-                            style={styles.logoImage}
-                        />
+                    <View>
+                        <View style={{height: 60}} className='justify-end flex-row mx-3'>
+                            {isUserLogged ? (
+                                    <TouchableOpacity onPress={handleLogout} className='p-2.5'>
+                                        <View className='flex-row gap-1 items-center justify-center'>
+                                            <Entypo name="login" size={24} color={Colors.light.text} />
+                                            <Text className='text-xl' style={styles.login}>Logout</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                ) : (
+                                    <TouchableOpacity onPress={() => {
+                                        if(navigation.canGoBack()) {
+                                            navigation.dispatch(StackActions.popToTop());
+                                        }
+                                        router.push('/screens/UserAuthentification')
+                                    }} className='p-2.5 pl-0 flex-row gap-2'>
+                                        <View className='flex-row gap-1 items-center justify-center'>
+                                            <Entypo name="login" size={24} color={Colors.light.text} />
+                                            <Text className='text-xl' style={styles.login}>Login</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                )
+                            }
+                        </View>
+                        <View className="items-center justify-center">
+                            <Image 
+                                source={TicDriveLogo}
+                                style={styles.logoImage}
+                            />
+                        </View>
                     </View>
                     <View>
                         <LottieView

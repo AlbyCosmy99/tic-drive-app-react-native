@@ -39,7 +39,7 @@ export default function RootLayout() {
               <Stack.Screen name="(hub)" options={{ headerShown: false }} />
               <Stack.Screen 
                 name="screens/ChooseServicesScreen" 
-                options={{ 
+                options={{
                   title: 'ChooseServicesScreen', 
                   headerShown: false,
               }} />
@@ -48,7 +48,7 @@ export default function RootLayout() {
                 options={{ 
                   title: 'UserAuthentification', 
                   headerShown: false,
-                  presentation: 'modal',
+                  presentation: 'card',
                 }} 
               />
               <Stack.Screen 
