@@ -9,6 +9,7 @@ import GlobalContext from "@/app/stateManagement/contexts/GlobalContext";
 import { saveLoginStatus } from "@/app/utils";
 import { StackActions } from "@react-navigation/native";
 import { login, setAreFormErrors } from "@/app/stateManagement/redux/slices/authSlice";
+import UserLogged from "@/mock/UserLogged";
 
 type FormData = {
   email: string;
@@ -50,10 +51,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
   
   const onSubmit =async (data: FormData) => {
     //mock data
-    dispatch(login({
-      name: "Andrei",
-      surname: "Albu"
-    }))
+    dispatch(login(UserLogged))
     
     await saveLoginStatus(true)
     //sostituire con react-thunk
