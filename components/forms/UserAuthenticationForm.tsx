@@ -5,7 +5,6 @@ import TicDriveInput from "../ui/inputs/TicDriveInput";
 import { router, useNavigation } from "expo-router";
 import { useAppDispatch } from "@/app/stateManagement/redux/hooks";
 import GlobalContext from "@/app/stateManagement/contexts/GlobalContext";
-
 import { saveLoginStatus } from "@/app/utils";
 import { StackActions } from "@react-navigation/native";
 import { login, setAreFormErrors } from "@/app/stateManagement/redux/slices/authSlice";
@@ -76,29 +75,6 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
 
   return (
     <View style={[styles.container, isUserRegistering && styles.containerUserRegistering]}>
-      <Controller
-        control={control}
-        name="email"
-        rules={{
-          required: "Email is required",
-          pattern: {
-            value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, //is an email
-            message: "Please enter a valid email address"
-          }
-        }}
-        render={({ field: { onChange, value, onBlur } }) => (
-          <TicDriveInput 
-            placeholder="Email"
-            isRightIcon={true}
-            customValue={value}
-            onChange={onChange}
-            inputContainerStyle={styles.inputContainerStyle}
-            returnKeyType="send"
-          />
-        )}
-      />
-      {errors.email && <Text style={styles.error}>{errors.email.message}</Text>}
-
      {
       isUserRegistering && (
         <>
@@ -120,7 +96,30 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
           {errors.name && <Text style={styles.error}>{errors.name.message}</Text>}
         </>
       )
-     } 
+     }
+     
+     <Controller
+        control={control}
+        name="email"
+        rules={{
+          required: "Email is required",
+          pattern: {
+            value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, //is an email
+            message: "Please enter a valid email address"
+          }
+        }}
+        render={({ field: { onChange, value, onBlur } }) => (
+          <TicDriveInput 
+            placeholder="Email"
+            isRightIcon={true}
+            customValue={value}
+            onChange={onChange}
+            inputContainerStyle={styles.inputContainerStyle}
+            returnKeyType="send"
+          />
+        )}
+      />
+      {errors.email && <Text style={styles.error}>{errors.email.message}</Text>}
 
       <Controller
         control={control}
