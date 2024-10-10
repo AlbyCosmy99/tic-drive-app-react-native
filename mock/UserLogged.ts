@@ -4,7 +4,7 @@ const UserLogged : User = {
     name: "Andrei",
     surname: "Albu",
     email: "dinamo1999@icloud.com",
-    isWorkshop: false
+    category: 'user'
 }
 
 export default UserLogged

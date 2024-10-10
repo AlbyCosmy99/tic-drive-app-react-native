@@ -2,11 +2,14 @@ import WorkshopCard from "./WorkshopCard";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import workshops, { Workshop } from '../constants/temp/Workshops'
 import GlobalContext from "@/app/stateManagement/contexts/GlobalContext";
-import { memo, useContext, useEffect } from "react";
+import { memo, useContext } from "react";
 import { router } from "expo-router";
+import { useAppSelector } from "@/app/stateManagement/redux/hooks";
 
 function WorkshopCards() {
-    const {workshopFilter, servicesChoosen, isUserLogged} = useContext(GlobalContext)
+    const {workshopFilter, servicesChoosen} = useContext(GlobalContext)
+
+    const isUserLogged = useAppSelector(state => state.auth.isAuthenticated)
 
     const handleCardPress = (workshop: Workshop) => {
         router.push({

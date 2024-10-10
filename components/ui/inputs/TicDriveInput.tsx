@@ -1,8 +1,7 @@
 import { ReturnKeyTypeOptions, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { Icon, Input } from '@rneui/themed';
 import { Colors } from "@/constants/Colors";
-import React, { memo, useContext, useState } from 'react';
-import GlobalContext from "@/app/stateManagement/contexts/GlobalContext";
+import React, { memo, useState } from 'react';
 
 interface TicDriveInputProps {
   placeholder: string;
@@ -35,12 +34,10 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
 }) => {
 
   const [value, setValue] = useState<string>(customValue);
-  const {workshopFilter, setWorkshopFilter} = useContext(GlobalContext)
 
   const handleOnPress = () => {
     setValue('');
     onRightIcon && onRightIcon()
-    setWorkshopFilter('')
     onChange && onChange("")
   };
 
@@ -77,7 +74,6 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
         value={value}
         onChangeText={(text) => {
           setValue(isTextUppercase ? text.toUpperCase() : text)
-          setWorkshopFilter(text)
           onChange && onChange(text.trim())
         }}
         onSubmitEditing={handleSubmitEditing}

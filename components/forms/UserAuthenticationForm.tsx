@@ -153,7 +153,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
               name="repeatedPassword"
               rules={{ 
                 required: "Repeated password is required",
-                validate: (value) => value === control._getWatch("password") || "Passwords do not match"
+                validate: (value) => value === control._getWatch("password") || "Passwords do not match" //da sostituire?
               }}
               render={({ field: { onChange, value, onBlur } }) => (
                 <TicDriveInput 

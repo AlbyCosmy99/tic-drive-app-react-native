@@ -7,9 +7,12 @@ import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
 import WorkshopCards from '@/components/WorkshopCards';
 import { LinearGradient } from 'expo-linear-gradient';
 import { globalStyles } from '../globalStyles';
+import { useContext } from 'react';
+import GlobalContext from '../stateManagement/contexts/GlobalContext';
 
 export default function HomeTab() {
-  
+  const { setWorkshopFilter } = useContext(GlobalContext)
+
   return (
     <LinearGradient
       colors={[Colors.light.backgroundLinearGradient.start, Colors.light.backgroundLinearGradient.end]}
@@ -22,6 +25,9 @@ export default function HomeTab() {
               isRightIcon={true} 
               placeholder='Search workshop' 
               containerViewStyleTailwind="flex-1 justify-center items-center"
+              onChange={text => {
+                setWorkshopFilter(text)
+              }}
             />
             <View className='justify-center items-center ml-2 mb-1 border-2 rounded-xl mx-3.5 w-14 h-14' style={styles.filterButtonContainer}>
               <TouchableOpacity 
