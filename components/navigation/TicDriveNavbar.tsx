@@ -25,12 +25,6 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
     backgroundColor: colorScheme === 'light' ? Colors.light.background : Colors.dark.background,
   }
 
-  const handleLogout = async () => {
-    dispatch(logout())
-    await saveLoginStatus(false)
-    //sostituire con redux thunk?
-  }
-
   return (
     <View 
       className={`flex-row items-center ${!isLoginAvailable ? 'justify-center' : 'justify-between'} px-2.5 h-14`} 
@@ -46,7 +40,6 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
       <View className='flex-1 justify-end flex-row'>
         {isLoginAvailable && (isUserLogged ? (
             <TicDriveAuthButton 
-              onPress={handleLogout}
               action='logout'  
             />
           ) : (

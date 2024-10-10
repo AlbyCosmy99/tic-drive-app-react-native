@@ -30,12 +30,6 @@ const ChooseUserModeScreen = () => {
     const [isSearchButtonPressed, setIsSearchButtonPressed] = useState(false);
     const [isOfferButtonPressed, setIsOfferButtonPressed] = useState(false);
 
-    const handleLogout = async () => {
-        dispatch(logout())
-        await saveLoginStatus(false)
-        //sostituire con redux thunk?
-    }
-
     return (
         <View className={`flex-1`}>
             <LinearGradient
@@ -48,7 +42,6 @@ const ChooseUserModeScreen = () => {
                         <View style={{height: 60}} className='justify-end flex-row mx-3 mt-1'>
                             {isUserLogged ? (
                                     <TicDriveAuthButton 
-                                        onPress={handleLogout}
                                         action="logout"
                                     />
                                 ) : (
