@@ -9,12 +9,13 @@ import CarRepair from '../assets/svg/servicesIcons/car_repair.svg' //default ico
 import smallDevicebreakpointHeight from "@/constants/smallDevicebreakpointHeight";
 
 import { Dimensions } from 'react-native';
+import LottieView from "lottie-react-native";
 const { width, height } = Dimensions.get('window');
 
 interface ServicesCardProps {
-    id: number;
-    title: string;
-    description: string;
+    id?: number;
+    title?: string;
+    description?: string;
     cardStyle?: StyleProp<ViewStyle>;
     titleStyle?: StyleProp<TextStyle>;
     descriptionStyle?: StyleProp<TextStyle>;
@@ -25,6 +26,7 @@ interface ServicesCardProps {
     isCheckIconAvailable?: boolean;
     pressIn?: () => void;
     disabledPressIn?: boolean;
+    loading?: boolean;
 }
 
 const ServicesCard: React.FC<ServicesCardProps> = ({ 
@@ -41,6 +43,7 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
     isCheckIconAvailable = true,
     pressIn,
     disabledPressIn = false,
+    loading = false
 }) => {
     const [isPressed, setIsPressed] = useState(false);
     const {servicesChoosen, setServicesChoosen} = useContext(GlobalContext)
@@ -81,22 +84,38 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
             accessibilityRole="button"
         >
             <Card containerStyle={[styles.card, cardStyle, isPressed && styles.pressedCard]}>
-                <View style={styles.cardIcons}>
-                    <View style={iconStyle}>
-                        <ServiceIcon width={iconWidth} height={iconHeight} />
-                    </View>
-                    {
-                        isCheckIconAvailable && (
-                            <View style={styles.iconContainer}>
-                                {isPressed && <CheckCircle width={20} height={20} />}
+                {
+                    loading ? (
+                        <View className="justify-center items-center w-full h-full">
+                            <LottieView
+                                source={require('@/assets/json/animations/TicDriveLoading.json')}
+                                autoPlay
+                                loop
+                                style={styles.lottieAnimation}
+                            />
+                        </View>
+                    ) : (
+                        <>
+                            <View style={styles.cardIcons}>
+                                <View style={iconStyle}>
+                                    <ServiceIcon width={iconWidth} height={iconHeight} />
+                                </View>
+                                {
+                                    isCheckIconAvailable && (
+                                        <View style={styles.iconContainer}>
+                                            {isPressed && <CheckCircle width={20} height={20} />}
+                                        </View>
+                                    )
+                                }
                             </View>
-                        )
-                    }
-                </View>
-                <Text style={[styles.serviceTitle, titleStyle]}>{title}</Text>
-                <Text style={[styles.serviceDesc, descriptionStyle]} numberOfLines={4} ellipsizeMode="tail">
-                    {description}
-                </Text>
+                            <Text style={[styles.serviceTitle, titleStyle]}>{title}</Text>
+                            <Text style={[styles.serviceDesc, descriptionStyle]} numberOfLines={4} ellipsizeMode="tail">
+                                {description}
+                            </Text>
+                        </>
+                    )
+                }
+                
             </Card>
         </TouchableWithoutFeedback>
     );
@@ -135,7 +154,12 @@ const styles = StyleSheet.create({
         opacity: 0.6,
         marginBottom: 25,
         fontSize: 12
-    }
+    },
+    lottieAnimation: {
+        width: '100%',
+        alignSelf: 'flex-end',
+        height: 200
+    },
 });
 
 export default memo(ServicesCard);

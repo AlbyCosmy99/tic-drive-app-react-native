@@ -16,7 +16,7 @@ import ServicesCard from "@/components/ServicesCard";
 import Feather from '@expo/vector-icons/Feather';
 import CarRepairService from '../../assets/svg/carRepairService.svg'
 import { MotiView } from 'moti'
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Dimensions } from 'react-native';
 import smallDevicebreakpointHeight from "@/constants/smallDevicebreakpointHeight";

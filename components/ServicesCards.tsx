@@ -23,26 +23,30 @@ function ServicesCards() {
            setLoading(false)
         })
     }, [])
-    if (loading) {
-        return (
-            <View style={styles.loadingContainer}>
-                <ActivityIndicator size="large" color={Colors.light.bookingsOptionsText}/>
-            </View>
-        )
-    }
-
     return (
         <ScrollView contentContainerStyle={styles.container}>
-            {services.map((elem, index) => (
-                <View key={index} style={styles.cardContainer}>
-                    <ServicesCard 
-                        id={elem.id} 
-                        title={elem.title} 
-                        description={elem.description}
-                        icon={icons[index+1]}
-                    />
-                </View>
-            ))}
+            {
+                loading ? (
+                    [1,2,3,4,5,6].map((elem, index) => (
+                        <View key={index} style={styles.cardContainer}>
+                            <ServicesCard 
+                                loading={true}
+                            />
+                        </View>
+                    ))
+                ) : (
+                    services.map((elem, index) => (
+                        <View key={index} style={styles.cardContainer}>
+                            <ServicesCard 
+                                id={elem.id} 
+                                title={elem.title} 
+                                description={elem.description}
+                                icon={icons[index+1]}
+                            />
+                        </View>
+                    ))
+                )
+            }
         </ScrollView>
     );
 }
