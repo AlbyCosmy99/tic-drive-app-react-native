@@ -16,7 +16,7 @@ import ServicesCard from "@/components/ServicesCard";
 import Feather from '@expo/vector-icons/Feather';
 import CarRepairService from '../../assets/svg/carRepairService.svg'
 import { MotiView } from 'moti'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Dimensions } from 'react-native';
 import smallDevicebreakpointHeight from "@/constants/smallDevicebreakpointHeight";
@@ -29,6 +29,13 @@ const ChooseUserModeScreen = () => {
     const isUserLogged = useAppSelector((state) => state.auth.isAuthenticated)
     const [isSearchButtonPressed, setIsSearchButtonPressed] = useState(false);
     const [isOfferButtonPressed, setIsOfferButtonPressed] = useState(false);
+
+    //da sostituire con componente intermediario che controlla se utente loggato
+    useEffect(() => {
+        if(isUserLogged) {
+            router.replace("/(tabs)")
+        }
+    }, [])
 
     return (
         <View className={`flex-1`}>
