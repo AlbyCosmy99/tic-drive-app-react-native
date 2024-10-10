@@ -29,7 +29,10 @@ export default function HomeTab() {
                 setWorkshopFilter(text)
               }}
             />
-            <View className='justify-center items-center ml-2 mb-1 border-2 rounded-xl mx-3.5 w-14 h-14' style={styles.filterButtonContainer}>
+            <View 
+              className='justify-center items-center ml-2 mb-1 border-2 rounded-xl mx-3.5 w-14 h-14' 
+              style={styles.filterButtonContainer}
+            >
               <TouchableOpacity 
                 className='justify-center items-center h-full w-full' 
                 onPress={() => alert('filter services')}

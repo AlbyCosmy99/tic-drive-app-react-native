@@ -31,8 +31,8 @@ interface ServicesCardProps {
 
 const ServicesCard: React.FC<ServicesCardProps> = ({ 
     id, 
-    title, 
-    description, 
+    title = "", 
+    description = "", 
     cardStyle = {}, 
     titleStyle = {},
     descriptionStyle = {},
@@ -88,7 +88,7 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
                     loading ? (
                         <View className="justify-center items-center w-full h-full">
                             <LottieView
-                                source={require('@/assets/json/animations/TicDriveLoading.json')}
+                                source={require('@/assets/json/animations/TicDriveLoadingGrey.json')}
                                 autoPlay
                                 loop
                                 style={styles.lottieAnimation}
