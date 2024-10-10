@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import ServicesCard from './ServicesCard';
-import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
-import { Colors } from '@/constants/Colors';
+import { StyleSheet, View } from 'react-native';
 import icons from '../constants/servicesIconsMap'
 
 interface Service {
@@ -27,7 +26,7 @@ function ServicesCards() {
         <ScrollView contentContainerStyle={styles.container}>
             {
                 loading ? (
-                    [1,2,3,4,5,6].map((elem, index) => (
+                    [1,2,3,4,5,6].map((_, index) => (
                         <View key={index} style={styles.cardContainer}>
                             <ServicesCard 
                                 loading={true}

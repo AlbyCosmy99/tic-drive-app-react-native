@@ -7,9 +7,9 @@ import CheckCircle from '../assets/svg/check_circle.svg'
 import GlobalContext from "@/app/stateManagement/contexts/GlobalContext";
 import CarRepair from '../assets/svg/servicesIcons/car_repair.svg' //default icon
 import smallDevicebreakpointHeight from "@/constants/smallDevicebreakpointHeight";
-
 import { Dimensions } from 'react-native';
 import LottieView from "lottie-react-native";
+
 const { width, height } = Dimensions.get('window');
 
 interface ServicesCardProps {
