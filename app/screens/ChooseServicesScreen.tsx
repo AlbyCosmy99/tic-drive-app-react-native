@@ -37,7 +37,7 @@ export default function ChooseServicesScreen() {
                 className="flex-1 absolute w-full h-full"
             />
                 <SafeAreaView className="flex-1" style={globalStyles().safeAreaView}>
-                    <TicDriveNavbar />
+                    <TicDriveNavbar isLoginAvailable={false} />
                     <View className="flex-1 justify-between">
                         <Text style={{ color: colorScheme === 'light' ? Colors.light.text : Colors.dark.text }} className="font-medium text-3xl mx-3.5 mb-2">
                             {isUserLogged ? `${UserLogged.name}, w` : 'W'}hat service are you looking for?

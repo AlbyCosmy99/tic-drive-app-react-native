@@ -7,6 +7,7 @@ import { StackActions, useNavigation } from '@react-navigation/native';
 import { useAppDispatch, useAppSelector } from '@/app/stateManagement/redux/hooks';
 import { logout } from '@/app/stateManagement/redux/slices/authSlice';
 import ToPreviousPage from './ToPreviousPage';
+import TicDriveAuthButton from '../ui/buttons/TicDriveAuthButton';
 interface TicDriveNavbarProps {
   isLoginAvailable?: boolean;
 }
@@ -44,22 +45,18 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
       </View>
       <View className='flex-1 justify-end flex-row'>
         {isLoginAvailable && (isUserLogged ? (
-            <TouchableOpacity onPress={handleLogout} className='p-2.5'>
-              <View className='flex-row gap-1 items-center justify-center'>
-                <Entypo name="login" size={24} color={Colors.light.text} />
-                <Text className='text-xl' style={styles.login}>Logout</Text>
-              </View>
-            </TouchableOpacity>
+            <TicDriveAuthButton 
+              onPress={handleLogout}
+              action='logout'  
+            />
           ) : (
-            <TouchableOpacity onPress={() => {
-              router.push('/screens/UserAuthentification')
-              
-            }} className='p-2.5 pl-0 flex-row gap-2'>
-              <View className='flex-row gap-1 items-center justify-center'>
-                <Entypo name="login" size={24} color={Colors.light.text} />
-                <Text className='text-xl' style={styles.login}>Login</Text>
-              </View>
-            </TouchableOpacity>
+            <TicDriveAuthButton 
+              onPress={() => {
+                router.push('/screens/UserAuthentification')
+                
+              }}
+              action='login'
+            />
           ))
         }
       </View>
