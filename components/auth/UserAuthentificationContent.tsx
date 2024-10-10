@@ -9,9 +9,10 @@ import { Colors } from "@/constants/Colors"
 import React, { useState } from "react"
 import { useAppDispatch } from "@/app/stateManagement/redux/hooks"
 import { setAreFormErrors } from "@/app/stateManagement/redux/slices/authSlice"
+import AuthAction from "@/app/types/auth/Action"
 
 interface UserAuthenticationContentProps {
-    action: "Login" | "Register";
+    action: AuthAction;
     isUserRegistering: boolean;
     setIsUserRegistering: (isUserRegistering: boolean) => void
 }
@@ -38,12 +39,12 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
             <Text className="text-center text-3xl font-medium m-1.5 mb-3">Welcome</Text>
             <View className="flex-row justify-center gap-1">
                 {
-                    action === "Login" ?
+                    action === "login" ?
                     (<Text>Don't have an account?</Text>) :
                     (<Text>Already have an account?</Text>)
                 }
                 <TouchableOpacity onPress={handleSwitchLoginRegister}>
-                    <Text className="font-medium">{action === "Login" ? "Register" : "Login"} here</Text>
+                    <Text className="font-medium">{action === "login" ? "Register" : "Login"} here</Text>
                 </TouchableOpacity>
             </View>
             <View>

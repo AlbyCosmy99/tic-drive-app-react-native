@@ -20,6 +20,7 @@ import { useState } from "react";
 
 import { Dimensions } from 'react-native';
 import smallDevicebreakpointHeight from "@/constants/smallDevicebreakpointHeight";
+import TicDriveAuthButton from "@/components/ui/buttons/TicDriveAuthButton";
 const { width, height } = Dimensions.get('window');
 
 const ChooseUserModeScreen = () => {
@@ -46,24 +47,20 @@ const ChooseUserModeScreen = () => {
                     <View>
                         <View style={{height: 60}} className='justify-end flex-row mx-3'>
                             {isUserLogged ? (
-                                    <TouchableOpacity onPress={handleLogout} className='p-2.5'>
-                                        <View className='flex-row gap-1 items-center justify-center'>
-                                            <Entypo name="login" size={24} color={Colors.light.text} />
-                                            <Text className='text-xl' style={styles.login}>Logout</Text>
-                                        </View>
-                                    </TouchableOpacity>
+                                    <TicDriveAuthButton 
+                                        onPress={handleLogout}
+                                        action="logout"
+                                    />
                                 ) : (
-                                    <TouchableOpacity onPress={() => {
-                                        if(navigation.canGoBack()) {
-                                            navigation.dispatch(StackActions.popToTop());
-                                        }
-                                        router.push('/screens/UserAuthentification')
-                                    }} className='p-2.5 pl-0 flex-row gap-2'>
-                                        <View className='flex-row gap-1 items-center justify-center'>
-                                            <Entypo name="login" size={24} color={Colors.light.text} />
-                                            <Text className='text-xl' style={styles.login}>Login</Text>
-                                        </View>
-                                    </TouchableOpacity>
+                                    <TicDriveAuthButton 
+                                        onPress={() => {
+                                            if(navigation.canGoBack()) {
+                                                navigation.dispatch(StackActions.popToTop());
+                                            }
+                                            router.push('/screens/UserAuthentification')
+                                        }}
+                                        action="login"
+                                    />
                                 )
                             }
                         </View>
@@ -227,9 +224,6 @@ const styles = StyleSheet.create({
         width: '100%',
         alignSelf: 'flex-end',
         height: 200
-    },
-    login: {
-        color: Colors.light.text,  
     },
 });
 
