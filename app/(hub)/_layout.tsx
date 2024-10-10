@@ -6,21 +6,21 @@ import { Colors } from "@/constants/Colors";
 import { Image } from "@rneui/themed";
 import TicDriveLogo from '../../assets/images/TicDriveLogo.jpeg';
 import LottieView from 'lottie-react-native'
-import { TouchableOpacity, TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { useAppDispatch, useAppSelector } from "../stateManagement/redux/hooks";
-import { logout } from "../stateManagement/redux/slices/authSlice";
-import { saveLoginStatus } from "../utils";
-import { Entypo } from "@expo/vector-icons";
+import { login, logout } from "../stateManagement/redux/slices/authSlice";
+import { getLoginStatus } from "../utils";
 import { StackActions, useNavigation } from "@react-navigation/native";
 import ServicesCard from "@/components/ServicesCard";
 import Feather from '@expo/vector-icons/Feather';
 import CarRepairService from '../../assets/svg/carRepairService.svg'
 import { MotiView } from 'moti'
 import { useEffect, useState } from "react";
-
 import { Dimensions } from 'react-native';
 import smallDevicebreakpointHeight from "@/constants/smallDevicebreakpointHeight";
 import TicDriveAuthButton from "@/components/ui/buttons/TicDriveAuthButton";
+import UserLogged from "@/mock/UserLogged";
+
 const { width, height } = Dimensions.get('window');
 
 const ChooseUserModeScreen = () => {
@@ -32,9 +32,17 @@ const ChooseUserModeScreen = () => {
 
     //da sostituire con componente intermediario che controlla se utente loggato
     useEffect(() => {
-        if(isUserLogged) {
-            router.replace("/(tabs)")
+        const checkAuth = async () => {
+            const userAuthStatus = await getLoginStatus()
+            if(userAuthStatus) {
+                dispatch(login(UserLogged))
+                router.replace('../(tabs)/Home')
+            } else {
+                dispatch(logout())
+            }
         }
+
+        checkAuth()
     }, [])
 
     return (

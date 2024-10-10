@@ -15,20 +15,6 @@ import UserLogged from "@/mock/UserLogged";
 export default function ChooseServicesScreen() {
     const colorScheme = useColorScheme();
     const isUserLogged = useAppSelector((state) => state.auth.isAuthenticated)
-    const dispatch = useAppDispatch()
-
-    useEffect(() => {
-        const checkLoginStatus = async () => {
-          if(isUserLogged) {
-            //mock data
-            dispatch(login(UserLogged))
-          } else {
-            dispatch(logout())
-          }
-        }
-    
-        checkLoginStatus()
-      }, [])
 
     return (
         <View className={`flex-1 ${necessaryDeviceBottomInset()}`}>
