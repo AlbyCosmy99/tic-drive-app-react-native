@@ -77,12 +77,6 @@ export default function RootLayout() {
                   title: 'Booking Confirmation', 
                   headerShown: false }} 
               />
-              <Stack.Screen 
-                name="screens/UserDashboard" 
-                options={{ 
-                  title: 'User Dashboard', 
-                  headerShown: false }} 
-              />
               <Stack.Screen name="+not-found" />
             </Stack>
           </GestureHandlerRootView>
