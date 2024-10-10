@@ -6,10 +6,11 @@ import OAuth2Button from "../ui/buttons/OAuth2Button"
 import GoogleIcon from "@/assets/svg/OAuth2Icons/GoogleIcon"
 import AppleIcon from "@/assets/svg/OAuth2Icons/AppleIcon"
 import { Colors } from "@/constants/Colors"
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { useAppDispatch } from "@/app/stateManagement/redux/hooks"
 import { setAreFormErrors } from "@/app/stateManagement/redux/slices/authSlice"
 import AuthAction from "@/app/types/auth/Action"
+import GlobalContext from "@/app/stateManagement/contexts/GlobalContext"
 
 interface UserAuthenticationContentProps {
     action: AuthAction;

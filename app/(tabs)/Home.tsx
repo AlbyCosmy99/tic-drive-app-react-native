@@ -18,7 +18,7 @@ export default function HomeTab() {
       colors={[Colors.light.backgroundLinearGradient.start, Colors.light.backgroundLinearGradient.end]}
       className="flex-1 w-full h-full">
       <SafeAreaView className='flex-1' style={globalStyles().safeAreaView}>
-        <TicDriveNavbar />
+        <TicDriveNavbar isLoginAvailable={false} />
         <View className='flex-row items-center'>
             <TicDriveInput 
               isLeftIcon={true} 

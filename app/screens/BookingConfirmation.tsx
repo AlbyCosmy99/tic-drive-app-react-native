@@ -5,8 +5,11 @@ import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { globalStyles } from "../globalStyles";
 import necessaryDeviceBottomInset from "../utils/necessaryDeviceBottomInset";
+import { useContext } from "react";
+import GlobalContext from "../stateManagement/contexts/GlobalContext";
 
 export default function BookingConfirmation() {
+    const {setServicesChoosen} = useContext(GlobalContext)
     return (
         <LinearGradient
             colors={[Colors.light.backgroundLinearGradient.start, Colors.light.backgroundLinearGradient.end]}

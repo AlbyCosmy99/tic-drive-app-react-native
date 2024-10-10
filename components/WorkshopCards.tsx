@@ -2,12 +2,12 @@ import WorkshopCard from "./WorkshopCard";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import workshops, { Workshop } from '../constants/temp/Workshops'
 import GlobalContext from "@/app/stateManagement/contexts/GlobalContext";
-import { memo, useContext } from "react";
+import { memo, useContext, useEffect } from "react";
 import { router } from "expo-router";
 import { useAppSelector } from "@/app/stateManagement/redux/hooks";
 
 function WorkshopCards() {
-    const {workshopFilter, servicesChoosen} = useContext(GlobalContext)
+    const {workshopFilter, servicesChoosen, setServicesChoosen} = useContext(GlobalContext)
 
     const isUserLogged = useAppSelector(state => state.auth.isAuthenticated)
 
@@ -17,6 +17,13 @@ function WorkshopCards() {
             params: { id: workshop.id }
         })
     }
+
+    //temp useEffect
+    useEffect(() => {
+        if(servicesChoosen.length === 0) {
+            setServicesChoosen(['Service'])
+        }
+    }, [])
 
     //checking if servicesChoosen are in the services offered by a workshop
     const anyService = (services: string[]) => {

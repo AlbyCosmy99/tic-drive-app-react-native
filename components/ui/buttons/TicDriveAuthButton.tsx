@@ -1,3 +1,4 @@
+import GlobalContext from "@/app/stateManagement/contexts/GlobalContext";
 import { useAppDispatch } from "@/app/stateManagement/redux/hooks";
 import { logout } from "@/app/stateManagement/redux/slices/authSlice";
 import AuthAction from "@/app/types/auth/Action";
@@ -6,7 +7,7 @@ import { Colors } from "@/constants/Colors"
 import { Entypo } from "@expo/vector-icons"
 import { StackActions } from "@react-navigation/native";
 import { router, useNavigation } from "expo-router";
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, Text, View } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
 

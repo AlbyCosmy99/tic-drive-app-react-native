@@ -11,13 +11,14 @@ import isIOSPlatform from "../utils/IsIOSPlatform";
 import smallDevicebreakpointHeight from "@/constants/smallDevicebreakpointHeight";
 
 import { Dimensions } from 'react-native';
+import AuthAction from "../types/auth/Action";
 const { width, height } = Dimensions.get('window');
 
 export default function UserAuthentification() {
     const [isUserRegistering, setIsUserRegistering] = useState<boolean>(false)
 
-    const action = useMemo<"Login" | "Register">(() => {
-        return isUserRegistering ? "Register" : "Login"
+    const action = useMemo<AuthAction>(() => {
+        return isUserRegistering ? "register" : "login"
     }, [isUserRegistering])
 
     return (
