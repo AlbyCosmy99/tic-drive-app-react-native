@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import ServicesCard from './ServicesCard';
 import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import { Colors } from '@/constants/Colors';
+import icons from '../constants/servicesIconsMap'
 
 interface Service {
     id: number;
@@ -37,7 +38,8 @@ function ServicesCards() {
                     <ServicesCard 
                         id={elem.id} 
                         title={elem.title} 
-                        description={elem.description} 
+                        description={elem.description}
+                        icon={icons[index+1]}
                     />
                 </View>
             ))}
