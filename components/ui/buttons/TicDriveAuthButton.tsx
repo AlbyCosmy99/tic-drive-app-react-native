@@ -15,19 +15,13 @@ const TicDriveAuthButton:React.FC<TicDriveAuthButtonProps> = ({
     action
 }) => {
     return (
-        <TouchableOpacity onPress={onPress} className='p-2.5'>
+        <TouchableOpacity onPress={onPress} className='p-2.5 bg-green-500 rounded-2xl'>
             <View className='flex-row gap-1 items-center justify-center'>
-                <Entypo name="login" size={24} color={Colors.light.text} />
-                <Text className='text-xl' style={styles.login}>{action[0].toUpperCase() + action.slice(1)}</Text>
+                <Entypo name="login" size={24} color="white" />
+                <Text className='text-xl text-white'>{action[0].toUpperCase() + action.slice(1)}</Text>
             </View>
         </TouchableOpacity>
     )
 }
-
-const styles = StyleSheet.create({
-    login: {
-        color: Colors.light.text,  
-    },
-})
 
 export default TicDriveAuthButton

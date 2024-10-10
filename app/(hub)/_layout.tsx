@@ -45,7 +45,7 @@ const ChooseUserModeScreen = () => {
             >
                 <View className="flex-1 justify-between" style={globalStyles().safeAreaView}>
                     <View>
-                        <View style={{height: 60}} className='justify-end flex-row mx-3'>
+                        <View style={{height: 60}} className='justify-end flex-row mx-3 mt-1'>
                             {isUserLogged ? (
                                     <TicDriveAuthButton 
                                         onPress={handleLogout}
