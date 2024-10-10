@@ -56,7 +56,7 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
             </View>
             <View>
                 <TicDriveButton
-                    text={action}
+                    text={action[0].toUpperCase() + action.slice(1)}
                     onClick={handleLoginPressed}
                 />
                 <View className="flex-row justify-center items-center my-3.5">
