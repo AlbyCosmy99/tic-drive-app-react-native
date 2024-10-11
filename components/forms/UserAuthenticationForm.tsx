@@ -31,6 +31,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
     setValue,
     handleSubmit,
     clearErrors,
+    watch,
     formState: { errors },
   } = useForm<FormData>();
 
@@ -60,6 +61,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
         if (navigation.canGoBack()) {
             navigation.dispatch(StackActions.popToTop());
         }
+        // setLoginBtnCustomPath('/screens/WorkshopDetails')
         router.replace(loginBtnCustomPath);
         setLoginBtnCustomPath(undefined);
     } else if (navigation.canGoBack()) {
@@ -70,8 +72,13 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
   };
 
   React.useEffect(() => {
-    setOnFormSubmit(() => handleSubmit(onSubmit))
-  }, [])
+    setOnFormSubmit(() => {
+      return handleSubmit((data) => {
+        onSubmit(data);
+      })
+    }
+    );
+  }, []);
 
   return (
     <View style={[styles.container, isUserRegistering && styles.containerUserRegistering]}>
@@ -153,7 +160,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
               name="repeatedPassword"
               rules={{ 
                 required: "Repeated password is required",
-                validate: (value) => value === control._getWatch("password") || "Passwords do not match" //da sostituire?
+                validate: (value) => value === watch("password") || "Passwords do not match"
               }}
               render={({ field: { onChange, value, onBlur } }) => (
                 <TicDriveInput 

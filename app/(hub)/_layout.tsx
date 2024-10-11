@@ -31,7 +31,7 @@ const Hub = () => {
     return (
         <View className="justify-center items-center w-full h-full bg-white">
             <LottieView
-                source={require('@/assets/json/animations/TicDriveLoadingGrey.json')}
+                source={require('@/assets/json/animations/TicDriveLoading.json')}
                 autoPlay
                 loop
                 style={styles.lottieAnimation}
