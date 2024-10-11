@@ -44,6 +44,12 @@ export default function RootLayout() {
                   headerShown: false,
               }} />
               <Stack.Screen 
+                name="screens/LandingScreen" 
+                options={{
+                  title: 'ChooseServicesScreen', 
+                  headerShown: false,
+              }} />
+              <Stack.Screen 
                 name="screens/UserAuthentification" 
                 options={{ 
                   title: 'UserAuthentification', 

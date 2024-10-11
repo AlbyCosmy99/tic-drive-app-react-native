@@ -5,7 +5,7 @@ import AuthAction from "@/app/types/auth/Action";
 import { saveLoginStatus } from "@/app/utils";
 import { Colors } from "@/constants/Colors"
 import { Entypo } from "@expo/vector-icons"
-import { StackActions } from "@react-navigation/native";
+import { StackActions, useNavigationState } from "@react-navigation/native";
 import { router, useNavigation } from "expo-router";
 import React, { useContext } from "react";
 import { StyleSheet, Text, View } from "react-native"
@@ -21,10 +21,17 @@ const TicDriveAuthButton:React.FC<TicDriveAuthButtonProps> = ({
     action
 }) => {
     const dispatch = useAppDispatch()
+    const navigation = useNavigation()
+    const currentRoute = useNavigationState(state => state.routes[state.index])
 
     const handleLogout = async () => {
         dispatch(logout())
         await saveLoginStatus(false)
+        if(currentRoute.name != '(hub)') {
+            navigation.dispatch(StackActions.popToTop)
+            router.replace('../screens/LandingScreen')
+        }
+        
         //sostituire con redux thunk?
     }
 
