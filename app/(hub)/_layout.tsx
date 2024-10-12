@@ -1,4 +1,4 @@
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
 import { useAppDispatch } from "../stateManagement/redux/hooks";
 import { login, logout } from "../stateManagement/redux/slices/authSlice";
@@ -9,6 +9,7 @@ import LottieView from "lottie-react-native";
 
 const Hub = () => {
     const dispatch = useAppDispatch();
+    const params = useLocalSearchParams()
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -30,12 +31,23 @@ const Hub = () => {
 
     return (
         <View className="justify-center items-center w-full h-full bg-white">
-            <LottieView
-                source={require('@/assets/json/animations/TicDriveLoading.json')}
-                autoPlay
-                loop
-                style={styles.lottieAnimation}
-            />
+            {
+                params && params.isCarGreen === "false" ? (
+                    <LottieView
+                        source={require('@/assets/json/animations/TicDriveLoadingGrey.json')}
+                        autoPlay
+                        loop
+                        style={styles.lottieAnimation}
+                    />
+                ) : (
+                    <LottieView
+                        source={require('@/assets/json/animations/TicDriveLoading.json')}
+                        autoPlay
+                        loop
+                        style={styles.lottieAnimation}
+                    />
+                )
+            }
         </View>
     )
 };

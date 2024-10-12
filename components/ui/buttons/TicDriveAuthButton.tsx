@@ -1,14 +1,12 @@
-import GlobalContext from "@/app/stateManagement/contexts/GlobalContext";
 import { useAppDispatch } from "@/app/stateManagement/redux/hooks";
 import { logout } from "@/app/stateManagement/redux/slices/authSlice";
 import AuthAction from "@/app/types/auth/Action";
 import { saveLoginStatus } from "@/app/utils";
-import { Colors } from "@/constants/Colors"
 import { Entypo } from "@expo/vector-icons"
-import { StackActions, useNavigationState } from "@react-navigation/native";
+import { StackActions } from "@react-navigation/native";
 import { router, useNavigation } from "expo-router";
-import React, { useContext } from "react";
-import { StyleSheet, Text, View } from "react-native"
+import React from "react";
+import { Text, View } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
 
 interface TicDriveAuthButtonProps {
@@ -22,16 +20,19 @@ const TicDriveAuthButton:React.FC<TicDriveAuthButtonProps> = ({
 }) => {
     const dispatch = useAppDispatch()
     const navigation = useNavigation()
-    const currentRoute = useNavigationState(state => state.routes[state.index])
 
     const handleLogout = async () => {
-        dispatch(logout())       
-        if(currentRoute.name != 'screens/LandingScreen') {
-            if(navigation.canGoBack()) {
-                navigation.dispatch(StackActions.popToTop)
-            }
-            router.replace('../screens/LandingScreen')
+        dispatch(logout())
+        if(navigation.canGoBack()) {
+            navigation.dispatch(StackActions.popToTop)
         }
+        
+        const params = {
+            isCarGreen: String(false)
+        }
+        const queryString = new URLSearchParams(params)
+        router.replace(`/?${queryString}`)
+
         await saveLoginStatus(false)
         
         //sostituire con redux thunk?
