@@ -62,19 +62,15 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
 
     //setServicesChoosen([]);
     if (loginBtnCustomPath) {
-        console.log('cc')
         if (navigation.canGoBack()) {
-          console.log('dd')
           navigation.dispatch(StackActions.popToTop());
         }
         router.replace(loginBtnCustomPath);
         setLoginBtnCustomPath(undefined);
     } else if (navigation.canGoBack()) {
-      console.log('bb')
       navigation.dispatch(StackActions.popToTop());
       router.replace('/');
     } else {
-      console.log('aa')
       router.replace('/');
     }
   };
