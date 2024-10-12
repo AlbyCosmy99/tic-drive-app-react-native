@@ -8,7 +8,6 @@ import GlobalContext from "@/app/stateManagement/contexts/GlobalContext";
 import { saveLoginStatus } from "@/app/utils";
 import { StackActions } from "@react-navigation/native";
 import { login, setAreFormErrors } from "@/app/stateManagement/redux/slices/authSlice";
-import UserLogged from "@/mock/UserLogged";
 
 type FormData = {
   email: string;
@@ -51,23 +50,32 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
   
   const onSubmit =async (data: FormData) => {
     //mock data
-    dispatch(login(UserLogged))
+    console.log(data)
+    dispatch(login({
+      name: data.name,
+      email: data.email,
+      category: 'user'
+  }))
     
     await saveLoginStatus(true)
     //sostituire con react-thunk
 
-    setServicesChoosen([]);
+    //setServicesChoosen([]);
     if (loginBtnCustomPath) {
+        console.log('cc')
         if (navigation.canGoBack()) {
-            navigation.dispatch(StackActions.popToTop());
+          console.log('dd')
+          navigation.dispatch(StackActions.popToTop());
         }
-        // setLoginBtnCustomPath('/screens/WorkshopDetails')
         router.replace(loginBtnCustomPath);
         setLoginBtnCustomPath(undefined);
     } else if (navigation.canGoBack()) {
-        navigation.goBack();
+      console.log('bb')
+      navigation.dispatch(StackActions.popToTop());
+      router.replace('/');
     } else {
-        router.replace('/');
+      console.log('aa')
+      router.replace('/');
     }
   };
 

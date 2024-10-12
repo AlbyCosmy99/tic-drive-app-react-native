@@ -1,6 +1,5 @@
 export default interface User {
-    name: string;
-    surname: string;
+    name: string | undefined;
     email: string;
     category: UserCategory
 }

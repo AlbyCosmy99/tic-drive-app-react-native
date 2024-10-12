@@ -28,7 +28,9 @@ const TicDriveAuthButton:React.FC<TicDriveAuthButtonProps> = ({
         dispatch(logout())
         await saveLoginStatus(false)
         if(currentRoute.name != 'screens/LandingScreen') {
-            navigation.dispatch(StackActions.popToTop)
+            if(navigation.canGoBack()) {
+                navigation.dispatch(StackActions.popToTop)
+            }
             router.replace('../screens/LandingScreen')
         }
         
