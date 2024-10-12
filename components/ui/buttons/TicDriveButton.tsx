@@ -31,7 +31,8 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({
 
   const whenIsDisabled: Record<string, boolean> = {
     "book a service": servicesChoosen.length === 0,
-    "confirm": carNotFound, 
+    "confirm": carNotFound,
+    "continue": servicesChoosen.length === 0,
   };
 
   return (

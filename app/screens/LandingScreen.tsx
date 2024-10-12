@@ -107,7 +107,7 @@ const LandingScreen = () => {
                                 <TouchableWithoutFeedback
                                         onPressIn={() => setIsSearchButtonPressed(true)}
                                         onPressOut={() => setIsSearchButtonPressed(false)}
-                                        onPress={()=> router.push("/screens/ChooseServicesScreen")}
+                                        onPress={()=> router.push("/screens/ChooseServicesScreen?category=user")}
                                         onLongPress={() => alert('long press')}
                                 >
                                     <ServicesCard 
@@ -140,7 +140,7 @@ const LandingScreen = () => {
                                 <TouchableWithoutFeedback
                                     onPressIn={() => setIsOfferButtonPressed(true)}
                                     onPressOut={() => setIsOfferButtonPressed(false)}
-                                    onPress={() => alert('Service offering pressed')}
+                                    onPress={()=> router.push("/screens/ChooseServicesScreen?category=workshop")}
                                     onLongPress={() => alert('Service offering long pressed')}
                                 >
                                     <ServicesCard 
@@ -160,6 +160,7 @@ const LandingScreen = () => {
                                                 height={height > smallDevicebreakpointHeight ? 50 : 40} 
                                             />
                                         }
+                                        disabledPressIn={true}
                                     />
                                 </TouchableWithoutFeedback>
                             </MotiView>
