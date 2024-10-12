@@ -25,14 +25,14 @@ const TicDriveAuthButton:React.FC<TicDriveAuthButtonProps> = ({
     const currentRoute = useNavigationState(state => state.routes[state.index])
 
     const handleLogout = async () => {
-        dispatch(logout())
-        await saveLoginStatus(false)
+        dispatch(logout())       
         if(currentRoute.name != 'screens/LandingScreen') {
             if(navigation.canGoBack()) {
                 navigation.dispatch(StackActions.popToTop)
             }
             router.replace('../screens/LandingScreen')
         }
+        await saveLoginStatus(false)
         
         //sostituire con redux thunk?
     }
