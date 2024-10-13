@@ -119,7 +119,11 @@ const LandingScreen = () => {
                                         descriptionStyle={styles.cardDescription}
                                         iconStyle={styles.cardIcon}
                                         isCheckIconAvailable={false}
-                                        icon={() => <Feather name="search" size={height > smallDevicebreakpointHeight ? 50 : 40} />}
+                                        icon={() => <Feather 
+                                            name="search" 
+                                            size={height > smallDevicebreakpointHeight ? 50 : 40} 
+                                            color={'green'}
+                                        />}
                                         disabledPressIn={true}
                                     />
                                 </TouchableWithoutFeedback>
@@ -158,6 +162,7 @@ const LandingScreen = () => {
                                             <CarRepairService 
                                                 width={height > smallDevicebreakpointHeight ? 50 : 40} 
                                                 height={height > smallDevicebreakpointHeight ? 50 : 40} 
+                                                fill={'green'}
                                             />
                                         }
                                         disabledPressIn={true}
@@ -203,11 +208,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     cardDescription: {
-        color: 'black',
+        color: 'green',
         textAlign: 'center'
     },
     cardTitle: {
-        color: 'black',
+        color: 'green',
         textAlign: 'center'
     },
     card: {
