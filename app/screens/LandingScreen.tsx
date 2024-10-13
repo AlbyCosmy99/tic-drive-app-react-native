@@ -1,6 +1,6 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
-import { StyleSheet, View } from "react-native";;
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";;
 import { globalStyles } from "../globalStyles";
 import { Colors } from "@/constants/Colors";
 import { Image } from "@rneui/themed";
@@ -25,6 +25,7 @@ const LandingScreen = () => {
     const isUserLogged = useAppSelector((state) => state.auth.isAuthenticated)
     const [isSearchButtonPressed, setIsSearchButtonPressed] = useState(false);
     const [isOfferButtonPressed, setIsOfferButtonPressed] = useState(false);
+    const [imageLoading, setImageLoading] = useState(true)
 
     return (
         <View className={`flex-1 bg-white`}>
@@ -54,9 +55,18 @@ const LandingScreen = () => {
                             }
                         </View>
                         <View className="items-center justify-center">
+                            {imageLoading && (
+                                <LottieView
+                                    source={require('@/assets/json/animations/TicDriveLoading.json')}
+                                    autoPlay
+                                    loop
+                                    style={styles.lottieAnimation}
+                                />
+                            )}
                             <Image 
                                 source={TicDriveLogo}
                                 style={styles.logoImage}
+                                onLoad={() => setImageLoading(false)}
                             />
                         </View>
                     </View>
