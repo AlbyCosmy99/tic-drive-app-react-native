@@ -1,13 +1,13 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";;
+import { StyleSheet, View } from "react-native";;
 import { globalStyles } from "../globalStyles";
 import { Colors } from "@/constants/Colors";
 import { Image } from "@rneui/themed";
 import TicDriveLogo from '../../assets/images/TicDriveLogo.jpeg';
 import LottieView from 'lottie-react-native'
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { useAppDispatch, useAppSelector } from "../stateManagement/redux/hooks";
+import { useAppSelector } from "../stateManagement/redux/hooks";
 import { StackActions, useNavigation } from "@react-navigation/native";
 import ServicesCard from "@/components/ServicesCard";
 import Feather from '@expo/vector-icons/Feather';
@@ -36,7 +36,7 @@ const LandingScreen = () => {
             >
                 <View className="flex-1 justify-between" style={globalStyles().safeAreaView}>
                     <View>
-                        <View style={{height: 60}} className='justify-end flex-row mx-5'>
+                        <View style={{height: 60}} className='justify-end flex-row mx-5 absolute right-1 top-5 z-10'>
                             {isUserLogged ? (
                                     <TicDriveAuthButton 
                                         action="logout"
@@ -54,7 +54,7 @@ const LandingScreen = () => {
                                 )
                             }
                         </View>
-                        <View className="items-center justify-center">
+                        <View style={{marginTop: 60}} className="items-center justify-center">
                             {imageLoading && (
                                 <LottieView
                                     source={require('@/assets/json/animations/TicDriveLoading.json')}
