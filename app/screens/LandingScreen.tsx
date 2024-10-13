@@ -1,6 +1,6 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";;
+import { StyleSheet, View } from "react-native";;
 import { globalStyles } from "../globalStyles";
 import { Colors } from "@/constants/Colors";
 import { Image } from "@rneui/themed";
@@ -8,30 +8,26 @@ import TicDriveLogo from '../../assets/images/TicDriveLogo.jpeg';
 import LottieView from 'lottie-react-native'
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { useAppDispatch, useAppSelector } from "../stateManagement/redux/hooks";
-import { login, logout } from "../stateManagement/redux/slices/authSlice";
-import { getLoginStatus } from "../utils";
 import { StackActions, useNavigation } from "@react-navigation/native";
 import ServicesCard from "@/components/ServicesCard";
 import Feather from '@expo/vector-icons/Feather';
 import CarRepairService from '../../assets/svg/carRepairService.svg'
 import { MotiView } from 'moti'
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Dimensions } from 'react-native';
 import smallDevicebreakpointHeight from "@/constants/smallDevicebreakpointHeight";
 import TicDriveAuthButton from "@/components/ui/buttons/TicDriveAuthButton";
-import UserLogged from "@/mock/UserLogged";
 
 const { width, height } = Dimensions.get('window');
 
 const LandingScreen = () => {
     const navigation = useNavigation()
-    const dispatch = useAppDispatch()
     const isUserLogged = useAppSelector((state) => state.auth.isAuthenticated)
     const [isSearchButtonPressed, setIsSearchButtonPressed] = useState(false);
     const [isOfferButtonPressed, setIsOfferButtonPressed] = useState(false);
 
     return (
-        <View className={`flex-1`}>
+        <View className={`flex-1 bg-white`}>
             <LinearGradient
                 colors={[Colors.light.backgroundLinearGradient.start,Colors.light.backgroundLinearGradient.start, Colors.light.green.drive]}
                 locations={[0, 0.45, 1]} 
@@ -39,7 +35,7 @@ const LandingScreen = () => {
             >
                 <View className="flex-1 justify-between" style={globalStyles().safeAreaView}>
                     <View>
-                        <View style={{height: 60}} className='justify-end flex-row mx-3 mt-1'>
+                        <View style={{height: 60}} className='justify-end flex-row mx-5'>
                             {isUserLogged ? (
                                     <TicDriveAuthButton 
                                         action="logout"
