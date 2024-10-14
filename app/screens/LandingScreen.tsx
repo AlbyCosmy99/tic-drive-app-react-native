@@ -25,7 +25,6 @@ const LandingScreen = () => {
     const isUserLogged = useAppSelector((state) => state.auth.isAuthenticated)
     const [isSearchButtonPressed, setIsSearchButtonPressed] = useState(false);
     const [isOfferButtonPressed, setIsOfferButtonPressed] = useState(false);
-    const [imageLoading, setImageLoading] = useState(true)
 
     return (
         <View className={`flex-1 bg-white`}>
@@ -54,19 +53,11 @@ const LandingScreen = () => {
                                 )
                             }
                         </View>
-                        <View style={{marginTop: 60}} className="items-center justify-center">
-                            {imageLoading && (
-                                <LottieView
-                                    source={require('@/assets/json/animations/TicDriveLoading.json')}
-                                    autoPlay
-                                    loop
-                                    style={styles.lottieAnimation}
-                                />
-                            )}
+                        <View style={{marginTop: 60}} className="items-center justify-center relative">
                             <Image 
                                 source={TicDriveLogo}
                                 style={styles.logoImage}
-                                onLoad={() => setImageLoading(false)}
+                                placeholderStyle={{ backgroundColor: 'transparent' }} 
                             />
                         </View>
                     </View>
@@ -228,7 +219,7 @@ const styles = StyleSheet.create({
     lottieAnimation: {
         width: '100%',
         alignSelf: 'flex-end',
-        height: 210
+        height: 210,
     },
 });
 
