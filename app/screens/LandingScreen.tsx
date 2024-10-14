@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
     lottieAnimation: {
         width: '100%',
         alignSelf: 'flex-end',
-        height: 200
+        height: 210
     },
 });
 

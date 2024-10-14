@@ -27,6 +27,7 @@ const TicDriveAuthButton:React.FC<TicDriveAuthButtonProps> = ({
             navigation.dispatch(StackActions.popToTop)
         }
         
+        //params for loading car animation - isCarGreen -> animation color is green
         const params = {
             isCarGreen: String(false)
         }
