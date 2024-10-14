@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import ServicesCard from './ServicesCard';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
@@ -9,11 +9,18 @@ interface Service {
     id: number;
     title: string;
     description: string;
-  }
+}
 
-function ServicesCards() {
+interface ServicesCardsProps {
+    isSingleChoice?: boolean;
+}
+
+const ServicesCards: React.FC<ServicesCardsProps> = ({
+    isSingleChoice = true
+}) => {
     const [services, setServices] = useState<Service[]>([])
     const [loading, setLoading] = useState(true)
+    const [servicesChoosen, setServicesChoosen] = useState<number[]>([])
 
     useEffect(() => {
         fetch("https://669ae4f09ba098ed610102d8.mockapi.io/api/v1/ticDrive/services")
@@ -38,6 +45,15 @@ function ServicesCards() {
                                 title={elem.title} 
                                 description={elem.description}
                                 icon={icons[index+1]}
+                                pressIn={(id: number)=> {
+                                    if(isSingleChoice) {
+                                        setServicesChoosen([id])
+                                        
+                                    } else {
+                                        setServicesChoosen([...servicesChoosen, id])
+                                    }
+                                }}
+                                servicesChoosen={servicesChoosen}
                             />
                         </View>
                     ))

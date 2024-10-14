@@ -33,7 +33,7 @@ export default function ChooseServicesScreen() {
                         <Text style={{ color: colorScheme === 'light' ? Colors.light.text : Colors.dark.text }} className="font-medium text-3xl mx-3.5 mb-2">
                             {isUserLogged ? `${user.name || ""}, w` : 'W'}hat service{isUserLookingForServices() ? "" : "s"} {isUserLookingForServices() ? "are you looking for": "do you want to offer"}?
                         </Text>
-                        <ServicesCards />
+                        <ServicesCards isSingleChoice={isUserLookingForServices() ? true : false}/>
                     </View>
                     <TicDriveButton 
                         text={isUserLookingForServices() ? "Book a service" : "Continue"} 

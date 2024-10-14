@@ -13,7 +13,7 @@ import LottieView from "lottie-react-native";
 const { width, height } = Dimensions.get('window');
 
 interface ServicesCardProps {
-    id?: number;
+    id: number;
     title?: string;
     description?: string;
     cardStyle?: StyleProp<ViewStyle>;
@@ -24,9 +24,10 @@ interface ServicesCardProps {
     iconWidth?: number;
     iconHeight?: number;
     isCheckIconAvailable?: boolean;
-    pressIn?: () => void;
+    pressIn?: (id: number) => void;
     disabledPressIn?: boolean;
     loading?: boolean;
+    servicesChoosen?: number[];
 }
 
 const ServicesCard: React.FC<ServicesCardProps> = ({ 
@@ -43,33 +44,22 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
     isCheckIconAvailable = true,
     pressIn,
     disabledPressIn = false,
-    loading = false
+    loading = false,
+    servicesChoosen = []
 }) => {
     const [isPressed, setIsPressed] = useState(false);
-    const {servicesChoosen, setServicesChoosen} = useContext(GlobalContext)
 
     const handleOnPressIn = () => {
         if (disabledPressIn) return;
 
         if (pressIn) {
-            pressIn();
-        } else {
-            handlePressIn();
+            pressIn(id);
         }
-    };
-
-    const handlePressIn = () => {
-        if(servicesChoosen.includes(title)) {
-            setIsPressed(false)
-            setServicesChoosen([])
-        } else {
-            setIsPressed(true);
-            setServicesChoosen([title])
-        }
+        setIsPressed(!isPressed)
     };
 
     useEffect(() => {
-        if(!servicesChoosen.includes(title)) {
+        if(!servicesChoosen.includes(id)) {
             setIsPressed(false)
         } 
     },[servicesChoosen])
