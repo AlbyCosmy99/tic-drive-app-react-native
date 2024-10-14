@@ -28,7 +28,7 @@ function ServicesCards() {
             {
                 loading ? (
                     <View style={styles.loadingContainer}>
-                        <ActivityIndicator size="large" color={Colors.light.bookingsOptionsText}/>
+                        <ActivityIndicator size="large" color={Colors.light.green.drive}/>
                     </View>
                 ) : (
                     services.map((elem, index) => (
