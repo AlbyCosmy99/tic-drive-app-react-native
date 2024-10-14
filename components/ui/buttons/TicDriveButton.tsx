@@ -40,7 +40,7 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({
   return (
     <Button
       title={text}
-      disabled={false}
+      disabled={disabled}
       buttonStyle={[
         {
           borderRadius: 40,

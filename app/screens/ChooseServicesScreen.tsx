@@ -17,11 +17,12 @@ export default function ChooseServicesScreen() {
     const colorScheme = useColorScheme();
     const isUserLogged = useAppSelector((state) => state.auth.isAuthenticated)
     const user = useAppSelector(state => state.auth.user) || UserLogged;
-    const [isButtonDisabled, setIsButtonDisabled] = useState(true)
-
     const isUserLookingForServices = () => {
         return !params || params.category === "user"
     }
+    const isButtonDisabled = params.category === "user" ? 
+        useAppSelector(state => state.services.servicesChoosenByUsers).length === 0 :
+        useAppSelector(state => state.services.servicesChoosenByWorkshops).length === 0
 
     return (
         <View className={`flex-1 ${necessaryDeviceBottomInset()}`}>

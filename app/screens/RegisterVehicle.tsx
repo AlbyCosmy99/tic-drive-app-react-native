@@ -114,7 +114,7 @@ function RegisterVehicle() {
                     </ScrollView>                
                 </View> 
             </View>
-            <TicDriveButton text="Confirm" path="../(tabs)/Home" />
+            <TicDriveButton text="Confirm" path="../(tabs)/Home" disabled={carNotFound} />
         </SafeAreaView>
     )
 }
