@@ -1,7 +1,6 @@
 import { Colors } from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { router } from "expo-router";
 import React from "react";
 import { useColorScheme } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";

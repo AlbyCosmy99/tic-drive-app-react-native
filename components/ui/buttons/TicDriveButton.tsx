@@ -13,7 +13,8 @@ interface TicDriveButtonProps {
   path?: Href;
   replace?: boolean,
   onClick?: () => void,
-  toTop?: boolean
+  toTop?: boolean;
+  disabled?: boolean;
 }
 
 const TicDriveButton: React.FC<TicDriveButtonProps> = ({
@@ -23,22 +24,23 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({
   path,
   replace = false,
   onClick,
-  toTop = false
+  toTop = false,
+  disabled = false
 }) => {
   const router = useRouter();
   const { servicesChoosen, carNotFound, setWorkshopFilter } = useContext(GlobalContext)
   const navigation = useNavigation()
 
-  const whenIsDisabled: Record<string, boolean> = {
-    "book a service": servicesChoosen.length === 0,
-    "confirm": carNotFound,
-    "continue": servicesChoosen.length === 0,
-  };
+  // const whenIsDisabled: Record<string, boolean> = {
+  //   "book a service": servicesChoosen.length === 0,
+  //   "confirm": carNotFound,
+  //   "continue": servicesChoosen.length === 0,
+  // };
 
   return (
     <Button
       title={text}
-      disabled={whenIsDisabled[text.toLowerCase() ?? false]}
+      disabled={false}
       buttonStyle={[
         {
           borderRadius: 40,

@@ -1,9 +1,13 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, {  useCallback, useEffect, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import ServicesCard from './ServicesCard';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import icons from '../constants/servicesIconsMap'
 import { Colors } from '@/constants/Colors';
+import { UserCategory } from '@/app/types/User';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { reset } from '@/app/stateManagement/redux/slices/servicesSlice';
 
 interface Service {
     id: number;
@@ -13,14 +17,17 @@ interface Service {
 
 interface ServicesCardsProps {
     isSingleChoice?: boolean;
+    type: UserCategory;
 }
 
 const ServicesCards: React.FC<ServicesCardsProps> = ({
-    isSingleChoice = true
+    isSingleChoice = true,
+    type
 }) => {
     const [services, setServices] = useState<Service[]>([])
     const [loading, setLoading] = useState(true)
-    const [servicesChoosen, setServicesChoosen] = useState<number[]>([])
+    const navigation = useNavigation();
+    const dispatch = useDispatch()
 
     useEffect(() => {
         fetch("https://669ae4f09ba098ed610102d8.mockapi.io/api/v1/ticDrive/services")
@@ -30,6 +37,18 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
            setLoading(false)
         })
     }, [])
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('beforeRemove', (e) => {
+            console.log(e)
+            if (e.data.action.type === 'GO_BACK' || e.data.action.type === 'POP') {
+                dispatch(reset())
+            }
+        });
+
+        return unsubscribe;
+    }, [navigation]);
+    
     return (
         <ScrollView contentContainerStyle={styles.container}>
             {
@@ -45,15 +64,8 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
                                 title={elem.title} 
                                 description={elem.description}
                                 icon={icons[index+1]}
-                                pressIn={(id: number)=> {
-                                    if(isSingleChoice) {
-                                        setServicesChoosen([id])
-                                        
-                                    } else {
-                                        setServicesChoosen([...servicesChoosen, id])
-                                    }
-                                }}
-                                servicesChoosen={servicesChoosen}
+                                type={type}
+                                isSingleChoice={isSingleChoice}
                             />
                         </View>
                     ))

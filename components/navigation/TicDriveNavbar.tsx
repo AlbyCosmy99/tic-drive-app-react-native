@@ -1,11 +1,8 @@
-import { View, Text, TouchableOpacity, StyleSheet, useColorScheme } from 'react-native';
+import { View, Text, StyleSheet, useColorScheme } from 'react-native';
 import { Colors } from '@/constants/Colors';
-import Entypo from '@expo/vector-icons/Entypo';
 import { router } from 'expo-router';
-import { saveLoginStatus } from '@/app/utils';
-import { StackActions, useNavigation } from '@react-navigation/native';
-import { useAppDispatch, useAppSelector } from '@/app/stateManagement/redux/hooks';
-import { logout } from '@/app/stateManagement/redux/slices/authSlice';
+import { useNavigation } from '@react-navigation/native';
+import { useAppSelector } from '@/app/stateManagement/redux/hooks';
 import ToPreviousPage from './ToPreviousPage';
 import TicDriveAuthButton from '../ui/buttons/TicDriveAuthButton';
 interface TicDriveNavbarProps {
@@ -19,7 +16,6 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
   const isUserLogged = useAppSelector((state) => state.auth.isAuthenticated)
 
   const navigation = useNavigation()
-  const dispatch = useAppDispatch()
 
   const backgroundStyle = {
     backgroundColor: colorScheme === 'light' ? Colors.light.background : Colors.dark.background,

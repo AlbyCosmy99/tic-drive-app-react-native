@@ -9,6 +9,9 @@ import CarRepair from '../assets/svg/servicesIcons/car_repair.svg' //default ico
 import smallDevicebreakpointHeight from "@/constants/smallDevicebreakpointHeight";
 import { Dimensions } from 'react-native';
 import LottieView from "lottie-react-native";
+import { UserCategory } from "@/app/types/User";
+import { useAppDispatch, useAppSelector } from "@/app/stateManagement/redux/hooks";
+import { addServiceChoosenByUsers, addServiceChoosenByWorkshops, removeServiceChoosenByUsers, removeServiceChoosenByWorkshops, setServicesChoosenByUsers, setServicesChoosenByWorkshops } from "@/app/stateManagement/redux/slices/servicesSlice";
 
 const { width, height } = Dimensions.get('window');
 
@@ -27,7 +30,8 @@ interface ServicesCardProps {
     pressIn?: (id: number) => void;
     disabledPressIn?: boolean;
     loading?: boolean;
-    servicesChoosen?: number[];
+    type: UserCategory | null;
+    isSingleChoice?: boolean | null;
 }
 
 const ServicesCard: React.FC<ServicesCardProps> = ({ 
@@ -45,9 +49,11 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
     pressIn,
     disabledPressIn = false,
     loading = false,
-    servicesChoosen = []
+    type = null,
+    isSingleChoice = null
 }) => {
     const [isPressed, setIsPressed] = useState(false);
+    const dispatch = useAppDispatch()
 
     const handleOnPressIn = () => {
         if (disabledPressIn) return;
@@ -55,14 +61,40 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
         if (pressIn) {
             pressIn(id);
         }
+
+        //if true it is a card not linked to user or workshop services choices
+        if(isSingleChoice === null) return
+
+        if(isPressed) {
+            type === "user" ? dispatch(removeServiceChoosenByUsers(id)) : dispatch(removeServiceChoosenByWorkshops(id))
+        } else {
+            if(isSingleChoice) {
+                type === "user" ? 
+                dispatch(setServicesChoosenByUsers(id)) : 
+                dispatch(setServicesChoosenByWorkshops(id))
+            } else {
+                type === "user" ? 
+                dispatch(addServiceChoosenByUsers(id)) : 
+                dispatch(addServiceChoosenByWorkshops(id))
+            }
+        }
         setIsPressed(!isPressed)
     };
 
+    const servicesChoosenByUsers = useAppSelector(state => state.services.servicesChoosenByUsers);
+    const servicesChoosenByWorkshops = useAppSelector(state => state.services.servicesChoosenByWorkshops);
+
     useEffect(() => {
-        if(!servicesChoosen.includes(id)) {
-            setIsPressed(false)
-        } 
-    },[servicesChoosen])
+        if (type === "user" && !servicesChoosenByUsers.includes(id)) {
+            setIsPressed(false);
+        }
+    }, [servicesChoosenByUsers]);
+
+    useEffect(() => {
+        if (type === "workshop" && !servicesChoosenByWorkshops.includes(id)) {
+            setIsPressed(false);
+        }
+    }, [servicesChoosenByWorkshops]);
 
     const ServiceIcon = icon
 

@@ -10,12 +10,14 @@ import { globalStyles } from "../globalStyles";
 import necessaryDeviceBottomInset from "../utils/necessaryDeviceBottomInset";
 import UserLogged from "@/mock/UserLogged";
 import { useLocalSearchParams } from "expo-router";
+import { useState } from "react";
 
 export default function ChooseServicesScreen() {
     const params = useLocalSearchParams()
     const colorScheme = useColorScheme();
     const isUserLogged = useAppSelector((state) => state.auth.isAuthenticated)
-    const user = useAppSelector(state => state.auth.user) || UserLogged
+    const user = useAppSelector(state => state.auth.user) || UserLogged;
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true)
 
     const isUserLookingForServices = () => {
         return !params || params.category === "user"
@@ -33,11 +35,16 @@ export default function ChooseServicesScreen() {
                         <Text style={{ color: colorScheme === 'light' ? Colors.light.text : Colors.dark.text }} className="font-medium text-3xl mx-3.5 mb-2">
                             {isUserLogged ? `${user.name || ""}, w` : 'W'}hat service{isUserLookingForServices() ? "" : "s"} {isUserLookingForServices() ? "are you looking for": "do you want to offer"}?
                         </Text>
-                        <ServicesCards isSingleChoice={isUserLookingForServices() ? true : false}/>
+                        <ServicesCards 
+                            isSingleChoice={isUserLookingForServices() ? true : false}
+                            type={isUserLookingForServices() ? "user" : "workshop"}
+                        />
                     </View>
                     <TicDriveButton 
                         text={isUserLookingForServices() ? "Book a service" : "Continue"} 
                         path={isUserLookingForServices() ? "./RegisterVehicle" : "/screens/UserAuthentification"}
+                        disabled={isButtonDisabled}
+
                     />
                 </SafeAreaView>
         </View>
