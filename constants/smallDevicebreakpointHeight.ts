@@ -1,2 +1,2 @@
-const smallDevicebreakpointHeight = 650
-export default smallDevicebreakpointHeight
+const smallDevicebreakpointHeight = 650;
+export default smallDevicebreakpointHeight;

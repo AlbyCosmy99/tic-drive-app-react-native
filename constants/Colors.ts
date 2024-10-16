@@ -16,16 +16,16 @@ export const Colors = {
     tabIconSelected: tintColorLight,
     SegmentedControlBackground: '#f7f7f7',
     green: {
-      drive: '#00BF63'
+      drive: '#00BF63',
     },
     bookingsOptionsText: '#7c7c7c',
     ticText: '#737373',
     placeholderText: '#808080',
     backgroundLinearGradient: {
       start: '#FFFFFF',
-      end: '#FBFBFB'
+      end: '#FBFBFB',
     },
-    OAuth2BorderButton: '#ECECEC'
+    OAuth2BorderButton: '#ECECEC',
   },
   dark: {
     text: '#ECEDEE',
@@ -36,9 +36,9 @@ export const Colors = {
     tabIconSelected: tintColorDark,
     backgroundLinearGradient: {
       start: '#151718',
-      end: '#151718'
-    }
+      end: '#151718',
+    },
   },
   white: '#000',
-  black: '#fff'
+  black: '#fff',
 };

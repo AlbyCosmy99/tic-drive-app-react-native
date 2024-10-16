@@ -1,8 +1,8 @@
-import isAndroidPlatform from "./isAndroidPlatform"
-import isIphoneWithHomeIndicator from "./isIphoneWithHomeIndicator"
+import isAndroidPlatform from './isAndroidPlatform';
+import isIphoneWithHomeIndicator from './isIphoneWithHomeIndicator';
 
 const doesDeviceNeedsBottomInset = () => {
-    return isAndroidPlatform() || !isIphoneWithHomeIndicator()
-}
+  return isAndroidPlatform() || !isIphoneWithHomeIndicator();
+};
 
-export default doesDeviceNeedsBottomInset
+export default doesDeviceNeedsBottomInset;

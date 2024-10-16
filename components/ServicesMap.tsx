@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Alert } from 'react-native';
-import { Region, LatLng } from 'react-native-maps';
+import React, {useState, useEffect} from 'react';
+import {StyleSheet, View, Text, TouchableOpacity, Alert} from 'react-native';
+import {Region, LatLng} from 'react-native-maps';
 import Entypo from '@expo/vector-icons/Entypo';
 import * as Location from 'expo-location';
 import ServicesMapModal from './ServiceMapModal';
-import { Colors } from '@/constants/Colors';
-import LocationPin from '../assets/svg/location_on.svg'
-import workshops from '../constants/temp/Workshops'
+import {Colors} from '@/constants/Colors';
+import LocationPin from '../assets/svg/location_on.svg';
+import workshops from '../constants/temp/Workshops';
 
 interface POIMarker {
   coordinate: LatLng;
@@ -23,25 +23,45 @@ const ServicesMap: React.FC = () => {
   const [poiMarkers, setPoiMarkers] = useState<POIMarker[]>([]);
   const [initialRegion, setInitialRegion] = useState<Region | null>(null);
 
-const customPOIs = [
-    { name: 'Precision Works Garage', latitudeOffset: 0.010, longitudeOffset: 0.015 },
-    { name: 'Steel & Torque Mechanics', latitudeOffset: -0.020, longitudeOffset: -0.025 },
-    { name: 'Fusion Auto Repair', latitudeOffset: 0.030, longitudeOffset: -0.035 },
-    { name: 'Engine Craftworks', latitudeOffset: -0.050, longitudeOffset: 0.045 },
-    { name: 'MasterWrench Garage', latitudeOffset: 0.060, longitudeOffset: -0.010 },
-    { name: 'RevLine Motorshop', latitudeOffset: -0.070, longitudeOffset: 0.020 },
-];
+  const customPOIs = [
+    {
+      name: 'Precision Works Garage',
+      latitudeOffset: 0.01,
+      longitudeOffset: 0.015,
+    },
+    {
+      name: 'Steel & Torque Mechanics',
+      latitudeOffset: -0.02,
+      longitudeOffset: -0.025,
+    },
+    {
+      name: 'Fusion Auto Repair',
+      latitudeOffset: 0.03,
+      longitudeOffset: -0.035,
+    },
+    {
+      name: 'Engine Craftworks',
+      latitudeOffset: -0.05,
+      longitudeOffset: 0.045,
+    },
+    {
+      name: 'MasterWrench Garage',
+      latitudeOffset: 0.06,
+      longitudeOffset: -0.01,
+    },
+    {name: 'RevLine Motorshop', latitudeOffset: -0.07, longitudeOffset: 0.02},
+  ];
 
   useEffect(() => {
     (async () => {
-      const { status } = await Location.requestForegroundPermissionsAsync();
+      const {status} = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         Alert.alert('Permission to access location was denied');
         return;
       }
 
       const location = await Location.getCurrentPositionAsync({});
-      const { latitude, longitude } = location.coords;
+      const {latitude, longitude} = location.coords;
 
       setInitialRegion({
         latitude,
@@ -69,7 +89,7 @@ const customPOIs = [
       },
       name: workshops[index].title,
       price: workshops[index].price,
-      id: workshops[index].id
+      id: workshops[index].id,
     }));
     setPoiMarkers(markers);
   };
@@ -77,7 +97,11 @@ const customPOIs = [
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
-        <LocationPin width={24} name="location-pin" fill={Colors.light.ticText}/>
+        <LocationPin
+          width={24}
+          name="location-pin"
+          fill={Colors.light.ticText}
+        />
         <TouchableOpacity
           style={styles.input}
           onPress={() => setIsMapVisible(true)}
@@ -111,7 +135,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     paddingBottom: 15,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.light.SegmentedControlBackground
+    borderBottomColor: Colors.light.SegmentedControlBackground,
   },
   inputContainer: {
     flexDirection: 'row',

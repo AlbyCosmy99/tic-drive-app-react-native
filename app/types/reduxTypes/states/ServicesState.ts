@@ -1,4 +1,4 @@
 export default interface ServicesState {
-    servicesChoosenByUsers: number[],
-    servicesChoosenByWorkshops: number[]
+  servicesChoosenByUsers: number[];
+  servicesChoosenByWorkshops: number[];
 }

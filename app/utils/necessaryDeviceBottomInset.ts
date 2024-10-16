@@ -1,8 +1,8 @@
-import doesDeviceNeedsBottomInset from "./doesDeviceNeedsBottomInset"
+import doesDeviceNeedsBottomInset from './doesDeviceNeedsBottomInset';
 
 const necessaryDeviceBottomInset = () => {
-    //tailwind css
-    return doesDeviceNeedsBottomInset() ? "mb-4" : ''
-}
+  //tailwind css
+  return doesDeviceNeedsBottomInset() ? 'mb-4' : '';
+};
 
-export default necessaryDeviceBottomInset
+export default necessaryDeviceBottomInset;

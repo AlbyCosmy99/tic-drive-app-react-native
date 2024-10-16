@@ -1,19 +1,19 @@
-import { Colors } from "@/constants/Colors";
-import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-import React from "react";
-import { useColorScheme } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import {Colors} from '@/constants/Colors';
+import {Ionicons} from '@expo/vector-icons';
+import {useNavigation} from '@react-navigation/native';
+import React from 'react';
+import {useColorScheme} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 interface ToPreviousPageProps {
-  containerClassName?: string
-} 
+  containerClassName?: string;
+}
 
 const ToPreviousPage: React.FC<ToPreviousPageProps> = ({
-  containerClassName = ""
+  containerClassName = '',
 }) => {
   const colorScheme = useColorScheme();
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   return (
     <TouchableOpacity
@@ -25,7 +25,7 @@ const ToPreviousPage: React.FC<ToPreviousPageProps> = ({
       <Ionicons
         name="arrow-back"
         size={30}
-        color={colorScheme === "light" ? Colors.white : Colors.black}
+        color={colorScheme === 'light' ? Colors.white : Colors.black}
       />
     </TouchableOpacity>
   );

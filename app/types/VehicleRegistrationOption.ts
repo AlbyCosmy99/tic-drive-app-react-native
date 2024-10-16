@@ -1,7 +1,7 @@
 export default interface VehicleRegistrationOption {
-    index: number;
-    name: string;
-    placeholder: string;
-    inputLabel: string;
-    keyString: string
+  index: number;
+  name: string;
+  placeholder: string;
+  inputLabel: string;
+  keyString: string;
 }

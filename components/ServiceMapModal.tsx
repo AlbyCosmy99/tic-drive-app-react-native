@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Modal, Button, Text, Image } from 'react-native';
-import MapView, { Marker, Region, LatLng } from 'react-native-maps';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import React, {useState, useEffect} from 'react';
+import {StyleSheet, View, Modal, Button, Text, Image} from 'react-native';
+import MapView, {Marker, Region, LatLng} from 'react-native-maps';
+import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import * as Location from 'expo-location';
-import { router } from 'expo-router';
+import {router} from 'expo-router';
 
 interface POIMarker {
   coordinate: LatLng;
@@ -43,16 +43,16 @@ export default function ServicesMapModal({
 
   useEffect(() => {
     (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
+      let {status} = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         alert('Permission to access location was denied');
         return;
       }
 
       let location = await Location.getCurrentPositionAsync({});
-      const { latitude, longitude } = location.coords;
+      const {latitude, longitude} = location.coords;
 
-      setUserLocation({ latitude, longitude });
+      setUserLocation({latitude, longitude});
       setInitialRegion({
         latitude,
         longitude,
@@ -69,8 +69,8 @@ export default function ServicesMapModal({
     setIsMapVisible(false);
     router.push({
       pathname: '../screens/WorkshopDetails',
-      params: { id: poi.id }
-    })
+      params: {id: poi.id},
+    });
   };
 
   return (
@@ -80,8 +80,8 @@ export default function ServicesMapModal({
           placeholder="Search"
           onPress={(data, details = null) => {
             if (details) {
-              const { lat, lng } = details.geometry.location;
-              setSelectedLocation({ latitude: lat, longitude: lng });
+              const {lat, lng} = details.geometry.location;
+              setSelectedLocation({latitude: lat, longitude: lng});
               setLocationName(details.formatted_address || data.description);
             }
             setIsMapVisible(false);
@@ -116,13 +116,14 @@ export default function ServicesMapModal({
               </Marker>
             )}
 
-            {selectedLocation && selectedPrice !== null && ( //selected location
-              <Marker coordinate={selectedLocation}>
-                <View style={styles.selectedMarker}>
-                  <Text style={styles.priceText}>{selectedPrice}</Text>
-                </View>
-              </Marker>
-            )}
+            {selectedLocation &&
+              selectedPrice !== null && ( //selected location
+                <Marker coordinate={selectedLocation}>
+                  <View style={styles.selectedMarker}>
+                    <Text style={styles.priceText}>{selectedPrice}</Text>
+                  </View>
+                </Marker>
+              )}
 
             {poiMarkers.map((poi, index) => (
               <Marker
@@ -130,7 +131,7 @@ export default function ServicesMapModal({
                 coordinate={poi.coordinate}
                 title={poi.name}
                 description={`Price: ${poi.price}`}
-                image={poi.icon ? { uri: poi.icon } : undefined}
+                image={poi.icon ? {uri: poi.icon} : undefined}
                 onPress={() => handlePOISelect(poi)}
               >
                 <View style={styles.markerContent}>
@@ -193,27 +194,29 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 5,
     padding: 2,
-    paddingHorizontal: 3
+    paddingHorizontal: 3,
   },
   markerText: {
     fontSize: 22,
     fontWeight: 'bold',
     color: 'black',
   },
-  selectedMarker: { //container selected marker
+  selectedMarker: {
+    //container selected marker
     backgroundColor: 'black',
     borderRadius: 5,
     padding: 2,
-    paddingHorizontal: 3
+    paddingHorizontal: 3,
   },
-  priceText: { //text selected marker
+  priceText: {
+    //text selected marker
     fontSize: 25,
     fontWeight: 'bold',
     color: 'white',
   },
   userIconContainer: {
     justifyContent: 'center',
-    alignItems: 'center', 
+    alignItems: 'center',
   },
   userIcon: {
     width: 45,

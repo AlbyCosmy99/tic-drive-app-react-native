@@ -1,10 +1,10 @@
-import {combineReducers} from 'redux'
-import authReducer from './authSlice'
-import servicesReducer from './servicesSlice'
+import {combineReducers} from 'redux';
+import authReducer from './authSlice';
+import servicesReducer from './servicesSlice';
 
 const rootReducer = combineReducers({
-    auth: authReducer,
-    services: servicesReducer
-})
+  auth: authReducer,
+  services: servicesReducer,
+});
 
-export default rootReducer
+export default rootReducer;
