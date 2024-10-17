@@ -2,7 +2,7 @@ import {DarkTheme, DefaultTheme, ThemeProvider} from '@react-navigation/native';
 import {useFonts} from 'expo-font';
 import {Stack} from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import 'react-native-reanimated';
 import {StyleSheet} from 'react-native';
 import {useColorScheme} from '@/hooks/useColorScheme';
@@ -11,14 +11,28 @@ import {Colors} from '@/constants/Colors';
 import GlobalProvider from './stateManagement/contexts/GlobalProvider';
 import {Provider} from 'react-redux';
 import store from './stateManagement/redux/store/store';
+import { useAppSelector } from './stateManagement/redux/hooks';
+import { getLoginStatus } from './utils';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+  const [isUserLogged, setIsUserLogged] = useState(false)
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const userAuthStatus = await getLoginStatus();
+        setIsUserLogged(userAuthStatus)
+      } catch (error) {
+        console.error('Error checking auth status: ', error);
+      }
+    };
+    checkAuth();
+  }, [])
 
   useEffect(() => {
     if (loaded) {
@@ -36,7 +50,14 @@ export default function RootLayout() {
         <GlobalProvider>
           <GestureHandlerRootView>
             <Stack>
-              <Stack.Screen name="(hub)" options={{headerShown: false}} />
+              <Stack.Screen 
+                name="(hub)" 
+                options={{
+                  title: 'Hub',
+                  headerShown: false,
+                  animation: 'fade'
+                }} 
+              />
               <Stack.Screen
                 name="screens/ChooseServicesScreen"
                 options={{
@@ -49,6 +70,7 @@ export default function RootLayout() {
                 options={{
                   title: 'ChooseServicesScreen',
                   headerShown: false,
+                  animation: 'fade'
                 }}
               />
               <Stack.Screen
@@ -66,7 +88,14 @@ export default function RootLayout() {
                   headerShown: false,
                 }}
               />
-              <Stack.Screen name="(tabs)" options={{headerShown: false}} />
+              <Stack.Screen 
+                name="(tabs)" 
+                options={{
+                  title: 'Tabs',
+                  headerShown: false, 
+                  animation: isUserLogged ? 'fade' : 'default'
+                }} 
+              />
               <Stack.Screen
                 name="screens/WorkshopDetails"
                 options={{
