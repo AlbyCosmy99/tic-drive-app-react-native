@@ -13,7 +13,7 @@ import {Image} from '@rneui/themed';
 import TicDriveLogo from '../../assets/images/TicDriveLogo.jpeg';
 import UserAuthenticationContent from '@/components/auth/UserAuthentificationContent';
 import {globalStyles} from '../globalStyles';
-import isIOSPlatform from '../utils/IsIOSPlatform';
+import isIOSPlatform from '../utils/devices/IsIOSPlatform';
 import smallDevicebreakpointHeight from '@/constants/smallDevicebreakpointHeight';
 
 import {Dimensions} from 'react-native';

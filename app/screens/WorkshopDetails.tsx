@@ -25,7 +25,9 @@ import {Ionicons} from '@expo/vector-icons';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import ClientReviewCards from '@/components/ClientReviewCards';
 import {globalStyles} from '../globalStyles';
-import necessaryDeviceBottomInset from '../utils/necessaryDeviceBottomInset';
+import calculateWorkshopDiscount from '../utils/workshops/calculateWorkshopDiscount';
+import calculateWorkshopStars from '../utils/workshops/calculateWorkshopStars';
+import necessaryDeviceBottomInset from '../utils/devices/necessaryDeviceBottomInset';
 
 export default function WorkshopDetails() {
   const {id} = useLocalSearchParams();
@@ -35,19 +37,6 @@ export default function WorkshopDetails() {
   useEffect(() => {
     setWorkshop(workshops.find(workshop => String(workshop.id) === id) || null);
   }, [id]);
-
-  const calculateDiscountPrice = (price: string, discount: number) => {
-    const priceValue = parseInt(price.slice(1));
-    return priceValue - (priceValue * discount) / 100;
-  };
-
-  const calculateWorkshopStars = (reviews: Review[]) => {
-    let sumReviewStars = 0;
-    reviews.forEach(review => {
-      sumReviewStars += review.stars;
-    });
-    return sumReviewStars / reviews.length;
-  };
 
   return (
     <SafeAreaView
@@ -201,7 +190,7 @@ export default function WorkshopDetails() {
                 </View>
                 {workshop.discount !== 0 && (
                   <Text className="font-bold text-2xl mx-1">
-                    ${calculateDiscountPrice(workshop.price, workshop.discount)}
+                    ${calculateWorkshopDiscount(workshop.price, workshop.discount)}
                   </Text>
                 )}
               </View>

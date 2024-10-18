@@ -4,7 +4,7 @@ import {Colors} from '@/constants/Colors';
 import {LinearGradient} from 'expo-linear-gradient';
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {globalStyles} from '../globalStyles';
-import necessaryDeviceBottomInset from '../utils/necessaryDeviceBottomInset';
+import necessaryDeviceBottomInset from '../utils/devices/necessaryDeviceBottomInset';
 
 export default function BookingConfirmation() {
   return (

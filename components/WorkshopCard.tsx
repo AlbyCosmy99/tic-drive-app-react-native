@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import {memo} from 'react';
 import {Colors} from '@/constants/Colors';
 import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
 import {Image} from 'react-native-elements';
@@ -10,10 +10,10 @@ import Acute from '../assets/svg/acute.svg';
 import FreeCancellation from '../assets/svg/free_cancellation.svg';
 import AssistantDirection from '../assets/svg/assistant_direction';
 import CalendarIcon from '../assets/svg/calendar_add_on.svg';
-import Review from '@/constants/temp/Review';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Workshop} from '@/constants/temp/Services';
-import {calculateDiscountPrice, calculateWorkshopStars} from '@/app/utils';
+import calculateWorkshopDiscount from '@/app/utils/workshops/calculateWorkshopDiscount';
+import calculateWorkshopStars from '@/app/utils/workshops/calculateWorkshopStars';
 
 function WorkshopCard({workshop}: {workshop: Workshop}) {
   return (
@@ -81,7 +81,7 @@ function WorkshopCard({workshop}: {workshop: Workshop}) {
           </View>
           {workshop.discount !== 0 && (
             <Text style={styles.priceDetail}>
-              ${calculateDiscountPrice(workshop.price, workshop.discount)}
+              ${calculateWorkshopDiscount(workshop.price, workshop.discount)}
             </Text>
           )}
         </View>

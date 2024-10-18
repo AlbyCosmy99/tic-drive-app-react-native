@@ -7,10 +7,10 @@ import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {Colors} from '@/constants/Colors';
 import {useAppSelector} from '../stateManagement/redux/hooks';
 import {globalStyles} from '../globalStyles';
-import necessaryDeviceBottomInset from '../utils/necessaryDeviceBottomInset';
 import UserLogged from '@/mock/UserLogged';
 import {useLocalSearchParams} from 'expo-router';
 import {useState} from 'react';
+import necessaryDeviceBottomInset from '../utils/devices/necessaryDeviceBottomInset';
 
 export default function ChooseServicesScreen() {
   const params = useLocalSearchParams();
