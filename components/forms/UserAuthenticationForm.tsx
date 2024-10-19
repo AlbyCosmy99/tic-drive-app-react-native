@@ -12,6 +12,7 @@ import {
   setAreFormErrors,
 } from '@/app/stateManagement/redux/slices/authSlice';
 import User, { UserCategory } from '@/app/types/User';
+import AuthContext from '@/app/stateManagement/contexts/AuthContext';
 
 type FormData = {
   email: string;
@@ -41,7 +42,8 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
   } = useForm<FormData>();
 
   const {setServicesChoosen, loginBtnCustomPath, setLoginBtnCustomPath} =
-    React.useContext(GlobalContext);
+  React.useContext(GlobalContext);
+  const {setIsUserLogged} = React.useContext(AuthContext)
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
 
@@ -60,8 +62,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
   }, [isUserRegistering]);
 
   const onSubmit = async (data: FormData) => {
-    //mock data
-    console.log(data);
+    setIsUserLogged(true)
 
     const user: User = {
       name: data.name,
@@ -73,9 +74,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
     );
 
     await saveUser(user);
-    //sostituire con react-thunk
 
-    //setServicesChoosen([]);
     if (loginBtnCustomPath) {
       if (navigation.canGoBack()) {
         navigation.dispatch(StackActions.popToTop());

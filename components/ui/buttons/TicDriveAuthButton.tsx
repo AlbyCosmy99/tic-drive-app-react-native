@@ -1,3 +1,5 @@
+import AuthContext from '@/app/stateManagement/contexts/AuthContext';
+import GlobalContext from '@/app/stateManagement/contexts/GlobalContext';
 import {useAppDispatch} from '@/app/stateManagement/redux/hooks';
 import {logout} from '@/app/stateManagement/redux/slices/authSlice';
 import AuthAction from '@/app/types/auth/Action';
@@ -5,7 +7,7 @@ import {saveUser} from '@/app/utils';
 import {Entypo} from '@expo/vector-icons';
 import {StackActions} from '@react-navigation/native';
 import {router, useNavigation} from 'expo-router';
-import React from 'react';
+import React, { useContext } from 'react';
 import {Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
@@ -20,9 +22,11 @@ const TicDriveAuthButton: React.FC<TicDriveAuthButtonProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
+  const {setIsUserLogged} = useContext(AuthContext)
 
   const handleLogout = async () => {
     dispatch(logout());
+    setIsUserLogged(false)
     if (navigation.canGoBack()) {
       navigation.dispatch(StackActions.popToTop);
     }

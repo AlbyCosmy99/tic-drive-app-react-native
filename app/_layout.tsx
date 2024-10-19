@@ -12,27 +12,28 @@ import GlobalProvider from './stateManagement/contexts/GlobalProvider';
 import {Provider} from 'react-redux';
 import store from './stateManagement/redux/store/store';
 import { getUser } from './utils';
-import User from './types/User';
+import AuthContext from './stateManagement/contexts/AuthContext';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  const [userLogged, setUserLogged] = useState<User | null>(null)
+  const [isUserLogged, setIsUserLogged] = useState(false)
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
   useEffect(() => {
     const checkAuth = async () => {
+      console.log('changed user logged')
       try {
         const user = await getUser();
-        setUserLogged(user)
+        user ? setIsUserLogged(true) : setIsUserLogged(false)
       } catch (error) {
         console.error('Error checking auth status: ', error);
       }
     };
     checkAuth();
-  }, [])
+  }, [isUserLogged])
 
   useEffect(() => {
     if (loaded) {
@@ -48,86 +49,88 @@ export default function RootLayout() {
     <Provider store={store}>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <GlobalProvider>
-          <GestureHandlerRootView>
-            <Stack>
-              <Stack.Screen 
-                name="(hub)" 
-                options={{
-                  title: 'Hub',
-                  headerShown: false,
-                  animation: 'fade'
-                }} 
-              />
-              <Stack.Screen
-                name="screens/ChooseServicesScreen"
-                options={{
-                  title: 'ChooseServicesScreen',
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="screens/LandingScreen"
-                options={{
-                  title: 'ChooseServicesScreen',
-                  headerShown: false,
-                  animation: 'fade'
-                }}
-              />
-              <Stack.Screen
-                name="screens/UserAuthentification"
-                options={{
-                  title: 'UserAuthentification',
-                  headerShown: false,
-                  presentation: 'modal',
-                }}
-              />
-              <Stack.Screen
-                name="screens/RegisterVehicle"
-                options={{
-                  title: 'Register Vehicle',
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen 
-                name="(workshopTabs)" 
-                options={{
-                  title: 'Tabs',
-                  headerShown: false, 
-                  animation: userLogged ? 'fade' : 'default'
-                }} 
-              />
-              <Stack.Screen 
-                name="(userTabs)" 
-                options={{
-                  title: 'Tabs',
-                  headerShown: false, 
-                  animation: userLogged ? 'fade' : 'default'
-                }} 
-              />
-              <Stack.Screen
-                name="screens/WorkshopDetails"
-                options={{
-                  title: 'Workshop details',
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="screens/CalendarDateSelection"
-                options={{
-                  title: 'Calendar Date Selection',
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="screens/BookingConfirmation"
-                options={{
-                  title: 'Booking Confirmation',
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen name="+not-found" />
-            </Stack>
-          </GestureHandlerRootView>
+          <AuthContext.Provider value={{isUserLogged, setIsUserLogged}}>
+            <GestureHandlerRootView>
+              <Stack>
+                <Stack.Screen 
+                  name="(hub)" 
+                  options={{
+                    title: 'Hub',
+                    headerShown: false,
+                    animation: 'fade'
+                  }} 
+                />
+                <Stack.Screen
+                  name="screens/ChooseServicesScreen"
+                  options={{
+                    title: 'ChooseServicesScreen',
+                    headerShown: false,
+                  }}
+                />
+                <Stack.Screen
+                  name="screens/LandingScreen"
+                  options={{
+                    title: 'ChooseServicesScreen',
+                    headerShown: false,
+                    animation: 'fade'
+                  }}
+                />
+                <Stack.Screen
+                  name="screens/UserAuthentification"
+                  options={{
+                    title: 'UserAuthentification',
+                    headerShown: false,
+                    presentation: 'modal',
+                  }}
+                />
+                <Stack.Screen
+                  name="screens/RegisterVehicle"
+                  options={{
+                    title: 'Register Vehicle',
+                    headerShown: false,
+                  }}
+                />
+                <Stack.Screen 
+                  name="(workshopTabs)" 
+                  options={{
+                    title: 'Tabs',
+                    headerShown: false, 
+                    animation: isUserLogged ? 'fade' : 'default'
+                  }} 
+                />
+                <Stack.Screen 
+                  name="(userTabs)" 
+                  options={{
+                    title: 'Tabs',
+                    headerShown: false, 
+                    animation: isUserLogged ? 'fade' : 'default'
+                  }} 
+                />
+                <Stack.Screen
+                  name="screens/WorkshopDetails"
+                  options={{
+                    title: 'Workshop details',
+                    headerShown: false,
+                  }}
+                />
+                <Stack.Screen
+                  name="screens/CalendarDateSelection"
+                  options={{
+                    title: 'Calendar Date Selection',
+                    headerShown: false,
+                  }}
+                />
+                <Stack.Screen
+                  name="screens/BookingConfirmation"
+                  options={{
+                    title: 'Booking Confirmation',
+                    headerShown: false,
+                  }}
+                />
+                <Stack.Screen name="+not-found" />
+              </Stack>
+            </GestureHandlerRootView>
+          </AuthContext.Provider>
         </GlobalProvider>
       </ThemeProvider>
     </Provider>
