@@ -18,7 +18,6 @@ import smallDevicebreakpointHeight from '@/constants/smallDevicebreakpointHeight
 
 import {Dimensions} from 'react-native';
 import AuthAction from '../types/auth/Action';
-import { useRoute } from '@react-navigation/native';
 import { useLocalSearchParams } from 'expo-router';
 const {width, height} = Dimensions.get('window');
 
@@ -54,7 +53,7 @@ export default function UserAuthentification() {
               <Image source={TicDriveLogo} style={styles.logoImage} />
             </View>
           </View>
-          <ScrollView style={styles.content}>
+          <ScrollView className='flex-1'>
             <UserAuthenticationContent
               action={action}
               isUserRegistering={isUserRegistering}
@@ -68,9 +67,6 @@ export default function UserAuthentification() {
 }
 
 const styles = StyleSheet.create({
-  content: {
-    flex: 1,
-  },
   hr: {
     borderBottomColor: '#e6e6e6',
     borderBottomWidth: 1.5,
