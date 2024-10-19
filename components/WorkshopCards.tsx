@@ -14,7 +14,7 @@ function WorkshopCards() {
 
   const handleCardPress = (workshop: Workshop) => {
     router.push({
-      pathname: '../screens/WorkshopDetails',
+      pathname: '../../screens/WorkshopDetails',
       params: {id: workshop.id},
     });
   };
