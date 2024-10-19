@@ -6,7 +6,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {Colors} from '@/constants/Colors';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Image} from '@rneui/themed';
@@ -18,10 +18,19 @@ import smallDevicebreakpointHeight from '@/constants/smallDevicebreakpointHeight
 
 import {Dimensions} from 'react-native';
 import AuthAction from '../types/auth/Action';
+import { useRoute } from '@react-navigation/native';
+import { useLocalSearchParams } from 'expo-router';
 const {width, height} = Dimensions.get('window');
 
 export default function UserAuthentification() {
   const [isUserRegistering, setIsUserRegistering] = useState<boolean>(false);
+  const searchParams = useLocalSearchParams();
+
+  useEffect(() => {
+    if(searchParams.register) {
+      setIsUserRegistering(true)
+    }
+  }, [])
 
   const action = useMemo<AuthAction>(() => {
     return isUserRegistering ? 'register' : 'login';
