@@ -35,7 +35,7 @@ export default function BookingConfirmation() {
             code via email to present to the mechanic.
           </Text>
         </View>
-        <TicDriveButton replace={true} text="Home" path={'../(tabs)/Home'} />
+        <TicDriveButton replace={true} text="Home" path={'../(tabs)/user/Home'} />
       </SafeAreaView>
     </LinearGradient>
   );
