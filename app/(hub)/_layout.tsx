@@ -1,6 +1,6 @@
 import {router, useLocalSearchParams} from 'expo-router';
 import {StyleSheet, Text, View} from 'react-native';
-import {useAppDispatch} from '../stateManagement/redux/hooks';
+import {useAppDispatch, useAppSelector} from '../stateManagement/redux/hooks';
 import {login, logout} from '../stateManagement/redux/slices/authSlice';
 import {getLoginStatus} from '../utils';
 import {useEffect} from 'react';
@@ -10,14 +10,15 @@ import LottieView from 'lottie-react-native';
 const Hub = () => {
   const dispatch = useAppDispatch();
   const params = useLocalSearchParams();
+  const user = useAppSelector(state => state.auth.user)
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
         const userAuthStatus = await getLoginStatus();
         if (userAuthStatus) {
-          dispatch(login(UserLogged));
-          router.replace('../(tabs)/Home');
+          dispatch(login(user ?? UserLogged));
+          router.replace('../(tabs)/user/Home');
         } else {
           dispatch(logout());
           router.replace('../screens/LandingScreen');
@@ -27,7 +28,7 @@ const Hub = () => {
       }
     };
     checkAuth();
-  }, [dispatch]);
+  }, []);
 
   return (
     <View className="justify-center items-center w-full h-full bg-white">

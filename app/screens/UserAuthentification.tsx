@@ -58,6 +58,7 @@ export default function UserAuthentification() {
               action={action}
               isUserRegistering={isUserRegistering}
               setIsUserRegistering={setIsUserRegistering}
+              clientCategory={searchParams.user === '0' ? 'workshop' : 'user'}
             />
           </ScrollView>
         </View>

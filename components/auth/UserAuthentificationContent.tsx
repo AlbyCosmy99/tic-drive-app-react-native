@@ -6,21 +6,24 @@ import OAuth2Button from '../ui/buttons/OAuth2Button';
 import GoogleIcon from '@/assets/svg/OAuth2Icons/GoogleIcon';
 import AppleIcon from '@/assets/svg/OAuth2Icons/AppleIcon';
 import {Colors} from '@/constants/Colors';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useAppDispatch} from '@/app/stateManagement/redux/hooks';
 import {setAreFormErrors} from '@/app/stateManagement/redux/slices/authSlice';
 import AuthAction from '@/app/types/auth/Action';
+import { UserCategory } from '@/app/types/User';
 
 interface UserAuthenticationContentProps {
   action: AuthAction;
   isUserRegistering: boolean;
   setIsUserRegistering: (isUserRegistering: boolean) => void;
+  clientCategory?: UserCategory;
 }
 
 const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
   action,
   isUserRegistering,
   setIsUserRegistering,
+  clientCategory = 'user'
 }) => {
   const [onFormSubmit, setOnFormSubmit] = useState<(() => void) | null>(null);
   const dispatch = useAppDispatch();
@@ -55,6 +58,7 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
         <UserAuthenticationForm
           isUserRegistering={isUserRegistering}
           setOnFormSubmit={setOnFormSubmit}
+          clientCategory={clientCategory}
         />
       </View>
       <View>

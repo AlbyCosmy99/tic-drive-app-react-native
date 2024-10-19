@@ -63,7 +63,7 @@ export default function ChooseServicesScreen() {
           path={
             isUserLookingForServices()
               ? './RegisterVehicle'
-              : '/screens/UserAuthentification?register=1'
+              : '/screens/UserAuthentification?register=1&user=0'
           }
           disabled={isButtonDisabled}
         />

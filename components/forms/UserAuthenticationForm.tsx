@@ -11,6 +11,7 @@ import {
   login,
   setAreFormErrors,
 } from '@/app/stateManagement/redux/slices/authSlice';
+import { UserCategory } from '@/app/types/User';
 
 type FormData = {
   email: string;
@@ -22,11 +23,13 @@ type FormData = {
 interface UserAuthenticationFormProps {
   isUserRegistering: boolean;
   setOnFormSubmit: (onSubmit: () => void) => void;
+  clientCategory: UserCategory;
 }
 
 const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
   isUserRegistering,
   setOnFormSubmit,
+  clientCategory
 }) => {
   const {
     control,
@@ -63,7 +66,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
       login({
         name: data.name,
         email: data.email,
-        category: 'user',
+        category: clientCategory === 'user' ? 'user' : 'workshop',
       }),
     );
 

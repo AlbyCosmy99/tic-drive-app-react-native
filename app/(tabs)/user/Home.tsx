@@ -2,18 +2,23 @@ import {Colors} from '@/constants/Colors';
 import {View, StyleSheet, SafeAreaView} from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import FilterIcon from '../../assets/svg/discover_tune.svg';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
 import WorkshopCards from '@/components/WorkshopCards';
 import {LinearGradient} from 'expo-linear-gradient';
-import {globalStyles} from '../globalStyles';
-import {useContext} from 'react';
-import GlobalContext from '../stateManagement/contexts/GlobalContext';
-import {useAppSelector} from '../stateManagement/redux/hooks';
+import {useContext, useEffect} from 'react';
+import GlobalContext from '@/app/stateManagement/contexts/GlobalContext';
+import { useAppSelector } from '@/app/stateManagement/redux/hooks';
+import { globalStyles } from '@/app/globalStyles';
+import FilterIcon from '../../../assets/svg/discover_tune.svg';
 
 export default function HomeTab() {
   const {setWorkshopFilter} = useContext(GlobalContext);
   const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);
+  const user = useAppSelector(state => state.auth.user)
+
+  useEffect(() => {
+    alert(user?.category)
+  }, [])
 
   return (
     <LinearGradient
