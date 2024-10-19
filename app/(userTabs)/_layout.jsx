@@ -5,7 +5,7 @@ import BookingsIcon from '../../assets/svg/bookingsIcon.svg';
 import FavouriteIcon from '../../assets/svg/favouriteIcon.svg';
 import ChatIcon from '../../assets/svg/chatIcon.svg';
 import AccountIcon from '../../assets/svg/accountIcon.svg';
-import HomeTab from './user/Home';
+import HomeTab from './Home';
 import {useAppSelector} from '../stateManagement/redux/hooks';
 
 export default function TabLayout() {
@@ -17,7 +17,7 @@ export default function TabLayout() {
   return (
     <Tabs screenOptions={{tabBarActiveTintColor: Colors.light.green.drive}}>
       <Tabs.Screen
-        name="user/Home"
+        name="Home"
         options={{
           title: 'Home',
           headerShown: false,
@@ -27,7 +27,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="user/Bookings"
+        name="Bookings"
         options={{
           title: 'Bookings',
           tabBarIcon: ({color}) => (
@@ -36,7 +36,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="user/Favourite"
+        name="Favourite"
         options={{
           title: 'Favourite',
           tabBarIcon: ({color}) => (
@@ -45,7 +45,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="user/Chat"
+        name="Chat"
         options={{
           title: 'Chat',
           tabBarIcon: ({color}) => (
@@ -54,9 +54,9 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="user/Account"
+        name="Account"
         options={{
-          title: 'user/Account',
+          title: 'Account',
           tabBarIcon: ({color}) => (
             <AccountIcon width={28} fill={color} name="Home" />
           ),

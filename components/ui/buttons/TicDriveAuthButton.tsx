@@ -1,7 +1,7 @@
 import {useAppDispatch} from '@/app/stateManagement/redux/hooks';
 import {logout} from '@/app/stateManagement/redux/slices/authSlice';
 import AuthAction from '@/app/types/auth/Action';
-import {saveLoginStatus} from '@/app/utils';
+import {saveUser} from '@/app/utils';
 import {Entypo} from '@expo/vector-icons';
 import {StackActions} from '@react-navigation/native';
 import {router, useNavigation} from 'expo-router';
@@ -34,7 +34,7 @@ const TicDriveAuthButton: React.FC<TicDriveAuthButtonProps> = ({
     const queryString = new URLSearchParams(params);
     router.replace(`/?${queryString}`);
 
-    await saveLoginStatus(false);
+    await saveUser(null);
 
     //sostituire con redux thunk?
   };

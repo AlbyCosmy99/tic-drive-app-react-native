@@ -11,22 +11,22 @@ import {Colors} from '@/constants/Colors';
 import GlobalProvider from './stateManagement/contexts/GlobalProvider';
 import {Provider} from 'react-redux';
 import store from './stateManagement/redux/store/store';
-import { useAppSelector } from './stateManagement/redux/hooks';
-import { getLoginStatus } from './utils';
+import { getUser } from './utils';
+import User from './types/User';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  const [isUserLogged, setIsUserLogged] = useState(false)
+  const [userLogged, setUserLogged] = useState<User | null>(null)
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const userAuthStatus = await getLoginStatus();
-        setIsUserLogged(userAuthStatus)
+        const user = await getUser();
+        setUserLogged(user)
       } catch (error) {
         console.error('Error checking auth status: ', error);
       }
@@ -89,11 +89,19 @@ export default function RootLayout() {
                 }}
               />
               <Stack.Screen 
-                name="(tabs)" 
+                name="(workshopTabs)" 
                 options={{
                   title: 'Tabs',
                   headerShown: false, 
-                  animation: isUserLogged ? 'fade' : 'default'
+                  animation: userLogged ? 'fade' : 'default'
+                }} 
+              />
+              <Stack.Screen 
+                name="(userTabs)" 
+                options={{
+                  title: 'Tabs',
+                  headerShown: false, 
+                  animation: userLogged ? 'fade' : 'default'
                 }} 
               />
               <Stack.Screen

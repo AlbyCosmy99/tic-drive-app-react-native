@@ -180,7 +180,7 @@ function RegisterVehicle() {
       </View>
       <TicDriveButton
         text="Confirm"
-        path="../(tabs)/user/Home"
+        path='../(userTabs)/Home'
         disabled={carNotFound}
       />
     </SafeAreaView>

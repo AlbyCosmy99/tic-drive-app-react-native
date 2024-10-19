@@ -5,13 +5,13 @@ import TicDriveInput from '../ui/inputs/TicDriveInput';
 import {router, useNavigation} from 'expo-router';
 import {useAppDispatch} from '@/app/stateManagement/redux/hooks';
 import GlobalContext from '@/app/stateManagement/contexts/GlobalContext';
-import {saveLoginStatus} from '@/app/utils';
+import { saveUser} from '@/app/utils';
 import {StackActions} from '@react-navigation/native';
 import {
   login,
   setAreFormErrors,
 } from '@/app/stateManagement/redux/slices/authSlice';
-import { UserCategory } from '@/app/types/User';
+import User, { UserCategory } from '@/app/types/User';
 
 type FormData = {
   email: string;
@@ -62,15 +62,17 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
   const onSubmit = async (data: FormData) => {
     //mock data
     console.log(data);
+
+    const user: User = {
+      name: data.name,
+      email: data.email,
+      category: clientCategory === 'user' ? 'user' : 'workshop',
+    }
     dispatch(
-      login({
-        name: data.name,
-        email: data.email,
-        category: clientCategory === 'user' ? 'user' : 'workshop',
-      }),
+      login(user),
     );
 
-    await saveLoginStatus(true);
+    await saveUser(user);
     //sostituire con react-thunk
 
     //setServicesChoosen([]);

@@ -1,19 +1,19 @@
-import Review from '@/constants/temp/Review';
 import * as SecureStore from 'expo-secure-store';
+import User from './types/User';
 
-export const saveLoginStatus = async (isLoggedIn: boolean) => {
+export const saveUser = async (user: User | null) => {
   try {
-    await SecureStore.setItemAsync('isUserLogged', JSON.stringify(isLoggedIn));
-  } catch (e) {
-    throw new Error('Failed to save login status securely: ' + e);
+    await SecureStore.setItemAsync('user', JSON.stringify(user))
+  } catch(e) {
+    throw new Error("Failed to save user securely: " + e)
   }
-};
+}
 
-export const getLoginStatus = async () => {
+export const getUser = async () => {
   try {
-    const value = await SecureStore.getItemAsync('isUserLogged');
-    return value ? JSON.parse(value) : false;
-  } catch (e) {
-    throw new Error('Failed to retrieve login status securely: ' + e);
+    const value = await SecureStore.getItemAsync('user')
+    return value ? JSON.parse(value) : null
+  } catch(e) {
+    throw new Error("Failed to retrieve user securely: " + e)
   }
-};
+}
