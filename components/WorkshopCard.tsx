@@ -130,14 +130,12 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   servicePositionContainer: {
-    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 3,
     marginTop: 10,
   },
   titleContainer: {
-    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 3,
@@ -158,7 +156,6 @@ const styles = StyleSheet.create({
     gap: 3,
   },
   extraServicesContainer: {
-    flex: 1,
     flexDirection: 'row',
     marginTop: 10,
   },
@@ -166,7 +163,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   priceContainer: {
-    flex: 1,
     flexDirection: 'row',
     gap: 5,
     marginTop: 10,
@@ -201,7 +197,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   cardOptionsContainer: {
-    flex: 1,
     flexDirection: 'row',
     gap: 10,
     marginTop: 10,
