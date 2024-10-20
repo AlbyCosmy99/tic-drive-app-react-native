@@ -1,10 +1,11 @@
 import {View, Text, StyleSheet, useColorScheme} from 'react-native';
 import {Colors} from '@/constants/Colors';
 import {router} from 'expo-router';
-import {useNavigation} from '@react-navigation/native';
+import {StackActions, useNavigation} from '@react-navigation/native';
 import {useAppSelector} from '@/app/stateManagement/redux/hooks';
 import ToPreviousPage from './ToPreviousPage';
 import TicDriveAuthButton from '../ui/buttons/TicDriveAuthButton';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 interface TicDriveNavbarProps {
   isLoginAvailable?: boolean;
 }
@@ -32,20 +33,26 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
       <View className="flex-1 justify-start flex-row">
         {navigation.canGoBack() && <ToPreviousPage />}
       </View>
-      <View className="flex-row flex-1 justify-center">
-        <Text
-          className="font-bold text-3xl"
-          style={[styles.title, styles.ticText]}
-        >
-          Tic
-        </Text>
-        <Text
-          className="font-bold text-3xl"
-          style={[styles.title, styles.driveText]}
-        >
-          Drive
-        </Text>
-      </View>
+      <TouchableWithoutFeedback onPress={() => {
+          if(navigation.canGoBack()) {
+            navigation.dispatch(StackActions.popToTop())
+          }
+          router.replace('/')
+        }}
+        className="flex-row flex-1 justify-center items-center">
+          <Text
+            className="font-bold text-3xl"
+            style={[styles.title, styles.ticText]}
+          >
+            Tic
+          </Text>
+          <Text
+            className="font-bold text-3xl"
+            style={[styles.title, styles.driveText]}
+          >
+            Drive
+          </Text>
+        </TouchableWithoutFeedback>
       <View className="flex-1 justify-end flex-row">
         {isLoginAvailable &&
           (isUserLogged ? (

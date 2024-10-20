@@ -14,7 +14,7 @@ import necessaryDeviceBottomInset from '../utils/devices/necessaryDeviceBottomIn
 export default function ChooseServicesScreen() {
   const params = useLocalSearchParams();
   const colorScheme = useColorScheme();
-  const user = useAppSelector(state => state.auth.user) || UserLogged;
+  const user = useAppSelector(state => state.auth.user);
   const isUserLookingForServices = () => {
     return !(params && params.category === 'workshop');
   };
@@ -44,7 +44,7 @@ export default function ChooseServicesScreen() {
             }}
             className="font-medium text-3xl mx-3.5 mb-2"
           >
-            {user ? `${user.name || ''}, w` : 'W'}hat service
+            {user ? `${user?.name ? user.name : 'Andrei'}, w` : 'W'}hat service
             {isUserLookingForServices() ? '' : 's'}{' '}
             {isUserLookingForServices()
               ? 'are you looking for'
