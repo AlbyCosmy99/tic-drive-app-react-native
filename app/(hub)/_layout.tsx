@@ -15,6 +15,9 @@ const Hub = () => {
       try {
         const user = await getUser()
         if (user) {
+          if(user && !user?.name) {
+            user.name = "Andrei"
+          }
           dispatch(login(user));
           router.replace(user?.category === 'workshop' ? '../(workshopTabs)/Home' : '../(userTabs)/Home');
         } else {

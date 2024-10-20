@@ -5,15 +5,19 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
 import WorkshopCards from '@/components/WorkshopCards';
 import {LinearGradient} from 'expo-linear-gradient';
-import {useContext} from 'react';
+import {useContext, useEffect} from 'react';
 import GlobalContext from '@/app/stateManagement/contexts/GlobalContext';
 import { useAppSelector } from '@/app/stateManagement/redux/hooks';
 import { globalStyles } from '@/app/globalStyles';
 import FilterIcon from '../../assets/svg/discover_tune.svg';
+import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
+import { useNavigation } from '@react-navigation/native';
+import { router } from 'expo-router';
 
 export default function HomeTab() {
   const {setWorkshopFilter} = useContext(GlobalContext);
-  const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);
+  const user = useAppSelector(state => state.auth.user)
+  const navigation = useNavigation()
 
   return (
     <LinearGradient
@@ -24,7 +28,7 @@ export default function HomeTab() {
       className="flex-1 w-full h-full"
     >
       <SafeAreaView className="flex-1" style={globalStyles().safeAreaView}>
-        <TicDriveNavbar isLoginAvailable={isUserLogged ? true : true} />
+        <TicDriveNavbar isLoginAvailable={!user ? false : true} />
         <View className="flex-row items-center">
           <TicDriveInput
             isLeftIcon={true}
@@ -51,6 +55,16 @@ export default function HomeTab() {
         </View>
         <View className="flex-1">
           <WorkshopCards />
+          {
+            user && user.category === 'user' && !navigation.canGoBack() && (
+              <View className='absolute bottom-3 left-0 right-0' style={styles.bookAService}>
+                <TicDriveButton 
+                  text='Book a service'
+                  onClick={() => router.push('/screens/ChooseServicesScreen')}
+                />
+              </View>
+            )
+          }
         </View>
       </SafeAreaView>
     </LinearGradient>
@@ -61,4 +75,7 @@ const styles = StyleSheet.create({
   filterButtonContainer: {
     borderColor: Colors.light.SegmentedControlBackground,
   },
+  bookAService: {
+    
+  }
 });

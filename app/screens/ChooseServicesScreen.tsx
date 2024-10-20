@@ -9,23 +9,21 @@ import {useAppSelector} from '../stateManagement/redux/hooks';
 import {globalStyles} from '../globalStyles';
 import UserLogged from '@/mock/UserLogged';
 import {useLocalSearchParams} from 'expo-router';
-import {useState} from 'react';
 import necessaryDeviceBottomInset from '../utils/devices/necessaryDeviceBottomInset';
 
 export default function ChooseServicesScreen() {
   const params = useLocalSearchParams();
   const colorScheme = useColorScheme();
-  const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);
   const user = useAppSelector(state => state.auth.user) || UserLogged;
   const isUserLookingForServices = () => {
-    return !params || params.category === 'user';
+    return !(params && params.category === 'workshop');
   };
   const isButtonDisabled =
-    params.category === 'user'
-      ? useAppSelector(state => state.services.servicesChoosenByUsers)
-          .length === 0
-      : useAppSelector(state => state.services.servicesChoosenByWorkshops)
-          .length === 0;
+    params.category === 'workshop'
+      ? useAppSelector(state => state.services.servicesChoosenByWorkshops)
+      .length === 0
+      : useAppSelector(state => state.services.servicesChoosenByUsers)
+      .length === 0;
 
   return (
     <View className={`flex-1 ${necessaryDeviceBottomInset()}`}>
@@ -46,7 +44,7 @@ export default function ChooseServicesScreen() {
             }}
             className="font-medium text-3xl mx-3.5 mb-2"
           >
-            {isUserLogged ? `${user.name || ''}, w` : 'W'}hat service
+            {user ? `${user.name || ''}, w` : 'W'}hat service
             {isUserLookingForServices() ? '' : 's'}{' '}
             {isUserLookingForServices()
               ? 'are you looking for'

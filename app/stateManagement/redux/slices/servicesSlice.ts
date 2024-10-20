@@ -66,7 +66,6 @@ const servicesSlice = createSlice({
       console.log(state.servicesChoosenByWorkshops);
     },
     reset(state: ServicesState) {
-      console.log('services state resetted');
       state.servicesChoosenByUsers = [];
       state.servicesChoosenByWorkshops = [];
     },

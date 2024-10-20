@@ -19,7 +19,6 @@ import Acute from '../../assets/svg/acute.svg';
 import FreeCancellation from '../../assets/svg/free_cancellation.svg';
 import AssistantDirection from '../../assets/svg/assistant_direction';
 import CalendarIcon from '../../assets/svg/calendar_add_on.svg';
-import Review from '@/constants/temp/Review';
 import ChatIcon from '../../assets/svg/chat.svg';
 import {Ionicons} from '@expo/vector-icons';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
@@ -28,11 +27,13 @@ import {globalStyles} from '../globalStyles';
 import calculateWorkshopDiscount from '../utils/workshops/calculateWorkshopDiscount';
 import calculateWorkshopStars from '../utils/workshops/calculateWorkshopStars';
 import necessaryDeviceBottomInset from '../utils/devices/necessaryDeviceBottomInset';
+import { useAppSelector } from '../stateManagement/redux/hooks';
 
 export default function WorkshopDetails() {
   const {id} = useLocalSearchParams();
 
   const [workshop, setWorkshop] = useState<Workshop | null>(null);
+  const servicesChoosen = useAppSelector(state => state.services.servicesChoosenByUsers)
 
   useEffect(() => {
     setWorkshop(workshops.find(workshop => String(workshop.id) === id) || null);
@@ -196,11 +197,15 @@ export default function WorkshopDetails() {
               </View>
             </View>
             <View>
-              <TicDriveButton
-                text="Book a service"
-                path={'../screens/CalendarDateSelection'}
-                customButtonStyle={styles.customButtonStyle}
-              />
+              {
+                servicesChoosen.length > 0 && (
+                  <TicDriveButton
+                    text="Book a service"
+                    path={'../screens/CalendarDateSelection'}
+                    customButtonStyle={styles.customButtonStyle}
+                  />
+                )
+              }
             </View>
           </View>
         </>

@@ -9,7 +9,7 @@ export const saveUser = async (user: User | null) => {
   }
 }
 
-export const getUser = async () => {
+export const getUser = async (): Promise<User> => {
   try {
     const value = await SecureStore.getItemAsync('user')
     return value ? JSON.parse(value) : null

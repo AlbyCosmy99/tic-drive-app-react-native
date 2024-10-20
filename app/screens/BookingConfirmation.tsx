@@ -5,8 +5,11 @@ import {LinearGradient} from 'expo-linear-gradient';
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {globalStyles} from '../globalStyles';
 import necessaryDeviceBottomInset from '../utils/devices/necessaryDeviceBottomInset';
+import { useAppDispatch } from '../stateManagement/redux/hooks';
+import { reset } from '../stateManagement/redux/slices/servicesSlice';
 
 export default function BookingConfirmation() {
+  const dispatch = useAppDispatch()
   return (
     <LinearGradient
       colors={[
@@ -35,7 +38,14 @@ export default function BookingConfirmation() {
             code via email to present to the mechanic.
           </Text>
         </View>
-        <TicDriveButton replace={true} text="Home" path={'../(userTabs)/Home'} />
+        <TicDriveButton 
+          replace={true} 
+          text="Home" 
+          path={'../(userTabs)/Home'} 
+          onClick={() => {
+            dispatch(reset())
+          }}
+        />
       </SafeAreaView>
     </LinearGradient>
   );
