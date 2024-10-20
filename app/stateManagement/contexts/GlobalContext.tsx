@@ -8,8 +8,6 @@ interface GlobalServiceType {
   setServicesChoosen: (servicesChoosen: string[]) => void;
   carNotFound: boolean;
   setCarNotFound: (carNotFound: boolean) => void;
-  isUserLogged: boolean;
-  setIsUserLogged: (isUserlogged: boolean) => void;
   loginBtnCustomPath?: Href;
   setLoginBtnCustomPath: (loginBtnCustomPath?: Href) => void;
 }
@@ -21,8 +19,6 @@ const defaultContextValue: GlobalServiceType = {
   setServicesChoosen: () => {},
   carNotFound: true,
   setCarNotFound: () => {},
-  isUserLogged: false,
-  setIsUserLogged: () => {},
   loginBtnCustomPath: undefined,
   setLoginBtnCustomPath: () => {},
 };

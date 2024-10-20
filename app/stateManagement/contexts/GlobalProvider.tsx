@@ -6,7 +6,6 @@ const GlobalProvider: FC<{children: ReactNode}> = ({children}) => {
   const [workshopFilter, setWorkshopFilter] = useState<string>('');
   const [servicesChoosen, setServicesChoosen] = useState<string[]>([]);
   const [carNotFound, setCarNotFound] = useState<boolean>(true);
-  const [isUserLogged, setIsUserLogged] = useState<boolean>(false);
   const [loginBtnCustomPath, setLoginBtnCustomPath] = useState<
     Href | undefined
   >(undefined);
@@ -20,8 +19,6 @@ const GlobalProvider: FC<{children: ReactNode}> = ({children}) => {
         setServicesChoosen,
         carNotFound,
         setCarNotFound,
-        isUserLogged,
-        setIsUserLogged,
         loginBtnCustomPath,
         setLoginBtnCustomPath,
       }}
