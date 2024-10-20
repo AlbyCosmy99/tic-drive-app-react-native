@@ -28,7 +28,7 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({
   disabled = false,
 }) => {
   const router = useRouter();
-  const {servicesChoosen, carNotFound, setWorkshopFilter} =
+  const {setWorkshopFilter} =
     useContext(GlobalContext);
   const navigation = useNavigation();
 

@@ -41,7 +41,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
     formState: {errors},
   } = useForm<FormData>();
 
-  const {setServicesChoosen, loginBtnCustomPath, setLoginBtnCustomPath} =
+  const {loginBtnCustomPath, setLoginBtnCustomPath} =
   React.useContext(GlobalContext);
   const {setIsUserLogged} = React.useContext(AuthContext)
   const navigation = useNavigation();

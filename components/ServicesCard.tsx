@@ -1,10 +1,9 @@
-import React, {memo, useContext, useEffect, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import {Colors} from '@/constants/Colors';
 import {Card, Text} from '@rneui/themed';
 import {StyleProp, StyleSheet, TextStyle, View, ViewStyle} from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native';
 import CheckCircle from '../assets/svg/check_circle.svg';
-import GlobalContext from '@/app/stateManagement/contexts/GlobalContext';
 import CarRepair from '../assets/svg/servicesIcons/car_repair.svg'; //default icon
 import smallDevicebreakpointHeight from '@/constants/smallDevicebreakpointHeight';
 import {Dimensions} from 'react-native';

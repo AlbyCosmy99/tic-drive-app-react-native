@@ -1,5 +1,4 @@
 import AuthContext from '@/app/stateManagement/contexts/AuthContext';
-import GlobalContext from '@/app/stateManagement/contexts/GlobalContext';
 import {useAppDispatch} from '@/app/stateManagement/redux/hooks';
 import {logout} from '@/app/stateManagement/redux/slices/authSlice';
 import AuthAction from '@/app/types/auth/Action';

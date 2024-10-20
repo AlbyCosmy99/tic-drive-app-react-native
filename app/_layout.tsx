@@ -24,7 +24,6 @@ export default function RootLayout() {
   });
   useEffect(() => {
     const checkAuth = async () => {
-      console.log('changed user logged')
       try {
         const user = await getUser();
         user ? setIsUserLogged(true) : setIsUserLogged(false)
@@ -136,9 +135,3 @@ export default function RootLayout() {
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  safeArea: {
-    backgroundColor: Colors.light.background,
-  },
-});

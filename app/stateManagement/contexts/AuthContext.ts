@@ -7,7 +7,7 @@ interface AuthContextType {
 
 const initialState: AuthContextType = {
   isUserLogged: false,
-  setIsUserLogged: () => {},
+  setIsUserLogged: () => {}
 };
 
 const AuthContext = createContext<AuthContextType>(initialState);
