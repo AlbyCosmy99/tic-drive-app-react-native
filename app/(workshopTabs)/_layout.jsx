@@ -7,6 +7,7 @@ import ChatIcon from '../../assets/svg/chatIcon.svg';
 import AccountIcon from '../../assets/svg/accountIcon.svg';
 import HomeTab from './Home';
 import {useAppSelector} from '../stateManagement/redux/hooks';
+import { Text, View } from 'react-native';
 
 export default function TabLayout() {
   const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);
@@ -30,6 +31,7 @@ export default function TabLayout() {
         name="Bookings"
         options={{
           title: 'Bookings',
+          headerShown: false,
           tabBarIcon: ({color}) => (
             <BookingsIcon width={28} fill={color} name="Home" />
           ),
@@ -39,8 +41,14 @@ export default function TabLayout() {
         name="Chat"
         options={{
           title: 'Chat',
+          headerShown: false,
           tabBarIcon: ({color}) => (
-            <ChatIcon width={28} fill={color} name="Home" />
+            <View style={{position: 'relative', padding: 10}}>
+              <ChatIcon width={28} fill={color} name="Home" />
+              <View style={{backgroundColor: 'red', borderRadius: 50, position: 'absolute', right: 0, padding: 5, width: 25, height: 25}}>
+                <Text style={{textAlign: 'center', color: 'white'}}>3</Text>
+              </View>
+            </View>
           ),
         }}
       />
@@ -48,6 +56,7 @@ export default function TabLayout() {
         name="Account"
         options={{
           title: 'Account',
+          headerShown: false,
           tabBarIcon: ({color}) => (
             <AccountIcon width={28} fill={color} name="Home" />
           ),

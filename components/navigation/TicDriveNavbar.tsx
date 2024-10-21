@@ -9,10 +9,12 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { reset } from '@/app/stateManagement/redux/slices/servicesSlice';
 interface TicDriveNavbarProps {
   isLoginAvailable?: boolean;
+  canGoBack?: boolean;
 }
 
 const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
   isLoginAvailable = true,
+  canGoBack = null
 }) => {
   const colorScheme = useColorScheme();
   const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);
@@ -33,7 +35,7 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
       style={backgroundStyle}
     >
       <View className="flex-1 justify-start flex-row">
-        {navigation.canGoBack() && <ToPreviousPage />}
+        {canGoBack || (canGoBack === null && navigation.canGoBack()) && <ToPreviousPage />}
       </View>
       <TouchableWithoutFeedback onPress={() => {
           if(navigation.canGoBack()) {
