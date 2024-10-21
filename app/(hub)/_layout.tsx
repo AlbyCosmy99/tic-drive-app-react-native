@@ -19,10 +19,12 @@ const Hub = () => {
             user.name = "Andrei"
           }
           dispatch(login(user));
-          router.replace(user?.category === 'workshop' ? '../(workshopTabs)/Home' : '../(userTabs)/Home');
+          router.replace(user?.category === 'workshop' ? 
+            '../(workshopTabs)/Home?animation=fade' : 
+            '../(userTabs)/Home?animation=fade');
         } else {
           dispatch(logout());
-          router.replace('../screens/LandingScreen');
+          router.replace('../screens/LandingScreen?animation=fade');
         }
       } catch (error) {
         console.error('Error checking auth status: ', error);

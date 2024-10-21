@@ -1,39 +1,48 @@
-import {DarkTheme, DefaultTheme, ThemeProvider} from '@react-navigation/native';
-import {useFonts} from 'expo-font';
-import {Stack} from 'expo-router';
+import { DarkTheme, DefaultTheme, RouteProp, ThemeProvider, useNavigation } from '@react-navigation/native';
+import { useFonts } from 'expo-font';
+import { Stack, StackScreenProps } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
-import {useColorScheme} from '@/hooks/useColorScheme';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import { useColorScheme } from '@/hooks/useColorScheme';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import GlobalProvider from './stateManagement/contexts/GlobalProvider';
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 import store from './stateManagement/redux/store/store';
 import { getUser } from './utils';
 import AuthContext from './stateManagement/contexts/AuthContext';
+import { StackAnimationTypes } from 'react-native-screens';
 
 SplashScreen.preventAutoHideAsync();
 
+const getAnimation = (route?: any): StackAnimationTypes => {
+  if (route?.params?.animation) {
+    return route?.params?.animation
+  }
+  return 'default';
+};
+
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  const [isUserLogged, setIsUserLogged] = useState(false)
+  const [isUserLogged, setIsUserLogged] = useState(false);
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
+
   useEffect(() => {
     const checkAuth = async () => {
       try {
         const user = await getUser();
-        if(user && !user?.name) {
-          user.name = "Andrei"
+        if (user && !user?.name) {
+          user.name = 'Andrei';
         }
-        user ? setIsUserLogged(true) : setIsUserLogged(false)
+        user ? setIsUserLogged(true) : setIsUserLogged(false);
       } catch (error) {
         console.error('Error checking auth status: ', error);
       }
     };
     checkAuth();
-  }, [isUserLogged])
+  }, [isUserLogged]);
 
   useEffect(() => {
     if (loaded) {
@@ -49,83 +58,89 @@ export default function RootLayout() {
     <Provider store={store}>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <GlobalProvider>
-          <AuthContext.Provider value={{isUserLogged, setIsUserLogged}}>
+          <AuthContext.Provider value={{ isUserLogged, setIsUserLogged }}>
             <GestureHandlerRootView>
               <Stack>
-                <Stack.Screen 
-                  name="(hub)" 
-                  options={{
+                <Stack.Screen
+                  name="(hub)"
+                  options={({ route }) => ({
                     title: 'Hub',
                     headerShown: false,
-                    animation: 'fade'
-                  }} 
+                    animation: getAnimation(route),
+                  })}
                 />
                 <Stack.Screen
                   name="screens/ChooseServicesScreen"
-                  options={{
+                  options={({ route }) => ({
                     title: 'ChooseServicesScreen',
                     headerShown: false,
-                  }}
+                    animation: getAnimation(route),
+                  })}
                 />
                 <Stack.Screen
                   name="screens/LandingScreen"
-                  options={{
-                    title: 'ChooseServicesScreen',
+                  options={({ route }) => ({
+                    title: 'LandingScreen',
                     headerShown: false,
-                    animation: 'fade'
-                  }}
+                    animation: getAnimation(route),
+                  })}
                 />
                 <Stack.Screen
                   name="screens/UserAuthentification"
-                  options={{
+                  options={({ route }) => ({
                     title: 'UserAuthentification',
                     headerShown: false,
                     presentation: 'modal',
-                  }}
+                    animation: getAnimation(route),
+                  })}
                 />
                 <Stack.Screen
                   name="screens/RegisterVehicle"
-                  options={{
-                    title: 'Register Vehicle',
+                  options={({ route }) => ({
+                    title: 'RegisterVehicle',
                     headerShown: false,
-                  }}
+                    animation: getAnimation(route),
+                  })}
                 />
-                <Stack.Screen 
-                  name="(workshopTabs)" 
-                  options={{
-                    title: 'Tabs',
-                    headerShown: false, 
-                    animation: isUserLogged ? 'fade' : 'default'
-                  }} 
+                <Stack.Screen
+                  name="(workshopTabs)"
+                  options={({ route }) => ({
+                    title: 'workshopTabs',
+                    headerShown: false,
+                    animation: getAnimation(route),
+                  })}
                 />
-                <Stack.Screen 
-                  name="(userTabs)" 
-                  options={{
-                    title: 'Tabs',
-                    headerShown: false, 
-                    animation: isUserLogged ? 'fade' : 'default'
-                  }} 
+                <Stack.Screen
+                  name="(userTabs)"
+                  options={({ route }) => ({
+                    title: 'userTabs',
+                    headerShown: false,
+                    animation: getAnimation(route),
+                  })}
                 />
                 <Stack.Screen
                   name="screens/WorkshopDetails"
-                  options={{
-                    title: 'Workshop details',
+                  options={({ route }) => ({
+                    title: 'WorkshopDetails',
                     headerShown: false,
-                  }}
+                    animation: getAnimation(route),
+                  })}
                 />
                 <Stack.Screen
                   name="screens/CalendarDateSelection"
-                  options={{
-                    title: 'Calendar Date Selection',
+                  options={({ route }) => ({
+                    title: 'CalendarDateSelection',
                     headerShown: false,
-                  }}
+                    animation: getAnimation(route),
+                  })}
                 />
                 <Stack.Screen
                   name="screens/BookingConfirmation"
-                  options={{
-                    title: 'Booking Confirmation',
+                  options={({ route }) => ({
+                    title: 'BookingConfirmation',
                     headerShown: false,
-                  }}
+                    animation: getAnimation(route),
+                  })}
                 />
                 <Stack.Screen name="+not-found" />
               </Stack>

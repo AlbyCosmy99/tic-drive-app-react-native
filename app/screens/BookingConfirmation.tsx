@@ -41,7 +41,7 @@ export default function BookingConfirmation() {
         <TicDriveButton 
           replace={true} 
           text="Home" 
-          path={'../(userTabs)/Home'} 
+          path={'../(userTabs)/Home?animation=fade'} 
           onClick={() => {
             dispatch(reset())
           }}

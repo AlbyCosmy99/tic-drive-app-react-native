@@ -35,11 +35,9 @@ const TicDriveAuthButton: React.FC<TicDriveAuthButtonProps> = ({
       isCarGreen: String(false),
     };
     const queryString = new URLSearchParams(params);
-    router.replace(`/?${queryString}`);
+    router.replace(`/?animation=fade&${queryString}`);
 
     await saveUser(null);
-
-    //sostituire con redux thunk?
   };
 
   const handleOnPress = () => {
