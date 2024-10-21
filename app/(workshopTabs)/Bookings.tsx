@@ -20,9 +20,12 @@ export default function WorkshopBookings() {
     >
       <SafeAreaView className="flex-1" style={globalStyles().safeAreaView}>
         <TicDriveNavbar isLoginAvailable={user ? true : true} canGoBack={false} />
-        <Text className='font-bold text-2xl text-center mb-1 mt-1'>
-          All Active prenotations
+        <Text className='font-bold text-2xl text-center mb-2 mt-1'>
+          All Active Bookings
         </Text>
+        <View className='w-full justify-center items-center'>
+            <View style={{height: 1, width: '90%', backgroundColor: Colors.light.ticText}}></View>
+        </View>
         <ScrollView className='flex-1'>
             <PrenotationBookedCard 
               model='Alfa Romeo'

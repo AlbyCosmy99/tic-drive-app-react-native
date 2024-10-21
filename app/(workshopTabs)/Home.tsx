@@ -22,10 +22,7 @@ export default function HomeTab() {
       <SafeAreaView className="flex-1" style={globalStyles().safeAreaView}>
         <TicDriveNavbar isLoginAvailable={user ? true : true} />
         <View className='flex-1'>
-          <Text className='text-center m-4 font-bold text-xl'>Hi, Orlando AC Repairs</Text>
-          <View className='w-full justify-center items-center'>
-            <View style={{height: 1, width: '90%', backgroundColor: Colors.light.ticText}}></View>
-          </View>
+          <Text className='text-center m-4 mb-2 font-bold text-xl'>Hi, Orlando AC Repairs</Text>
           <TouchableWithoutFeedback 
             className='bg-red-500 m-3 mx-6 p-2 rounded-xl'
             onPress={() => router.push('/(workshopTabs)/Chat?animation=fade')}
@@ -33,9 +30,12 @@ export default function HomeTab() {
             <Text className='text-white text-center font-semibold text-lg'>3 new messages to read &gt;</Text>
           </TouchableWithoutFeedback>
           <View>
-            <Text className='font-bold text-2xl text-center mb-1 mt-1'>
-              Active prenotations
+            <Text className='font-bold text-2xl text-center mb-2 mt-1'>
+              Active Bookings
             </Text>
+            <View className='w-full justify-center items-center'>
+                <View style={{height: 1, width: '90%', backgroundColor: Colors.light.ticText}}></View>
+            </View>
             <PrenotationBookedCard 
               model='Alfa Romeo'
               service='Oil change'
