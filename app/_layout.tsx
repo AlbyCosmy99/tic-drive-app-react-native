@@ -27,7 +27,9 @@ export default function RootLayout() {
   const [isUserLogged, setIsUserLogged] = useState(false);
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-    PlaywriteGBS: require('../assets/fonts/PlaywriteGBS-VariableFont_wght.ttf')
+    PlaywriteGBS: require('../assets/fonts/PlaywriteGBS-VariableFont_wght.ttf'),
+    RegularLato: require('../assets/fonts/Lato/Lato-Regular.ttf'),
+    BoldLato: require('../assets/fonts/Lato/Lato-Bold.ttf'),
   });
 
   useEffect(() => {

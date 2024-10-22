@@ -1,6 +1,6 @@
 import {LinearGradient} from 'expo-linear-gradient';
 import {router} from 'expo-router';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {globalStyles} from '../globalStyles';
 import {Colors} from '@/constants/Colors';
 import {Image} from '@rneui/themed';
@@ -42,24 +42,7 @@ const LandingScreen = () => {
           style={globalStyles().safeAreaView}
         >
           <View>
-            <View
-              style={{height: 60}}
-              className="justify-end flex-row mx-5 absolute right-1 top-5 z-10"
-            >
-              {isUserLogged ? (
-                <TicDriveAuthButton action="logout" />
-              ) : (
-                <TicDriveAuthButton
-                  onPress={() => {
-                    if (navigation.canGoBack()) {
-                      navigation.dispatch(StackActions.popToTop());
-                    }
-                    router.push('/screens/UserAuthentification');
-                  }}
-                  action="login"
-                />
-              )}
-            </View>
+            
             <View
               style={{marginTop: 60}}
               className="items-center justify-center relative"
@@ -71,13 +54,8 @@ const LandingScreen = () => {
               />
             </View>
           </View>
-          <View>
-            <LottieView
-              source={require('@/assets/json/animations/ticDriveAnimation2.json')}
-              autoPlay
-              loop
-              style={styles.lottieAnimation}
-            />
+          <View style={styles.lottieAnimation} className='justify-center items-center px-1 p-2'>
+            <Text className='text-4xl text-center' style={{fontFamily: 'RegularLato'}}>Let's make <Text className='text-green-500'>car maintenance</Text> simple, convenient and reliable.</Text>
           </View>
           <LinearGradient
             colors={[
