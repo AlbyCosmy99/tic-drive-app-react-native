@@ -24,9 +24,7 @@ const PrenotationBookedCard: React.FC<PrenotationBookedCardProps> = ({
                 <View>
                     <Text className="font-semibold text-xl">{model}</Text>
                     <View className="flex-row justify-between items-center mt-">
-                        <View className="rounded-lg bg-green-500">
-                            <Text className="text-white text-2xl font-semibold p-1">{service}</Text>
-                        </View>
+                        <Text className="text-black text-2xl font-semibold">{service}</Text>
                         <Text className="font-medium text-lg">PIN: {pin}</Text>
                     </View>
                 </View>
