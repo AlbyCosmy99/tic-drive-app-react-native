@@ -32,6 +32,7 @@ interface ServicesCardProps {
   titleStyle?: StyleProp<TextStyle>;
   descriptionStyle?: StyleProp<TextStyle>;
   icon?: React.FC<{width: number; height: number}>; //is <Feather name="search" size={24} color="black" />
+  isIconVisible?: boolean;
   iconStyle?: StyleProp<ViewStyle>;
   iconWidth?: number;
   iconHeight?: number;
@@ -39,7 +40,7 @@ interface ServicesCardProps {
   pressIn?: (id: number) => void;
   disabledPressIn?: boolean;
   loading?: boolean;
-  type: UserCategory | null;
+  type?: UserCategory | null;
   isSingleChoice?: boolean | null;
 }
 
@@ -55,6 +56,7 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
   iconWidth = 20,
   iconHeight = 20,
   isCheckIconAvailable = true,
+  isIconVisible = true,
   pressIn,
   disabledPressIn = false,
   loading = false,
@@ -139,9 +141,13 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
         ) : (
           <>
             <View style={styles.cardIcons}>
-              <View style={iconStyle}>
-                <ServiceIcon width={iconWidth} height={iconHeight} />
-              </View>
+              {
+                isIconVisible && (
+                  <View style={iconStyle}>
+                    <ServiceIcon width={iconWidth} height={iconHeight} />
+                  </View>
+                )
+              }
               {isCheckIconAvailable && (
                 <View style={styles.iconContainer}>
                   {isPressed && <CheckCircle width={20} height={20} />}
