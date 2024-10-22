@@ -42,7 +42,6 @@ const LandingScreen = () => {
           style={globalStyles().safeAreaView}
         >
           <View>
-            
             <View
               style={{marginTop: 60}}
               className="items-center justify-center relative"
@@ -54,8 +53,26 @@ const LandingScreen = () => {
               />
             </View>
           </View>
-          <View style={styles.lottieAnimation} className='justify-center items-center px-1 p-2'>
-            <Text className='text-4xl text-center' style={{fontFamily: 'RegularLato'}}>Let's make <Text className='text-green-500'>car maintenance</Text> simple, convenient and reliable.</Text>
+          <View style={styles.lottieAnimation} className='justify-center items-center px-1 p-6'>
+            <Text className='text-3xl text-center' style={{fontFamily: 'RegularLato'}}>Let's make <Text className='text-green-500'>car maintenance</Text> simple, convenient and reliable.</Text>
+            <View
+              style={{height: 60}}
+              className="justify-end flex-row mx-5 z-10 mt-4"
+            >
+              {isUserLogged ? (
+                <TicDriveAuthButton action="logout" />
+              ) : (
+                <TicDriveAuthButton
+                  onPress={() => {
+                    if (navigation.canGoBack()) {
+                      navigation.dispatch(StackActions.popToTop());
+                    }
+                    router.push('/screens/UserAuthentification');
+                  }}
+                  action="login"
+                />
+              )}
+            </View>
           </View>
           <LinearGradient
             colors={[
