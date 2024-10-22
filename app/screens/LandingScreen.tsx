@@ -90,7 +90,7 @@ const LandingScreen = () => {
             className="p-2 items-end justify-center flex-1"
           >
             <MotiView
-              className="flex-column justify-center items-center p-2 w-full h-full"
+              className="flex-row justify-center items-center p-2 w-full h-full"
               from={{
                 scale: 0.8,
               }}
@@ -126,8 +126,8 @@ const LandingScreen = () => {
                   <ServicesCard
                     id={1}
                     title="Search a service"
-                    description="Discover the available services."
-                    cardStyle={[styles.card, {height: 150}]}
+                    description="What service are you looking for?"
+                    cardStyle={styles.card}
                     titleStyle={styles.cardTitle}
                     descriptionStyle={styles.cardDescription}
                     iconStyle={styles.cardIcon}
@@ -169,15 +169,14 @@ const LandingScreen = () => {
                   <ServicesCard
                     id={2}
                     title="Offer a service"
-                    description="Apply as a supplier."
-                    cardStyle={[styles.card,{height: 90}]}
+                    description="What services do you want to offer?"
+                    cardStyle={styles.card}
                     titleStyle={styles.cardTitle}
                     descriptionStyle={styles.cardDescription}
                     iconStyle={styles.cardIcon}
                     iconWidth={40}
                     iconHeight={40}
                     isCheckIconAvailable={false}
-                    isIconVisible={false}
                     icon={() => (
                       <CarRepairService
                         width={height > smallDevicebreakpointHeight ? 50 : 40}
@@ -238,7 +237,6 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: 'lightgreen',
     borderColor: Colors.light.green.drive,
-    width: 200
   },
   lottieAnimation: {
     width: '100%',
