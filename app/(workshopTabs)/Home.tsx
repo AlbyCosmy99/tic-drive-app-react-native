@@ -8,6 +8,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { router } from 'expo-router';
 import PrenotationBookedCard from '@/components/workshop/PrenotationBookedCard';
 import ForwardArrow from '../../assets/svg/forwardArrow.svg'
+import HorizontalLine from '@/components/ui/HorizontalLine';
 export default function HomeTab() {
   const user = useAppSelector(state => state.auth.user)
 
@@ -34,9 +35,7 @@ export default function HomeTab() {
             <Text className='font-bold text-2xl text-center mb-2 mt-1'>
               Active Bookings
             </Text>
-            <View className='w-full justify-center items-center'>
-                <View style={{height: 1, width: '90%', backgroundColor: Colors.light.ticText}}></View>
-            </View>
+            <HorizontalLine />
             <PrenotationBookedCard 
               model='Alfa Romeo'
               service='Oil change'
@@ -52,12 +51,10 @@ export default function HomeTab() {
               time='23/10 - 10:30'  
             />
             <TouchableWithoutFeedback onPress={() => router.push('/(workshopTabs)/Bookings')}>
-              <Text className='self-end mr-12 mt-1 font-medium text-xl'>View All</Text>
+              <Text className='self-end mr-12 mt-1 font-medium text-xl mb-1'>View All Bookings</Text>
             </TouchableWithoutFeedback>
           </View>
-          <View className='w-full justify-center items-center mt-2'>
-            <View style={{height: 1, width: '90%', backgroundColor: Colors.light.ticText}}></View>
-          </View>
+          <HorizontalLine />
         </View>
       </SafeAreaView>
     </LinearGradient>

@@ -1,6 +1,7 @@
 import { Colors } from "@/constants/Colors";
 import React from "react";
 import { Text, View } from "react-native"
+import HorizontalLine from "../ui/HorizontalLine";
 
 interface PrenotationBookedCardProps {
     model: string;
@@ -37,9 +38,7 @@ const PrenotationBookedCard: React.FC<PrenotationBookedCardProps> = ({
                     <Text className={`${time.includes("TODAY") ? 'text-red-500' : ''} font-semibold text-xl`}>{time}</Text>
                 </View>
             </View>
-            <View className='w-full justify-center items-center'>
-                <View style={{height: 1, width: '90%', backgroundColor: Colors.light.ticText}}></View>
-            </View>
+            <HorizontalLine />
         </>
     )
 }

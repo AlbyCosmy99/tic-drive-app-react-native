@@ -6,6 +6,7 @@ import { useAppSelector } from '@/app/stateManagement/redux/hooks';
 import { globalStyles } from '@/app/globalStyles';
 import PrenotationBookedCard from '@/components/workshop/PrenotationBookedCard';
 import { ScrollView } from 'react-native-gesture-handler';
+import HorizontalLine from '@/components/ui/HorizontalLine';
 
 export default function WorkshopBookings() {
   const user = useAppSelector(state => state.auth.user)
@@ -23,9 +24,7 @@ export default function WorkshopBookings() {
         <Text className='font-bold text-2xl text-center mb-2 mt-1'>
           All Active Bookings
         </Text>
-        <View className='w-full justify-center items-center'>
-            <View style={{height: 1, width: '90%', backgroundColor: Colors.light.ticText}}></View>
-        </View>
+        <HorizontalLine />
         <ScrollView className='flex-1'>
             <PrenotationBookedCard 
               model='Alfa Romeo'
