@@ -7,7 +7,7 @@ import { globalStyles } from '@/app/globalStyles';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { router } from 'expo-router';
 import PrenotationBookedCard from '@/components/workshop/PrenotationBookedCard';
-
+import ForwardArrow from '../../assets/svg/forwardArrow.svg'
 export default function HomeTab() {
   const user = useAppSelector(state => state.auth.user)
 
@@ -24,10 +24,11 @@ export default function HomeTab() {
         <View className='flex-1'>
           <Text className='text-center m-4 mb-2 font-bold text-xl'>Hi, Orlando AC Repairs</Text>
           <TouchableWithoutFeedback 
-            className='bg-red-500 m-3 mx-6 p-2 rounded-xl'
+            className='bg-red-500 m-3 mx-6 p-2 rounded-xl flex-row justify-center items-center'
             onPress={() => router.push('/(workshopTabs)/Chat?animation=fade')}
           >
-            <Text className='text-white text-center font-semibold text-lg'>3 new messages to read &gt;</Text>
+            <Text className='text-white text-center font-semibold text-lg'>3 new messages to read </Text>
+            <ForwardArrow fill={'white'}/>
           </TouchableWithoutFeedback>
           <View>
             <Text className='font-bold text-2xl text-center mb-2 mt-1'>
