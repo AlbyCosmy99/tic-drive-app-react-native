@@ -60,7 +60,3 @@ export default function HomeTab() {
     </LinearGradient>
   );
 }
-
-const styles = StyleSheet.create({
-
-})

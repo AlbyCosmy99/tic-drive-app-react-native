@@ -5,7 +5,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
 import WorkshopCards from '@/components/WorkshopCards';
 import {LinearGradient} from 'expo-linear-gradient';
-import {useContext, useEffect} from 'react';
+import {useContext} from 'react';
 import GlobalContext from '@/app/stateManagement/contexts/GlobalContext';
 import { useAppSelector } from '@/app/stateManagement/redux/hooks';
 import FilterIcon from '../../assets/svg/discover_tune.svg';
@@ -69,7 +69,7 @@ export default function HomeTab() {
           <WorkshopCards />
           {
             user && user.category === 'user' && !navigation.canGoBack() && (
-              <View className='absolute bottom-3 left-0 right-0' style={styles.bookAService}>
+              <View className='absolute bottom-3 left-0 right-0'>
                 <TicDriveButton 
                   text='Book a service'
                   onClick={() => router.push('/screens/ChooseServicesScreen')}
@@ -87,7 +87,4 @@ const styles = StyleSheet.create({
   filterButtonContainer: {
     borderColor: Colors.light.SegmentedControlBackground,
   },
-  bookAService: {
-    
-  }
 });
