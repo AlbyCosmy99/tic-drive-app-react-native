@@ -12,7 +12,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {Image} from '@rneui/themed';
 import TicDriveLogo from '../../assets/images/TicDriveLogo.jpeg';
 import UserAuthenticationContent from '@/components/auth/UserAuthentificationContent';
-import {globalStyles} from '../globalStyles';
+import {globalStyles} from '../styles/globalStyles';
 import isIOSPlatform from '../utils/devices/IsIOSPlatform';
 import smallDevicebreakpointHeight from '@/constants/smallDevicebreakpointHeight';
 

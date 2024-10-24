@@ -6,7 +6,7 @@ import ServicesCards from '@/components/ServicesCards';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {Colors} from '@/constants/Colors';
 import {useAppSelector} from '../stateManagement/redux/hooks';
-import {globalStyles} from '../globalStyles';
+import {globalStyles} from '../styles/globalStyles';
 import UserLogged from '@/mock/UserLogged';
 import {useLocalSearchParams} from 'expo-router';
 import necessaryDeviceBottomInset from '../utils/devices/necessaryDeviceBottomInset';

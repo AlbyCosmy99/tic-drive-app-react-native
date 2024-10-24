@@ -1,10 +1,10 @@
 import {router, useLocalSearchParams} from 'expo-router';
 import {StyleSheet, View} from 'react-native';
-import {useAppDispatch, useAppSelector} from '../stateManagement/redux/hooks';
+import {useAppDispatch} from '../stateManagement/redux/hooks';
 import {login, logout} from '../stateManagement/redux/slices/authSlice';
-import {getUser} from '../utils';
 import {useEffect} from 'react';
 import LottieView from 'lottie-react-native';
+import { getUser } from '../services/auth/secureStore/user';
 
 const Hub = () => {
   const dispatch = useAppDispatch();

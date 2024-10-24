@@ -3,7 +3,7 @@ import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import {Colors} from '@/constants/Colors';
 import {LinearGradient} from 'expo-linear-gradient';
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import {globalStyles} from '../globalStyles';
+import {globalStyles} from '../styles/globalStyles';
 import necessaryDeviceBottomInset from '../utils/devices/necessaryDeviceBottomInset';
 import { useAppDispatch } from '../stateManagement/redux/hooks';
 import { reset } from '../stateManagement/redux/slices/servicesSlice';

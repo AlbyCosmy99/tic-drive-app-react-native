@@ -20,7 +20,7 @@ import SegmentedControlSelection from '../types/SegmentedControlSelection';
 import Car from '../types/Car';
 import defaultCar from '@/constants/defaultRegistrationCar';
 import cars from '@/constants/temp/Cars';
-import {globalStyles} from '../globalStyles';
+import {globalStyles} from '../styles/globalStyles';
 import necessaryDeviceBottomInset from '../utils/devices/necessaryDeviceBottomInset';
 
 function RegisterVehicle() {

@@ -1,5 +1,5 @@
+import User from '@/app/types/User';
 import * as SecureStore from 'expo-secure-store';
-import User from './types/User';
 
 export const saveUser = async (user: User | null) => {
   try {

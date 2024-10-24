@@ -1,8 +1,8 @@
+import { saveUser } from '@/app/services/auth/secureStore/user';
 import AuthContext from '@/app/stateManagement/contexts/AuthContext';
 import {useAppDispatch} from '@/app/stateManagement/redux/hooks';
 import {logout} from '@/app/stateManagement/redux/slices/authSlice';
 import AuthAction from '@/app/types/auth/Action';
-import {saveUser} from '@/app/utils';
 import {Entypo} from '@expo/vector-icons';
 import {StackActions} from '@react-navigation/native';
 import {router, useNavigation} from 'expo-router';

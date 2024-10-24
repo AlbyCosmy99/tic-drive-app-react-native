@@ -1,11 +1,10 @@
 import {LinearGradient} from 'expo-linear-gradient';
 import {router} from 'expo-router';
 import {StyleSheet, Text, View} from 'react-native';
-import {globalStyles} from '../globalStyles';
+import {globalStyles} from '../styles/globalStyles';
 import {Colors} from '@/constants/Colors';
 import {Image} from '@rneui/themed';
 import TicDriveLogo from '../../assets/images/TicDriveLogo.jpeg';
-import LottieView from 'lottie-react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {useAppSelector} from '../stateManagement/redux/hooks';
 import {StackActions, useNavigation} from '@react-navigation/native';

@@ -23,7 +23,7 @@ import ChatIcon from '../../assets/svg/chat.svg';
 import {Ionicons} from '@expo/vector-icons';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import ClientReviewCards from '@/components/ClientReviewCards';
-import {globalStyles} from '../globalStyles';
+import {globalStyles} from '../styles/globalStyles';
 import calculateWorkshopDiscount from '../utils/workshops/calculateWorkshopDiscount';
 import calculateWorkshopStars from '../utils/workshops/calculateWorkshopStars';
 import necessaryDeviceBottomInset from '../utils/devices/necessaryDeviceBottomInset';

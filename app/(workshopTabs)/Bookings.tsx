@@ -3,7 +3,7 @@ import {View, SafeAreaView, Text, StyleSheet} from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {LinearGradient} from 'expo-linear-gradient';
 import { useAppSelector } from '@/app/stateManagement/redux/hooks';
-import { globalStyles } from '@/app/globalStyles';
+import { globalStyles } from '@/app/styles/globalStyles';
 import PrenotationBookedCard from '@/components/workshop/PrenotationBookedCard';
 import { ScrollView } from 'react-native-gesture-handler';
 import HorizontalLine from '@/components/ui/HorizontalLine';

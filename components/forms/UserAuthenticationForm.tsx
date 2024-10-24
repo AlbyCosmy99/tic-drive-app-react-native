@@ -5,7 +5,6 @@ import TicDriveInput from '../ui/inputs/TicDriveInput';
 import {router, useNavigation} from 'expo-router';
 import {useAppDispatch} from '@/app/stateManagement/redux/hooks';
 import GlobalContext from '@/app/stateManagement/contexts/GlobalContext';
-import { saveUser} from '@/app/utils';
 import {StackActions} from '@react-navigation/native';
 import {
   login,
@@ -13,6 +12,7 @@ import {
 } from '@/app/stateManagement/redux/slices/authSlice';
 import User, { UserCategory } from '@/app/types/User';
 import AuthContext from '@/app/stateManagement/contexts/AuthContext';
+import { saveUser } from '@/app/services/auth/secureStore/user';
 
 type FormData = {
   email: string;

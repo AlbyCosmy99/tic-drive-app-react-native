@@ -1,6 +1,6 @@
-import { DarkTheme, DefaultTheme, RouteProp, ThemeProvider, useNavigation } from '@react-navigation/native';
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { Stack, StackScreenProps } from 'expo-router';
+import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
@@ -9,18 +9,11 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import GlobalProvider from './stateManagement/contexts/GlobalProvider';
 import { Provider } from 'react-redux';
 import store from './stateManagement/redux/store/store';
-import { getUser } from './utils';
 import AuthContext from './stateManagement/contexts/AuthContext';
-import { StackAnimationTypes } from 'react-native-screens';
+import getAnimation from './utils/route/getAnimation';
+import { getUser } from './services/auth/secureStore/user';
 
 SplashScreen.preventAutoHideAsync();
-
-const getAnimation = (route?: any): StackAnimationTypes => {
-  if (route?.params?.animation) {
-    return route?.params?.animation
-  }
-  return 'default';
-};
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
