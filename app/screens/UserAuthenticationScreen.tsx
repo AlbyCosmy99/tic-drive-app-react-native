@@ -21,7 +21,7 @@ import AuthAction from '../types/auth/Action';
 import {useLocalSearchParams} from 'expo-router';
 const {width, height} = Dimensions.get('window');
 
-export default function UserAuthentification() {
+export default function UserAuthenticationScreen() {
   const [isUserRegistering, setIsUserRegistering] = useState<boolean>(false);
   const searchParams = useLocalSearchParams();
 

@@ -60,8 +60,8 @@ export default function ChooseServicesScreen() {
           text={isUserLookingForServices() ? 'Book a service' : 'Continue'}
           path={
             isUserLookingForServices()
-              ? './RegisterVehicle'
-              : '/screens/UserAuthentification?register=1&user=0'
+              ? './user/RegisterVehicleScreen'
+              : '/screens/UserAuthenticationScreen?register=1&user=0'
           }
           disabled={isButtonDisabled}
         />

@@ -55,12 +55,12 @@ function WorkshopCard({workshop}: {workshop: Workshop}) {
         </View>
         <View style={styles.extraServicesContainer}>
           <View style={styles.expressServiceContainer}>
-            <Acute width={24} name="acute" />
+            <Acute width={24} />
             <Text style={styles.extraService}>Express service</Text>
           </View>
           {workshop.freeCancellation && (
             <View style={styles.expressServiceContainer}>
-              <FreeCancellation width={24} name="acute" />
+              <FreeCancellation width={24} />
               <Text style={styles.extraService}>Free cancellation</Text>
             </View>
           )}

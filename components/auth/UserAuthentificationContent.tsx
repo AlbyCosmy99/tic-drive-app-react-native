@@ -6,7 +6,7 @@ import OAuth2Button from '../ui/buttons/OAuth2Button';
 import GoogleIcon from '@/assets/svg/OAuth2Icons/GoogleIcon';
 import AppleIcon from '@/assets/svg/OAuth2Icons/AppleIcon';
 import {Colors} from '@/constants/Colors';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useAppDispatch} from '@/app/stateManagement/redux/hooks';
 import {setAreFormErrors} from '@/app/stateManagement/redux/slices/authSlice';
 import AuthAction from '@/app/types/auth/Action';
@@ -95,9 +95,6 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
 };
 
 const styles = StyleSheet.create({
-  content: {
-    flex: 1,
-  },
   hr: {
     borderBottomColor: '#e6e6e6',
     borderBottomWidth: 1.5,
@@ -112,11 +109,6 @@ const styles = StyleSheet.create({
   },
   footerText: {
     color: Colors.light.placeholderText,
-  },
-  logoImage: {
-    width: 180,
-    height: 180,
-    resizeMode: 'contain',
   },
 });
 

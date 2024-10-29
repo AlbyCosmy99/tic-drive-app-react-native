@@ -13,6 +13,7 @@ import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import {useNavigation} from '@react-navigation/native';
 import {router} from 'expo-router';
 import {globalStyles} from '../styles/globalStyles';
+import HorizontalLine from '@/components/ui/HorizontalLine';
 
 export default function HomeTab() {
   const {setWorkshopFilter} = useContext(GlobalContext);
@@ -62,15 +63,7 @@ export default function HomeTab() {
             <Text className="text-center m-4 font-bold text-xl">
               Welcome {user?.name}
             </Text>
-            <View className="w-full justify-center items-center">
-              <View
-                style={{
-                  height: 1,
-                  width: '90%',
-                  backgroundColor: Colors.light.ticText,
-                }}
-              ></View>
-            </View>
+            <HorizontalLine />
           </View>
         )}
         <View className="flex-1">

@@ -82,18 +82,18 @@ export default function RootLayout() {
                   })}
                 />
                 <Stack.Screen
-                  name="screens/UserAuthentification"
+                  name="screens/UserAuthenticationScreen"
                   options={({route}) => ({
-                    title: 'UserAuthentification',
+                    title: 'UserAuthenticationScreen',
                     headerShown: false,
                     presentation: 'modal',
                     animation: getAnimation(route),
                   })}
                 />
                 <Stack.Screen
-                  name="screens/RegisterVehicle"
+                  name="screens/user/RegisterVehicleScreen"
                   options={({route}) => ({
-                    title: 'RegisterVehicle',
+                    title: 'RegisterVehicleScreen',
                     headerShown: false,
                     animation: getAnimation(route),
                   })}
@@ -115,7 +115,7 @@ export default function RootLayout() {
                   })}
                 />
                 <Stack.Screen
-                  name="screens/WorkshopDetails"
+                  name="screens/user/WorkshopDetails"
                   options={({route}) => ({
                     title: 'WorkshopDetails',
                     headerShown: false,
@@ -123,17 +123,17 @@ export default function RootLayout() {
                   })}
                 />
                 <Stack.Screen
-                  name="screens/CalendarDateSelection"
+                  name="screens/user/CalendarDateSelectionScreen"
                   options={({route}) => ({
-                    title: 'CalendarDateSelection',
+                    title: 'CalendarDateSelectionScreen',
                     headerShown: false,
                     animation: getAnimation(route),
                   })}
                 />
                 <Stack.Screen
-                  name="screens/BookingConfirmation"
+                  name="screens/user/BookingConfirmationScreen"
                   options={({route}) => ({
-                    title: 'BookingConfirmation',
+                    title: 'BookingConfirmationScreen',
                     headerShown: false,
                     animation: getAnimation(route),
                   })}

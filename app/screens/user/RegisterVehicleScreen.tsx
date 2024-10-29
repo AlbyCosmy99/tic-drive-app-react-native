@@ -13,17 +13,17 @@ import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
 import {useContext, useEffect, useState} from 'react';
 import options, {
   CarRegistrationOptions,
-} from '../../constants/VehicleRegistrationOptions';
-import GlobalContext from '../stateManagement/contexts/GlobalContext';
+} from '../../../constants/VehicleRegistrationOptions';
+import GlobalContext from '../../stateManagement/contexts/GlobalContext';
 import ToPreviousPage from '@/components/navigation/ToPreviousPage';
-import SegmentedControlSelection from '../types/SegmentedControlSelection';
-import Car from '../types/Car';
+import SegmentedControlSelection from '../../types/SegmentedControlSelection';
+import Car from '../../types/Car';
 import defaultCar from '@/constants/defaultRegistrationCar';
 import cars from '@/constants/temp/Cars';
-import {globalStyles} from '../styles/globalStyles';
-import necessaryDeviceBottomInset from '../utils/devices/necessaryDeviceBottomInset';
+import {globalStyles} from '../../styles/globalStyles';
+import necessaryDeviceBottomInset from '../../utils/devices/necessaryDeviceBottomInset';
 
-function RegisterVehicle() {
+function RegisterVehicleScreen() {
   const [segmentedControlSelection, setSegmentedControlSelection] =
     useState<SegmentedControlSelection | null>(null);
   const [carSelected, setCarSelected] = useState<Car>(defaultCar);
@@ -180,7 +180,7 @@ function RegisterVehicle() {
       </View>
       <TicDriveButton
         text="Confirm"
-        path="../(userTabs)/Home"
+        path="../../(userTabs)/Home"
         disabled={carNotFound}
       />
     </SafeAreaView>
@@ -197,4 +197,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegisterVehicle;
+export default RegisterVehicleScreen;

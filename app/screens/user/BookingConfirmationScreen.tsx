@@ -3,12 +3,12 @@ import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import {Colors} from '@/constants/Colors';
 import {LinearGradient} from 'expo-linear-gradient';
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import {globalStyles} from '../styles/globalStyles';
-import necessaryDeviceBottomInset from '../utils/devices/necessaryDeviceBottomInset';
-import {useAppDispatch} from '../stateManagement/redux/hooks';
-import {reset} from '../stateManagement/redux/slices/servicesSlice';
+import { globalStyles } from '@/app/styles/globalStyles';
+import necessaryDeviceBottomInset from '@/app/utils/devices/necessaryDeviceBottomInset';
+import { useAppDispatch } from '@/app/stateManagement/redux/hooks';
+import { reset } from '@/app/stateManagement/redux/slices/servicesSlice';
 
-export default function BookingConfirmation() {
+export default function BookingConfirmationScreen() {
   const dispatch = useAppDispatch();
   return (
     <LinearGradient
@@ -41,7 +41,7 @@ export default function BookingConfirmation() {
         <TicDriveButton
           replace={true}
           text="Home"
-          path={'../(userTabs)/Home?animation=fade'}
+          path={'../../(userTabs)/Home/?animation=fade'}
           onClick={() => {
             dispatch(reset());
           }}

@@ -59,7 +59,7 @@ export default function TabLayout() {
                   alignItems: 'center',
                 }}
               >
-                <Text style={{textAlign: 'center', color: 'white'}}>9</Text>
+                <Text style={{textAlign: 'center', color: 'white'}}>4</Text>
               </View>
             </View>
           ),

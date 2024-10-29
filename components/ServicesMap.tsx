@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity, Alert} from 'react-native';
 import {Region, LatLng} from 'react-native-maps';
-import Entypo from '@expo/vector-icons/Entypo';
 import * as Location from 'expo-location';
 import ServicesMapModal from './ServiceMapModal';
 import {Colors} from '@/constants/Colors';
@@ -99,7 +98,6 @@ const ServicesMap: React.FC = () => {
       <View style={styles.inputContainer}>
         <LocationPin
           width={24}
-          name="location-pin"
           fill={Colors.light.ticText}
         />
         <TouchableOpacity

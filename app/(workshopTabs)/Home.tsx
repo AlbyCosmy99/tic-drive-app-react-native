@@ -28,16 +28,17 @@ export default function HomeTab() {
           <Text className="text-center m-3 mb-2 font-bold text-2xl">
             Hi, Orlando AC Repairs
           </Text>
-          <TouchableWithoutFeedback
-            className="bg-red-500 m-3 mx-6 p-2 rounded-xl flex-row justify-center items-center"
-            onPress={() => router.push('/(workshopTabs)/Chat?animation=fade')}
-          >
-            <Text className="text-white text-center font-semibold text-lg">
-              3 new messages to read{' '}
-            </Text>
-            <ForwardArrow fill={'white'} />
-          </TouchableWithoutFeedback>
+          <HorizontalLine />
           <ScrollView>
+            <TouchableWithoutFeedback
+              className="bg-red-500 m-3 mx-6 p-2 rounded-xl flex-row justify-center items-center"
+              onPress={() => router.push('/(workshopTabs)/Chat?animation=fade')}
+            >
+              <Text className="text-white text-center font-semibold text-lg">
+                3 new messages to read{' '}
+              </Text>
+              <ForwardArrow fill={'white'} />
+            </TouchableWithoutFeedback>
             <View>
               <Text className="font-bold text-xl text-center mb-2 mt-1">
                 Most Recent Active Bookings
@@ -60,7 +61,7 @@ export default function HomeTab() {
               <TouchableWithoutFeedback
                 onPress={() => router.push('/(workshopTabs)/Bookings')}
               >
-                <Text className="self-end mr-12 mt-1 font-medium text-xl mb-2">
+                <Text className="self-end mr-12 mt-1 font-medium text-xl mb-3">
                   View All Bookings
                 </Text>
               </TouchableWithoutFeedback>

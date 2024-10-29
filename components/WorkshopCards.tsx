@@ -23,7 +23,7 @@ function WorkshopCards() {
   const width = Dimensions.get('window').width;
   const handleCardPress = (workshop: Workshop) => {
     router.push({
-      pathname: '../../screens/WorkshopDetails',
+      pathname: '../../screens/user/WorkshopDetails',
       params: {id: workshop.id},
     });
   };

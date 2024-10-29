@@ -68,7 +68,7 @@ export default function ServicesMapModal({
     setLocationName(poi.name);
     setIsMapVisible(false);
     router.push({
-      pathname: '../screens/WorkshopDetails',
+      pathname: '../screens/user/WorkshopDetails',
       params: {id: poi.id},
     });
   };

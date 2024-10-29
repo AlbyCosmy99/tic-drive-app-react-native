@@ -12,22 +12,22 @@ import {
 } from 'react-native';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import LocationPin from '../../assets/svg/location_on.svg';
-import Verified from '../../assets/svg/verified.svg';
-import Star from '../../assets/svg/star.svg';
-import Acute from '../../assets/svg/acute.svg';
-import FreeCancellation from '../../assets/svg/free_cancellation.svg';
-import AssistantDirection from '../../assets/svg/assistant_direction';
-import CalendarIcon from '../../assets/svg/calendar_add_on.svg';
-import ChatIcon from '../../assets/svg/chat.svg';
+import LocationPin from '../../../assets/svg/location_on.svg';
+import Verified from '../../../assets/svg/verified.svg';
+import Star from '../../../assets/svg/star.svg';
+import Acute from '../../../assets/svg/acute.svg';
+import FreeCancellation from '../../../assets/svg/free_cancellation.svg';
+import AssistantDirection from '../../../assets/svg/assistant_direction';
+import CalendarIcon from '../../../assets/svg/calendar_add_on.svg';
+import ChatIcon from '../../../assets/svg/chat.svg';
 import {Ionicons} from '@expo/vector-icons';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import ClientReviewCards from '@/components/ClientReviewCards';
-import {globalStyles} from '../styles/globalStyles';
-import calculateWorkshopDiscount from '../utils/workshops/calculateWorkshopDiscount';
-import calculateWorkshopStars from '../utils/workshops/calculateWorkshopStars';
-import necessaryDeviceBottomInset from '../utils/devices/necessaryDeviceBottomInset';
-import {useAppSelector} from '../stateManagement/redux/hooks';
+import {globalStyles} from '../../styles/globalStyles';
+import calculateWorkshopDiscount from '../../utils/workshops/calculateWorkshopDiscount';
+import calculateWorkshopStars from '../../utils/workshops/calculateWorkshopStars';
+import necessaryDeviceBottomInset from '../../utils/devices/necessaryDeviceBottomInset';
+import {useAppSelector} from '../../stateManagement/redux/hooks';
 
 export default function WorkshopDetails() {
   const {id} = useLocalSearchParams();
@@ -92,16 +92,16 @@ export default function WorkshopDetails() {
                 />
                 <View className="flex-1 flex-row items-center gap-0.5 mt-2">
                   <Text className="text-2xl font-bold">{workshop.title}</Text>
-                  {workshop.verified && <Verified width={24} name="verified" />}
+                  {workshop.verified && <Verified width={24} />}
                 </View>
                 <View className="flex-1 flex-row mt-2.5">
                   <View className="flex-1 flex-row items-center gap-0.5">
-                    <Acute width={24} name="acute" />
+                    <Acute width={24} />
                     <Text className="text-lg">Express service</Text>
                   </View>
                   {workshop.freeCancellation && (
                     <View className="flex-1 flex-row items-center gap-0.5">
-                      <FreeCancellation width={24} name="acute" />
+                      <FreeCancellation width={24} />
                       <Text className="text-lg">Free cancellation</Text>
                     </View>
                   )}
@@ -146,7 +146,6 @@ export default function WorkshopDetails() {
                 <View className="flex-1 flex-row items-center gap-0.5 mt-2.5">
                   <LocationPin
                     width={24}
-                    name="location-pin"
                     fill={Colors.light.ticText}
                   />
                   <Text className="text-lg">{workshop.position}</Text>
@@ -157,7 +156,6 @@ export default function WorkshopDetails() {
                 <View className="flex-1 flex-row items-center gap-0.5 mt-2.5">
                   <Star
                     width={24}
-                    name="location-pin"
                     fill={Colors.light.ticText}
                   />
                   <Text className="text-lg">
@@ -206,7 +204,7 @@ export default function WorkshopDetails() {
               {servicesChoosen.length > 0 && (
                 <TicDriveButton
                   text="Book a service"
-                  path={'../screens/CalendarDateSelection'}
+                  path={'../../screens/user/CalendarDateSelectionScreen'}
                   customButtonStyle={styles.customButtonStyle}
                 />
               )}

@@ -71,7 +71,7 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
           ) : (
             <TicDriveAuthButton
               onPress={() => {
-                router.push('/screens/UserAuthentification');
+                router.push('../../screens/UserAuthenticationScreen');
               }}
               action="login"
             />

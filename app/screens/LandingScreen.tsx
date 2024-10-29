@@ -72,7 +72,7 @@ const LandingScreen = () => {
                     if (navigation.canGoBack()) {
                       navigation.dispatch(StackActions.popToTop());
                     }
-                    router.push('/screens/UserAuthentification');
+                    router.push('/screens/UserAuthenticationScreen');
                   }}
                   action="login"
                 />
@@ -201,7 +201,7 @@ const LandingScreen = () => {
                   if (navigation.canGoBack()) {
                     navigation.dispatch(StackActions.popToTop());
                   }
-                  router.push('/screens/UserAuthentification');
+                  router.push('./UserAuthenticationScreen');
                 }}
               >
                 <Text className="text-lg">login</Text>
@@ -219,21 +219,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 35,
     borderTopRightRadius: 35,
     height: 280,
-  },
-  hr: {
-    borderBottomColor: '#e6e6e6',
-    borderBottomWidth: 1.5,
-    margin: 10,
-    flex: 1,
-  },
-  continueWithText: {
-    color: Colors.light.placeholderText,
-  },
-  link: {
-    color: 'black',
-  },
-  footerText: {
-    color: Colors.light.placeholderText,
   },
   logoImage: {
     width: height > smallDevicebreakpointHeight ? 180 : 150,

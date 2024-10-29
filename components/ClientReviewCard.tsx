@@ -36,7 +36,7 @@ function ClientReviewCard({review}: ClientReviewCardProps) {
           </View>
         </View>
         <View className="flex-row items-center mt-2.5 mr-3.5 gap-0.5">
-          <Star width={24} name="location-pin" fill={Colors.light.ticText} />
+          <Star width={24} fill={Colors.light.ticText} />
           <Text className="text-lg">{review.stars}</Text>
         </View>
       </View>
@@ -57,9 +57,6 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   when: {
-    color: Colors.light.placeholderText,
-  },
-  reviewTextContainer: {
     color: Colors.light.placeholderText,
   },
   reviewText: {

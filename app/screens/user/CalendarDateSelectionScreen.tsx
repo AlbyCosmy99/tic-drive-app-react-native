@@ -4,12 +4,12 @@ import {Colors} from '@/constants/Colors';
 import {LinearGradient} from 'expo-linear-gradient';
 import {useContext} from 'react';
 import {SafeAreaView, Text, View} from 'react-native';
-import GlobalContext from '../stateManagement/contexts/GlobalContext';
-import {useAppSelector} from '../stateManagement/redux/hooks';
-import {globalStyles} from '../styles/globalStyles';
-import necessaryDeviceBottomInset from '../utils/devices/necessaryDeviceBottomInset';
+import GlobalContext from '../../stateManagement/contexts/GlobalContext';
+import {useAppSelector} from '../../stateManagement/redux/hooks';
+import {globalStyles} from '../../styles/globalStyles';
+import necessaryDeviceBottomInset from '../../utils/devices/necessaryDeviceBottomInset';
 
-export default function CalendarDateSelection() {
+export default function CalendarDateSelectionScreen() {
   const {setLoginBtnCustomPath} = useContext(GlobalContext);
   const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);
 
@@ -33,15 +33,15 @@ export default function CalendarDateSelection() {
           text={'Confirm ' + (!isUserLogged ? 'and login' : '')}
           path={
             isUserLogged
-              ? '../screens/BookingConfirmation'
-              : '../screens/UserAuthentification'
+              ? '../user/BookingConfirmationScreen'
+              : '../UserAuthenticationScreen'
           }
           toTop={isUserLogged ? true : false}
           replace={isUserLogged ? true : false}
           onClick={
             isUserLogged
               ? () => {}
-              : () => setLoginBtnCustomPath('../screens/BookingConfirmation')
+              : () => setLoginBtnCustomPath('../screens/user/BookingConfirmationScreen')
           }
         />
       </SafeAreaView>
