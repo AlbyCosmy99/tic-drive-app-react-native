@@ -42,7 +42,6 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', e => {
-      console.log(e);
       if (e.data.action.type === 'GO_BACK' || e.data.action.type === 'POP') {
         dispatch(reset());
       }

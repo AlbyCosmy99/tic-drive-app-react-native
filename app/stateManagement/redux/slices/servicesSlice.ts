@@ -21,7 +21,6 @@ const servicesSlice = createSlice({
       action: PayloadAction<number>,
     ) {
       state.servicesChoosenByWorkshops = [action.payload];
-      console.log(state.servicesChoosenByWorkshops);
     },
     addServiceChoosenByUsers(
       state: ServicesState,
@@ -38,7 +37,6 @@ const servicesSlice = createSlice({
       if (!state.servicesChoosenByWorkshops.includes(action.payload)) {
         state.servicesChoosenByWorkshops.push(action.payload);
       }
-      console.log(state.servicesChoosenByWorkshops);
     },
     removeServiceChoosenByUsers(
       state: ServicesState,
@@ -63,7 +61,6 @@ const servicesSlice = createSlice({
           ...state.servicesChoosenByWorkshops.slice(index + 1),
         ];
       }
-      console.log(state.servicesChoosenByWorkshops);
     },
     reset(state: ServicesState) {
       state.servicesChoosenByUsers = [];
