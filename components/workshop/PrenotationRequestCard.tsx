@@ -1,10 +1,7 @@
-import {Colors} from '@/constants/Colors';
 import React from 'react';
 import {Pressable, Text, View} from 'react-native';
 import HorizontalLine from '../ui/HorizontalLine';
-import TicDriveButton from '../ui/buttons/TicDriveButton';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import {router} from 'expo-router';
 
 interface PrenotationRequestCardProps {
   model: string;

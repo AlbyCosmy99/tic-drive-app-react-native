@@ -2,7 +2,6 @@ import {Tabs} from 'expo-router';
 import {Colors} from '../../constants/Colors';
 import HomeIcon from '../../assets/svg/homeIcon.svg';
 import BookingsIcon from '../../assets/svg/bookingsIcon.svg';
-import FavouriteIcon from '../../assets/svg/favouriteIcon.svg';
 import ChatIcon from '../../assets/svg/chatIcon.svg';
 import AccountIcon from '../../assets/svg/accountIcon.svg';
 import HomeTab from './Home';

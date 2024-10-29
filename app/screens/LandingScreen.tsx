@@ -6,7 +6,6 @@ import {Colors} from '@/constants/Colors';
 import {Image} from '@rneui/themed';
 import TicDriveLogo from '../../assets/images/TicDriveLogo.jpeg';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import {useAppSelector} from '../stateManagement/redux/hooks';
 import {StackActions, useNavigation} from '@react-navigation/native';
 import ServicesCard from '@/components/ServicesCard';
 import Feather from '@expo/vector-icons/Feather';
@@ -15,13 +14,11 @@ import {MotiView} from 'moti';
 import {useState} from 'react';
 import {Dimensions} from 'react-native';
 import smallDevicebreakpointHeight from '@/constants/smallDevicebreakpointHeight';
-import TicDriveAuthButton from '@/components/ui/buttons/TicDriveAuthButton';
 
 const {width, height} = Dimensions.get('window');
 
 const LandingScreen = () => {
   const navigation = useNavigation();
-  const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);
   const [isSearchButtonPressed, setIsSearchButtonPressed] = useState(false);
   const [isOfferButtonPressed, setIsOfferButtonPressed] = useState(false);
 
