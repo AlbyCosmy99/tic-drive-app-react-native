@@ -1,11 +1,11 @@
-import React, { useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import ServicesCard from './ServicesCard';
 import {ActivityIndicator, StyleSheet, View} from 'react-native';
 import icons from '../constants/servicesIconsMap';
 import {Colors} from '@/constants/Colors';
 import {UserCategory} from '@/app/types/User';
-import { useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {reset} from '@/app/stateManagement/redux/slices/servicesSlice';
 

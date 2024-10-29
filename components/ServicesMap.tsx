@@ -96,10 +96,7 @@ const ServicesMap: React.FC = () => {
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
-        <LocationPin
-          width={24}
-          fill={Colors.light.ticText}
-        />
+        <LocationPin width={24} fill={Colors.light.ticText} />
         <TouchableOpacity
           style={styles.input}
           onPress={() => setIsMapVisible(true)}

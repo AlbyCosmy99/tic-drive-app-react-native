@@ -11,7 +11,7 @@ const HorizontalLine: React.FC<HorizontalLineProps> = ({height = 1}) => {
     <View className="w-full justify-center items-center">
       <View
         style={{height, backgroundColor: Colors.light.ticText}}
-        className='w-full'
+        className="w-full"
       ></View>
     </View>
   );

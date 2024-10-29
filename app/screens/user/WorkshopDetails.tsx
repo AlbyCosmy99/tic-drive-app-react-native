@@ -144,20 +144,14 @@ export default function WorkshopDetails() {
               <View className="mt-2.5">
                 <Text className="text-xl font-bold">Location</Text>
                 <View className="flex-1 flex-row items-center gap-0.5 mt-2.5">
-                  <LocationPin
-                    width={24}
-                    fill={Colors.light.ticText}
-                  />
+                  <LocationPin width={24} fill={Colors.light.ticText} />
                   <Text className="text-lg">{workshop.position}</Text>
                 </View>
               </View>
               <View className="mt-2.5">
                 <Text className="text-xl font-bold">What people say</Text>
                 <View className="flex-1 flex-row items-center gap-0.5 mt-2.5">
-                  <Star
-                    width={24}
-                    fill={Colors.light.ticText}
-                  />
+                  <Star width={24} fill={Colors.light.ticText} />
                   <Text className="text-lg">
                     {calculateWorkshopStars(workshop.reviews)} (
                     {workshop.reviews.length} reviews)

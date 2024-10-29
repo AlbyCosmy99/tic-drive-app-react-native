@@ -41,7 +41,10 @@ export default function CalendarDateSelectionScreen() {
           onClick={
             isUserLogged
               ? () => {}
-              : () => setLoginBtnCustomPath('../screens/user/BookingConfirmationScreen')
+              : () =>
+                  setLoginBtnCustomPath(
+                    '../screens/user/BookingConfirmationScreen',
+                  )
           }
         />
       </SafeAreaView>
