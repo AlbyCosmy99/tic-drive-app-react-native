@@ -30,6 +30,7 @@ export default function TabLayout() {
         name="Bookings"
         options={{
           title: 'Bookings',
+          headerShown: false,
           tabBarIcon: ({color}) => (
             <BookingsIcon width={28} fill={color} name="Home" />
           ),
@@ -39,6 +40,7 @@ export default function TabLayout() {
         name="Favourite"
         options={{
           title: 'Favourite',
+          headerShown: false,
           tabBarIcon: ({color}) => (
             <FavouriteIcon width={28} fill={color} name="Home" />
           ),
@@ -48,6 +50,7 @@ export default function TabLayout() {
         name="Chat"
         options={{
           title: 'Chat',
+          headerShown: false,
           tabBarIcon: ({color}) => (
             <ChatIcon width={28} fill={color} name="Home" />
           ),
@@ -57,6 +60,7 @@ export default function TabLayout() {
         name="Account"
         options={{
           title: 'Account',
+          headerShown: false,
           tabBarIcon: ({color}) => (
             <AccountIcon width={28} fill={color} name="Home" />
           ),

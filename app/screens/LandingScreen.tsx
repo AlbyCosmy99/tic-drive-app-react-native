@@ -1,6 +1,6 @@
 import {LinearGradient} from 'expo-linear-gradient';
 import {router} from 'expo-router';
-import {StyleSheet, Text, View} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {globalStyles} from '../styles/globalStyles';
 import {Colors} from '@/constants/Colors';
 import {Image} from '@rneui/themed';
@@ -53,8 +53,9 @@ const LandingScreen = () => {
             </View>
           </View>
           <View style={styles.lottieAnimation} className='justify-center items-center px-1 p-6'>
-            {/* <Text className='text-3xl text-center' style={{fontFamily: 'RegularLato'}}>Let's make <Text className='text-green-500'>car maintenance</Text> simple, convenient and reliable.</Text>
-            <View
+
+            <Text className='text-3xl text-center' style={{fontFamily: 'RegularLato'}}>Let's make <Text className='text-green-500'>car maintenance</Text> simple, convenient and reliable.</Text>
+            {/* <View
               style={{height: 60}}
               className="justify-end flex-row mx-5 z-10 mt-4"
             >
@@ -72,6 +73,7 @@ const LandingScreen = () => {
                 />
               )}
             </View> */}
+            
           </View>
           <LinearGradient
             colors={[
@@ -81,10 +83,10 @@ const LandingScreen = () => {
             ]} // Define your gradient colors here
             style={styles.content}
             locations={[0, 0.4, 1]}
-            className="p-2 items-end justify-center flex-1"
+            className="p-2 justify-center flex-1"
           >
             <MotiView
-              className="flex-row justify-center items-center p-2 w-full h-full"
+              className="flex-row justify-center items-center p-2 pb-0 w-full h-full"
               from={{
                 scale: 0.8,
               }}
@@ -183,6 +185,19 @@ const LandingScreen = () => {
                 </TouchableWithoutFeedback>
               </MotiView>
             </MotiView>
+            <View className='mx-5 flex-row justify-between' style={{marginBottom:80}}>
+              <Pressable onPress={() => router.push('/(userTabs)/Home')}>
+                <Text className='text-lg'>skip</Text>
+              </Pressable>
+              <Pressable onPress={() => {
+                    if (navigation.canGoBack()) {
+                      navigation.dispatch(StackActions.popToTop());
+                    }
+                    router.push('/screens/UserAuthentification');
+                  }}>
+                <Text className='text-lg'>login</Text>
+              </Pressable>
+            </View>
           </LinearGradient>
         </View>
       </LinearGradient>
@@ -231,6 +246,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: 'lightgreen',
     borderColor: Colors.light.green.drive,
+    height: 150
   },
   lottieAnimation: {
     width: '100%',

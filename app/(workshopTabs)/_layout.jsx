@@ -33,7 +33,22 @@ export default function TabLayout() {
           title: 'Bookings',
           headerShown: false,
           tabBarIcon: ({color}) => (
-            <BookingsIcon width={28} fill={color} name="Home" />
+            <BookingsIcon width={28} fill={color} name="Bookings" />
+          ),
+        }}
+      />
+       <Tabs.Screen
+        name="Requests"
+        options={{
+          title: 'Requests',
+          headerShown: false,
+          tabBarIcon: ({color}) => (
+            <View style={{position: 'relative', padding: 10}}>
+              <BookingsIcon width={28} fill={color} name="Requests" />
+              <View style={{backgroundColor: 'green', borderRadius: 50, position: 'absolute', right: 0, top:2,padding: 5, width: 26, height: 26, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={{textAlign: 'center', color: 'white'}}>9</Text>
+              </View>
+            </View>
           ),
         }}
       />
@@ -44,8 +59,8 @@ export default function TabLayout() {
           headerShown: false,
           tabBarIcon: ({color}) => (
             <View style={{position: 'relative', padding: 10}}>
-              <ChatIcon width={28} fill={color} name="Home" />
-              <View style={{backgroundColor: 'red', borderRadius: 50, position: 'absolute', right: 0, padding: 5, width: 25, height: 25}}>
+              <ChatIcon width={28} fill={color} name="Chat" />
+              <View style={{backgroundColor: 'red', borderRadius: 50, position: 'absolute', right: 0, padding: 5, width: 26, height: 26, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                 <Text style={{textAlign: 'center', color: 'white'}}>3</Text>
               </View>
             </View>
@@ -58,7 +73,7 @@ export default function TabLayout() {
           title: 'Account',
           headerShown: false,
           tabBarIcon: ({color}) => (
-            <AccountIcon width={28} fill={color} name="Home" />
+            <AccountIcon width={28} fill={color} name="Account" />
           ),
         }}
       />

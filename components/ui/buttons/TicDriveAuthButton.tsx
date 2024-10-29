@@ -26,9 +26,9 @@ const TicDriveAuthButton: React.FC<TicDriveAuthButtonProps> = ({
   const handleLogout = async () => {
     dispatch(logout());
     setIsUserLogged(false)
-    if (navigation.canGoBack()) {
-      navigation.dispatch(StackActions.popToTop);
-    }
+    // if (navigation.canGoBack()) {
+    //   navigation.dispatch(StackActions.popToTop);
+    // }
 
     //params for loading car animation - isCarGreen -> animation color is green
     const params = {

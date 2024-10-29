@@ -29,7 +29,7 @@ export default function HomeTab() {
       className="flex-1 w-full h-full"
     >
       <SafeAreaView className="flex-1" style={globalStyles().safeAreaView}>
-        <TicDriveNavbar isLoginAvailable={!user ? false : true} />
+        <TicDriveNavbar isLoginAvailable={false}/>
         {
           userServicesChoosen.length > 0 ? (
             <View className="flex-row items-center">

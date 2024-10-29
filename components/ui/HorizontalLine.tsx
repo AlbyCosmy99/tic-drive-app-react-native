@@ -1,10 +1,15 @@
 import { Colors } from "@/constants/Colors"
+import React from "react";
 import { View } from "react-native"
 
-const HorizontalLine = () => {
+interface HorizontalLineProps {
+    height?: number;
+}
+
+const HorizontalLine: React.FC<HorizontalLineProps> = ({height = 1}) => {
     return (
         <View className='w-full justify-center items-center'>
-            <View style={{height: 1, width: '100%', backgroundColor: Colors.light.ticText}}></View>
+            <View style={{height, width: '100%', backgroundColor: Colors.light.ticText}}></View>
         </View>
     )
 }

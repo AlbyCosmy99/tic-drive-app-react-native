@@ -1,9 +1,27 @@
-import {View, Text, StyleSheet} from 'react-native';
+import {Colors} from '@/constants/Colors';
+import {SafeAreaView, Text} from 'react-native';
+import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
+import {LinearGradient} from 'expo-linear-gradient';
+import { useAppSelector } from '@/app/stateManagement/redux/hooks';
+import { globalStyles } from '@/app/styles/globalStyles';
 
-export default function Tab() {
+export default function WorkshopAccount() {
+  const user = useAppSelector(state => state.auth.user)
+
   return (
-    <View className="flex-1 justify-center items-center">
-      <Text>Workshop Account</Text>
-    </View>
+    <LinearGradient
+      colors={[
+        Colors.light.backgroundLinearGradient.start,
+        Colors.light.backgroundLinearGradient.end,
+      ]}
+      className="flex-1 w-full h-full"
+    >
+      <SafeAreaView className="flex-1" style={globalStyles().safeAreaView}>
+        <TicDriveNavbar isLoginAvailable={user ? true : true} canGoBack={false} />
+        <Text className='font-bold text-2xl text-center mb-2 mt-1'>
+          Workshop Account
+        </Text>
+      </SafeAreaView>
+    </LinearGradient>
   );
 }
