@@ -10,9 +10,9 @@ import {
   login,
   setAreFormErrors,
 } from '@/app/stateManagement/redux/slices/authSlice';
-import User, { UserCategory } from '@/app/types/User';
+import User, {UserCategory} from '@/app/types/User';
 import AuthContext from '@/app/stateManagement/contexts/AuthContext';
-import { saveUser } from '@/app/services/auth/secureStore/user';
+import {saveUser} from '@/app/services/auth/secureStore/user';
 
 type FormData = {
   email: string;
@@ -30,7 +30,7 @@ interface UserAuthenticationFormProps {
 const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
   isUserRegistering,
   setOnFormSubmit,
-  clientCategory
+  clientCategory,
 }) => {
   const {
     control,
@@ -42,8 +42,8 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
   } = useForm<FormData>();
 
   const {loginBtnCustomPath, setLoginBtnCustomPath} =
-  React.useContext(GlobalContext);
-  const {setIsUserLogged} = React.useContext(AuthContext)
+    React.useContext(GlobalContext);
+  const {setIsUserLogged} = React.useContext(AuthContext);
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
 
@@ -62,16 +62,14 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
   }, [isUserRegistering]);
 
   const onSubmit = async (data: FormData) => {
-    setIsUserLogged(true)
+    setIsUserLogged(true);
 
     const user: User = {
       name: data.name,
       email: data.email,
       category: clientCategory === 'user' ? 'user' : 'workshop',
-    }
-    dispatch(
-      login(user),
-    );
+    };
+    dispatch(login(user));
 
     await saveUser(user);
 

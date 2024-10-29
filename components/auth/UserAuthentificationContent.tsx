@@ -10,7 +10,7 @@ import React, {useEffect, useState} from 'react';
 import {useAppDispatch} from '@/app/stateManagement/redux/hooks';
 import {setAreFormErrors} from '@/app/stateManagement/redux/slices/authSlice';
 import AuthAction from '@/app/types/auth/Action';
-import { UserCategory } from '@/app/types/User';
+import {UserCategory} from '@/app/types/User';
 
 interface UserAuthenticationContentProps {
   action: AuthAction;
@@ -23,7 +23,7 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
   action,
   isUserRegistering,
   setIsUserRegistering,
-  clientCategory = 'user'
+  clientCategory = 'user',
 }) => {
   const [onFormSubmit, setOnFormSubmit] = useState<(() => void) | null>(null);
   const dispatch = useAppDispatch();

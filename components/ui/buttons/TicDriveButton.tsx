@@ -28,8 +28,7 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({
   disabled = false,
 }) => {
   const router = useRouter();
-  const {setWorkshopFilter} =
-    useContext(GlobalContext);
+  const {setWorkshopFilter} = useContext(GlobalContext);
   const navigation = useNavigation();
 
   // const whenIsDisabled: Record<string, boolean> = {

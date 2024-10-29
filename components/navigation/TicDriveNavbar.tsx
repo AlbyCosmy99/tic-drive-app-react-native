@@ -2,11 +2,14 @@ import {View, Text, StyleSheet, useColorScheme} from 'react-native';
 import {Colors} from '@/constants/Colors';
 import {router} from 'expo-router';
 import {StackActions, useNavigation} from '@react-navigation/native';
-import {useAppDispatch, useAppSelector} from '@/app/stateManagement/redux/hooks';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '@/app/stateManagement/redux/hooks';
 import ToPreviousPage from './ToPreviousPage';
 import TicDriveAuthButton from '../ui/buttons/TicDriveAuthButton';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import { reset } from '@/app/stateManagement/redux/slices/servicesSlice';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import {reset} from '@/app/stateManagement/redux/slices/servicesSlice';
 interface TicDriveNavbarProps {
   isLoginAvailable?: boolean;
   canGoBack?: boolean;
@@ -14,13 +17,13 @@ interface TicDriveNavbarProps {
 
 const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
   isLoginAvailable = true,
-  canGoBack = null
+  canGoBack = null,
 }) => {
   const colorScheme = useColorScheme();
   const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);
 
   const navigation = useNavigation();
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   const backgroundStyle = {
     backgroundColor:
@@ -35,29 +38,32 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
       style={backgroundStyle}
     >
       <View className="flex-1 justify-start flex-row">
-        {canGoBack || (canGoBack === null && navigation.canGoBack()) && <ToPreviousPage />}
+        {canGoBack ||
+          (canGoBack === null && navigation.canGoBack() && <ToPreviousPage />)}
       </View>
-      <TouchableWithoutFeedback onPress={() => {
-          if(navigation.canGoBack()) {
-            navigation.dispatch(StackActions.popToTop())
+      <TouchableWithoutFeedback
+        onPress={() => {
+          if (navigation.canGoBack()) {
+            navigation.dispatch(StackActions.popToTop());
           }
-          dispatch(reset())
-          router.replace('/?animation=fade')
+          dispatch(reset());
+          router.replace('/?animation=fade');
         }}
-        className="flex-row flex-1 justify-center items-center">
-          <Text
-            className="font-bold text-3xl"
-            style={[styles.title, styles.ticText]}
-          >
-            Tic
-          </Text>
-          <Text
-            className="font-bold text-3xl"
-            style={[styles.title, styles.driveText]}
-          >
-            Drive
-          </Text>
-        </TouchableWithoutFeedback>
+        className="flex-row flex-1 justify-center items-center"
+      >
+        <Text
+          className="font-bold text-3xl"
+          style={[styles.title, styles.ticText]}
+        >
+          Tic
+        </Text>
+        <Text
+          className="font-bold text-3xl"
+          style={[styles.title, styles.driveText]}
+        >
+          Drive
+        </Text>
+      </TouchableWithoutFeedback>
       <View className="flex-1 justify-end flex-row">
         {isLoginAvailable &&
           (isUserLogged ? (

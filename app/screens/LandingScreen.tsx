@@ -52,9 +52,17 @@ const LandingScreen = () => {
               />
             </View>
           </View>
-          <View style={styles.lottieAnimation} className='justify-center items-center px-1 p-6'>
-
-            <Text className='text-3xl text-center' style={{fontFamily: 'RegularLato'}}>Let's make <Text className='text-green-500'>car maintenance</Text> simple, convenient and reliable.</Text>
+          <View
+            style={styles.lottieAnimation}
+            className="justify-center items-center px-1 p-6"
+          >
+            <Text
+              className="text-3xl text-center"
+              style={{fontFamily: 'RegularLato'}}
+            >
+              Let's make <Text className="text-green-500">car maintenance</Text>{' '}
+              simple, convenient and reliable.
+            </Text>
             {/* <View
               style={{height: 60}}
               className="justify-end flex-row mx-5 z-10 mt-4"
@@ -73,7 +81,6 @@ const LandingScreen = () => {
                 />
               )}
             </View> */}
-            
           </View>
           <LinearGradient
             colors={[
@@ -185,17 +192,22 @@ const LandingScreen = () => {
                 </TouchableWithoutFeedback>
               </MotiView>
             </MotiView>
-            <View className='mx-5 flex-row justify-between' style={{marginBottom:80}}>
+            <View
+              className="mx-5 flex-row justify-between"
+              style={{marginBottom: 80}}
+            >
               <Pressable onPress={() => router.push('/(userTabs)/Home')}>
-                <Text className='text-lg'>skip</Text>
+                <Text className="text-lg">skip</Text>
               </Pressable>
-              <Pressable onPress={() => {
-                    if (navigation.canGoBack()) {
-                      navigation.dispatch(StackActions.popToTop());
-                    }
-                    router.push('/screens/UserAuthentification');
-                  }}>
-                <Text className='text-lg'>login</Text>
+              <Pressable
+                onPress={() => {
+                  if (navigation.canGoBack()) {
+                    navigation.dispatch(StackActions.popToTop());
+                  }
+                  router.push('/screens/UserAuthentification');
+                }}
+              >
+                <Text className="text-lg">login</Text>
               </Pressable>
             </View>
           </LinearGradient>
@@ -246,7 +258,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: 'lightgreen',
     borderColor: Colors.light.green.drive,
-    height: 150
+    height: 150,
   },
   lottieAnimation: {
     width: '100%',

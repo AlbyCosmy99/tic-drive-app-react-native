@@ -2,10 +2,10 @@ import {Colors} from '@/constants/Colors';
 import {View, SafeAreaView, Text, StyleSheet} from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {LinearGradient} from 'expo-linear-gradient';
-import { useAppSelector } from '@/app/stateManagement/redux/hooks';
-import { globalStyles } from '@/app/styles/globalStyles';
+import {useAppSelector} from '@/app/stateManagement/redux/hooks';
+import {globalStyles} from '@/app/styles/globalStyles';
 import PrenotationBookedCard from '@/components/workshop/PrenotationBookedCard';
-import { ScrollView } from 'react-native-gesture-handler';
+import {ScrollView} from 'react-native-gesture-handler';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import PrenotationRequestCard from '@/components/workshop/PrenotationRequestCard';
 
@@ -20,46 +20,45 @@ export default function WorkshopRequests() {
     >
       <SafeAreaView className="flex-1" style={globalStyles().safeAreaView}>
         <TicDriveNavbar isLoginAvailable={false} canGoBack={false} />
-        <Text className='font-bold text-2xl text-center mb-2 mt-1'>
+        <Text className="font-bold text-2xl text-center mb-2 mt-1">
           All Requests
         </Text>
         <HorizontalLine />
-        <ScrollView className='flex-1'>
-            <PrenotationRequestCard
-                model='Alfa Romeo'
-                service='Oil change'
-                price='59$'
-                pin={1457}
-                time='TODAY - 15:30'
-                number={8}
-            />
-            <PrenotationRequestCard
-                model='Alfa Romeo'
-                service='Oil change'
-                price='59$'
-                pin={1457}
-                time='TODAY - 15:30'
-                number={9}
-            />
-            <PrenotationRequestCard
-                model='Alfa Romeo'
-                service='Oil change'
-                price='59$'
-                pin={1457}
-                time='TODAY - 15:30'
-                number={10}
-            />
-                <PrenotationRequestCard
-                model='Alfa Romeo'
-                service='Oil change'
-                price='59$'
-                pin={1457}
-                time='TODAY - 15:30'
-                number={11}
-            />
+        <ScrollView className="flex-1">
+          <PrenotationRequestCard
+            model="Alfa Romeo"
+            service="Oil change"
+            price="59$"
+            pin={1457}
+            time="TODAY - 15:30"
+            number={8}
+          />
+          <PrenotationRequestCard
+            model="Alfa Romeo"
+            service="Oil change"
+            price="59$"
+            pin={1457}
+            time="TODAY - 15:30"
+            number={9}
+          />
+          <PrenotationRequestCard
+            model="Alfa Romeo"
+            service="Oil change"
+            price="59$"
+            pin={1457}
+            time="TODAY - 15:30"
+            number={10}
+          />
+          <PrenotationRequestCard
+            model="Alfa Romeo"
+            service="Oil change"
+            price="59$"
+            pin={1457}
+            time="TODAY - 15:30"
+            number={11}
+          />
         </ScrollView>
       </SafeAreaView>
     </LinearGradient>
   );
 }
-

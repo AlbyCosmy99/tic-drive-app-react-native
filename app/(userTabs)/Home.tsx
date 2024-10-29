@@ -7,18 +7,20 @@ import WorkshopCards from '@/components/WorkshopCards';
 import {LinearGradient} from 'expo-linear-gradient';
 import {useContext} from 'react';
 import GlobalContext from '@/app/stateManagement/contexts/GlobalContext';
-import { useAppSelector } from '@/app/stateManagement/redux/hooks';
+import {useAppSelector} from '@/app/stateManagement/redux/hooks';
 import FilterIcon from '../../assets/svg/discover_tune.svg';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
-import { useNavigation } from '@react-navigation/native';
-import { router } from 'expo-router';
-import { globalStyles } from '../styles/globalStyles';
+import {useNavigation} from '@react-navigation/native';
+import {router} from 'expo-router';
+import {globalStyles} from '../styles/globalStyles';
 
 export default function HomeTab() {
   const {setWorkshopFilter} = useContext(GlobalContext);
-  const user = useAppSelector(state => state.auth.user)
-  const userServicesChoosen = useAppSelector(state => state.services.servicesChoosenByUsers)
-  const navigation = useNavigation()
+  const user = useAppSelector(state => state.auth.user);
+  const userServicesChoosen = useAppSelector(
+    state => state.services.servicesChoosenByUsers,
+  );
+  const navigation = useNavigation();
 
   return (
     <LinearGradient
@@ -29,54 +31,58 @@ export default function HomeTab() {
       className="flex-1 w-full h-full"
     >
       <SafeAreaView className="flex-1" style={globalStyles().safeAreaView}>
-        <TicDriveNavbar isLoginAvailable={false}/>
-        {
-          userServicesChoosen.length > 0 ? (
-            <View className="flex-row items-center">
-              <TicDriveInput
-                isLeftIcon={true}
-                isRightIcon={true}
-                placeholder="Search workshop"
-                containerViewStyleTailwind="flex-1 justify-center items-center"
-                onChange={text => {
-                  setWorkshopFilter(text);
-                }}
-              />
-              <View
-                className="justify-center items-center ml-2 mb-1 border-2 rounded-xl mx-3.5 w-14 h-14"
-                style={styles.filterButtonContainer}
+        <TicDriveNavbar isLoginAvailable={false} />
+        {userServicesChoosen.length > 0 ? (
+          <View className="flex-row items-center">
+            <TicDriveInput
+              isLeftIcon={true}
+              isRightIcon={true}
+              placeholder="Search workshop"
+              containerViewStyleTailwind="flex-1 justify-center items-center"
+              onChange={text => {
+                setWorkshopFilter(text);
+              }}
+            />
+            <View
+              className="justify-center items-center ml-2 mb-1 border-2 rounded-xl mx-3.5 w-14 h-14"
+              style={styles.filterButtonContainer}
+            >
+              <TouchableOpacity
+                className="justify-center items-center h-full w-full"
+                onPress={() => alert('filter services')}
+                accessible={true}
+                accessibilityLabel="Filter workshops"
               >
-                <TouchableOpacity
-                  className="justify-center items-center h-full w-full"
-                  onPress={() => alert('filter services')}
-                  accessible={true}
-                  accessibilityLabel="Filter workshops"
-                >
-                  <FilterIcon width={22} height={22} />
-                </TouchableOpacity>
-              </View>
+                <FilterIcon width={22} height={22} />
+              </TouchableOpacity>
             </View>
-          ) : (
-            <View>
-              <Text className='text-center m-4 font-bold text-xl'>Welcome {user?.name}</Text>
-              <View className='w-full justify-center items-center'>
-                <View style={{height: 1, width: '90%', backgroundColor: Colors.light.ticText}}></View>
-              </View>
+          </View>
+        ) : (
+          <View>
+            <Text className="text-center m-4 font-bold text-xl">
+              Welcome {user?.name}
+            </Text>
+            <View className="w-full justify-center items-center">
+              <View
+                style={{
+                  height: 1,
+                  width: '90%',
+                  backgroundColor: Colors.light.ticText,
+                }}
+              ></View>
             </View>
-          )
-        }
+          </View>
+        )}
         <View className="flex-1">
           <WorkshopCards />
-          {
-            user && user.category === 'user' && !navigation.canGoBack() && (
-              <View className='absolute bottom-3 left-0 right-0'>
-                <TicDriveButton 
-                  text='Book a service'
-                  onClick={() => router.push('/screens/ChooseServicesScreen')}
-                />
-              </View>
-            )
-          }
+          {user && user.category === 'user' && !navigation.canGoBack() && (
+            <View className="absolute bottom-3 left-0 right-0">
+              <TicDriveButton
+                text="Book a service"
+                onClick={() => router.push('/screens/ChooseServicesScreen')}
+              />
+            </View>
+          )}
         </View>
       </SafeAreaView>
     </LinearGradient>

@@ -3,17 +3,17 @@ import * as SecureStore from 'expo-secure-store';
 
 export const saveUser = async (user: User | null) => {
   try {
-    await SecureStore.setItemAsync('user', JSON.stringify(user))
-  } catch(e) {
-    throw new Error("Failed to save user securely: " + e)
+    await SecureStore.setItemAsync('user', JSON.stringify(user));
+  } catch (e) {
+    throw new Error('Failed to save user securely: ' + e);
   }
-}
+};
 
 export const getUser = async (): Promise<User> => {
   try {
-    const value = await SecureStore.getItemAsync('user')
-    return value ? JSON.parse(value) : null
-  } catch(e) {
-    throw new Error("Failed to retrieve user securely: " + e)
+    const value = await SecureStore.getItemAsync('user');
+    return value ? JSON.parse(value) : null;
+  } catch (e) {
+    throw new Error('Failed to retrieve user securely: ' + e);
   }
-}
+};

@@ -4,7 +4,7 @@ import {useAppDispatch} from '../stateManagement/redux/hooks';
 import {login, logout} from '../stateManagement/redux/slices/authSlice';
 import {useEffect} from 'react';
 import LottieView from 'lottie-react-native';
-import { getUser } from '../services/auth/secureStore/user';
+import {getUser} from '../services/auth/secureStore/user';
 
 const Hub = () => {
   const dispatch = useAppDispatch();
@@ -13,15 +13,17 @@ const Hub = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const user = await getUser()
+        const user = await getUser();
         if (user) {
-          if(user && !user?.name) {
-            user.name = "Andrei"
+          if (user && !user?.name) {
+            user.name = 'Andrei';
           }
           dispatch(login(user));
-          router.replace(user?.category === 'workshop' ? 
-            '../(workshopTabs)/Home?animation=fade' : 
-            '../(userTabs)/Home?animation=fade');
+          router.replace(
+            user?.category === 'workshop'
+              ? '../(workshopTabs)/Home?animation=fade'
+              : '../(userTabs)/Home?animation=fade',
+          );
         } else {
           dispatch(logout());
           router.replace('../screens/LandingScreen?animation=fade');

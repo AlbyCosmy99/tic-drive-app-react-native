@@ -1,9 +1,7 @@
-import { Text } from "react-native"
+import {Text} from 'react-native';
 
 const ServiceBooking = () => {
-    return (
-        <Text>Service booking</Text>
-    )
-}
+  return <Text>Service booking</Text>;
+};
 
-export default ServiceBooking
+export default ServiceBooking;

@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import {createContext} from 'react';
 
 interface AuthContextType {
   isUserLogged: boolean;
@@ -7,7 +7,7 @@ interface AuthContextType {
 
 const initialState: AuthContextType = {
   isUserLogged: false,
-  setIsUserLogged: () => {}
+  setIsUserLogged: () => {},
 };
 
 const AuthContext = createContext<AuthContextType>(initialState);

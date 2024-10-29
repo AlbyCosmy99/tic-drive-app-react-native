@@ -1,17 +1,17 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import {DarkTheme, DefaultTheme, ThemeProvider} from '@react-navigation/native';
+import {useFonts} from 'expo-font';
+import {Stack} from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import 'react-native-reanimated';
-import { useColorScheme } from '@/hooks/useColorScheme';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import {useColorScheme} from '@/hooks/useColorScheme';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import GlobalProvider from './stateManagement/contexts/GlobalProvider';
-import { Provider } from 'react-redux';
+import {Provider} from 'react-redux';
 import store from './stateManagement/redux/store/store';
 import AuthContext from './stateManagement/contexts/AuthContext';
 import getAnimation from './utils/route/getAnimation';
-import { getUser } from './services/auth/secureStore/user';
+import {getUser} from './services/auth/secureStore/user';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -54,12 +54,12 @@ export default function RootLayout() {
     <Provider store={store}>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <GlobalProvider>
-          <AuthContext.Provider value={{ isUserLogged, setIsUserLogged }}>
+          <AuthContext.Provider value={{isUserLogged, setIsUserLogged}}>
             <GestureHandlerRootView>
               <Stack>
                 <Stack.Screen
                   name="(hub)"
-                  options={({ route }) => ({
+                  options={({route}) => ({
                     title: 'Hub',
                     headerShown: false,
                     animation: getAnimation(route),
@@ -67,7 +67,7 @@ export default function RootLayout() {
                 />
                 <Stack.Screen
                   name="screens/ChooseServicesScreen"
-                  options={({ route }) => ({
+                  options={({route}) => ({
                     title: 'ChooseServicesScreen',
                     headerShown: false,
                     animation: getAnimation(route),
@@ -75,7 +75,7 @@ export default function RootLayout() {
                 />
                 <Stack.Screen
                   name="screens/LandingScreen"
-                  options={({ route }) => ({
+                  options={({route}) => ({
                     title: 'LandingScreen',
                     headerShown: false,
                     animation: getAnimation(route),
@@ -83,7 +83,7 @@ export default function RootLayout() {
                 />
                 <Stack.Screen
                   name="screens/UserAuthentification"
-                  options={({ route }) => ({
+                  options={({route}) => ({
                     title: 'UserAuthentification',
                     headerShown: false,
                     presentation: 'modal',
@@ -92,7 +92,7 @@ export default function RootLayout() {
                 />
                 <Stack.Screen
                   name="screens/RegisterVehicle"
-                  options={({ route }) => ({
+                  options={({route}) => ({
                     title: 'RegisterVehicle',
                     headerShown: false,
                     animation: getAnimation(route),
@@ -100,7 +100,7 @@ export default function RootLayout() {
                 />
                 <Stack.Screen
                   name="(workshopTabs)"
-                  options={({ route }) => ({
+                  options={({route}) => ({
                     title: 'workshopTabs',
                     headerShown: false,
                     animation: getAnimation(route),
@@ -108,7 +108,7 @@ export default function RootLayout() {
                 />
                 <Stack.Screen
                   name="(userTabs)"
-                  options={({ route }) => ({
+                  options={({route}) => ({
                     title: 'userTabs',
                     headerShown: false,
                     animation: getAnimation(route),
@@ -116,7 +116,7 @@ export default function RootLayout() {
                 />
                 <Stack.Screen
                   name="screens/WorkshopDetails"
-                  options={({ route }) => ({
+                  options={({route}) => ({
                     title: 'WorkshopDetails',
                     headerShown: false,
                     animation: getAnimation(route),
@@ -124,7 +124,7 @@ export default function RootLayout() {
                 />
                 <Stack.Screen
                   name="screens/CalendarDateSelection"
-                  options={({ route }) => ({
+                  options={({route}) => ({
                     title: 'CalendarDateSelection',
                     headerShown: false,
                     animation: getAnimation(route),
@@ -132,7 +132,7 @@ export default function RootLayout() {
                 />
                 <Stack.Screen
                   name="screens/BookingConfirmation"
-                  options={({ route }) => ({
+                  options={({route}) => ({
                     title: 'BookingConfirmation',
                     headerShown: false,
                     animation: getAnimation(route),

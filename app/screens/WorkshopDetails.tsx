@@ -27,13 +27,15 @@ import {globalStyles} from '../styles/globalStyles';
 import calculateWorkshopDiscount from '../utils/workshops/calculateWorkshopDiscount';
 import calculateWorkshopStars from '../utils/workshops/calculateWorkshopStars';
 import necessaryDeviceBottomInset from '../utils/devices/necessaryDeviceBottomInset';
-import { useAppSelector } from '../stateManagement/redux/hooks';
+import {useAppSelector} from '../stateManagement/redux/hooks';
 
 export default function WorkshopDetails() {
   const {id} = useLocalSearchParams();
 
   const [workshop, setWorkshop] = useState<Workshop | null>(null);
-  const servicesChoosen = useAppSelector(state => state.services.servicesChoosenByUsers)
+  const servicesChoosen = useAppSelector(
+    state => state.services.servicesChoosenByUsers,
+  );
 
   useEffect(() => {
     setWorkshop(workshops.find(workshop => String(workshop.id) === id) || null);
@@ -191,21 +193,23 @@ export default function WorkshopDetails() {
                 </View>
                 {workshop.discount !== 0 && (
                   <Text className="font-bold text-2xl mx-1">
-                    ${calculateWorkshopDiscount(workshop.price, workshop.discount)}
+                    $
+                    {calculateWorkshopDiscount(
+                      workshop.price,
+                      workshop.discount,
+                    )}
                   </Text>
                 )}
               </View>
             </View>
             <View>
-              {
-                servicesChoosen.length > 0 && (
-                  <TicDriveButton
-                    text="Book a service"
-                    path={'../screens/CalendarDateSelection'}
-                    customButtonStyle={styles.customButtonStyle}
-                  />
-                )
-              }
+              {servicesChoosen.length > 0 && (
+                <TicDriveButton
+                  text="Book a service"
+                  path={'../screens/CalendarDateSelection'}
+                  customButtonStyle={styles.customButtonStyle}
+                />
+              )}
             </View>
           </View>
         </>

@@ -141,13 +141,11 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
         ) : (
           <>
             <View style={styles.cardIcons}>
-              {
-                isIconVisible && (
-                  <View style={iconStyle}>
-                    <ServiceIcon width={iconWidth} height={iconHeight} />
-                  </View>
-                )
-              }
+              {isIconVisible && (
+                <View style={iconStyle}>
+                  <ServiceIcon width={iconWidth} height={iconHeight} />
+                </View>
+              )}
               {isCheckIconAvailable && (
                 <View style={styles.iconContainer}>
                   {isPressed && <CheckCircle width={20} height={20} />}

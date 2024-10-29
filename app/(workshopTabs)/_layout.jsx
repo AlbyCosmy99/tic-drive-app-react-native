@@ -7,7 +7,7 @@ import ChatIcon from '../../assets/svg/chatIcon.svg';
 import AccountIcon from '../../assets/svg/accountIcon.svg';
 import HomeTab from './Home';
 import {useAppSelector} from '../stateManagement/redux/hooks';
-import { Text, View } from 'react-native';
+import {Text, View} from 'react-native';
 
 export default function TabLayout() {
   const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);
@@ -37,7 +37,7 @@ export default function TabLayout() {
           ),
         }}
       />
-       <Tabs.Screen
+      <Tabs.Screen
         name="Requests"
         options={{
           title: 'Requests',
@@ -45,7 +45,21 @@ export default function TabLayout() {
           tabBarIcon: ({color}) => (
             <View style={{position: 'relative', padding: 10}}>
               <BookingsIcon width={28} fill={color} name="Requests" />
-              <View style={{backgroundColor: 'green', borderRadius: 50, position: 'absolute', right: 0, top:2,padding: 5, width: 26, height: 26, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+              <View
+                style={{
+                  backgroundColor: 'green',
+                  borderRadius: 50,
+                  position: 'absolute',
+                  right: 0,
+                  top: 2,
+                  padding: 5,
+                  width: 26,
+                  height: 26,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
                 <Text style={{textAlign: 'center', color: 'white'}}>9</Text>
               </View>
             </View>
@@ -60,7 +74,20 @@ export default function TabLayout() {
           tabBarIcon: ({color}) => (
             <View style={{position: 'relative', padding: 10}}>
               <ChatIcon width={28} fill={color} name="Chat" />
-              <View style={{backgroundColor: 'red', borderRadius: 50, position: 'absolute', right: 0, padding: 5, width: 26, height: 26, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+              <View
+                style={{
+                  backgroundColor: 'red',
+                  borderRadius: 50,
+                  position: 'absolute',
+                  right: 0,
+                  padding: 5,
+                  width: 26,
+                  height: 26,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
                 <Text style={{textAlign: 'center', color: 'white'}}>3</Text>
               </View>
             </View>

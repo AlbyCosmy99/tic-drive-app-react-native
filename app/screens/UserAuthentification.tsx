@@ -18,7 +18,7 @@ import smallDevicebreakpointHeight from '@/constants/smallDevicebreakpointHeight
 
 import {Dimensions} from 'react-native';
 import AuthAction from '../types/auth/Action';
-import { useLocalSearchParams } from 'expo-router';
+import {useLocalSearchParams} from 'expo-router';
 const {width, height} = Dimensions.get('window');
 
 export default function UserAuthentification() {
@@ -26,10 +26,10 @@ export default function UserAuthentification() {
   const searchParams = useLocalSearchParams();
 
   useEffect(() => {
-    if(searchParams.register) {
-      setIsUserRegistering(true)
+    if (searchParams.register) {
+      setIsUserRegistering(true);
     }
-  }, [])
+  }, []);
 
   const action = useMemo<AuthAction>(() => {
     return isUserRegistering ? 'register' : 'login';
@@ -53,7 +53,7 @@ export default function UserAuthentification() {
               <Image source={TicDriveLogo} style={styles.logoImage} />
             </View>
           </View>
-          <ScrollView className='flex-1'>
+          <ScrollView className="flex-1">
             <UserAuthenticationContent
               action={action}
               isUserRegistering={isUserRegistering}

@@ -21,9 +21,9 @@ export default function ChooseServicesScreen() {
   const isButtonDisabled =
     params.category === 'workshop'
       ? useAppSelector(state => state.services.servicesChoosenByWorkshops)
-      .length === 0
+          .length === 0
       : useAppSelector(state => state.services.servicesChoosenByUsers)
-      .length === 0;
+          .length === 0;
 
   return (
     <View className={`flex-1 ${necessaryDeviceBottomInset()}`}>

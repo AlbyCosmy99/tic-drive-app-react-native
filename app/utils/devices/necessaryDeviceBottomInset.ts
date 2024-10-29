@@ -1,4 +1,4 @@
-import doesDeviceNeedsBottomInset from "./doesDeviceNeedsBottomInset";
+import doesDeviceNeedsBottomInset from './doesDeviceNeedsBottomInset';
 
 const necessaryDeviceBottomInset = () => {
   //tailwind css
