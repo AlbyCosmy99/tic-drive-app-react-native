@@ -54,7 +54,7 @@ const PrenotationRequestCard: React.FC<PrenotationRequestCardProps> = ({
             style={{width: '48%'}}
           >
             <Text className="text-white text-center font-semibold text-lg">
-              Accetta
+              Accept
             </Text>
           </Pressable>
           <Pressable
@@ -63,7 +63,7 @@ const PrenotationRequestCard: React.FC<PrenotationRequestCardProps> = ({
             style={{width: '48%'}}
           >
             <Text className="text-white text-center font-semibold text-lg">
-              Rifiuta
+              Reject
             </Text>
           </Pressable>
         </View>
@@ -72,7 +72,7 @@ const PrenotationRequestCard: React.FC<PrenotationRequestCardProps> = ({
           onPress={() => {}}
         >
           <Text className="text-white text-center font-semibold text-lg">
-            Proponi un altro orario
+            Suggest a new time
           </Text>
         </TouchableWithoutFeedback>
       </View>
