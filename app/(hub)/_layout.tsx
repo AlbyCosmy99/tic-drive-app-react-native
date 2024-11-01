@@ -21,7 +21,7 @@ const Hub = () => {
           dispatch(login(user));
           router.replace(
             user?.category === 'workshop'
-              ? '../(workshopTabs)/Home?animation=fade'
+              ? '../(workshopTabs)/Requests?animation=fade'
               : '../(userTabs)/Home?animation=fade',
           );
         } else {

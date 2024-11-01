@@ -1,10 +1,8 @@
 import {Tabs} from 'expo-router';
 import {Colors} from '../../constants/Colors';
-import HomeIcon from '../../assets/svg/homeIcon.svg';
 import BookingsIcon from '../../assets/svg/bookingsIcon.svg';
 import ChatIcon from '../../assets/svg/chatIcon.svg';
 import AccountIcon from '../../assets/svg/accountIcon.svg';
-import HomeTab from './Home';
 import {useAppSelector} from '../stateManagement/redux/hooks';
 import {Text, View} from 'react-native';
 
@@ -16,7 +14,7 @@ export default function TabLayout() {
   }
   return (
     <Tabs screenOptions={{tabBarActiveTintColor: Colors.light.green.drive}}>
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="Home"
         options={{
           title: 'Home',
@@ -25,17 +23,7 @@ export default function TabLayout() {
             <HomeIcon width={28} fill={color} name="Home" />
           ),
         }}
-      />
-      <Tabs.Screen
-        name="Bookings"
-        options={{
-          title: 'Bookings',
-          headerShown: false,
-          tabBarIcon: ({color}) => (
-            <BookingsIcon width={28} fill={color} name="Bookings" />
-          ),
-        }}
-      />
+      /> */}
       <Tabs.Screen
         name="Requests"
         options={{
@@ -62,6 +50,16 @@ export default function TabLayout() {
                 <Text style={{textAlign: 'center', color: 'white'}}>4</Text>
               </View>
             </View>
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="Bookings"
+        options={{
+          title: 'Bookings',
+          headerShown: false,
+          tabBarIcon: ({color}) => (
+            <BookingsIcon width={28} fill={color} name="Bookings" />
           ),
         }}
       />

@@ -1,9 +1,13 @@
 import {Colors} from '@/constants/Colors';
-import {SafeAreaView, Text} from 'react-native';
+import {SafeAreaView, Text, View} from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {LinearGradient} from 'expo-linear-gradient';
 import {useAppSelector} from '@/app/stateManagement/redux/hooks';
 import {globalStyles} from '@/app/styles/globalStyles';
+import HorizontalLine from '@/components/ui/HorizontalLine';
+import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { router } from 'expo-router';
 
 export default function WorkshopAccount() {
   const user = useAppSelector(state => state.auth.user);
@@ -21,9 +25,18 @@ export default function WorkshopAccount() {
           isLoginAvailable={user ? true : true}
           canGoBack={false}
         />
-        <Text className="font-bold text-2xl text-center mb-2 mt-1">
-          Workshop Account
-        </Text>
+        <View className="my-3">
+          <Text className="font-bold text-xl text-center mb-2">
+            Quick Settings
+          </Text>
+          <HorizontalLine />
+          <View className="mx-6 mb-3">
+            <TicDriveButton text="Update availability" />
+            <TicDriveButton text="Change prices" />
+            <TicDriveButton text="Change services offered" />
+          </View>
+          <HorizontalLine height={2}/>
+        </View>
       </SafeAreaView>
     </LinearGradient>
   );
