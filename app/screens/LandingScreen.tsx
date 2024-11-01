@@ -193,9 +193,6 @@ const LandingScreen = () => {
               className="mx-5 flex-row justify-between"
               style={{marginBottom: 80}}
             >
-              <Pressable onPress={() => router.push('/(userTabs)/Home')}>
-                <Text className="text-lg">skip</Text>
-              </Pressable>
               <Pressable
                 onPress={() => {
                   if (navigation.canGoBack()) {
@@ -205,6 +202,9 @@ const LandingScreen = () => {
                 }}
               >
                 <Text className="text-lg">login</Text>
+              </Pressable>
+              <Pressable onPress={() => router.push('/(userTabs)/Home')}>
+                <Text className="text-lg">skip</Text>
               </Pressable>
             </View>
           </LinearGradient>
