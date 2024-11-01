@@ -87,10 +87,10 @@ const LandingScreen = () => {
             ]} // Define your gradient colors here
             style={styles.content}
             locations={[0, 0.4, 1]}
-            className="p-2 justify-center flex-1"
+            className="p-2 pb-6 justify-center flex-1"
           >
             <MotiView
-              className="flex-row justify-center items-center p-2 pb-0 w-full h-full"
+              className="flex-row justify-center items-end p-2 pb-6 w-full h-full"
               from={{
                 scale: 0.8,
               }}
