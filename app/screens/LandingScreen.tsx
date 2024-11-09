@@ -60,37 +60,9 @@ const LandingScreen = () => {
               Let's make <Text className="text-green-500">car maintenance</Text>{' '}
               simple, convenient and reliable.
             </Text>
-            {/* <View
-              style={{height: 60}}
-              className="justify-end flex-row mx-5 z-10 mt-4"
-            >
-              {isUserLogged ? (
-                <TicDriveAuthButton action="logout" />
-              ) : (
-                <TicDriveAuthButton
-                  onPress={() => {
-                    if (navigation.canGoBack()) {
-                      navigation.dispatch(StackActions.popToTop());
-                    }
-                    router.push('/screens/UserAuthenticationScreen');
-                  }}
-                  action="login"
-                />
-              )}
-            </View> */}
           </View>
-          <LinearGradient
-            colors={[
-              Colors.light.backgroundLinearGradient.start,
-              Colors.light.green.drive,
-              Colors.light.green.drive,
-            ]} // Define your gradient colors here
-            style={styles.content}
-            locations={[0, 0.4, 1]}
-            className="p-2 pb-6 justify-center flex-1"
-          >
-            <MotiView
-              className="flex-row justify-center items-end p-2 pb-6 w-full h-full"
+          <MotiView
+              className="flex-row justify-center p-2"
               from={{
                 scale: 0.8,
               }}
@@ -190,8 +162,8 @@ const LandingScreen = () => {
               </MotiView>
             </MotiView>
             <View
-              className="mx-5 flex-row justify-between"
-              style={{marginBottom: 80}}
+              className="mx-5 flex-row justify-between bg"
+              style={{marginBottom: 50}}
             >
               <Pressable
                 onPress={() => {
@@ -207,7 +179,6 @@ const LandingScreen = () => {
                 <Text className="text-lg">skip</Text>
               </Pressable>
             </View>
-          </LinearGradient>
         </View>
       </LinearGradient>
     </View>
