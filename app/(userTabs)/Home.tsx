@@ -67,7 +67,7 @@ export default function HomeTab() {
           </View>
         )}
         <View className="flex-1">
-          <WorkshopCards />
+          <Text>User home when logged in</Text>
           {user && user.category === 'user' && !navigation.canGoBack() && (
             <View className="absolute bottom-3 left-0 right-0">
               <TicDriveButton
