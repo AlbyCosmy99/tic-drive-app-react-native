@@ -26,8 +26,8 @@ const SegmentedControl: React.FC<SegmentedControlProps> = ({
 
   const slidingIndicatorStyle = {
     left: animatedValue.interpolate({
-      inputRange: [0, 1, 2],
-      outputRange: ['0%', '33.33%', '66.66%'],
+      inputRange: [0, 1],
+      outputRange: ['0%', '50%'],
     }),
   };
 
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   slidingIndicator: {
-    width: '33.33%',
+    width: '50%',
     backgroundColor: Colors.light.background,
     borderRadius: 30,
   },
