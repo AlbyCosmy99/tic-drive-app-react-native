@@ -10,8 +10,8 @@ import GlobalProvider from './stateManagement/contexts/GlobalProvider';
 import {Provider} from 'react-redux';
 import store from './stateManagement/redux/store/store';
 import AuthContext from './stateManagement/contexts/AuthContext';
-import getAnimation from './utils/route/getAnimation';
 import { getUser } from '@/services/auth/secureStore/user';
+import getAnimation from '@/utils/route/getAnimation';
 
 SplashScreen.preventAutoHideAsync();
 

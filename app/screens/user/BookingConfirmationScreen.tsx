@@ -4,9 +4,9 @@ import {Colors} from '@/constants/Colors';
 import {LinearGradient} from 'expo-linear-gradient';
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {globalStyles} from '@/app/styles/globalStyles';
-import necessaryDeviceBottomInset from '@/app/utils/devices/necessaryDeviceBottomInset';
 import {useAppDispatch} from '@/app/stateManagement/redux/hooks';
 import {reset} from '@/app/stateManagement/redux/slices/servicesSlice';
+import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
 
 export default function BookingConfirmationScreen() {
   const dispatch = useAppDispatch();

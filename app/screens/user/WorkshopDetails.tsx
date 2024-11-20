@@ -24,10 +24,10 @@ import {Ionicons} from '@expo/vector-icons';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import ClientReviewCards from '@/components/ClientReviewCards';
 import {globalStyles} from '../../styles/globalStyles';
-import calculateWorkshopDiscount from '../../utils/workshops/calculateWorkshopDiscount';
-import calculateWorkshopStars from '../../utils/workshops/calculateWorkshopStars';
-import necessaryDeviceBottomInset from '../../utils/devices/necessaryDeviceBottomInset';
 import {useAppSelector} from '../../stateManagement/redux/hooks';
+import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
+import calculateWorkshopStars from '@/utils/workshops/calculateWorkshopStars';
+import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 
 export default function WorkshopDetails() {
   const {id} = useLocalSearchParams();

@@ -11,9 +11,9 @@ import FreeCancellation from '../assets/svg/free_cancellation.svg';
 import AssistantDirection from '../assets/svg/assistant_direction';
 import CalendarIcon from '../assets/svg/calendar_add_on.svg';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {Workshop} from '@/constants/temp/Services';
-import calculateWorkshopDiscount from '@/app/utils/workshops/calculateWorkshopDiscount';
-import calculateWorkshopStars from '@/app/utils/workshops/calculateWorkshopStars';
+import { Workshop } from '@/constants/temp/Workshops';
+import calculateWorkshopStars from '@/utils/workshops/calculateWorkshopStars';
+import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 
 function WorkshopCard({workshop}: {workshop: Workshop}) {
   return (
