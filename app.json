@@ -12,16 +12,19 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "jsEngine": "hermes",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.albycosmy99.ticdrive"
+      "bundleIdentifier": "com.albycosmy99.ticdrive",
+      "jsEngine": "hermes"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.albycosmy99.ticdrive"
+      "package": "com.albycosmy99.ticdrive",
+      "jsEngine": "hermes"
     },
     "web": {
       "bundler": "metro",
@@ -50,6 +53,7 @@
     },
     "updates": {
       "url": "https://u.expo.dev/89391c4d-8326-47ff-b646-8624126e7001"
-    }
+    },
+    "newArchEnabled": true
   }
 }

@@ -53,13 +53,7 @@ const LandingScreen = () => {
             style={styles.lottieAnimation}
             className="justify-center items-center px-1 p-6"
           >
-            <Text
-              className="text-3xl text-center"
-              style={{fontFamily: 'RegularLato'}}
-            >
-              Let's make <Text className="text-green-500">car maintenance</Text>{' '}
-              simple, convenient and reliable.
-            </Text>
+            {/* intentionally left blank */}
           </View>
           <MotiView
               className="flex-row justify-center p-2"

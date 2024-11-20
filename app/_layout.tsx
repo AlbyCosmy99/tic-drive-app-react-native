@@ -1,4 +1,4 @@
-import {DarkTheme, DefaultTheme, ThemeProvider} from '@react-navigation/native';
+import {DarkTheme, DefaultTheme, NavigationContainer, ThemeProvider} from '@react-navigation/native';
 import {useFonts} from 'expo-font';
 import {Stack} from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
@@ -56,90 +56,92 @@ export default function RootLayout() {
         <GlobalProvider>
           <AuthContext.Provider value={{isUserLogged, setIsUserLogged}}>
             <GestureHandlerRootView>
-              <Stack>
-                <Stack.Screen
-                  name="(hub)"
-                  options={({route}) => ({
-                    title: 'Hub',
-                    headerShown: false,
-                    animation: getAnimation(route),
-                  })}
-                />
-                <Stack.Screen
-                  name="screens/ChooseServicesScreen"
-                  options={({route}) => ({
-                    title: 'ChooseServicesScreen',
-                    headerShown: false,
-                    animation: getAnimation(route),
-                  })}
-                />
-                <Stack.Screen
-                  name="screens/LandingScreen"
-                  options={({route}) => ({
-                    title: 'LandingScreen',
-                    headerShown: false,
-                    animation: getAnimation(route),
-                  })}
-                />
-                <Stack.Screen
-                  name="screens/UserAuthenticationScreen"
-                  options={({route}) => ({
-                    title: 'UserAuthenticationScreen',
-                    headerShown: false,
-                    presentation: 'modal',
-                    animation: getAnimation(route),
-                  })}
-                />
-                <Stack.Screen
-                  name="screens/user/RegisterVehicleScreen"
-                  options={({route}) => ({
-                    title: 'RegisterVehicleScreen',
-                    headerShown: false,
-                    animation: getAnimation(route),
-                  })}
-                />
-                <Stack.Screen
-                  name="(workshopTabs)"
-                  options={({route}) => ({
-                    title: 'workshopTabs',
-                    headerShown: false,
-                    animation: getAnimation(route),
-                  })}
-                />
-                <Stack.Screen
-                  name="(userTabs)"
-                  options={({route}) => ({
-                    title: 'userTabs',
-                    headerShown: false,
-                    animation: getAnimation(route),
-                  })}
-                />
-                <Stack.Screen
-                  name="screens/user/WorkshopDetails"
-                  options={({route}) => ({
-                    title: 'WorkshopDetails',
-                    headerShown: false,
-                    animation: getAnimation(route),
-                  })}
-                />
-                <Stack.Screen
-                  name="screens/user/CalendarDateSelectionScreen"
-                  options={({route}) => ({
-                    title: 'CalendarDateSelectionScreen',
-                    headerShown: false,
-                    animation: getAnimation(route),
-                  })}
-                />
-                <Stack.Screen
-                  name="screens/user/BookingConfirmationScreen"
-                  options={({route}) => ({
-                    title: 'BookingConfirmationScreen',
-                    headerShown: false,
-                    animation: getAnimation(route),
-                  })}
-                />
-                <Stack.Screen name="+not-found" />
-              </Stack>
+              <NavigationContainer>
+                <Stack>
+                  <Stack.Screen
+                    name="(hub)"
+                    options={({route}) => ({
+                      title: 'Hub',
+                      headerShown: false,
+                      animation: getAnimation(route),
+                    })}
+                  />
+                  <Stack.Screen
+                    name="screens/ChooseServicesScreen"
+                    options={({route}) => ({
+                      title: 'ChooseServicesScreen',
+                      headerShown: false,
+                      animation: getAnimation(route),
+                    })}
+                  />
+                  <Stack.Screen
+                    name="screens/LandingScreen"
+                    options={({route}) => ({
+                      title: 'LandingScreen',
+                      headerShown: false,
+                      animation: getAnimation(route),
+                    })}
+                  />
+                  <Stack.Screen
+                    name="screens/UserAuthenticationScreen"
+                    options={({route}) => ({
+                      title: 'UserAuthenticationScreen',
+                      headerShown: false,
+                      presentation: 'modal',
+                      animation: getAnimation(route),
+                    })}
+                  />
+                  <Stack.Screen
+                    name="screens/user/RegisterVehicleScreen"
+                    options={({route}) => ({
+                      title: 'RegisterVehicleScreen',
+                      headerShown: false,
+                      animation: getAnimation(route),
+                    })}
+                  />
+                  <Stack.Screen
+                    name="(workshopTabs)"
+                    options={({route}) => ({
+                      title: 'workshopTabs',
+                      headerShown: false,
+                      animation: getAnimation(route),
+                    })}
+                  />
+                  <Stack.Screen
+                    name="(userTabs)"
+                    options={({route}) => ({
+                      title: 'userTabs',
+                      headerShown: false,
+                      animation: getAnimation(route),
+                    })}
+                  />
+                  <Stack.Screen
+                    name="screens/user/WorkshopDetails"
+                    options={({route}) => ({
+                      title: 'WorkshopDetails',
+                      headerShown: false,
+                      animation: getAnimation(route),
+                    })}
+                  />
+                  <Stack.Screen
+                    name="screens/user/CalendarDateSelectionScreen"
+                    options={({route}) => ({
+                      title: 'CalendarDateSelectionScreen',
+                      headerShown: false,
+                      animation: getAnimation(route),
+                    })}
+                  />
+                  <Stack.Screen
+                    name="screens/user/BookingConfirmationScreen"
+                    options={({route}) => ({
+                      title: 'BookingConfirmationScreen',
+                      headerShown: false,
+                      animation: getAnimation(route),
+                    })}
+                  />
+                  <Stack.Screen name="+not-found" />
+                </Stack>
+              </NavigationContainer>
             </GestureHandlerRootView>
           </AuthContext.Provider>
         </GlobalProvider>
