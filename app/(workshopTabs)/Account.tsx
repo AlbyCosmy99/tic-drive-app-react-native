@@ -3,11 +3,9 @@ import {SafeAreaView, Text, View} from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {LinearGradient} from 'expo-linear-gradient';
 import {useAppSelector} from '@/app/stateManagement/redux/hooks';
-import {globalStyles} from '@/app/styles/globalStyles';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import { router } from 'expo-router';
+import { globalStyles } from '@/styles/globalStyles';
 
 export default function WorkshopAccount() {
   const user = useAppSelector(state => state.auth.user);

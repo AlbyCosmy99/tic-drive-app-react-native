@@ -18,10 +18,10 @@ import GlobalContext from '../../stateManagement/contexts/GlobalContext';
 import ToPreviousPage from '@/components/navigation/ToPreviousPage';
 import defaultCar from '@/constants/defaultRegistrationCar';
 import cars from '@/constants/temp/Cars';
-import {globalStyles} from '../../styles/globalStyles';
 import SegmentedControlSelection from '@/types/SegmentedControlSelection';
 import Car from '@/types/Car';
 import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
+import { globalStyles } from '@/styles/globalStyles';
 
 function RegisterVehicleScreen() {
   const [segmentedControlSelection, setSegmentedControlSelection] =

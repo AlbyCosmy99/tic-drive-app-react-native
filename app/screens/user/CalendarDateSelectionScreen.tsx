@@ -6,8 +6,8 @@ import {useContext} from 'react';
 import {SafeAreaView, Text, View} from 'react-native';
 import GlobalContext from '../../stateManagement/contexts/GlobalContext';
 import {useAppSelector} from '../../stateManagement/redux/hooks';
-import {globalStyles} from '../../styles/globalStyles';
 import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
+import { globalStyles } from '@/styles/globalStyles';
 
 export default function CalendarDateSelectionScreen() {
   const {setLoginBtnCustomPath} = useContext(GlobalContext);

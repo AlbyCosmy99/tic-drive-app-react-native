@@ -1,16 +1,13 @@
 import {Colors} from '@/constants/Colors';
-import {View, SafeAreaView, Text, StyleSheet} from 'react-native';
+import {SafeAreaView, Text, StyleSheet} from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {LinearGradient} from 'expo-linear-gradient';
-import {useAppSelector} from '@/app/stateManagement/redux/hooks';
-import {globalStyles} from '@/app/styles/globalStyles';
 import PrenotationBookedCard from '@/components/workshop/PrenotationBookedCard';
 import {ScrollView} from 'react-native-gesture-handler';
 import HorizontalLine from '@/components/ui/HorizontalLine';
+import { globalStyles } from '@/styles/globalStyles';
 
 export default function WorkshopBookings() {
-  const user = useAppSelector(state => state.auth.user);
-
   return (
     <LinearGradient
       colors={[

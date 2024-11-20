@@ -1,7 +1,6 @@
 import {LinearGradient} from 'expo-linear-gradient';
 import {router} from 'expo-router';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
-import {globalStyles} from '../styles/globalStyles';
 import {Colors} from '@/constants/Colors';
 import {Image} from '@rneui/themed';
 import TicDriveLogo from '../../assets/images/TicDriveLogo.jpeg';
@@ -14,6 +13,7 @@ import {MotiView} from 'moti';
 import {useState} from 'react';
 import {Dimensions} from 'react-native';
 import smallDevicebreakpointHeight from '@/constants/smallDevicebreakpointHeight';
+import { globalStyles } from '@/styles/globalStyles';
 
 const {width, height} = Dimensions.get('window');
 

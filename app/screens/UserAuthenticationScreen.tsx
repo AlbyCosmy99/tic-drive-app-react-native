@@ -11,13 +11,13 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {Image} from '@rneui/themed';
 import TicDriveLogo from '../../assets/images/TicDriveLogo.jpeg';
 import UserAuthenticationContent from '@/components/auth/UserAuthentificationContent';
-import {globalStyles} from '../styles/globalStyles';
 import smallDevicebreakpointHeight from '@/constants/smallDevicebreakpointHeight';
 
 import {Dimensions} from 'react-native';
 import {useLocalSearchParams} from 'expo-router';
 import AuthAction from '@/types/auth/Action';
 import isIOSPlatform from '@/utils/devices/IsIOSPlatform';
+import { globalStyles } from '@/styles/globalStyles';
 const {width, height} = Dimensions.get('window');
 
 export default function UserAuthenticationScreen() {

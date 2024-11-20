@@ -2,10 +2,10 @@ import {Colors} from '@/constants/Colors';
 import {SafeAreaView, Text} from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {LinearGradient} from 'expo-linear-gradient';
-import {globalStyles} from '@/app/styles/globalStyles';
 import {ScrollView} from 'react-native-gesture-handler';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import PrenotationRequestCard from '@/components/workshop/PrenotationRequestCard';
+import { globalStyles } from '@/styles/globalStyles';
 
 export default function WorkshopRequests() {
   return (

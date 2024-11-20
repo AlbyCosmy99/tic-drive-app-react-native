@@ -12,8 +12,8 @@ import FilterIcon from '../../assets/svg/discover_tune.svg';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import {useNavigation} from '@react-navigation/native';
 import {router} from 'expo-router';
-import {globalStyles} from '../styles/globalStyles';
 import HorizontalLine from '@/components/ui/HorizontalLine';
+import { globalStyles } from '@/styles/globalStyles';
 
 export default function HomeTab() {
   const {setWorkshopFilter} = useContext(GlobalContext);

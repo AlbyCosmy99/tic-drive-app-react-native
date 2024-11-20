@@ -3,7 +3,7 @@ import {SafeAreaView, Text} from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {LinearGradient} from 'expo-linear-gradient';
 import {useAppSelector} from '@/app/stateManagement/redux/hooks';
-import {globalStyles} from '@/app/styles/globalStyles';
+import { globalStyles } from '@/styles/globalStyles';
 
 export default function UserAccount() {
   const user = useAppSelector(state => state.auth.user);
