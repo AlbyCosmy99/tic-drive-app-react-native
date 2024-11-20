@@ -3,27 +3,20 @@ import VehicleRegistrationOption from '@/app/types/VehicleRegistrationOption';
 const vehicleRegistrationOptions: VehicleRegistrationOption[] = [
   {
     index: 0,
-    name: 'Licence Plate',
+    name: 'Plate',
     placeholder: 'E.g. AA123BB',
-    inputLabel: 'Plate number',
+    inputLabel: 'Targa',
     keyString: 'plateNumber',
   },
   {
     index: 1,
-    name: 'Model',
+    name: 'Make and model',
     placeholder: 'E.g. FIAT PANDA 1.2',
-    inputLabel: 'Model',
-    keyString: 'model',
-  },
-  {
-    index: 2,
-    name: 'VIN',
-    placeholder: 'E.g. 1HGCM82633A123456',
-    inputLabel: 'VIN',
-    keyString: 'vin',
-  },
+    inputLabel: 'Make and model',
+    keyString: 'make and model',
+  }
 ];
 
-export type CarRegistrationOptions = 'vin' | 'plateNumber' | 'model';
+export type CarRegistrationOptions = 'plateNumber' | 'make and model';
 
 export default vehicleRegistrationOptions;
