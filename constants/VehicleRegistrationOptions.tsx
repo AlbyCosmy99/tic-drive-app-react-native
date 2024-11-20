@@ -5,7 +5,7 @@ const vehicleRegistrationOptions: VehicleRegistrationOption[] = [
     index: 0,
     name: 'Plate',
     placeholder: 'E.g. AA123BB',
-    inputLabel: 'Targa',
+    inputLabel: 'Plate',
     keyString: 'plateNumber',
   },
   {
