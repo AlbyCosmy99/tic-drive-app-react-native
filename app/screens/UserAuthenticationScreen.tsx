@@ -1,7 +1,6 @@
 import ToPreviousPage from '@/components/navigation/ToPreviousPage';
 import {
   KeyboardAvoidingView,
-  Platform,
   SafeAreaView,
   StyleSheet,
   View,
@@ -17,8 +16,8 @@ import isIOSPlatform from '../utils/devices/IsIOSPlatform';
 import smallDevicebreakpointHeight from '@/constants/smallDevicebreakpointHeight';
 
 import {Dimensions} from 'react-native';
-import AuthAction from '../types/auth/Action';
 import {useLocalSearchParams} from 'expo-router';
+import AuthAction from '@/types/auth/Action';
 const {width, height} = Dimensions.get('window');
 
 export default function UserAuthenticationScreen() {

@@ -2,7 +2,7 @@ import {Colors} from '@/constants/Colors';
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, Animated, StyleSheet} from 'react-native';
 import options from '../constants/VehicleRegistrationOptions';
-import {SegmentedControlSelection} from '@/app/types/interfaces';
+import SegmentedControlSelection from '@/types/SegmentedControlSelection';
 
 interface SegmentedControlProps {
   segmentedControlSelection: SegmentedControlSelection | null;

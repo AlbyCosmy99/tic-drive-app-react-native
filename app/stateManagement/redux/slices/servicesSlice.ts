@@ -1,4 +1,4 @@
-import ServicesState from '@/app/types/reduxTypes/states/ServicesState';
+import ServicesState from '@/types/reduxTypes/states/ServicesState';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 const initialState: ServicesState = {

@@ -16,12 +16,12 @@ import options, {
 } from '../../../constants/VehicleRegistrationOptions';
 import GlobalContext from '../../stateManagement/contexts/GlobalContext';
 import ToPreviousPage from '@/components/navigation/ToPreviousPage';
-import SegmentedControlSelection from '../../types/SegmentedControlSelection';
-import Car from '../../types/Car';
 import defaultCar from '@/constants/defaultRegistrationCar';
 import cars from '@/constants/temp/Cars';
 import {globalStyles} from '../../styles/globalStyles';
 import necessaryDeviceBottomInset from '../../utils/devices/necessaryDeviceBottomInset';
+import SegmentedControlSelection from '@/types/SegmentedControlSelection';
+import Car from '@/types/Car';
 
 function RegisterVehicleScreen() {
   const [segmentedControlSelection, setSegmentedControlSelection] =

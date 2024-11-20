@@ -9,8 +9,8 @@ import {Colors} from '@/constants/Colors';
 import React, {useState} from 'react';
 import {useAppDispatch} from '@/app/stateManagement/redux/hooks';
 import {setAreFormErrors} from '@/app/stateManagement/redux/slices/authSlice';
-import AuthAction from '@/app/types/auth/Action';
-import {UserCategory} from '@/app/types/User';
+import { UserCategory } from '@/types/User';
+import AuthAction from '@/types/auth/Action';
 
 interface UserAuthenticationContentProps {
   action: AuthAction;

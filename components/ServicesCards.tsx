@@ -4,10 +4,10 @@ import ServicesCard from './ServicesCard';
 import {ActivityIndicator, StyleSheet, View} from 'react-native';
 import icons from '../constants/servicesIconsMap';
 import {Colors} from '@/constants/Colors';
-import {UserCategory} from '@/app/types/User';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {reset} from '@/app/stateManagement/redux/slices/servicesSlice';
+import { UserCategory } from '@/types/User';
 
 interface Service {
   id: number;

@@ -1,4 +1,5 @@
-import User from '@/app/types/User';
+import User from "@/types/User";
+
 
 const UserLogged: User = {
   name: 'Andrei',

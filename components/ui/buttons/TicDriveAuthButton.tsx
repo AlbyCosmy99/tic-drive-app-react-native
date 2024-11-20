@@ -1,8 +1,8 @@
 import AuthContext from '@/app/stateManagement/contexts/AuthContext';
 import {useAppDispatch} from '@/app/stateManagement/redux/hooks';
 import {logout} from '@/app/stateManagement/redux/slices/authSlice';
-import AuthAction from '@/app/types/auth/Action';
 import { saveUser } from '@/services/auth/secureStore/user';
+import AuthAction from '@/types/auth/Action';
 import {Entypo} from '@expo/vector-icons';
 import {router} from 'expo-router';
 import React, {useContext} from 'react';
