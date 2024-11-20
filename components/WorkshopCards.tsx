@@ -43,42 +43,7 @@ function WorkshopCards() {
     return false;
   };
 
-  return userServicesChoosen.length === 0 ? (
-    <View style={{height: width}}>
-      <Carousel
-        loop
-        width={width}
-        autoPlay={true}
-        autoPlayInterval={5000}
-        data={workshops.filter(
-          workshop =>
-            (workshopFilter.length === 0 ||
-              workshop.title
-                .toLowerCase()
-                .includes(workshopFilter.toLowerCase().trim())) &&
-            anyService(workshop.services),
-        )}
-        onSnapToItem={index => console.log('current index:', index)}
-        mode="parallax"
-        modeConfig={{
-          parallaxScrollingScale: 0.8,
-        }}
-        renderItem={({item, index, animationValue}) => (
-          <TouchableWithoutFeedback
-            onPress={() => handleCardPress(item)}
-            style={{
-              borderWidth: 1,
-              borderColor: Colors.light.ticText,
-              backgroundColor: 'white',
-              borderRadius: 15,
-            }}
-          >
-            <WorkshopCard workshop={item} />
-          </TouchableWithoutFeedback>
-        )}
-      />
-    </View>
-  ) : (
+  return (
     <ScrollView className={!isUserLogged ? 'mb-2' : ''}>
       {workshops
         .filter(
@@ -100,7 +65,7 @@ function WorkshopCards() {
           );
         })}
     </ScrollView>
-  );
+  )
 }
 
 export default memo(WorkshopCards);
