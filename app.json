@@ -2,6 +2,9 @@
   "expo": {
     "name": "TicDrive",
     "slug": "tic-drive",
+    "entryPoint": "./index.js",
+    "platforms": ["ios", "android"],
+    "sdkVersion": "52.0.0",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/TicDriveLogo.jpeg",
