@@ -4,7 +4,7 @@ import {useAppDispatch} from '../stateManagement/redux/hooks';
 import {login, logout} from '../stateManagement/redux/slices/authSlice';
 import {useEffect} from 'react';
 import LottieView from 'lottie-react-native';
-import {getUser} from '../services/auth/secureStore/user';
+import { getUser } from '@/services/auth/secureStore/user';
 
 const Hub = () => {
   const dispatch = useAppDispatch();

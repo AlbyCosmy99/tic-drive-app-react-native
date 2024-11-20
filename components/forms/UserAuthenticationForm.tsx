@@ -12,7 +12,7 @@ import {
 } from '@/app/stateManagement/redux/slices/authSlice';
 import User, {UserCategory} from '@/app/types/User';
 import AuthContext from '@/app/stateManagement/contexts/AuthContext';
-import {saveUser} from '@/app/services/auth/secureStore/user';
+import { saveUser } from '@/services/auth/secureStore/user';
 
 type FormData = {
   email: string;
