@@ -40,12 +40,6 @@ export default function RootLayout() {
     checkAuth();
   }, [isUserLogged]);
 
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
   if (!loaded) {
     return null;
   }

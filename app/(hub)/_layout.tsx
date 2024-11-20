@@ -5,6 +5,7 @@ import LottieView from 'lottie-react-native';
 import { getUser } from '@/services/auth/secureStore/user';
 import { login, logout } from '@/stateManagement/redux/slices/authSlice';
 import { useAppDispatch } from '@/stateManagement/redux/hooks';
+import * as SplashScreen from 'expo-splash-screen';
 
 const Hub = () => {
   const dispatch = useAppDispatch();
@@ -28,6 +29,7 @@ const Hub = () => {
           dispatch(logout());
           router.replace('../screens/LandingScreen?animation=fade');
         }
+        SplashScreen.hideAsync();
       } catch (error) {
         console.error('Error checking auth status: ', error);
       }
@@ -37,21 +39,7 @@ const Hub = () => {
 
   return (
     <View className="justify-center items-center w-full h-full bg-white">
-      {params && params.isCarGreen === 'false' ? (
-        <LottieView
-          source={require('@/assets/json/animations/TicDriveLoadingGrey.json')}
-          autoPlay
-          loop
-          style={styles.lottieAnimation}
-        />
-      ) : (
-        <LottieView
-          source={require('@/assets/json/animations/TicDriveLoading.json')}
-          autoPlay
-          loop
-          style={styles.lottieAnimation}
-        />
-      )}
+      
     </View>
   );
 };
