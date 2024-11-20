@@ -3,7 +3,7 @@ import {Colors} from '../../constants/Colors';
 import BookingsIcon from '../../assets/svg/bookingsIcon.svg';
 import ChatIcon from '../../assets/svg/chatIcon.svg';
 import AccountIcon from '../../assets/svg/accountIcon.svg';
-import {useAppSelector} from '../stateManagement/redux/hooks';
+import {useAppSelector} from '../../stateManagement/redux/hooks';
 import {Text, View} from 'react-native';
 
 export default function TabLayout() {

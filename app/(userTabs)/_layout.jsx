@@ -6,7 +6,7 @@ import FavouriteIcon from '../../assets/svg/favouriteIcon.svg';
 import ChatIcon from '../../assets/svg/chatIcon.svg';
 import AccountIcon from '../../assets/svg/accountIcon.svg';
 import HomeTab from './Home';
-import {useAppSelector} from '../stateManagement/redux/hooks';
+import {useAppSelector} from '../../stateManagement/redux/hooks';
 
 export default function TabLayout() {
   const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);

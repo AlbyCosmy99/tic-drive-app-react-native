@@ -6,14 +6,14 @@ import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
 import WorkshopCards from '@/components/WorkshopCards';
 import {LinearGradient} from 'expo-linear-gradient';
 import {useContext} from 'react';
-import GlobalContext from '@/app/stateManagement/contexts/GlobalContext';
-import {useAppSelector} from '@/app/stateManagement/redux/hooks';
 import FilterIcon from '../../assets/svg/discover_tune.svg';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import {useNavigation} from '@react-navigation/native';
 import {router} from 'expo-router';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import { globalStyles } from '@/styles/globalStyles';
+import GlobalContext from '@/stateManagement/contexts/GlobalContext';
+import { useAppSelector } from '@/stateManagement/redux/hooks';
 
 export default function HomeTab() {
   const {setWorkshopFilter} = useContext(GlobalContext);

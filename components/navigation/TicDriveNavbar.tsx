@@ -2,14 +2,11 @@ import {View, Text, StyleSheet, useColorScheme} from 'react-native';
 import {Colors} from '@/constants/Colors';
 import {router} from 'expo-router';
 import {StackActions, useNavigation} from '@react-navigation/native';
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '@/app/stateManagement/redux/hooks';
 import ToPreviousPage from './ToPreviousPage';
 import TicDriveAuthButton from '../ui/buttons/TicDriveAuthButton';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import {reset} from '@/app/stateManagement/redux/slices/servicesSlice';
+import { useAppDispatch, useAppSelector } from '@/stateManagement/redux/hooks';
+import { reset } from '@/stateManagement/redux/slices/servicesSlice';
 interface TicDriveNavbarProps {
   isLoginAvailable?: boolean;
   canGoBack?: boolean;

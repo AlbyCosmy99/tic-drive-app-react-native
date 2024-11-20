@@ -4,10 +4,10 @@ import {Colors} from '@/constants/Colors';
 import {LinearGradient} from 'expo-linear-gradient';
 import {useContext} from 'react';
 import {SafeAreaView, Text, View} from 'react-native';
-import GlobalContext from '../../stateManagement/contexts/GlobalContext';
-import {useAppSelector} from '../../stateManagement/redux/hooks';
 import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
 import { globalStyles } from '@/styles/globalStyles';
+import GlobalContext from '@/stateManagement/contexts/GlobalContext';
+import { useAppSelector } from '@/stateManagement/redux/hooks';
 
 export default function CalendarDateSelectionScreen() {
   const {setLoginBtnCustomPath} = useContext(GlobalContext);

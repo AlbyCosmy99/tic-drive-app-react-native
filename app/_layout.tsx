@@ -6,12 +6,12 @@ import {useEffect, useState} from 'react';
 import 'react-native-reanimated';
 import {useColorScheme} from '@/hooks/useColorScheme';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import GlobalProvider from './stateManagement/contexts/GlobalProvider';
 import {Provider} from 'react-redux';
-import store from './stateManagement/redux/store/store';
-import AuthContext from './stateManagement/contexts/AuthContext';
 import { getUser } from '@/services/auth/secureStore/user';
 import getAnimation from '@/utils/route/getAnimation';
+import GlobalProvider from '@/stateManagement/contexts/GlobalProvider';
+import AuthContext from '@/stateManagement/contexts/AuthContext';
+import store from '@/stateManagement/redux/store/store';
 
 SplashScreen.preventAutoHideAsync();
 

@@ -3,8 +3,8 @@ import {Button} from '@rneui/themed';
 import {StyleProp, ViewStyle} from 'react-native';
 import {Colors} from '@/constants/Colors';
 import {useRouter, Href} from 'expo-router';
-import GlobalContext from '@/app/stateManagement/contexts/GlobalContext';
 import {StackActions, useNavigation} from '@react-navigation/native';
+import GlobalContext from '@/stateManagement/contexts/GlobalContext';
 
 interface TicDriveButtonProps {
   text: string;

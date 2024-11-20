@@ -6,8 +6,8 @@ import icons from '../constants/servicesIconsMap';
 import {Colors} from '@/constants/Colors';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
-import {reset} from '@/app/stateManagement/redux/slices/servicesSlice';
 import { UserCategory } from '@/types/User';
+import { reset } from '@/stateManagement/redux/slices/servicesSlice';
 
 interface Service {
   id: number;

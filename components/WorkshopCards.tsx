@@ -2,25 +2,17 @@ import WorkshopCard from './WorkshopCard';
 import {
   ScrollView,
   TouchableOpacity,
-  TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
 import workshops, {Workshop} from '../constants/temp/Workshops';
-import GlobalContext from '@/app/stateManagement/contexts/GlobalContext';
 import {memo, useContext, useEffect} from 'react';
 import {router} from 'expo-router';
-import {useAppSelector} from '@/app/stateManagement/redux/hooks';
-import Carousel from 'react-native-reanimated-carousel';
-import {Dimensions, Text, View} from 'react-native';
-import {Colors} from '@/constants/Colors';
+import GlobalContext from '@/stateManagement/contexts/GlobalContext';
+import { useAppSelector } from '@/stateManagement/redux/hooks';
 function WorkshopCards() {
   const {workshopFilter, servicesChoosen, setServicesChoosen} =
     useContext(GlobalContext);
 
   const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);
-  const userServicesChoosen = useAppSelector(
-    state => state.services.servicesChoosenByUsers,
-  );
-  const width = Dimensions.get('window').width;
   const handleCardPress = (workshop: Workshop) => {
     router.push({
       pathname: '../../screens/user/WorkshopDetails',

@@ -3,16 +3,13 @@ import {Text, StyleSheet, View} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import TicDriveInput from '../ui/inputs/TicDriveInput';
 import {router, useNavigation} from 'expo-router';
-import {useAppDispatch} from '@/app/stateManagement/redux/hooks';
-import GlobalContext from '@/app/stateManagement/contexts/GlobalContext';
 import {StackActions} from '@react-navigation/native';
-import {
-  login,
-  setAreFormErrors,
-} from '@/app/stateManagement/redux/slices/authSlice';
-import User, {UserCategory} from '@/app/types/User';
-import AuthContext from '@/app/stateManagement/contexts/AuthContext';
 import { saveUser } from '@/services/auth/secureStore/user';
+import User, { UserCategory } from '@/types/User';
+import GlobalContext from '@/stateManagement/contexts/GlobalContext';
+import { useAppDispatch } from '@/stateManagement/redux/hooks';
+import AuthContext from '@/stateManagement/contexts/AuthContext';
+import { login, setAreFormErrors } from '@/stateManagement/redux/slices/authSlice';
 
 type FormData = {
   email: string;

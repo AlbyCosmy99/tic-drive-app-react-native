@@ -2,10 +2,10 @@ import {Colors} from '@/constants/Colors';
 import {SafeAreaView, Text, View} from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {LinearGradient} from 'expo-linear-gradient';
-import {useAppSelector} from '@/app/stateManagement/redux/hooks';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import { globalStyles } from '@/styles/globalStyles';
+import { useAppSelector } from '@/stateManagement/redux/hooks';
 
 export default function WorkshopAccount() {
   const user = useAppSelector(state => state.auth.user);
