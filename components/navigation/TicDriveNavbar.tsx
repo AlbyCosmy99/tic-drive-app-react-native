@@ -1,7 +1,7 @@
 import {View, Text, StyleSheet, useColorScheme} from 'react-native';
 import {Colors} from '@/constants/Colors';
-import {router} from 'expo-router';
-import {StackActions, useNavigation} from '@react-navigation/native';
+import {router, useNavigation} from 'expo-router';
+import {StackActions} from '@react-navigation/native';
 import ToPreviousPage from './ToPreviousPage';
 import TicDriveAuthButton from '../ui/buttons/TicDriveAuthButton';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
@@ -18,9 +18,8 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
 }) => {
   const colorScheme = useColorScheme();
   const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);
-
-  const navigation = useNavigation();
   const dispatch = useAppDispatch();
+  const navigation = useNavigation()
 
   const backgroundStyle = {
     backgroundColor:
@@ -36,11 +35,11 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
     >
       <View className="flex-1 justify-start flex-row">
         {canGoBack ||
-          (canGoBack === null && navigation.canGoBack() && <ToPreviousPage />)}
+          (canGoBack === null && navigation?.canGoBack() && <ToPreviousPage />)}
       </View>
       <TouchableWithoutFeedback
         onPress={() => {
-          if (navigation.canGoBack()) {
+          if (navigation?.canGoBack()) {
             navigation.dispatch(StackActions.popToTop());
           }
           dispatch(reset());

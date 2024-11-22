@@ -1,11 +1,10 @@
 import {LinearGradient} from 'expo-linear-gradient';
-import {router} from 'expo-router';
+import {router, useNavigation} from 'expo-router';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {Colors} from '@/constants/Colors';
 import {Image} from '@rneui/themed';
 import TicDriveLogo from '../../assets/images/TicDriveLogo.jpeg';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import {StackActions, useNavigation} from '@react-navigation/native';
 import ServicesCard from '@/components/ServicesCard';
 import Feather from '@expo/vector-icons/Feather';
 import CarRepairService from '../../assets/svg/carRepairService.svg';
@@ -14,6 +13,7 @@ import {useState} from 'react';
 import {Dimensions} from 'react-native';
 import smallDevicebreakpointHeight from '@/constants/smallDevicebreakpointHeight';
 import { globalStyles } from '@/styles/globalStyles';
+import { StackActions } from '@react-navigation/native';
 
 const {width, height} = Dimensions.get('window');
 

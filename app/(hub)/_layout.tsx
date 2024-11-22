@@ -1,7 +1,6 @@
-import {router, useLocalSearchParams} from 'expo-router';
-import {StyleSheet, View} from 'react-native';
+import {router} from 'expo-router';
+import { Text, View} from 'react-native';
 import {useEffect} from 'react';
-import LottieView from 'lottie-react-native';
 import { getUser } from '@/services/auth/secureStore/user';
 import { login, logout } from '@/stateManagement/redux/slices/authSlice';
 import { useAppDispatch } from '@/stateManagement/redux/hooks';
@@ -9,7 +8,6 @@ import * as SplashScreen from 'expo-splash-screen';
 
 const Hub = () => {
   const dispatch = useAppDispatch();
-  const params = useLocalSearchParams();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -39,17 +37,9 @@ const Hub = () => {
 
   return (
     <View className="justify-center items-center w-full h-full bg-white">
-      
+      <Text>ciao test</Text>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  lottieAnimation: {
-    width: '100%',
-    alignSelf: 'flex-end',
-    height: 300,
-  },
-});
 
 export default Hub;

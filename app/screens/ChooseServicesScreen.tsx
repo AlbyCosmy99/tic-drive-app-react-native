@@ -5,7 +5,7 @@ import {LinearGradient} from 'expo-linear-gradient';
 import ServicesCards from '@/components/ServicesCards';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {Colors} from '@/constants/Colors';
-import {useLocalSearchParams} from 'expo-router';
+import {useLocalSearchParams, useNavigation} from 'expo-router';
 import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
 import { globalStyles } from '@/styles/globalStyles';
 import { useAppSelector } from '@/stateManagement/redux/hooks';

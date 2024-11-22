@@ -46,6 +46,7 @@ export default function UserAuthenticationScreen() {
         <View className="flex-1 justify-between">
           <View>
             <View style={{height: 60}}>
+          
               <ToPreviousPage containerClassName="m-2 mb-7" />
             </View>
             <View className="justify-center items-center">
