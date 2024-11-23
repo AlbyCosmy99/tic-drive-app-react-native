@@ -1,15 +1,17 @@
-import {router} from 'expo-router';
-import { Text, View} from 'react-native';
+import {router, useLocalSearchParams, usePathname} from 'expo-router';
+import { StyleSheet, Text, View} from 'react-native';
 import {useEffect} from 'react';
 import { getUser } from '@/services/auth/secureStore/user';
 import { login, logout } from '@/stateManagement/redux/slices/authSlice';
 import { useAppDispatch } from '@/stateManagement/redux/hooks';
 import * as SplashScreen from 'expo-splash-screen';
+import LottieView from 'lottie-react-native';
 
 const Hub = () => {
   const dispatch = useAppDispatch();
-
+  const params = useLocalSearchParams();
   useEffect(() => {
+    console.log('here')
     const checkAuth = async () => {
       try {
         const user = await getUser();
@@ -18,7 +20,7 @@ const Hub = () => {
             user.name = 'Andrei';
           }
           dispatch(login(user));
-          router.replace(
+          router.push(
             user?.category === 'workshop'
               ? '../(workshopTabs)/Requests?animation=fade'
               : '../(userTabs)/Home?animation=fade',
@@ -37,9 +39,33 @@ const Hub = () => {
 
   return (
     <View className="justify-center items-center w-full h-full bg-white">
-      <Text>ciao test</Text>
+      {params && params.isCarGreen === 'false' ? (
+        <LottieView
+          source={require('@/assets/json/animations/TicDriveLoadingGrey.json')}
+          autoPlay
+          loop
+          style={styles.lottieAnimation}
+        />
+      ) : (
+        <LottieView
+          source={require('@/assets/json/animations/TicDriveLoading.json')}
+          autoPlay
+          loop
+          style={styles.lottieAnimation}
+        />
+      )}
     </View>
   );
 };
 
+const styles = StyleSheet.create({
+  lottieAnimation: {
+    width: '100%',
+    alignSelf: 'flex-end',
+    height: 300,
+  },
+});
+
 export default Hub;
+
+

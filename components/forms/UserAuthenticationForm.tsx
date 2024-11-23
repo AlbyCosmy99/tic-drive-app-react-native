@@ -77,7 +77,6 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
       router.replace(loginBtnCustomPath);
       setLoginBtnCustomPath(undefined);
     } else if (navigation.canGoBack()) {
-      navigation.dispatch(StackActions.popToTop());
       router.replace('/');
     } else {
       router.replace('/');
