@@ -1,16 +1,15 @@
-import {StyleSheet, View} from 'react-native';
-import {useContext, useEffect, useState} from 'react';
+import {View} from 'react-native';
+import {useContext, useEffect} from 'react';
 import {getUser} from '@/services/auth/secureStore/user';
 import {login, logout} from '@/stateManagement/redux/slices/authSlice';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import * as SplashScreen from 'expo-splash-screen';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import navigationReset from '@/services/navigation/reset';
 
 const Hub = () => {
   const dispatch = useAppDispatch();
-  //const route = useRoute()
   const navigation = useNavigation();
   const {setNavigation} = useContext(NavigationContext);
 
@@ -50,31 +49,9 @@ const Hub = () => {
 
   return (
     <View className="justify-center items-center w-full h-full bg-white">
-      {/* {!route?.params?.isCarGreen ? (
-        <LottieView
-          source={require('@/assets/json/animations/TicDriveLoadingGrey.json')}
-          autoPlay
-          loop
-          style={styles.lottieAnimation}
-        />
-      ) : (
-        <LottieView
-          source={require('@/assets/json/animations/TicDriveLoading.json')}
-          autoPlay
-          loop
-          style={styles.lottieAnimation}
-        />
-      )} */}
+    {/* Intentionally left blank */}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  lottieAnimation: {
-    width: '100%',
-    alignSelf: 'flex-end',
-    height: 300,
-  },
-});
 
 export default Hub;

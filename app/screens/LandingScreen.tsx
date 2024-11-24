@@ -51,7 +51,7 @@ const LandingScreen = () => {
             </View>
           </View>
           <View
-            style={styles.lottieAnimation}
+            style={styles.emptySpace}
             className="justify-center items-center px-1 p-6"
           >
             {/* intentionally left blank */}
@@ -209,12 +209,12 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: 'lightgreen',
     borderColor: Colors.light.green.drive,
-    height: 150,
+    height: 160,
   },
-  lottieAnimation: {
+  emptySpace: {
     width: '100%',
     alignSelf: 'flex-end',
-    height: 210,
+    height: 150,
   },
 });
 
