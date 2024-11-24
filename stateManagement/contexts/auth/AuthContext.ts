@@ -12,10 +12,10 @@ interface AuthContextType {
 const initialState: AuthContextType = {
   isUserLogged: false,
   setIsUserLogged: () => {},
-  loginRouteName: "",
+  loginRouteName: '',
   setLoginRouteName: () => {},
   loginRouteParams: {},
-  setLoginRouteParams: () => {}
+  setLoginRouteParams: () => {},
 };
 
 const AuthContext = createContext<AuthContextType>(initialState);

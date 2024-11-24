@@ -25,16 +25,16 @@ import ClientReviewCards from '@/components/ClientReviewCards';
 import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
 import calculateWorkshopStars from '@/utils/workshops/calculateWorkshopStars';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
-import { globalStyles } from '@/styles/globalStyles';
-import { useAppSelector } from '@/stateManagement/redux/hooks';
-import { useRoute } from '@react-navigation/native';
+import {globalStyles} from '@/styles/globalStyles';
+import {useAppSelector} from '@/stateManagement/redux/hooks';
+import {useRoute} from '@react-navigation/native';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 
 export default function WorkshopDetails() {
-  const route = useRoute()
+  const route = useRoute();
   //@ts-ignore
-  const {id} = route?.params
-  const {navigation} = useContext(NavigationContext)
+  const {id} = route?.params;
+  const {navigation} = useContext(NavigationContext);
 
   const [workshop, setWorkshop] = useState<Workshop | null>(null);
   const servicesChoosen = useAppSelector(
@@ -202,7 +202,7 @@ export default function WorkshopDetails() {
               {servicesChoosen.length > 0 && (
                 <TicDriveButton
                   text="Book a service"
-                  routeName='CalendarDateSelectionScreen'
+                  routeName="CalendarDateSelectionScreen"
                   customButtonStyle={styles.customButtonStyle}
                 />
               )}

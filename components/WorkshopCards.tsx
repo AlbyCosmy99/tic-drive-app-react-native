@@ -1,22 +1,19 @@
 import WorkshopCard from './WorkshopCard';
-import {
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import workshops, {Workshop} from '../constants/temp/Workshops';
 import {memo, useContext, useEffect} from 'react';
 import GlobalContext from '@/stateManagement/contexts/GlobalContext';
-import { useAppSelector } from '@/stateManagement/redux/hooks';
+import {useAppSelector} from '@/stateManagement/redux/hooks';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 function WorkshopCards() {
   const {workshopFilter, servicesChoosen, setServicesChoosen} =
     useContext(GlobalContext);
-  const {navigation} = useContext(NavigationContext)
+  const {navigation} = useContext(NavigationContext);
 
   const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);
   const handleCardPress = (workshop: Workshop) => {
-    navigationPush(navigation, 'WorkshopDetails', {id: workshop.id})
+    navigationPush(navigation, 'WorkshopDetails', {id: workshop.id});
   };
 
   //temp useEffect
@@ -56,7 +53,7 @@ function WorkshopCards() {
           );
         })}
     </ScrollView>
-  )
+  );
 }
 
 export default memo(WorkshopCards);

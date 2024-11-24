@@ -1,12 +1,12 @@
-import { saveUser } from '@/services/auth/secureStore/user';
+import {saveUser} from '@/services/auth/secureStore/user';
 import navigationReplace from '@/services/navigation/replace';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
-import { useAppDispatch } from '@/stateManagement/redux/hooks';
-import { logout } from '@/stateManagement/redux/slices/authSlice';
+import {useAppDispatch} from '@/stateManagement/redux/hooks';
+import {logout} from '@/stateManagement/redux/slices/authSlice';
 import AuthAction from '@/types/auth/Action';
 import {Entypo} from '@expo/vector-icons';
-import { nanoid } from '@reduxjs/toolkit';
+import {nanoid} from '@reduxjs/toolkit';
 import {router} from 'expo-router';
 import React, {useContext} from 'react';
 import {Text, View} from 'react-native';
@@ -23,14 +23,14 @@ const TicDriveAuthButton: React.FC<TicDriveAuthButtonProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const {setIsUserLogged} = useContext(AuthContext);
-  const {navigation} = useContext(NavigationContext)
+  const {navigation} = useContext(NavigationContext);
 
   const handleLogout = async () => {
     //params for loading car animation - isCarGreen -> animation color is green
     const params = {
       isCarGreen: false,
     };
-    navigationReplace(navigation, 'Hub', params)
+    navigationReplace(navigation, 'Hub', params);
     dispatch(logout());
     setIsUserLogged(false);
 

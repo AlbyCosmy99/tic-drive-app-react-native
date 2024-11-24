@@ -5,7 +5,7 @@ import {LinearGradient} from 'expo-linear-gradient';
 import PrenotationBookedCard from '@/components/workshop/PrenotationBookedCard';
 import {ScrollView} from 'react-native-gesture-handler';
 import HorizontalLine from '@/components/ui/HorizontalLine';
-import { globalStyles } from '@/styles/globalStyles';
+import {globalStyles} from '@/styles/globalStyles';
 
 export default function WorkshopBookings() {
   return (

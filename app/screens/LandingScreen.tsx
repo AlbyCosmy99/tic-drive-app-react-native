@@ -11,7 +11,7 @@ import {MotiView} from 'moti';
 import {useContext, useState} from 'react';
 import {Dimensions} from 'react-native';
 import smallDevicebreakpointHeight from '@/constants/smallDevicebreakpointHeight';
-import { globalStyles } from '@/styles/globalStyles';
+import {globalStyles} from '@/styles/globalStyles';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import navigationPush from '@/services/navigation/push';
 
@@ -21,7 +21,7 @@ const LandingScreen = () => {
   const [isSearchButtonPressed, setIsSearchButtonPressed] = useState(false);
   const [isOfferButtonPressed, setIsOfferButtonPressed] = useState(false);
 
-  const {navigation} = useContext(NavigationContext)
+  const {navigation} = useContext(NavigationContext);
 
   return (
     <View className={`flex-1 bg-white`}>
@@ -57,118 +57,126 @@ const LandingScreen = () => {
             {/* intentionally left blank */}
           </View>
           <MotiView
-              className="flex-row justify-center p-2"
+            className="flex-row justify-center p-2"
+            from={{
+              scale: 0.8,
+            }}
+            animate={{
+              scale: 1,
+            }}
+            transition={{
+              type: 'timing',
+              duration: 150,
+            }}
+          >
+            <MotiView
+              className="flex-1"
               from={{
                 scale: 0.8,
               }}
               animate={{
-                scale: 1,
+                scale: isSearchButtonPressed ? 0.95 : 1,
               }}
               transition={{
                 type: 'timing',
                 duration: 150,
               }}
             >
-              <MotiView
-                className="flex-1"
-                from={{
-                  scale: 0.8,
-                }}
-                animate={{
-                  scale: isSearchButtonPressed ? 0.95 : 1,
-                }}
-                transition={{
-                  type: 'timing',
-                  duration: 150,
-                }}
+              <TouchableWithoutFeedback
+                onPressIn={() => setIsSearchButtonPressed(true)}
+                onPressOut={() => setIsSearchButtonPressed(false)}
+                onPress={() =>
+                  navigationPush(navigation, 'ChooseServicesScreen', {
+                    category: 'user',
+                  })
+                }
+                onLongPress={() => alert('long press')}
               >
-                <TouchableWithoutFeedback
-                  onPressIn={() => setIsSearchButtonPressed(true)}
-                  onPressOut={() => setIsSearchButtonPressed(false)}
-                  onPress={() =>
-                    navigationPush(navigation, 'ChooseServicesScreen', {category: 'user'})
-                  }
-                  onLongPress={() => alert('long press')}
-                >
-                  <ServicesCard
-                    id={1}
-                    title="Search a service"
-                    description="What service are you looking for?"
-                    cardStyle={styles.card}
-                    titleStyle={styles.cardTitle}
-                    descriptionStyle={styles.cardDescription}
-                    iconStyle={styles.cardIcon}
-                    isCheckIconAvailable={false}
-                    icon={() => (
-                      <Feather
-                        name="search"
-                        size={height > smallDevicebreakpointHeight ? 50 : 40}
-                        color={'green'}
-                      />
-                    )}
-                    disabledPressIn={true}
-                  />
-                </TouchableWithoutFeedback>
-              </MotiView>
-              <MotiView
-                className="flex-1"
-                from={{
-                  scale: 0.8,
-                }}
-                animate={{
-                  scale: isOfferButtonPressed ? 0.95 : 1,
-                }}
-                transition={{
-                  type: 'timing',
-                  duration: 150,
-                }}
-              >
-                <TouchableWithoutFeedback
-                  onPressIn={() => setIsOfferButtonPressed(true)}
-                  onPressOut={() => setIsOfferButtonPressed(false)}
-                  onPress={() =>
-                    navigationPush(navigation, 'ChooseServicesScreen', {category: 'workshop'})
-                  }
-                  onLongPress={() => alert('Service offering long pressed')}
-                >
-                  <ServicesCard
-                    id={2}
-                    title="Offer a service"
-                    description="What services do you want to offer?"
-                    cardStyle={styles.card}
-                    titleStyle={styles.cardTitle}
-                    descriptionStyle={styles.cardDescription}
-                    iconStyle={styles.cardIcon}
-                    iconWidth={40}
-                    iconHeight={40}
-                    isCheckIconAvailable={false}
-                    icon={() => (
-                      <CarRepairService
-                        width={height > smallDevicebreakpointHeight ? 50 : 40}
-                        height={height > smallDevicebreakpointHeight ? 50 : 40}
-                        fill={'green'}
-                      />
-                    )}
-                    disabledPressIn={true}
-                  />
-                </TouchableWithoutFeedback>
-              </MotiView>
+                <ServicesCard
+                  id={1}
+                  title="Search a service"
+                  description="What service are you looking for?"
+                  cardStyle={styles.card}
+                  titleStyle={styles.cardTitle}
+                  descriptionStyle={styles.cardDescription}
+                  iconStyle={styles.cardIcon}
+                  isCheckIconAvailable={false}
+                  icon={() => (
+                    <Feather
+                      name="search"
+                      size={height > smallDevicebreakpointHeight ? 50 : 40}
+                      color={'green'}
+                    />
+                  )}
+                  disabledPressIn={true}
+                />
+              </TouchableWithoutFeedback>
             </MotiView>
-            <View
-              className="mx-5 flex-row justify-between bg"
-              style={{marginBottom: 50}}
+            <MotiView
+              className="flex-1"
+              from={{
+                scale: 0.8,
+              }}
+              animate={{
+                scale: isOfferButtonPressed ? 0.95 : 1,
+              }}
+              transition={{
+                type: 'timing',
+                duration: 150,
+              }}
             >
-              <Pressable
-                onPress={() => {
-                  navigationPush(navigation, 'UserAuthenticationScreen', {isUser: true})
-                }}
+              <TouchableWithoutFeedback
+                onPressIn={() => setIsOfferButtonPressed(true)}
+                onPressOut={() => setIsOfferButtonPressed(false)}
+                onPress={() =>
+                  navigationPush(navigation, 'ChooseServicesScreen', {
+                    category: 'workshop',
+                  })
+                }
+                onLongPress={() => alert('Service offering long pressed')}
               >
-                <Text className="text-lg">login</Text>
-              </Pressable>
-              <Pressable onPress={() => navigationPush(navigation, 'userTabs', {}, 'Home')}>
-                <Text className="text-lg">skip</Text>
-              </Pressable>
-            </View>
+                <ServicesCard
+                  id={2}
+                  title="Offer a service"
+                  description="What services do you want to offer?"
+                  cardStyle={styles.card}
+                  titleStyle={styles.cardTitle}
+                  descriptionStyle={styles.cardDescription}
+                  iconStyle={styles.cardIcon}
+                  iconWidth={40}
+                  iconHeight={40}
+                  isCheckIconAvailable={false}
+                  icon={() => (
+                    <CarRepairService
+                      width={height > smallDevicebreakpointHeight ? 50 : 40}
+                      height={height > smallDevicebreakpointHeight ? 50 : 40}
+                      fill={'green'}
+                    />
+                  )}
+                  disabledPressIn={true}
+                />
+              </TouchableWithoutFeedback>
+            </MotiView>
+          </MotiView>
+          <View
+            className="mx-5 flex-row justify-between bg"
+            style={{marginBottom: 50}}
+          >
+            <Pressable
+              onPress={() => {
+                navigationPush(navigation, 'UserAuthenticationScreen', {
+                  isUser: true,
+                });
+              }}
+            >
+              <Text className="text-lg">login</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => navigationPush(navigation, 'userTabs', {}, 'Home')}
+            >
+              <Text className="text-lg">skip</Text>
+            </Pressable>
+          </View>
         </View>
       </LinearGradient>
     </View>

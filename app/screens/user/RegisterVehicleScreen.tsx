@@ -20,7 +20,7 @@ import cars from '@/constants/temp/Cars';
 import SegmentedControlSelection from '@/types/SegmentedControlSelection';
 import Car from '@/types/Car';
 import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
-import { globalStyles } from '@/styles/globalStyles';
+import {globalStyles} from '@/styles/globalStyles';
 import GlobalContext from '@/stateManagement/contexts/GlobalContext';
 
 function RegisterVehicleScreen() {
@@ -181,8 +181,8 @@ function RegisterVehicleScreen() {
       </View>
       <TicDriveButton
         text="Confirm"
-        routeName='userTabs'
-        stateRouteName='Home'
+        routeName="userTabs"
+        stateRouteName="Home"
         disabled={carNotFound}
       />
     </SafeAreaView>

@@ -1,8 +1,8 @@
 import Navigation from '@/types/nav/Navigation';
-import { createContext } from 'react';
+import {createContext} from 'react';
 
 interface NavigationContextType {
-  navigation: Navigation
+  navigation: Navigation;
   setNavigation: (navigation: NavigationContextType['navigation']) => void;
 }
 

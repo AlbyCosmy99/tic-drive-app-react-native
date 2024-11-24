@@ -1,4 +1,3 @@
-
 import User from '@/types/User';
 import * as SecureStore from 'expo-secure-store';
 

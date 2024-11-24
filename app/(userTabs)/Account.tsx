@@ -2,8 +2,8 @@ import {Colors} from '@/constants/Colors';
 import {SafeAreaView, Text} from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {LinearGradient} from 'expo-linear-gradient';
-import { globalStyles } from '@/styles/globalStyles';
-import { useAppSelector } from '@/stateManagement/redux/hooks';
+import {globalStyles} from '@/styles/globalStyles';
+import {useAppSelector} from '@/stateManagement/redux/hooks';
 
 export default function UserAccount() {
   const user = useAppSelector(state => state.auth.user);

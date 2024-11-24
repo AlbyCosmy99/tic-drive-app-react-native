@@ -4,9 +4,9 @@ import {Colors} from '@/constants/Colors';
 import {LinearGradient} from 'expo-linear-gradient';
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
-import { globalStyles } from '@/styles/globalStyles';
-import { useAppDispatch } from '@/stateManagement/redux/hooks';
-import { reset } from '@/stateManagement/redux/slices/servicesSlice';
+import {globalStyles} from '@/styles/globalStyles';
+import {useAppDispatch} from '@/stateManagement/redux/hooks';
+import {reset} from '@/stateManagement/redux/slices/servicesSlice';
 
 export default function BookingConfirmationScreen() {
   const dispatch = useAppDispatch();
@@ -42,9 +42,9 @@ export default function BookingConfirmationScreen() {
           replace={true}
           toTop={true}
           text="Home"
-          routeName='userTabs'
+          routeName="userTabs"
           routeParams={{animation: 'fade'}}
-          stateRouteName='Home'     
+          stateRouteName="Home"
           onClick={() => {
             dispatch(reset());
           }}

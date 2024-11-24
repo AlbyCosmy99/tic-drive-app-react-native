@@ -8,9 +8,16 @@ import CarRepair from '../assets/svg/servicesIcons/car_repair.svg'; //default ic
 import smallDevicebreakpointHeight from '@/constants/smallDevicebreakpointHeight';
 import {Dimensions} from 'react-native';
 import LottieView from 'lottie-react-native';
-import { UserCategory } from '@/types/User';
-import { useAppDispatch, useAppSelector } from '@/stateManagement/redux/hooks';
-import { addServiceChoosenByUsers, addServiceChoosenByWorkshops, removeServiceChoosenByUsers, removeServiceChoosenByWorkshops, setServicesChoosenByUsers, setServicesChoosenByWorkshops } from '@/stateManagement/redux/slices/servicesSlice';
+import {UserCategory} from '@/types/User';
+import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
+import {
+  addServiceChoosenByUsers,
+  addServiceChoosenByWorkshops,
+  removeServiceChoosenByUsers,
+  removeServiceChoosenByWorkshops,
+  setServicesChoosenByUsers,
+  setServicesChoosenByWorkshops,
+} from '@/stateManagement/redux/slices/servicesSlice';
 
 const {width, height} = Dimensions.get('window');
 

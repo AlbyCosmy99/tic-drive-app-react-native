@@ -4,11 +4,14 @@ import {useForm, Controller} from 'react-hook-form';
 import TicDriveInput from '../ui/inputs/TicDriveInput';
 import {router, useNavigation} from 'expo-router';
 import {StackActions} from '@react-navigation/native';
-import { saveUser } from '@/services/auth/secureStore/user';
-import User, { UserCategory } from '@/types/User';
-import { useAppDispatch } from '@/stateManagement/redux/hooks';
+import {saveUser} from '@/services/auth/secureStore/user';
+import User, {UserCategory} from '@/types/User';
+import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
-import { login, setAreFormErrors } from '@/stateManagement/redux/slices/authSlice';
+import {
+  login,
+  setAreFormErrors,
+} from '@/stateManagement/redux/slices/authSlice';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import navigationPush from '@/services/navigation/push';
 import navigationReset from '@/services/navigation/reset';
@@ -41,8 +44,9 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
     formState: {errors},
   } = useForm<FormData>();
 
-  const {setIsUserLogged, loginRouteName, setLoginRouteName} = React.useContext(AuthContext);
-  const {navigation} = React.useContext(NavigationContext)
+  const {setIsUserLogged, loginRouteName, setLoginRouteName} =
+    React.useContext(AuthContext);
+  const {navigation} = React.useContext(NavigationContext);
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
@@ -68,14 +72,13 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
     };
     dispatch(login(user));
 
-    
     if (loginRouteName) {
-      navigationReset(navigation, 0, loginRouteName)
-      setLoginRouteName("");
+      navigationReset(navigation, 0, loginRouteName);
+      setLoginRouteName('');
     } else if (navigation?.canGoBack()) {
-      navigationReplace(navigation, 'Hub')
+      navigationReplace(navigation, 'Hub');
     } else {
-      navigationPush(navigation, 'Hub')
+      navigationPush(navigation, 'Hub');
     }
     await saveUser(user);
   };

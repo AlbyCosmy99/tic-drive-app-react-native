@@ -1,5 +1,4 @@
-import VehicleRegistrationOption from "@/types/VehicleRegistrationOption";
-
+import VehicleRegistrationOption from '@/types/VehicleRegistrationOption';
 
 const vehicleRegistrationOptions: VehicleRegistrationOption[] = [
   {
@@ -15,7 +14,7 @@ const vehicleRegistrationOptions: VehicleRegistrationOption[] = [
     placeholder: 'E.g. FIAT PANDA 1.2',
     inputLabel: 'Make and model',
     keyString: 'make and model',
-  }
+  },
 ];
 
 export type CarRegistrationOptions = 'plateNumber' | 'make and model';

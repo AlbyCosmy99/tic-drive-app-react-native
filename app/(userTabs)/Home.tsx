@@ -9,9 +9,9 @@ import {useContext} from 'react';
 import FilterIcon from '../../assets/svg/discover_tune.svg';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import HorizontalLine from '@/components/ui/HorizontalLine';
-import { globalStyles } from '@/styles/globalStyles';
+import {globalStyles} from '@/styles/globalStyles';
 import GlobalContext from '@/stateManagement/contexts/GlobalContext';
-import { useAppSelector } from '@/stateManagement/redux/hooks';
+import {useAppSelector} from '@/stateManagement/redux/hooks';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import navigationPush from '@/services/navigation/push';
 
@@ -21,7 +21,7 @@ export default function UserHome() {
   const userServicesChoosen = useAppSelector(
     state => state.services.servicesChoosenByUsers,
   );
-  const {navigation} = useContext(NavigationContext)
+  const {navigation} = useContext(NavigationContext);
 
   return (
     <LinearGradient
@@ -72,7 +72,9 @@ export default function UserHome() {
             <View className="absolute bottom-3 left-0 right-0">
               <TicDriveButton
                 text="Book a service"
-                onClick={() => navigationPush(navigation, 'ChooseServicesScreen')}
+                onClick={() =>
+                  navigationPush(navigation, 'ChooseServicesScreen')
+                }
               />
             </View>
           )}

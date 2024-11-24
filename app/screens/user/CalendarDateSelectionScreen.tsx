@@ -5,8 +5,8 @@ import {LinearGradient} from 'expo-linear-gradient';
 import {useContext} from 'react';
 import {SafeAreaView, Text, View} from 'react-native';
 import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
-import { globalStyles } from '@/styles/globalStyles';
-import { useAppSelector } from '@/stateManagement/redux/hooks';
+import {globalStyles} from '@/styles/globalStyles';
+import {useAppSelector} from '@/stateManagement/redux/hooks';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
 
 export default function CalendarDateSelectionScreen() {
@@ -31,8 +31,12 @@ export default function CalendarDateSelectionScreen() {
         </View>
         <TicDriveButton
           text={'Confirm ' + (!isUserLogged ? 'and login' : '')}
-          routeName={isUserLogged ? 'BookingConfirmationScreen' : 'UserAuthenticationScreen'}
-          routeParams={isUserLogged? {} : {isUser: true}}
+          routeName={
+            isUserLogged
+              ? 'BookingConfirmationScreen'
+              : 'UserAuthenticationScreen'
+          }
+          routeParams={isUserLogged ? {} : {isUser: true}}
           toTop={isUserLogged ? true : false}
           replace={isUserLogged ? true : false}
           onClick={

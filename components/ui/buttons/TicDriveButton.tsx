@@ -14,8 +14,8 @@ interface TicDriveButtonProps {
   customContainerStyle?: StyleProp<ViewStyle>;
   routeName?: string;
   routeParams?: any;
-  stateRouteName?: string,
-  stateRouteParams?: any,
+  stateRouteName?: string;
+  stateRouteParams?: any;
   replace?: boolean;
   onClick?: () => void;
   toTop?: boolean;
@@ -36,7 +36,7 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({
   disabled = false,
 }) => {
   const {setWorkshopFilter} = useContext(GlobalContext);
-  const {navigation} = useContext(NavigationContext)
+  const {navigation} = useContext(NavigationContext);
 
   // const whenIsDisabled: Record<string, boolean> = {
   //   "book a service": servicesChoosen.length === 0,
@@ -66,12 +66,24 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({
       onPress={() => {
         if (routeName) {
           if (toTop) {
-            navigationReset(navigation,0,routeName ?? 'Hub',routeParams,stateRouteName, stateRouteParams)
-          }
-          else if (replace) {
-            navigationReplace(navigation, routeName ?? 'Hub', routeParams)
+            navigationReset(
+              navigation,
+              0,
+              routeName ?? 'Hub',
+              routeParams,
+              stateRouteName,
+              stateRouteParams,
+            );
+          } else if (replace) {
+            navigationReplace(navigation, routeName ?? 'Hub', routeParams);
           } else {
-            navigationPush(navigation, routeName ?? 'Hub', routeParams,stateRouteName, stateRouteParams)
+            navigationPush(
+              navigation,
+              routeName ?? 'Hub',
+              routeParams,
+              stateRouteName,
+              stateRouteParams,
+            );
           }
 
           if (text.toLowerCase() === 'confirm') {

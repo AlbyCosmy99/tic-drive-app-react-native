@@ -16,15 +16,15 @@ import smallDevicebreakpointHeight from '@/constants/smallDevicebreakpointHeight
 import {Dimensions} from 'react-native';
 import AuthAction from '@/types/auth/Action';
 import isIOSPlatform from '@/utils/devices/IsIOSPlatform';
-import { globalStyles } from '@/styles/globalStyles';
-import { useRoute } from '@react-navigation/native';
+import {globalStyles} from '@/styles/globalStyles';
+import {useRoute} from '@react-navigation/native';
 const {width, height} = Dimensions.get('window');
 
 export default function UserAuthenticationScreen() {
   const [isUserRegistering, setIsUserRegistering] = useState<boolean>(false);
-  const route = useRoute()
+  const route = useRoute();
   //@ts-ignore
-  const {register, isUser} = route.params
+  const {register, isUser} = route.params;
 
   useEffect(() => {
     if (register) {
@@ -48,7 +48,6 @@ export default function UserAuthenticationScreen() {
         <View className="flex-1 justify-between">
           <View>
             <View style={{height: 60}}>
-          
               <ToPreviousPage containerClassName="m-2 mb-7" />
             </View>
             <View className="justify-center items-center">

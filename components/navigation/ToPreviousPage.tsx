@@ -1,9 +1,9 @@
 import {Colors} from '@/constants/Colors';
 import {Ionicons} from '@expo/vector-icons';
-import React, { useContext } from 'react';
+import React, {useContext} from 'react';
 import {useColorScheme} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import { router } from 'expo-router';
+import {router} from 'expo-router';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 
 interface ToPreviousPageProps {
@@ -14,7 +14,7 @@ const ToPreviousPage: React.FC<ToPreviousPageProps> = ({
   containerClassName = '',
 }) => {
   const colorScheme = useColorScheme();
-  const {navigation} = useContext(NavigationContext)
+  const {navigation} = useContext(NavigationContext);
 
   return (
     <TouchableOpacity

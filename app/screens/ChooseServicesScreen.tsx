@@ -6,18 +6,17 @@ import ServicesCards from '@/components/ServicesCards';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {Colors} from '@/constants/Colors';
 import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
-import { globalStyles } from '@/styles/globalStyles';
-import { useAppSelector } from '@/stateManagement/redux/hooks';
-import { useRoute } from '@react-navigation/native';
-
+import {globalStyles} from '@/styles/globalStyles';
+import {useAppSelector} from '@/stateManagement/redux/hooks';
+import {useRoute} from '@react-navigation/native';
 
 export default function ChooseServicesScreen() {
-  const route = useRoute()
+  const route = useRoute();
   const colorScheme = useColorScheme();
   const user = useAppSelector(state => state.auth.user);
 
   //@ts-ignore
-  const {category} = route?.params
+  const {category} = route?.params;
 
   const isUserLookingForServices = () => {
     return !(category === 'workshop');
@@ -63,8 +62,14 @@ export default function ChooseServicesScreen() {
         </View>
         <TicDriveButton
           text={isUserLookingForServices() ? 'Book a service' : 'Continue'}
-          routeName={isUserLookingForServices() ? 'RegisterVehicleScreen' : 'UserAuthenticationScreen'}
-          routeParams={isUserLookingForServices() ? {} : {register: true, isUser: false}}
+          routeName={
+            isUserLookingForServices()
+              ? 'RegisterVehicleScreen'
+              : 'UserAuthenticationScreen'
+          }
+          routeParams={
+            isUserLookingForServices() ? {} : {register: true, isUser: false}
+          }
           disabled={isButtonDisabled}
         />
       </SafeAreaView>

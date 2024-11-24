@@ -4,8 +4,8 @@ import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {LinearGradient} from 'expo-linear-gradient';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
-import { globalStyles } from '@/styles/globalStyles';
-import { useAppSelector } from '@/stateManagement/redux/hooks';
+import {globalStyles} from '@/styles/globalStyles';
+import {useAppSelector} from '@/stateManagement/redux/hooks';
 
 export default function WorkshopAccount() {
   const user = useAppSelector(state => state.auth.user);
@@ -33,7 +33,7 @@ export default function WorkshopAccount() {
             <TicDriveButton text="Change prices" />
             <TicDriveButton text="Change services offered" />
           </View>
-          <HorizontalLine height={2}/>
+          <HorizontalLine height={2} />
         </View>
       </SafeAreaView>
     </LinearGradient>

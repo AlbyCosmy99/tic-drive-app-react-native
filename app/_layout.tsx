@@ -1,4 +1,4 @@
-import { DarkTheme, DefaultTheme, ThemeProvider} from '@react-navigation/native';
+import {DarkTheme, DefaultTheme, ThemeProvider} from '@react-navigation/native';
 import {useFonts} from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import {useEffect, useState} from 'react';
@@ -6,19 +6,19 @@ import 'react-native-reanimated';
 import {useColorScheme} from '@/hooks/useColorScheme';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {Provider} from 'react-redux';
-import { getUser } from '@/services/auth/secureStore/user';
+import {getUser} from '@/services/auth/secureStore/user';
 import getAnimation from '@/utils/route/getAnimation';
 import GlobalProvider from '@/stateManagement/contexts/GlobalProvider';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
 import store from '@/stateManagement/redux/store/store';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Hub from './(hub)/_layout';
 import ChooseServicesScreen from './screens/ChooseServicesScreen';
 import LandingScreen from './screens/LandingScreen';
 import UserAuthenticationScreen from './screens/UserAuthenticationScreen';
 import RegisterVehicleScreen from './screens/user/RegisterVehicleScreen';
-import WorkshopTabLayout from './(workshopTabs)/_layout'
-import userTabLayout from './(userTabs)//_layout'
+import WorkshopTabLayout from './(workshopTabs)/_layout';
+import userTabLayout from './(userTabs)//_layout';
 import WorkshopDetails from './screens/user/WorkshopDetails';
 import CalendarDateSelectionScreen from './screens/user/CalendarDateSelectionScreen';
 import BookingConfirmationScreen from './screens/user/BookingConfirmationScreen';
@@ -35,10 +35,10 @@ export default function RootLayout() {
 
   //AuthContext data
   const [isUserLogged, setIsUserLogged] = useState(false);
-  const [loginRouteName, setLoginRouteName] = useState("")
-  const [loginRouteParams, setLoginRouteParams] = useState<any>({})
-  
-  const [navigation, setNavigation] = useState<Navigation>(null)
+  const [loginRouteName, setLoginRouteName] = useState('');
+  const [loginRouteParams, setLoginRouteParams] = useState<any>({});
+
+  const [navigation, setNavigation] = useState<Navigation>(null);
 
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
@@ -71,7 +71,16 @@ export default function RootLayout() {
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <GlobalProvider>
           <NavigationContext.Provider value={{navigation, setNavigation}}>
-            <AuthContext.Provider value={{isUserLogged, setIsUserLogged, loginRouteName, setLoginRouteName, loginRouteParams, setLoginRouteParams}}>
+            <AuthContext.Provider
+              value={{
+                isUserLogged,
+                setIsUserLogged,
+                loginRouteName,
+                setLoginRouteName,
+                loginRouteParams,
+                setLoginRouteParams,
+              }}
+            >
               <GestureHandlerRootView>
                 <Stack.Navigator>
                   <Stack.Screen
@@ -165,7 +174,7 @@ export default function RootLayout() {
                       animation: getAnimation(route),
                     })}
                   />
-                  <Stack.Screen 
+                  <Stack.Screen
                     name="notFound"
                     component={NotFoundScreen}
                     options={({route}) => ({
