@@ -25,7 +25,7 @@ const Hub = () => {
           dispatch(login(user));
         }
         if (user) {
-          navigationReset(navigation, 0, user?.category === 'workshop' ? 'workshopTabs' : 'userTabs', {}, user?.category === 'workshop' ? 'Requests' : 'Home')
+          navigationReset(navigation, 0, user?.category === 'workshop' ? 'workshopTabs' : 'userTabs', {animation: 'fade'}, user?.category === 'workshop' ? 'Requests' : 'Home')
         } else {
           dispatch(logout());
           navigationReset(navigation, 0,'LandingScreen',{ animation: 'fade' })
