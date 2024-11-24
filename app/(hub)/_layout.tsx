@@ -1,33 +1,34 @@
-import {router, useLocalSearchParams, usePathname} from 'expo-router';
-import { StyleSheet, Text, View} from 'react-native';
-import {useEffect} from 'react';
+import { StyleSheet, View} from 'react-native';
+import {useContext, useEffect, useState} from 'react';
 import { getUser } from '@/services/auth/secureStore/user';
 import { login, logout } from '@/stateManagement/redux/slices/authSlice';
-import { useAppDispatch } from '@/stateManagement/redux/hooks';
+import { useAppDispatch, useAppSelector } from '@/stateManagement/redux/hooks';
 import * as SplashScreen from 'expo-splash-screen';
-import LottieView from 'lottie-react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import NavigationContext from '@/stateManagement/contexts/NavigationContext';
+import navigationReset from '@/services/navigation/reset';
 
 const Hub = () => {
   const dispatch = useAppDispatch();
-  const params = useLocalSearchParams();
+  //const route = useRoute()
+  const navigation = useNavigation()
+  const {setNavigation} = useContext(NavigationContext)
+
+  let user = useAppSelector(state => state.auth.user);
+  
   useEffect(() => {
-    console.log('here')
+    setNavigation(navigation)
     const checkAuth = async () => {
       try {
-        const user = await getUser();
-        if (user) {
-          if (user && !user?.name) {
-            user.name = 'Andrei';
-          }
+        if(!user) {
+          user = await getUser();
           dispatch(login(user));
-          router.push(
-            user?.category === 'workshop'
-              ? '../(workshopTabs)/Requests?animation=fade'
-              : '../(userTabs)/Home?animation=fade',
-          );
+        }
+        if (user) {
+          navigationReset(navigation, 0, user?.category === 'workshop' ? 'workshopTabs' : 'userTabs', {}, user?.category === 'workshop' ? 'Requests' : 'Home')
         } else {
           dispatch(logout());
-          router.replace('../screens/LandingScreen?animation=fade');
+          navigationReset(navigation, 0,'LandingScreen',{ animation: 'fade' })
         }
         SplashScreen.hideAsync();
       } catch (error) {
@@ -37,9 +38,13 @@ const Hub = () => {
     checkAuth();
   }, []);
 
+  useEffect(() => {
+    setNavigation(navigation)
+  }, [navigation])
+
   return (
     <View className="justify-center items-center w-full h-full bg-white">
-      {params && params.isCarGreen === 'false' ? (
+      {/* {!route?.params?.isCarGreen ? (
         <LottieView
           source={require('@/assets/json/animations/TicDriveLoadingGrey.json')}
           autoPlay
@@ -53,7 +58,7 @@ const Hub = () => {
           loop
           style={styles.lottieAnimation}
         />
-      )}
+      )} */}
     </View>
   );
 };

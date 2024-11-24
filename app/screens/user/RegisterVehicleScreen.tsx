@@ -96,6 +96,7 @@ function RegisterVehicleScreen() {
                     onSubmit={value => {
                       const car = cars.find(
                         car =>
+                          //@ts-ignore
                           car[option.keyString as CarRegistrationOptions]
                             ?.toLowerCase()
                             .trim() === value.toLowerCase().trim(),
@@ -180,7 +181,8 @@ function RegisterVehicleScreen() {
       </View>
       <TicDriveButton
         text="Confirm"
-        path="../../(userTabs)/Home"
+        routeName='userTabs'
+        stateRouteName='Home'
         disabled={carNotFound}
       />
     </SafeAreaView>

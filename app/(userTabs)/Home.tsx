@@ -8,20 +8,20 @@ import {LinearGradient} from 'expo-linear-gradient';
 import {useContext} from 'react';
 import FilterIcon from '../../assets/svg/discover_tune.svg';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
-import {useNavigation} from '@react-navigation/native';
-import {router} from 'expo-router';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import { globalStyles } from '@/styles/globalStyles';
 import GlobalContext from '@/stateManagement/contexts/GlobalContext';
 import { useAppSelector } from '@/stateManagement/redux/hooks';
+import NavigationContext from '@/stateManagement/contexts/NavigationContext';
+import navigationPush from '@/services/navigation/push';
 
-export default function HomeTab() {
+export default function UserHome() {
   const {setWorkshopFilter} = useContext(GlobalContext);
   const user = useAppSelector(state => state.auth.user);
   const userServicesChoosen = useAppSelector(
     state => state.services.servicesChoosenByUsers,
   );
-  const navigation = useNavigation();
+  const {navigation} = useContext(NavigationContext)
 
   return (
     <LinearGradient
@@ -68,11 +68,11 @@ export default function HomeTab() {
         )}
         <View className="flex-1">
           <WorkshopCards />
-          {user && user.category === 'user' && !navigation.canGoBack() && (
+          {user && user.category === 'user' && !navigation?.canGoBack() && (
             <View className="absolute bottom-3 left-0 right-0">
               <TicDriveButton
                 text="Book a service"
-                onClick={() => router.push('/screens/ChooseServicesScreen')}
+                onClick={() => navigationPush(navigation, 'ChooseServicesScreen')}
               />
             </View>
           )}

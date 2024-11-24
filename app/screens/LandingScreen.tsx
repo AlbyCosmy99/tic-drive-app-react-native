@@ -1,5 +1,4 @@
 import {LinearGradient} from 'expo-linear-gradient';
-import {router, useNavigation} from 'expo-router';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {Colors} from '@/constants/Colors';
 import {Image} from '@rneui/themed';
@@ -9,18 +8,20 @@ import ServicesCard from '@/components/ServicesCard';
 import Feather from '@expo/vector-icons/Feather';
 import CarRepairService from '../../assets/svg/carRepairService.svg';
 import {MotiView} from 'moti';
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import {Dimensions} from 'react-native';
 import smallDevicebreakpointHeight from '@/constants/smallDevicebreakpointHeight';
 import { globalStyles } from '@/styles/globalStyles';
-import { StackActions } from '@react-navigation/native';
+import NavigationContext from '@/stateManagement/contexts/NavigationContext';
+import navigationPush from '@/services/navigation/push';
 
 const {width, height} = Dimensions.get('window');
 
 const LandingScreen = () => {
-  const navigation = useNavigation();
   const [isSearchButtonPressed, setIsSearchButtonPressed] = useState(false);
   const [isOfferButtonPressed, setIsOfferButtonPressed] = useState(false);
+
+  const {navigation} = useContext(NavigationContext)
 
   return (
     <View className={`flex-1 bg-white`}>
@@ -85,7 +86,7 @@ const LandingScreen = () => {
                   onPressIn={() => setIsSearchButtonPressed(true)}
                   onPressOut={() => setIsSearchButtonPressed(false)}
                   onPress={() =>
-                    router.push('/screens/ChooseServicesScreen?category=user')
+                    navigationPush(navigation, 'ChooseServicesScreen', {category: 'user'})
                   }
                   onLongPress={() => alert('long press')}
                 >
@@ -126,9 +127,7 @@ const LandingScreen = () => {
                   onPressIn={() => setIsOfferButtonPressed(true)}
                   onPressOut={() => setIsOfferButtonPressed(false)}
                   onPress={() =>
-                    router.push(
-                      '/screens/ChooseServicesScreen?category=workshop',
-                    )
+                    navigationPush(navigation, 'ChooseServicesScreen', {category: 'workshop'})
                   }
                   onLongPress={() => alert('Service offering long pressed')}
                 >
@@ -161,15 +160,12 @@ const LandingScreen = () => {
             >
               <Pressable
                 onPress={() => {
-                  if (navigation.canGoBack()) {
-                    navigation.dispatch(StackActions.popToTop());
-                  }
-                  router.push('./UserAuthenticationScreen');
+                  navigationPush(navigation, 'UserAuthenticationScreen', {isUser: true})
                 }}
               >
                 <Text className="text-lg">login</Text>
               </Pressable>
-              <Pressable onPress={() => router.push('/(userTabs)/Home')}>
+              <Pressable onPress={() => navigationPush(navigation, 'userTabs', {}, 'Home')}>
                 <Text className="text-lg">skip</Text>
               </Pressable>
             </View>

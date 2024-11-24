@@ -1,6 +1,5 @@
-import {DarkTheme, DefaultTheme, NavigationContainer, ThemeProvider} from '@react-navigation/native';
+import { DarkTheme, DefaultTheme, ThemeProvider} from '@react-navigation/native';
 import {useFonts} from 'expo-font';
-import {Stack} from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import {useEffect, useState} from 'react';
 import 'react-native-reanimated';
@@ -10,14 +9,37 @@ import {Provider} from 'react-redux';
 import { getUser } from '@/services/auth/secureStore/user';
 import getAnimation from '@/utils/route/getAnimation';
 import GlobalProvider from '@/stateManagement/contexts/GlobalProvider';
-import AuthContext from '@/stateManagement/contexts/AuthContext';
+import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
 import store from '@/stateManagement/redux/store/store';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Hub from './(hub)/_layout';
+import ChooseServicesScreen from './screens/ChooseServicesScreen';
+import LandingScreen from './screens/LandingScreen';
+import UserAuthenticationScreen from './screens/UserAuthenticationScreen';
+import RegisterVehicleScreen from './screens/user/RegisterVehicleScreen';
+import WorkshopTabLayout from './(workshopTabs)/_layout'
+import userTabLayout from './(userTabs)//_layout'
+import WorkshopDetails from './screens/user/WorkshopDetails';
+import CalendarDateSelectionScreen from './screens/user/CalendarDateSelectionScreen';
+import BookingConfirmationScreen from './screens/user/BookingConfirmationScreen';
+import NotFoundScreen from './+not-found';
+import NavigationContext from '@/stateManagement/contexts/NavigationContext';
+import Navigation from '@/types/nav/Navigation';
 
 SplashScreen.preventAutoHideAsync();
 
+const Stack = createNativeStackNavigator();
+
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+
+  //AuthContext data
   const [isUserLogged, setIsUserLogged] = useState(false);
+  const [loginRouteName, setLoginRouteName] = useState("")
+  const [loginRouteParams, setLoginRouteParams] = useState<any>({})
+  
+  const [navigation, setNavigation] = useState<Navigation>(null)
+
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
     PlaywriteGBS: require('../assets/fonts/PlaywriteGBS-VariableFont_wght.ttf'),
@@ -48,28 +70,22 @@ export default function RootLayout() {
     <Provider store={store}>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <GlobalProvider>
-          <AuthContext.Provider value={{isUserLogged, setIsUserLogged}}>
-            <GestureHandlerRootView>
-              <NavigationContainer>
-                <Stack>
+          <NavigationContext.Provider value={{navigation, setNavigation}}>
+            <AuthContext.Provider value={{isUserLogged, setIsUserLogged, loginRouteName, setLoginRouteName, loginRouteParams, setLoginRouteParams}}>
+              <GestureHandlerRootView>
+                <Stack.Navigator>
                   <Stack.Screen
-                    name="(hub)"
+                    name="Hub"
+                    component={Hub}
                     options={({route}) => ({
                       title: 'Hub',
                       headerShown: false,
-                      animation: getAnimation(route),
+                      animation: 'fade',
                     })}
                   />
                   <Stack.Screen
-                    name="screens/ChooseServicesScreen"
-                    options={({route}) => ({
-                      title: 'ChooseServicesScreen',
-                      headerShown: false,
-                      animation: getAnimation(route),
-                    })}
-                  />
-                  <Stack.Screen
-                    name="screens/LandingScreen"
+                    name="LandingScreen"
+                    component={LandingScreen}
                     options={({route}) => ({
                       title: 'LandingScreen',
                       headerShown: false,
@@ -77,7 +93,8 @@ export default function RootLayout() {
                     })}
                   />
                   <Stack.Screen
-                    name="screens/UserAuthenticationScreen"
+                    name="UserAuthenticationScreen"
+                    component={UserAuthenticationScreen}
                     options={({route}) => ({
                       title: 'UserAuthenticationScreen',
                       headerShown: false,
@@ -86,7 +103,17 @@ export default function RootLayout() {
                     })}
                   />
                   <Stack.Screen
-                    name="screens/user/RegisterVehicleScreen"
+                    component={ChooseServicesScreen}
+                    name="ChooseServicesScreen"
+                    options={({route}) => ({
+                      title: 'ChooseServicesScreen',
+                      headerShown: false,
+                      animation: getAnimation(route),
+                    })}
+                  />
+                  <Stack.Screen
+                    name="RegisterVehicleScreen"
+                    component={RegisterVehicleScreen}
                     options={({route}) => ({
                       title: 'RegisterVehicleScreen',
                       headerShown: false,
@@ -94,7 +121,8 @@ export default function RootLayout() {
                     })}
                   />
                   <Stack.Screen
-                    name="(workshopTabs)"
+                    name="workshopTabs"
+                    component={WorkshopTabLayout}
                     options={({route}) => ({
                       title: 'workshopTabs',
                       headerShown: false,
@@ -102,7 +130,8 @@ export default function RootLayout() {
                     })}
                   />
                   <Stack.Screen
-                    name="(userTabs)"
+                    name="userTabs"
+                    component={userTabLayout}
                     options={({route}) => ({
                       title: 'userTabs',
                       headerShown: false,
@@ -110,7 +139,8 @@ export default function RootLayout() {
                     })}
                   />
                   <Stack.Screen
-                    name="screens/user/WorkshopDetails"
+                    name="WorkshopDetails"
+                    component={WorkshopDetails}
                     options={({route}) => ({
                       title: 'WorkshopDetails',
                       headerShown: false,
@@ -118,7 +148,8 @@ export default function RootLayout() {
                     })}
                   />
                   <Stack.Screen
-                    name="screens/user/CalendarDateSelectionScreen"
+                    name="CalendarDateSelectionScreen"
+                    component={CalendarDateSelectionScreen}
                     options={({route}) => ({
                       title: 'CalendarDateSelectionScreen',
                       headerShown: false,
@@ -126,18 +157,27 @@ export default function RootLayout() {
                     })}
                   />
                   <Stack.Screen
-                    name="screens/user/BookingConfirmationScreen"
+                    name="BookingConfirmationScreen"
+                    component={BookingConfirmationScreen}
                     options={({route}) => ({
                       title: 'BookingConfirmationScreen',
                       headerShown: false,
                       animation: getAnimation(route),
                     })}
                   />
-                  <Stack.Screen name="+not-found" />
-                </Stack>
-              </NavigationContainer>
-            </GestureHandlerRootView>
-          </AuthContext.Provider>
+                  <Stack.Screen 
+                    name="notFound"
+                    component={NotFoundScreen}
+                    options={({route}) => ({
+                      title: 'userTabs',
+                      headerShown: false,
+                      animation: getAnimation(route),
+                    })}
+                  />
+                </Stack.Navigator>
+              </GestureHandlerRootView>
+            </AuthContext.Provider>
+          </NavigationContext.Provider>
         </GlobalProvider>
       </ThemeProvider>
     </Provider>

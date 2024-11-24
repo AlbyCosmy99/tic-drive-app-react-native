@@ -14,18 +14,20 @@ import UserAuthenticationContent from '@/components/auth/UserAuthentificationCon
 import smallDevicebreakpointHeight from '@/constants/smallDevicebreakpointHeight';
 
 import {Dimensions} from 'react-native';
-import {useLocalSearchParams} from 'expo-router';
 import AuthAction from '@/types/auth/Action';
 import isIOSPlatform from '@/utils/devices/IsIOSPlatform';
 import { globalStyles } from '@/styles/globalStyles';
+import { useRoute } from '@react-navigation/native';
 const {width, height} = Dimensions.get('window');
 
 export default function UserAuthenticationScreen() {
   const [isUserRegistering, setIsUserRegistering] = useState<boolean>(false);
-  const searchParams = useLocalSearchParams();
+  const route = useRoute()
+  //@ts-ignore
+  const {register, isUser} = route.params
 
   useEffect(() => {
-    if (searchParams.register) {
+    if (register) {
       setIsUserRegistering(true);
     }
   }, []);
@@ -58,7 +60,7 @@ export default function UserAuthenticationScreen() {
               action={action}
               isUserRegistering={isUserRegistering}
               setIsUserRegistering={setIsUserRegistering}
-              clientCategory={searchParams.user === '0' ? 'workshop' : 'user'}
+              clientCategory={isUser ? 'user' : 'workshop'}
             />
           </ScrollView>
         </View>

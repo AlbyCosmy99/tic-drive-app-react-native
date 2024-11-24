@@ -6,6 +6,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import PrenotationRequestCard from '@/components/workshop/PrenotationRequestCard';
 import { globalStyles } from '@/styles/globalStyles';
+
 export default function WorkshopRequests() {
   return (
     <LinearGradient

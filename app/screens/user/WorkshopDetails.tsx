@@ -1,8 +1,7 @@
 import {Colors} from '@/constants/Colors';
 import workshops, {Workshop} from '@/constants/temp/Workshops';
 import {Image} from '@rneui/themed';
-import {router, useLocalSearchParams} from 'expo-router';
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   SafeAreaView,
@@ -28,9 +27,14 @@ import calculateWorkshopStars from '@/utils/workshops/calculateWorkshopStars';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 import { globalStyles } from '@/styles/globalStyles';
 import { useAppSelector } from '@/stateManagement/redux/hooks';
+import { useRoute } from '@react-navigation/native';
+import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 
 export default function WorkshopDetails() {
-  const {id} = useLocalSearchParams();
+  const route = useRoute()
+  //@ts-ignore
+  const {id} = route?.params
+  const {navigation} = useContext(NavigationContext)
 
   const [workshop, setWorkshop] = useState<Workshop | null>(null);
   const servicesChoosen = useAppSelector(
@@ -38,7 +42,7 @@ export default function WorkshopDetails() {
   );
 
   useEffect(() => {
-    setWorkshop(workshops.find(workshop => String(workshop.id) === id) || null);
+    setWorkshop(workshops.find(workshop => workshop.id === id) || null);
   }, [id]);
 
   return (
@@ -48,7 +52,7 @@ export default function WorkshopDetails() {
     >
       <View className="flex-row items-center justify-between mr-2.5">
         <TouchableOpacity
-          onPress={() => router.back()}
+          onPress={() => navigation?.goBack()}
           className="m-2 mb-2.5"
           accessible={true}
           accessibilityLabel="Back to previous page"
@@ -198,7 +202,7 @@ export default function WorkshopDetails() {
               {servicesChoosen.length > 0 && (
                 <TicDriveButton
                   text="Book a service"
-                  path={'../../screens/user/CalendarDateSelectionScreen'}
+                  routeName='CalendarDateSelectionScreen'
                   customButtonStyle={styles.customButtonStyle}
                 />
               )}

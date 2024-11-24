@@ -5,21 +5,26 @@ import {LinearGradient} from 'expo-linear-gradient';
 import ServicesCards from '@/components/ServicesCards';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {Colors} from '@/constants/Colors';
-import {useLocalSearchParams, useNavigation} from 'expo-router';
 import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
 import { globalStyles } from '@/styles/globalStyles';
 import { useAppSelector } from '@/stateManagement/redux/hooks';
+import { useRoute } from '@react-navigation/native';
 
 
 export default function ChooseServicesScreen() {
-  const params = useLocalSearchParams();
+  const route = useRoute()
   const colorScheme = useColorScheme();
   const user = useAppSelector(state => state.auth.user);
+
+  //@ts-ignore
+  const {category} = route?.params
+
   const isUserLookingForServices = () => {
-    return !(params && params.category === 'workshop');
+    return !(category === 'workshop');
   };
+
   const isButtonDisabled =
-    params.category === 'workshop'
+    category === 'workshop'
       ? useAppSelector(state => state.services.servicesChoosenByWorkshops)
           .length === 0
       : useAppSelector(state => state.services.servicesChoosenByUsers)
@@ -58,11 +63,8 @@ export default function ChooseServicesScreen() {
         </View>
         <TicDriveButton
           text={isUserLookingForServices() ? 'Book a service' : 'Continue'}
-          path={
-            isUserLookingForServices()
-              ? './user/RegisterVehicleScreen'
-              : '/screens/UserAuthenticationScreen?register=1&user=0'
-          }
+          routeName={isUserLookingForServices() ? 'RegisterVehicleScreen' : 'UserAuthenticationScreen'}
+          routeParams={isUserLookingForServices() ? {} : {register: true, isUser: false}}
           disabled={isButtonDisabled}
         />
       </SafeAreaView>

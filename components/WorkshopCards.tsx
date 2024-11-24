@@ -5,19 +5,18 @@ import {
 } from 'react-native-gesture-handler';
 import workshops, {Workshop} from '../constants/temp/Workshops';
 import {memo, useContext, useEffect} from 'react';
-import {router} from 'expo-router';
 import GlobalContext from '@/stateManagement/contexts/GlobalContext';
 import { useAppSelector } from '@/stateManagement/redux/hooks';
+import navigationPush from '@/services/navigation/push';
+import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 function WorkshopCards() {
   const {workshopFilter, servicesChoosen, setServicesChoosen} =
     useContext(GlobalContext);
+  const {navigation} = useContext(NavigationContext)
 
   const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);
   const handleCardPress = (workshop: Workshop) => {
-    router.push({
-      pathname: '../../screens/user/WorkshopDetails',
-      params: {id: workshop.id},
-    });
+    navigationPush(navigation, 'WorkshopDetails', {id: workshop.id})
   };
 
   //temp useEffect

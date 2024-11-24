@@ -1,4 +1,3 @@
-import {Tabs} from 'expo-router';
 import {Colors} from '../../constants/Colors';
 import HomeIcon from '../../assets/svg/homeIcon.svg';
 import BookingsIcon from '../../assets/svg/bookingsIcon.svg';
@@ -7,65 +6,82 @@ import ChatIcon from '../../assets/svg/chatIcon.svg';
 import AccountIcon from '../../assets/svg/accountIcon.svg';
 import HomeTab from './Home';
 import {useAppSelector} from '../../stateManagement/redux/hooks';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import UserHome from './Home';
+import UserBookings from './Bookings';
+import UserFavourite from './Favourite';
+import UserChat from './Chat';
+import UserAccount from './Account';
 
-export default function TabLayout() {
+const Tab = createBottomTabNavigator();
+
+export default function UserTabLayout() {
   const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);
 
   if (!isUserLogged) {
     return <HomeTab />;
   }
   return (
-    <Tabs screenOptions={{tabBarActiveTintColor: Colors.light.green.drive}}>
-      <Tabs.Screen
-        name="Home"
-        options={{
-          title: 'Home',
-          headerShown: false,
-          tabBarIcon: ({color}) => (
-            <HomeIcon width={28} fill={color} name="Home" />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="Bookings"
-        options={{
-          title: 'Bookings',
-          headerShown: false,
-          tabBarIcon: ({color}) => (
-            <BookingsIcon width={28} fill={color} name="Home" />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="Favourite"
-        options={{
-          title: 'Favourite',
-          headerShown: false,
-          tabBarIcon: ({color}) => (
-            <FavouriteIcon width={28} fill={color} name="Home" />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="Chat"
-        options={{
-          title: 'Chat',
-          headerShown: false,
-          tabBarIcon: ({color}) => (
-            <ChatIcon width={28} fill={color} name="Home" />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="Account"
-        options={{
-          title: 'Account',
-          headerShown: false,
-          tabBarIcon: ({color}) => (
-            <AccountIcon width={28} fill={color} name="Home" />
-          ),
-        }}
-      />
-    </Tabs>
+    <Tab.Navigator
+    screenOptions={{
+      tabBarActiveTintColor: Colors.light.green.drive,
+    }}
+  >
+    <Tab.Screen
+      name="Home"
+      component={UserHome}
+      options={{
+        title: 'Home',
+        headerShown: false,
+        tabBarIcon: ({color}) => (
+          <HomeIcon width={28} fill={color} name="Home" />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="Bookings"
+      component={UserBookings}
+      options={{
+        title: 'Bookings',
+        headerShown: false,
+        tabBarIcon: ({color}) => (
+          <BookingsIcon width={28} fill={color} name="Home" />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="Favourite"
+      component={UserFavourite}
+      options={{
+        title: 'Favourite',
+        headerShown: false,
+        tabBarIcon: ({color}) => (
+          <FavouriteIcon width={28} fill={color} name="Home" />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="Chat"
+      component={UserChat}
+      options={{
+        title: 'Chat',
+        headerShown: false,
+        tabBarIcon: ({color}) => (
+          <ChatIcon width={28} fill={color} name="Home" />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="Account"
+      component={UserAccount}
+      options={{
+        title: 'Account',
+        headerShown: false,
+        tabBarIcon: ({color}) => (
+          <AccountIcon width={28} fill={color} name="Home" />
+        ),
+      }}
+    />
+  </Tab.Navigator>
   );
 }

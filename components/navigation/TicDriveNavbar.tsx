@@ -1,12 +1,15 @@
 import {View, Text, StyleSheet, useColorScheme} from 'react-native';
 import {Colors} from '@/constants/Colors';
-import {router, useNavigation} from 'expo-router';
 import {StackActions} from '@react-navigation/native';
 import ToPreviousPage from './ToPreviousPage';
 import TicDriveAuthButton from '../ui/buttons/TicDriveAuthButton';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import { useAppDispatch, useAppSelector } from '@/stateManagement/redux/hooks';
 import { reset } from '@/stateManagement/redux/slices/servicesSlice';
+import { useContext } from 'react';
+import NavigationContext from '@/stateManagement/contexts/NavigationContext';
+import navigationPush from '@/services/navigation/push';
+import navigationReplace from '@/services/navigation/replace';
 interface TicDriveNavbarProps {
   isLoginAvailable?: boolean;
   canGoBack?: boolean;
@@ -19,7 +22,7 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
   const colorScheme = useColorScheme();
   const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);
   const dispatch = useAppDispatch();
-  const navigation = useNavigation()
+  const {navigation} = useContext(NavigationContext)
 
   const backgroundStyle = {
     backgroundColor:
@@ -43,7 +46,7 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
             navigation.dispatch(StackActions.popToTop());
           }
           dispatch(reset());
-          router.replace('/?animation=fade');
+          navigationReplace(navigation, 'Hub')
         }}
         className="flex-row flex-1 justify-center items-center"
       >
@@ -67,7 +70,7 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
           ) : (
             <TicDriveAuthButton
               onPress={() => {
-                router.push('../../screens/UserAuthenticationScreen');
+                navigationPush(navigation, 'UserAuthenticationScreen')
               }}
               action="login"
             />

@@ -6,10 +6,13 @@ import {router, useNavigation} from 'expo-router';
 import {StackActions} from '@react-navigation/native';
 import { saveUser } from '@/services/auth/secureStore/user';
 import User, { UserCategory } from '@/types/User';
-import GlobalContext from '@/stateManagement/contexts/GlobalContext';
 import { useAppDispatch } from '@/stateManagement/redux/hooks';
-import AuthContext from '@/stateManagement/contexts/AuthContext';
+import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
 import { login, setAreFormErrors } from '@/stateManagement/redux/slices/authSlice';
+import NavigationContext from '@/stateManagement/contexts/NavigationContext';
+import navigationPush from '@/services/navigation/push';
+import navigationReset from '@/services/navigation/reset';
+import navigationReplace from '@/services/navigation/replace';
 
 type FormData = {
   email: string;
@@ -38,10 +41,8 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
     formState: {errors},
   } = useForm<FormData>();
 
-  const {loginBtnCustomPath, setLoginBtnCustomPath} =
-    React.useContext(GlobalContext);
-  const {setIsUserLogged} = React.useContext(AuthContext);
-  const navigation = useNavigation();
+  const {setIsUserLogged, loginRouteName, setLoginRouteName} = React.useContext(AuthContext);
+  const {navigation} = React.useContext(NavigationContext)
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
@@ -60,7 +61,6 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
 
   const onSubmit = async (data: FormData) => {
     setIsUserLogged(true);
-
     const user: User = {
       name: data.name,
       email: data.email,
@@ -68,19 +68,16 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
     };
     dispatch(login(user));
 
-    await saveUser(user);
-
-    if (loginBtnCustomPath) {
-      if (navigation.canGoBack()) {
-        navigation.dispatch(StackActions.popToTop());
-      }
-      router.replace(loginBtnCustomPath);
-      setLoginBtnCustomPath(undefined);
-    } else if (navigation.canGoBack()) {
-      router.replace('/');
+    
+    if (loginRouteName) {
+      navigationReset(navigation, 0, loginRouteName)
+      setLoginRouteName("");
+    } else if (navigation?.canGoBack()) {
+      navigationReplace(navigation, 'Hub')
     } else {
-      router.replace('/');
+      navigationPush(navigation, 'Hub')
     }
+    await saveUser(user);
   };
 
   React.useEffect(() => {

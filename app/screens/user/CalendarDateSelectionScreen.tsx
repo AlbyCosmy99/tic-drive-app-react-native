@@ -6,11 +6,11 @@ import {useContext} from 'react';
 import {SafeAreaView, Text, View} from 'react-native';
 import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
 import { globalStyles } from '@/styles/globalStyles';
-import GlobalContext from '@/stateManagement/contexts/GlobalContext';
 import { useAppSelector } from '@/stateManagement/redux/hooks';
+import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
 
 export default function CalendarDateSelectionScreen() {
-  const {setLoginBtnCustomPath} = useContext(GlobalContext);
+  const {setLoginRouteName} = useContext(AuthContext);
   const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);
 
   return (
@@ -31,20 +31,14 @@ export default function CalendarDateSelectionScreen() {
         </View>
         <TicDriveButton
           text={'Confirm ' + (!isUserLogged ? 'and login' : '')}
-          path={
-            isUserLogged
-              ? '../user/BookingConfirmationScreen'
-              : '../UserAuthenticationScreen'
-          }
+          routeName={isUserLogged ? 'BookingConfirmationScreen' : 'UserAuthenticationScreen'}
+          routeParams={isUserLogged? {} : {isUser: true}}
           toTop={isUserLogged ? true : false}
           replace={isUserLogged ? true : false}
           onClick={
             isUserLogged
               ? () => {}
-              : () =>
-                  setLoginBtnCustomPath(
-                    '../screens/user/BookingConfirmationScreen',
-                  )
+              : () => setLoginRouteName('BookingConfirmationScreen')
           }
         />
       </SafeAreaView>

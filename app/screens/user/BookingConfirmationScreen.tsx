@@ -40,8 +40,11 @@ export default function BookingConfirmationScreen() {
         </View>
         <TicDriveButton
           replace={true}
+          toTop={true}
           text="Home"
-          path={'../../(userTabs)/Home/?animation=fade'}
+          routeName='userTabs'
+          routeParams={{animation: 'fade'}}
+          stateRouteName='Home'     
           onClick={() => {
             dispatch(reset());
           }}

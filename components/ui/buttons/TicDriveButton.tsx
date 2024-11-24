@@ -2,15 +2,20 @@ import React, {memo, useContext} from 'react';
 import {Button} from '@rneui/themed';
 import {StyleProp, ViewStyle} from 'react-native';
 import {Colors} from '@/constants/Colors';
-import {useRouter, Href} from 'expo-router';
-import {StackActions, useNavigation} from '@react-navigation/native';
 import GlobalContext from '@/stateManagement/contexts/GlobalContext';
+import NavigationContext from '@/stateManagement/contexts/NavigationContext';
+import navigationPush from '@/services/navigation/push';
+import navigationReplace from '@/services/navigation/replace';
+import navigationReset from '@/services/navigation/reset';
 
 interface TicDriveButtonProps {
   text: string;
   customButtonStyle?: StyleProp<ViewStyle>;
   customContainerStyle?: StyleProp<ViewStyle>;
-  path?: Href;
+  routeName?: string;
+  routeParams?: any;
+  stateRouteName?: string,
+  stateRouteParams?: any,
   replace?: boolean;
   onClick?: () => void;
   toTop?: boolean;
@@ -21,15 +26,17 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({
   text,
   customButtonStyle,
   customContainerStyle,
-  path,
+  routeName,
+  routeParams = {},
+  stateRouteName,
+  stateRouteParams = {},
   replace = false,
   onClick,
   toTop = false,
   disabled = false,
 }) => {
-  const router = useRouter();
   const {setWorkshopFilter} = useContext(GlobalContext);
-  const navigation = useNavigation();
+  const {navigation} = useContext(NavigationContext)
 
   // const whenIsDisabled: Record<string, boolean> = {
   //   "book a service": servicesChoosen.length === 0,
@@ -57,14 +64,14 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({
         customContainerStyle,
       ]}
       onPress={() => {
-        if (path) {
-          if (toTop && navigation.canGoBack()) {
-            navigation.dispatch(StackActions.popToTop());
+        if (routeName) {
+          if (toTop) {
+            navigationReset(navigation,0,routeName ?? 'Hub',routeParams,stateRouteName, stateRouteParams)
           }
-          if (!replace) {
-            router.push(path ?? '/');
+          else if (replace) {
+            navigationReplace(navigation, routeName ?? 'Hub', routeParams)
           } else {
-            router.replace(path ?? '/');
+            navigationPush(navigation, routeName ?? 'Hub', routeParams,stateRouteName, stateRouteParams)
           }
 
           if (text.toLowerCase() === 'confirm') {
