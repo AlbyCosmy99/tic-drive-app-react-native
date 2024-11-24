@@ -1,13 +1,12 @@
 import {View} from 'react-native';
 import {useContext, useEffect} from 'react';
 import {getUser} from '@/services/auth/secureStore/user';
-import {login, logout} from '@/stateManagement/redux/slices/authSlice';
+import {login} from '@/stateManagement/redux/slices/authSlice';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import * as SplashScreen from 'expo-splash-screen';
-import {StackActions, useNavigation, useRoute} from '@react-navigation/native';
+import { useNavigation, useRoute} from '@react-navigation/native';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import navigationReset from '@/services/navigation/reset';
-import navigationReplace from '@/services/navigation/replace';
 
 const Hub = () => {
   const dispatch = useAppDispatch();
@@ -15,7 +14,6 @@ const Hub = () => {
   const {setNavigation} = useContext(NavigationContext);
   const route = useRoute()
   //@ts-ignore
-  const {isloggingOut} = route?.params
 
   let user = useAppSelector(state => state.auth.user);
 
@@ -23,11 +21,13 @@ const Hub = () => {
     setNavigation(navigation);
     const checkAuth = async () => {
       try {
-        if (!user && !isloggingOut) {
+        //@ts-ignore
+        if (!user && !route?.params?.isloggingOut) {
           user = await getUser();
+          dispatch(login(user));
         }
         if (user) {
-          dispatch(login(user));
+         
           navigationReset(
             navigation,
             0,
