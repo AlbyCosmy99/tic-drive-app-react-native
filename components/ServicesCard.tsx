@@ -70,7 +70,7 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
       pressIn(id);
     }
 
-    //if true it is a card not linked to user or workshop services choices
+    //if isSingleChoice === null, the card it is not linked to user or workshop services choices
     if (isSingleChoice === null) return;
 
     if (isPressed) {

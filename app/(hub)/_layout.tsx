@@ -4,14 +4,18 @@ import {getUser} from '@/services/auth/secureStore/user';
 import {login, logout} from '@/stateManagement/redux/slices/authSlice';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import * as SplashScreen from 'expo-splash-screen';
-import {useNavigation} from '@react-navigation/native';
+import {StackActions, useNavigation, useRoute} from '@react-navigation/native';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import navigationReset from '@/services/navigation/reset';
+import navigationReplace from '@/services/navigation/replace';
 
 const Hub = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
   const {setNavigation} = useContext(NavigationContext);
+  const route = useRoute()
+  //@ts-ignore
+  const {isloggingOut} = route?.params
 
   let user = useAppSelector(state => state.auth.user);
 
@@ -19,11 +23,11 @@ const Hub = () => {
     setNavigation(navigation);
     const checkAuth = async () => {
       try {
-        if (!user) {
+        if (!user && !isloggingOut) {
           user = await getUser();
-          dispatch(login(user));
         }
         if (user) {
+          dispatch(login(user));
           navigationReset(
             navigation,
             0,
@@ -32,7 +36,6 @@ const Hub = () => {
             user?.category === 'workshop' ? 'Requests' : 'Home',
           );
         } else {
-          dispatch(logout());
           navigationReset(navigation, 0, 'LandingScreen', {animation: 'fade'});
         }
         SplashScreen.hideAsync();

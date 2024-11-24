@@ -66,7 +66,9 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
       <View className="flex-1 justify-end flex-row">
         {isLoginAvailable &&
           (isUserLogged ? (
-            <TicDriveAuthButton action="logout" />
+            <TicDriveAuthButton 
+              action="logout"
+            />
           ) : (
             <TicDriveAuthButton
               onPress={() => {

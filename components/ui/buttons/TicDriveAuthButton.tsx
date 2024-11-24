@@ -4,6 +4,7 @@ import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import {logout} from '@/stateManagement/redux/slices/authSlice';
+import { reset } from '@/stateManagement/redux/slices/servicesSlice';
 import AuthAction from '@/types/auth/Action';
 import {Entypo} from '@expo/vector-icons';
 import {nanoid} from '@reduxjs/toolkit';
@@ -28,10 +29,11 @@ const TicDriveAuthButton: React.FC<TicDriveAuthButtonProps> = ({
   const handleLogout = async () => {
     //params for loading car animation - isCarGreen -> animation color is green
     const params = {
-      isCarGreen: false,
+      isloggingOut: true,
     };
     navigationReplace(navigation, 'Hub', params);
     dispatch(logout());
+    dispatch(reset())
     setIsUserLogged(false);
 
     await saveUser(null);
