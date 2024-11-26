@@ -1,4 +1,4 @@
-import { Text, View } from "react-native"
+import { ScrollView, Text, View } from "react-native"
 import WorkshopRequestCard from "./WorkshopRequestCard"
 import WorkshopRequestStatus from "@/types/WorkshopRequestStatus"
 import { FC } from "react"
@@ -9,10 +9,12 @@ interface WorkshopRequestCardsProps {
 
 const WorkshopRequestCards:FC<WorkshopRequestCardsProps> = ({status}) => {
     return (
-        <View className="flex mt-4">
+        <ScrollView className="flex my-4 px-3">
             <WorkshopRequestCard status={status}/>
             <WorkshopRequestCard status={status}/>
-        </View>
+            <WorkshopRequestCard status={status}/>
+            <WorkshopRequestCard status={status}/>
+        </ScrollView>
 
     )
 }
