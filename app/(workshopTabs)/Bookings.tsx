@@ -1,13 +1,16 @@
 import {Colors} from '@/constants/Colors';
-import {SafeAreaView, Text, StyleSheet} from 'react-native';
+import { Text, StyleSheet} from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {LinearGradient} from 'expo-linear-gradient';
-import PrenotationBookedCard from '@/components/workshop/PrenotationBookedCard';
-import {ScrollView} from 'react-native-gesture-handler';
-import HorizontalLine from '@/components/ui/HorizontalLine';
-import {globalStyles} from '@/styles/globalStyles';
+import WorkshopRequestCards from '@/components/ui/cards/WorkshopRequestCards';
+import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
+import SegmentedControl from '@/components/SegmentedControl';
+import { useState } from 'react';
+import WorkshopRequestsDate from '@/types/segmentedControlOptions/WorkshopRequestsDate';
+import workshopRequestsDates from '@/constants/SegmentedControlOptions/WorkshopRequestsDates';
 
 export default function WorkshopBookings() {
+  const [selectedRequestDate, setSelectedRequestDate] = useState<WorkshopRequestsDate>(workshopRequestsDates[0])
   return (
     <LinearGradient
       colors={[
@@ -16,36 +19,18 @@ export default function WorkshopBookings() {
       ]}
       className="flex-1 w-full h-full"
     >
-      <SafeAreaView className="flex-1" style={globalStyles().safeAreaView}>
+      <SafeAreaViewLayout tailwindCss='mx-3.5'>
         <TicDriveNavbar isLoginAvailable={false} canGoBack={false} />
-        <Text className="font-bold text-2xl text-center mb-2 mt-1">
-          All Active Bookings
+        <Text className="font-semibold text-2xl mb-7 mt-2 text-3xl">
+          Bookings
         </Text>
-        <HorizontalLine />
-        <ScrollView className="flex-1">
-          <PrenotationBookedCard
-            model="Alfa Romeo"
-            service="Oil change"
-            price="59$"
-            pin={1457}
-            time="TODAY - 15:30"
-          />
-          <PrenotationBookedCard
-            model="Bmw series 3"
-            service="Battery"
-            price="237$"
-            pin={3454}
-            time="23/10 - 10:30"
-          />
-          <PrenotationBookedCard
-            model="Pegeout 208"
-            service="Oil change"
-            price="59$"
-            pin={2367}
-            time="25/10 - 14:30"
-          />
-        </ScrollView>
-      </SafeAreaView>
+        <SegmentedControl 
+          options={workshopRequestsDates}
+          segmentedControlSelection={selectedRequestDate}
+          setSegmentedControlSelection={setSelectedRequestDate}
+        />
+        <WorkshopRequestCards status='accepted'/>
+      </SafeAreaViewLayout>
     </LinearGradient>
   );
 }

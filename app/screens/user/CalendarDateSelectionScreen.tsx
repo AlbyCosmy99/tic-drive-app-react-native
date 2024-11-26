@@ -8,6 +8,7 @@ import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomIns
 import {globalStyles} from '@/styles/globalStyles';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
+import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 
 export default function CalendarDateSelectionScreen() {
   const {setLoginRouteName} = useContext(AuthContext);
@@ -21,10 +22,7 @@ export default function CalendarDateSelectionScreen() {
       ]}
       className={`flex-1 w-full h-full ${necessaryDeviceBottomInset()}`}
     >
-      <SafeAreaView
-        className="flex-1 justify-between"
-        style={globalStyles().safeAreaView}
-      >
+      <SafeAreaViewLayout tailwindCss='justify-between'>
         <TicDriveNavbar isLoginAvailable={false} />
         <View className="items-center justify-center flex-1">
           <Text>select date and hour</Text>
@@ -45,7 +43,7 @@ export default function CalendarDateSelectionScreen() {
               : () => setLoginRouteName('BookingConfirmationScreen')
           }
         />
-      </SafeAreaView>
+      </SafeAreaViewLayout>
     </LinearGradient>
   );
 }

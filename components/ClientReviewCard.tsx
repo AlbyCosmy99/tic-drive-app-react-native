@@ -1,9 +1,9 @@
 import {Colors} from '@/constants/Colors';
 import {StyleSheet, Text, View} from 'react-native';
 import Star from '../assets/svg/star.svg';
-import {Image} from '@rneui/themed';
 import Review from '../constants/temp/Review';
 import {memo} from 'react';
+import CircularUserAvatar from './ui/avatars/CircularUserAvatar';
 
 type ClientReviewCardProps = {
   review: Review;
@@ -26,7 +26,7 @@ function ClientReviewCard({review}: ClientReviewCardProps) {
       <View className="flex-row items-center justify-between">
         <View className="flex-row">
           <View>
-            <Image source={{uri: review.authorImageUrl}} style={styles.image} />
+            <CircularUserAvatar uri={review.authorImageUrl}/>
           </View>
           <View className="justify-center ml-2.5">
             <Text className="text-base font-medium">{review.authorName}</Text>
@@ -50,11 +50,6 @@ function ClientReviewCard({review}: ClientReviewCardProps) {
 const styles = StyleSheet.create({
   reviewContainer: {
     borderTopColor: '#ebebeb',
-  },
-  image: {
-    width: 45,
-    height: 45,
-    borderRadius: 50,
   },
   when: {
     color: Colors.light.placeholderText,

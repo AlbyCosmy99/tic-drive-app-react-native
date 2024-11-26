@@ -7,6 +7,7 @@ import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomIns
 import {globalStyles} from '@/styles/globalStyles';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import {reset} from '@/stateManagement/redux/slices/servicesSlice';
+import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 
 export default function BookingConfirmationScreen() {
   const dispatch = useAppDispatch();
@@ -18,10 +19,7 @@ export default function BookingConfirmationScreen() {
       ]}
       className={`flex-1 w-full h-full ${necessaryDeviceBottomInset()}`}
     >
-      <SafeAreaView
-        style={[styles.container, globalStyles().safeAreaView]}
-        className="flex-1"
-      >
+      <SafeAreaViewLayout styles={[styles.container]}>
         <TicDriveNavbar isLoginAvailable={false} />
         <View className="flex-1 justify-center items-center">
           <Text
@@ -49,7 +47,7 @@ export default function BookingConfirmationScreen() {
             dispatch(reset());
           }}
         />
-      </SafeAreaView>
+      </SafeAreaViewLayout>
     </LinearGradient>
   );
 }

@@ -6,8 +6,19 @@ import {ScrollView} from 'react-native-gesture-handler';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import PrenotationRequestCard from '@/components/workshop/PrenotationRequestCard';
 import {globalStyles} from '@/styles/globalStyles';
+import SegmentedControl from '@/components/SegmentedControl';
+import workshopRequestsDates from '@/constants/SegmentedControlOptions/WorkshopRequestsDates';
+import { useEffect, useState } from 'react';
+import WorkshopRequestsDate from '@/types/segmentedControlOptions/WorkshopRequestsDate';
+import WorkshopRequestCards from '@/components/ui/cards/WorkshopRequestCards';
+import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 
 export default function WorkshopRequests() {
+  const [selectedRequestDate, setSelectedRequestDate] = useState<WorkshopRequestsDate>(workshopRequestsDates[0])
+
+  useEffect(() => {
+    console.log(selectedRequestDate)
+  }, [selectedRequestDate])
   return (
     <LinearGradient
       colors={[
@@ -16,47 +27,18 @@ export default function WorkshopRequests() {
       ]}
       className="flex-1 w-full h-full"
     >
-      <SafeAreaView className="flex-1" style={globalStyles().safeAreaView}>
+      <SafeAreaViewLayout tailwindCss='mx-3.5'>
         <TicDriveNavbar isLoginAvailable={false} canGoBack={false} />
-        <Text className="font-bold text-2xl text-center mb-2 mt-1">
-          All Requests
+        <Text className="font-semibold text-2xl mb-7 mt-2 text-3xl">
+          Requests
         </Text>
-        <HorizontalLine />
-        <ScrollView className="flex-1">
-          <PrenotationRequestCard
-            model="Alfa Romeo"
-            service="Oil change"
-            price="59$"
-            pin={1457}
-            time="TODAY - 15:30"
-            number={8}
-          />
-          <PrenotationRequestCard
-            model="Alfa Romeo"
-            service="Oil change"
-            price="59$"
-            pin={1457}
-            time="TODAY - 15:30"
-            number={9}
-          />
-          <PrenotationRequestCard
-            model="Alfa Romeo"
-            service="Oil change"
-            price="59$"
-            pin={1457}
-            time="TODAY - 15:30"
-            number={10}
-          />
-          <PrenotationRequestCard
-            model="Alfa Romeo"
-            service="Oil change"
-            price="59$"
-            pin={1457}
-            time="TODAY - 15:30"
-            number={11}
-          />
-        </ScrollView>
-      </SafeAreaView>
+        <SegmentedControl
+          options={workshopRequestsDates}
+          segmentedControlSelection={selectedRequestDate}
+          setSegmentedControlSelection={setSelectedRequestDate}
+        />
+        <WorkshopRequestCards status='pending'/>
+      </SafeAreaViewLayout>
     </LinearGradient>
   );
 }

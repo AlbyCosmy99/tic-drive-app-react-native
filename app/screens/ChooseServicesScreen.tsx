@@ -9,6 +9,7 @@ import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomIns
 import {globalStyles} from '@/styles/globalStyles';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import {useRoute} from '@react-navigation/native';
+import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 
 export default function ChooseServicesScreen() {
   const route = useRoute();
@@ -38,7 +39,7 @@ export default function ChooseServicesScreen() {
         ]}
         className="flex-1 absolute w-full h-full"
       />
-      <SafeAreaView className="flex-1" style={globalStyles().safeAreaView}>
+      <SafeAreaViewLayout>
         <TicDriveNavbar isLoginAvailable={false} />
         <View className="flex-1 justify-between">
           <Text
@@ -72,7 +73,7 @@ export default function ChooseServicesScreen() {
           }
           disabled={isButtonDisabled}
         />
-      </SafeAreaView>
+      </SafeAreaViewLayout>
     </View>
   );
 }

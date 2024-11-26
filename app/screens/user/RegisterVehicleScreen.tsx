@@ -22,6 +22,7 @@ import Car from '@/types/Car';
 import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
 import {globalStyles} from '@/styles/globalStyles';
 import GlobalContext from '@/stateManagement/contexts/GlobalContext';
+import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 
 function RegisterVehicleScreen() {
   const [segmentedControlSelection, setSegmentedControlSelection] =
@@ -53,10 +54,7 @@ function RegisterVehicleScreen() {
   };
 
   return (
-    <SafeAreaView
-      style={[backgroundStyle, globalStyles().safeAreaView]}
-      className={`flex-1 ${necessaryDeviceBottomInset()}`}
-    >
+    <SafeAreaViewLayout styles={[backgroundStyle]}>
       <ToPreviousPage containerClassName="m-2 mb-7" />
       <View className="flex-1 justify-between">
         <Text
@@ -68,10 +66,13 @@ function RegisterVehicleScreen() {
         >
           Register your vehicle for service bookings
         </Text>
-        <SegmentedControl
-          segmentedControlSelection={segmentedControlSelection}
-          setSegmentedControlSelection={setSegmentedControlSelection}
-        />
+        <View className='m-3.5'>
+          <SegmentedControl
+            options={options}
+            segmentedControlSelection={segmentedControlSelection}
+            setSegmentedControlSelection={setSegmentedControlSelection}
+          />
+        </View>
         <View
           style={styles.bookingDetailsContainer}
           className="flex-1 m-3.5 border-2 rounded-xl"
@@ -185,7 +186,7 @@ function RegisterVehicleScreen() {
         stateRouteName="Home"
         disabled={carNotFound}
       />
-    </SafeAreaView>
+    </SafeAreaViewLayout>
   );
 }
 

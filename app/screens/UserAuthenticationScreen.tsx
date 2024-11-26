@@ -18,6 +18,7 @@ import AuthAction from '@/types/auth/Action';
 import isIOSPlatform from '@/utils/devices/IsIOSPlatform';
 import {globalStyles} from '@/styles/globalStyles';
 import {useRoute} from '@react-navigation/native';
+import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 const {width, height} = Dimensions.get('window');
 
 export default function UserAuthenticationScreen() {
@@ -41,10 +42,7 @@ export default function UserAuthenticationScreen() {
       className="flex-1"
       behavior={isIOSPlatform() ? 'padding' : 'height'}
     >
-      <SafeAreaView
-        className="flex-1 bg-white"
-        style={globalStyles().safeAreaView}
-      >
+      <SafeAreaViewLayout tailwindCss='bg-white'>
         <View className="flex-1 justify-between">
           <View>
             <View style={{height: 60}}>
@@ -63,7 +61,7 @@ export default function UserAuthenticationScreen() {
             />
           </ScrollView>
         </View>
-      </SafeAreaView>
+      </SafeAreaViewLayout>
     </KeyboardAvoidingView>
   );
 }

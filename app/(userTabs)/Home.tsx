@@ -14,6 +14,7 @@ import GlobalContext from '@/stateManagement/contexts/GlobalContext';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import navigationPush from '@/services/navigation/push';
+import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 
 export default function UserHome() {
   const {setWorkshopFilter} = useContext(GlobalContext);
@@ -31,7 +32,7 @@ export default function UserHome() {
       ]}
       className="flex-1 w-full h-full"
     >
-      <SafeAreaView className="flex-1" style={globalStyles().safeAreaView}>
+      <SafeAreaViewLayout>
         <TicDriveNavbar isLoginAvailable={false} />
         {userServicesChoosen.length > 0 ? (
           <View className="flex-row items-center">
@@ -79,7 +80,7 @@ export default function UserHome() {
             </View>
           )}
         </View>
-      </SafeAreaView>
+      </SafeAreaViewLayout>
     </LinearGradient>
   );
 }

@@ -4,7 +4,6 @@ import {Image} from '@rneui/themed';
 import {useContext, useEffect, useState} from 'react';
 import {
   ActivityIndicator,
-  SafeAreaView,
   StyleSheet,
   Text,
   View,
@@ -22,13 +21,12 @@ import ChatIcon from '../../../assets/svg/chat.svg';
 import {Ionicons} from '@expo/vector-icons';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import ClientReviewCards from '@/components/ClientReviewCards';
-import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
 import calculateWorkshopStars from '@/utils/workshops/calculateWorkshopStars';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
-import {globalStyles} from '@/styles/globalStyles';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import {useRoute} from '@react-navigation/native';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
+import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 
 export default function WorkshopDetails() {
   const route = useRoute();
@@ -46,10 +44,7 @@ export default function WorkshopDetails() {
   }, [id]);
 
   return (
-    <SafeAreaView
-      style={[styles.container, globalStyles().safeAreaView]}
-      className={`flex-1 p-2.5 ${necessaryDeviceBottomInset()}`}
-    >
+    <SafeAreaViewLayout tailwindCss='p-2.5' styles={[styles.container]}>
       <View className="flex-row items-center justify-between mr-2.5">
         <TouchableOpacity
           onPress={() => navigation?.goBack()}
@@ -210,7 +205,7 @@ export default function WorkshopDetails() {
           </View>
         </>
       )}
-    </SafeAreaView>
+    </SafeAreaViewLayout>
   );
 }
 

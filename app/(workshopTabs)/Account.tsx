@@ -6,6 +6,7 @@ import HorizontalLine from '@/components/ui/HorizontalLine';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import {globalStyles} from '@/styles/globalStyles';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
+import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 
 export default function WorkshopAccount() {
   const user = useAppSelector(state => state.auth.user);
@@ -18,7 +19,7 @@ export default function WorkshopAccount() {
       ]}
       className="flex-1 w-full h-full"
     >
-      <SafeAreaView className="flex-1" style={globalStyles().safeAreaView}>
+      <SafeAreaViewLayout>
         <TicDriveNavbar
           isLoginAvailable={user ? true : true}
           canGoBack={false}
@@ -35,7 +36,7 @@ export default function WorkshopAccount() {
           </View>
           <HorizontalLine height={2} />
         </View>
-      </SafeAreaView>
+      </SafeAreaViewLayout>
     </LinearGradient>
   );
 }
