@@ -13,7 +13,6 @@ const WorkshopRequestCards:FC<WorkshopRequestCardsProps> = ({status}) => {
             <WorkshopRequestCard status={status}/>
             <WorkshopRequestCard status={status}/>
             <WorkshopRequestCard status={status}/>
-            <WorkshopRequestCard status={status}/>
         </ScrollView>
 
     )

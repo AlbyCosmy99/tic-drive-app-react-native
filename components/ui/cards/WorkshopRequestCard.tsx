@@ -75,14 +75,14 @@ const WorkshopRequestCard:FC<WorkshopRequestCardProps> = ({status}) => {
                 {
                     status === 'pending' && (
                         <View className="flex flex-row items-center my-2 mt-4">
-                            <View className="flex-1 flex items-center justify-center mx-2 p-2 rounded-3xl border" style={styles.acceptBtn}>
+                            <View className="flex-1 flex items-center justify-center mx-2 p-2 rounded-3xl border bg-drive border-drive">
                                 <TouchableWithoutFeedback>
                                     <Text style={styles.acceptText}>Accept</Text>
                                 </TouchableWithoutFeedback>
                             </View>
-                            <View className="flex-1 flex items-center justify-center mx-2 p-2 rounded-3xl border" style={styles.rejectBtn}>
+                            <View className="flex-1 flex items-center justify-center mx-2 p-2 rounded-3xl border border-tic">
                                 <TouchableWithoutFeedback>
-                                    <Text style={styles.rejectText}>Reject</Text>
+                                    <Text className="text-tic">Reject</Text>
                                 </TouchableWithoutFeedback>
                             </View>
                         </View>
@@ -90,12 +90,12 @@ const WorkshopRequestCard:FC<WorkshopRequestCardProps> = ({status}) => {
                 }
             </View>
             {status === 'accepted' && (
-                <View className="flex flex-row justify-center items-center bg-slate-100 p-3">
-                    <Text className="text-center text-2xl mr-2" style={styles.pinLabel}>PIN:</Text>
-                    <Text className="text-2xl">55794</Text>
+                <View className="flex flex-row justify-center items-center bg-slate-100 p-3 my-2">
+                    <Text className="text-center text-2xl mr-2 text-tic" >PIN:</Text>
+                    <Text className="text-2xl" style={styles.pinValue}>55794</Text>
                 </View>
             )}
-            <Text className="text-center mt-1 mb-3" style={styles.suggestNewTime}>Suggest new time?</Text>
+            <Text className="text-center mt-2 mb-3 text-tic">Suggest new time?</Text>
         </View>
     )
 }
@@ -116,24 +116,14 @@ const styles = StyleSheet.create({
     userInfoContainer: {
         borderBottomColor: Colors.light.SegmentedControlBackground
     },
-    acceptBtn: {
-        backgroundColor: Colors.light.green.drive,
-        borderColor: Colors.light.green.drive
-    },
-    rejectBtn: {
-        borderColor: Colors.light.ticText
-    },
     acceptText: {
         color: 'white'
     },
-    rejectText: {
-        color: Colors.light.ticText
-    },
-    suggestNewTime: {
-        color: Colors.light.ticText
-    },
     pinLabel: {
-        color: Colors.light.ticText
+        fontFamily: 'RegularLato'
+    },
+    pinValue: {
+        fontFamily: 'RegularLato'
     }
 })
 

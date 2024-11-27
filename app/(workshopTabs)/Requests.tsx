@@ -1,5 +1,5 @@
 import {Colors} from '@/constants/Colors';
-import {SafeAreaView, Text} from 'react-native';
+import {SafeAreaView, Text, View} from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {LinearGradient} from 'expo-linear-gradient';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -37,6 +37,9 @@ export default function WorkshopRequests() {
           segmentedControlSelection={selectedRequestDate}
           setSegmentedControlSelection={setSelectedRequestDate}
         />
+        <View className='mt-4'>
+          <HorizontalLine color={Colors.light.SegmentedControlBackground}/>
+        </View>
         <WorkshopRequestCards status='pending'/>
       </SafeAreaViewLayout>
     </LinearGradient>

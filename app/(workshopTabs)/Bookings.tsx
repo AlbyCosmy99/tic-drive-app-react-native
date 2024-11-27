@@ -1,5 +1,5 @@
 import {Colors} from '@/constants/Colors';
-import { Text, StyleSheet} from 'react-native';
+import { Text, StyleSheet, View} from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {LinearGradient} from 'expo-linear-gradient';
 import WorkshopRequestCards from '@/components/ui/cards/WorkshopRequestCards';
@@ -8,6 +8,7 @@ import SegmentedControl from '@/components/SegmentedControl';
 import { useState } from 'react';
 import WorkshopRequestsDate from '@/types/segmentedControlOptions/WorkshopRequestsDate';
 import workshopRequestsDates from '@/constants/SegmentedControlOptions/WorkshopRequestsDates';
+import HorizontalLine from '@/components/ui/HorizontalLine';
 
 export default function WorkshopBookings() {
   const [selectedRequestDate, setSelectedRequestDate] = useState<WorkshopRequestsDate>(workshopRequestsDates[0])
@@ -29,6 +30,9 @@ export default function WorkshopBookings() {
           segmentedControlSelection={selectedRequestDate}
           setSegmentedControlSelection={setSelectedRequestDate}
         />
+        <View className='mt-4'>
+          <HorizontalLine color={Colors.light.SegmentedControlBackground}/>
+        </View>
         <WorkshopRequestCards status='accepted'/>
       </SafeAreaViewLayout>
     </LinearGradient>
