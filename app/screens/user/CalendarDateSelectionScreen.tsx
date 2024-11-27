@@ -22,7 +22,7 @@ export default function CalendarDateSelectionScreen() {
       ]}
       className={`flex-1 w-full h-full ${necessaryDeviceBottomInset()}`}
     >
-      <SafeAreaViewLayout tailwindCss='justify-between'>
+      <SafeAreaViewLayout tailwindCss="justify-between">
         <TicDriveNavbar isLoginAvailable={false} />
         <View className="items-center justify-center flex-1">
           <Text>select date and hour</Text>

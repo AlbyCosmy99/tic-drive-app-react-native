@@ -1,3 +1,3 @@
 type WorkshopRequestStatus = 'pending' | 'accepted';
 
-export default WorkshopRequestStatus
+export default WorkshopRequestStatus;

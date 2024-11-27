@@ -7,7 +7,7 @@ import ChatIcon from '../../assets/svg/chatIcon.svg';
 import AccountIcon from '../../assets/svg/accountIcon.svg';
 import WorkshopChat from './Chat';
 import WorkshopBookings from './Bookings';
-import { Colors } from '@/constants/Colors';
+import {Colors} from '@/constants/Colors';
 
 const Tab = createBottomTabNavigator();
 

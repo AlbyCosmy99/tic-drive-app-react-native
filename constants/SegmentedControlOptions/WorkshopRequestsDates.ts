@@ -8,11 +8,11 @@ const workshopRequestsDates: WorkshopRequestsDate[] = [
   {
     index: 1,
     name: 'This week',
-  }, 
+  },
   {
     index: 2,
     name: 'This month',
-  }, 
+  },
 ];
 
 export default workshopRequestsDates;

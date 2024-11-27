@@ -1,6 +1,6 @@
-import { Colors } from '@/constants/Colors';
-import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Animated, StyleSheet } from 'react-native';
+import {Colors} from '@/constants/Colors';
+import React, {useEffect, useState} from 'react';
+import {View, Text, TouchableOpacity, Animated, StyleSheet} from 'react-native';
 import SegmentedControlSelection from '@/types/SegmentedControlSelection';
 
 interface SegmentedControlProps {
@@ -27,7 +27,7 @@ const SegmentedControl: React.FC<SegmentedControlProps> = ({
 
   const calculateOutputRange = (length: number) => {
     const step = 100 / length;
-    return Array.from({ length }, (_, index) => `${index * step}%`);
+    return Array.from({length}, (_, index) => `${index * step}%`);
   };
 
   const slidingIndicatorStyle = {

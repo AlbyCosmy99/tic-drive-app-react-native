@@ -4,7 +4,7 @@ import {getUser} from '@/services/auth/secureStore/user';
 import {login} from '@/stateManagement/redux/slices/authSlice';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import * as SplashScreen from 'expo-splash-screen';
-import { useNavigation, useRoute} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import navigationReset from '@/services/navigation/reset';
 
@@ -12,7 +12,7 @@ const Hub = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
   const {setNavigation} = useContext(NavigationContext);
-  const route = useRoute()
+  const route = useRoute();
   //@ts-ignore
 
   let user = useAppSelector(state => state.auth.user);
@@ -27,7 +27,6 @@ const Hub = () => {
           dispatch(login(user));
         }
         if (user) {
-         
           navigationReset(
             navigation,
             0,
@@ -52,7 +51,7 @@ const Hub = () => {
 
   return (
     <View className="justify-center items-center w-full h-full bg-white">
-    {/* Intentionally left blank */}
+      {/* Intentionally left blank */}
     </View>
   );
 };

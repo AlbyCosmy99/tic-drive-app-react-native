@@ -2,12 +2,7 @@ import {Colors} from '@/constants/Colors';
 import workshops, {Workshop} from '@/constants/temp/Workshops';
 import {Image} from '@rneui/themed';
 import {useContext, useEffect, useState} from 'react';
-import {
-  ActivityIndicator,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LocationPin from '../../../assets/svg/location_on.svg';
@@ -44,7 +39,7 @@ export default function WorkshopDetails() {
   }, [id]);
 
   return (
-    <SafeAreaViewLayout tailwindCss='p-2.5' styles={[styles.container]}>
+    <SafeAreaViewLayout tailwindCss="p-2.5" styles={[styles.container]}>
       <View className="flex-row items-center justify-between mr-2.5">
         <TouchableOpacity
           onPress={() => navigation?.goBack()}

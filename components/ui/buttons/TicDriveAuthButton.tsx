@@ -4,7 +4,7 @@ import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import {logout} from '@/stateManagement/redux/slices/authSlice';
-import { reset } from '@/stateManagement/redux/slices/servicesSlice';
+import {reset} from '@/stateManagement/redux/slices/servicesSlice';
 import AuthAction from '@/types/auth/Action';
 import {Entypo} from '@expo/vector-icons';
 import {nanoid} from '@reduxjs/toolkit';
@@ -33,7 +33,7 @@ const TicDriveAuthButton: React.FC<TicDriveAuthButtonProps> = ({
     };
     navigationReplace(navigation, 'Hub', params);
     dispatch(logout());
-    dispatch(reset())
+    dispatch(reset());
     setIsUserLogged(false);
 
     await saveUser(null);

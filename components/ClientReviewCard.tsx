@@ -26,7 +26,7 @@ function ClientReviewCard({review}: ClientReviewCardProps) {
       <View className="flex-row items-center justify-between">
         <View className="flex-row">
           <View>
-            <CircularUserAvatar uri={review.authorImageUrl}/>
+            <CircularUserAvatar uri={review.authorImageUrl} />
           </View>
           <View className="justify-center ml-2.5">
             <Text className="text-base font-medium">{review.authorName}</Text>

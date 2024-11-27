@@ -10,7 +10,7 @@ module.exports = {
     extend: {
       colors: {
         tic: '#737373',
-        drive: '#00BF63'
+        drive: '#00BF63',
       },
     },
   },

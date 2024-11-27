@@ -42,7 +42,7 @@ export default function UserAuthenticationScreen() {
       className="flex-1"
       behavior={isIOSPlatform() ? 'padding' : 'height'}
     >
-      <SafeAreaViewLayout tailwindCss='bg-white'>
+      <SafeAreaViewLayout tailwindCss="bg-white">
         <View className="flex-1 justify-between">
           <View>
             <View style={{height: 60}}>

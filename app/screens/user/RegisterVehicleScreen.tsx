@@ -66,7 +66,7 @@ function RegisterVehicleScreen() {
         >
           Register your vehicle for service bookings
         </Text>
-        <View className='m-3.5'>
+        <View className="m-3.5">
           <SegmentedControl
             options={options}
             segmentedControlSelection={segmentedControlSelection}

@@ -7,13 +7,13 @@ interface HorizontalLineProps {
   color: string;
 }
 
-const HorizontalLine: React.FC<HorizontalLineProps> = ({height = 1, color = '#000'}) => {
+const HorizontalLine: React.FC<HorizontalLineProps> = ({
+  height = 1,
+  color = '#000',
+}) => {
   return (
     <View className="w-full justify-center items-center">
-      <View
-        style={{height, backgroundColor: color}}
-        className="w-full"
-      ></View>
+      <View style={{height, backgroundColor: color}} className="w-full"></View>
     </View>
   );
 };
