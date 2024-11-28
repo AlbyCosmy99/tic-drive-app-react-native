@@ -1,10 +1,14 @@
 import {Colors} from '@/constants/Colors';
-import {SafeAreaView, Text} from 'react-native';
+import {Text, View} from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {LinearGradient} from 'expo-linear-gradient';
-import {globalStyles} from '@/styles/globalStyles';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
+import CircularUserAvatar from '@/components/ui/avatars/CircularUserAvatar';
+import HorizontalLine from '@/components/ui/HorizontalLine';
+import TicDriveOptionButton from '@/components/ui/buttons/TicDriveOptionButton';
+import AddIcon from '../../assets/svg/add.svg'
+import UserCarCard from '@/components/ui/cards/user/UserCarCard';
 
 export default function UserAccount() {
   const user = useAppSelector(state => state.auth.user);
@@ -17,14 +21,48 @@ export default function UserAccount() {
       ]}
       className="flex-1 w-full h-full"
     >
-      <SafeAreaViewLayout>
+      <SafeAreaViewLayout tailwindCss='mx-3.5'>
         <TicDriveNavbar
           isLoginAvailable={user ? true : true}
           canGoBack={false}
         />
-        <Text className="font-bold text-2xl text-center mb-2 mt-1">
-          User Account
-        </Text>
+        <View className='flex flex-row justify-between items-center mb-4'>
+          <Text className="font-bold text-2xl text-center mb-2 mt-1">
+            My Account
+          </Text>
+          <Text className='text-3xl'>☰</Text>
+        </View>
+        <View className='flex flex-row items-center mb-4'>
+          <CircularUserAvatar
+            styles={{
+              width: 70,
+              height: 70,
+              marginRight: 10
+            }} 
+            uri="https://images.ladbible.com/resize?type=webp&quality=70&width=3840&fit=contain&gravity=auto&url=https://images.ladbiblegroup.com/v3/assets/bltb5d92757ac1ee045/bltc86e7943bcc0e006/6569cbef0b642304079a348b/AI-creates-what-the-average-person.png%3Fcrop%3D590%2C590%2Cx0%2Cy0" 
+          />
+          <View>
+            <Text className='font-semibold text-xl'>
+              Andrei Albu
+            </Text>
+            <Text className='text-tic'>
+              New Your, USA
+            </Text>
+          </View>
+        </View>
+        <HorizontalLine color={Colors.light.SegmentedControlBackground}/>
+        <View>
+          <View className='flex flex-row justify-between items-center'>
+            <View className='flex gap-0.5'>
+              <Text className='font-semibold text-lg'>My vehicles</Text>
+              <Text className='text-tic'>3 vehicles registered</Text>
+            </View>
+            <TicDriveOptionButton text='Register new' icon={<AddIcon />}/>
+          </View>
+        </View>
+        <View>
+          <UserCarCard />
+        </View>
       </SafeAreaViewLayout>
     </LinearGradient>
   );

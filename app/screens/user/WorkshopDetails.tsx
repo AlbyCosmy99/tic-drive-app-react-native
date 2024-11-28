@@ -10,7 +10,6 @@ import Verified from '../../../assets/svg/verified.svg';
 import Star from '../../../assets/svg/star.svg';
 import Acute from '../../../assets/svg/acute.svg';
 import FreeCancellation from '../../../assets/svg/free_cancellation.svg';
-import AssistantDirection from '../../../assets/svg/assistant_direction';
 import CalendarIcon from '../../../assets/svg/calendar_add_on.svg';
 import ChatIcon from '../../../assets/svg/chat.svg';
 import {Ionicons} from '@expo/vector-icons';
@@ -22,6 +21,8 @@ import {useAppSelector} from '@/stateManagement/redux/hooks';
 import {useRoute} from '@react-navigation/native';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
+import AssistantDirection from '../../../assets/svg/assistant_direction';
+import TicDriveOptionButton from '@/components/ui/buttons/TicDriveOptionButton';
 
 export default function WorkshopDetails() {
   const route = useRoute();
@@ -101,38 +102,21 @@ export default function WorkshopDetails() {
                   )}
                 </View>
                 <View className="flex-1 flex-row gap-2.5 mt-2.5 mb-3.5 flex-wrap">
-                  <TouchableOpacity
-                    className="flex-row items-center gap-0.5 border px-2.5 py-1.5 rounded-3xl"
-                    style={styles.cardOptionContainer}
-                    onPress={() => alert('directions')}
-                    accessible={true}
-                    accessibilityLabel="Map directions"
-                  >
-                    <AssistantDirection width={24} />
-                    <Text className="font-medium text-base">Directions</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    className="flex-row items-center gap-0.5 border px-2.5 py-1.5 rounded-3xl"
-                    style={styles.cardOptionContainer}
-                    onPress={() => alert('check availability')}
-                    accessible={true}
-                    accessibilityLabel="Check availability"
-                  >
-                    <CalendarIcon width={24} />
-                    <Text className="font-medium text-base">
-                      Check availability
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    className="flex-row items-center gap-0.5 border px-2.5 py-1.5 rounded-3xl"
-                    style={styles.cardOptionContainer}
-                    onPress={() => alert('message')}
-                    accessible={true}
-                    accessibilityLabel="Message"
-                  >
-                    <ChatIcon width={24} />
-                    <Text className="font-medium text-base">Message</Text>
-                  </TouchableOpacity>
+                  <TicDriveOptionButton 
+                    text='Directions' 
+                    icon={<AssistantDirection width={24} />}
+                    containerTailwindCss='gap-0.5' 
+                  />
+                  <TicDriveOptionButton 
+                    text='Check availability' 
+                    icon={<CalendarIcon width={24} />}
+                    containerTailwindCss='gap-0.5' 
+                  />
+                  <TicDriveOptionButton 
+                    text='Message' 
+                    icon={<ChatIcon width={24} />}
+                    containerTailwindCss='gap-0.5'
+                  />     
                 </View>
               </View>
               <View className="mt-2.5">
