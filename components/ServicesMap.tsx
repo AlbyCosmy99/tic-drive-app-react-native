@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     paddingBottom: 15,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.light.SegmentedControlBackground,
+    borderBottomColor: Colors.light.extremelyLightGrey,
   },
   inputContainer: {
     flexDirection: 'row',

@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     position: 'relative',
     width: '100%',
-    borderBottomColor: Colors.light.SegmentedControlBackground,
+    borderBottomColor: Colors.light.extremelyLightGrey,
     borderBottomWidth: 2,
   },
   image: {

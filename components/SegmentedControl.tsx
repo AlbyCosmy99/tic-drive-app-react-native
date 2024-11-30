@@ -73,7 +73,7 @@ const SegmentedControl: React.FC<SegmentedControlProps> = ({
 
 const styles = StyleSheet.create({
   segmentContainer: {
-    backgroundColor: Colors.light.SegmentedControlBackground,
+    backgroundColor: Colors.light.extremelyLightGrey,
     borderRadius: 50,
   },
   optionText: {

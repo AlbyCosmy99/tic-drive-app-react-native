@@ -14,7 +14,8 @@ export const Colors = {
     icon: '#687076',
     tabIconDefault: '#687076',
     tabIconSelected: tintColorLight,
-    SegmentedControlBackground: '#f7f7f7',
+    extremelyLightGrey: '#f7f7f7',
+    lightGrey: '#ECECEC',
     green: {
       drive: '#00BF63',
     },

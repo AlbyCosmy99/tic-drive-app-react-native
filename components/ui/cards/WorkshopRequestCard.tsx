@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#D9E9DF',
   },
   userInfoContainer: {
-    borderBottomColor: Colors.light.SegmentedControlBackground,
+    borderBottomColor: Colors.light.extremelyLightGrey,
   },
   acceptText: {
     color: 'white',

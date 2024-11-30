@@ -87,6 +87,6 @@ export default function UserHome() {
 
 const styles = StyleSheet.create({
   filterButtonContainer: {
-    borderColor: Colors.light.SegmentedControlBackground,
+    borderColor: Colors.light.extremelyLightGrey,
   },
 });

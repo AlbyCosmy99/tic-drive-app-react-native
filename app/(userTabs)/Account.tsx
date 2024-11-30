@@ -1,5 +1,5 @@
 import {Colors} from '@/constants/Colors';
-import {Text, View} from 'react-native';
+import {ScrollView, Text, View} from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {LinearGradient} from 'expo-linear-gradient';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
@@ -9,6 +9,7 @@ import HorizontalLine from '@/components/ui/HorizontalLine';
 import TicDriveOptionButton from '@/components/ui/buttons/TicDriveOptionButton';
 import AddIcon from '../../assets/svg/add.svg'
 import UserCarCard from '@/components/ui/cards/user/UserCarCard';
+import UserCarCards from '@/components/ui/cards/user/UserCarCards';
 
 export default function UserAccount() {
   const user = useAppSelector(state => state.auth.user);
@@ -50,19 +51,18 @@ export default function UserAccount() {
             </Text>
           </View>
         </View>
-        <HorizontalLine color={Colors.light.SegmentedControlBackground}/>
-        <View>
-          <View className='flex flex-row justify-between items-center'>
-            <View className='flex gap-0.5'>
-              <Text className='font-semibold text-lg'>My vehicles</Text>
-              <Text className='text-tic'>3 vehicles registered</Text>
-            </View>
-            <TicDriveOptionButton text='Register new' icon={<AddIcon />}/>
+        <HorizontalLine color={Colors.light.lightGrey}/>
+        <View className='flex flex-row justify-between items-center my-4 mx-2'>
+          <View className='flex gap-0.5'>
+            <Text className='font-semibold text-lg'>My vehicles</Text>
+            <Text className='text-tic'>3 vehicles registered</Text>
           </View>
+          <TicDriveOptionButton text='Register new' icon={<AddIcon />}/>
         </View>
-        <View>
-          <UserCarCard />
-        </View>
+        <HorizontalLine color={Colors.light.lightGrey}/>
+        <ScrollView className='px-4 mb-2'>
+          <UserCarCards />
+        </ScrollView>
       </SafeAreaViewLayout>
     </LinearGradient>
   );

@@ -32,7 +32,7 @@ export default function WorkshopBookings() {
           setSegmentedControlSelection={setSelectedRequestDate}
         />
         <View className="mt-4">
-          <HorizontalLine color={Colors.light.SegmentedControlBackground} />
+          <HorizontalLine color={Colors.light.lightGrey} />
         </View>
         <WorkshopRequestCards status="accepted" />
       </SafeAreaViewLayout>

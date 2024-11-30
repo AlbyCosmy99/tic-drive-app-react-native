@@ -39,7 +39,7 @@ export default function WorkshopRequests() {
           setSegmentedControlSelection={setSelectedRequestDate}
         />
         <View className="mt-4">
-          <HorizontalLine color={Colors.light.SegmentedControlBackground} />
+          <HorizontalLine color={Colors.light.lightGrey} />
         </View>
         <WorkshopRequestCards status="pending" />
       </SafeAreaViewLayout>

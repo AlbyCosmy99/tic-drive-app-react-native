@@ -193,10 +193,10 @@ function RegisterVehicleScreen() {
 const styles = StyleSheet.create({
   bookingDetailsContainer: {
     backgroundColor: Colors.light.background,
-    borderColor: Colors.light.SegmentedControlBackground,
+    borderColor: Colors.light.extremelyLightGrey,
   },
   carDetailContainer: {
-    borderBottomColor: Colors.light.SegmentedControlBackground,
+    borderBottomColor: Colors.light.extremelyLightGrey,
   },
 });
 

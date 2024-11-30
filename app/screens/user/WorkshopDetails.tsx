@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.background,
   },
   bottom: {
-    borderTopColor: Colors.light.SegmentedControlBackground,
+    borderTopColor: Colors.light.extremelyLightGrey,
   },
   image: {
     width: '100%',
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   cardContainer: {
-    borderBottomColor: Colors.light.SegmentedControlBackground,
+    borderBottomColor: Colors.light.extremelyLightGrey,
   },
   strikethroughLine: {
     position: 'absolute',
