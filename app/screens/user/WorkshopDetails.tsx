@@ -102,21 +102,21 @@ export default function WorkshopDetails() {
                   )}
                 </View>
                 <View className="flex-1 flex-row gap-2.5 mt-2.5 mb-3.5 flex-wrap">
-                  <TicDriveOptionButton 
-                    text='Directions' 
+                  <TicDriveOptionButton
+                    text="Directions"
                     icon={<AssistantDirection width={24} />}
-                    containerTailwindCss='gap-0.5' 
+                    containerTailwindCss="gap-0.5"
                   />
-                  <TicDriveOptionButton 
-                    text='Check availability' 
+                  <TicDriveOptionButton
+                    text="Check availability"
                     icon={<CalendarIcon width={24} />}
-                    containerTailwindCss='gap-0.5' 
+                    containerTailwindCss="gap-0.5"
                   />
-                  <TicDriveOptionButton 
-                    text='Message' 
+                  <TicDriveOptionButton
+                    text="Message"
                     icon={<ChatIcon width={24} />}
-                    containerTailwindCss='gap-0.5'
-                  />     
+                    containerTailwindCss="gap-0.5"
+                  />
                 </View>
               </View>
               <View className="mt-2.5">
