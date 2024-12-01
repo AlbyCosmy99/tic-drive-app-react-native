@@ -9,7 +9,7 @@ interface HorizontalLineProps {
 
 const HorizontalLine: React.FC<HorizontalLineProps> = ({
   height = 1,
-  color = '#000',
+  color = Colors.light.lightGrey,
 }) => {
   return (
     <View className="w-full justify-center items-center">

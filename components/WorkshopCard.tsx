@@ -14,6 +14,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Workshop} from '@/constants/temp/Workshops';
 import calculateWorkshopStars from '@/utils/workshops/calculateWorkshopStars';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
+import TicDriveOptionButton from './ui/buttons/TicDriveOptionButton';
 
 function WorkshopCard({workshop}: {workshop: Workshop}) {
   return (
@@ -35,7 +36,7 @@ function WorkshopCard({workshop}: {workshop: Workshop}) {
           <Icon name="heart" size={30} color="white" style={styles.heartIcon} />
         )}
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>{workshop.title}</Text>
+          <Text className='text-xl font-semibold'>{workshop.title}</Text>
           {workshop.verified && <Verified width={24} name="verified" />}
         </View>
         <View style={styles.servicePositionContainer}>
@@ -44,16 +45,16 @@ function WorkshopCard({workshop}: {workshop: Workshop}) {
             name="location-pin"
             fill={Colors.light.ticText}
           />
-          <Text style={styles.serviceInfo}>{workshop.position}</Text>
+          <Text className='text-sm' style={styles.serviceInfo}>{workshop.position}</Text>
         </View>
         <View style={styles.servicePositionContainer}>
           <Star width={24} name="location-pin" fill={Colors.light.ticText} />
-          <Text style={styles.serviceInfo}>
+          <Text className='text-sm' style={styles.serviceInfo}>
             {calculateWorkshopStars(workshop.reviews)} (
             {workshop.reviews.length} reviews)
           </Text>
         </View>
-        <View style={styles.extraServicesContainer}>
+        <View className='flex flex-row mt-4'>
           <View style={styles.expressServiceContainer}>
             <Acute width={24} />
             <Text style={styles.extraService}>Express service</Text>
@@ -61,17 +62,15 @@ function WorkshopCard({workshop}: {workshop: Workshop}) {
           {workshop.freeCancellation && (
             <View style={styles.expressServiceContainer}>
               <FreeCancellation width={24} />
-              <Text style={styles.extraService}>Free cancellation</Text>
+              <Text className='text-base'>Free cancellation</Text>
             </View>
           )}
         </View>
         <View style={styles.priceContainer}>
           <View>
             <Text
-              style={[
-                styles.priceDetail,
-                workshop.discount !== 0 && styles.priceWithDiscount,
-              ]}
+              className='font-semibold text-xl'
+              style={workshop.discount !== 0 && styles.priceWithDiscount}
             >
               {workshop.price}
             </Text>
@@ -80,7 +79,7 @@ function WorkshopCard({workshop}: {workshop: Workshop}) {
             )}
           </View>
           {workshop.discount !== 0 && (
-            <Text style={styles.priceDetail}>
+            <Text className='font-semibold text-xl'>
               ${calculateWorkshopDiscount(workshop.price, workshop.discount)}
             </Text>
           )}
@@ -112,15 +111,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
   },
+  cardOptionContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2,
+    borderWidth: 1,
+    borderColor: Colors.light.green.drive,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 50,
+  },
+  cardOption: {
+    fontWeight: '500',
+    fontSize: 16,
+  },
   cardContainer: {
     position: 'relative',
     width: '100%',
-    borderBottomColor: Colors.light.extremelyLightGrey,
+    borderBottomColor: Colors.light.lightGrey,
     borderBottomWidth: 2,
   },
   image: {
     width: '100%',
-    height: 200,
+    height: 160,
     borderRadius: 15,
   },
   heartIcon: {
@@ -141,12 +154,7 @@ const styles = StyleSheet.create({
     gap: 3,
     marginTop: 8,
   },
-  title: {
-    fontSize: 22,
-    fontWeight: '700',
-  },
   serviceInfo: {
-    fontSize: 16,
     color: Colors.light.placeholderText,
   },
   expressServiceContainer: {
@@ -155,21 +163,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 3,
   },
-  extraServicesContainer: {
-    flexDirection: 'row',
-    marginTop: 10,
-  },
   extraService: {
-    fontSize: 18,
+    fontSize: 16,
   },
   priceContainer: {
     flexDirection: 'row',
     gap: 5,
     marginTop: 10,
-  },
-  priceDetail: {
-    fontSize: 22,
-    fontWeight: '700',
   },
   strikethroughLine: {
     position: 'absolute',
@@ -181,20 +181,6 @@ const styles = StyleSheet.create({
   },
   priceWithDiscount: {
     color: 'red',
-  },
-  cardOptionContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 2,
-    borderWidth: 1,
-    borderColor: Colors.light.green.drive,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 50,
-  },
-  cardOption: {
-    fontWeight: '500',
-    fontSize: 16,
   },
   cardOptionsContainer: {
     flexDirection: 'row',

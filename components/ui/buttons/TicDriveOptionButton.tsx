@@ -3,7 +3,6 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
   ViewStyle,
 } from 'react-native';
 import {Colors} from '@/constants/Colors';
@@ -30,21 +29,27 @@ const TicDriveOptionButton: React.FC<TicDriveOptionButtonProps> = ({
 }) => {
   return (
     <TouchableOpacity
-      className={`flex-row items-center justify-center gap-x-1 border px-2.5 py-1.5 rounded-3xl ${containerTailwindCss}`}
-      style={[styles.cardOptionContainer, style]}
-      onPress={onPress}
-      accessible={true}
-      accessibilityLabel={accessibilityLabel}
-    >
-      <View>{icon}</View>
-      <Text className={`font-medium text-base ${textTailwindCss}`}>{text}</Text>
-    </TouchableOpacity>
+    className={`${containerTailwindCss}`}
+    style={[styles.cardOptionContainer, style]}
+    onPress={onPress}
+    accessibilityLabel={accessibilityLabel}
+  >
+    {icon}
+    <Text className={`font-medium ${textTailwindCss}`}>{text}</Text>
+  </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   cardOptionContainer: {
     borderColor: Colors.light.green.drive,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2,
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 50,
   },
 });
 
