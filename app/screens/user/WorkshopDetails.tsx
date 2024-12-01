@@ -86,18 +86,18 @@ export default function WorkshopDetails() {
                   }
                 />
                 <View className="flex-1 flex-row items-center gap-0.5 mt-2">
-                  <Text className="text-2xl font-bold">{workshop.title}</Text>
+                  <Text className="text-2xl font-semibold">{workshop.title}</Text>
                   {workshop.verified && <Verified width={24} />}
                 </View>
                 <View className="flex-1 flex-row mt-2.5">
                   <View className="flex-1 flex-row items-center gap-0.5">
                     <Acute width={24} />
-                    <Text className="text-lg">Express service</Text>
+                    <Text className="text-base">Express service</Text>
                   </View>
                   {workshop.freeCancellation && (
                     <View className="flex-1 flex-row items-center gap-0.5">
                       <FreeCancellation width={24} />
-                      <Text className="text-lg">Free cancellation</Text>
+                      <Text className="text-base">Free cancellation</Text>
                     </View>
                   )}
                 </View>
@@ -120,17 +120,17 @@ export default function WorkshopDetails() {
                 </View>
               </View>
               <View className="mt-2.5">
-                <Text className="text-xl font-bold">Location</Text>
+                <Text className="text-xl font-semibold">Location</Text>
                 <View className="flex-1 flex-row items-center gap-0.5 mt-2.5">
                   <LocationPin width={24} fill={Colors.light.ticText} />
-                  <Text className="text-lg">{workshop.position}</Text>
+                  <Text className="text-base">{workshop.position}</Text>
                 </View>
               </View>
               <View className="mt-2.5">
-                <Text className="text-xl font-bold">What people say</Text>
+                <Text className="text-xl font-semibold">What people say</Text>
                 <View className="flex-1 flex-row items-center gap-0.5 mt-2.5">
                   <Star width={24} fill={Colors.light.ticText} />
-                  <Text className="text-lg">
+                  <Text className="text-base">
                     {calculateWorkshopStars(workshop.reviews)} (
                     {workshop.reviews.length} reviews)
                   </Text>
@@ -144,7 +144,7 @@ export default function WorkshopDetails() {
             className="flex-row justify-between items-center mx-2.5 border-t"
           >
             <View className="flex-1 flex-col mt-2.5">
-              <Text className="text-lg" style={styles.startingFrom}>
+              <Text className="text-base" style={styles.startingFrom}>
                 Starting from
               </Text>
               <View className="flex-row items-center">
@@ -152,7 +152,7 @@ export default function WorkshopDetails() {
                   <Text
                     className={[
                       workshop.discount !== 0 ? 'text-red-500' : '',
-                      'font-bold text-2xl mx-1',
+                      'font-semibold text-xl mx-1',
                     ].join(' ')}
                   >
                     {workshop.price}
@@ -162,7 +162,7 @@ export default function WorkshopDetails() {
                   )}
                 </View>
                 {workshop.discount !== 0 && (
-                  <Text className="font-bold text-2xl mx-1">
+                  <Text className="font-semibold text-xl mx-1">
                     $
                     {calculateWorkshopDiscount(
                       workshop.price,
@@ -172,7 +172,7 @@ export default function WorkshopDetails() {
                 )}
               </View>
             </View>
-            <View>
+            <View className='flex justify-center items-center'>
               {servicesChoosen.length > 0 && (
                 <TicDriveButton
                   text="Book a service"
@@ -219,6 +219,7 @@ const styles = StyleSheet.create({
     color: Colors.light.placeholderText,
   },
   customButtonStyle: {
-    height: 50,
+    height: 45,
+    paddingHorizontal: 15
   },
 });

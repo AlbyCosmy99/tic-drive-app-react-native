@@ -29,19 +29,19 @@ function ClientReviewCard({review}: ClientReviewCardProps) {
             <CircularUserAvatar uri={review.authorImageUrl} />
           </View>
           <View className="justify-center ml-2.5">
-            <Text className="text-base font-medium">{review.authorName}</Text>
-            <Text className="text-base">
+            <Text className="text-base">{review.authorName}</Text>
+            <Text className="text-sm text-tic">
               {calculateTimeFromReview(review.when)}
             </Text>
           </View>
         </View>
         <View className="flex-row items-center mt-2.5 mr-3.5 gap-0.5">
           <Star width={24} fill={Colors.light.ticText} />
-          <Text className="text-lg">{review.stars}</Text>
+          <Text className="text-base">{review.stars}</Text>
         </View>
       </View>
       <View className="mt-2.5">
-        <Text style={styles.reviewText}>{review.text}</Text>
+        <Text className='text-tic text-base'>{review.text}</Text>
       </View>
     </View>
   );
@@ -53,9 +53,6 @@ const styles = StyleSheet.create({
   },
   when: {
     color: Colors.light.placeholderText,
-  },
-  reviewText: {
-    color: Colors.light.ticText,
   },
 });
 
