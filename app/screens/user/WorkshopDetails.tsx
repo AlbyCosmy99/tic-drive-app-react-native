@@ -23,6 +23,7 @@ import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import AssistantDirection from '../../../assets/svg/assistant_direction';
 import TicDriveOptionButton from '@/components/ui/buttons/TicDriveOptionButton';
+import UserCalendarModal from '@/components/ui/modals/UserCalendarModal';
 
 export default function WorkshopDetails() {
   const route = useRoute();
@@ -34,6 +35,7 @@ export default function WorkshopDetails() {
   const servicesChoosen = useAppSelector(
     state => state.services.servicesChoosenByUsers,
   );
+  const [showCalendar, setShowCalendar] = useState(false)
 
   useEffect(() => {
     setWorkshop(workshops.find(workshop => workshop.id === id) || null);
@@ -178,12 +180,14 @@ export default function WorkshopDetails() {
               {servicesChoosen.length > 0 && (
                 <TicDriveButton
                   text="Book a service"
-                  routeName="CalendarDateSelectionScreen"
+                  // routeName="CalendarDateSelectionScreen"
+                  onClick={() => setShowCalendar(true)}
                   customButtonStyle={styles.customButtonStyle}
                 />
               )}
             </View>
           </View>
+          <UserCalendarModal modalVisible={showCalendar} setModalVisible={setShowCalendar}/>
         </>
       )}
     </SafeAreaViewLayout>
@@ -221,7 +225,7 @@ const styles = StyleSheet.create({
     color: Colors.light.placeholderText,
   },
   customButtonStyle: {
-    height: 45,
+    height: 50,
     paddingHorizontal: 15,
   },
 });

@@ -3,12 +3,12 @@ import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import {Colors} from '@/constants/Colors';
 import {LinearGradient} from 'expo-linear-gradient';
 import {useContext} from 'react';
-import {SafeAreaView, Text, View} from 'react-native';
+import { Text, View} from 'react-native';
 import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
-import {globalStyles} from '@/styles/globalStyles';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
+import UserCalendarModal from '@/components/ui/modals/UserCalendarModal';
 
 export default function CalendarDateSelectionScreen() {
   const {setLoginRouteName} = useContext(AuthContext);
