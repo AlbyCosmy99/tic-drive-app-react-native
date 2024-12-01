@@ -178,16 +178,11 @@ export default function WorkshopDetails() {
             </View>
             <View className="flex justify-center items-center">
               {servicesChoosen.length > 0 && (
-                <TicDriveButton
-                  text="Book a service"
-                  // routeName="CalendarDateSelectionScreen"
-                  onClick={() => setShowCalendar(true)}
-                  customButtonStyle={styles.customButtonStyle}
-                />
+                <UserCalendarModal />
               )}
             </View>
           </View>
-          <UserCalendarModal modalVisible={showCalendar} setModalVisible={setShowCalendar}/>
+          
         </>
       )}
     </SafeAreaViewLayout>
@@ -223,9 +218,5 @@ const styles = StyleSheet.create({
   },
   startingFrom: {
     color: Colors.light.placeholderText,
-  },
-  customButtonStyle: {
-    height: 50,
-    paddingHorizontal: 15,
   },
 });

@@ -9,17 +9,29 @@ import {
   PanResponder,
   Dimensions,
   ScrollView,
+  GestureResponderEvent,
+  PanResponderGestureState,
 } from 'react-native';
 import { Calendar } from 'react-native-calendars';
+import TicDriveButton from '../buttons/TicDriveButton';
+import { Colors } from '@/constants/Colors';
 
 const { height } = Dimensions.get('window');
 
-const UserCalendarModal = () => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const slideAnim = useRef(new Animated.Value(height)).current; // Initial position is off-screen
-  const [selectedDate, setSelectedDate] = useState(null);
+// Define the type for the Calendar day object
+interface DayObject {
+    dateString: string;
+    day: number;
+    month: number;
+    year: number;
+  }
 
-  const openModal = () => {
+const UserCalendarModal: React.FC = () => {
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const slideAnim = useRef(new Animated.Value(height)).current; // Initial position is off-screen
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+
+  const openModal = (): void => {
     setModalVisible(true);
     Animated.timing(slideAnim, {
       toValue: 0, // Bring to the top of the screen
@@ -28,7 +40,7 @@ const UserCalendarModal = () => {
     }).start();
   };
 
-  const closeModal = () => {
+  const closeModal = (): void => {
     Animated.timing(slideAnim, {
       toValue: height, // Slide it off the screen
       duration: 300,
@@ -40,12 +52,18 @@ const UserCalendarModal = () => {
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponder: () => true,
-      onPanResponderMove: (e, gestureState) => {
+      onPanResponderMove: (
+        _: GestureResponderEvent,
+        gestureState: PanResponderGestureState
+      ) => {
         if (gestureState.dy > 0) {
           slideAnim.setValue(gestureState.dy);
         }
       },
-      onPanResponderRelease: (e, gestureState) => {
+      onPanResponderRelease: (
+        _: GestureResponderEvent,
+        gestureState: PanResponderGestureState
+      ) => {
         if (gestureState.dy > 100) {
           closeModal();
         } else {
@@ -61,9 +79,11 @@ const UserCalendarModal = () => {
 
   return (
     <>
-      <TouchableOpacity style={styles.button} onPress={openModal}>
-        <Text style={styles.buttonText}>Open Calendar Modal</Text>
-      </TouchableOpacity>
+      <TicDriveButton
+        text="Book a service"
+        onClick={openModal}
+        customButtonStyle={styles.customButtonStyle}
+      />
       {modalVisible && (
         <Modal
           transparent={true}
@@ -81,11 +101,21 @@ const UserCalendarModal = () => {
               <ScrollView contentContainerStyle={styles.scrollContent}>
                 <Text style={styles.modalText}>Select a Date</Text>
                 <Calendar
-                  onDayPress={(day) => {
+                  onDayPress={(day: DayObject) => {
                     setSelectedDate(day.dateString);
                   }}
                   markedDates={{
-                    [selectedDate]: { selected: true, marked: true, selectedColor: 'blue' },
+                    [selectedDate ?? '']: {
+                      selected: true,
+                      marked: false,
+                      selectedColor: Colors.light.green.drive,
+                    },
+                  }}
+                  theme={{
+                    selectedDayTextColor: 'white', // Text color for the selected day
+                    todayTextColor: Colors.light.green.drive, // Text color for today's date
+                    dayTextColor: 'black', // Default text color for all days
+                    textDisabledColor: Colors.light.ticText, // Text color for disabled dates
                   }}
                 />
                 <TouchableOpacity onPress={closeModal} style={styles.button}>
@@ -157,6 +187,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 16,
     color: '#007BFF',
+  },
+  customButtonStyle: {
+    height: 50,
+    paddingHorizontal: 15,
   },
 });
 
