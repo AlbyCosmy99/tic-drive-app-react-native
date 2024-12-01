@@ -86,7 +86,9 @@ export default function WorkshopDetails() {
                   }
                 />
                 <View className="flex-1 flex-row items-center gap-0.5 mt-2">
-                  <Text className="text-2xl font-semibold">{workshop.title}</Text>
+                  <Text className="text-2xl font-semibold">
+                    {workshop.title}
+                  </Text>
                   {workshop.verified && <Verified width={24} />}
                 </View>
                 <View className="flex-1 flex-row mt-2.5">
@@ -172,7 +174,7 @@ export default function WorkshopDetails() {
                 )}
               </View>
             </View>
-            <View className='flex justify-center items-center'>
+            <View className="flex justify-center items-center">
               {servicesChoosen.length > 0 && (
                 <TicDriveButton
                   text="Book a service"
@@ -220,6 +222,6 @@ const styles = StyleSheet.create({
   },
   customButtonStyle: {
     height: 45,
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
   },
 });

@@ -41,7 +41,7 @@ function ClientReviewCard({review}: ClientReviewCardProps) {
         </View>
       </View>
       <View className="mt-2.5">
-        <Text className='text-tic text-base'>{review.text}</Text>
+        <Text className="text-tic text-base">{review.text}</Text>
       </View>
     </View>
   );

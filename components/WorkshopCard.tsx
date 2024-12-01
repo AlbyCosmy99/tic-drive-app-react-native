@@ -14,7 +14,6 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Workshop} from '@/constants/temp/Workshops';
 import calculateWorkshopStars from '@/utils/workshops/calculateWorkshopStars';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
-import TicDriveOptionButton from './ui/buttons/TicDriveOptionButton';
 
 function WorkshopCard({workshop}: {workshop: Workshop}) {
   return (
@@ -36,7 +35,7 @@ function WorkshopCard({workshop}: {workshop: Workshop}) {
           <Icon name="heart" size={30} color="white" style={styles.heartIcon} />
         )}
         <View style={styles.titleContainer}>
-          <Text className='text-xl font-semibold'>{workshop.title}</Text>
+          <Text className="text-xl font-semibold">{workshop.title}</Text>
           {workshop.verified && <Verified width={24} name="verified" />}
         </View>
         <View style={styles.servicePositionContainer}>
@@ -45,16 +44,18 @@ function WorkshopCard({workshop}: {workshop: Workshop}) {
             name="location-pin"
             fill={Colors.light.ticText}
           />
-          <Text className='text-sm' style={styles.serviceInfo}>{workshop.position}</Text>
+          <Text className="text-sm" style={styles.serviceInfo}>
+            {workshop.position}
+          </Text>
         </View>
         <View style={styles.servicePositionContainer}>
           <Star width={24} name="location-pin" fill={Colors.light.ticText} />
-          <Text className='text-sm' style={styles.serviceInfo}>
+          <Text className="text-sm" style={styles.serviceInfo}>
             {calculateWorkshopStars(workshop.reviews)} (
             {workshop.reviews.length} reviews)
           </Text>
         </View>
-        <View className='flex flex-row mt-4'>
+        <View className="flex flex-row mt-4">
           <View style={styles.expressServiceContainer}>
             <Acute width={24} />
             <Text style={styles.extraService}>Express service</Text>
@@ -62,14 +63,14 @@ function WorkshopCard({workshop}: {workshop: Workshop}) {
           {workshop.freeCancellation && (
             <View style={styles.expressServiceContainer}>
               <FreeCancellation width={24} />
-              <Text className='text-base'>Free cancellation</Text>
+              <Text className="text-base">Free cancellation</Text>
             </View>
           )}
         </View>
         <View style={styles.priceContainer}>
           <View>
             <Text
-              className='font-semibold text-xl'
+              className="font-semibold text-xl"
               style={workshop.discount !== 0 && styles.priceWithDiscount}
             >
               {workshop.price}
@@ -79,7 +80,7 @@ function WorkshopCard({workshop}: {workshop: Workshop}) {
             )}
           </View>
           {workshop.discount !== 0 && (
-            <Text className='font-semibold text-xl'>
+            <Text className="font-semibold text-xl">
               ${calculateWorkshopDiscount(workshop.price, workshop.discount)}
             </Text>
           )}

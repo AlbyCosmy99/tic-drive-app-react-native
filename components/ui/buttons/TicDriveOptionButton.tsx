@@ -29,14 +29,14 @@ const TicDriveOptionButton: React.FC<TicDriveOptionButtonProps> = ({
 }) => {
   return (
     <TouchableOpacity
-    className={`${containerTailwindCss}`}
-    style={[styles.cardOptionContainer, style]}
-    onPress={onPress}
-    accessibilityLabel={accessibilityLabel}
-  >
-    {icon}
-    <Text className={`font-medium ${textTailwindCss}`}>{text}</Text>
-  </TouchableOpacity>
+      className={`${containerTailwindCss}`}
+      style={[styles.cardOptionContainer, style]}
+      onPress={onPress}
+      accessibilityLabel={accessibilityLabel}
+    >
+      {icon}
+      <Text className={`font-medium ${textTailwindCss}`}>{text}</Text>
+    </TouchableOpacity>
   );
 };
 
