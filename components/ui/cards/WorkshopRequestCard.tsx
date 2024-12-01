@@ -19,13 +19,14 @@ const WorkshopRequestCard: FC<WorkshopRequestCardProps> = ({status}) => {
     <View className="border border-slate-200 rounded-xl mt-4">
       <View className="p-4 pb-0">
         <View
-          className="flex flex-row justify-between items-center border-b p-1 pb-4 mt-1"
+          className="flex flex-row justify-between items-center p-1 pb-4 mt-1"
           style={styles.userInfoContainer}
         >
           <View className="flex gap-2 flex-row justify-between items-center">
             <CircularUserAvatar uri="https://images.ladbible.com/resize?type=webp&quality=70&width=3840&fit=contain&gravity=auto&url=https://images.ladbiblegroup.com/v3/assets/bltb5d92757ac1ee045/bltc86e7943bcc0e006/6569cbef0b642304079a348b/AI-creates-what-the-average-person.png%3Fcrop%3D590%2C590%2Cx0%2Cy0" />
             <Text className="font-semibold">John Doe</Text>
           </View>
+          
           <View
             className="flex flex-row justify-between items-center p-2 px-3 rounded-lg"
             style={
@@ -47,6 +48,7 @@ const WorkshopRequestCard: FC<WorkshopRequestCardProps> = ({status}) => {
             </Text>
           </View>
         </View>
+        <HorizontalLine color={Colors.light.lightGrey} />
 
         {/* time */}
         <View className="flex flex-row justify-between items-center my-2 mt-4">
@@ -82,7 +84,7 @@ const WorkshopRequestCard: FC<WorkshopRequestCardProps> = ({status}) => {
         </View>
 
         {/* payment status */}
-        <View className="flex flex-row justify-between items-center my-2">
+        <View className="flex flex-row justify-between items-center my-2 mb-4">
           <View className="flex gap-2 flex-row justify-between items-center">
             <CreditCardIcon />
             <Text>Payment status</Text>
@@ -91,6 +93,7 @@ const WorkshopRequestCard: FC<WorkshopRequestCardProps> = ({status}) => {
             <Text className="font-medium">$53 paid</Text>
           </View>
         </View>
+        <HorizontalLine color={Colors.light.lightGrey}/>
         {status === 'pending' && (
           <View className="flex flex-row items-center my-2 mt-4">
             <View className="flex-1 flex items-center justify-center mx-2 p-2 rounded-3xl border bg-drive border-drive">
@@ -114,7 +117,7 @@ const WorkshopRequestCard: FC<WorkshopRequestCardProps> = ({status}) => {
           </Text>
         </View>
       )}
-      <Text className="text-center mt-2 mb-3 text-tic">Suggest new time?</Text>
+      <Text className="text-center mt-2 mb-3 text-tic font-medium">Suggest new time?</Text>
     </View>
   );
 };
