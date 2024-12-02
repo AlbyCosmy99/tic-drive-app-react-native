@@ -8,7 +8,6 @@ import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomIns
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
-import UserCalendarModal from '@/components/ui/modals/UserCalendarModal';
 
 export default function CalendarDateSelectionScreen() {
   const {setLoginRouteName} = useContext(AuthContext);

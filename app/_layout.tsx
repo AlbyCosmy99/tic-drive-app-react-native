@@ -25,6 +25,7 @@ import BookingConfirmationScreen from './screens/user/BookingConfirmationScreen'
 import NotFoundScreen from './+not-found';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import Navigation from '@/types/nav/Navigation';
+import ReviewBookingDetailsScreen from './screens/user/ReviewBookingDetailsScreen';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -161,6 +162,15 @@ export default function RootLayout() {
                     component={CalendarDateSelectionScreen}
                     options={({route}) => ({
                       title: 'CalendarDateSelectionScreen',
+                      headerShown: false,
+                      animation: getAnimation(route),
+                    })}
+                  />
+                  <Stack.Screen
+                    name="ReviewBookingDetailsScreen"
+                    component={ReviewBookingDetailsScreen}
+                    options={({route}) => ({
+                      title: 'ReviewBookingDetailsScreen',
                       headerShown: false,
                       animation: getAnimation(route),
                     })}

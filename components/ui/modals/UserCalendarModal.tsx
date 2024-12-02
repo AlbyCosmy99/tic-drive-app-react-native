@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import {
   Modal,
   View,
@@ -11,25 +11,25 @@ import {
   ScrollView,
   GestureResponderEvent,
   PanResponderGestureState,
+  Pressable,
 } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import TicDriveButton from '../buttons/TicDriveButton';
 import { Colors } from '@/constants/Colors';
+import Day from '@/types/calendar/Day';
+import UserTimeSlot from '@/constants/temp/UserTimeSlots';
+import { useAppSelector } from '@/stateManagement/redux/hooks';
+import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
 
 const { height } = Dimensions.get('window');
 
-// Define the type for the Calendar day object
-interface DayObject {
-    dateString: string;
-    day: number;
-    month: number;
-    year: number;
-  }
-
 const UserCalendarModal: React.FC = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const slideAnim = useRef(new Animated.Value(height)).current; // Initial position is off-screen
+  const slideAnim = useRef(new Animated.Value(height)).current;
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [selectedTime, setSelectedTime] = useState<string | null>(null)
+  const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);
+  const {setLoginRouteName} = useContext(AuthContext);
 
   const openModal = (): void => {
     setModalVisible(true);
@@ -98,11 +98,17 @@ const UserCalendarModal: React.FC = () => {
               {...panResponder.panHandlers}
             >
               <View style={styles.dragHandle} />
-              <ScrollView contentContainerStyle={styles.scrollContent}>
-                <Text style={styles.modalText}>Select a Date</Text>
+              <View className='mb-2' style={styles.scrollContent}>
+                <Text className='text-base mt-2 mb-1'>Select a Date</Text>
                 <Calendar
-                  onDayPress={(day: DayObject) => {
-                    setSelectedDate(day.dateString);
+                  onDayPress={(day: Day) => {
+                    if(selectedDate === day.dateString) {
+                      setSelectedDate(null)
+                      setSelectedTime(null)
+                    } else {
+                      setSelectedDate(day.dateString);
+                    }
+                    
                   }}
                   markedDates={{
                     [selectedDate ?? '']: {
@@ -118,15 +124,41 @@ const UserCalendarModal: React.FC = () => {
                     textDisabledColor: Colors.light.ticText, // Text color for disabled dates
                   }}
                 />
-                <TouchableOpacity onPress={closeModal} style={styles.button}>
-                  <Text style={styles.buttonText}>Close</Text>
-                </TouchableOpacity>
                 {selectedDate && (
-                  <Text style={styles.selectedDateText}>
-                    Selected Date: {selectedDate}
-                  </Text>
+                  <View>
+                    <Text className='text-base mt-2 mb-1'>Select a Time</Text>
+                    <View className='flex flex-row flex-wrap gap-x-2 gap-y-2 justify-center items-center mt-4'>
+                      {
+                        UserTimeSlot.map((time, index) => (
+                          <Pressable 
+                            onPress={() => setSelectedTime(selectedTime === time ? null : time)} 
+                            key={index} 
+                            className={`border border-tic rounded-2xl p-1 px-2 ${selectedTime === time && 'bg-drive'}`} 
+                            style={styles.timeSlotContainer}>
+                            <Text className={`text-tic text-base text-center ${selectedTime === time && 'text-black'}`}>{time}</Text>
+                          </Pressable>
+                        ))
+                      }
+                    </View>
+                  </View>
                 )}
-              </ScrollView>
+                <TicDriveButton
+                  text={'Confirm ' + (!isUserLogged ? 'and login' : '')}
+                  disabled={!selectedDate || !selectedTime}
+                  routeName={
+                    isUserLogged
+                      ? 'ReviewBookingDetailsScreen'
+                      : 'UserAuthenticationScreen'
+                  }
+                  routeParams={isUserLogged ? {} : {isUser: true}}
+                  replace={isUserLogged ? false : false}
+                  onClick={
+                    isUserLogged
+                      ? () => {closeModal(); return {}}
+                      : () => {closeModal(); setLoginRouteName('ReviewBookingDetailsScreen')}
+                  }
+                />
+              </View>
             </Animated.View>
           </View>
         </Modal>
@@ -174,11 +206,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginVertical: 10,
   },
-  modalText: {
-    fontSize: 18,
-    textAlign: 'center',
-    marginBottom: 10,
-  },
   scrollContent: {
     flexGrow: 1,
   },
@@ -192,6 +219,9 @@ const styles = StyleSheet.create({
     height: 50,
     paddingHorizontal: 15,
   },
+  timeSlotContainer: {
+    width: '30%'
+  }
 });
 
 export default UserCalendarModal;
