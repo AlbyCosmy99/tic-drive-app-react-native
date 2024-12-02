@@ -125,7 +125,7 @@ const UserCalendarModal: React.FC = () => {
                   }}
                 />
                 {selectedDate && (
-                  <View>
+                  <View className='mb-4'>
                     <Text className='text-base mt-2 mb-1'>Select a Time</Text>
                     <View className='flex flex-row flex-wrap gap-x-2 gap-y-2 justify-center items-center mt-4'>
                       {
