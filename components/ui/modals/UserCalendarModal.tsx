@@ -33,7 +33,7 @@ const UserCalendarModal: React.FC<UserCalendarModalProps> = ({workshop}) => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null)
   const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);
-  const {setLoginRouteName} = useContext(AuthContext);
+  const {setLoginRouteName, setLoginRouteParams} = useContext(AuthContext);
 
   const openModal = (): void => {
     setModalVisible(true);
@@ -159,7 +159,7 @@ const UserCalendarModal: React.FC<UserCalendarModalProps> = ({workshop}) => {
                   onClick={
                     isUserLogged
                       ? () => {closeModal(); return {}}
-                      : () => {closeModal(); setLoginRouteName('ReviewBookingDetailsScreen')}
+                      : () => {closeModal(); setLoginRouteName('ReviewBookingDetailsScreen'); setLoginRouteParams({workshop, date: selectedDate, time: selectedTime})}
                   }
                 />
               </View>

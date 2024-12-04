@@ -44,7 +44,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
     formState: {errors},
   } = useForm<FormData>();
 
-  const {setIsUserLogged, loginRouteName, setLoginRouteName} =
+  const {setIsUserLogged, loginRouteName, setLoginRouteName, loginRouteParams} =
     React.useContext(AuthContext);
   const {navigation} = React.useContext(NavigationContext);
   const dispatch = useAppDispatch();
@@ -73,7 +73,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
     dispatch(login(user));
 
     if (loginRouteName) {
-      navigationReset(navigation, 0, loginRouteName);
+      navigationReset(navigation, 0, loginRouteName, loginRouteParams);
       setLoginRouteName('');
     } else if (navigation?.canGoBack()) {
       navigationReplace(navigation, 'Hub');
