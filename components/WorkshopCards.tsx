@@ -32,11 +32,11 @@ function WorkshopCards() {
       {workshops
         .filter(
           workshop =>
-            (workshopFilter.length === 0 ||
-              workshop.title
+            (workshopFilter.length === 0 || servicesChoosen.length === 0 ||
+              (workshop.title
                 .toLowerCase()
                 .includes(workshopFilter.toLowerCase().trim())) &&
-            anyService(workshop.services),
+            anyService(workshop.services))
         )
         .map((workshop, index) => {
           return (

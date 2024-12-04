@@ -44,7 +44,7 @@ export default function ReviewBookingDetailsScreen() {
             <View className='flex flex-row my-4'>
               {/* to do- spostare le immagini in un componente */}
               <Image
-                source={{uri: workshop.imageUrl}}
+                source={{uri: workshop?.imageUrl}}
                 containerStyle={styles.image}
                 PlaceholderContent={
                   <ActivityIndicator
