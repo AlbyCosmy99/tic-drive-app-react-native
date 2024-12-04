@@ -1,5 +1,6 @@
 import Review from './Review';
 
+//to do - move interface to types
 export interface Workshop {
   id: number;
   title: string;

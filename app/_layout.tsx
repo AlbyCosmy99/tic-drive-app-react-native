@@ -14,13 +14,11 @@ import store from '@/stateManagement/redux/store/store';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Hub from './(hub)/_layout';
 import ChooseServicesScreen from './screens/ChooseServicesScreen';
-import LandingScreen from './screens/LandingScreen';
 import UserAuthenticationScreen from './screens/UserAuthenticationScreen';
 import RegisterVehicleScreen from './screens/user/RegisterVehicleScreen';
 import WorkshopTabLayout from './(workshopTabs)/_layout';
 import userTabLayout from './(userTabs)//_layout';
 import WorkshopDetails from './screens/user/WorkshopDetails';
-import CalendarDateSelectionScreen from './screens/user/CalendarDateSelectionScreen';
 import BookingConfirmationScreen from './screens/user/BookingConfirmationScreen';
 import NotFoundScreen from './+not-found';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
@@ -94,15 +92,6 @@ export default function RootLayout() {
                     })}
                   />
                   <Stack.Screen
-                    name="LandingScreen"
-                    component={LandingScreen}
-                    options={({route}) => ({
-                      title: 'LandingScreen',
-                      headerShown: false,
-                      animation: getAnimation(route),
-                    })}
-                  />
-                  <Stack.Screen
                     name="UserAuthenticationScreen"
                     component={UserAuthenticationScreen}
                     options={({route}) => ({
@@ -153,15 +142,6 @@ export default function RootLayout() {
                     component={WorkshopDetails}
                     options={({route}) => ({
                       title: 'WorkshopDetails',
-                      headerShown: false,
-                      animation: getAnimation(route),
-                    })}
-                  />
-                  <Stack.Screen
-                    name="CalendarDateSelectionScreen"
-                    component={CalendarDateSelectionScreen}
-                    options={({route}) => ({
-                      title: 'CalendarDateSelectionScreen',
                       headerShown: false,
                       animation: getAnimation(route),
                     })}

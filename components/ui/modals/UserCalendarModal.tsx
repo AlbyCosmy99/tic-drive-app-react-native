@@ -8,7 +8,6 @@ import {
   Animated,
   PanResponder,
   Dimensions,
-  ScrollView,
   GestureResponderEvent,
   PanResponderGestureState,
   Pressable,
@@ -20,10 +19,15 @@ import Day from '@/types/calendar/Day';
 import UserTimeSlot from '@/constants/temp/UserTimeSlots';
 import { useAppSelector } from '@/stateManagement/redux/hooks';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
+import { Workshop } from '@/constants/temp/Workshops';
 
 const { height } = Dimensions.get('window');
 
-const UserCalendarModal: React.FC = () => {
+interface UserCalendarModalProps {
+  workshop: Workshop
+}
+
+const UserCalendarModal: React.FC<UserCalendarModalProps> = ({workshop}) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const slideAnim = useRef(new Animated.Value(height)).current;
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
@@ -150,7 +154,7 @@ const UserCalendarModal: React.FC = () => {
                       ? 'ReviewBookingDetailsScreen'
                       : 'UserAuthenticationScreen'
                   }
-                  routeParams={isUserLogged ? {} : {isUser: true}}
+                  routeParams={isUserLogged ? {workshop, date: selectedDate, time: selectedTime} : {isUser: true}}
                   replace={isUserLogged ? false : false}
                   onClick={
                     isUserLogged

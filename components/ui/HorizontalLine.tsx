@@ -4,7 +4,7 @@ import {View} from 'react-native';
 
 interface HorizontalLineProps {
   height?: number;
-  color: string;
+  color?: string;
 }
 
 const HorizontalLine: React.FC<HorizontalLineProps> = ({

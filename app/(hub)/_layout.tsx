@@ -24,7 +24,10 @@ const Hub = () => {
         //@ts-ignore
         if (!user && !route?.params?.isloggingOut) {
           user = await getUser();
-          dispatch(login(user));
+          console.log('user: ',user)
+          if(user) {
+            dispatch(login(user));
+          }
         }
         if (user) {
           navigationReset(
@@ -35,7 +38,7 @@ const Hub = () => {
             user?.category === 'workshop' ? 'Requests' : 'Home',
           );
         } else {
-          navigationReset(navigation, 0, 'LandingScreen', {animation: 'fade'});
+          navigationReset(navigation, 0, 'userTabs', {animation: 'fade'});
         }
         SplashScreen.hideAsync();
       } catch (error) {

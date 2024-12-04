@@ -1,32 +1,28 @@
 import WorkshopCard from './WorkshopCard';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import workshops, {Workshop} from '../constants/temp/Workshops';
-import {memo, useContext, useEffect} from 'react';
+import {memo, useContext } from 'react';
 import GlobalContext from '@/stateManagement/contexts/GlobalContext';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
+import { useServiceChoosenByUsers } from '@/hooks/user/useServiceChoosenByUsers';
 function WorkshopCards() {
-  const {workshopFilter, servicesChoosen, setServicesChoosen} =
-    useContext(GlobalContext);
+  const {workshopFilter} = useContext(GlobalContext);
   const {navigation} = useContext(NavigationContext);
+
+  const servicesChoosen = useServiceChoosenByUsers()
 
   const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);
   const handleCardPress = (workshop: Workshop) => {
     navigationPush(navigation, 'WorkshopDetails', {id: workshop.id});
   };
 
-  //temp useEffect
-  useEffect(() => {
-    if (servicesChoosen.length === 0) {
-      setServicesChoosen(['Service']);
-    }
-  }, []);
-
   //checking if servicesChoosen are in the services offered by a workshop
   const anyService = (services: string[]) => {
+    console.log(services)
     for (let serviceChoosen of servicesChoosen) {
-      if (services.includes(serviceChoosen.toLowerCase())) return true;
+      if (services.includes(serviceChoosen.name.toLowerCase())) return true;
     }
     return false;
   };

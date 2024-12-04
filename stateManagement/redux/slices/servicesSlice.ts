@@ -12,29 +12,29 @@ const servicesSlice = createSlice({
   reducers: {
     setServicesChoosenByUsers(
       state: ServicesState,
-      action: PayloadAction<number>,
+      action: PayloadAction<Service>,
     ) {
       state.servicesChoosenByUsers = [action.payload];
     },
     setServicesChoosenByWorkshops(
       state: ServicesState,
-      action: PayloadAction<number>,
+      action: PayloadAction<Service>,
     ) {
       state.servicesChoosenByWorkshops = [action.payload];
     },
     addServiceChoosenByUsers(
       state: ServicesState,
-      action: PayloadAction<number>,
+      action: PayloadAction<Service>,
     ) {
-      if (!state.servicesChoosenByUsers.includes(action.payload)) {
+      if (!state.servicesChoosenByUsers.find(service => service.id === action.payload.id)) {
         state.servicesChoosenByUsers.push(action.payload);
       }
     },
     addServiceChoosenByWorkshops(
       state: ServicesState,
-      action: PayloadAction<number>,
+      action: PayloadAction<Service>,
     ) {
-      if (!state.servicesChoosenByWorkshops.includes(action.payload)) {
+      if (!state.servicesChoosenByWorkshops.find(service => service.id === action.payload.id)) {
         state.servicesChoosenByWorkshops.push(action.payload);
       }
     },
@@ -42,7 +42,13 @@ const servicesSlice = createSlice({
       state: ServicesState,
       action: PayloadAction<number>,
     ) {
-      const index = state.servicesChoosenByUsers.indexOf(action.payload);
+      let index = -1;
+      for(let i = 0; i < state.servicesChoosenByUsers.length; i++) {
+        if(state.servicesChoosenByUsers[i].id === action.payload) {
+          index = i;
+          break;
+        }
+      }
       if (index !== -1) {
         state.servicesChoosenByUsers = [
           ...state.servicesChoosenByUsers.slice(0, index),
@@ -54,7 +60,13 @@ const servicesSlice = createSlice({
       state: ServicesState,
       action: PayloadAction<number>,
     ) {
-      const index = state.servicesChoosenByWorkshops.indexOf(action.payload);
+      let index = -1;
+      for(let i = 0; i < state.servicesChoosenByUsers.length; i++) {
+        if(state.servicesChoosenByUsers[i].id === action.payload) {
+          index = i;
+          break;
+        }
+      }
       if (index !== -1) {
         state.servicesChoosenByWorkshops = [
           ...state.servicesChoosenByWorkshops.slice(0, index),

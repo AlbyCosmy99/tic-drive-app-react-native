@@ -1,5 +1,5 @@
 import {Colors} from '@/constants/Colors';
-import {View, StyleSheet, SafeAreaView, Text} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
@@ -9,7 +9,6 @@ import {useContext} from 'react';
 import FilterIcon from '../../assets/svg/discover_tune.svg';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import HorizontalLine from '@/components/ui/HorizontalLine';
-import {globalStyles} from '@/styles/globalStyles';
 import GlobalContext from '@/stateManagement/contexts/GlobalContext';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
@@ -61,24 +60,30 @@ export default function UserHome() {
           </View>
         ) : (
           <View>
-            <Text className="text-center m-4 font-bold text-xl">
-              Welcome {user?.name}
-            </Text>
-            <HorizontalLine />
+            {
+              user && user.name && (
+                <Text className="text-center m-4 font-bold text-xl">
+                  Welcome {user.name}
+                </Text>
+              )
+            }
+            <HorizontalLine color={Colors.light.lightGrey}/>
           </View>
         )}
         <View className="flex-1">
           <WorkshopCards />
-          {user && user.category === 'user' && !navigation?.canGoBack() && (
-            <View className="absolute bottom-3 left-0 right-0">
-              <TicDriveButton
-                text="Book a service"
-                onClick={() =>
-                  navigationPush(navigation, 'ChooseServicesScreen')
-                }
-              />
-            </View>
-          )}
+          {
+            userServicesChoosen.length === 0 && (
+              <View className="absolute bottom-8 left-0 right-0">
+                <TicDriveButton
+                  text="Book a service"
+                  onClick={() =>
+                    navigationPush(navigation, 'ChooseServicesScreen')
+                  }
+                />
+              </View>
+            )
+          }
         </View>
       </SafeAreaViewLayout>
     </LinearGradient>

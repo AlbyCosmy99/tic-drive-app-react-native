@@ -13,7 +13,6 @@ import FreeCancellation from '../../../assets/svg/free_cancellation.svg';
 import CalendarIcon from '../../../assets/svg/calendar_add_on.svg';
 import ChatIcon from '../../../assets/svg/chat.svg';
 import {Ionicons} from '@expo/vector-icons';
-import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import ClientReviewCards from '@/components/ClientReviewCards';
 import calculateWorkshopStars from '@/utils/workshops/calculateWorkshopStars';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
@@ -35,7 +34,6 @@ export default function WorkshopDetails() {
   const servicesChoosen = useAppSelector(
     state => state.services.servicesChoosenByUsers,
   );
-  const [showCalendar, setShowCalendar] = useState(false)
 
   useEffect(() => {
     setWorkshop(workshops.find(workshop => workshop.id === id) || null);
@@ -178,7 +176,7 @@ export default function WorkshopDetails() {
             </View>
             <View className="flex justify-center items-center">
               {servicesChoosen.length > 0 && (
-                <UserCalendarModal />
+                <UserCalendarModal workshop={workshop}/>
               )}
             </View>
           </View>

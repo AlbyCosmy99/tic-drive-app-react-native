@@ -1,12 +1,10 @@
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import {Text, useColorScheme, View} from 'react-native';
-import {SafeAreaView} from 'react-native';
 import {LinearGradient} from 'expo-linear-gradient';
 import ServicesCards from '@/components/ServicesCards';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {Colors} from '@/constants/Colors';
 import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
-import {globalStyles} from '@/styles/globalStyles';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import {useRoute} from '@react-navigation/native';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';

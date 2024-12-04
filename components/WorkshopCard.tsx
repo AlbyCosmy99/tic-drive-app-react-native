@@ -48,6 +48,7 @@ function WorkshopCard({workshop}: {workshop: Workshop}) {
             {workshop.position}
           </Text>
         </View>
+        {/* to do - spostare la stella in un componente dato che e' utilizzato in piu punti (almeno 3) */}
         <View style={styles.servicePositionContainer}>
           <Star width={24} name="location-pin" fill={Colors.light.ticText} />
           <Text className="text-sm" style={styles.serviceInfo}>

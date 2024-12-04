@@ -2,14 +2,33 @@ import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import {Colors} from '@/constants/Colors';
 import {LinearGradient} from 'expo-linear-gradient';
-import { StyleSheet, Text, View} from 'react-native';
+import { Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
 import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import {reset} from '@/stateManagement/redux/slices/servicesSlice';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
+import { useRoute } from '@react-navigation/native';
+import { Workshop } from '@/constants/temp/Workshops';
+import { Image } from '@rneui/themed';
+import { ActivityIndicator } from 'react-native';
+import Star from '../../../assets/svg/star.svg';
+import calculateWorkshopStars from '@/utils/workshops/calculateWorkshopStars';
+import HorizontalLine from '@/components/ui/HorizontalLine';
+import Verified from '../../../assets/svg/verified.svg';
+import { useServiceChoosenByUsers } from '@/hooks/user/useServiceChoosenByUsers';
+import CarRepair from '../../../assets/svg/servicesIcons/car_repair.svg';
+import LocationPin from '../../../assets/svg/location_on.svg';
+import CalendarIcon from '../../../assets/svg/free_cancellation.svg';
+import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
+import sumMoney from '@/utils/money/sumMoney';
 
 export default function ReviewBookingDetailsScreen() {
   const dispatch = useAppDispatch();
+  const route = useRoute()
+  const {workshop, date, time} = route?.params as { workshop: Workshop, date: string, time: string }
+
+  const servicesChoosen = useServiceChoosenByUsers()
+  
   return (
     <LinearGradient
       colors={[
@@ -20,25 +39,98 @@ export default function ReviewBookingDetailsScreen() {
     >
       <SafeAreaViewLayout styles={[styles.container]}>
         <TicDriveNavbar isLoginAvailable={false} />
-        <View className="flex-1 justify-center items-center">
-          <Text
-            style={styles.success}
-            className="font-extrabold text-center p-5 pt-0 text-3xl"
-          >
-            Review booking details
-          </Text>
+        <View className="flex-1 m-4">
+          <View className='border rounded-xl border-slate-200 px-4'>
+            <View className='flex flex-row my-4'>
+              {/* to do- spostare le immagini in un componente */}
+              <Image
+                source={{uri: workshop.imageUrl}}
+                containerStyle={styles.image}
+                PlaceholderContent={
+                  <ActivityIndicator
+                    size="large"
+                    color={Colors.light.bookingsOptionsText}
+                  />
+                }
+              />
+              <View>
+                <View className='flex flex-row items-center gap-1'>
+                  <Text className='text-xl font-semibold'>{workshop.title}</Text>
+                  {workshop.verified && <Verified width={24} name="verified" />}
+                </View>
+                <View style={styles.servicePositionContainer}>
+                  <Star width={24} name="location-pin" fill={Colors.light.ticText} />
+                  <Text className="text-sm" style={styles.serviceInfo}>
+                    {calculateWorkshopStars(workshop.reviews)} (
+                    {workshop.reviews.length} reviews)
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <HorizontalLine color={Colors.light.lightGrey} />
+            <View className='my-2'>
+              <View className='flex flex-row items-center gap-2 py-3'>
+                <CarRepair width={24} fill={Colors.light.ticText} />
+                <Text>{servicesChoosen[0].name}</Text>
+              </View>
+              <View className='flex flex-row items-center gap-2 py-3'>
+                <CalendarIcon width={24} fill={Colors.light.ticText} />
+                <Text>{time + ', ' + date}</Text>
+              </View>
+              <View className='flex flex-row items-center gap-2 py-3'>
+                <LocationPin width={24} fill={Colors.light.ticText} />
+                <Text>{workshop.position}</Text>
+              </View>
+            </View>
+          </View>
+          <View className='my-5'>
+            <Text className='text-tic text-base mb-3'>SUB TOTAL</Text>
+            <View className='border rounded-xl border-slate-200 p-4'>
+              <View className='flex flex-row justify-between items-center'>
+                <Text className='text-sm text-tic'>Service ({servicesChoosen[0].name})</Text>
+                <Text>${calculateWorkshopDiscount(workshop.price, workshop.discount)}</Text>
+              </View>
+              <View style={styles.promoCodeContainer} className='mt-3 mb-3 flex flex-row justify-between items-center p-4 rounded-xl border-tic'>
+                <TextInput placeholder='Promo code'/>
+                <Pressable><Text className='text-drive'>Apply</Text></Pressable>
+              </View>
+              <HorizontalLine />
+              <View className='mb-3'>
+                <View className='flex flex-row justify-between items-center my-1'>
+                  <Text className='text-sm text-tic'>Sub total</Text>
+                  <Text>${calculateWorkshopDiscount(workshop.price, workshop.discount)}</Text>
+                </View>
+                <View className='flex flex-row justify-between items-center'>
+                  <Text className='text-sm text-tic'>Tax</Text>
+                  <Text>$14</Text>
+                </View>
+              </View>
+              <HorizontalLine />
+              <View className='flex flex-row justify-between items-center mt-2'>
+                <Text className='text-base text-tic'>Total</Text>
+                <Text className='text-lg font-medium'>${calculateWorkshopDiscount(workshop.price, workshop.discount) + 14}</Text>
+              </View>
+            </View>
+          </View>
         </View>
-        <TicDriveButton
-          replace={true}
-          toTop={true}
-          text="Home"
-          routeName="userTabs"
-          routeParams={{animation: 'fade'}}
-          stateRouteName="Home"
-          onClick={() => {
-            dispatch(reset());
-          }}
-        />
+        <HorizontalLine />
+        <View>
+          <View className='flex flex-row justify-between items-center mt-2 px-4'>
+            <Text className='text-base text-tic'>Total</Text>
+            <Text className='text-xl font-medium'>${calculateWorkshopDiscount(workshop.price, workshop.discount) + 14}</Text>
+          </View>
+          <TicDriveButton
+            replace={true}
+            toTop={true}
+            text="Pay now"
+            routeName="userTabs"
+            routeParams={{animation: 'fade'}}
+            stateRouteName="Home"
+            onClick={() => {
+              dispatch(reset());
+            }}
+          />
+        </View>
       </SafeAreaViewLayout>
     </LinearGradient>
   );
@@ -50,5 +142,25 @@ const styles = StyleSheet.create({
   },
   success: {
     color: Colors.light.ticText,
+  },
+  image: {
+    width: 70,
+    height: 70,
+    borderRadius: 10,
+    marginRight: 12,
+  },
+  servicePositionContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 3,
+    marginTop: 10,
+  },
+  serviceInfo: {
+    color: Colors.light.placeholderText,
+  },
+  promoCodeContainer: {
+    backgroundColor: '#F4F9F7',
+    borderStyle: 'dotted',
+    borderWidth: 1,
   },
 });

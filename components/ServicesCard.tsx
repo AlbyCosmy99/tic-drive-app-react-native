@@ -80,12 +80,12 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
     } else {
       if (isSingleChoice) {
         type === 'user'
-          ? dispatch(setServicesChoosenByUsers(id))
-          : dispatch(setServicesChoosenByWorkshops(id));
+          ? dispatch(setServicesChoosenByUsers({id, name: title}))
+          : dispatch(setServicesChoosenByWorkshops({id, name: title}));
       } else {
         type === 'user'
-          ? dispatch(addServiceChoosenByUsers(id))
-          : dispatch(addServiceChoosenByWorkshops(id));
+          ? dispatch(addServiceChoosenByUsers({id, name: title}))
+          : dispatch(addServiceChoosenByWorkshops({id, name: title}));
       }
     }
     setIsPressed(!isPressed);
@@ -99,13 +99,13 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
   );
 
   useEffect(() => {
-    if (type === 'user' && !servicesChoosenByUsers.includes(id)) {
+    if (type === 'user' && !servicesChoosenByUsers.find(service => service.id === id)) {
       setIsPressed(false);
     }
   }, [servicesChoosenByUsers]);
 
   useEffect(() => {
-    if (type === 'workshop' && !servicesChoosenByWorkshops.includes(id)) {
+    if (type === 'workshop' && !servicesChoosenByWorkshops.find(service => service.id === id)) {
       setIsPressed(false);
     }
   }, [servicesChoosenByWorkshops]);

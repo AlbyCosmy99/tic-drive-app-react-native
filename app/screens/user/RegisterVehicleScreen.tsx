@@ -23,6 +23,7 @@ import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomIns
 import {globalStyles} from '@/styles/globalStyles';
 import GlobalContext from '@/stateManagement/contexts/GlobalContext';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
+import { useAppSelector } from '@/stateManagement/redux/hooks';
 
 function RegisterVehicleScreen() {
   const [segmentedControlSelection, setSegmentedControlSelection] =
@@ -33,6 +34,10 @@ function RegisterVehicleScreen() {
 
   const colorScheme = useColorScheme();
 
+  const servicesChoosen = useAppSelector(
+    state => state.services.servicesChoosenByUsers,
+  );
+
   const backgroundStyle = {
     backgroundColor:
       colorScheme === 'light'
@@ -41,6 +46,7 @@ function RegisterVehicleScreen() {
   };
 
   useEffect(() => {
+    console.log(servicesChoosen)
     if (carSelected.id === 0) {
       setCarNotFound(true);
     } else {

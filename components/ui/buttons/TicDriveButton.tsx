@@ -38,12 +38,6 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({
   const {setWorkshopFilter} = useContext(GlobalContext);
   const {navigation} = useContext(NavigationContext);
 
-  // const whenIsDisabled: Record<string, boolean> = {
-  //   "book a service": servicesChoosen.length === 0,
-  //   "confirm": carNotFound,
-  //   "continue": servicesChoosen.length === 0,
-  // };
-
   return (
     <Button
       title={text}
