@@ -20,7 +20,6 @@ import CarRepair from '../../../assets/svg/servicesIcons/car_repair.svg';
 import LocationPin from '../../../assets/svg/location_on.svg';
 import CalendarIcon from '../../../assets/svg/free_cancellation.svg';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
-import sumMoney from '@/utils/money/sumMoney';
 
 export default function ReviewBookingDetailsScreen() {
   const dispatch = useAppDispatch();
@@ -55,14 +54,14 @@ export default function ReviewBookingDetailsScreen() {
               />
               <View>
                 <View className='flex flex-row items-center gap-1'>
-                  <Text className='text-xl font-semibold'>{workshop.title}</Text>
-                  {workshop.verified && <Verified width={24} name="verified" />}
+                  <Text className='text-xl font-semibold'>{workshop?.title}</Text>
+                  {workshop?.verified && <Verified width={24} name="verified" />}
                 </View>
                 <View style={styles.servicePositionContainer}>
                   <Star width={24} name="location-pin" fill={Colors.light.ticText} />
                   <Text className="text-sm" style={styles.serviceInfo}>
-                    {calculateWorkshopStars(workshop.reviews)} (
-                    {workshop.reviews.length} reviews)
+                    {calculateWorkshopStars(workshop?.reviews)} (
+                    {workshop?.reviews.length} reviews)
                   </Text>
                 </View>
               </View>
