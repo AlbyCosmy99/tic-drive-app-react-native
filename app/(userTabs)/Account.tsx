@@ -15,7 +15,6 @@ import { useContext } from 'react';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 
 export default function UserAccount() {
-  const user = useAppSelector(state => state.auth.user);
   const {navigation} = useContext(NavigationContext); 
 
   return (

@@ -11,6 +11,12 @@ module.exports = {
       colors: {
         tic: '#737373',
         drive: '#00BF63',
+        grey: {
+          light: '#ECECEC'
+        },
+        green: {
+          light: '#D4EEDE'
+        }
       },
     },
   },

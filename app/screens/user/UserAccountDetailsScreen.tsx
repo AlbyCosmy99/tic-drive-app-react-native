@@ -12,9 +12,12 @@ import NotificationsIcon from '../../../assets/svg/notifications/notifications.s
 import SupportIcon from '../../../assets/svg/support/support.svg'
 import FeedbackIcon from '../../../assets/svg/writing/feedback.svg'
 import TicDriveAuthButton from "@/components/ui/buttons/TicDriveAuthButton"
-import navigationPush from "@/services/navigation/push"
+import { useContext } from "react"
+import GlobalContext from "@/stateManagement/contexts/GlobalContext"
 
 const UserAccountDetailsScreen = () => {
+    const {userPaymentInfo} = useContext(GlobalContext)
+    
     return (
         <LinearGradient
         colors={[

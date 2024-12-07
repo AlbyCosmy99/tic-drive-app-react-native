@@ -2,9 +2,9 @@ import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import {Colors} from '@/constants/Colors';
 import {LinearGradient} from 'expo-linear-gradient';
-import { Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
 import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
-import {useAppDispatch} from '@/stateManagement/redux/hooks';
+import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import {reset} from '@/stateManagement/redux/slices/servicesSlice';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import { useRoute } from '@react-navigation/native';
@@ -21,13 +21,32 @@ import LocationPin from '../../../assets/svg/location_on.svg';
 import CalendarIcon from '../../../assets/svg/free_cancellation.svg';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 import IconTextPair from '@/components/ui/IconTextPair';
+import PaymentCard from '@/components/ui/payment/PaymentCard';
+import { useContext, useEffect } from 'react';
+import GlobalContext from '@/stateManagement/contexts/GlobalContext';
+import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
 
 export default function ReviewBookingDetailsScreen() {
   const dispatch = useAppDispatch();
   const route = useRoute()
+  const user = useAppSelector(state => state.auth.user);
   const {workshop, date, time} = route?.params as { workshop: Workshop, date: string, time: string }
+  const {userPaymentInfo, setUserPaymentInfo} = useContext(GlobalContext)
 
   const servicesChoosen = useServiceChoosenByUsers()
+
+  useEffect(() => {
+    if(!userPaymentInfo?.choosenCard) {
+      setUserPaymentInfo({
+        ...userPaymentInfo,
+        choosenCard: isAndroidPlatform() ? (
+          userPaymentInfo?.defaultPaymentTypes.find(type=> type.paymentType === 'Google Pay')
+        ) : (
+          userPaymentInfo?.defaultPaymentTypes.find(type=> type.paymentType === 'Apple Pay')
+        )
+      })
+    }
+  }, [])
   
   return (
     <LinearGradient
@@ -39,7 +58,7 @@ export default function ReviewBookingDetailsScreen() {
     >
       <SafeAreaViewLayout styles={[styles.container]}>
         <TicDriveNavbar isLoginAvailable={false} />
-        <View className="flex-1 m-4">
+        <ScrollView className="flex-1 m-4" showsVerticalScrollIndicator={false}>
           <View className='border rounded-xl border-slate-200 px-4'>
             <View className='flex flex-row my-4'>
               {/* to do- spostare le immagini in un componente */}
@@ -111,8 +130,19 @@ export default function ReviewBookingDetailsScreen() {
                 <Text className='text-lg font-medium'>${calculateWorkshopDiscount(workshop.price, workshop.discount) + 14}</Text>
               </View>
             </View>
+            <View className="mt-6">
+              <View className='flex flex-row justify-between items-center mb-3'>
+                <Text className="text-tic">PAYMENT METHOD</Text>
+                <Text className='text-drive font-semibold text-sm'>Change</Text>
+              </View>
+              <PaymentCard 
+                userName={userPaymentInfo?.choosenCard?.cardHolder ?? ''}
+                paymentType={userPaymentInfo?.choosenCard?.paymentType ?? 'Cash'}
+                icon={userPaymentInfo?.choosenCard?.icon}
+              />
+            </View>
           </View>
-        </View>
+        </ScrollView>
         <HorizontalLine />
         <View>
           <View className='flex flex-row justify-between items-center mt-2 px-4'>

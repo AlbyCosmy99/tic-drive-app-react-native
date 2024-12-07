@@ -1,4 +1,4 @@
-import {Href} from 'expo-router';
+import UserPaymentInfo from '@/types/payment/UserPaymentInfo';
 import {createContext} from 'react';
 
 interface GlobalServiceType {
@@ -8,6 +8,8 @@ interface GlobalServiceType {
   setServicesChoosen: (servicesChoosen: string[]) => void;
   carNotFound: boolean;
   setCarNotFound: (carNotFound: boolean) => void;
+  userPaymentInfo: UserPaymentInfo | null;
+  setUserPaymentInfo: (UserPaymentInfo: UserPaymentInfo) => void;
 }
 
 const defaultContextValue: GlobalServiceType = {
@@ -17,6 +19,12 @@ const defaultContextValue: GlobalServiceType = {
   setServicesChoosen: () => {},
   carNotFound: true,
   setCarNotFound: () => {},
+  userPaymentInfo: {
+    choosenCard: null,
+    defaultPaymentTypes: [],
+    customPaymentTypes: []
+  },
+  setUserPaymentInfo: () => {}
 };
 
 const GlobalContext = createContext<GlobalServiceType>(defaultContextValue);
