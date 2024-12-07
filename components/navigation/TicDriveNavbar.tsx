@@ -37,8 +37,7 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
       style={backgroundStyle}
     >
       <View className="flex-1 justify-start flex-row">
-        {canGoBack ||
-          (canGoBack === null && navigation?.canGoBack() && <ToPreviousPage />)}
+        {navigation?.canGoBack() && (canGoBack || canGoBack === null)  && <ToPreviousPage />}
       </View>
       <TouchableWithoutFeedback
         onPress={() => {

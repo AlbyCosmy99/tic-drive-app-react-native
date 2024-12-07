@@ -1,4 +1,5 @@
 import {saveUser} from '@/services/auth/secureStore/user';
+import navigationPush from '@/services/navigation/push';
 import navigationReplace from '@/services/navigation/replace';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
@@ -41,7 +42,10 @@ const TicDriveAuthButton: React.FC<TicDriveAuthButtonProps> = ({
 
   const handleOnPress = () => {
     onPress && onPress();
-    action === 'logout' && handleLogout();
+    if(action === 'logout') {
+      navigationPush(navigation, 'UserAuthenticationScreen');
+      handleLogout()
+    }
   };
 
   return (

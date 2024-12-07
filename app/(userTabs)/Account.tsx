@@ -1,5 +1,5 @@
 import {Colors} from '@/constants/Colors';
-import {ScrollView, Text, View} from 'react-native';
+import {Pressable, ScrollView, Text, TouchableWithoutFeedback, View} from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {LinearGradient} from 'expo-linear-gradient';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
@@ -10,9 +10,13 @@ import TicDriveOptionButton from '@/components/ui/buttons/TicDriveOptionButton';
 import AddIcon from '../../assets/svg/add.svg';
 import UserCarCard from '@/components/ui/cards/user/UserCarCard';
 import UserCarCards from '@/components/ui/cards/user/UserCarCards';
+import navigationPush from '@/services/navigation/push';
+import { useContext } from 'react';
+import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 
 export default function UserAccount() {
   const user = useAppSelector(state => state.auth.user);
+  const {navigation} = useContext(NavigationContext); 
 
   return (
     <LinearGradient
@@ -24,14 +28,13 @@ export default function UserAccount() {
     >
       <SafeAreaViewLayout tailwindCss="mx-3.5">
         <TicDriveNavbar
-          isLoginAvailable={user ? true : true}
-          canGoBack={false}
+          isLoginAvailable={false}
         />
         <View className="flex flex-row justify-between items-center mb-4">
           <Text className="font-bold text-2xl text-center mb-2 mt-1">
             My Account
           </Text>
-          <Text className="text-3xl">☰</Text>
+          <Pressable onPress={() => navigationPush(navigation, 'UserAccountDetailsScreen')}><Text className="text-3xl">☰</Text></Pressable>
         </View>
         <View className="flex flex-row items-center mb-4">
           <CircularUserAvatar

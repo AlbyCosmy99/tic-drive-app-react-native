@@ -20,6 +20,7 @@ import CarRepair from '../../../assets/svg/servicesIcons/car_repair.svg';
 import LocationPin from '../../../assets/svg/location_on.svg';
 import CalendarIcon from '../../../assets/svg/free_cancellation.svg';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
+import IconTextPair from '@/components/ui/IconTextPair';
 
 export default function ReviewBookingDetailsScreen() {
   const dispatch = useAppDispatch();
@@ -68,18 +69,18 @@ export default function ReviewBookingDetailsScreen() {
             </View>
             <HorizontalLine color={Colors.light.lightGrey} />
             <View className='my-2'>
-              <View className='flex flex-row items-center gap-2 py-3'>
-                <CarRepair width={24} fill={Colors.light.ticText} />
-                <Text>{servicesChoosen[0].name}</Text>
-              </View>
-              <View className='flex flex-row items-center gap-2 py-3'>
-                <CalendarIcon width={24} fill={Colors.light.ticText} />
-                <Text>{time + ', ' + date}</Text>
-              </View>
-              <View className='flex flex-row items-center gap-2 py-3'>
-                <LocationPin width={24} fill={Colors.light.ticText} />
-                <Text>{workshop.position}</Text>
-              </View>
+              <IconTextPair 
+                text={servicesChoosen[0].name}
+                icon={<CarRepair width={24} fill={Colors.light.ticText} />}
+              />
+               <IconTextPair 
+                text={time + ', ' + date}
+                icon={<CalendarIcon width={24} fill={Colors.light.ticText} />}
+              />
+               <IconTextPair 
+                text={workshop.position}
+                icon={<LocationPin width={24} fill={Colors.light.ticText} />}
+              />
             </View>
           </View>
           <View className='my-5'>

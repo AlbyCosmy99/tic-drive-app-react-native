@@ -24,6 +24,7 @@ import NotFoundScreen from './+not-found';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import Navigation from '@/types/nav/Navigation';
 import ReviewBookingDetailsScreen from './screens/user/ReviewBookingDetailsScreen';
+import UserAccountDetailsScreen from './screens/user/UserAccountDetailsScreen';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -160,6 +161,15 @@ export default function RootLayout() {
                     component={BookingConfirmationScreen}
                     options={({route}) => ({
                       title: 'BookingConfirmationScreen',
+                      headerShown: false,
+                      animation: getAnimation(route),
+                    })}
+                  />
+                  <Stack.Screen
+                    name="UserAccountDetailsScreen"
+                    component={UserAccountDetailsScreen}
+                    options={({route}) => ({
+                      title: 'UserAccountDetailsScreen',
                       headerShown: false,
                       animation: getAnimation(route),
                     })}
