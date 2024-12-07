@@ -52,6 +52,16 @@ const UserCalendarModal: React.FC<UserCalendarModalProps> = ({workshop}) => {
     }).start(() => setModalVisible(false));
   };
 
+  const onClick = () => {
+    if(isUserLogged) {
+      closeModal(); 
+      return {}
+    }
+    closeModal(); 
+    setLoginRouteName('ReviewBookingDetailsScreen'); 
+    setLoginRouteParams({workshop, date: selectedDate, time: selectedTime})
+  }
+
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
@@ -156,11 +166,7 @@ const UserCalendarModal: React.FC<UserCalendarModalProps> = ({workshop}) => {
                   }
                   routeParams={isUserLogged ? {workshop, date: selectedDate, time: selectedTime} : {isUser: true}}
                   replace={isUserLogged ? false : false}
-                  onClick={
-                    isUserLogged
-                      ? () => {closeModal(); return {}}
-                      : () => {closeModal(); setLoginRouteName('ReviewBookingDetailsScreen'); setLoginRouteParams({workshop, date: selectedDate, time: selectedTime})}
-                  }
+                  onClick={onClick}
                 />
               </View>
             </Animated.View>
