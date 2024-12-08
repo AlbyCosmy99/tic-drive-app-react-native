@@ -16,7 +16,7 @@ const GlobalProvider: FC<{children: ReactNode}> = ({children}) => {
   useEffect(() => {
     const defaultPaymentTypes: PaymentCard[] = [
       {
-        id: 3,
+        id: -3,
         cardHolder: 'Andrei Albu',
         paymentType: 'Cash',
         cardNumber: null,
@@ -25,14 +25,14 @@ const GlobalProvider: FC<{children: ReactNode}> = ({children}) => {
     ]
 
     isAndroidPlatform() ? defaultPaymentTypes.push({
-      id: 1,
+      id: -1,
       cardHolder: 'Andrei Albu',
       paymentType: 'Google Pay',
       cardNumber: null,
       icon: <GooglePayIcon width={40} fill={Colors.light.ticText} />
     }) : defaultPaymentTypes.push(
       {
-        id: 2,
+        id: -2,
         cardHolder: 'Andrei Albu',
         paymentType: 'Apple Pay',
         cardNumber: null,

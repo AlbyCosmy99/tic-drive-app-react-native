@@ -25,7 +25,8 @@ import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import Navigation from '@/types/nav/Navigation';
 import ReviewBookingDetailsScreen from './screens/user/ReviewBookingDetailsScreen';
 import UserAccountDetailsScreen from './screens/user/UserAccountDetailsScreen';
-import PaymentCardsScreen from './screens/user/PaymentCardsScreen';
+import AddNewPaymentMethodScreen from './screens/payment/AddNewPaymentMethodScreen';
+import PaymentCardsScreen from './screens/payment/PaymentCardsScreen';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -175,12 +176,22 @@ export default function RootLayout() {
                       animation: getAnimation(route),
                     })}
                   />
-                    <Stack.Screen
+                  <Stack.Screen
                     name="PaymentCardsScreen"
                     component={PaymentCardsScreen}
                     options={({route}) => ({
                       title: 'PaymentCardsScreen',
                       headerShown: false,
+                      animation: getAnimation(route),
+                    })}
+                  />
+                   <Stack.Screen
+                    name="AddNewPaymentMethodScreen"
+                    component={AddNewPaymentMethodScreen}
+                    options={({route}) => ({
+                      title: 'AddNewPaymentMethodScreen',
+                      headerShown: false,
+                      presentation: 'modal',
                       animation: getAnimation(route),
                     })}
                   />

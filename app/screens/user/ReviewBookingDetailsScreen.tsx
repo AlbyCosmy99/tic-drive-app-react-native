@@ -4,8 +4,6 @@ import {Colors} from '@/constants/Colors';
 import {LinearGradient} from 'expo-linear-gradient';
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
 import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
-import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
-import {reset} from '@/stateManagement/redux/slices/servicesSlice';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import { useRoute } from '@react-navigation/native';
 import { Workshop } from '@/constants/temp/Workshops';
@@ -27,6 +25,7 @@ import GlobalContext from '@/stateManagement/contexts/GlobalContext';
 import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
+import navigationReset from '@/services/navigation/reset';
 
 export default function ReviewBookingDetailsScreen() {
   const route = useRoute()
@@ -148,6 +147,7 @@ export default function ReviewBookingDetailsScreen() {
                   paymentType={userPaymentInfo?.choosenCard?.paymentType ?? 'Cash'}
                   icon={userPaymentInfo?.choosenCard?.icon}
                   id={userPaymentInfo?.choosenCard?.id ?? 0}
+                  optionsVisible={false}
                 />
               </Pressable>
             </View>
@@ -167,7 +167,7 @@ export default function ReviewBookingDetailsScreen() {
             routeParams={{animation: 'fade'}}
             stateRouteName="Home"
             onClick={() => {
-              navigationPush(navigation, 'PaymentCardsScreen')
+              navigationReset(navigation,0, 'BookingConfirmationScreen')
             }}
           />
         </View>
