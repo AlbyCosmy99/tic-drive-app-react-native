@@ -26,7 +26,11 @@ const servicesSlice = createSlice({
       state: ServicesState,
       action: PayloadAction<Service>,
     ) {
-      if (!state.servicesChoosenByUsers.find(service => service.id === action.payload.id)) {
+      if (
+        !state.servicesChoosenByUsers.find(
+          service => service.id === action.payload.id,
+        )
+      ) {
         state.servicesChoosenByUsers.push(action.payload);
       }
     },
@@ -34,7 +38,11 @@ const servicesSlice = createSlice({
       state: ServicesState,
       action: PayloadAction<Service>,
     ) {
-      if (!state.servicesChoosenByWorkshops.find(service => service.id === action.payload.id)) {
+      if (
+        !state.servicesChoosenByWorkshops.find(
+          service => service.id === action.payload.id,
+        )
+      ) {
         state.servicesChoosenByWorkshops.push(action.payload);
       }
     },
@@ -43,8 +51,8 @@ const servicesSlice = createSlice({
       action: PayloadAction<number>,
     ) {
       let index = -1;
-      for(let i = 0; i < state.servicesChoosenByUsers.length; i++) {
-        if(state.servicesChoosenByUsers[i].id === action.payload) {
+      for (let i = 0; i < state.servicesChoosenByUsers.length; i++) {
+        if (state.servicesChoosenByUsers[i].id === action.payload) {
           index = i;
           break;
         }
@@ -61,8 +69,8 @@ const servicesSlice = createSlice({
       action: PayloadAction<number>,
     ) {
       let index = -1;
-      for(let i = 0; i < state.servicesChoosenByUsers.length; i++) {
-        if(state.servicesChoosenByUsers[i].id === action.payload) {
+      for (let i = 0; i < state.servicesChoosenByUsers.length; i++) {
+        if (state.servicesChoosenByUsers[i].id === action.payload) {
           index = i;
           break;
         }

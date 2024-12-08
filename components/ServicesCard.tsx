@@ -99,13 +99,19 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
   );
 
   useEffect(() => {
-    if (type === 'user' && !servicesChoosenByUsers.find(service => service.id === id)) {
+    if (
+      type === 'user' &&
+      !servicesChoosenByUsers.find(service => service.id === id)
+    ) {
       setIsPressed(false);
     }
   }, [servicesChoosenByUsers]);
 
   useEffect(() => {
-    if (type === 'workshop' && !servicesChoosenByWorkshops.find(service => service.id === id)) {
+    if (
+      type === 'workshop' &&
+      !servicesChoosenByWorkshops.find(service => service.id === id)
+    ) {
       setIsPressed(false);
     }
   }, [servicesChoosenByWorkshops]);

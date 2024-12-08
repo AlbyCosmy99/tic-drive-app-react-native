@@ -42,9 +42,9 @@ const TicDriveAuthButton: React.FC<TicDriveAuthButtonProps> = ({
 
   const handleOnPress = () => {
     onPress && onPress();
-    if(action === 'logout') {
+    if (action === 'logout') {
       navigationPush(navigation, 'UserAuthenticationScreen');
-      handleLogout()
+      handleLogout();
     }
   };
 

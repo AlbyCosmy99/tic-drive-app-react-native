@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, {useState, useRef, useContext} from 'react';
 import {
   Modal,
   View,
@@ -12,26 +12,26 @@ import {
   PanResponderGestureState,
   Pressable,
 } from 'react-native';
-import { Calendar } from 'react-native-calendars';
+import {Calendar} from 'react-native-calendars';
 import TicDriveButton from '../buttons/TicDriveButton';
-import { Colors } from '@/constants/Colors';
+import {Colors} from '@/constants/Colors';
 import Day from '@/types/calendar/Day';
 import UserTimeSlot from '@/constants/temp/UserTimeSlots';
-import { useAppSelector } from '@/stateManagement/redux/hooks';
+import {useAppSelector} from '@/stateManagement/redux/hooks';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
-import { Workshop } from '@/constants/temp/Workshops';
+import {Workshop} from '@/constants/temp/Workshops';
 
-const { height } = Dimensions.get('window');
+const {height} = Dimensions.get('window');
 
 interface UserCalendarModalProps {
-  workshop: Workshop
+  workshop: Workshop;
 }
 
 const UserCalendarModal: React.FC<UserCalendarModalProps> = ({workshop}) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const slideAnim = useRef(new Animated.Value(height)).current;
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [selectedTime, setSelectedTime] = useState<string | null>(null)
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);
   const {setLoginRouteName, setLoginRouteParams} = useContext(AuthContext);
 
@@ -53,14 +53,14 @@ const UserCalendarModal: React.FC<UserCalendarModalProps> = ({workshop}) => {
   };
 
   const onClick = () => {
-    if(isUserLogged) {
-      closeModal(); 
-      return {}
+    if (isUserLogged) {
+      closeModal();
+      return {};
     }
-    closeModal(); 
-    setLoginRouteName('ReviewBookingDetailsScreen'); 
-    setLoginRouteParams({workshop, date: selectedDate, time: selectedTime})
-  }
+    closeModal();
+    setLoginRouteName('ReviewBookingDetailsScreen');
+    setLoginRouteParams({workshop, date: selectedDate, time: selectedTime});
+  };
 
   const panResponder = useRef(
     PanResponder.create({
@@ -68,7 +68,7 @@ const UserCalendarModal: React.FC<UserCalendarModalProps> = ({workshop}) => {
       onMoveShouldSetPanResponder: () => true,
       onPanResponderMove: (
         _: GestureResponderEvent,
-        gestureState: PanResponderGestureState
+        gestureState: PanResponderGestureState,
       ) => {
         if (gestureState.dy > 0) {
           slideAnim.setValue(gestureState.dy);
@@ -76,7 +76,7 @@ const UserCalendarModal: React.FC<UserCalendarModalProps> = ({workshop}) => {
       },
       onPanResponderRelease: (
         _: GestureResponderEvent,
-        gestureState: PanResponderGestureState
+        gestureState: PanResponderGestureState,
       ) => {
         if (gestureState.dy > 100) {
           closeModal();
@@ -88,16 +88,16 @@ const UserCalendarModal: React.FC<UserCalendarModalProps> = ({workshop}) => {
           }).start();
         }
       },
-    })
+    }),
   ).current;
 
   // Array of custom days to disable
-  const customDisabledDays = ["2024-12-08", "2024-12-10", "2024-12-15"];
+  const customDisabledDays = ['2024-12-08', '2024-12-10', '2024-12-15'];
 
   // Generate disabled dates object
   const generateDisabledDates = () => {
     const today = new Date();
-    const disabledDates: Record<string, { disabled: boolean }> = {};
+    const disabledDates: Record<string, {disabled: boolean}> = {};
 
     // Disable all past dates
     for (
@@ -105,13 +105,13 @@ const UserCalendarModal: React.FC<UserCalendarModalProps> = ({workshop}) => {
       d >= new Date(2000, 0, 1);
       d.setDate(d.getDate() - 1)
     ) {
-      const dateStr = d.toISOString().split("T")[0];
-      disabledDates[dateStr] = { disabled: true };
+      const dateStr = d.toISOString().split('T')[0];
+      disabledDates[dateStr] = {disabled: true};
     }
 
     // Add custom disabled days
-    customDisabledDays.forEach((day) => {
-      disabledDates[day] = { disabled: true };
+    customDisabledDays.forEach(day => {
+      disabledDates[day] = {disabled: true};
     });
 
     return disabledDates;
@@ -136,22 +136,26 @@ const UserCalendarModal: React.FC<UserCalendarModalProps> = ({workshop}) => {
           <View style={styles.modalOverlay}>
             <TouchableOpacity style={styles.overlay} onPress={closeModal} />
             <Animated.View
-              style={[styles.modalContent, { transform: [{ translateY: slideAnim }] }]}
+              style={[
+                styles.modalContent,
+                {transform: [{translateY: slideAnim}]},
+              ]}
               {...panResponder.panHandlers}
             >
               <View style={styles.dragHandle} />
-              <View className='mb-2' style={styles.scrollContent}>
-                <Text className='text-sm mt-2 mb-1 text-tic'>SELECT A DATE</Text>
+              <View className="mb-2" style={styles.scrollContent}>
+                <Text className="text-sm mt-2 mb-1 text-tic">
+                  SELECT A DATE
+                </Text>
                 <Calendar
                   onDayPress={(day: Day) => {
-                    if(disabledDates[day.dateString]) return 
-                    if(selectedDate === day.dateString) {
-                      setSelectedDate(null)
-                      setSelectedTime(null)
+                    if (disabledDates[day.dateString]) return;
+                    if (selectedDate === day.dateString) {
+                      setSelectedDate(null);
+                      setSelectedTime(null);
                     } else {
                       setSelectedDate(day.dateString);
                     }
-                    
                   }}
                   markedDates={{
                     [selectedDate ?? '']: {
@@ -169,20 +173,27 @@ const UserCalendarModal: React.FC<UserCalendarModalProps> = ({workshop}) => {
                   }}
                 />
                 {selectedDate && (
-                  <View className='mb-4'>
-                    <Text className='text-sm text-tic mt-4'>CHOOSE FROM AVAILABLE SLOTS</Text>
-                    <View className='flex flex-row flex-wrap gap-x-2 gap-y-2 justify-center items-center mt-4'>
-                      {
-                        UserTimeSlot.map((time, index) => (
-                          <Pressable 
-                            onPress={() => setSelectedTime(selectedTime === time ? null : time)} 
-                            key={index} 
-                            className={`border border-tic rounded-2xl p-1 px-2 ${selectedTime === time && 'bg-drive border-drive'}`} 
-                            style={styles.timeSlotContainer}>
-                              <Text className={`text-tic text-base text-center ${selectedTime === time && 'text-black'}`}>{time}</Text>
-                          </Pressable>
-                        ))
-                      }
+                  <View className="mb-4">
+                    <Text className="text-sm text-tic mt-4">
+                      CHOOSE FROM AVAILABLE SLOTS
+                    </Text>
+                    <View className="flex flex-row flex-wrap gap-x-2 gap-y-2 justify-center items-center mt-4">
+                      {UserTimeSlot.map((time, index) => (
+                        <Pressable
+                          onPress={() =>
+                            setSelectedTime(selectedTime === time ? null : time)
+                          }
+                          key={index}
+                          className={`border border-tic rounded-2xl p-1 px-2 ${selectedTime === time && 'bg-drive border-drive'}`}
+                          style={styles.timeSlotContainer}
+                        >
+                          <Text
+                            className={`text-tic text-base text-center ${selectedTime === time && 'text-black'}`}
+                          >
+                            {time}
+                          </Text>
+                        </Pressable>
+                      ))}
                     </View>
                   </View>
                 )}
@@ -194,7 +205,11 @@ const UserCalendarModal: React.FC<UserCalendarModalProps> = ({workshop}) => {
                       ? 'ReviewBookingDetailsScreen'
                       : 'UserAuthenticationScreen'
                   }
-                  routeParams={isUserLogged ? {workshop, date: selectedDate, time: selectedTime} : {isUser: true}}
+                  routeParams={
+                    isUserLogged
+                      ? {workshop, date: selectedDate, time: selectedTime}
+                      : {isUser: true}
+                  }
                   replace={isUserLogged ? false : false}
                   onClick={onClick}
                 />
@@ -262,8 +277,8 @@ const styles = StyleSheet.create({
   },
   timeSlotContainer: {
     width: '30%',
-     borderColor: ''
-  }
+    borderColor: '',
+  },
 });
 
 export default UserCalendarModal;

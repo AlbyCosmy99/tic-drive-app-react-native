@@ -1,17 +1,17 @@
 import WorkshopCard from './WorkshopCard';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import workshops, {Workshop} from '../constants/temp/Workshops';
-import {memo, useContext } from 'react';
+import {memo, useContext} from 'react';
 import GlobalContext from '@/stateManagement/contexts/GlobalContext';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
-import { useServiceChoosenByUsers } from '@/hooks/user/useServiceChoosenByUsers';
+import {useServiceChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
 function WorkshopCards() {
   const {workshopFilter} = useContext(GlobalContext);
   const {navigation} = useContext(NavigationContext);
 
-  const servicesChoosen = useServiceChoosenByUsers()
+  const servicesChoosen = useServiceChoosenByUsers();
 
   const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);
   const handleCardPress = (workshop: Workshop) => {
@@ -20,7 +20,7 @@ function WorkshopCards() {
 
   //checking if servicesChoosen are in the services offered by a workshop
   const anyService = (services: string[]) => {
-    console.log(services)
+    console.log(services);
     for (let serviceChoosen of servicesChoosen) {
       if (services.includes(serviceChoosen.name.toLowerCase())) return true;
     }
@@ -32,11 +32,12 @@ function WorkshopCards() {
       {workshops
         .filter(
           workshop =>
-            (workshopFilter.length === 0 || servicesChoosen.length === 0 ||
-              (workshop.title
-                .toLowerCase()
-                .includes(workshopFilter.toLowerCase().trim())) &&
-            anyService(workshop.services))
+            workshopFilter.length === 0 ||
+            servicesChoosen.length === 0 ||
+            (workshop.title
+              .toLowerCase()
+              .includes(workshopFilter.toLowerCase().trim()) &&
+              anyService(workshop.services)),
         )
         .map((workshop, index) => {
           return (

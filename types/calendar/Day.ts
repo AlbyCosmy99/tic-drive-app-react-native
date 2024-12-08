@@ -1,8 +1,8 @@
 interface Day {
-    dateString: string;
-    day: number;
-    month: number;
-    year: number;
+  dateString: string;
+  day: number;
+  month: number;
+  year: number;
 }
 
-export default Day
+export default Day;

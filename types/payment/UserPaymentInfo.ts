@@ -1,5 +1,9 @@
-
-export type PaymentType = 'Visa' | 'Mastercard' | 'Apple Pay' | 'Google Pay' | 'Cash'
+export type PaymentType =
+  | 'Visa'
+  | 'Mastercard'
+  | 'Apple Pay'
+  | 'Google Pay'
+  | 'Cash';
 
 export interface PaymentCard {
   id: number;

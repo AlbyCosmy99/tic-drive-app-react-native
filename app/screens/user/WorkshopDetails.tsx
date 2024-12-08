@@ -176,11 +176,10 @@ export default function WorkshopDetails() {
             </View>
             <View className="flex justify-center items-center">
               {servicesChoosen.length > 0 && (
-                <UserCalendarModal workshop={workshop}/>
+                <UserCalendarModal workshop={workshop} />
               )}
             </View>
           </View>
-          
         </>
       )}
     </SafeAreaViewLayout>

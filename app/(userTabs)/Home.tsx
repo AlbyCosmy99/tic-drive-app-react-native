@@ -60,30 +60,26 @@ export default function UserHome() {
           </View>
         ) : (
           <View>
-            {
-              user && user.name && (
-                <Text className="text-center m-4 font-bold text-xl">
-                  Welcome {user.name}
-                </Text>
-              )
-            }
-            <HorizontalLine color={Colors.light.lightGrey}/>
+            {user && user.name && (
+              <Text className="text-center m-4 font-bold text-xl">
+                Welcome {user.name}
+              </Text>
+            )}
+            <HorizontalLine color={Colors.light.lightGrey} />
           </View>
         )}
         <View className="flex-1">
           <WorkshopCards />
-          {
-            userServicesChoosen.length === 0 && (
-              <View className="absolute bottom-8 left-0 right-0">
-                <TicDriveButton
-                  text="Book a service"
-                  onClick={() =>
-                    navigationPush(navigation, 'ChooseServicesScreen')
-                  }
-                />
-              </View>
-            )
-          }
+          {userServicesChoosen.length === 0 && (
+            <View className="absolute bottom-8 left-0 right-0">
+              <TicDriveButton
+                text="Book a service"
+                onClick={() =>
+                  navigationPush(navigation, 'ChooseServicesScreen')
+                }
+              />
+            </View>
+          )}
         </View>
       </SafeAreaViewLayout>
     </LinearGradient>

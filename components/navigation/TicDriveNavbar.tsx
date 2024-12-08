@@ -28,7 +28,7 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
   isLoginAvailable = true,
   canGoBack = null,
   topContent,
-  rightContent
+  rightContent,
 }) => {
   const colorScheme = useColorScheme();
   const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);
@@ -48,47 +48,51 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
       style={backgroundStyle}
     >
       <View className="flex-1 justify-start flex-row">
-        {navigation?.canGoBack() && (canGoBack || canGoBack === null)  && <ToPreviousPage />}
+        {navigation?.canGoBack() && (canGoBack || canGoBack === null) && (
+          <ToPreviousPage />
+        )}
       </View>
-      {!topContent ? (<TouchableWithoutFeedback
-        onPress={() => {
-          if (navigation?.canGoBack()) {
-            navigation.dispatch(StackActions.popToTop());
-          }
-          dispatch(reset());
-          navigationReplace(navigation, 'Hub');
-        }}
-        className="flex-row flex-1 justify-center items-center"
-      >
-        <Text
-          className="font-bold text-3xl"
-          style={[styles.title, styles.ticText]}
+      {!topContent ? (
+        <TouchableWithoutFeedback
+          onPress={() => {
+            if (navigation?.canGoBack()) {
+              navigation.dispatch(StackActions.popToTop());
+            }
+            dispatch(reset());
+            navigationReplace(navigation, 'Hub');
+          }}
+          className="flex-row flex-1 justify-center items-center"
         >
-          Tic
-        </Text>
-        <Text
-          className="font-bold text-3xl"
-          style={[styles.title, styles.driveText]}
-        >
-          Drive
-        </Text>
-      </TouchableWithoutFeedback>) : topContent}
+          <Text
+            className="font-bold text-3xl"
+            style={[styles.title, styles.ticText]}
+          >
+            Tic
+          </Text>
+          <Text
+            className="font-bold text-3xl"
+            style={[styles.title, styles.driveText]}
+          >
+            Drive
+          </Text>
+        </TouchableWithoutFeedback>
+      ) : (
+        topContent
+      )}
       <View className="flex-1 justify-end flex-row">
-        {
-          !rightContent ? (
-            isLoginAvailable &&
-              (isUserLogged ? (
-                <TicDriveAuthButton action="logout" />
-              ) : (
-                <TicDriveAuthButton
-                  onPress={() => {
-                    navigationPush(navigation, 'UserAuthenticationScreen');
-                  }}
-                  action="login"
-                />
-              ))
-          ) : rightContent
-        }
+        {!rightContent
+          ? isLoginAvailable &&
+            (isUserLogged ? (
+              <TicDriveAuthButton action="logout" />
+            ) : (
+              <TicDriveAuthButton
+                onPress={() => {
+                  navigationPush(navigation, 'UserAuthenticationScreen');
+                }}
+                action="login"
+              />
+            ))
+          : rightContent}
       </View>
     </View>
   );

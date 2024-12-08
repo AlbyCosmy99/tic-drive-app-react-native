@@ -12,11 +12,11 @@ module.exports = {
         tic: '#737373',
         drive: '#00BF63',
         grey: {
-          light: '#ECECEC'
+          light: '#ECECEC',
         },
         green: {
-          light: '#D4EEDE'
-        }
+          light: '#D4EEDE',
+        },
       },
     },
   },

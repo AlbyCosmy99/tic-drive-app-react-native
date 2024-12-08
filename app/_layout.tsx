@@ -185,7 +185,7 @@ export default function RootLayout() {
                       animation: getAnimation(route),
                     })}
                   />
-                   <Stack.Screen
+                  <Stack.Screen
                     name="AddNewPaymentMethodScreen"
                     component={AddNewPaymentMethodScreen}
                     options={({route}) => ({

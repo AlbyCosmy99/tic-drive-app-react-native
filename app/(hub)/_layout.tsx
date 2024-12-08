@@ -24,8 +24,8 @@ const Hub = () => {
         //@ts-ignore
         if (!user && !route?.params?.isloggingOut) {
           user = await getUser();
-          console.log('user: ',user)
-          if(user) {
+          console.log('user: ', user);
+          if (user) {
             dispatch(login(user));
           }
         }

@@ -22,9 +22,9 @@ const defaultContextValue: GlobalServiceType = {
   userPaymentInfo: {
     choosenCard: null,
     defaultPaymentTypes: [],
-    customPaymentTypes: []
+    customPaymentTypes: [],
   },
-  setUserPaymentInfo: () => {}
+  setUserPaymentInfo: () => {},
 };
 
 const GlobalContext = createContext<GlobalServiceType>(defaultContextValue);

@@ -1,17 +1,21 @@
 import {FC, ReactNode, useEffect, useState} from 'react';
 import GlobalContext from './GlobalContext';
-import ApplePayIcon from '../../assets/svg/payment/apple_pay.svg'
-import GooglePayIcon from '../../assets/svg/payment/google_pay.svg'
-import CashIcon from '../../assets/svg/payment/cash.svg'
-import { Colors } from '@/constants/Colors';
-import UserPaymentInfo, { PaymentCard, PaymentType } from '@/types/payment/UserPaymentInfo'
+import ApplePayIcon from '../../assets/svg/payment/apple_pay.svg';
+import GooglePayIcon from '../../assets/svg/payment/google_pay.svg';
+import CashIcon from '../../assets/svg/payment/cash.svg';
+import {Colors} from '@/constants/Colors';
+import UserPaymentInfo, {
+  PaymentCard,
+  PaymentType,
+} from '@/types/payment/UserPaymentInfo';
 import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
 
 const GlobalProvider: FC<{children: ReactNode}> = ({children}) => {
   const [workshopFilter, setWorkshopFilter] = useState<string>('');
   const [servicesChoosen, setServicesChoosen] = useState<string[]>([]);
   const [carNotFound, setCarNotFound] = useState<boolean>(true);
-  const [userPaymentInfo, setUserPaymentInfo] = useState<UserPaymentInfo | null>(null)
+  const [userPaymentInfo, setUserPaymentInfo] =
+    useState<UserPaymentInfo | null>(null);
 
   useEffect(() => {
     const defaultPaymentTypes: PaymentCard[] = [
@@ -20,32 +24,32 @@ const GlobalProvider: FC<{children: ReactNode}> = ({children}) => {
         cardHolder: 'Andrei Albu',
         paymentType: 'Cash',
         cardNumber: null,
-        icon: <CashIcon width={24} fill={Colors.light.ticText} />
-      }
-    ]
+        icon: <CashIcon width={24} fill={Colors.light.ticText} />,
+      },
+    ];
 
-    isAndroidPlatform() ? defaultPaymentTypes.push({
-      id: -1,
-      cardHolder: 'Andrei Albu',
-      paymentType: 'Google Pay',
-      cardNumber: null,
-      icon: <GooglePayIcon width={40} fill={Colors.light.ticText} />
-    }) : defaultPaymentTypes.push(
-      {
-        id: -2,
-        cardHolder: 'Andrei Albu',
-        paymentType: 'Apple Pay',
-        cardNumber: null,
-        icon: <ApplePayIcon width={60} />
-      }
-    )
+    isAndroidPlatform()
+      ? defaultPaymentTypes.push({
+          id: -1,
+          cardHolder: 'Andrei Albu',
+          paymentType: 'Google Pay',
+          cardNumber: null,
+          icon: <GooglePayIcon width={40} fill={Colors.light.ticText} />,
+        })
+      : defaultPaymentTypes.push({
+          id: -2,
+          cardHolder: 'Andrei Albu',
+          paymentType: 'Apple Pay',
+          cardNumber: null,
+          icon: <ApplePayIcon width={60} />,
+        });
 
     setUserPaymentInfo({
       choosenCard: null,
       defaultPaymentTypes,
-      customPaymentTypes: []
-    })
-  }, [])
+      customPaymentTypes: [],
+    });
+  }, []);
 
   return (
     <GlobalContext.Provider
@@ -57,7 +61,7 @@ const GlobalProvider: FC<{children: ReactNode}> = ({children}) => {
         carNotFound,
         setCarNotFound,
         userPaymentInfo,
-        setUserPaymentInfo
+        setUserPaymentInfo,
       }}
     >
       {children}
