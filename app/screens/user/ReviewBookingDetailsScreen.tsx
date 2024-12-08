@@ -25,13 +25,14 @@ import PaymentCard from '@/components/ui/payment/PaymentCard';
 import { useContext, useEffect } from 'react';
 import GlobalContext from '@/stateManagement/contexts/GlobalContext';
 import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
+import navigationPush from '@/services/navigation/push';
+import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 
 export default function ReviewBookingDetailsScreen() {
-  const dispatch = useAppDispatch();
   const route = useRoute()
-  const user = useAppSelector(state => state.auth.user);
   const {workshop, date, time} = route?.params as { workshop: Workshop, date: string, time: string }
   const {userPaymentInfo, setUserPaymentInfo} = useContext(GlobalContext)
+  const {navigation} = useContext(NavigationContext);
 
   const servicesChoosen = useServiceChoosenByUsers()
 
@@ -47,6 +48,10 @@ export default function ReviewBookingDetailsScreen() {
       })
     }
   }, [])
+
+  const handlePaymentTypeChange = () => {
+    navigationPush(navigation, 'PaymentCardsScreen')
+  }
   
   return (
     <LinearGradient
@@ -57,7 +62,7 @@ export default function ReviewBookingDetailsScreen() {
       className={`flex-1 w-full h-full ${necessaryDeviceBottomInset()}`}
     >
       <SafeAreaViewLayout styles={[styles.container]}>
-        <TicDriveNavbar isLoginAvailable={false} />
+        <TicDriveNavbar isLoginAvailable={false} topContent={<Text className='font-semibold text-lg'>Review details</Text>} />
         <ScrollView className="flex-1 m-4" showsVerticalScrollIndicator={false}>
           <View className='border rounded-xl border-slate-200 px-4'>
             <View className='flex flex-row my-4'>
@@ -133,13 +138,18 @@ export default function ReviewBookingDetailsScreen() {
             <View className="mt-6">
               <View className='flex flex-row justify-between items-center mb-3'>
                 <Text className="text-tic">PAYMENT METHOD</Text>
-                <Text className='text-drive font-semibold text-sm'>Change</Text>
+                <Pressable onPress={handlePaymentTypeChange}>
+                  <Text className='text-drive font-semibold text-sm'>Change</Text>
+                </Pressable>
               </View>
-              <PaymentCard 
-                userName={userPaymentInfo?.choosenCard?.cardHolder ?? ''}
-                paymentType={userPaymentInfo?.choosenCard?.paymentType ?? 'Cash'}
-                icon={userPaymentInfo?.choosenCard?.icon}
-              />
+              <Pressable onPress={handlePaymentTypeChange}>
+                <PaymentCard 
+                  userName={userPaymentInfo?.choosenCard?.cardHolder ?? ''}
+                  paymentType={userPaymentInfo?.choosenCard?.paymentType ?? 'Cash'}
+                  icon={userPaymentInfo?.choosenCard?.icon}
+                  id={userPaymentInfo?.choosenCard?.id ?? 0}
+                />
+              </Pressable>
             </View>
           </View>
         </ScrollView>
@@ -157,7 +167,7 @@ export default function ReviewBookingDetailsScreen() {
             routeParams={{animation: 'fade'}}
             stateRouteName="Home"
             onClick={() => {
-              dispatch(reset());
+              navigationPush(navigation, 'PaymentCardsScreen')
             }}
           />
         </View>

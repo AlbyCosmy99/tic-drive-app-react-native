@@ -1,23 +1,34 @@
+/*
+README: login cannot be available if there is a rightContent node passed as prop
+this is because the login button is the default right content, and if the prop
+right content is given, this will override the default node
+*/
+
 import {View, Text, StyleSheet, useColorScheme} from 'react-native';
 import {Colors} from '@/constants/Colors';
 import {StackActions} from '@react-navigation/native';
 import ToPreviousPage from './ToPreviousPage';
-import TicDriveAuthButton from '../ui/buttons/TicDriveAuthButton';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import {reset} from '@/stateManagement/redux/slices/servicesSlice';
 import {useContext} from 'react';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
-import navigationPush from '@/services/navigation/push';
 import navigationReplace from '@/services/navigation/replace';
+import TicDriveAuthButton from '../ui/buttons/TicDriveAuthButton';
+import navigationPush from '@/services/navigation/push';
+
 interface TicDriveNavbarProps {
   isLoginAvailable?: boolean;
   canGoBack?: boolean;
+  topContent?: React.ReactNode;
+  rightContent?: React.ReactNode;
 }
 
 const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
   isLoginAvailable = true,
   canGoBack = null,
+  topContent,
+  rightContent
 }) => {
   const colorScheme = useColorScheme();
   const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);
@@ -39,7 +50,7 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
       <View className="flex-1 justify-start flex-row">
         {navigation?.canGoBack() && (canGoBack || canGoBack === null)  && <ToPreviousPage />}
       </View>
-      <TouchableWithoutFeedback
+      {!topContent ? (<TouchableWithoutFeedback
         onPress={() => {
           if (navigation?.canGoBack()) {
             navigation.dispatch(StackActions.popToTop());
@@ -61,19 +72,23 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
         >
           Drive
         </Text>
-      </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>) : topContent}
       <View className="flex-1 justify-end flex-row">
-        {isLoginAvailable &&
-          (isUserLogged ? (
-            <TicDriveAuthButton action="logout" />
-          ) : (
-            <TicDriveAuthButton
-              onPress={() => {
-                navigationPush(navigation, 'UserAuthenticationScreen');
-              }}
-              action="login"
-            />
-          ))}
+        {
+          !rightContent ? (
+            isLoginAvailable &&
+              (isUserLogged ? (
+                <TicDriveAuthButton action="logout" />
+              ) : (
+                <TicDriveAuthButton
+                  onPress={() => {
+                    navigationPush(navigation, 'UserAuthenticationScreen');
+                  }}
+                  action="login"
+                />
+              ))
+          ) : rightContent
+        }
       </View>
     </View>
   );
