@@ -19,7 +19,7 @@ import Day from '@/types/calendar/Day';
 import UserTimeSlot from '@/constants/temp/UserTimeSlots';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
-import {Workshop} from '@/constants/temp/Workshops';
+import Workshop from '@/types/workshops/Workshop';
 
 const {height} = Dimensions.get('window');
 

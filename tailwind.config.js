@@ -16,6 +16,7 @@ module.exports = {
         },
         green: {
           light: '#D4EEDE',
+          dark: '#228E4D'
         },
       },
     },

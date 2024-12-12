@@ -13,26 +13,26 @@ import {
 import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import {useRoute} from '@react-navigation/native';
-import {Workshop} from '@/constants/temp/Workshops';
 import {Image} from '@rneui/themed';
 import {ActivityIndicator} from 'react-native';
 import Star from '../../../assets/svg/star.svg';
 import calculateWorkshopStars from '@/utils/workshops/calculateWorkshopStars';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import Verified from '../../../assets/svg/verified.svg';
-import {useServiceChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
 import CarRepair from '../../../assets/svg/servicesIcons/car_repair.svg';
 import LocationPin from '../../../assets/svg/location_on.svg';
 import CalendarIcon from '../../../assets/svg/free_cancellation.svg';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 import IconTextPair from '@/components/ui/IconTextPair';
 import PaymentCard from '@/components/ui/payment/PaymentCard';
-import {useContext, useEffect} from 'react';
+import {useContext, useEffect, useMemo} from 'react';
 import GlobalContext from '@/stateManagement/contexts/GlobalContext';
 import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import navigationReset from '@/services/navigation/reset';
+import Workshop from '@/types/workshops/Workshop';
+import { useServicesChoosenByUsers } from '@/hooks/user/useServiceChoosenByUsers';
 
 export default function ReviewBookingDetailsScreen() {
   const route = useRoute();
@@ -44,7 +44,9 @@ export default function ReviewBookingDetailsScreen() {
   const {userPaymentInfo, setUserPaymentInfo} = useContext(GlobalContext);
   const {navigation} = useContext(NavigationContext);
 
-  const servicesChoosen = useServiceChoosenByUsers();
+  const timeDate = useMemo(() => time + ', ' + date, [date,time])
+
+  const servicesChoosen = useServicesChoosenByUsers();
 
   useEffect(() => {
     if (!userPaymentInfo?.choosenCard) {
@@ -123,7 +125,7 @@ export default function ReviewBookingDetailsScreen() {
                 icon={<CarRepair width={24} fill={Colors.light.ticText} />}
               />
               <IconTextPair
-                text={time + ', ' + date}
+                text={timeDate}
                 icon={<CalendarIcon width={24} fill={Colors.light.ticText} />}
               />
               <IconTextPair
@@ -223,7 +225,7 @@ export default function ReviewBookingDetailsScreen() {
             routeParams={{animation: 'fade'}}
             stateRouteName="Home"
             onClick={() => {
-              navigationReset(navigation, 0, 'BookingConfirmationScreen');
+              navigationReset(navigation, 0, 'BookingConfirmationScreen', {workshop, date,time});
             }}
           />
         </View>

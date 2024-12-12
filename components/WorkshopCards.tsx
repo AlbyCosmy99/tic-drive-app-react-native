@@ -1,17 +1,18 @@
 import WorkshopCard from './WorkshopCard';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
-import workshops, {Workshop} from '../constants/temp/Workshops';
+import workshops from '../constants/temp/Workshops';
 import {memo, useContext} from 'react';
 import GlobalContext from '@/stateManagement/contexts/GlobalContext';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
-import {useServiceChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
+import Workshop from '@/types/workshops/Workshop';
+import { useServicesChoosenByUsers } from '@/hooks/user/useServiceChoosenByUsers';
 function WorkshopCards() {
   const {workshopFilter} = useContext(GlobalContext);
   const {navigation} = useContext(NavigationContext);
 
-  const servicesChoosen = useServiceChoosenByUsers();
+  const servicesChoosen = useServicesChoosenByUsers();
 
   const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);
   const handleCardPress = (workshop: Workshop) => {

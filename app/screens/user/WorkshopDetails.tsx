@@ -1,5 +1,5 @@
 import {Colors} from '@/constants/Colors';
-import workshops, {Workshop} from '@/constants/temp/Workshops';
+import workshops from '@/constants/temp/Workshops';
 import {Image} from '@rneui/themed';
 import {useContext, useEffect, useState} from 'react';
 import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
@@ -23,6 +23,7 @@ import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import AssistantDirection from '../../../assets/svg/assistant_direction';
 import TicDriveOptionButton from '@/components/ui/buttons/TicDriveOptionButton';
 import UserCalendarModal from '@/components/ui/modals/UserCalendarModal';
+import Workshop from '@/types/workshops/Workshop';
 
 export default function WorkshopDetails() {
   const route = useRoute();
