@@ -32,7 +32,7 @@ import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import navigationReset from '@/services/navigation/reset';
 import Workshop from '@/types/workshops/Workshop';
-import { useServicesChoosenByUsers } from '@/hooks/user/useServiceChoosenByUsers';
+import {useServicesChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
 
 export default function ReviewBookingDetailsScreen() {
   const route = useRoute();
@@ -44,7 +44,7 @@ export default function ReviewBookingDetailsScreen() {
   const {userPaymentInfo, setUserPaymentInfo} = useContext(GlobalContext);
   const {navigation} = useContext(NavigationContext);
 
-  const timeDate = useMemo(() => time + ', ' + date, [date,time])
+  const timeDate = useMemo(() => time + ', ' + date, [date, time]);
 
   const servicesChoosen = useServicesChoosenByUsers();
 
@@ -225,7 +225,11 @@ export default function ReviewBookingDetailsScreen() {
             routeParams={{animation: 'fade'}}
             stateRouteName="Home"
             onClick={() => {
-              navigationReset(navigation, 0, 'BookingConfirmationScreen', {workshop, date,time});
+              navigationReset(navigation, 0, 'BookingConfirmationScreen', {
+                workshop,
+                date,
+                time,
+              });
             }}
           />
         </View>

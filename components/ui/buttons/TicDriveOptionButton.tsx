@@ -3,6 +3,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  View,
   ViewStyle,
 } from 'react-native';
 import {Colors} from '@/constants/Colors';
@@ -29,12 +30,12 @@ const TicDriveOptionButton: React.FC<TicDriveOptionButtonProps> = ({
 }) => {
   return (
     <TouchableOpacity
-      className={`${containerTailwindCss}`}
+      className={`flex flex-row items-center justify-center ${containerTailwindCss}`}
       style={[styles.cardOptionContainer, style]}
       onPress={onPress}
       accessibilityLabel={accessibilityLabel}
     >
-      {icon}
+      <View>{icon}</View>
       <Text className={`font-medium ${textTailwindCss}`}>{text}</Text>
     </TouchableOpacity>
   );

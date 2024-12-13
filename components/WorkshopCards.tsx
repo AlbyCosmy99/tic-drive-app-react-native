@@ -7,7 +7,7 @@ import {useAppSelector} from '@/stateManagement/redux/hooks';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import Workshop from '@/types/workshops/Workshop';
-import { useServicesChoosenByUsers } from '@/hooks/user/useServiceChoosenByUsers';
+import {useServicesChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
 function WorkshopCards() {
   const {workshopFilter} = useContext(GlobalContext);
   const {navigation} = useContext(NavigationContext);
