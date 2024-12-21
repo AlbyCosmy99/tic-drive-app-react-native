@@ -30,14 +30,16 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch(
-      'https://4df2-176-200-13-89.ngrok-free.app/api/services',
-    )
+    fetch('https://4df2-176-200-13-89.ngrok-free.app/api/services')
       .then(res => res.json())
       .then(res => {
-        console.log(res)
+        console.log(res);
         setServices(res);
         setLoading(false);
+      })
+      .catch(err => {
+        console.error(err);
+        setLoading(false); // Ensure loading stops even on failure
       });
   }, []);
 
@@ -49,31 +51,26 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
     });
 
     return unsubscribe;
-  }, [navigation]);
+  }, [navigation, dispatch]);
 
-  return (
+  return loading ? (
+    <View style={styles.loadingContainer}>
+      <ActivityIndicator size="large" color={Colors.light.bookingsOptionsText} />
+    </View>
+  ) : (
     <ScrollView contentContainerStyle={styles.container}>
-      {loading ? (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator
-            size="large"
-            color={Colors.light.bookingsOptionsText}
+      {services.map((elem, index) => (
+        <View key={elem.id} style={styles.cardContainer}>
+          <ServicesCard
+            id={elem.id}
+            title={elem.title}
+            description={elem.description}
+            icon={icons[index + 1]}
+            type={type}
+            isSingleChoice={isSingleChoice}
           />
         </View>
-      ) : (
-        services.map((elem, index) => (
-          <View key={index} style={styles.cardContainer}>
-            <ServicesCard
-              id={elem.id}
-              title={elem.title}
-              description={elem.description}
-              icon={icons[index + 1]}
-              type={type}
-              isSingleChoice={isSingleChoice}
-            />
-          </View>
-        ))
-      )}
+      ))}
     </ScrollView>
   );
 };
@@ -83,7 +80,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    marginHorizontal: 7
+    marginHorizontal: 7,
   },
   cardContainer: {
     width: '50%',
