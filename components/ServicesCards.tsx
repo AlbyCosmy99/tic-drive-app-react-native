@@ -30,7 +30,7 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch('https://4df2-176-200-13-89.ngrok-free.app/api/services')
+    fetch('https://ticdrive20241221184222.azurewebsites.net/api/services')
       .then(res => res.json())
       .then(res => {
         console.log(res);
