@@ -31,10 +31,11 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
 
   useEffect(() => {
     fetch(
-      'https://669ae4f09ba098ed610102d8.mockapi.io/api/v1/ticDrive/services',
+      'https://4df2-176-200-13-89.ngrok-free.app/api/services',
     )
       .then(res => res.json())
       .then(res => {
+        console.log(res)
         setServices(res);
         setLoading(false);
       });
@@ -82,8 +83,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    marginHorizontal: 7,
-    flex: 1,
+    marginHorizontal: 7
   },
   cardContainer: {
     width: '50%',
