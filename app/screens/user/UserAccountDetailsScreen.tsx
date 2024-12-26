@@ -14,9 +14,10 @@ import FeedbackIcon from '../../../assets/svg/writing/feedback.svg';
 import TicDriveAuthButton from '@/components/ui/buttons/TicDriveAuthButton';
 import {useContext} from 'react';
 import GlobalContext from '@/stateManagement/contexts/GlobalContext';
+import { useAppSelector } from '@/stateManagement/redux/hooks';
 
 const UserAccountDetailsScreen = () => {
-  const {userPaymentInfo} = useContext(GlobalContext);
+  const user = useAppSelector(state => state.auth.user);
 
   return (
     <LinearGradient
@@ -43,7 +44,7 @@ const UserAccountDetailsScreen = () => {
               }}
               uri="https://images.ladbible.com/resize?type=webp&quality=70&width=3840&fit=contain&gravity=auto&url=https://images.ladbiblegroup.com/v3/assets/bltb5d92757ac1ee045/bltc86e7943bcc0e006/6569cbef0b642304079a348b/AI-creates-what-the-average-person.png%3Fcrop%3D590%2C590%2Cx0%2Cy0"
             />
-            <Text className="font-semibold text-xl">Andrei Albu</Text>
+            <Text className="font-semibold text-xl">{user!.name}</Text>
           </View>
           <HorizontalLine color={Colors.light.lightGrey} />
           <View className="my-4">

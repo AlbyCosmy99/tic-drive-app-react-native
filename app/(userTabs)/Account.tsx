@@ -14,7 +14,6 @@ import CircularUserAvatar from '@/components/ui/avatars/CircularUserAvatar';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import TicDriveOptionButton from '@/components/ui/buttons/TicDriveOptionButton';
 import AddIcon from '../../assets/svg/add.svg';
-import UserCarCard from '@/components/ui/cards/user/UserCarCard';
 import UserCarCards from '@/components/ui/cards/user/UserCarCards';
 import navigationPush from '@/services/navigation/push';
 import {useContext} from 'react';
@@ -22,6 +21,7 @@ import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 
 export default function UserAccount() {
   const {navigation} = useContext(NavigationContext);
+  const user = useAppSelector(state => state.auth.user);
 
   return (
     <LinearGradient
@@ -55,7 +55,7 @@ export default function UserAccount() {
             uri="https://images.ladbible.com/resize?type=webp&quality=70&width=3840&fit=contain&gravity=auto&url=https://images.ladbiblegroup.com/v3/assets/bltb5d92757ac1ee045/bltc86e7943bcc0e006/6569cbef0b642304079a348b/AI-creates-what-the-average-person.png%3Fcrop%3D590%2C590%2Cx0%2Cy0"
           />
           <View>
-            <Text className="font-semibold text-xl">Andrei Albu</Text>
+            <Text className="font-semibold text-xl">{user!.name}</Text>
             <Text className="text-tic">New Your, USA</Text>
           </View>
         </View>

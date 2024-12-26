@@ -2,8 +2,6 @@ import * as React from 'react';
 import {Text, StyleSheet, View} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import TicDriveInput from '../ui/inputs/TicDriveInput';
-import {router, useNavigation} from 'expo-router';
-import {StackActions} from '@react-navigation/native';
 import {saveUser} from '@/services/auth/secureStore/user';
 import User, {UserCategory} from '@/types/User';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
@@ -16,6 +14,10 @@ import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import navigationPush from '@/services/navigation/push';
 import navigationReset from '@/services/navigation/reset';
 import navigationReplace from '@/services/navigation/replace';
+import register from '@/services/auth/register';
+import { setToken } from '@/services/auth/secureStore/setToken';
+import Toast from 'react-native-toast-message';
+import { getToken } from '@/services/auth/secureStore/getToken';
 
 type FormData = {
   email: string;
@@ -65,23 +67,54 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
 
   const onSubmit = async (data: FormData) => {
     setIsUserLogged(true);
+  
     const user: User = {
       name: data.name,
       email: data.email,
       category: clientCategory === 'user' ? 'user' : 'workshop',
+      password: data.password,
+      repeatedPassword: data.repeatedPassword,
     };
-    dispatch(login(user));
+  
+    if (isUserRegistering) {
+      register(user)
+        .then(async res => {
+          // Clear sensitive data
+          user.password = "";
+          user.repeatedPassword = "";
+  
+          dispatch(login(user));
 
-    if (loginRouteName) {
-      navigationReset(navigation, 0, loginRouteName, loginRouteParams);
-      setLoginRouteName('');
-    } else if (navigation?.canGoBack()) {
-      navigationReplace(navigation, 'Hub');
+          // await setToken(res.token)
+          // const t = await getToken();
+          // console.log("Saved token:", t);
+  
+          saveUser(user);
+          if (loginRouteName) {
+            navigationReset(navigation, 0, loginRouteName, loginRouteParams);
+            setLoginRouteName('');
+          } else if (navigation?.canGoBack()) {
+            navigationReplace(navigation, 'Hub');
+          } else {
+            navigationPush(navigation, 'Hub');
+          }
+        })
+        .catch(err => {
+          console.error("Registration error:", err);
+          
+          dispatch(setAreFormErrors(true));
+
+          Toast.show({
+            type: 'error',
+            text1: 'Registration Failed',
+            text2: 'We encountered an issue. Please try again.',
+          });
+        });
     } else {
-      navigationPush(navigation, 'Hub');
+      console.log("User is logging in...");
     }
-    await saveUser(user);
   };
+  
 
   React.useEffect(() => {
     setOnFormSubmit(() => {
@@ -150,9 +183,9 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
         rules={{
           required: 'Password is required',
           pattern: {
-            value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/,
+            value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
             message:
-              'Password must be at least 8 characters long and include letters and numbers',
+              'Password must be at least 8 characters long, include letters, numbers, and at least one special character',
           },
         }}
         render={({field: {onChange, value, onBlur}}) => (

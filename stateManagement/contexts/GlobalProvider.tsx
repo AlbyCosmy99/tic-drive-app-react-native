@@ -6,9 +6,9 @@ import CashIcon from '../../assets/svg/payment/cash.svg';
 import {Colors} from '@/constants/Colors';
 import UserPaymentInfo, {
   PaymentCard,
-  PaymentType,
 } from '@/types/payment/UserPaymentInfo';
 import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
+import { useAppSelector } from '../redux/hooks';
 
 const GlobalProvider: FC<{children: ReactNode}> = ({children}) => {
   const [workshopFilter, setWorkshopFilter] = useState<string>('');
@@ -16,12 +16,13 @@ const GlobalProvider: FC<{children: ReactNode}> = ({children}) => {
   const [carNotFound, setCarNotFound] = useState<boolean>(true);
   const [userPaymentInfo, setUserPaymentInfo] =
     useState<UserPaymentInfo | null>(null);
+  const user = useAppSelector(state => state.auth.user);
 
   useEffect(() => {
     const defaultPaymentTypes: PaymentCard[] = [
       {
         id: -3,
-        cardHolder: 'Andrei Albu',
+        cardHolder: user ? user.name : '',
         paymentType: 'Cash',
         cardNumber: null,
         icon: <CashIcon width={24} fill={Colors.light.ticText} />,
@@ -31,14 +32,14 @@ const GlobalProvider: FC<{children: ReactNode}> = ({children}) => {
     isAndroidPlatform()
       ? defaultPaymentTypes.push({
           id: -1,
-          cardHolder: 'Andrei Albu',
+          cardHolder: user ? user.name : '',
           paymentType: 'Google Pay',
           cardNumber: null,
           icon: <GooglePayIcon width={40} fill={Colors.light.ticText} />,
         })
       : defaultPaymentTypes.push({
           id: -2,
-          cardHolder: 'Andrei Albu',
+          cardHolder: user ? user.name : '',
           paymentType: 'Apple Pay',
           cardNumber: null,
           icon: <ApplePayIcon width={60} />,
