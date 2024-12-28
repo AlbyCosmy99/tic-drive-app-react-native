@@ -6,7 +6,6 @@ import TicDriveInputLabel from '@/components/ui/inputs/TicDriveInputLabel';
 import {Colors} from '@/constants/Colors';
 import GlobalContext from '@/stateManagement/contexts/GlobalContext';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
-import {LinearGradient} from 'expo-linear-gradient';
 import {useContext, useState} from 'react';
 import {Text, View} from 'react-native';
 import VisaIcon from '../../../assets/svg/payment/visa.svg';

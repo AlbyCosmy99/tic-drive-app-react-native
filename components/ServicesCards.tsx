@@ -8,6 +8,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {UserCategory} from '@/types/User';
 import {reset} from '@/stateManagement/redux/slices/servicesSlice';
+import apiClient from '@/services/http/axiosClient';
 
 interface Service {
   id: number;
@@ -30,17 +31,17 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch('https://ticdrive20241221234140.azurewebsites.net/api/services')
-      .then(res => res.json())
-      .then(res => {
-        console.log(res);
-        setServices(res);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error(err);
-        setLoading(false); // Ensure loading stops even on failure
-      });
+    apiClient.get('services')
+    .then(res => {
+      console.log(res.data);
+      setServices(res.data);
+    })
+    .catch(err => {
+      console.error(err);
+    })
+    .finally(() => {
+      setLoading(false);
+    })
   }, []);
 
   useEffect(() => {
