@@ -7,18 +7,13 @@ import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import {globalStyles} from '@/styles/globalStyles';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
+import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 
 export default function WorkshopAccount() {
   const user = useAppSelector(state => state.auth.user);
 
   return (
-    <LinearGradient
-      colors={[
-        Colors.light.backgroundLinearGradient.start,
-        Colors.light.backgroundLinearGradient.end,
-      ]}
-      className="flex-1 w-full h-full"
-    >
+    <LinearGradientViewLayout>
       <SafeAreaViewLayout>
         <TicDriveNavbar
           isLoginAvailable={user ? true : true}
@@ -37,6 +32,6 @@ export default function WorkshopAccount() {
           <HorizontalLine height={2} />
         </View>
       </SafeAreaViewLayout>
-    </LinearGradient>
+    </LinearGradientViewLayout>
   );
 }

@@ -1,18 +1,15 @@
 import User from '@/types/User';
 
-const register = async (user: User): Promise<any> => {
+export const login = async (user: User): Promise<any> => {
     try {
-        const response = await fetch("https://ticdrive20241221234140.azurewebsites.net/api/auth/register", {
+        const response = await fetch("https://ticdrive20241221234140.azurewebsites.net/api/auth/login", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                name: user.name,
                 email: user.email,
                 password: user.password,
-                confirmPassword: user.repeatedPassword,
-                userType: user.category === 'user' ? 1 : 2
             })
         });
 
@@ -26,5 +23,3 @@ const register = async (user: User): Promise<any> => {
         throw err;
     }
 };
-
-export default register;

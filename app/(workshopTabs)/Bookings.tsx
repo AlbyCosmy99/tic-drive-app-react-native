@@ -9,18 +9,13 @@ import {useState} from 'react';
 import WorkshopRequestsDate from '@/types/segmentedControlOptions/WorkshopRequestsDate';
 import workshopRequestsDates from '@/constants/SegmentedControlOptions/WorkshopRequestsDates';
 import HorizontalLine from '@/components/ui/HorizontalLine';
+import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 
 export default function WorkshopBookings() {
   const [selectedRequestDate, setSelectedRequestDate] =
     useState<WorkshopRequestsDate>(workshopRequestsDates[0]);
   return (
-    <LinearGradient
-      colors={[
-        Colors.light.backgroundLinearGradient.start,
-        Colors.light.backgroundLinearGradient.end,
-      ]}
-      className="flex-1 w-full h-full"
-    >
+    <LinearGradientViewLayout>
       <SafeAreaViewLayout tailwindCss="mx-3.5">
         <TicDriveNavbar isLoginAvailable={false} canGoBack={false} />
         <Text className="font-semibold text-2xl mb-7 mt-2 text-3xl">
@@ -36,7 +31,7 @@ export default function WorkshopBookings() {
         </View>
         <WorkshopRequestCards status="accepted" />
       </SafeAreaViewLayout>
-    </LinearGradient>
+    </LinearGradientViewLayout>
   );
 }
 

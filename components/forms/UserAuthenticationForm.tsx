@@ -15,9 +15,8 @@ import navigationPush from '@/services/navigation/push';
 import navigationReset from '@/services/navigation/reset';
 import navigationReplace from '@/services/navigation/replace';
 import register from '@/services/auth/register';
+import { login as authLogin } from '@/services/auth/login';
 import { setToken } from '@/services/auth/secureStore/setToken';
-import Toast from 'react-native-toast-message';
-import { getToken } from '@/services/auth/secureStore/getToken';
 
 type FormData = {
   email: string;
@@ -65,7 +64,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
     clearErrors();
   }, [isUserRegistering]);
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: FormData, isUserRegistering: boolean) => {
     setIsUserLogged(true);
   
     const user: User = {
@@ -75,43 +74,57 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
       password: data.password,
       repeatedPassword: data.repeatedPassword,
     };
-  
+
     if (isUserRegistering) {
-      register(user)
-        .then(async res => {
-          // Clear sensitive data
-          user.password = "";
-          user.repeatedPassword = "";
-  
-          dispatch(login(user));
+      try {
+        const res = await register(user)
 
-          // await setToken(res.token)
-          // const t = await getToken();
-          // console.log("Saved token:", t);
-  
-          saveUser(user);
-          if (loginRouteName) {
-            navigationReset(navigation, 0, loginRouteName, loginRouteParams);
-            setLoginRouteName('');
-          } else if (navigation?.canGoBack()) {
-            navigationReplace(navigation, 'Hub');
-          } else {
-            navigationPush(navigation, 'Hub');
-          }
-        })
-        .catch(err => {
-          console.error("Registration error:", err);
+        setToken(res.token)
+        //to-do:salvare il token in redux per accesso facilitato e piu veloce rispetto a SecureStore
+
+        navigationReset(navigation,0,'ConfirmEmailScreen')
+        return
+      } catch(err) {
+        console.error("Registration error:", err);
           
-          dispatch(setAreFormErrors(true));
+        dispatch(setAreFormErrors(true));
 
-          Toast.show({
-            type: 'error',
-            text1: 'Registration Failed',
-            text2: 'We encountered an issue. Please try again.',
-          });
-        });
+        alert('We encountered an issue. Please try again.');
+        return
+      }
     } else {
-      console.log("User is logging in...");
+      try {
+        const res = await authLogin(user)
+        saveUser(user);
+        setToken(res.token)
+        navigationReset(navigation,0,'ConfirmEmailScreen')
+        //to-do:salvare il token in redux per accesso facilitato e piu veloce rispetto a SecureStore
+        //chiamata fetch per payload e conferma mail
+        //se confermata home, altrimenti pagina conferma email
+
+      } catch(err) {
+        console.error("Login error:", err);
+          
+        dispatch(setAreFormErrors(true));
+
+        alert('We encountered an issue. Please try again.');
+        return
+      }
+    }
+
+    // Clear sensitive data
+    user.password = "";
+    user.repeatedPassword = "";
+
+    dispatch(login(user));
+
+    if (loginRouteName) {
+      navigationReset(navigation, 0, loginRouteName, loginRouteParams);
+      setLoginRouteName('');
+    } else if (navigation?.canGoBack()) {
+      navigationReplace(navigation, 'Hub');
+    } else {
+      navigationPush(navigation, 'Hub');
     }
   };
   
@@ -119,10 +132,10 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
   React.useEffect(() => {
     setOnFormSubmit(() => {
       return handleSubmit(data => {
-        onSubmit(data);
+        onSubmit(data, isUserRegistering);
       });
     });
-  }, []);
+  }, [isUserRegistering]);
 
   return (
     <View

@@ -3,7 +3,6 @@ import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import CircularUserAvatar from '@/components/ui/avatars/CircularUserAvatar';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import {Colors} from '@/constants/Colors';
-import {LinearGradient} from 'expo-linear-gradient';
 import {Text, View} from 'react-native';
 import AccountIcon from '../../../assets/svg/accountIcon.svg';
 import IconTextPair from '@/components/ui/IconTextPair';
@@ -12,21 +11,14 @@ import NotificationsIcon from '../../../assets/svg/notifications/notifications.s
 import SupportIcon from '../../../assets/svg/support/support.svg';
 import FeedbackIcon from '../../../assets/svg/writing/feedback.svg';
 import TicDriveAuthButton from '@/components/ui/buttons/TicDriveAuthButton';
-import {useContext} from 'react';
-import GlobalContext from '@/stateManagement/contexts/GlobalContext';
 import { useAppSelector } from '@/stateManagement/redux/hooks';
+import LinearGradientViewLayout from '@/app/layouts/LinearGradientViewLayout';
 
 const UserAccountDetailsScreen = () => {
   const user = useAppSelector(state => state.auth.user);
 
   return (
-    <LinearGradient
-      colors={[
-        Colors.light.backgroundLinearGradient.start,
-        Colors.light.backgroundLinearGradient.end,
-      ]}
-      className="flex-1 w-full h-full"
-    >
+    <LinearGradientViewLayout>
       <SafeAreaViewLayout tailwindCss="mx-3.5">
         <View className="flex-1">
           <TicDriveNavbar isLoginAvailable={false} canGoBack={true} />
@@ -90,7 +82,7 @@ const UserAccountDetailsScreen = () => {
           <TicDriveAuthButton action="logout" />
         </View>
       </SafeAreaViewLayout>
-    </LinearGradient>
+    </LinearGradientViewLayout>
   );
 };
 

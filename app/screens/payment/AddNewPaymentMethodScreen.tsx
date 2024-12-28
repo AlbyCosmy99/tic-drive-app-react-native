@@ -10,6 +10,7 @@ import {LinearGradient} from 'expo-linear-gradient';
 import {useContext, useState} from 'react';
 import {Text, View} from 'react-native';
 import VisaIcon from '../../../assets/svg/payment/visa.svg';
+import LinearGradientViewLayout from '@/app/layouts/LinearGradientViewLayout';
 
 const AddNewPaymentMethodScreen = () => {
   const {navigation} = useContext(NavigationContext);
@@ -40,13 +41,7 @@ const AddNewPaymentMethodScreen = () => {
   };
 
   return (
-    <LinearGradient
-      colors={[
-        Colors.light.backgroundLinearGradient.start,
-        Colors.light.backgroundLinearGradient.end,
-      ]}
-      className="flex-1 w-full h-full"
-    >
+    <LinearGradientViewLayout>
       <SafeAreaViewLayout>
         <TicDriveNavbar
           isLoginAvailable={false}
@@ -85,7 +80,7 @@ const AddNewPaymentMethodScreen = () => {
           onClick={onConfirm}
         />
       </SafeAreaViewLayout>
-    </LinearGradient>
+    </LinearGradientViewLayout>
   );
 };
 

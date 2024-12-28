@@ -12,6 +12,7 @@ import {useEffect, useState} from 'react';
 import WorkshopRequestsDate from '@/types/segmentedControlOptions/WorkshopRequestsDate';
 import WorkshopRequestCards from '@/components/ui/cards/WorkshopRequestCards';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
+import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 
 export default function WorkshopRequests() {
   const [selectedRequestDate, setSelectedRequestDate] =
@@ -21,13 +22,7 @@ export default function WorkshopRequests() {
     console.log(selectedRequestDate);
   }, [selectedRequestDate]);
   return (
-    <LinearGradient
-      colors={[
-        Colors.light.backgroundLinearGradient.start,
-        Colors.light.backgroundLinearGradient.end,
-      ]}
-      className="flex-1 w-full h-full"
-    >
+    <LinearGradientViewLayout>
       <SafeAreaViewLayout tailwindCss="mx-3.5">
         <TicDriveNavbar isLoginAvailable={false} canGoBack={false} />
         <Text className="font-semibold text-2xl mb-7 mt-2 text-3xl">
@@ -43,6 +38,6 @@ export default function WorkshopRequests() {
         </View>
         <WorkshopRequestCards status="pending" />
       </SafeAreaViewLayout>
-    </LinearGradient>
+    </LinearGradientViewLayout>
   );
 }

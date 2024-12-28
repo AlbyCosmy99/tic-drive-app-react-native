@@ -18,19 +18,14 @@ import UserCarCards from '@/components/ui/cards/user/UserCarCards';
 import navigationPush from '@/services/navigation/push';
 import {useContext} from 'react';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
+import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 
 export default function UserAccount() {
   const {navigation} = useContext(NavigationContext);
   const user = useAppSelector(state => state.auth.user);
 
   return (
-    <LinearGradient
-      colors={[
-        Colors.light.backgroundLinearGradient.start,
-        Colors.light.backgroundLinearGradient.end,
-      ]}
-      className="flex-1 w-full h-full"
-    >
+    <LinearGradientViewLayout>
       <SafeAreaViewLayout tailwindCss="mx-3.5">
         <TicDriveNavbar isLoginAvailable={false} />
         <View className="flex flex-row justify-between items-center mb-4">
@@ -72,6 +67,6 @@ export default function UserAccount() {
           <UserCarCards />
         </ScrollView>
       </SafeAreaViewLayout>
-    </LinearGradient>
+    </LinearGradientViewLayout>
   );
 }

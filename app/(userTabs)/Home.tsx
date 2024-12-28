@@ -14,6 +14,7 @@ import {useAppSelector} from '@/stateManagement/redux/hooks';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import navigationPush from '@/services/navigation/push';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
+import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 
 export default function UserHome() {
   const {setWorkshopFilter} = useContext(GlobalContext);
@@ -24,13 +25,7 @@ export default function UserHome() {
   const {navigation} = useContext(NavigationContext);
 
   return (
-    <LinearGradient
-      colors={[
-        Colors.light.backgroundLinearGradient.start,
-        Colors.light.backgroundLinearGradient.end,
-      ]}
-      className="flex-1 w-full h-full"
-    >
+    <LinearGradientViewLayout>
       <SafeAreaViewLayout>
         <TicDriveNavbar isLoginAvailable={false} />
         {userServicesChoosen.length > 0 ? (
@@ -82,7 +77,7 @@ export default function UserHome() {
           )}
         </View>
       </SafeAreaViewLayout>
-    </LinearGradient>
+    </LinearGradientViewLayout>
   );
 }
 

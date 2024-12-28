@@ -27,6 +27,7 @@ import ReviewBookingDetailsScreen from './screens/user/ReviewBookingDetailsScree
 import UserAccountDetailsScreen from './screens/user/UserAccountDetailsScreen';
 import AddNewPaymentMethodScreen from './screens/payment/AddNewPaymentMethodScreen';
 import PaymentCardsScreen from './screens/payment/PaymentCardsScreen';
+import ConfirmEmailScreen from './screens/auth/ConfirmEmailScreen';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -192,6 +193,15 @@ export default function RootLayout() {
                       title: 'AddNewPaymentMethodScreen',
                       headerShown: false,
                       presentation: 'modal',
+                      animation: getAnimation(route),
+                    })}
+                  />
+                   <Stack.Screen
+                    name="ConfirmEmailScreen"
+                    component={ConfirmEmailScreen}
+                    options={({route}) => ({
+                      title: 'ConfirmEmailScreen',
+                      headerShown: false,
                       animation: getAnimation(route),
                     })}
                   />
