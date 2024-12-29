@@ -1,9 +1,9 @@
 export default interface User {
-  userId: string;
+  userId?: string;
   name: string | undefined;
   email: string;
   category: UserCategory;
-  emailConfirmed: boolean;
+  emailConfirmed?: boolean;
   password?: string;
   repeatedPassword?: string;
 }

@@ -1,4 +1,3 @@
-import { Colors } from '@/constants/Colors';
 import { removeSecureToken } from '@/services/auth/secureStore/setToken';
 import navigationReplace from '@/services/navigation/replace';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
@@ -8,7 +7,7 @@ import {reset} from '@/stateManagement/redux/slices/servicesSlice';
 import AuthAction from '@/types/auth/Action';
 import {Entypo} from '@expo/vector-icons';
 import React, {useContext, useState} from 'react';
-import {ActivityIndicator, Text, View} from 'react-native';
+import { Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 interface TicDriveAuthButtonProps {

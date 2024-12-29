@@ -33,7 +33,7 @@ const Hub = () => {
               category: 'user', //to-do: integrare anche il tipo di utente officina (workshop),
               emailConfirmed: payload.emailConfirmed
             }));
-            if(user?.emailConfirmed) {
+            if(payload.emailConfirmed) {
               navigationReset(
                 navigation,
                 0,

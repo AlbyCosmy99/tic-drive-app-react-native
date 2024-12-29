@@ -4,7 +4,6 @@ import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
 import WorkshopCards from '@/components/WorkshopCards';
-import {LinearGradient} from 'expo-linear-gradient';
 import {useContext} from 'react';
 import FilterIcon from '../../assets/svg/discover_tune.svg';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';

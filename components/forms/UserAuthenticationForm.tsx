@@ -6,7 +6,8 @@ import User, {UserCategory} from '@/types/User';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
 import {
-  setToken
+  setToken,
+  login
 } from '@/stateManagement/redux/slices/authSlice';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import navigationPush from '@/services/navigation/push';
@@ -14,7 +15,8 @@ import navigationReset from '@/services/navigation/reset';
 import navigationReplace from '@/services/navigation/replace';
 import register from '@/services/auth/register';
 import { setSecureToken } from '@/services/auth/secureStore/setToken';
-import { login } from '@/services/auth/login';
+import { login as authLogin } from '@/services/auth/login';
+import { getPayload } from '@/services/auth/getPayload';
 
 type FormData = {
   email: string;
@@ -76,21 +78,21 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
     } else {
       try {
         setLoading(true)
-        const res = await login(user)
+        const res = await authLogin(user)
 
         setSecureToken(res.token)
-        dispatch(setToken(res.setToken))
+        dispatch(setToken(res.token))
+
+        const payload = await getPayload(res.token)
+        dispatch(login({
+          userId: payload.userId,
+          name: payload.name,
+          email: payload.email,
+          category: 'user', //to-do: integrare anche il tipo di utente officina (workshop),
+          emailConfirmed: payload.emailConfirmed
+        }));
 
         if(res.emailConfirmed) {
-          //ottieni i dati dell'utente attraverso un'altra chiamata http passando il token
-          
-          // saveUser(user);
-          // // Clear sensitive data
-          // user.password = "";
-          // user.repeatedPassword = "";
-          // dispatch(login(user));
-
-
           if (loginRouteName) {
             navigationReset(navigation, 0, loginRouteName, loginRouteParams);
             setLoginRouteName('');

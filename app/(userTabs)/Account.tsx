@@ -3,11 +3,9 @@ import {
   Pressable,
   ScrollView,
   Text,
-  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
-import {LinearGradient} from 'expo-linear-gradient';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 import CircularUserAvatar from '@/components/ui/avatars/CircularUserAvatar';
