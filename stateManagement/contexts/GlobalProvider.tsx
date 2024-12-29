@@ -4,11 +4,9 @@ import ApplePayIcon from '../../assets/svg/payment/apple_pay.svg';
 import GooglePayIcon from '../../assets/svg/payment/google_pay.svg';
 import CashIcon from '../../assets/svg/payment/cash.svg';
 import {Colors} from '@/constants/Colors';
-import UserPaymentInfo, {
-  PaymentCard,
-} from '@/types/payment/UserPaymentInfo';
+import UserPaymentInfo, {PaymentCard} from '@/types/payment/UserPaymentInfo';
 import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
-import { useAppSelector } from '../redux/hooks';
+import {useAppSelector} from '../redux/hooks';
 
 const GlobalProvider: FC<{children: ReactNode}> = ({children}) => {
   const [workshopFilter, setWorkshopFilter] = useState<string>('');

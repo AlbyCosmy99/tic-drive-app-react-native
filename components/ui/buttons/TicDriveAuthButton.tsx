@@ -1,4 +1,4 @@
-import { removeSecureToken } from '@/services/auth/secureStore/setToken';
+import {removeSecureToken} from '@/services/auth/secureStore/setToken';
 import navigationReplace from '@/services/navigation/replace';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
@@ -7,7 +7,7 @@ import {reset} from '@/stateManagement/redux/slices/servicesSlice';
 import AuthAction from '@/types/auth/Action';
 import {Entypo} from '@expo/vector-icons';
 import React, {useContext, useState} from 'react';
-import { Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 interface TicDriveAuthButtonProps {
@@ -21,41 +21,39 @@ const TicDriveAuthButton: React.FC<TicDriveAuthButtonProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const {navigation} = useContext(NavigationContext);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const handleLogout = async () => {
-    await removeSecureToken()
+    await removeSecureToken();
     navigationReplace(navigation, 'Hub');
     dispatch(logout());
     dispatch(reset());
   };
 
   const handleOnPress = () => {
-    setLoading(true)
+    setLoading(true);
     onPress && onPress();
     if (action === 'logout') {
       handleLogout();
     }
   };
 
-  return (
-    loading ? (
-      <View className='p-2.5'> 
-        <Text className="text-lg text-center text-tic">Goodbye!</Text>
+  return loading ? (
+    <View className="p-2.5">
+      <Text className="text-lg text-center text-tic">Goodbye!</Text>
+    </View>
+  ) : (
+    <TouchableOpacity
+      onPress={handleOnPress}
+      className={`p-2.5 rounded-2xl ${action === 'login' ? 'bg-green-500' : 'bg-slate-500'}`}
+    >
+      <View className="flex-row gap-1 items-center justify-center">
+        <Entypo name="login" size={24} color="white" />
+        <Text className="text-xl text-white">
+          {action[0].toUpperCase() + action.slice(1)}
+        </Text>
       </View>
-    ) : (
-      <TouchableOpacity
-        onPress={handleOnPress}
-        className={`p-2.5 rounded-2xl ${action === 'login' ? 'bg-green-500' : 'bg-slate-500'}`}
-      >
-        <View className="flex-row gap-1 items-center justify-center">
-          <Entypo name="login" size={24} color="white" />
-          <Text className="text-xl text-white">
-            {action[0].toUpperCase() + action.slice(1)}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    )
+    </TouchableOpacity>
   );
 };
 

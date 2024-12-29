@@ -5,18 +5,15 @@ import TicDriveInput from '../ui/inputs/TicDriveInput';
 import User, {UserCategory} from '@/types/User';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
-import {
-  setToken,
-  login
-} from '@/stateManagement/redux/slices/authSlice';
+import {setToken, login} from '@/stateManagement/redux/slices/authSlice';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import navigationPush from '@/services/navigation/push';
 import navigationReset from '@/services/navigation/reset';
 import navigationReplace from '@/services/navigation/replace';
 import register from '@/services/auth/register';
-import { setSecureToken } from '@/services/auth/secureStore/setToken';
-import { login as authLogin } from '@/services/auth/login';
-import { getPayload } from '@/services/auth/getPayload';
+import {setSecureToken} from '@/services/auth/secureStore/setToken';
+import {login as authLogin} from '@/services/auth/login';
+import {getPayload} from '@/services/auth/getPayload';
 
 type FormData = {
   email: string;
@@ -36,7 +33,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
   isUserRegistering,
   setOnFormSubmit,
   clientCategory,
-  setLoading
+  setLoading,
 }) => {
   const {
     control,
@@ -47,7 +44,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
     formState: {errors},
   } = useForm<FormData>();
 
-  const { loginRouteName, setLoginRouteName, loginRouteParams} =
+  const {loginRouteName, setLoginRouteName, loginRouteParams} =
     React.useContext(AuthContext);
   const {navigation} = React.useContext(NavigationContext);
   const dispatch = useAppDispatch();
@@ -67,32 +64,34 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
 
     if (isUserRegistering) {
       try {
-        setLoading(true)
-        const res = await register(user)
-        setSecureToken(res.token)
-        dispatch(setToken(res.setToken))
-        navigationReset(navigation,0,'ConfirmEmailScreen')
-      } catch(err) { 
+        setLoading(true);
+        const res = await register(user);
+        setSecureToken(res.token);
+        dispatch(setToken(res.setToken));
+        navigationReset(navigation, 0, 'ConfirmEmailScreen');
+      } catch (err) {
         alert('User already registered. Login or try with a new email.');
       }
     } else {
       try {
-        setLoading(true)
-        const res = await authLogin(user)
+        setLoading(true);
+        const res = await authLogin(user);
 
-        setSecureToken(res.token)
-        dispatch(setToken(res.token))
+        setSecureToken(res.token);
+        dispatch(setToken(res.token));
 
-        const payload = await getPayload(res.token)
-        dispatch(login({
-          userId: payload.userId,
-          name: payload.name,
-          email: payload.email,
-          category: 'user', //to-do: integrare anche il tipo di utente officina (workshop),
-          emailConfirmed: payload.emailConfirmed
-        }));
+        const payload = await getPayload(res.token);
+        dispatch(
+          login({
+            userId: payload.userId,
+            name: payload.name,
+            email: payload.email,
+            category: 'user', //to-do: integrare anche il tipo di utente officina (workshop),
+            emailConfirmed: payload.emailConfirmed,
+          }),
+        );
 
-        if(res.emailConfirmed) {
+        if (res.emailConfirmed) {
           if (loginRouteName) {
             navigationReset(navigation, 0, loginRouteName, loginRouteParams);
             setLoginRouteName('');
@@ -102,15 +101,14 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
             navigationPush(navigation, 'Hub');
           }
         } else {
-          navigationReset(navigation,0,'ConfirmEmailScreen')
-        }  
-      } catch(err) { 
+          navigationReset(navigation, 0, 'ConfirmEmailScreen');
+        }
+      } catch (err) {
         alert('We encountered an issue. Please try again.');
       }
     }
-    setLoading(false)
+    setLoading(false);
   };
-  
 
   React.useEffect(() => {
     setOnFormSubmit(() => {
@@ -179,7 +177,8 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
         rules={{
           required: 'Password is required',
           pattern: {
-            value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+            value:
+              /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
             message:
               'Password must be at least 8 characters long, include letters, numbers, and at least one special character',
           },

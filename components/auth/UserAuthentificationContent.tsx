@@ -23,7 +23,7 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
   setIsUserRegistering,
   clientCategory = 'user',
 }) => {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [onFormSubmit, setOnFormSubmit] = useState<(() => void) | null>(null);
 
   const handleLoginPressed = async () => {
@@ -34,67 +34,68 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
     setIsUserRegistering(!isUserRegistering);
   };
 
-  return (
-    loading ? (
-      <View className='mt-40 flex-1 justify-center items-center'>
-        <ActivityIndicator size="large" color={Colors.light.bookingsOptionsText} />
+  return loading ? (
+    <View className="mt-40 flex-1 justify-center items-center">
+      <ActivityIndicator
+        size="large"
+        color={Colors.light.bookingsOptionsText}
+      />
+    </View>
+  ) : (
+    <>
+      <Text className="text-center text-3xl font-medium m-1.5 mb-3">
+        Welcome
+      </Text>
+      <View className="flex-row justify-center gap-1">
+        {action === 'login' ? (
+          <Text>Don't have an account?</Text>
+        ) : (
+          <Text>Already have an account?</Text>
+        )}
+        <TouchableOpacity onPress={handleSwitchLoginRegister}>
+          <Text className="font-medium">
+            {action === 'login' ? 'Register' : 'Login'} here
+          </Text>
+        </TouchableOpacity>
       </View>
-    ) : (
-      <>
-        <Text className="text-center text-3xl font-medium m-1.5 mb-3">
-          Welcome
-        </Text>
-        <View className="flex-row justify-center gap-1">
-          {action === 'login' ? (
-            <Text>Don't have an account?</Text>
-          ) : (
-            <Text>Already have an account?</Text>
-          )}
-          <TouchableOpacity onPress={handleSwitchLoginRegister}>
-            <Text className="font-medium">
-              {action === 'login' ? 'Register' : 'Login'} here
-            </Text>
+      <View>
+        <UserAuthenticationForm
+          isUserRegistering={isUserRegistering}
+          setOnFormSubmit={setOnFormSubmit}
+          clientCategory={clientCategory}
+          setLoading={setLoading}
+        />
+      </View>
+      <View>
+        <TicDriveButton
+          text={action[0].toUpperCase() + action.slice(1)}
+          onClick={handleLoginPressed}
+        />
+        <View className="flex-row justify-center items-center my-3.5">
+          <View style={styles.hr} />
+          <Text className="text-center" style={styles.continueWithText}>
+            Or continue with
+          </Text>
+          <View style={styles.hr} />
+        </View>
+        <View className="flex-row mx-3.5">
+          <OAuth2Button text="Google" icon={<GoogleIcon />} />
+          <OAuth2Button text="Apple ID" icon={<AppleIcon />} />
+        </View>
+        <View className="flex-row justify-center gap-1 flex-wrap text-center mx-3.5 my-3">
+          <Text style={styles.footerText}>
+            By clicking {action}, you agree to our
+          </Text>
+          <TouchableOpacity>
+            <Text style={styles.link}>Terms of Service</Text>
+          </TouchableOpacity>
+          <Text style={styles.footerText}>and</Text>
+          <TouchableOpacity>
+            <Text style={styles.link}>Privacy Policy</Text>
           </TouchableOpacity>
         </View>
-        <View>
-          <UserAuthenticationForm
-            isUserRegistering={isUserRegistering}
-            setOnFormSubmit={setOnFormSubmit}
-            clientCategory={clientCategory}
-            setLoading={setLoading}
-          />
-        </View>
-        <View>
-          <TicDriveButton
-            text={action[0].toUpperCase() + action.slice(1)}
-            onClick={handleLoginPressed}
-          />
-          <View className="flex-row justify-center items-center my-3.5">
-            <View style={styles.hr} />
-            <Text className="text-center" style={styles.continueWithText}>
-              Or continue with
-            </Text>
-            <View style={styles.hr} />
-          </View>
-          <View className="flex-row mx-3.5">
-            <OAuth2Button text="Google" icon={<GoogleIcon />} />
-            <OAuth2Button text="Apple ID" icon={<AppleIcon />} />
-          </View>
-          <View className="flex-row justify-center gap-1 flex-wrap text-center mx-3.5 my-3">
-            <Text style={styles.footerText}>
-              By clicking {action}, you agree to our
-            </Text>
-            <TouchableOpacity>
-              <Text style={styles.link}>Terms of Service</Text>
-            </TouchableOpacity>
-            <Text style={styles.footerText}>and</Text>
-            <TouchableOpacity>
-              <Text style={styles.link}>Privacy Policy</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </>
-    )
+      </View>
+    </>
   );
 };
 

@@ -11,7 +11,7 @@ import NotificationsIcon from '../../../assets/svg/notifications/notifications.s
 import SupportIcon from '../../../assets/svg/support/support.svg';
 import FeedbackIcon from '../../../assets/svg/writing/feedback.svg';
 import TicDriveAuthButton from '@/components/ui/buttons/TicDriveAuthButton';
-import { useAppSelector } from '@/stateManagement/redux/hooks';
+import {useAppSelector} from '@/stateManagement/redux/hooks';
 import LinearGradientViewLayout from '@/app/layouts/LinearGradientViewLayout';
 
 const UserAccountDetailsScreen = () => {

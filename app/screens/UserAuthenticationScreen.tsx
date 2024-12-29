@@ -28,7 +28,7 @@ export default function UserAuthenticationScreen() {
   const {register, isUser} = route.params;
 
   useEffect(() => {
-    console.log('render')
+    console.log('render');
     if (register) {
       setIsUserRegistering(true);
     }

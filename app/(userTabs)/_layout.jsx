@@ -17,7 +17,7 @@ const Tab = createBottomTabNavigator();
 
 export default function UserTabLayout() {
   const token = useAppSelector(state => state.auth.token);
-  console.log(token)
+  console.log(token);
 
   if (!token) {
     return <HomeTab />;

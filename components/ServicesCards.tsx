@@ -31,17 +31,18 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    apiClient.get('services')
-    .then(res => {
-      console.log(res.data);
-      setServices(res.data);
-    })
-    .catch(err => {
-      console.error(err);
-    })
-    .finally(() => {
-      setLoading(false);
-    })
+    apiClient
+      .get('services')
+      .then(res => {
+        console.log(res.data);
+        setServices(res.data);
+      })
+      .catch(err => {
+        console.error(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   useEffect(() => {
@@ -55,8 +56,11 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
   }, [navigation, dispatch]);
 
   return loading ? (
-    <View className='flex-1 justify-center items-center'>
-      <ActivityIndicator size="large" color={Colors.light.bookingsOptionsText} />
+    <View className="flex-1 justify-center items-center">
+      <ActivityIndicator
+        size="large"
+        color={Colors.light.bookingsOptionsText}
+      />
     </View>
   ) : (
     <ScrollView contentContainerStyle={styles.container}>
