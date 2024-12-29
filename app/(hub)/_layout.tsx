@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {ActivityIndicator, View} from 'react-native';
 import {useContext, useEffect} from 'react';
 import {login, setToken} from '@/stateManagement/redux/slices/authSlice';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
@@ -10,6 +10,7 @@ import {getToken} from '@/services/auth/secureStore/getToken';
 import {getPayload} from '@/services/auth/getPayload';
 import { removeSecureToken } from '@/services/auth/secureStore/setToken';
 import navigationPush from '@/services/navigation/push';
+import { Colors } from '@/constants/Colors';
 
 const Hub = () => {
   const dispatch = useAppDispatch();
@@ -71,7 +72,12 @@ const Hub = () => {
 
   return (
     <View className="justify-center items-center w-full h-full bg-white">
-      {/* Intentionally left blank */}
+      <View className="flex-1 justify-center items-center">
+        <ActivityIndicator
+          size="large"
+          color={Colors.light.bookingsOptionsText}
+        />
+      </View>
     </View>
   );
 };
