@@ -8,6 +8,8 @@ import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import navigationReset from '@/services/navigation/reset';
 import {getToken} from '@/services/auth/secureStore/getToken';
 import {getPayload} from '@/services/auth/getPayload';
+import { removeSecureToken } from '@/services/auth/secureStore/setToken';
+import navigationPush from '@/services/navigation/push';
 
 const Hub = () => {
   const dispatch = useAppDispatch();
@@ -47,7 +49,10 @@ const Hub = () => {
               navigationReset(navigation, 0, 'ConfirmEmailScreen');
             }
           } catch (err) {
-            alert('error while getting user data.');
+            //if here, probably token is in secureStore but user is not in db - to solve, remove token from secureStore and retry
+            console.log('error while getting user data.');
+            await removeSecureToken()
+            navigationPush(navigation, '/')
           }
         } else {
           navigationReset(navigation, 0, 'userTabs', {animation: 'fade'});

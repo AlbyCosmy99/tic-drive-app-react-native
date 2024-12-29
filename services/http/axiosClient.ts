@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const PROD_BACKEND_URL = 'https://ticdrive20241221234140.azurewebsites.net';
-const DEV_BACKEND_URL = 'https://cd7c-95-235-179-147.ngrok-free.app';
+const DEV_BACKEND_URL = 'https://ticdrive20241221234140.azurewebsites.net'; //local
 
 const backendUrl = __DEV__ ? DEV_BACKEND_URL : PROD_BACKEND_URL;
 
