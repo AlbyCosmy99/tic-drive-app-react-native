@@ -66,6 +66,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
       try {
         setLoading(true);
         const res = await register(user);
+        console.log(res)
         setSecureToken(res.token);
         dispatch(setToken(res.setToken));
         navigationReset(navigation, 0, 'ConfirmEmailScreen');
@@ -177,10 +178,8 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
         rules={{
           required: 'Password is required',
           pattern: {
-            value:
-              /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-            message:
-              'Password must be at least 8 characters long, include letters, numbers, and at least one special character',
+            value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+            message: 'Password must be at least 8 characters long, include letters (at least one uppercase), numbers, and at least one special character',
           },
         }}
         render={({field: {onChange, value, onBlur}}) => (
