@@ -16,9 +16,9 @@ import UserAccount from './Account';
 const Tab = createBottomTabNavigator();
 
 export default function UserTabLayout() {
-  const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);
+  const token = useAppSelector(state => state.auth.token);
 
-  if (!isUserLogged) {
+  if (!token) {
     return <HomeTab />;
   }
   return (

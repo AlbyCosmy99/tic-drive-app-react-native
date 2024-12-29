@@ -1,8 +1,6 @@
 import {createContext} from 'react';
 
 interface AuthContextType {
-  isUserLogged: boolean;
-  setIsUserLogged: (isLogged: boolean) => void;
   //to do: tenere un unico oggetto di loginRouteName e considerare di non utilizzare il context
   loginRouteName: string;
   setLoginRouteName: (loginRouteName: string) => void;
@@ -11,8 +9,6 @@ interface AuthContextType {
 }
 
 const initialState: AuthContextType = {
-  isUserLogged: false,
-  setIsUserLogged: () => {},
   loginRouteName: '',
   setLoginRouteName: () => {},
   loginRouteParams: {},

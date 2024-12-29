@@ -32,7 +32,7 @@ const UserCalendarModal: React.FC<UserCalendarModalProps> = ({workshop}) => {
   const slideAnim = useRef(new Animated.Value(height)).current;
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);
+  const token = useAppSelector(state => state.auth.token);
   const {setLoginRouteName, setLoginRouteParams} = useContext(AuthContext);
 
   const openModal = (): void => {
@@ -53,7 +53,7 @@ const UserCalendarModal: React.FC<UserCalendarModalProps> = ({workshop}) => {
   };
 
   const onClick = () => {
-    if (isUserLogged) {
+    if (token) {
       closeModal();
       return {};
     }
@@ -198,19 +198,19 @@ const UserCalendarModal: React.FC<UserCalendarModalProps> = ({workshop}) => {
                   </View>
                 )}
                 <TicDriveButton
-                  text={'Confirm ' + (!isUserLogged ? 'and login' : '')}
+                  text={'Confirm ' + (!token ? 'and login' : '')}
                   disabled={!selectedDate || !selectedTime}
                   routeName={
-                    isUserLogged
+                    token
                       ? 'ReviewBookingDetailsScreen'
                       : 'UserAuthenticationScreen'
                   }
                   routeParams={
-                    isUserLogged
+                    token
                       ? {workshop, date: selectedDate, time: selectedTime}
                       : {isUser: true}
                   }
-                  replace={isUserLogged ? false : false}
+                  replace={token ? false : false}
                   onClick={onClick}
                 />
               </View>

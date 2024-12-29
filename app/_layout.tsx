@@ -1,7 +1,7 @@
 import {DarkTheme, DefaultTheme, ThemeProvider} from '@react-navigation/native';
 import {useFonts} from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import {useEffect, useState} from 'react';
+import { useState} from 'react';
 import 'react-native-reanimated';
 import {useColorScheme} from '@/hooks/useColorScheme';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
@@ -27,7 +27,6 @@ import UserAccountDetailsScreen from './screens/user/UserAccountDetailsScreen';
 import AddNewPaymentMethodScreen from './screens/payment/AddNewPaymentMethodScreen';
 import PaymentCardsScreen from './screens/payment/PaymentCardsScreen';
 import ConfirmEmailScreen from './screens/auth/ConfirmEmailScreen';
-import { getToken } from '@/services/auth/secureStore/getToken';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -37,7 +36,6 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
 
   //AuthContext data
-  const [isUserLogged, setIsUserLogged] = useState(false);
   const [loginRouteName, setLoginRouteName] = useState('');
   const [loginRouteParams, setLoginRouteParams] = useState<any>({});
 
@@ -50,20 +48,6 @@ export default function RootLayout() {
     BoldLato: require('../assets/fonts/Lato/Lato-Bold.ttf'),
   });
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const token = await getToken();
-        if(token) {
-          setIsUserLogged(true)
-        }
-      } catch (error) {
-        console.error('Error checking auth status: ', error);
-      }
-    };
-    checkAuth();
-  }, [isUserLogged]);
-
   if (!loaded) {
     return null;
   }
@@ -75,8 +59,6 @@ export default function RootLayout() {
           <NavigationContext.Provider value={{navigation, setNavigation}}>
             <AuthContext.Provider
               value={{
-                isUserLogged,
-                setIsUserLogged,
                 loginRouteName,
                 setLoginRouteName,
                 loginRouteParams,

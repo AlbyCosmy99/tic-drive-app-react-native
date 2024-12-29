@@ -31,7 +31,7 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
   rightContent,
 }) => {
   const colorScheme = useColorScheme();
-  const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);
+  const token = useAppSelector(state => state.auth.token);
   const dispatch = useAppDispatch();
   const {navigation} = useContext(NavigationContext);
 
@@ -82,7 +82,7 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
       <View className="flex-1 justify-end flex-row">
         {!rightContent
           ? isLoginAvailable &&
-            (isUserLogged ? (
+            (token ? (
               <TicDriveAuthButton action="logout" />
             ) : (
               <TicDriveAuthButton

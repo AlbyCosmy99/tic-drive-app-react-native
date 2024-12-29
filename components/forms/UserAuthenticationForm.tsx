@@ -2,12 +2,10 @@ import * as React from 'react';
 import {Text, StyleSheet, View} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import TicDriveInput from '../ui/inputs/TicDriveInput';
-import {saveUser} from '@/services/auth/secureStore/user';
 import User, {UserCategory} from '@/types/User';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
 import {
-  login,
   setToken
 } from '@/stateManagement/redux/slices/authSlice';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
@@ -15,8 +13,8 @@ import navigationPush from '@/services/navigation/push';
 import navigationReset from '@/services/navigation/reset';
 import navigationReplace from '@/services/navigation/replace';
 import register from '@/services/auth/register';
-import { login as authLogin } from '@/services/auth/login';
 import { setSecureToken } from '@/services/auth/secureStore/setToken';
+import { login } from '@/services/auth/login';
 
 type FormData = {
   email: string;
@@ -47,7 +45,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
     formState: {errors},
   } = useForm<FormData>();
 
-  const {setIsUserLogged, loginRouteName, setLoginRouteName, loginRouteParams} =
+  const { loginRouteName, setLoginRouteName, loginRouteParams} =
     React.useContext(AuthContext);
   const {navigation} = React.useContext(NavigationContext);
   const dispatch = useAppDispatch();
@@ -57,8 +55,6 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
   }, [isUserRegistering]);
 
   const onSubmit = async (data: FormData, isUserRegistering: boolean) => {
-    setIsUserLogged(true);
-  
     const user: User = {
       name: data.name,
       email: data.email,
@@ -80,7 +76,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
     } else {
       try {
         setLoading(true)
-        const res = await authLogin(user)
+        const res = await login(user)
 
         setSecureToken(res.token)
         dispatch(setToken(res.setToken))

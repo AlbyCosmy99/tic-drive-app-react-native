@@ -14,7 +14,7 @@ function WorkshopCards() {
 
   const servicesChoosen = useServicesChoosenByUsers();
 
-  const isUserLogged = useAppSelector(state => state.auth.isAuthenticated);
+  const token = useAppSelector(state => state.auth.token);
   const handleCardPress = (workshop: Workshop) => {
     navigationPush(navigation, 'WorkshopDetails', {id: workshop.id});
   };
@@ -29,7 +29,7 @@ function WorkshopCards() {
   };
 
   return (
-    <ScrollView className={!isUserLogged ? 'mb-2' : ''}>
+    <ScrollView className={!token ? 'mb-2' : ''}>
       {workshops
         .filter(
           workshop =>

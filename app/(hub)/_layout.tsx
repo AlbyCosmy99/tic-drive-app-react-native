@@ -1,19 +1,18 @@
 import {View} from 'react-native';
 import {useContext, useEffect} from 'react';
-import {getUser} from '@/services/auth/secureStore/user';
-import {login} from '@/stateManagement/redux/slices/authSlice';
+import {login, setToken} from '@/stateManagement/redux/slices/authSlice';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import * as SplashScreen from 'expo-splash-screen';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import navigationReset from '@/services/navigation/reset';
+import { getToken } from '@/services/auth/secureStore/getToken';
+import { getPayload } from '@/services/auth/getPayload';
 
 const Hub = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
   const {setNavigation} = useContext(NavigationContext);
-  const route = useRoute();
-  //@ts-ignore
 
   let user = useAppSelector(state => state.auth.user);
 
@@ -21,25 +20,36 @@ const Hub = () => {
     setNavigation(navigation);
     const checkAuth = async () => {
       try {
+        const token = await getToken()
         //@ts-ignore
-        if (!user && !route?.params?.isloggingOut) {
-          user = await getUser();
-          console.log('user: ', user);
-          if (user) {
-            dispatch(login(user));
-          }
-        }
-        if (user) {
-          navigationReset(
-            navigation,
-            0,
-            user?.category === 'workshop' ? 'workshopTabs' : 'userTabs',
-            {animation: 'fade'},
-            user?.category === 'workshop' ? 'Requests' : 'Home',
-          );
+        if (token) {
+          dispatch(setToken(token))
+          try {
+            const payload = await getPayload(token)
+            dispatch(login({
+              userId: payload.userId,
+              name: payload.name,
+              email: payload.email,
+              category: 'user', //to-do: integrare anche il tipo di utente officina (workshop),
+              emailConfirmed: payload.emailConfirmed
+            }));
+            if(user?.emailConfirmed) {
+              navigationReset(
+                navigation,
+                0,
+                user?.category === 'workshop' ? 'workshopTabs' : 'userTabs',
+                {animation: 'fade'},
+                user?.category === 'workshop' ? 'Requests' : 'Home',
+              );
+            } else {
+              navigationReset(navigation,0,'ConfirmEmailScreen')
+            }
+          } catch(err) {
+            alert('error while getting user data.')
+          }       
         } else {
           navigationReset(navigation, 0, 'userTabs', {animation: 'fade'});
-        }
+        } 
         SplashScreen.hideAsync();
       } catch (error) {
         console.error('Error checking auth status: ', error);
