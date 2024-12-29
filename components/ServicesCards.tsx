@@ -55,7 +55,7 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
   }, [navigation, dispatch]);
 
   return loading ? (
-    <View style={styles.loadingContainer}>
+    <View className='flex-1 justify-center items-center'>
       <ActivityIndicator size="large" color={Colors.light.bookingsOptionsText} />
     </View>
   ) : (
@@ -85,11 +85,6 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     width: '50%',
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
 

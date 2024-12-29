@@ -11,8 +11,11 @@ const ConfirmEmailScreen = () => {
             <SafeAreaViewLayout tailwindCss="mx-3.5">
                 <TicDriveNavbar isLoginAvailable={false} />
                 <View className="flex-1 justify-center items-center">
+                    <Text className="text-center text-3xl font-medium m-1.5 mb-3">
+                        Welcome!
+                    </Text>
                     <Text className="text-lg font-bold text-center mb-4">
-                        Please confirm your email address
+                        Please confirm your email address.
                     </Text>
                     <Text className="text-sm text-center text-gray-600 mb-4">
                         We have sent a confirmation email to your registered address. 

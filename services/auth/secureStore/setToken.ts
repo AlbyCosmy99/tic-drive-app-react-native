@@ -1,6 +1,6 @@
 import * as SecureStore from 'expo-secure-store';
 
-export const setToken = async (token: string) => {
+export const setSecureToken = async (token: string) => {
   try {
     await SecureStore.setItemAsync('token', token);
   } catch (e) {

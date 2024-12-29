@@ -24,6 +24,7 @@ import {globalStyles} from '@/styles/globalStyles';
 import GlobalContext from '@/stateManagement/contexts/GlobalContext';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
+import axios from 'axios';
 
 function RegisterVehicleScreen() {
   const [segmentedControlSelection, setSegmentedControlSelection] =
@@ -44,6 +45,17 @@ function RegisterVehicleScreen() {
         ? Colors.light.backgroundLinearGradient.end
         : Colors.dark.background,
   };
+
+  // useEffect(() => {
+  //   axios.get("https://automotive.openapi.com/IT-car/FV181EX", {
+  //     headers: {
+  //       "accept": "application/json",
+  //       "Authorization": "Bearer 67708091c8d1fe2ae006cf05"
+  //     }
+  //   })
+  //     .then(response => console.log(response.data))
+  //     .catch(error => console.error('Error:', error));
+  // }, [])
 
   useEffect(() => {
     console.log(servicesChoosen);

@@ -6,7 +6,6 @@ import 'react-native-reanimated';
 import {useColorScheme} from '@/hooks/useColorScheme';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {Provider} from 'react-redux';
-import {getUser} from '@/services/auth/secureStore/user';
 import getAnimation from '@/utils/route/getAnimation';
 import GlobalProvider from '@/stateManagement/contexts/GlobalProvider';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
@@ -28,6 +27,7 @@ import UserAccountDetailsScreen from './screens/user/UserAccountDetailsScreen';
 import AddNewPaymentMethodScreen from './screens/payment/AddNewPaymentMethodScreen';
 import PaymentCardsScreen from './screens/payment/PaymentCardsScreen';
 import ConfirmEmailScreen from './screens/auth/ConfirmEmailScreen';
+import { getToken } from '@/services/auth/secureStore/getToken';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -53,11 +53,10 @@ export default function RootLayout() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const user = await getUser();
-        if (user && !user?.name) {
-          user.name = 'Andrei';
+        const token = await getToken();
+        if(token) {
+          setIsUserLogged(true)
         }
-        user ? setIsUserLogged(true) : setIsUserLogged(false);
       } catch (error) {
         console.error('Error checking auth status: ', error);
       }

@@ -8,7 +8,7 @@ import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
 import {
   login,
-  setAreFormErrors,
+  setToken
 } from '@/stateManagement/redux/slices/authSlice';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import navigationPush from '@/services/navigation/push';
@@ -16,7 +16,7 @@ import navigationReset from '@/services/navigation/reset';
 import navigationReplace from '@/services/navigation/replace';
 import register from '@/services/auth/register';
 import { login as authLogin } from '@/services/auth/login';
-import { setToken } from '@/services/auth/secureStore/setToken';
+import { setSecureToken } from '@/services/auth/secureStore/setToken';
 
 type FormData = {
   email: string;
@@ -29,12 +29,14 @@ interface UserAuthenticationFormProps {
   isUserRegistering: boolean;
   setOnFormSubmit: (onSubmit: () => void) => void;
   clientCategory: UserCategory;
+  setLoading: (loading: boolean) => void;
 }
 
 const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
   isUserRegistering,
   setOnFormSubmit,
   clientCategory,
+  setLoading
 }) => {
   const {
     control,
@@ -49,16 +51,6 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
     React.useContext(AuthContext);
   const {navigation} = React.useContext(NavigationContext);
   const dispatch = useAppDispatch();
-
-  React.useEffect(() => {
-    const areThereErrors: boolean = !!(
-      errors?.email ||
-      errors?.name ||
-      errors?.password ||
-      errors?.repeatedPassword
-    );
-    dispatch(setAreFormErrors(areThereErrors));
-  }, [errors?.email, errors?.name, errors?.password, errors?.repeatedPassword]);
 
   React.useEffect(() => {
     clearErrors();
@@ -77,55 +69,48 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
 
     if (isUserRegistering) {
       try {
+        setLoading(true)
         const res = await register(user)
-
-        setToken(res.token)
-        //to-do:salvare il token in redux per accesso facilitato e piu veloce rispetto a SecureStore
-
+        setSecureToken(res.token)
+        dispatch(setToken(res.setToken))
         navigationReset(navigation,0,'ConfirmEmailScreen')
-        return
-      } catch(err) {
-        console.error("Registration error:", err);
-          
-        dispatch(setAreFormErrors(true));
-
-        alert('We encountered an issue. Please try again.');
-        return
+      } catch(err) { 
+        alert('User already registered. Login or try with a new email.');
       }
     } else {
       try {
+        setLoading(true)
         const res = await authLogin(user)
-        saveUser(user);
-        setToken(res.token)
-        navigationReset(navigation,0,'ConfirmEmailScreen')
-        //to-do:salvare il token in redux per accesso facilitato e piu veloce rispetto a SecureStore
-        //chiamata fetch per payload e conferma mail
-        //se confermata home, altrimenti pagina conferma email
 
-      } catch(err) {
-        console.error("Login error:", err);
+        setSecureToken(res.token)
+        dispatch(setToken(res.setToken))
+
+        if(res.emailConfirmed) {
+          //ottieni i dati dell'utente attraverso un'altra chiamata http passando il token
           
-        dispatch(setAreFormErrors(true));
+          // saveUser(user);
+          // // Clear sensitive data
+          // user.password = "";
+          // user.repeatedPassword = "";
+          // dispatch(login(user));
 
+
+          if (loginRouteName) {
+            navigationReset(navigation, 0, loginRouteName, loginRouteParams);
+            setLoginRouteName('');
+          } else if (navigation?.canGoBack()) {
+            navigationReplace(navigation, 'Hub');
+          } else {
+            navigationPush(navigation, 'Hub');
+          }
+        } else {
+          navigationReset(navigation,0,'ConfirmEmailScreen')
+        }  
+      } catch(err) { 
         alert('We encountered an issue. Please try again.');
-        return
       }
     }
-
-    // Clear sensitive data
-    user.password = "";
-    user.repeatedPassword = "";
-
-    dispatch(login(user));
-
-    if (loginRouteName) {
-      navigationReset(navigation, 0, loginRouteName, loginRouteParams);
-      setLoginRouteName('');
-    } else if (navigation?.canGoBack()) {
-      navigationReplace(navigation, 'Hub');
-    } else {
-      navigationPush(navigation, 'Hub');
-    }
+    setLoading(false)
   };
   
 
