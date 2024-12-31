@@ -1,7 +1,7 @@
-import React, {memo, useEffect, useState} from 'react';
+import React, {FC, memo, useEffect, useState} from 'react';
 import {Colors} from '@/constants/Colors';
 import {Card, Text} from '@rneui/themed';
-import {StyleProp, StyleSheet, TextStyle, View, ViewStyle} from 'react-native';
+import {Image, StyleProp, StyleSheet, TextStyle, View, ViewStyle} from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native';
 import CheckCircle from '../assets/svg/check_circle.svg';
 import CarRepair from '../assets/svg/servicesIcons/car_repair.svg'; //default icon
@@ -18,6 +18,7 @@ import {
   setServicesChoosenByUsers,
   setServicesChoosenByWorkshops,
 } from '@/stateManagement/redux/slices/servicesSlice';
+import { SvgProps } from 'react-native-svg';
 
 const {width, height} = Dimensions.get('window');
 
@@ -28,7 +29,7 @@ interface ServicesCardProps {
   cardStyle?: StyleProp<ViewStyle>;
   titleStyle?: StyleProp<TextStyle>;
   descriptionStyle?: StyleProp<TextStyle>;
-  icon?: React.FC<{width: number; height: number}>; //is <Feather name="search" size={24} color="black" />
+  icon?: string | FC<SvgProps>;
   isIconVisible?: boolean;
   iconStyle?: StyleProp<ViewStyle>;
   iconWidth?: number;
@@ -50,8 +51,8 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
   descriptionStyle = {},
   icon = CarRepair,
   iconStyle = {},
-  iconWidth = 20,
-  iconHeight = 20,
+  iconWidth = 30,
+  iconHeight = 30,
   isCheckIconAvailable = true,
   isIconVisible = true,
   pressIn,
@@ -116,8 +117,6 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
     }
   }, [servicesChoosenByWorkshops]);
 
-  const ServiceIcon = icon;
-
   return (
     <TouchableWithoutFeedback
       onPressIn={handleOnPressIn}
@@ -144,9 +143,13 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
         ) : (
           <>
             <View style={styles.cardIcons}>
-              {isIconVisible && (
+              {isIconVisible && icon && (
                 <View style={iconStyle}>
-                  <ServiceIcon width={iconWidth} height={iconHeight} />
+                  {typeof icon === 'string' ? (
+                    <Image source={{ uri: icon }} style={{ width: iconWidth, height: iconHeight }} />
+                  ) : (
+                    React.createElement(icon, { width: iconWidth, height: iconHeight })
+                  )}
                 </View>
               )}
               {isCheckIconAvailable && (
@@ -156,13 +159,6 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
               )}
             </View>
             <Text style={[styles.serviceTitle, titleStyle]}>{title}</Text>
-            <Text
-              style={[styles.serviceDesc, descriptionStyle]}
-              numberOfLines={4}
-              ellipsizeMode="tail"
-            >
-              {description}
-            </Text>
           </>
         )}
       </Card>
@@ -178,7 +174,7 @@ const styles = StyleSheet.create({
     padding: 15,
     elevation: 1,
     borderWidth: 1,
-    height: height > smallDevicebreakpointHeight ? 160 : 150,
+    height: height > smallDevicebreakpointHeight ? 120 : 100,
   },
   pressedCard: {
     borderColor: Colors.light.green.drive,
@@ -186,7 +182,7 @@ const styles = StyleSheet.create({
   cardIcons: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 5,
+    marginBottom: 10,
   },
   iconContainer: {
     width: 20,

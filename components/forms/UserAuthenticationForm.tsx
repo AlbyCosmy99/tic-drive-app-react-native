@@ -105,7 +105,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
           navigationReset(navigation, 0, 'ConfirmEmailScreen');
         }
       } catch (err) {
-        alert('We encountered an issue. Please try again.');
+        alert('User not registered.');
       }
     }
     setLoading(false);

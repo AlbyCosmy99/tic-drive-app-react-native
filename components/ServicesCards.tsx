@@ -2,19 +2,13 @@ import React, {useEffect, useState} from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import ServicesCard from './ServicesCard';
 import {ActivityIndicator, StyleSheet, View} from 'react-native';
-import icons from '../constants/servicesIconsMap';
 import {Colors} from '@/constants/Colors';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {UserCategory} from '@/types/User';
 import {reset} from '@/stateManagement/redux/slices/servicesSlice';
 import apiClient from '@/services/http/axiosClient';
-
-interface Service {
-  id: number;
-  title: string;
-  description: string;
-}
+import Service from '@/types/Service';
 
 interface ServicesCardsProps {
   isSingleChoice?: boolean;
@@ -71,7 +65,7 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
             id={elem.id}
             title={elem.title}
             description={elem.description}
-            icon={icons[index + 1]}
+            icon={elem.icon}
             type={type}
             isSingleChoice={isSingleChoice}
           />
