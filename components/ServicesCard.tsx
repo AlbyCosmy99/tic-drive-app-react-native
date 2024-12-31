@@ -182,7 +182,6 @@ const styles = StyleSheet.create({
   cardIcons: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 2,
   },
   iconContainer: {
     width: 20,
@@ -193,7 +192,6 @@ const styles = StyleSheet.create({
   serviceTitle: {
     fontWeight: '500',
     fontSize: height > smallDevicebreakpointHeight ? 16 : 14,
-    marginBottom: 10,
     textAlign: 'center'
   },
   serviceDesc: {
