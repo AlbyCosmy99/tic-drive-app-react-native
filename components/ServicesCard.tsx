@@ -141,8 +141,8 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
             />
           </View>
         ) : (
-          <>
-            <View style={styles.cardIcons}>
+          <View className='flex justify-center items-center relative w-full h-full'>
+            <View style={styles.cardIcons} className='absolute left-0 top-0'>
               {isIconVisible && icon && (
                 <View style={iconStyle}>
                   {typeof icon === 'string' ? (
@@ -159,7 +159,7 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
               )}
             </View>
             <Text style={[styles.serviceTitle, titleStyle]}>{title}</Text>
-          </>
+          </View>
         )}
       </Card>
     </TouchableWithoutFeedback>
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
   cardIcons: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 10,
+    marginBottom: 2,
   },
   iconContainer: {
     width: 20,
@@ -194,6 +194,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontSize: height > smallDevicebreakpointHeight ? 16 : 14,
     marginBottom: 10,
+    textAlign: 'center'
   },
   serviceDesc: {
     opacity: 0.6,
