@@ -152,12 +152,12 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
                   )}
                 </View>
               )}
-              {isCheckIconAvailable && (
-                <View style={styles.iconContainer}>
-                  {isPressed && <CheckCircle width={20} height={20} />}
-                </View>
-              )}
             </View>
+            {isCheckIconAvailable && (
+              <View style={styles.iconContainer} className='absolute top-0 right-0'>
+                {isPressed && <CheckCircle width={20} height={20} />}
+              </View>
+            )}
             <Text style={[styles.serviceTitle, titleStyle]}>{title}</Text>
           </View>
         )}
