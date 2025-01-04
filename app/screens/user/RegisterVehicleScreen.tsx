@@ -6,6 +6,7 @@ import {
   Text,
   useColorScheme,
   View,
+  TextInput
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import SegmentedControl from '@/components/SegmentedControl';
@@ -19,12 +20,11 @@ import defaultCar from '@/constants/defaultRegistrationCar';
 import cars from '@/constants/temp/Cars';
 import SegmentedControlSelection from '@/types/SegmentedControlSelection';
 import Car from '@/types/Car';
-import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
-import {globalStyles} from '@/styles/globalStyles';
 import GlobalContext from '@/stateManagement/contexts/GlobalContext';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
-import axios from 'axios';
+import TicDriveDropdown from '@/components/ui/dropdowns/TicDriveDropdown';
+
 
 function RegisterVehicleScreen() {
   const [segmentedControlSelection, setSegmentedControlSelection] =
@@ -32,6 +32,12 @@ function RegisterVehicleScreen() {
   const [carSelected, setCarSelected] = useState<Car>(defaultCar);
   const {carNotFound, setCarNotFound} = useContext(GlobalContext);
   const [isCarSearched, setIsCarSearched] = useState(false);
+  const [value, setValue] = useState('');
+  const [data, setData] = useState([
+    { label: 'Option 1', value: '1' },
+    { label: 'Option 2', value: '2' },
+    { label: 'Option 3', value: '3' },
+  ]);
 
   const colorScheme = useColorScheme();
 
@@ -102,28 +108,39 @@ function RegisterVehicleScreen() {
                   segmentedControlSelection.name === option.name)) && (
                 <View key={index}>
                   <Text
-                    className="font-semibold mx-3.5 mt-3.5 mb-0 text-lg"
+                    className="font-semibold mx-3.5 my-3.5 mb-0 text-lg"
                     key={index}
                   >
                     {option.inputLabel}
                   </Text>
-                  <TicDriveInput
-                    placeholder={option.placeholder}
-                    isRightIcon={true}
-                    isTextUppercase={true}
-                    onRightIcon={handleOnRightIcon}
-                    onSubmit={value => {
-                      const car = cars.find(
-                        car =>
-                          //@ts-ignore
-                          car[option.keyString as CarRegistrationOptions]
-                            ?.toLowerCase()
-                            .trim() === value.toLowerCase().trim(),
-                      );
-                      setCarSelected(car ? car : defaultCar);
-                      setIsCarSearched(true);
-                    }}
-                  />
+                  {
+                    option.keyString === 'plateNumber' && (
+                      <TicDriveInput
+                        placeholder={option.placeholder}
+                        isRightIcon={true}
+                        isTextUppercase={true}
+                        onRightIcon={handleOnRightIcon}
+                        onSubmit={value => {
+                          const car = cars.find(
+                            car =>
+                              //@ts-ignore
+                              car[option.keyString as CarRegistrationOptions]
+                                ?.toLowerCase()
+                                .trim() === value.toLowerCase().trim(),
+                          );
+                          setCarSelected(car ? car : defaultCar);
+                          setIsCarSearched(true);
+                        }}
+                      />
+                    )
+                  }
+                  {
+                    option.keyString === 'make and model' && (
+                      <View className='mt-6'>
+                        <TicDriveDropdown data={data} value={value} setValue={setValue} placeholder='Select car make' searchPlaceholder='Search make'/>
+                      </View>
+                    )
+                  }
                   {carNotFound && isCarSearched && (
                     <Text className="text-base mx-auto text-red-600">
                       Car not found. Try again.

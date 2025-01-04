@@ -18,6 +18,7 @@ interface TicDriveInputProps {
   isTextUppercase?: boolean;
   containerViewStyleTailwind?: string;
   customValue?: string;
+  containerStyle?: StyleProp<ViewStyle>;
   inputContainerStyle?: StyleProp<ViewStyle>;
   returnKeyType?: ReturnKeyTypeOptions;
   onChange?: (text: string) => void;
@@ -33,6 +34,7 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
   isTextUppercase = false,
   containerViewStyleTailwind = '',
   customValue = '',
+  containerStyle,
   inputContainerStyle = {},
   returnKeyType = 'default',
   isPassword = false,
@@ -69,6 +71,7 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
             />
           ) : undefined
         }
+        containerStyle={containerStyle}
         inputContainerStyle={[styles.inputContainer, inputContainerStyle]}
         inputStyle={styles.inputText}
         placeholderTextColor="#8b8b8b"
