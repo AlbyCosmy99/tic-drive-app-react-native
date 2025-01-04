@@ -24,6 +24,10 @@ import GlobalContext from '@/stateManagement/contexts/GlobalContext';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import TicDriveDropdown from '@/components/ui/dropdowns/TicDriveDropdown';
+import axiosClient from '@/services/http/axiosClient';
+import useJwtToken from '@/hooks/auth/useJwtToken';
+import CarMake from '@/types/cars/CarMake';
+import TicDriveDropdownData from '@/types/ui/dropdown/TicDriveDropdownData';
 
 
 function RegisterVehicleScreen() {
@@ -32,8 +36,14 @@ function RegisterVehicleScreen() {
   const [carSelected, setCarSelected] = useState<Car>(defaultCar);
   const {carNotFound, setCarNotFound} = useContext(GlobalContext);
   const [isCarSearched, setIsCarSearched] = useState(false);
-  const [value, setValue] = useState('');
-  const [data, setData] = useState([
+  const [carMake, setCarMake] = useState<TicDriveDropdownData | undefined>(undefined);
+  const [value2, setValue2] = useState('');
+
+  const token = useJwtToken()
+
+  const [makes, setMakes] = useState<Array<CarMake>>([]);
+
+  const [model, setModel] = useState([
     { label: 'Option 1', value: '1' },
     { label: 'Option 2', value: '2' },
     { label: 'Option 3', value: '3' },
@@ -62,6 +72,17 @@ function RegisterVehicleScreen() {
   //     .then(response => console.log(response.data))
   //     .catch(error => console.error('Error:', error));
   // }, [])
+
+
+   useEffect(() => {
+    axiosClient.get("cars/makes", {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    })
+      .then(response => setMakes(response.data))
+      .catch(error => console.error('Error:', error));
+  }, [])
 
   useEffect(() => {
     console.log(servicesChoosen);
@@ -137,7 +158,8 @@ function RegisterVehicleScreen() {
                   {
                     option.keyString === 'make and model' && (
                       <View className='mt-6'>
-                        <TicDriveDropdown data={data} value={value} setValue={setValue} placeholder='Select car make' searchPlaceholder='Search make'/>
+                        <TicDriveDropdown data={makes.map(make => ({id: make.id, value: make.name}))} value={carMake} setValue={setCarMake} placeholder='Select car make' searchPlaceholder='Search make' />
+                        <TicDriveDropdown data={makes.map(make => ({id: make.id, value: make.name}))} value={value2} setValue={setValue2} placeholder='Select car model' searchPlaceholder='Search model' disabled={!carMake}/>
                       </View>
                     )
                   }

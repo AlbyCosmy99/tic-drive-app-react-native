@@ -5,18 +5,18 @@ import FavouriteIcon from '../../assets/svg/favouriteIcon.svg';
 import ChatIcon from '../../assets/svg/chatIcon.svg';
 import AccountIcon from '../../assets/svg/accountIcon.svg';
 import HomeTab from './Home';
-import {useAppSelector} from '../../stateManagement/redux/hooks';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import UserHome from './Home';
 import UserBookings from './Bookings';
 import UserFavourite from './Favourite';
 import UserChat from './Chat';
 import UserAccount from './Account';
+import useJwtToken from '@/hooks/auth/useJwtToken';
 
 const Tab = createBottomTabNavigator();
 
 export default function UserTabLayout() {
-  const token = useAppSelector(state => state.auth.token);
+  const token = useJwtToken()
   console.log(token);
 
   if (!token) {

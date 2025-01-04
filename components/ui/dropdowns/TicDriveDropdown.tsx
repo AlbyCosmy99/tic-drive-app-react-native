@@ -3,22 +3,23 @@ import React, { useMemo, useState } from "react";
 import { StyleSheet, TextInput, View } from "react-native"
 import { Dropdown } from "react-native-element-dropdown";
 import TicDriveInput from "../inputs/TicDriveInput";
-
+import TicDriveDropdownData from "@/types/ui/dropdown/TicDriveDropdownData";
 interface TicDriveDropdownProps {
-    value: any;
+    value?: TicDriveDropdownData;
     setValue: (value: any) => void;
-    data: Array<any>;
+    data: Array<TicDriveDropdownData>;
     placeholder: string;
     searchPlaceholder?: string;
+    disabled?: boolean;
 }
 
-const TicDriveDropdown: React.FC<TicDriveDropdownProps> = ({value, setValue, data, placeholder, searchPlaceholder = "Search..."}) => {
+const TicDriveDropdown: React.FC<TicDriveDropdownProps> = ({value, setValue, data, placeholder, searchPlaceholder = "Search...", disabled=false}) => {
     const [search, setSearch] = useState("")
 
     const filteredData = useMemo(
         () =>
             data.filter((item) =>
-                item.label.toLowerCase().includes(search.toLowerCase())
+                item.value.toLowerCase().includes(search.toLowerCase())
             ),
         [search, data]
     );
@@ -26,15 +27,18 @@ const TicDriveDropdown: React.FC<TicDriveDropdownProps> = ({value, setValue, dat
     return (
         <View className="flex justify-center px-3">
             <Dropdown
-                style={styles.dropdown}
+                style={[{borderColor: disabled ? Colors.light.lightGrey : Colors.light.ticText}, styles.dropdown]}
+                placeholderStyle={{color: disabled ? Colors.light.lightGrey : Colors.light.ticText}}
+                containerStyle={{maxHeight: 230}}
                 data={filteredData}
                 search
+                disable={disabled}
                 searchPlaceholder={searchPlaceholder}
-                labelField="label"
+                labelField="value"
                 valueField="value"
-                placeholder={placeholder}
+                placeholder={!search ? placeholder : 'Searching...'}
                 value={value}
-                onChange={(item) => setValue(item.value)}
+                onChange={(item) => setValue(item)}
                 renderInputSearch={(props) => (
                     <TicDriveInput
                         placeholder="Search car make..."
@@ -54,17 +58,16 @@ const styles = StyleSheet.create({
     dropdown: {
         marginBottom: 20,
         height: 56,
-        borderColor: Colors.light.ticText,
         borderWidth: 1,
         borderRadius: 8,
-        paddingHorizontal: 10,
+        paddingHorizontal: 10
     },
     textInput: {
         height: 50,
         borderColor: '#ccc',
         borderWidth: 1,
         borderRadius: 8,
-        paddingHorizontal: 10,
+        paddingHorizontal: 10
     },
     label: {
         marginBottom: 10,
@@ -77,7 +80,7 @@ const styles = StyleSheet.create({
         borderColor: "#ddd",
         backgroundColor: "#f9f9f9",
         color: "#333",
-        textAlignVertical: "center",
+        textAlignVertical: "center"
     },
     
 

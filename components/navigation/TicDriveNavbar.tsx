@@ -9,13 +9,14 @@ import {Colors} from '@/constants/Colors';
 import {StackActions} from '@react-navigation/native';
 import ToPreviousPage from './ToPreviousPage';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
+import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import {reset} from '@/stateManagement/redux/slices/servicesSlice';
 import {useContext} from 'react';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import navigationReplace from '@/services/navigation/replace';
 import TicDriveAuthButton from '../ui/buttons/TicDriveAuthButton';
 import navigationPush from '@/services/navigation/push';
+import useJwtToken from '@/hooks/auth/useJwtToken';
 
 interface TicDriveNavbarProps {
   isLoginAvailable?: boolean;
@@ -31,7 +32,7 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
   rightContent,
 }) => {
   const colorScheme = useColorScheme();
-  const token = useAppSelector(state => state.auth.token);
+  const token = useJwtToken()
   const dispatch = useAppDispatch();
   const {navigation} = useContext(NavigationContext);
 

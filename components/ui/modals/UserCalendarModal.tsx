@@ -20,6 +20,7 @@ import UserTimeSlot from '@/constants/temp/UserTimeSlots';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
 import Workshop from '@/types/workshops/Workshop';
+import useJwtToken from '@/hooks/auth/useJwtToken';
 
 const {height} = Dimensions.get('window');
 
@@ -32,7 +33,7 @@ const UserCalendarModal: React.FC<UserCalendarModalProps> = ({workshop}) => {
   const slideAnim = useRef(new Animated.Value(height)).current;
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  const token = useAppSelector(state => state.auth.token);
+  const token = useJwtToken()
   const {setLoginRouteName, setLoginRouteParams} = useContext(AuthContext);
 
   const openModal = (): void => {
