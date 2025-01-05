@@ -28,7 +28,6 @@ import getCarsMakes from '@/services/http/requests/cars/getCarsMakes';
 import getCarModelsByCarMakeId from '@/services/http/requests/cars/getCarModelsByCarMakeId';
 import CarModel from '@/types/cars/CarModel';
 
-
 function RegisterVehicleScreen() {
   const [segmentedControlSelection, setSegmentedControlSelection] =
     useState<SegmentedControlSelection | null>(null);
@@ -84,6 +83,7 @@ function RegisterVehicleScreen() {
         setModels(data)
         setLoadingCarModels(false)
       }
+      setCarModelDropdownData(undefined)
       getModels()
     }
   }, [carMakeDropdownData])
@@ -167,17 +167,25 @@ function RegisterVehicleScreen() {
                   }
                   {
                     option.keyString === 'make and model' && (
-                      <View className='mt-6'>
+                      <View className='mt-6 px-4'
+                  
+                      >
                         <TicDriveDropdown data={makes.map(make => ({id: make.id, value: make.name}))} value={carMakeDropdownData} setValue={setCarMakeDropdownData} placeholder='Select car make' searchPlaceholder='Search make' />
-                        <TicDriveDropdown data={models ? models.map(model => ({id: model.id, value: model.name})) : []} value={carModelDropdownData} setValue={setCarModelDropdownData} placeholder='Select car model' searchPlaceholder='Search model' disabled={!carMakeDropdownData || loadingCarModels}/>
-                        {carMakeDropdownData && carModel && (
-                          carModel.year ? (
-                            <View className='px-3'>
-                              <Text>Car year: {carModel.year}</Text>
-                            </View>
-                          ) : (
-                            <TicDriveInput placeholder='Car year'/>
-                          )
+                          <TicDriveDropdown data={models ? models.map(model => ({id: model.id, value: model.name})) : []} value={carModelDropdownData} setValue={setCarModelDropdownData} placeholder='Select car model' searchPlaceholder='Search model' disabled={!carMakeDropdownData || loadingCarModels}/>
+                          {carModelDropdownData && carModel && (
+                            <View
+                              className="my-1 border-b mx-3"
+                              style={styles.carDetailContainer}
+                            >
+                              <Text className="font-bold mb-0.5 text-lg">Year</Text>
+                              {
+                                false ? (
+                                  <Text className="text-lg mb-1.5">{carModel.year}</Text>
+                                ) : (
+                                  <TicDriveInput  placeholder='Insert car year' isRightIcon />
+                                )
+                              }
+                          </View>
                         )}
                       </View>
                     )
