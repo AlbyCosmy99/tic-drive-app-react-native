@@ -1,12 +1,10 @@
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import {Colors} from '@/constants/Colors';
 import {
-  SafeAreaView,
   StyleSheet,
   Text,
   useColorScheme,
   View,
-  TextInput
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import SegmentedControl from '@/components/SegmentedControl';
@@ -24,10 +22,11 @@ import GlobalContext from '@/stateManagement/contexts/GlobalContext';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import TicDriveDropdown from '@/components/ui/dropdowns/TicDriveDropdown';
-import axiosClient from '@/services/http/axiosClient';
-import useJwtToken from '@/hooks/auth/useJwtToken';
 import CarMake from '@/types/cars/CarMake';
 import TicDriveDropdownData from '@/types/ui/dropdown/TicDriveDropdownData';
+import getCarsMakes from '@/services/http/requests/cars/getCarsMakes';
+import getCarModelsByCarMakeId from '@/services/http/requests/cars/getCarModelsByCarMakeId';
+import CarModel from '@/types/cars/CarModel';
 
 
 function RegisterVehicleScreen() {
@@ -36,19 +35,14 @@ function RegisterVehicleScreen() {
   const [carSelected, setCarSelected] = useState<Car>(defaultCar);
   const {carNotFound, setCarNotFound} = useContext(GlobalContext);
   const [isCarSearched, setIsCarSearched] = useState(false);
-  const [carMake, setCarMake] = useState<TicDriveDropdownData | undefined>(undefined);
-  const [value2, setValue2] = useState('');
-
-  const token = useJwtToken()
-
+  const [loadingCarModels, setLoadingCarModels] = useState(false)
   const [makes, setMakes] = useState<Array<CarMake>>([]);
+  const [models, setModels] = useState<Array<CarModel>>([]);
 
-  const [model, setModel] = useState([
-    { label: 'Option 1', value: '1' },
-    { label: 'Option 2', value: '2' },
-    { label: 'Option 3', value: '3' },
-  ]);
+  const [carMakeDropdownData, setCarMakeDropdownData] = useState<TicDriveDropdownData | undefined>(undefined);
+  const [carModelDropdownData, setCarModelDropdownData] = useState<TicDriveDropdownData | undefined>(undefined);
 
+  const [carModel, setCarModel] = useState<CarModel | undefined>(undefined)
   const colorScheme = useColorScheme();
 
   const servicesChoosen = useAppSelector(
@@ -74,15 +68,31 @@ function RegisterVehicleScreen() {
   // }, [])
 
 
-   useEffect(() => {
-    axiosClient.get("cars/makes", {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    })
-      .then(response => setMakes(response.data))
-      .catch(error => console.error('Error:', error));
+  useEffect(() => {
+    const getMakes = async () => {
+      const data = await getCarsMakes()
+      setMakes(data)
+    }
+    getMakes()
   }, [])
+
+  useEffect(() => {
+    if(carMakeDropdownData) {
+      const getModels = async () => {
+        setLoadingCarModels(true)
+        const data = await getCarModelsByCarMakeId(carMakeDropdownData?.id)
+        setModels(data)
+        setLoadingCarModels(false)
+      }
+      getModels()
+    }
+  }, [carMakeDropdownData])
+
+  useEffect(() => {
+    if(carModelDropdownData) {
+      setCarModel(models.find(model => model.id === carModelDropdownData.id))
+    }
+  }, [carModelDropdownData])
 
   useEffect(() => {
     console.log(servicesChoosen);
@@ -158,8 +168,17 @@ function RegisterVehicleScreen() {
                   {
                     option.keyString === 'make and model' && (
                       <View className='mt-6'>
-                        <TicDriveDropdown data={makes.map(make => ({id: make.id, value: make.name}))} value={carMake} setValue={setCarMake} placeholder='Select car make' searchPlaceholder='Search make' />
-                        <TicDriveDropdown data={makes.map(make => ({id: make.id, value: make.name}))} value={value2} setValue={setValue2} placeholder='Select car model' searchPlaceholder='Search model' disabled={!carMake}/>
+                        <TicDriveDropdown data={makes.map(make => ({id: make.id, value: make.name}))} value={carMakeDropdownData} setValue={setCarMakeDropdownData} placeholder='Select car make' searchPlaceholder='Search make' />
+                        <TicDriveDropdown data={models ? models.map(model => ({id: model.id, value: model.name})) : []} value={carModelDropdownData} setValue={setCarModelDropdownData} placeholder='Select car model' searchPlaceholder='Search model' disabled={!carMakeDropdownData || loadingCarModels}/>
+                        {carMakeDropdownData && carModel && (
+                          carModel.year ? (
+                            <View className='px-3'>
+                              <Text>Car year: {carModel.year}</Text>
+                            </View>
+                          ) : (
+                            <TicDriveInput placeholder='Car year'/>
+                          )
+                        )}
                       </View>
                     )
                   }
