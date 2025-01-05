@@ -177,7 +177,7 @@ function RegisterVehicleScreen() {
                             >
                               <Text className="font-bold mb-0.5 text-lg">Year</Text>
                               {
-                                carModel && carModelDropdownData ? (
+                                carModel.year ? (
                                   <Text className="text-lg mb-1.5">{carModel.year}</Text>
                                 ) : (
                                   <TicDriveInput  placeholder='Insert car year' isRightIcon/>
