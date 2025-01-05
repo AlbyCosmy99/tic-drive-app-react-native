@@ -198,7 +198,7 @@ function RegisterVehicleScreen() {
             );
           })}
           <ScrollView>
-            {carSelected.id > 0 && (
+            {carSelected.id > 0 && segmentedControlSelection?.name === 'Plate' && (
               <View className="mx-3.5">
                 <View
                   className="my-1 border-b"
