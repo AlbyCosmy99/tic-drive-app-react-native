@@ -167,9 +167,7 @@ function RegisterVehicleScreen() {
                   }
                   {
                     option.keyString === 'make and model' && (
-                      <ScrollView className='mt-6 px-4' automaticallyAdjustKeyboardInsets
-                  
-                      >
+                      <ScrollView className='mt-6 px-4' automaticallyAdjustKeyboardInsets>
                         <TicDriveDropdown data={makes.map(make => ({id: make.id, value: make.name}))} value={carMakeDropdownData} setValue={setCarMakeDropdownData} placeholder='Select car make' searchPlaceholder='Search make' />
                           <TicDriveDropdown data={models ? models.map(model => ({id: model.id, value: model.name})) : []} value={carModelDropdownData} setValue={setCarModelDropdownData} placeholder='Select car model' searchPlaceholder='Search model' disabled={!carMakeDropdownData || loadingCarModels}/>
                           {carModelDropdownData && carModel && (
@@ -179,14 +177,14 @@ function RegisterVehicleScreen() {
                             >
                               <Text className="font-bold mb-0.5 text-lg">Year</Text>
                               {
-                                false ? (
+                                carModel && carModelDropdownData ? (
                                   <Text className="text-lg mb-1.5">{carModel.year}</Text>
                                 ) : (
                                   <TicDriveInput  placeholder='Insert car year' isRightIcon/>
                                 )
                               }
-                          </View>
-                        )}
+                            </View>
+                          )}
                       </ScrollView>
                     )
                   }
