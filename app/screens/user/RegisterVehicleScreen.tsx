@@ -167,7 +167,7 @@ function RegisterVehicleScreen() {
                   }
                   {
                     option.keyString === 'make and model' && (
-                      <View className='mt-6 px-4'
+                      <ScrollView className='mt-6 px-4' automaticallyAdjustKeyboardInsets
                   
                       >
                         <TicDriveDropdown data={makes.map(make => ({id: make.id, value: make.name}))} value={carMakeDropdownData} setValue={setCarMakeDropdownData} placeholder='Select car make' searchPlaceholder='Search make' />
@@ -182,12 +182,12 @@ function RegisterVehicleScreen() {
                                 false ? (
                                   <Text className="text-lg mb-1.5">{carModel.year}</Text>
                                 ) : (
-                                  <TicDriveInput  placeholder='Insert car year' isRightIcon />
+                                  <TicDriveInput  placeholder='Insert car year' isRightIcon/>
                                 )
                               }
                           </View>
                         )}
-                      </View>
+                      </ScrollView>
                     )
                   }
                   {carNotFound && isCarSearched && (
