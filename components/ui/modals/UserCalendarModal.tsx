@@ -33,7 +33,7 @@ const UserCalendarModal: React.FC<UserCalendarModalProps> = ({workshop}) => {
   const slideAnim = useRef(new Animated.Value(height)).current;
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  const token = useJwtToken()
+  const token = useJwtToken();
   const {setLoginRouteName, setLoginRouteParams} = useContext(AuthContext);
 
   const openModal = (): void => {

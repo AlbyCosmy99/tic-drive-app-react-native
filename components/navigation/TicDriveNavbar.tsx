@@ -32,7 +32,7 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
   rightContent,
 }) => {
   const colorScheme = useColorScheme();
-  const token = useJwtToken()
+  const token = useJwtToken();
   const dispatch = useAppDispatch();
   const {navigation} = useContext(NavigationContext);
 

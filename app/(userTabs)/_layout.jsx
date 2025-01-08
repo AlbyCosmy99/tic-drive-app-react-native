@@ -16,7 +16,7 @@ import useJwtToken from '@/hooks/auth/useJwtToken';
 const Tab = createBottomTabNavigator();
 
 export default function UserTabLayout() {
-  const token = useJwtToken()
+  const token = useJwtToken();
   console.log(token);
 
   if (!token) {

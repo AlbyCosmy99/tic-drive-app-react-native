@@ -14,7 +14,7 @@ function WorkshopCards() {
 
   const servicesChoosen = useServicesChoosenByUsers();
 
-  const token = useJwtToken()
+  const token = useJwtToken();
   const handleCardPress = (workshop: Workshop) => {
     navigationPush(navigation, 'WorkshopDetails', {id: workshop.id});
   };

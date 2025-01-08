@@ -1,7 +1,14 @@
 import React, {FC, memo, useEffect, useState} from 'react';
 import {Colors} from '@/constants/Colors';
 import {Card, Text} from '@rneui/themed';
-import {Image, StyleProp, StyleSheet, TextStyle, View, ViewStyle} from 'react-native';
+import {
+  Image,
+  StyleProp,
+  StyleSheet,
+  TextStyle,
+  View,
+  ViewStyle,
+} from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native';
 import CheckCircle from '../assets/svg/check_circle.svg';
 import CarRepair from '../assets/svg/servicesIcons/car_repair.svg'; //default icon
@@ -18,7 +25,7 @@ import {
   setServicesChoosenByUsers,
   setServicesChoosenByWorkshops,
 } from '@/stateManagement/redux/slices/servicesSlice';
-import { SvgProps } from 'react-native-svg';
+import {SvgProps} from 'react-native-svg';
 
 const {width, height} = Dimensions.get('window');
 
@@ -141,20 +148,29 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
             />
           </View>
         ) : (
-          <View className='flex justify-center items-center relative w-full h-full'>
-            <View style={styles.cardIcons} className='absolute left-0 top-0'>
+          <View className="flex justify-center items-center relative w-full h-full">
+            <View style={styles.cardIcons} className="absolute left-0 top-0">
               {isIconVisible && icon && (
                 <View style={iconStyle}>
                   {typeof icon === 'string' ? (
-                    <Image source={{ uri: icon }} style={{ width: iconWidth, height: iconHeight }} />
+                    <Image
+                      source={{uri: icon}}
+                      style={{width: iconWidth, height: iconHeight}}
+                    />
                   ) : (
-                    React.createElement(icon, { width: iconWidth, height: iconHeight })
+                    React.createElement(icon, {
+                      width: iconWidth,
+                      height: iconHeight,
+                    })
                   )}
                 </View>
               )}
             </View>
             {isCheckIconAvailable && (
-              <View style={styles.iconContainer} className='absolute top-0 right-0'>
+              <View
+                style={styles.iconContainer}
+                className="absolute top-0 right-0"
+              >
                 {isPressed && <CheckCircle width={20} height={20} />}
               </View>
             )}
@@ -192,7 +208,7 @@ const styles = StyleSheet.create({
   serviceTitle: {
     fontWeight: '500',
     fontSize: height > smallDevicebreakpointHeight ? 16 : 14,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   serviceDesc: {
     opacity: 0.6,

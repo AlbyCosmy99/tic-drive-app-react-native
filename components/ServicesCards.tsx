@@ -32,7 +32,7 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
         setServices(res.data);
       })
       .catch(err => {
-        alert("Al momento il servizio non è disponibile. Riprova piu tardi.")
+        alert('Al momento il servizio non è disponibile. Riprova piu tardi.');
         console.error(err);
       })
       .finally(() => {

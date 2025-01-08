@@ -1,6 +1,6 @@
 interface TicDriveDropdownData {
-    id: number;
-    value: string;
+  id: number;
+  value: string;
 }
 
-export default TicDriveDropdownData
+export default TicDriveDropdownData;

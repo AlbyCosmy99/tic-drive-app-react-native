@@ -1,7 +1,7 @@
 interface CarModel {
-    id: number;
-    name: string;
-    carMakeId: number;
+  id: number;
+  name: string;
+  carMakeId: number;
 }
 
-export default CarModel
+export default CarModel;

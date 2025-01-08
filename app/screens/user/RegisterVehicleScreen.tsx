@@ -1,11 +1,6 @@
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import {Colors} from '@/constants/Colors';
-import {
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {StyleSheet, Text, useColorScheme, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import SegmentedControl from '@/components/SegmentedControl';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
@@ -32,44 +27,55 @@ import CarContext from '@/stateManagement/contexts/car/CarContext';
 function RegisterVehicleScreen() {
   const [segmentedControlSelection, setSegmentedControlSelection] =
     useState<SegmentedControlSelection | null>(options[0]);
-  const [carSelectedByMakeAndModel, setCarSelectedByMakeAndModel] = useState<Car | undefined>(undefined);
-  const [carSelectedByPlate, setCarSelectedByPlate] = useState<Car | undefined>(undefined);
+  const [carSelectedByMakeAndModel, setCarSelectedByMakeAndModel] = useState<
+    Car | undefined
+  >(undefined);
+  const [carSelectedByPlate, setCarSelectedByPlate] = useState<Car | undefined>(
+    undefined,
+  );
   const {carNotFound, setCarNotFound} = useContext(GlobalContext);
   const [isCarSearched, setIsCarSearched] = useState(false);
-  const [loadingCarModels, setLoadingCarModels] = useState(false)
+  const [loadingCarModels, setLoadingCarModels] = useState(false);
   const [makes, setMakes] = useState<Array<CarMake>>([]);
   const [models, setModels] = useState<Array<Car>>([]);
 
-  const [carMakeDropdownData, setCarMakeDropdownData] = useState<TicDriveDropdownData | undefined>(undefined);
-  const [carModelDropdownData, setCarModelDropdownData] = useState<TicDriveDropdownData | undefined>(undefined);
+  const [carMakeDropdownData, setCarMakeDropdownData] = useState<
+    TicDriveDropdownData | undefined
+  >(undefined);
+  const [carModelDropdownData, setCarModelDropdownData] = useState<
+    TicDriveDropdownData | undefined
+  >(undefined);
 
-  const {carSelectedByMakeAndModel: carSelectedByMakeAndModelCtx, carSelectedByPlate: carSelectedByPlateCtx} = useContext(CarContext)
+  const {
+    carSelectedByMakeAndModel: carSelectedByMakeAndModelCtx,
+    carSelectedByPlate: carSelectedByPlateCtx,
+  } = useContext(CarContext);
 
   const colorScheme = useColorScheme();
-  
+
   const servicesChoosen = useAppSelector(
     state => state.services.servicesChoosenByUsers,
   );
 
   useEffect(() => {
-    console.log("Context Updated: ", carSelectedByMakeAndModelCtx);
-    console.log(carSelectedByMakeAndModelCtx?.engineDisplacement)
-}, [carSelectedByMakeAndModelCtx]);
+    console.log('Context Updated: ', carSelectedByMakeAndModelCtx);
+    console.log(carSelectedByMakeAndModelCtx?.engineDisplacement);
+  }, [carSelectedByMakeAndModelCtx]);
 
   useEffect(() => {
-    console.log(carSelectedByMakeAndModelCtx)
-  }, [carSelectedByMakeAndModelCtx])
+    console.log(carSelectedByMakeAndModelCtx);
+  }, [carSelectedByMakeAndModelCtx]);
 
   const buttonIsEnabled = useMemo(() => {
     return (
-        segmentedControlSelection?.index === 0 &&
-        carSelectedByMakeAndModelCtx &&
-        !!carSelectedByMakeAndModelCtx.engineDisplacement &&
-        !!carSelectedByMakeAndModelCtx.fuel &&
-        !!carSelectedByMakeAndModelCtx.mileage &&
-        !!carSelectedByMakeAndModelCtx.plateNumber
+      segmentedControlSelection?.index === 0 &&
+      carSelectedByMakeAndModelCtx &&
+      !!carSelectedByMakeAndModelCtx.engineDisplacement &&
+      !!carSelectedByMakeAndModelCtx.fuel &&
+      !!carSelectedByMakeAndModelCtx.mileage &&
+      !!carSelectedByMakeAndModelCtx.plateNumber
     );
-}, [segmentedControlSelection, carSelectedByMakeAndModelCtx]);
+  }, [segmentedControlSelection, carSelectedByMakeAndModelCtx]);
 
   const backgroundStyle = {
     backgroundColor:
@@ -80,34 +86,36 @@ function RegisterVehicleScreen() {
 
   useEffect(() => {
     const getMakes = async () => {
-      const data = await getCarsMakes()
-      setMakes(data)
-    }
-    getMakes()
-  }, [])
+      const data = await getCarsMakes();
+      setMakes(data);
+    };
+    getMakes();
+  }, []);
 
   useEffect(() => {
-    if(carMakeDropdownData) {
+    if (carMakeDropdownData) {
       const getModels = async () => {
-        setLoadingCarModels(true)
-        const data = await getCarModelsByCarMakeId(carMakeDropdownData?.id)
-        setModels(data)
-        setLoadingCarModels(false)
-      }
-      setCarModelDropdownData(undefined)
-      getModels()
+        setLoadingCarModels(true);
+        const data = await getCarModelsByCarMakeId(carMakeDropdownData?.id);
+        setModels(data);
+        setLoadingCarModels(false);
+      };
+      setCarModelDropdownData(undefined);
+      getModels();
     }
-  }, [carMakeDropdownData])
+  }, [carMakeDropdownData]);
 
   useEffect(() => {
-    if(carModelDropdownData) {
-      setCarSelectedByMakeAndModel(models.find(model => model.id === carModelDropdownData.id))
+    if (carModelDropdownData) {
+      setCarSelectedByMakeAndModel(
+        models.find(model => model.id === carModelDropdownData.id),
+      );
     }
-  }, [carModelDropdownData])
+  }, [carModelDropdownData]);
 
   useEffect(() => {
-    setCarModelDropdownData(undefined)
-  }, [segmentedControlSelection])
+    setCarModelDropdownData(undefined);
+  }, [segmentedControlSelection]);
 
   //to-do: update car not found
   // useEffect(() => {
@@ -153,45 +161,72 @@ function RegisterVehicleScreen() {
               ((!segmentedControlSelection && index === 0) ||
                 (segmentedControlSelection &&
                   segmentedControlSelection.name === option.name)) && (
-                <View key={index} className='h-full'>
+                <View key={index} className="h-full">
                   <Text
                     className="font-semibold mx-3.5 my-3.5 mb-0 text-lg"
                     key={index}
                   >
                     {option.inputLabel}
                   </Text>
-                  {
-                    option.keyString === 'plateNumber' && (
-                      <TicDriveInput
-                        placeholder={option.placeholder}
-                        isRightIcon={true}
-                        isTextUppercase={true}
-                        onRightIcon={handleOnRightIcon}
-                        onSubmit={value => {
-                          const car = cars.find(
-                            car =>
-                              //@ts-ignore
-                              car[option.keyString as CarRegistrationOptions]
-                                ?.toLowerCase()
-                                .trim() === value.toLowerCase().trim(),
-                          );
-                          setCarSelectedByPlate(car ? car : defaultCar);
-                          setIsCarSearched(true);
-                        }}
+                  {option.keyString === 'plateNumber' && (
+                    <TicDriveInput
+                      placeholder={option.placeholder}
+                      isRightIcon={true}
+                      isTextUppercase={true}
+                      onRightIcon={handleOnRightIcon}
+                      onSubmit={value => {
+                        const car = cars.find(
+                          car =>
+                            //@ts-ignore
+                            car[option.keyString as CarRegistrationOptions]
+                              ?.toLowerCase()
+                              .trim() === value.toLowerCase().trim(),
+                        );
+                        setCarSelectedByPlate(car ? car : defaultCar);
+                        setIsCarSearched(true);
+                      }}
+                    />
+                  )}
+                  {option.keyString === 'make and model' && (
+                    <ScrollView
+                      className="mt-6 px-4"
+                      automaticallyAdjustKeyboardInsets
+                    >
+                      <TicDriveDropdown
+                        title="Make"
+                        data={makes.map(make => ({
+                          id: make.id,
+                          value: make.name,
+                        }))}
+                        value={carMakeDropdownData}
+                        setValue={setCarMakeDropdownData}
+                        placeholder="Select car make"
+                        searchPlaceholder="Search make"
                       />
-                    )
-                  }
-                  {
-                    option.keyString === 'make and model' && (
-                      <ScrollView className='mt-6 px-4' automaticallyAdjustKeyboardInsets>
-                        <TicDriveDropdown title='Make' data={makes.map(make => ({id: make.id, value: make.name}))} value={carMakeDropdownData} setValue={setCarMakeDropdownData} placeholder='Select car make' searchPlaceholder='Search make' />
-                        <TicDriveDropdown title='Model' data={models ? models.map(model => ({id: model.id, value: model.name})) : []} value={carModelDropdownData} setValue={setCarModelDropdownData} placeholder='Select car model' searchPlaceholder='Search model' disabled={!carMakeDropdownData || loadingCarModels}/>
-                        {carSelectedByMakeAndModel && carModelDropdownData && (
-                          <CarDetailsByMakeAndModel key={carModelDropdownData?.id} carSelected={carSelectedByMakeAndModel} />
-                        )}
-                      </ScrollView>
-                    )
-                  }
+                      <TicDriveDropdown
+                        title="Model"
+                        data={
+                          models
+                            ? models.map(model => ({
+                                id: model.id,
+                                value: model.name,
+                              }))
+                            : []
+                        }
+                        value={carModelDropdownData}
+                        setValue={setCarModelDropdownData}
+                        placeholder="Select car model"
+                        searchPlaceholder="Search model"
+                        disabled={!carMakeDropdownData || loadingCarModels}
+                      />
+                      {carSelectedByMakeAndModel && carModelDropdownData && (
+                        <CarDetailsByMakeAndModel
+                          key={carModelDropdownData?.id}
+                          carSelected={carSelectedByMakeAndModel}
+                        />
+                      )}
+                    </ScrollView>
+                  )}
                   {carNotFound && isCarSearched && (
                     <Text className="text-base mx-auto text-red-600">
                       Car not found. Try again.
@@ -202,67 +237,80 @@ function RegisterVehicleScreen() {
             );
           })}
           <ScrollView>
-            {carSelectedByPlate && segmentedControlSelection?.name === 'Plate' && (
-              <View className="mx-3.5">
-                <View
-                  className="my-1 border-b"
-                  style={styles.carDetailContainer}
-                >
-                  <Text className="font-bold mb-0.5 text-lg">Model</Text>
-                  <Text className="text-lg mb-1.5">{carSelectedByPlate.model}</Text>
+            {carSelectedByPlate &&
+              segmentedControlSelection?.name === 'Plate' && (
+                <View className="mx-3.5">
+                  <View
+                    className="my-1 border-b"
+                    style={styles.carDetailContainer}
+                  >
+                    <Text className="font-bold mb-0.5 text-lg">Model</Text>
+                    <Text className="text-lg mb-1.5">
+                      {carSelectedByPlate.model}
+                    </Text>
+                  </View>
+                  <View
+                    className="my-1 border-b"
+                    style={styles.carDetailContainer}
+                  >
+                    <Text className="font-bold mb-0.5 text-lg">
+                      Plate number
+                    </Text>
+                    <Text className="text-lg mb-1.5">
+                      {carSelectedByPlate.plateNumber}
+                    </Text>
+                  </View>
+                  <View
+                    className="my-1 border-b"
+                    style={styles.carDetailContainer}
+                  >
+                    <Text className="font-bold mb-0.5 text-lg">VIN</Text>
+                    <Text className="text-lg mb-1.5">
+                      {carSelectedByPlate.vin}
+                    </Text>
+                  </View>
+                  <View
+                    className="my-1 border-b"
+                    style={styles.carDetailContainer}
+                  >
+                    <Text className="font-bold mb-0.5 text-lg">Liters</Text>
+                    <Text className="text-lg mb-1.5">
+                      {carSelectedByPlate.liters}
+                    </Text>
+                  </View>
+                  <View
+                    className="my-1 border-b"
+                    style={styles.carDetailContainer}
+                  >
+                    <Text className="font-bold mb-0.5 text-lg">Energy</Text>
+                    <Text className="text-lg mb-1.5">
+                      {carSelectedByPlate.energy}
+                    </Text>
+                  </View>
+                  <View
+                    className="my-1 border-b"
+                    style={styles.carDetailContainer}
+                  >
+                    <Text className="font-bold mb-0.5 text-lg">
+                      Engine code
+                    </Text>
+                    <Text className="text-lg mb-1.5">
+                      {carSelectedByPlate.engineCode}
+                    </Text>
+                  </View>
+                  <View
+                    className="my-1 border-b"
+                    style={styles.carDetailContainer}
+                  >
+                    <Text className="font-bold mb-0.5 text-lg">
+                      Engine displacement (cc)
+                    </Text>
+                    <Text className="text-lg mb-1.5">
+                      {carSelectedByPlate.engineDisplacement}
+                    </Text>
+                  </View>
                 </View>
-                <View
-                  className="my-1 border-b"
-                  style={styles.carDetailContainer}
-                >
-                  <Text className="font-bold mb-0.5 text-lg">Plate number</Text>
-                  <Text className="text-lg mb-1.5">
-                    {carSelectedByPlate.plateNumber}
-                  </Text>
-                </View>
-                <View
-                  className="my-1 border-b"
-                  style={styles.carDetailContainer}
-                >
-                  <Text className="font-bold mb-0.5 text-lg">VIN</Text>
-                  <Text className="text-lg mb-1.5">{carSelectedByPlate.vin}</Text>
-                </View>
-                <View
-                  className="my-1 border-b"
-                  style={styles.carDetailContainer}
-                >
-                  <Text className="font-bold mb-0.5 text-lg">Liters</Text>
-                  <Text className="text-lg mb-1.5">{carSelectedByPlate.liters}</Text>
-                </View>
-                <View
-                  className="my-1 border-b"
-                  style={styles.carDetailContainer}
-                >
-                  <Text className="font-bold mb-0.5 text-lg">Energy</Text>
-                  <Text className="text-lg mb-1.5">{carSelectedByPlate.energy}</Text>
-                </View>
-                <View
-                  className="my-1 border-b"
-                  style={styles.carDetailContainer}
-                >
-                  <Text className="font-bold mb-0.5 text-lg">Engine code</Text>
-                  <Text className="text-lg mb-1.5">
-                    {carSelectedByPlate.engineCode}
-                  </Text>
-                </View>
-                <View
-                  className="my-1 border-b"
-                  style={styles.carDetailContainer}
-                >
-                  <Text className="font-bold mb-0.5 text-lg">
-                    Engine displacement (cc)
-                  </Text>
-                  <Text className="text-lg mb-1.5">
-                    {carSelectedByPlate.engineDisplacement}
-                  </Text>
-                </View>
-              </View>
-            )}
+              )}
           </ScrollView>
         </View>
       </View>

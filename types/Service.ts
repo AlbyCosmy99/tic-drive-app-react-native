@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { SvgProps } from "react-native-svg";
+import {FC} from 'react';
+import {SvgProps} from 'react-native-svg';
 
 interface Service {
   id: number;
@@ -8,4 +8,4 @@ interface Service {
   icon: string | FC<SvgProps>;
 }
 
-export default Service
+export default Service;

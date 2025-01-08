@@ -14,7 +14,7 @@ const vehicleRegistrationOptions: VehicleRegistrationOption[] = [
     placeholder: 'E.g. AA123BB',
     inputLabel: 'Plate',
     keyString: 'plateNumber',
-  }
+  },
 ];
 
 export type CarRegistrationOptions = 'plateNumber' | 'make and model';
