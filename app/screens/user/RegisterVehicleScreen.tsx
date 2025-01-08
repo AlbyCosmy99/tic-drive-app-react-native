@@ -105,6 +105,10 @@ function RegisterVehicleScreen() {
     }
   }, [carModelDropdownData])
 
+  useEffect(() => {
+    setCarModelDropdownData(undefined)
+  }, [segmentedControlSelection])
+
   //to-do: update car not found
   // useEffect(() => {
   //   console.log(servicesChoosen);
@@ -180,10 +184,10 @@ function RegisterVehicleScreen() {
                   {
                     option.keyString === 'make and model' && (
                       <ScrollView className='mt-6 px-4' automaticallyAdjustKeyboardInsets>
-                        <TicDriveDropdown data={makes.map(make => ({id: make.id, value: make.name}))} value={carMakeDropdownData} setValue={setCarMakeDropdownData} placeholder='Select car make' searchPlaceholder='Search make' />
-                        <TicDriveDropdown data={models ? models.map(model => ({id: model.id, value: model.name})) : []} value={carModelDropdownData} setValue={setCarModelDropdownData} placeholder='Select car model' searchPlaceholder='Search model' disabled={!carMakeDropdownData || loadingCarModels}/>
-                        {carSelectedByMakeAndModel && (
-                          <CarDetailsByMakeAndModel carSelected={carSelectedByMakeAndModel} />
+                        <TicDriveDropdown title='Make' data={makes.map(make => ({id: make.id, value: make.name}))} value={carMakeDropdownData} setValue={setCarMakeDropdownData} placeholder='Select car make' searchPlaceholder='Search make' />
+                        <TicDriveDropdown title='Model' data={models ? models.map(model => ({id: model.id, value: model.name})) : []} value={carModelDropdownData} setValue={setCarModelDropdownData} placeholder='Select car model' searchPlaceholder='Search model' disabled={!carMakeDropdownData || loadingCarModels}/>
+                        {carSelectedByMakeAndModel && carModelDropdownData && (
+                          <CarDetailsByMakeAndModel key={carModelDropdownData?.id} carSelected={carSelectedByMakeAndModel} />
                         )}
                       </ScrollView>
                     )

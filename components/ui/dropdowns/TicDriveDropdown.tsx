@@ -4,16 +4,19 @@ import { StyleSheet, TextInput, View } from "react-native"
 import { Dropdown } from "react-native-element-dropdown";
 import TicDriveInput from "../inputs/TicDriveInput";
 import TicDriveDropdownData from "@/types/ui/dropdown/TicDriveDropdownData";
+import { Text } from "react-native";
 interface TicDriveDropdownProps {
-    value?: TicDriveDropdownData;
-    setValue: (value: any) => void;
+    value?: TicDriveDropdownData; //variable where to save the choosen value
+    setValue: (value: any) => void; //function to update the choosen value
     data: Array<TicDriveDropdownData>;
     placeholder: string;
     searchPlaceholder?: string;
     disabled?: boolean;
+    titleIsVisible?: boolean;
+    title?: string;
 }
 
-const TicDriveDropdown: React.FC<TicDriveDropdownProps> = ({value, setValue, data, placeholder, searchPlaceholder = "Search...", disabled=false}) => {
+const TicDriveDropdown: React.FC<TicDriveDropdownProps> = ({value, setValue, data, placeholder, searchPlaceholder = "Search...", disabled=false, titleIsVisible = true, title = 'Select an option'}) => {
     const [search, setSearch] = useState("")
 
     const filteredData = useMemo(
@@ -26,6 +29,7 @@ const TicDriveDropdown: React.FC<TicDriveDropdownProps> = ({value, setValue, dat
 
     return (
         <View className="flex justify-center px-3">
+            {titleIsVisible && <Text className="font-bold mt-2 mb-3 text-lg">{title}</Text>}
             <Dropdown
                 style={[{borderColor: disabled ? Colors.light.lightGrey : Colors.light.ticText}, styles.dropdown]}
                 placeholderStyle={{color: disabled ? Colors.light.lightGrey : Colors.light.ticText}}
@@ -41,7 +45,7 @@ const TicDriveDropdown: React.FC<TicDriveDropdownProps> = ({value, setValue, dat
                 onChange={(item) => setValue(item)}
                 renderInputSearch={(props) => (
                     <TicDriveInput
-                        placeholder="Search car make..."
+                        placeholder={searchPlaceholder + '...'}
                         isRightIcon
                         inputContainerStyle={{borderRadius: 0, padding: 0, height: 50, paddingHorizontal: 8, marginTop: 0}}
                         containerStyle={{paddingHorizontal: 0, height: 50,backgroundColor: 'red'}}
