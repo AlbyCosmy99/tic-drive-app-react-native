@@ -27,6 +27,7 @@ import TicDriveDropdownData from '@/types/ui/dropdown/TicDriveDropdownData';
 import getCarsMakes from '@/services/http/requests/cars/getCarsMakes';
 import getCarModelsByCarMakeId from '@/services/http/requests/cars/getCarModelsByCarMakeId';
 import CarModel from '@/types/cars/CarModel';
+import TicDriveTextOrInput from '@/components/ui/inputs/TicDriveTextOrInput';
 
 function RegisterVehicleScreen() {
   const [segmentedControlSelection, setSegmentedControlSelection] =
@@ -43,6 +44,16 @@ function RegisterVehicleScreen() {
 
   const [carModel, setCarModel] = useState<CarModel | undefined>(undefined)
   const colorScheme = useColorScheme();
+
+  const setCarModelYear = (year: number) => {
+    if (carModel && year >= 1886 && year <= new Date().getFullYear()) {
+      setCarModel({ ...carModel, year });
+    } else {
+      console.error("Invalid year");
+    }
+  };
+  
+  
 
   const servicesChoosen = useAppSelector(
     state => state.services.servicesChoosenByUsers,
@@ -137,7 +148,7 @@ function RegisterVehicleScreen() {
               ((!segmentedControlSelection && index === 0) ||
                 (segmentedControlSelection &&
                   segmentedControlSelection.name === option.name)) && (
-                <View key={index}>
+                <View key={index} className='h-full'>
                   <Text
                     className="font-semibold mx-3.5 my-3.5 mb-0 text-lg"
                     key={index}
@@ -171,19 +182,12 @@ function RegisterVehicleScreen() {
                         <TicDriveDropdown data={makes.map(make => ({id: make.id, value: make.name}))} value={carMakeDropdownData} setValue={setCarMakeDropdownData} placeholder='Select car make' searchPlaceholder='Search make' />
                           <TicDriveDropdown data={models ? models.map(model => ({id: model.id, value: model.name})) : []} value={carModelDropdownData} setValue={setCarModelDropdownData} placeholder='Select car model' searchPlaceholder='Search model' disabled={!carMakeDropdownData || loadingCarModels}/>
                           {carModelDropdownData && carModel && (
-                            <View
-                              className="my-1 border-b mx-3"
-                              style={styles.carDetailContainer}
-                            >
-                              <Text className="font-bold mb-0.5 text-lg">Year</Text>
-                              {
-                                carModel.year ? (
-                                  <Text className="text-lg mb-1.5">{carModel.year}</Text>
-                                ) : (
-                                  <TicDriveInput  placeholder='Insert car year' isRightIcon/>
-                                )
-                              }
-                            </View>
+                            <>
+                              <TicDriveTextOrInput placeholder='Insert car year' value={carModel.year} setValue={setCarModelYear}/>
+                              <TicDriveTextOrInput placeholder='Insert car year' value={carModel.year} setValue={setCarModelYear}/>
+                              <TicDriveTextOrInput placeholder='Insert car year' value={carModel.year} setValue={setCarModelYear}/>
+                              <TicDriveTextOrInput placeholder='Insert car year' value={carModel.year} setValue={setCarModelYear}/>
+                            </>
                           )}
                       </ScrollView>
                     )
