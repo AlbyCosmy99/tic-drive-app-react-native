@@ -28,6 +28,7 @@ import AddNewPaymentMethodScreen from './screens/payment/AddNewPaymentMethodScre
 import PaymentCardsScreen from './screens/payment/PaymentCardsScreen';
 import ConfirmEmailScreen from './screens/auth/ConfirmEmailScreen';
 import CarProvider from '@/stateManagement/contexts/car/CarProvider';
+import CarRegistrationConfirmationScreen from './screens/cars/CarRegistrationConfirmationScreen';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -102,6 +103,15 @@ export default function RootLayout() {
                       component={RegisterVehicleScreen}
                       options={({route}) => ({
                         title: 'RegisterVehicleScreen',
+                        headerShown: false,
+                        animation: getAnimation(route),
+                      })}
+                    />
+                    <Stack.Screen
+                      name="CarRegistrationConfirmationScreen"
+                      component={CarRegistrationConfirmationScreen}
+                      options={({route}) => ({
+                        title: 'CarRegistrationConfirmationScreen',
                         headerShown: false,
                         animation: getAnimation(route),
                       })}

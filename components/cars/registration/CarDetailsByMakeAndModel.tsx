@@ -74,6 +74,14 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
         value={carSelected?.year}
         setValue={setCarYear}
       />
+      <TicDriveDropdown
+        placeholder="Choose the car fuel type"
+        searchPlaceholder="Search fuel type"
+        title="Fuel"
+        data={fuels.map((fuel, index) => ({id: index, value: fuel}))}
+        value={{id: -1, value: carSelectedByMakeAndModel?.fuel!}}
+        setValue={setCarFuelType}
+      />
       <TicDriveTextOrInput
         title="Plate number"
         placeholder="Insert plate"
@@ -85,14 +93,6 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
         placeholder="Insert displacement"
         value={carSelected?.engineDisplacement}
         setValue={setCarEngineDisplacement}
-      />
-      <TicDriveDropdown
-        placeholder="Choose the car fuel type"
-        searchPlaceholder="Search fuel type"
-        title="Fuel"
-        data={fuels.map((fuel, index) => ({id: index, value: fuel}))}
-        value={{id: -1, value: carSelectedByMakeAndModel?.fuel!}}
-        setValue={setCarFuelType}
       />
       <TicDriveTextOrInput
         title="Mileage"

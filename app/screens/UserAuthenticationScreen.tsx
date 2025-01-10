@@ -1,7 +1,6 @@
 import ToPreviousPage from '@/components/navigation/ToPreviousPage';
 import {
   KeyboardAvoidingView,
-  SafeAreaView,
   StyleSheet,
   View,
 } from 'react-native';
@@ -16,7 +15,6 @@ import smallDevicebreakpointHeight from '@/constants/smallDevicebreakpointHeight
 import {Dimensions} from 'react-native';
 import AuthAction from '@/types/auth/Action';
 import isIOSPlatform from '@/utils/devices/IsIOSPlatform';
-import {globalStyles} from '@/styles/globalStyles';
 import {useRoute} from '@react-navigation/native';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 const {width, height} = Dimensions.get('window');

@@ -23,6 +23,7 @@ import getCarsMakes from '@/services/http/requests/cars/getCarsMakes';
 import getCarModelsByCarMakeId from '@/services/http/requests/cars/getCarModelsByCarMakeId';
 import CarDetailsByMakeAndModel from '@/components/cars/registration/CarDetailsByMakeAndModel';
 import CarContext from '@/stateManagement/contexts/car/CarContext';
+import BoldTitle1 from '@/components/ui/text/BoldTitle1';
 
 function RegisterVehicleScreen() {
   const [segmentedControlSelection, setSegmentedControlSelection] =
@@ -48,6 +49,7 @@ function RegisterVehicleScreen() {
 
   const {
     carSelectedByMakeAndModel: carSelectedByMakeAndModelCtx,
+    setCarSelectedByMakeAndModel: setCarSelectedByMakeAndModelCtx,
     carSelectedByPlate: carSelectedByPlateCtx,
   } = useContext(CarContext);
 
@@ -56,6 +58,12 @@ function RegisterVehicleScreen() {
   const servicesChoosen = useAppSelector(
     state => state.services.servicesChoosenByUsers,
   );
+
+  // useEffect(() => {
+  //   if(setCarSelectedByMakeAndModelCtx) {
+  //     setCarSelectedByMakeAndModelCtx({...carSelectedByMakeAndModelCtx, carMake: carMakeDropdownData?.value})
+  //   }
+  // }, [carMakeDropdownData])
 
   useEffect(() => {
     console.log('Context Updated: ', carSelectedByMakeAndModelCtx);
@@ -107,9 +115,8 @@ function RegisterVehicleScreen() {
 
   useEffect(() => {
     if (carModelDropdownData) {
-      setCarSelectedByMakeAndModel(
-        models.find(model => model.id === carModelDropdownData.id),
-      );
+      const car = models.find(model => model.id === carModelDropdownData.id)
+      setCarSelectedByMakeAndModel({...car, make: carMakeDropdownData?.value, model: carModelDropdownData?.value });
     }
   }, [carModelDropdownData]);
 
@@ -136,15 +143,7 @@ function RegisterVehicleScreen() {
     <SafeAreaViewLayout styles={[backgroundStyle]}>
       <ToPreviousPage containerClassName="m-2 mb-7" />
       <View className="flex-1 justify-between">
-        <Text
-          style={{
-            color:
-              colorScheme === 'light' ? Colors.light.text : Colors.dark.text,
-          }}
-          className="font-medium mb-2 text-3xl mx-3.5"
-        >
-          Register your vehicle for service bookings
-        </Text>
+        <BoldTitle1 title='Register your vehicle for service bookings' />
         <View className="m-3.5">
           <SegmentedControl
             options={options}
@@ -316,10 +315,16 @@ function RegisterVehicleScreen() {
       </View>
       <TicDriveButton
         text="Confirm"
+        routeName="CarRegistrationConfirmationScreen"
+        routeParams={{carSelected: carSelectedByMakeAndModelCtx}}
+        disabled={!buttonIsEnabled}
+      />
+      {/* <TicDriveButton
+        text="Confirm"
         routeName="userTabs"
         stateRouteName="Home"
         disabled={!buttonIsEnabled}
-      />
+      /> */}
     </SafeAreaViewLayout>
   );
 }
