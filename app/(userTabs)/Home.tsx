@@ -34,23 +34,11 @@ export default function UserHome() {
               isRightIcon={true}
               placeholder="Search workshop"
               containerViewStyleTailwind="flex-1 justify-center items-center"
+              inputContainerStyle={{marginTop: 4}}
               onChange={text => {
                 setWorkshopFilter(text);
               }}
             />
-            <View
-              className="justify-center items-center ml-2 mb-1 border-2 rounded-xl mx-3.5 w-14 h-14"
-              style={styles.filterButtonContainer}
-            >
-              <TouchableOpacity
-                className="justify-center items-center h-full w-full"
-                onPress={() => alert('filter services')}
-                accessible={true}
-                accessibilityLabel="Filter workshops"
-              >
-                <FilterIcon width={22} height={22} />
-              </TouchableOpacity>
-            </View>
           </View>
         ) : (
           <View>
@@ -62,6 +50,7 @@ export default function UserHome() {
             <HorizontalLine color={Colors.light.lightGrey} />
           </View>
         )}
+        <HorizontalLine color={Colors.light.lightGrey} />
         <View className="flex-1">
           <WorkshopCards tailwindContainerCss="mb-0" />
           {userServicesChoosen.length === 0 && (
