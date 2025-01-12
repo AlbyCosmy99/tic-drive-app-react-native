@@ -1,24 +1,18 @@
 import {memo} from 'react';
 import {Colors} from '@/constants/Colors';
-import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
+import {ActivityIndicator, StyleSheet, View} from 'react-native';
 import {Image} from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import LocationPin from '../assets/svg/location_on.svg';
-import Verified from '../assets/svg/verified.svg';
-import Star from '../assets/svg/star.svg';
-import Acute from '../assets/svg/acute.svg';
-import FreeCancellation from '../assets/svg/free_cancellation.svg';
-import AssistantDirection from '../assets/svg/assistant_direction';
-import CalendarIcon from '../assets/svg/calendar_add_on.svg';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import PinLocationIcon from '../assets/svg/location/PinLocation.svg';
+import GreenCheckIcon from '../assets/svg/check_green.svg';
+import StarIcon from '../assets/svg/star.svg';
 import calculateWorkshopStars from '@/utils/workshops/calculateWorkshopStars';
-import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 import Workshop from '@/types/workshops/Workshop';
+import IconTextPair from './ui/IconTextPair';
 
 function WorkshopCard({workshop}: {workshop: Workshop}) {
   return (
     <View style={styles.container}>
-      <View style={styles.cardContainer}>
+      <View className='border-2 rounded-2xl' style={styles.cardContainer}>
         <Image
           source={{uri: workshop.imageUrl}}
           containerStyle={styles.image}
@@ -29,79 +23,11 @@ function WorkshopCard({workshop}: {workshop: Workshop}) {
             />
           }
         />
-        {workshop.favourite ? (
-          <Icon name="heart" size={30} color="red" style={styles.heartIcon} />
-        ) : (
-          <Icon name="heart" size={30} color="white" style={styles.heartIcon} />
-        )}
-        <View style={styles.titleContainer}>
-          <Text className="text-xl font-semibold">{workshop.title}</Text>
-          {workshop.verified && <Verified width={24} name="verified" />}
-        </View>
-        <View style={styles.servicePositionContainer}>
-          <LocationPin
-            width={24}
-            name="location-pin"
-            fill={Colors.light.ticText}
-          />
-          <Text className="text-sm" style={styles.serviceInfo}>
-            {workshop.position}
-          </Text>
-        </View>
-        {/* to do - spostare la stella in un componente dato che e' utilizzato in piu punti (almeno 3) */}
-        <View style={styles.servicePositionContainer}>
-          <Star width={24} name="location-pin" fill={Colors.light.ticText} />
-          <Text className="text-sm" style={styles.serviceInfo}>
-            {calculateWorkshopStars(workshop.reviews)} (
-            {workshop.reviews.length} reviews)
-          </Text>
-        </View>
-        <View className="flex flex-row mt-4">
-          <View style={styles.expressServiceContainer}>
-            <Acute width={24} />
-            <Text style={styles.extraService}>Express service</Text>
-          </View>
-          {workshop.freeCancellation && (
-            <View style={styles.expressServiceContainer}>
-              <FreeCancellation width={24} />
-              <Text className="text-base">Free cancellation</Text>
-            </View>
-          )}
-        </View>
-        <View style={styles.priceContainer}>
-          <View>
-            <Text
-              className="font-semibold text-xl"
-              style={workshop.discount !== 0 && styles.priceWithDiscount}
-            >
-              {workshop.price}
-            </Text>
-            {workshop.discount !== 0 && (
-              <View style={styles.strikethroughLine} />
-            )}
-          </View>
-          {workshop.discount !== 0 && (
-            <Text className="font-semibold text-xl">
-              ${calculateWorkshopDiscount(workshop.price, workshop.discount)}
-            </Text>
-          )}
-        </View>
-        <View style={styles.cardOptionsContainer}>
-          <TouchableOpacity
-            style={styles.cardOptionContainer}
-            onPress={() => alert('directions')}
-          >
-            <AssistantDirection width={24} />
-            <Text style={styles.cardOption}>Directions</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.cardOptionContainer}
-            onPress={() => alert('check availability')}
-          >
-            <CalendarIcon width={24} />
-            <Text style={styles.cardOption}>Check availability</Text>
-          </TouchableOpacity>
-        </View>
+       <View className='mb-1.5 px-3 pb-1 pt-2'>
+        <IconTextPair containerTailwindCss='py-1.5' textTailwindCss='text-xl font-semibold' text={workshop.title} icon={<GreenCheckIcon />}/>
+        <IconTextPair containerTailwindCss='py-1.5' textTailwindCss='text-sm font-medium underline' text='indirizzo' icon={<PinLocationIcon />}/>
+        <IconTextPair containerTailwindCss='py-1.5' textTailwindCss='text-sm font-medium' text={`${calculateWorkshopStars(workshop.reviews).toString()}/5 (${workshop.reviews.length} reviews)`} icon={<StarIcon />}/>
+       </View>
       </View>
     </View>
   );
@@ -130,13 +56,14 @@ const styles = StyleSheet.create({
   cardContainer: {
     position: 'relative',
     width: '100%',
-    borderBottomColor: Colors.light.lightGrey,
-    borderBottomWidth: 2,
+    borderColor: Colors.light.lightGrey
   },
   image: {
     width: '100%',
     height: 160,
-    borderRadius: 15,
+    borderRadius: 14,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0
   },
   heartIcon: {
     position: 'absolute',

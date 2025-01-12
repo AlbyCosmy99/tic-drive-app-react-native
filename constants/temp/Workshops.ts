@@ -37,42 +37,6 @@ const workshops: Workshop[] = [
     ],
   },
   {
-    id: 6,
-    title: 'Seattle Tire and Auto',
-    imageUrl:
-      'https://premier-carcare.com/wp-content/uploads/2019/02/auto-repair-shop-man.jpg',
-    favourite: false,
-    position: 'Seattle, USA',
-    reviews: [
-      {
-        stars: 4,
-        text: 'Tires were replaced quickly, and the alignment is perfect!',
-        authorName: 'Patricia Blue',
-        authorImageUrl:
-          'https://media.licdn.com/dms/image/v2/D4D08AQE0CXu4hnoe7g/croft-frontend-shrinkToFit1024/croft-frontend-shrinkToFit1024/0/1646754728586?e=2147483647&v=beta&t=qLLnAorOkCKvbPAVBJgmyYhxQUt6YWeU0qJRV5cCgYQ',
-        when: new Date('2023-07-22'),
-      },
-      {
-        stars: 3,
-        text: 'Good service but communication could be better.',
-        authorName: 'Henry Gold',
-        authorImageUrl:
-          'https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg',
-        when: new Date('2023-06-17'),
-      },
-    ],
-    freeCancellation: false,
-    price: '$140',
-    discount: 10,
-    freeService: 'Free tire balancing',
-    verified: false,
-    services: ['tires', 'battery'],
-    images: [
-      'https://example.com/auto-shop-1.jpg',
-      'https://example.com/auto-shop-2.jpg',
-    ],
-  },
-  {
     id: 7,
     title: 'Dallas Brake Experts',
     imageUrl:

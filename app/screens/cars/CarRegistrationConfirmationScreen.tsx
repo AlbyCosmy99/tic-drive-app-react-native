@@ -39,7 +39,7 @@ const CarRegistrationConfirmationScreen = () => {
                             <RegistrationCarDetailCard title="Mileage" value={carSelected.mileage.toString()}/>
                         </View>
                         <HorizontalLine />
-                        <Pressable onPress={() =>navigation.goBack()}><Text className="text-green-inter text-base font-medium mt-2">Change</Text></Pressable>
+                        <Pressable onPress={() =>navigation.goBack()}><Text className="text-drive text-base font-medium mt-2">Change</Text></Pressable>
                     </View>
                 </View>
             </View>

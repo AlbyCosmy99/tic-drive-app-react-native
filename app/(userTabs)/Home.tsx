@@ -63,9 +63,10 @@ export default function UserHome() {
           </View>
         )}
         <View className="flex-1">
-          <WorkshopCards />
+          <WorkshopCards tailwindContainerCss='mb-0'/>
           {userServicesChoosen.length === 0 && (
-            <View className="absolute bottom-8 left-0 right-0">
+            <View>
+              <HorizontalLine />
               <TicDriveButton
                 text="Book a service"
                 onClick={() =>

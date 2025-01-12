@@ -8,7 +8,12 @@ import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import Workshop from '@/types/workshops/Workshop';
 import {useServicesChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
 import useJwtToken from '@/hooks/auth/useJwtToken';
-function WorkshopCards() {
+
+interface WorkshopCardsProps {
+  tailwindContainerCss?: string;
+}
+
+const WorkshopCards: React.FC<WorkshopCardsProps> = ({tailwindContainerCss = ''}) => {
   const {workshopFilter} = useContext(GlobalContext);
   const {navigation} = useContext(NavigationContext);
 
@@ -29,7 +34,7 @@ function WorkshopCards() {
   };
 
   return (
-    <ScrollView className={!token ? 'mb-2' : ''}>
+    <ScrollView className={`${!token ? 'mb-2' : ''} ${tailwindContainerCss}`}>
       {workshops
         .filter(
           workshop =>
