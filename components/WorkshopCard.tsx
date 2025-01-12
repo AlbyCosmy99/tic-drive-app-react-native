@@ -1,6 +1,6 @@
-import {memo} from 'react';
+import {memo, useEffect} from 'react';
 import {Colors} from '@/constants/Colors';
-import {ActivityIndicator, StyleSheet, View} from 'react-native';
+import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
 import {Image} from 'react-native-elements';
 import PinLocationIcon from '../assets/svg/location/PinLocation.svg';
 import GreenCheckIcon from '../assets/svg/check_green.svg';
@@ -8,8 +8,14 @@ import StarIcon from '../assets/svg/star.svg';
 import calculateWorkshopStars from '@/utils/workshops/calculateWorkshopStars';
 import Workshop from '@/types/workshops/Workshop';
 import IconTextPair from './ui/IconTextPair';
+import { useAppSelector } from '@/stateManagement/redux/hooks';
+import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 
 function WorkshopCard({workshop}: {workshop: Workshop}) {
+  const servicesChoosenByUsers = useAppSelector(state => state.services.servicesChoosenByUsers)
+  useEffect(() => {
+    console.log(servicesChoosenByUsers)
+  },[])
   return (
     <View style={styles.container}>
       <View className="border-2 rounded-2xl" style={styles.cardContainer}>
@@ -43,6 +49,24 @@ function WorkshopCard({workshop}: {workshop: Workshop}) {
             icon={<StarIcon />}
           />
         </View>
+        {
+            servicesChoosenByUsers?.length > 0 && (
+              <View className="flex flex-row justify-between items-center border-2 border-grey-light m-2 p-3 mt-0 rounded-lg">
+                <Text className="text-base font-medium">
+                  {servicesChoosenByUsers[0].name}
+                </Text>
+                <View>
+                  <View className="flex flex-row justify-between items-center">
+                    <Text className="text-base font-medium">Total</Text>
+                    <Text className="text-base font-medium">$ {calculateWorkshopDiscount(workshop.price, workshop.discount)}</Text>
+                  </View>
+                  <Text className="font-medium text-xs text-tic">
+                    Includes taxes and fees
+                  </Text>
+                </View>
+              </View>
+            )
+        }
       </View>
     </View>
   );

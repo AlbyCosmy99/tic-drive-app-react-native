@@ -27,29 +27,18 @@ export default function UserHome() {
     <LinearGradientViewLayout>
       <SafeAreaViewLayout>
         <TicDriveNavbar isLoginAvailable={false} />
-        {userServicesChoosen.length > 0 ? (
-          <View className="flex-row items-center">
-            <TicDriveInput
-              isLeftIcon={true}
-              isRightIcon={true}
-              placeholder="Search workshop"
-              containerViewStyleTailwind="flex-1 justify-center items-center"
-              inputContainerStyle={{marginTop: 4}}
-              onChange={text => {
-                setWorkshopFilter(text);
-              }}
-            />
-          </View>
-        ) : (
-          <View>
-            {user && user.name && (
-              <Text className="text-center m-4 font-bold text-xl">
-                Welcome {user.name}
-              </Text>
-            )}
-            <HorizontalLine color={Colors.light.lightGrey} />
-          </View>
-        )}
+        <View className="flex-row items-center">
+          <TicDriveInput
+            isLeftIcon={true}
+            isRightIcon={true}
+            placeholder="Search workshop"
+            containerViewStyleTailwind="flex-1 justify-center items-center"
+            inputContainerStyle={{marginTop: 4}}
+            onChange={text => {
+              setWorkshopFilter(text);
+            }}
+          />
+        </View>
         <HorizontalLine color={Colors.light.lightGrey} />
         <View className="flex-1">
           <WorkshopCards tailwindContainerCss="mb-0" />
