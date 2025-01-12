@@ -63,7 +63,7 @@ export default function UserHome() {
           </View>
         )}
         <View className="flex-1">
-          <WorkshopCards tailwindContainerCss='mb-0'/>
+          <WorkshopCards tailwindContainerCss="mb-0" />
           {userServicesChoosen.length === 0 && (
             <View>
               <HorizontalLine />

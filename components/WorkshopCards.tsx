@@ -13,7 +13,9 @@ interface WorkshopCardsProps {
   tailwindContainerCss?: string;
 }
 
-const WorkshopCards: React.FC<WorkshopCardsProps> = ({tailwindContainerCss = ''}) => {
+const WorkshopCards: React.FC<WorkshopCardsProps> = ({
+  tailwindContainerCss = '',
+}) => {
   const {workshopFilter} = useContext(GlobalContext);
   const {navigation} = useContext(NavigationContext);
 
@@ -57,6 +59,6 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({tailwindContainerCss = ''}
         })}
     </ScrollView>
   );
-}
+};
 
 export default memo(WorkshopCards);

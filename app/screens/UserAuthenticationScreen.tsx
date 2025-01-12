@@ -1,9 +1,5 @@
 import ToPreviousPage from '@/components/navigation/ToPreviousPage';
-import {
-  KeyboardAvoidingView,
-  StyleSheet,
-  View,
-} from 'react-native';
+import {KeyboardAvoidingView, StyleSheet, View} from 'react-native';
 import {useEffect, useMemo, useState} from 'react';
 import {Colors} from '@/constants/Colors';
 import {ScrollView} from 'react-native-gesture-handler';

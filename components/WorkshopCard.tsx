@@ -12,7 +12,7 @@ import IconTextPair from './ui/IconTextPair';
 function WorkshopCard({workshop}: {workshop: Workshop}) {
   return (
     <View style={styles.container}>
-      <View className='border-2 rounded-2xl' style={styles.cardContainer}>
+      <View className="border-2 rounded-2xl" style={styles.cardContainer}>
         <Image
           source={{uri: workshop.imageUrl}}
           containerStyle={styles.image}
@@ -23,11 +23,26 @@ function WorkshopCard({workshop}: {workshop: Workshop}) {
             />
           }
         />
-       <View className='mb-1.5 px-3 pb-1 pt-2'>
-        <IconTextPair containerTailwindCss='py-1.5' textTailwindCss='text-xl font-semibold' text={workshop.title} icon={<GreenCheckIcon />}/>
-        <IconTextPair containerTailwindCss='py-1.5' textTailwindCss='text-sm font-medium underline' text='indirizzo' icon={<PinLocationIcon />}/>
-        <IconTextPair containerTailwindCss='py-1.5' textTailwindCss='text-sm font-medium' text={`${calculateWorkshopStars(workshop.reviews).toString()}/5 (${workshop.reviews.length} reviews)`} icon={<StarIcon />}/>
-       </View>
+        <View className="mb-1.5 px-3 pb-1 pt-2">
+          <IconTextPair
+            containerTailwindCss="py-1.5"
+            textTailwindCss="text-xl font-semibold"
+            text={workshop.title}
+            icon={<GreenCheckIcon />}
+          />
+          <IconTextPair
+            containerTailwindCss="py-1.5"
+            textTailwindCss="text-sm font-medium underline"
+            text="indirizzo"
+            icon={<PinLocationIcon />}
+          />
+          <IconTextPair
+            containerTailwindCss="py-1.5"
+            textTailwindCss="text-sm font-medium"
+            text={`${calculateWorkshopStars(workshop.reviews).toString()}/5 (${workshop.reviews.length} reviews)`}
+            icon={<StarIcon />}
+          />
+        </View>
       </View>
     </View>
   );
@@ -56,14 +71,14 @@ const styles = StyleSheet.create({
   cardContainer: {
     position: 'relative',
     width: '100%',
-    borderColor: Colors.light.lightGrey
+    borderColor: Colors.light.lightGrey,
   },
   image: {
     width: '100%',
     height: 160,
     borderRadius: 14,
     borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0
+    borderBottomRightRadius: 0,
   },
   heartIcon: {
     position: 'absolute',

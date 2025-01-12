@@ -115,8 +115,12 @@ function RegisterVehicleScreen() {
 
   useEffect(() => {
     if (carModelDropdownData) {
-      const car = models.find(model => model.id === carModelDropdownData.id)
-      setCarSelectedByMakeAndModel({...car, make: carMakeDropdownData?.value, model: carModelDropdownData?.value });
+      const car = models.find(model => model.id === carModelDropdownData.id);
+      setCarSelectedByMakeAndModel({
+        ...car,
+        make: carMakeDropdownData?.value,
+        model: carModelDropdownData?.value,
+      });
     }
   }, [carModelDropdownData]);
 
@@ -143,7 +147,7 @@ function RegisterVehicleScreen() {
     <SafeAreaViewLayout styles={[backgroundStyle]}>
       <ToPreviousPage containerClassName="m-2 mb-7" />
       <View className="flex-1 justify-between">
-        <BoldTitle1 title='Register your vehicle for service bookings' />
+        <BoldTitle1 title="Register your vehicle for service bookings" />
         <View className="m-3.5">
           <SegmentedControl
             options={options}
