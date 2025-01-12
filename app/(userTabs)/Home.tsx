@@ -1,11 +1,9 @@
 import {Colors} from '@/constants/Colors';
-import {View, StyleSheet, Text} from 'react-native';
+import {View} from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
 import WorkshopCards from '@/components/WorkshopCards';
 import {useContext} from 'react';
-import FilterIcon from '../../assets/svg/discover_tune.svg';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import GlobalContext from '@/stateManagement/contexts/GlobalContext';
@@ -17,7 +15,6 @@ import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 
 export default function UserHome() {
   const {setWorkshopFilter} = useContext(GlobalContext);
-  const user = useAppSelector(state => state.auth.user);
   const userServicesChoosen = useAppSelector(
     state => state.services.servicesChoosenByUsers,
   );
@@ -58,9 +55,3 @@ export default function UserHome() {
     </LinearGradientViewLayout>
   );
 }
-
-const styles = StyleSheet.create({
-  filterButtonContainer: {
-    borderColor: Colors.light.extremelyLightGrey,
-  },
-});

@@ -82,21 +82,21 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
         value={{id: -1, value: carSelectedByMakeAndModel?.fuel!}}
         setValue={setCarFuelType}
       />
-      <TicDriveTextOrInput
+      {/* <TicDriveTextOrInput
         title="Plate number"
         placeholder="Insert plate"
         value={carSelected?.plateNumber}
         setValue={setCarPlateNumber}
-      />
+      /> */}
       <TicDriveTextOrInput
-        title="Engine displacement"
-        placeholder="Insert displacement"
+        title="Engine size"
+        placeholder="Es. 2.0"
         value={carSelected?.engineDisplacement}
         setValue={setCarEngineDisplacement}
       />
       <TicDriveTextOrInput
         title="Mileage"
-        placeholder="Insert mileage"
+        placeholder="Es. 10.000km"
         value={carSelected?.mileage}
         setValue={setCarMileage}
       />

@@ -1,6 +1,6 @@
 import {memo, useEffect} from 'react';
 import {Colors} from '@/constants/Colors';
-import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
+import {ActivityIndicator, Pressable, StyleSheet, Text, View} from 'react-native';
 import {Image} from 'react-native-elements';
 import PinLocationIcon from '../assets/svg/location/PinLocation.svg';
 import GreenCheckIcon from '../assets/svg/check_green.svg';
@@ -51,7 +51,8 @@ function WorkshopCard({workshop}: {workshop: Workshop}) {
         </View>
         {
             servicesChoosenByUsers?.length > 0 && (
-              <View className="flex flex-row justify-between items-center border-2 border-grey-light m-2 p-3 mt-0 rounded-lg">
+              // quando pressed vai a disponibilita
+              <Pressable className="flex flex-row justify-between items-center border-2 border-grey-light m-2 p-3 mt-0 rounded-lg" onPress={() => console.log('pressed')}>
                 <Text className="text-base font-medium">
                   {servicesChoosenByUsers[0].name}
                 </Text>
@@ -64,7 +65,7 @@ function WorkshopCard({workshop}: {workshop: Workshop}) {
                     Includes taxes and fees
                   </Text>
                 </View>
-              </View>
+              </Pressable>
             )
         }
       </View>

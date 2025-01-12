@@ -80,8 +80,7 @@ function RegisterVehicleScreen() {
       carSelectedByMakeAndModelCtx &&
       !!carSelectedByMakeAndModelCtx.engineDisplacement &&
       !!carSelectedByMakeAndModelCtx.fuel &&
-      !!carSelectedByMakeAndModelCtx.mileage &&
-      !!carSelectedByMakeAndModelCtx.plateNumber
+      !!carSelectedByMakeAndModelCtx.mileage
     );
   }, [segmentedControlSelection, carSelectedByMakeAndModelCtx]);
 

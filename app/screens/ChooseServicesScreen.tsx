@@ -45,7 +45,7 @@ export default function ChooseServicesScreen() {
               color:
                 colorScheme === 'light' ? Colors.light.text : Colors.dark.text,
             }}
-            className="font-medium text-3xl mx-3.5 mb-2"
+            className="font-medium text-2xl mx-3.5 mb-2"
           >
             {user ? `${user?.name ? user.name : 'Andrei'}, w` : 'W'}hat service
             {isUserLookingForServices() ? '' : 's'}{' '}
