@@ -29,6 +29,7 @@ import PaymentCardsScreen from './screens/payment/PaymentCardsScreen';
 import ConfirmEmailScreen from './screens/auth/ConfirmEmailScreen';
 import CarProvider from '@/stateManagement/contexts/car/CarProvider';
 import CarRegistrationConfirmationScreen from './screens/cars/CarRegistrationConfirmationScreen';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -56,164 +57,166 @@ export default function RootLayout() {
 
   return (
     <Provider store={store}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <GlobalProvider>
-          <CarProvider>
-            <NavigationContext.Provider value={{navigation, setNavigation}}>
-              <AuthContext.Provider
-                value={{
-                  loginRouteName,
-                  setLoginRouteName,
-                  loginRouteParams,
-                  setLoginRouteParams,
-                }}
-              >
-                <GestureHandlerRootView>
-                  <Stack.Navigator>
-                    <Stack.Screen
-                      name="Hub"
-                      component={Hub}
-                      options={({route}) => ({
-                        title: 'Hub',
-                        headerShown: false,
-                        animation: 'fade',
-                      })}
-                    />
-                    <Stack.Screen
-                      name="UserAuthenticationScreen"
-                      component={UserAuthenticationScreen}
-                      options={({route}) => ({
-                        title: 'UserAuthenticationScreen',
-                        headerShown: false,
-                        presentation: 'modal',
-                        animation: getAnimation(route),
-                      })}
-                    />
-                    <Stack.Screen
-                      component={ChooseServicesScreen}
-                      name="ChooseServicesScreen"
-                      options={({route}) => ({
-                        title: 'ChooseServicesScreen',
-                        headerShown: false,
-                        animation: getAnimation(route),
-                      })}
-                    />
-                    <Stack.Screen
-                      name="RegisterVehicleScreen"
-                      component={RegisterVehicleScreen}
-                      options={({route}) => ({
-                        title: 'RegisterVehicleScreen',
-                        headerShown: false,
-                        animation: getAnimation(route),
-                      })}
-                    />
-                    <Stack.Screen
-                      name="CarRegistrationConfirmationScreen"
-                      component={CarRegistrationConfirmationScreen}
-                      options={({route}) => ({
-                        title: 'CarRegistrationConfirmationScreen',
-                        headerShown: false,
-                        animation: getAnimation(route),
-                      })}
-                    />
-                    <Stack.Screen
-                      name="workshopTabs"
-                      component={WorkshopTabLayout}
-                      options={({route}) => ({
-                        title: 'workshopTabs',
-                        headerShown: false,
-                        animation: getAnimation(route),
-                      })}
-                    />
-                    <Stack.Screen
-                      name="userTabs"
-                      component={userTabLayout}
-                      options={({route}) => ({
-                        title: 'userTabs',
-                        headerShown: false,
-                        animation: getAnimation(route),
-                      })}
-                    />
-                    <Stack.Screen
-                      name="WorkshopDetails"
-                      component={WorkshopDetails}
-                      options={({route}) => ({
-                        title: 'WorkshopDetails',
-                        headerShown: false,
-                        animation: getAnimation(route),
-                      })}
-                    />
-                    <Stack.Screen
-                      name="ReviewBookingDetailsScreen"
-                      component={ReviewBookingDetailsScreen}
-                      options={({route}) => ({
-                        title: 'ReviewBookingDetailsScreen',
-                        headerShown: false,
-                        animation: getAnimation(route),
-                      })}
-                    />
-                    <Stack.Screen
-                      name="BookingConfirmationScreen"
-                      component={BookingConfirmationScreen}
-                      options={({route}) => ({
-                        title: 'BookingConfirmationScreen',
-                        headerShown: false,
-                        animation: getAnimation(route),
-                      })}
-                    />
-                    <Stack.Screen
-                      name="UserAccountDetailsScreen"
-                      component={UserAccountDetailsScreen}
-                      options={({route}) => ({
-                        title: 'UserAccountDetailsScreen',
-                        headerShown: false,
-                        animation: getAnimation(route),
-                      })}
-                    />
-                    <Stack.Screen
-                      name="PaymentCardsScreen"
-                      component={PaymentCardsScreen}
-                      options={({route}) => ({
-                        title: 'PaymentCardsScreen',
-                        headerShown: false,
-                        animation: getAnimation(route),
-                      })}
-                    />
-                    <Stack.Screen
-                      name="AddNewPaymentMethodScreen"
-                      component={AddNewPaymentMethodScreen}
-                      options={({route}) => ({
-                        title: 'AddNewPaymentMethodScreen',
-                        headerShown: false,
-                        presentation: 'modal',
-                        animation: getAnimation(route),
-                      })}
-                    />
-                    <Stack.Screen
-                      name="ConfirmEmailScreen"
-                      component={ConfirmEmailScreen}
-                      options={({route}) => ({
-                        title: 'ConfirmEmailScreen',
-                        headerShown: false,
-                        animation: getAnimation(route),
-                      })}
-                    />
-                    <Stack.Screen
-                      name="notFound"
-                      component={NotFoundScreen}
-                      options={({route}) => ({
-                        title: 'userTabs',
-                        headerShown: false,
-                        animation: getAnimation(route),
-                      })}
-                    />
-                  </Stack.Navigator>
-                </GestureHandlerRootView>
-              </AuthContext.Provider>
-            </NavigationContext.Provider>
-          </CarProvider>
-        </GlobalProvider>
-      </ThemeProvider>
+      <SafeAreaProvider>
+        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+          <GlobalProvider>
+            <CarProvider>
+              <NavigationContext.Provider value={{navigation, setNavigation}}>
+                <AuthContext.Provider
+                  value={{
+                    loginRouteName,
+                    setLoginRouteName,
+                    loginRouteParams,
+                    setLoginRouteParams,
+                  }}
+                >
+                  <GestureHandlerRootView>
+                    <Stack.Navigator>
+                      <Stack.Screen
+                        name="Hub"
+                        component={Hub}
+                        options={({route}) => ({
+                          title: 'Hub',
+                          headerShown: false,
+                          animation: 'fade',
+                        })}
+                      />
+                      <Stack.Screen
+                        name="UserAuthenticationScreen"
+                        component={UserAuthenticationScreen}
+                        options={({route}) => ({
+                          title: 'UserAuthenticationScreen',
+                          headerShown: false,
+                          presentation: 'modal',
+                          animation: getAnimation(route),
+                        })}
+                      />
+                      <Stack.Screen
+                        component={ChooseServicesScreen}
+                        name="ChooseServicesScreen"
+                        options={({route}) => ({
+                          title: 'ChooseServicesScreen',
+                          headerShown: false,
+                          animation: getAnimation(route),
+                        })}
+                      />
+                      <Stack.Screen
+                        name="RegisterVehicleScreen"
+                        component={RegisterVehicleScreen}
+                        options={({route}) => ({
+                          title: 'RegisterVehicleScreen',
+                          headerShown: false,
+                          animation: getAnimation(route),
+                        })}
+                      />
+                      <Stack.Screen
+                        name="CarRegistrationConfirmationScreen"
+                        component={CarRegistrationConfirmationScreen}
+                        options={({route}) => ({
+                          title: 'CarRegistrationConfirmationScreen',
+                          headerShown: false,
+                          animation: getAnimation(route),
+                        })}
+                      />
+                      <Stack.Screen
+                        name="workshopTabs"
+                        component={WorkshopTabLayout}
+                        options={({route}) => ({
+                          title: 'workshopTabs',
+                          headerShown: false,
+                          animation: getAnimation(route),
+                        })}
+                      />
+                      <Stack.Screen
+                        name="userTabs"
+                        component={userTabLayout}
+                        options={({route}) => ({
+                          title: 'userTabs',
+                          headerShown: false,
+                          animation: getAnimation(route),
+                        })}
+                      />
+                      <Stack.Screen
+                        name="WorkshopDetails"
+                        component={WorkshopDetails}
+                        options={({route}) => ({
+                          title: 'WorkshopDetails',
+                          headerShown: false,
+                          animation: getAnimation(route),
+                        })}
+                      />
+                      <Stack.Screen
+                        name="ReviewBookingDetailsScreen"
+                        component={ReviewBookingDetailsScreen}
+                        options={({route}) => ({
+                          title: 'ReviewBookingDetailsScreen',
+                          headerShown: false,
+                          animation: getAnimation(route),
+                        })}
+                      />
+                      <Stack.Screen
+                        name="BookingConfirmationScreen"
+                        component={BookingConfirmationScreen}
+                        options={({route}) => ({
+                          title: 'BookingConfirmationScreen',
+                          headerShown: false,
+                          animation: getAnimation(route),
+                        })}
+                      />
+                      <Stack.Screen
+                        name="UserAccountDetailsScreen"
+                        component={UserAccountDetailsScreen}
+                        options={({route}) => ({
+                          title: 'UserAccountDetailsScreen',
+                          headerShown: false,
+                          animation: getAnimation(route),
+                        })}
+                      />
+                      <Stack.Screen
+                        name="PaymentCardsScreen"
+                        component={PaymentCardsScreen}
+                        options={({route}) => ({
+                          title: 'PaymentCardsScreen',
+                          headerShown: false,
+                          animation: getAnimation(route),
+                        })}
+                      />
+                      <Stack.Screen
+                        name="AddNewPaymentMethodScreen"
+                        component={AddNewPaymentMethodScreen}
+                        options={({route}) => ({
+                          title: 'AddNewPaymentMethodScreen',
+                          headerShown: false,
+                          presentation: 'modal',
+                          animation: getAnimation(route),
+                        })}
+                      />
+                      <Stack.Screen
+                        name="ConfirmEmailScreen"
+                        component={ConfirmEmailScreen}
+                        options={({route}) => ({
+                          title: 'ConfirmEmailScreen',
+                          headerShown: false,
+                          animation: getAnimation(route),
+                        })}
+                      />
+                      <Stack.Screen
+                        name="notFound"
+                        component={NotFoundScreen}
+                        options={({route}) => ({
+                          title: 'userTabs',
+                          headerShown: false,
+                          animation: getAnimation(route),
+                        })}
+                      />
+                    </Stack.Navigator>
+                  </GestureHandlerRootView>
+                </AuthContext.Provider>
+              </NavigationContext.Provider>
+            </CarProvider>
+          </GlobalProvider>
+        </ThemeProvider>
+      </SafeAreaProvider>
     </Provider>
   );
 }
