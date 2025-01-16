@@ -1,6 +1,6 @@
 import {removeSecureToken} from '@/services/auth/secureStore/setToken';
 import navigationReplace from '@/services/navigation/replace';
-import NavigationContext from '@/stateManagement/contexts/NavigationContext';
+import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import {logout} from '@/stateManagement/redux/slices/authSlice';
 import {reset} from '@/stateManagement/redux/slices/servicesSlice';

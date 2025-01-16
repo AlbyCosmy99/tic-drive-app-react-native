@@ -18,7 +18,7 @@ import calculateWorkshopStars from '@/utils/workshops/calculateWorkshopStars';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import {useRoute} from '@react-navigation/native';
-import NavigationContext from '@/stateManagement/contexts/NavigationContext';
+import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import AssistantDirection from '../../../assets/svg/assistant_direction';
 import TicDriveOptionButton from '@/components/ui/buttons/TicDriveOptionButton';

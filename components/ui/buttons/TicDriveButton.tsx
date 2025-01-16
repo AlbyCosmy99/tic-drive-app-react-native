@@ -3,7 +3,7 @@ import {Button} from '@rneui/themed';
 import {StyleProp, ViewStyle} from 'react-native';
 import {Colors} from '@/constants/Colors';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
-import NavigationContext from '@/stateManagement/contexts/NavigationContext';
+import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import navigationPush from '@/services/navigation/push';
 import navigationReplace from '@/services/navigation/replace';
 import navigationReset from '@/services/navigation/reset';

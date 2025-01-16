@@ -12,7 +12,7 @@ import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import {reset} from '@/stateManagement/redux/slices/servicesSlice';
 import {useContext} from 'react';
-import NavigationContext from '@/stateManagement/contexts/NavigationContext';
+import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import navigationReplace from '@/services/navigation/replace';
 import TicDriveAuthButton from '../ui/buttons/TicDriveAuthButton';
 import navigationPush from '@/services/navigation/push';

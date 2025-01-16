@@ -4,7 +4,7 @@ import {login, setToken} from '@/stateManagement/redux/slices/authSlice';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import * as SplashScreen from 'expo-splash-screen';
 import {useNavigation} from '@react-navigation/native';
-import NavigationContext from '@/stateManagement/contexts/NavigationContext';
+import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import navigationReset from '@/services/navigation/reset';
 import {getToken} from '@/services/auth/secureStore/getToken';
 import {getPayload} from '@/services/auth/getPayload';

@@ -10,7 +10,7 @@ import AddIcon from '../../assets/svg/add.svg';
 import UserCarCards from '@/components/ui/cards/user/UserCarCards';
 import navigationPush from '@/services/navigation/push';
 import {useContext} from 'react';
-import NavigationContext from '@/stateManagement/contexts/NavigationContext';
+import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 
 export default function UserAccount() {

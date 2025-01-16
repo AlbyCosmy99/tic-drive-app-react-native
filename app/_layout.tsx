@@ -20,7 +20,7 @@ import userTabLayout from './(userTabs)//_layout';
 import WorkshopDetails from './screens/user/WorkshopDetails';
 import BookingConfirmationScreen from './screens/user/BookingConfirmationScreen';
 import NotFoundScreen from './+not-found';
-import NavigationContext from '@/stateManagement/contexts/NavigationContext';
+import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import Navigation from '@/types/nav/Navigation';
 import ReviewBookingDetailsScreen from './screens/user/ReviewBookingDetailsScreen';
 import UserAccountDetailsScreen from './screens/user/UserAccountDetailsScreen';

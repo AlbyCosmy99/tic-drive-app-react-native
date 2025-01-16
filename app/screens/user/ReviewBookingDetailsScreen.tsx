@@ -29,7 +29,7 @@ import {useContext, useEffect, useMemo} from 'react';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
 import navigationPush from '@/services/navigation/push';
-import NavigationContext from '@/stateManagement/contexts/NavigationContext';
+import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import navigationReset from '@/services/navigation/reset';
 import Workshop from '@/types/workshops/Workshop';
 import {useServicesChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';

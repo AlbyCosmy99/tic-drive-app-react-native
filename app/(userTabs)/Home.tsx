@@ -8,7 +8,7 @@ import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
-import NavigationContext from '@/stateManagement/contexts/NavigationContext';
+import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import navigationPush from '@/services/navigation/push';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';

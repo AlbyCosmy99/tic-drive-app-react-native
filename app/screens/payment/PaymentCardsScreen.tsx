@@ -6,7 +6,7 @@ import PaymentCard from '@/components/ui/payment/PaymentCard';
 import {Colors} from '@/constants/Colors';
 import navigationPush from '@/services/navigation/push';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
-import NavigationContext from '@/stateManagement/contexts/NavigationContext';
+import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
 import {LinearGradient} from 'expo-linear-gradient';
 import {useContext, useEffect} from 'react';

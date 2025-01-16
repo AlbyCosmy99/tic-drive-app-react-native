@@ -6,7 +6,7 @@ import User, {UserCategory} from '@/types/User';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
 import {setToken, login} from '@/stateManagement/redux/slices/authSlice';
-import NavigationContext from '@/stateManagement/contexts/NavigationContext';
+import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import navigationPush from '@/services/navigation/push';
 import navigationReset from '@/services/navigation/reset';
 import navigationReplace from '@/services/navigation/replace';

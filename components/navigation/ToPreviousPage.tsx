@@ -4,7 +4,7 @@ import React, {useContext} from 'react';
 import {useColorScheme} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {router} from 'expo-router';
-import NavigationContext from '@/stateManagement/contexts/NavigationContext';
+import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 
 interface ToPreviousPageProps {
   containerClassName?: string;
