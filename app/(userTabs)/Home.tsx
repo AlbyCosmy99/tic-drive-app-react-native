@@ -6,7 +6,7 @@ import WorkshopCards from '@/components/WorkshopCards';
 import {useContext} from 'react';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import HorizontalLine from '@/components/ui/HorizontalLine';
-import GlobalContext from '@/stateManagement/contexts/GlobalContext';
+import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import navigationPush from '@/services/navigation/push';

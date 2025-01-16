@@ -4,7 +4,7 @@ import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import TicDriveInputLabel from '@/components/ui/inputs/TicDriveInputLabel';
 import {Colors} from '@/constants/Colors';
-import GlobalContext from '@/stateManagement/contexts/GlobalContext';
+import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import {useContext, useState} from 'react';
 import {Text, View} from 'react-native';

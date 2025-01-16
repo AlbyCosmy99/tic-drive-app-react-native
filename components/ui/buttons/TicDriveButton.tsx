@@ -2,7 +2,7 @@ import React, {memo, useContext} from 'react';
 import {Button} from '@rneui/themed';
 import {StyleProp, ViewStyle} from 'react-native';
 import {Colors} from '@/constants/Colors';
-import GlobalContext from '@/stateManagement/contexts/GlobalContext';
+import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import navigationPush from '@/services/navigation/push';
 import navigationReplace from '@/services/navigation/replace';

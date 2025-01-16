@@ -1,4 +1,4 @@
-import GlobalContext from '@/stateManagement/contexts/GlobalContext';
+import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import {PaymentType} from '@/types/payment/UserPaymentInfo';
 import {useContext, useEffect, useState} from 'react';
 import {Pressable, Text, View} from 'react-native';

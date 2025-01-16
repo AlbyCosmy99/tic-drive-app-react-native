@@ -2,7 +2,7 @@ import WorkshopCard from './WorkshopCard';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import workshops from '../constants/temp/Workshops';
 import {memo, useContext} from 'react';
-import GlobalContext from '@/stateManagement/contexts/GlobalContext';
+import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';
 import Workshop from '@/types/workshops/Workshop';

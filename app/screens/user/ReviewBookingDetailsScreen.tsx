@@ -26,7 +26,7 @@ import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscou
 import IconTextPair from '@/components/ui/IconTextPair';
 import PaymentCard from '@/components/ui/payment/PaymentCard';
 import {useContext, useEffect, useMemo} from 'react';
-import GlobalContext from '@/stateManagement/contexts/GlobalContext';
+import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/NavigationContext';

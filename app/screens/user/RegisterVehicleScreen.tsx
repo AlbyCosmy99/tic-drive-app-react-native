@@ -13,7 +13,7 @@ import defaultCar from '@/constants/defaultRegistrationCar';
 import cars from '@/constants/temp/Cars';
 import SegmentedControlSelection from '@/types/SegmentedControlSelection';
 import Car from '@/types/Car';
-import GlobalContext from '@/stateManagement/contexts/GlobalContext';
+import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import TicDriveDropdown from '@/components/ui/dropdowns/TicDriveDropdown';
 import CarMake from '@/types/cars/CarMake';

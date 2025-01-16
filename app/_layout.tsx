@@ -7,7 +7,7 @@ import {useColorScheme} from '@/hooks/useColorScheme';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {Provider} from 'react-redux';
 import getAnimation from '@/utils/route/getAnimation';
-import GlobalProvider from '@/stateManagement/contexts/GlobalProvider';
+import GlobalProvider from '@/stateManagement/contexts/global/GlobalProvider';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
 import store from '@/stateManagement/redux/store/store';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
