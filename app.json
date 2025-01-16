@@ -2,7 +2,6 @@
   "expo": {
     "name": "TicDrive",
     "slug": "tic-drive",
-    "entryPoint": "./index.js",
     "platforms": ["ios", "android"],
     "sdkVersion": "52.0.0",
     "version": "1.0.0",
@@ -18,7 +17,7 @@
     "jsEngine": "hermes",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.albycosmy99.ticdrive",
+      "bundleIdentifier": "com.ticdrive.ios",
       "jsEngine": "hermes"
     },
     "android": {
