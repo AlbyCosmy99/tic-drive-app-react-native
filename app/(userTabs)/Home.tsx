@@ -28,7 +28,7 @@ export default function UserHome() {
           <TicDriveInput
             isLeftIcon={true}
             isRightIcon={true}
-            placeholder="Search workshop test2222222!"
+            placeholder="Search workshop"
             containerViewStyleTailwind="flex-1 justify-center items-center"
             inputContainerStyle={{marginTop: 4}}
             onChange={text => {
