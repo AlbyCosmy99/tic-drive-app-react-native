@@ -15,7 +15,6 @@ import SegmentedControlSelection from '@/types/SegmentedControlSelection';
 import Car from '@/types/Car';
 import GlobalContext from '@/stateManagement/contexts/GlobalContext';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
-import {useAppSelector} from '@/stateManagement/redux/hooks';
 import TicDriveDropdown from '@/components/ui/dropdowns/TicDriveDropdown';
 import CarMake from '@/types/cars/CarMake';
 import TicDriveDropdownData from '@/types/ui/dropdown/TicDriveDropdownData';
@@ -55,23 +54,11 @@ function RegisterVehicleScreen() {
 
   const colorScheme = useColorScheme();
 
-  const servicesChoosen = useAppSelector(
-    state => state.services.servicesChoosenByUsers,
-  );
-
-  // useEffect(() => {
-  //   if(setCarSelectedByMakeAndModelCtx) {
-  //     setCarSelectedByMakeAndModelCtx({...carSelectedByMakeAndModelCtx, carMake: carMakeDropdownData?.value})
-  //   }
-  // }, [carMakeDropdownData])
-
   useEffect(() => {
-    console.log('Context Updated: ', carSelectedByMakeAndModelCtx);
-    console.log(carSelectedByMakeAndModelCtx?.engineDisplacement);
+
   }, [carSelectedByMakeAndModelCtx]);
 
   useEffect(() => {
-    console.log(carSelectedByMakeAndModelCtx);
   }, [carSelectedByMakeAndModelCtx]);
 
   const buttonIsEnabled = useMemo(() => {

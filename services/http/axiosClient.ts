@@ -27,7 +27,7 @@ axiosClient.interceptors.response.use(
     return response;
   },
   error => {
-    console.log(error);
+    console.error(error);
     return Promise.reject(error);
   },
 );

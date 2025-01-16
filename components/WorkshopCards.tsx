@@ -28,7 +28,6 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
 
   //checking if servicesChoosen are in the services offered by a workshop
   const anyService = (services: string[]) => {
-    console.log(services);
     for (let serviceChoosen of servicesChoosen) {
       if (services.includes(serviceChoosen.name.toLowerCase())) return true;
     }

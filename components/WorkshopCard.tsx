@@ -1,4 +1,4 @@
-import {memo, useEffect} from 'react';
+import {memo} from 'react';
 import {Colors} from '@/constants/Colors';
 import {ActivityIndicator, Pressable, StyleSheet, Text, View} from 'react-native';
 import {Image} from 'react-native-elements';
@@ -13,9 +13,7 @@ import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscou
 
 function WorkshopCard({workshop}: {workshop: Workshop}) {
   const servicesChoosenByUsers = useAppSelector(state => state.services.servicesChoosenByUsers)
-  useEffect(() => {
-    console.log(servicesChoosenByUsers)
-  },[])
+
   return (
     <View style={styles.container}>
       <View className="border-2 rounded-2xl" style={styles.cardContainer}>

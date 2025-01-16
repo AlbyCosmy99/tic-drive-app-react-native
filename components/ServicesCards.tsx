@@ -28,7 +28,6 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
     apiClient
       .get('services')
       .then(res => {
-        console.log(res.data);
         setServices(res.data);
       })
       .catch(err => {

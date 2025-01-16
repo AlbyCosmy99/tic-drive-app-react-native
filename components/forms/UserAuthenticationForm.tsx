@@ -66,7 +66,6 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
       try {
         setLoading(true);
         const res = await register(user);
-        console.log(res);
         setSecureToken(res.token);
         dispatch(setToken(res.setToken));
         navigationReset(navigation, 0, 'ConfirmEmailScreen');

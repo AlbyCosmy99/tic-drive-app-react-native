@@ -17,7 +17,6 @@ const Tab = createBottomTabNavigator();
 
 export default function UserTabLayout() {
   const token = useJwtToken();
-  console.log(token);
 
   if (!token) {
     return <HomeTab />;
