@@ -1,7 +1,7 @@
 import WorkshopCard from './WorkshopCard';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import workshops from '../constants/temp/Workshops';
-import {memo, useContext} from 'react';
+import {memo, useContext, useEffect} from 'react';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
@@ -20,6 +20,10 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
   const {navigation} = useContext(NavigationContext);
 
   const servicesChoosen = useServicesChoosenByUsers();
+
+  useEffect(() => {
+    console.log(workshopFilter)
+  }, [workshopFilter])
 
   const token = useJwtToken();
   const handleCardPress = (workshop: Workshop) => {
@@ -40,11 +44,8 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
         .filter(
           workshop =>
             workshopFilter.length === 0 ||
-            servicesChoosen.length === 0 ||
-            (workshop.title
-              .toLowerCase()
-              .includes(workshopFilter.toLowerCase().trim()) &&
-              anyService(workshop.services)),
+            (workshop.title.toLowerCase().trim()
+              .includes(workshopFilter.toLowerCase().trim())),
         )
         .map((workshop, index) => {
           return (
