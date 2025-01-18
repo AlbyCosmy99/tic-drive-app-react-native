@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
   cardDescription: {
     color: 'green',
     textAlign: 'center',
-    fontSize: 25
+    fontSize: 25,
   },
   cardTitle: {
     color: 'green',

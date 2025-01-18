@@ -54,12 +54,9 @@ function RegisterVehicleScreen() {
 
   const colorScheme = useColorScheme();
 
-  useEffect(() => {
+  useEffect(() => {}, [carSelectedByMakeAndModelCtx]);
 
-  }, [carSelectedByMakeAndModelCtx]);
-
-  useEffect(() => {
-  }, [carSelectedByMakeAndModelCtx]);
+  useEffect(() => {}, [carSelectedByMakeAndModelCtx]);
 
   const buttonIsEnabled = useMemo(() => {
     return (

@@ -20,7 +20,7 @@ export default function UserHome() {
     state => state.services.servicesChoosenByUsers,
   );
   const {navigation} = useContext(NavigationContext);
-  const {areServicesAvailable} = useAreServicesAvailable()
+  const {areServicesAvailable} = useAreServicesAvailable();
 
   return (
     <LinearGradientViewLayout>

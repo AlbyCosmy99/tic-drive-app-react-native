@@ -29,7 +29,7 @@ import PaymentCardsScreen from './screens/payment/PaymentCardsScreen';
 import ConfirmEmailScreen from './screens/auth/ConfirmEmailScreen';
 import CarProvider from '@/stateManagement/contexts/car/CarProvider';
 import CarRegistrationConfirmationScreen from './screens/cars/CarRegistrationConfirmationScreen';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -58,7 +58,9 @@ export default function RootLayout() {
   return (
     <Provider store={store}>
       <SafeAreaProvider>
-        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <ThemeProvider
+          value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+        >
           <GlobalProvider>
             <CarProvider>
               <NavigationContext.Provider value={{navigation, setNavigation}}>

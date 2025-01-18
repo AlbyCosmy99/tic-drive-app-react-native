@@ -36,10 +36,9 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
         setLoading(false);
       }
     };
-  
+
     fetchServices();
   }, []);
-  
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', e => {

@@ -1,6 +1,12 @@
 import {memo, useEffect, useState} from 'react';
 import {Colors} from '@/constants/Colors';
-import {ActivityIndicator, Pressable, StyleSheet, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {Image} from 'react-native-elements';
 import PinLocationIcon from '../assets/svg/location/PinLocation.svg';
 import GreenCheckIcon from '../assets/svg/check_green.svg';
@@ -10,11 +16,13 @@ import Workshop from '@/types/workshops/Workshop';
 import IconTextPair from './ui/IconTextPair';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
-import { useAppSelector } from '@/stateManagement/redux/hooks';
+import {useAppSelector} from '@/stateManagement/redux/hooks';
 
 function WorkshopCard({workshop}: {workshop: Workshop}) {
-  const {areServicesAvailable} = useAreServicesAvailable()
-  const servicesChoosenByUsers = useAppSelector(state => state.services.servicesChoosenByUsers)
+  const {areServicesAvailable} = useAreServicesAvailable();
+  const servicesChoosenByUsers = useAppSelector(
+    state => state.services.servicesChoosenByUsers,
+  );
 
   return (
     <View style={styles.container}>
@@ -49,25 +57,29 @@ function WorkshopCard({workshop}: {workshop: Workshop}) {
             icon={<StarIcon />}
           />
         </View>
-        {
-            areServicesAvailable && (
-              // quando pressed vai a disponibilita
-              <Pressable className="flex flex-row justify-between items-center border-2 border-grey-light m-2 p-3 mt-0 rounded-lg" onPress={() => console.log('pressed')}>
+        {areServicesAvailable && (
+          // quando pressed vai a disponibilita
+          <Pressable
+            className="flex flex-row justify-between items-center border-2 border-grey-light m-2 p-3 mt-0 rounded-lg"
+            onPress={() => console.log('pressed')}
+          >
+            <Text className="text-base font-medium">
+              {servicesChoosenByUsers[0].name}
+            </Text>
+            <View>
+              <View className="flex flex-row justify-between items-center">
+                <Text className="text-base font-medium">Total</Text>
                 <Text className="text-base font-medium">
-                  {servicesChoosenByUsers[0].name}
+                  ${' '}
+                  {calculateWorkshopDiscount(workshop.price, workshop.discount)}
                 </Text>
-                <View>
-                  <View className="flex flex-row justify-between items-center">
-                    <Text className="text-base font-medium">Total</Text>
-                    <Text className="text-base font-medium">$ {calculateWorkshopDiscount(workshop.price, workshop.discount)}</Text>
-                  </View>
-                  <Text className="font-medium text-xs text-tic">
-                    Includes taxes and fees
-                  </Text>
-                </View>
-              </Pressable>
-            )
-        }
+              </View>
+              <Text className="font-medium text-xs text-tic">
+                Includes taxes and fees
+              </Text>
+            </View>
+          </Pressable>
+        )}
       </View>
     </View>
   );

@@ -14,8 +14,7 @@ export default function WorkshopRequests() {
   const [selectedRequestDate, setSelectedRequestDate] =
     useState<WorkshopRequestsDate>(workshopRequestsDates[0]);
 
-  useEffect(() => {
-  }, [selectedRequestDate]);
+  useEffect(() => {}, [selectedRequestDate]);
   return (
     <LinearGradientViewLayout>
       <SafeAreaViewLayout tailwindCss="mx-3.5">
