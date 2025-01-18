@@ -1,4 +1,4 @@
-import {memo} from 'react';
+import {memo, useEffect, useState} from 'react';
 import {Colors} from '@/constants/Colors';
 import {ActivityIndicator, Pressable, StyleSheet, Text, View} from 'react-native';
 import {Image} from 'react-native-elements';
@@ -8,10 +8,12 @@ import StarIcon from '../assets/svg/star.svg';
 import calculateWorkshopStars from '@/utils/workshops/calculateWorkshopStars';
 import Workshop from '@/types/workshops/Workshop';
 import IconTextPair from './ui/IconTextPair';
-import { useAppSelector } from '@/stateManagement/redux/hooks';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
+import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
+import { useAppSelector } from '@/stateManagement/redux/hooks';
 
 function WorkshopCard({workshop}: {workshop: Workshop}) {
+  const {areServicesAvailable} = useAreServicesAvailable()
   const servicesChoosenByUsers = useAppSelector(state => state.services.servicesChoosenByUsers)
 
   return (
@@ -48,7 +50,7 @@ function WorkshopCard({workshop}: {workshop: Workshop}) {
           />
         </View>
         {
-            servicesChoosenByUsers?.length > 0 && (
+            areServicesAvailable && (
               // quando pressed vai a disponibilita
               <Pressable className="flex flex-row justify-between items-center border-2 border-grey-light m-2 p-3 mt-0 rounded-lg" onPress={() => console.log('pressed')}>
                 <Text className="text-base font-medium">

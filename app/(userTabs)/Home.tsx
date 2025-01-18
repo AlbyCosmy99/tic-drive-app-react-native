@@ -12,6 +12,7 @@ import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext'
 import navigationPush from '@/services/navigation/push';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
+import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
 
 export default function UserHome() {
   const {setWorkshopFilter} = useContext(GlobalContext);
@@ -19,6 +20,7 @@ export default function UserHome() {
     state => state.services.servicesChoosenByUsers,
   );
   const {navigation} = useContext(NavigationContext);
+  const {areServicesAvailable} = useAreServicesAvailable()
 
   return (
     <LinearGradientViewLayout>
@@ -39,7 +41,7 @@ export default function UserHome() {
         <HorizontalLine color={Colors.light.lightGrey} />
         <View className="flex-1">
           <WorkshopCards tailwindContainerCss="mb-0" />
-          {userServicesChoosen.length === 0 && (
+          {!areServicesAvailable && (
             <View>
               <HorizontalLine />
               <TicDriveButton
