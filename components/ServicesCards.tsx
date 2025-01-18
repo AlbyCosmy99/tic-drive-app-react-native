@@ -25,19 +25,21 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    apiClient
-      .get('services')
-      .then(res => {
+    const fetchServices = async () => {
+      try {
+        const res = await apiClient.get('services');
         setServices(res.data);
-      })
-      .catch(err => {
-        alert('Al momento il servizio non è disponibile. Riprova piu tardi.');
+      } catch (err) {
+        alert('Al momento il servizio non è disponibile. Riprova più tardi.');
         console.error(err);
-      })
-      .finally(() => {
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+  
+    fetchServices();
   }, []);
+  
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', e => {
