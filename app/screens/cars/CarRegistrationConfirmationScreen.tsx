@@ -4,10 +4,12 @@ import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import RegistrationCarDetailCard from '@/components/ui/cards/cars/RegistrationCarDetailCard';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import BoldTitle1 from '@/components/ui/text/BoldTitle1';
-import {Colors} from '@/constants/Colors';
+import { useAppDispatch } from '@/stateManagement/redux/hooks';
+import { setAreServicesOn } from '@/stateManagement/redux/slices/servicesSlice';
 import Car from '@/types/Car';
 import {RouteProp, useRoute} from '@react-navigation/native';
-import {useNavigation} from 'expo-router';
+import {useFocusEffect, useNavigation} from 'expo-router';
+import { useEffect } from 'react';
 import {Pressable, View} from 'react-native';
 import {Text} from 'react-native';
 
@@ -21,6 +23,11 @@ const CarRegistrationConfirmationScreen = () => {
   const route = useRoute<CarRouteProp>();
   const {carSelected} = route.params;
   const navigation = useNavigation();
+  const dispatch = useAppDispatch()
+
+  useFocusEffect(() => {
+    dispatch(setAreServicesOn(true))
+  })
 
   return (
     <SafeAreaViewLayout>

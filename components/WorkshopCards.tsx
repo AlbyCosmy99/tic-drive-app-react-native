@@ -8,6 +8,7 @@ import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext'
 import Workshop from '@/types/workshops/Workshop';
 import {useServicesChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
 import useJwtToken from '@/hooks/auth/useJwtToken';
+import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
 
 interface WorkshopCardsProps {
   tailwindContainerCss?: string;
@@ -20,10 +21,11 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
   const {navigation} = useContext(NavigationContext);
 
   const servicesChoosen = useServicesChoosenByUsers();
+  const {areServicesAvailable} = useAreServicesAvailable();
 
   useEffect(() => {
-    console.log(workshopFilter);
-  }, [workshopFilter]);
+    console.log(areServicesAvailable)
+  }, []);
 
   const token = useJwtToken();
   const handleCardPress = (workshop: Workshop) => {
@@ -33,7 +35,7 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
   //checking if servicesChoosen are in the services offered by a workshop
   const anyService = (services: string[]) => {
     for (let serviceChoosen of servicesChoosen) {
-      if (services.includes(serviceChoosen.name.toLowerCase())) return true;
+      if (services.includes(serviceChoosen.title?.toLowerCase())) return true;
     }
     return false;
   };
@@ -43,11 +45,11 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
       {workshops
         .filter(
           workshop =>
-            workshopFilter.length === 0 ||
-            workshop.title
-              .toLowerCase()
+            // (!areServicesAvailable || (areServicesAvailable && anyService(workshop.services))) &&
+            (workshopFilter.length === 0 ||
+            workshop.title?.toLowerCase()
               .trim()
-              .includes(workshopFilter.toLowerCase().trim()),
+              .includes(workshopFilter?.toLowerCase().trim())),
         )
         .map((workshop, index) => {
           return (

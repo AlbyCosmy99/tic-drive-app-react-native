@@ -1,18 +1,18 @@
 import {useAppSelector} from '@/stateManagement/redux/hooks';
-import {useNavigation} from '@react-navigation/native';
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo} from 'react';
 
 const useAreServicesAvailable = () => {
-  const [areServicesAvailable, setAreServicesAvailable] = useState(false);
   const servicesChoosenByUsers = useAppSelector(
     state => state.services.servicesChoosenByUsers,
   );
 
-  useEffect(() => {
-    setAreServicesAvailable(servicesChoosenByUsers?.length > 0);
-  }, []);
+  const areServicesOn = useAppSelector(
+    state => state.services.areServicesOn,
+  );
 
-  return {areServicesAvailable, setAreServicesAvailable};
+  const areServicesAvailable = useMemo(() => areServicesOn && servicesChoosenByUsers?.length > 0, [servicesChoosenByUsers,areServicesOn])
+
+  return {areServicesAvailable};
 };
 
 export default useAreServicesAvailable;
