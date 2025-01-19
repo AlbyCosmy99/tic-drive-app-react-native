@@ -9,6 +9,7 @@ import {UserCategory} from '@/types/User';
 import {reset} from '@/stateManagement/redux/slices/servicesSlice';
 import apiClient from '@/services/http/axiosClient';
 import Service from '@/types/Service';
+import useServices from '@/hooks/api/useServices';
 
 interface ServicesCardsProps {
   isSingleChoice?: boolean;
@@ -19,26 +20,9 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
   isSingleChoice = true,
   type,
 }) => {
-  const [services, setServices] = useState<Service[]>([]);
-  const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        const res = await apiClient.get('services');
-        setServices(res.data);
-      } catch (err) {
-        alert('Al momento il servizio non è disponibile. Riprova più tardi.');
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchServices();
-  }, []);
+  const {services, loading} = useServices()
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', e => {
