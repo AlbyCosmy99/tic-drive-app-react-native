@@ -38,7 +38,7 @@ export default function UserHome() {
             }}
           />
         </View>    
-        <Text className='font-semibold text-xl m-2.5 mt-0'>Trova l'officina che fa per te:</Text>
+        <Text className='font-semibold text-xl m-2.5 mt-0'>Find the workshop that's right for you</Text>
         <View className="flex-1">
           {/* <WorkshopCards tailwindContainerCss="mb-0" /> */}
           <View className='flex-1'>
@@ -47,7 +47,7 @@ export default function UserHome() {
               <WorkshopCardMini workshop={workshops[1]}/>
             </View>
             <Pressable className='border-2 border-grey-light items-center justify-center p-1 m-2.5 rounded-xl' onPress={handleOnSeeAllWorkshops}>
-              <Text className='text-base font-medium'>Vedi tutte le officine</Text>
+              <Text className='text-base font-medium'>See all workshops</Text>
               </Pressable>
           </View>
           {!areServicesAvailable && (
