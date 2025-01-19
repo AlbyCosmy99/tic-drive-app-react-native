@@ -5,7 +5,10 @@ import {StyleSheet, Text, View} from 'react-native';
 import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
 import CheckIcon from '@/assets/svg/check_circle.svg';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
-import {reset, setAreServicesOn} from '@/stateManagement/redux/slices/servicesSlice';
+import {
+  reset,
+  setAreServicesOn,
+} from '@/stateManagement/redux/slices/servicesSlice';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import formatCurrentDate from '@/utils/dates/FormatCurrentDate';
 import PaymentConfirmationCard from '@/components/ui/cards/payment/PaymentConfirmationCard';

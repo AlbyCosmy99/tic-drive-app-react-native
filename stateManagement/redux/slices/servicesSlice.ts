@@ -5,7 +5,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 const initialState: ServicesState = {
   servicesChoosenByUsers: [],
   servicesChoosenByWorkshops: [],
-  areServicesOn: false
+  areServicesOn: false,
 };
 
 const servicesSlice = createSlice({
@@ -84,8 +84,8 @@ const servicesSlice = createSlice({
         ];
       }
     },
-    setAreServicesOn(state: ServicesState, action: PayloadAction<boolean>,) {
-      state.areServicesOn = action.payload
+    setAreServicesOn(state: ServicesState, action: PayloadAction<boolean>) {
+      state.areServicesOn = action.payload;
     },
     reset(state: ServicesState) {
       state.servicesChoosenByUsers = [];

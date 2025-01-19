@@ -6,11 +6,12 @@ const useAreServicesAvailable = () => {
     state => state.services.servicesChoosenByUsers,
   );
 
-  const areServicesOn = useAppSelector(
-    state => state.services.areServicesOn,
-  );
+  const areServicesOn = useAppSelector(state => state.services.areServicesOn);
 
-  const areServicesAvailable = useMemo(() => areServicesOn && servicesChoosenByUsers?.length > 0, [servicesChoosenByUsers,areServicesOn])
+  const areServicesAvailable = useMemo(
+    () => areServicesOn && servicesChoosenByUsers?.length > 0,
+    [servicesChoosenByUsers, areServicesOn],
+  );
 
   return {areServicesAvailable};
 };

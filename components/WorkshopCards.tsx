@@ -24,7 +24,7 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
   const {areServicesAvailable} = useAreServicesAvailable();
 
   useEffect(() => {
-    console.log(areServicesAvailable)
+    console.log(areServicesAvailable);
   }, []);
 
   const token = useJwtToken();
@@ -46,10 +46,11 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
         .filter(
           workshop =>
             // (!areServicesAvailable || (areServicesAvailable && anyService(workshop.services))) &&
-            (workshopFilter.length === 0 ||
-            workshop.title?.toLowerCase()
+            workshopFilter.length === 0 ||
+            workshop.title
+              ?.toLowerCase()
               .trim()
-              .includes(workshopFilter?.toLowerCase().trim())),
+              .includes(workshopFilter?.toLowerCase().trim()),
         )
         .map((workshop, index) => {
           return (

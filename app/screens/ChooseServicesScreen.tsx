@@ -8,14 +8,13 @@ import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomIns
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import {useFocusEffect, useRoute} from '@react-navigation/native';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
-import { useEffect } from 'react';
-import { setAreServicesOn } from '@/stateManagement/redux/slices/servicesSlice';
+import {setAreServicesOn} from '@/stateManagement/redux/slices/servicesSlice';
 
 export default function ChooseServicesScreen() {
   const route = useRoute();
   const colorScheme = useColorScheme();
   const user = useAppSelector(state => state.auth.user);
-   const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   //@ts-ignore
   const {category} = route?.params;
@@ -32,8 +31,8 @@ export default function ChooseServicesScreen() {
           .length === 0;
 
   useFocusEffect(() => {
-    dispatch(setAreServicesOn(false))
-  })
+    dispatch(setAreServicesOn(false));
+  });
 
   return (
     <View className={`flex-1 ${necessaryDeviceBottomInset()}`}>

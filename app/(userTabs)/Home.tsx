@@ -3,7 +3,7 @@ import {View} from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
 import WorkshopCards from '@/components/WorkshopCards';
-import {useContext, useEffect} from 'react';
+import {useContext} from 'react';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
@@ -12,14 +12,11 @@ import navigationPush from '@/services/navigation/push';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
-import { useAppDispatch } from '@/stateManagement/redux/hooks';
-import { setAreServicesOn } from '@/stateManagement/redux/slices/servicesSlice';
 
 export default function UserHome() {
   const {setWorkshopFilter} = useContext(GlobalContext);
   const {navigation} = useContext(NavigationContext);
   const {areServicesAvailable} = useAreServicesAvailable();
-  
 
   return (
     <LinearGradientViewLayout>
