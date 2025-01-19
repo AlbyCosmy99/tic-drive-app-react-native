@@ -52,7 +52,10 @@
     },
     "runtimeVersion": "1.0.0",
     "updates": {
-      "url": "https://u.expo.dev/89391c4d-8326-47ff-b646-8624126e7001"
+      "url": "https://u.expo.dev/89391c4d-8326-47ff-b646-8624126e7001",
+      "enabled": true,
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 0
     },
     "newArchEnabled": true
   }
