@@ -47,7 +47,7 @@ function WorkshopCard({workshop}: {workshop: Workshop}) {
           <IconTextPair
             containerTailwindCss="py-1.5"
             textTailwindCss="text-sm font-medium underline"
-            text="indirizzo"
+            text="indirizzo tests"
             icon={<PinLocationIcon />}
           />
           <IconTextPair
