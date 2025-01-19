@@ -73,8 +73,7 @@ const CarRegistrationConfirmationScreen = () => {
       </View>
       <TicDriveButton
         text="Confirm"
-        routeName="userTabs"
-        stateRouteName="Home"
+        routeName="WorkshopsListScreen"
       />
     </SafeAreaViewLayout>
   );

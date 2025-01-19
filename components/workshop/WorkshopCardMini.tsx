@@ -8,19 +8,19 @@ import {
   View,
 } from 'react-native';
 import {Image} from 'react-native-elements';
-import PinLocationIcon from '../assets/svg/location/PinLocation.svg';
-import GreenCheckIcon from '../assets/svg/check_green.svg';
-import StarIcon from '../assets/svg/star.svg';
+import PinLocationIcon from '@/assets/svg/location/PinLocation.svg';
+import GreenCheckIcon from '@/assets/svg/check_green.svg';
+import StarIcon from '@/assets/svg/star.svg';
 import calculateWorkshopStars from '@/utils/workshops/calculateWorkshopStars';
 import Workshop from '@/types/workshops/Workshop';
-import IconTextPair from './ui/IconTextPair';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
+import IconTextPair from '../ui/IconTextPair';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 
-function WorkshopCard({workshop}: {workshop: Workshop}) {
+function WorkshopCardMini({workshop}: {workshop: Workshop}) {
   const {areServicesAvailable} = useAreServicesAvailable();
   const servicesChoosenByUsers = useAppSelector(
     state => state.services.servicesChoosenByUsers,
@@ -32,7 +32,7 @@ function WorkshopCard({workshop}: {workshop: Workshop}) {
   };
 
   return (
-    <Pressable style={styles.container} onPress={() => handleCardPress(workshop)}>
+    <Pressable style={styles.container} className='flex-1' onPress={() => handleCardPress(workshop)}>
       <View className="border-2 rounded-2xl" style={styles.cardContainer}>
         <Image
           source={{uri: workshop.imageUrl}}
@@ -44,22 +44,22 @@ function WorkshopCard({workshop}: {workshop: Workshop}) {
             />
           }
         />
-        <View className="mb-1.5 px-3 pb-1 pt-2">
+        <View className="mb-1.5 px-1 pb-0.5 pt-0.5">
           <IconTextPair
-            containerTailwindCss="py-1.5"
-            textTailwindCss="text-xl font-semibold"
+            containerTailwindCss="py-1.5 gap-1"
+            textTailwindCss="text-xs font-semibold"
             text={workshop.title}
             icon={<GreenCheckIcon />}
           />
           <IconTextPair
-            containerTailwindCss="py-1.5"
-            textTailwindCss="text-sm font-medium underline"
+            containerTailwindCss="py-1.5 gap-1"
+            textTailwindCss="text-xs font-medium underline"
             text="indirizzo"
             icon={<PinLocationIcon />}
           />
           <IconTextPair
-            containerTailwindCss="py-1.5"
-            textTailwindCss="text-sm font-medium"
+            containerTailwindCss="py-1.5 gap-1"
+            textTailwindCss="text-xs font-medium"
             text={`${calculateWorkshopStars(workshop.reviews).toString()}/5 (${workshop.reviews.length} reviews)`}
             icon={<StarIcon />}
           />
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 10,
+    paddingHorizontal: 2
   },
   cardOptionContainer: {
     flexDirection: 'row',
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 160,
+    height: 80,
     borderRadius: 14,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
@@ -178,4 +178,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(WorkshopCard);
+export default memo(WorkshopCardMini);
