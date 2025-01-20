@@ -12,6 +12,7 @@ import UserFavourite from './Favourite';
 import UserChat from './Chat';
 import UserAccount from './Account';
 import useJwtToken from '@/hooks/auth/useJwtToken';
+import ChooseServicesScreen from '../screens/ChooseServicesScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -51,13 +52,13 @@ export default function UserTabLayout() {
       />
       <Tab.Screen
         name="Services"
-        component={UserFavourite}
+        component={ChooseServicesScreen}
         options={{
           title: 'Services',
           headerShown: false,
           tabBarIcon: ({color}) => (
             <FavouriteIcon width={28} fill={color} name="Home" />
-          ),
+          )
         }}
       />
       <Tab.Screen

@@ -17,7 +17,7 @@ export default function ChooseServicesScreen() {
   const dispatch = useAppDispatch();
 
   //@ts-ignore
-  const {category} = route?.params;
+  const {category} = route?.params ?? 'user';
 
   const isUserLookingForServices = () => {
     return !(category === 'workshop');
@@ -65,18 +65,20 @@ export default function ChooseServicesScreen() {
             type={isUserLookingForServices() ? 'user' : 'workshop'}
           />
         </View>
-        <TicDriveButton
-          text={isUserLookingForServices() ? 'Book a service' : 'Continue'}
-          routeName={
-            isUserLookingForServices()
-              ? 'RegisterVehicleScreen'
-              : 'UserAuthenticationScreen'
-          }
-          routeParams={
-            isUserLookingForServices() ? {} : {register: true, isUser: false}
-          }
-          disabled={isButtonDisabled}
-        />
+        <View className='mb-2'>
+          <TicDriveButton
+            text={isUserLookingForServices() ? 'Book a service' : 'Continue'}
+            routeName={
+              isUserLookingForServices()
+                ? 'RegisterVehicleScreen'
+                : 'UserAuthenticationScreen'
+            }
+            routeParams={
+              isUserLookingForServices() ? {} : {register: true, isUser: false}
+            }
+            disabled={isButtonDisabled}
+          />
+        </View>
       </SafeAreaViewLayout>
     </View>
   );
