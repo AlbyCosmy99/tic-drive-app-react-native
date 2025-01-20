@@ -21,6 +21,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
 import IconTextPair from '@/components/ui/IconTextPair';
 import AddIcon from '@/assets/svg/add.svg';
+import LoadingSpinner from '@/components/ui/loading/LoadingSpinner';
 
 export default function UserHome() {
   const {setWorkshopFilter} = useContext(GlobalContext);
@@ -91,7 +92,11 @@ export default function UserHome() {
             <Text className="font-semibold text-xl m-2.5 mt-0">
               Discover services and book
             </Text>
-            <View>
+            {
+              loadingServices ? (
+                <LoadingSpinner />
+              ) : (
+                <View>
               <View>
                 <View className="flex-row flex-wrap justify-center items-start">
                   {services.slice(0, 4).map((service, index) => (
@@ -115,6 +120,8 @@ export default function UserHome() {
                 </Pressable>
               </View>
             </View>
+              )
+            }
           </View>
           <View className="mt-2.5 mb-1">
             <Text className="font-semibold text-xl m-2.5 mt-0">
