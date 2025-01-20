@@ -7,8 +7,6 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {UserCategory} from '@/types/User';
 import {reset} from '@/stateManagement/redux/slices/servicesSlice';
-import apiClient from '@/services/http/axiosClient';
-import Service from '@/types/Service';
 import useServices from '@/hooks/api/useServices';
 
 interface ServicesCardsProps {

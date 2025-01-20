@@ -1,20 +1,14 @@
-import {Colors} from '@/constants/Colors';
-import { ScrollView, Text, View} from 'react-native';
+import {ScrollView, Text, View} from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 import CircularUserAvatar from '@/components/ui/avatars/CircularUserAvatar';
 import HorizontalLine from '@/components/ui/HorizontalLine';
-import TicDriveOptionButton from '@/components/ui/buttons/TicDriveOptionButton';
 import AddIcon from '../../assets/svg/add.svg';
-import UserCarCards from '@/components/ui/cards/user/UserCarCards';
-import {useContext} from 'react';
-import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 import IconTextPair from '@/components/ui/IconTextPair';
 
 export default function UserAccount() {
-  const {navigation} = useContext(NavigationContext);
   const user = useAppSelector(state => state.auth.user);
 
   return (
@@ -37,34 +31,84 @@ export default function UserAccount() {
         </View>
         <HorizontalLine />
         <ScrollView>
-        <View className='my-4'>
-          <Text className='font-medium text-2xl'>Account</Text>
-          <View>
-            <IconTextPair text='Personal informations' icon={<AddIcon />} textTailwindCss='text-base font-medium' containerTailwindCss='gap-1 pt-2 pb-1'/>
-            <IconTextPair text='Phone number' icon={<AddIcon />} textTailwindCss='text-base font-medium' containerTailwindCss='gap-1 py-1'/>
-            <IconTextPair text='Email' icon={<AddIcon />} textTailwindCss='text-base font-medium' containerTailwindCss='gap-1 py-1'/>
-            <IconTextPair text='Address' icon={<AddIcon />} textTailwindCss='text-base font-medium' containerTailwindCss='gap-1 py-1'/>
-            <IconTextPair text='Registered vehicles' icon={<AddIcon />} textTailwindCss='text-base font-medium' containerTailwindCss='gap-1 py-1'/>
-            <IconTextPair text='Favorite workshops' icon={<AddIcon />} textTailwindCss='text-base font-medium' containerTailwindCss='gap-1 py-1'/>
+          <View className="my-4">
+            <Text className="font-medium text-2xl">Account</Text>
+            <View>
+              <IconTextPair
+                text="Personal informations"
+                icon={<AddIcon />}
+                textTailwindCss="text-base font-medium"
+                containerTailwindCss="gap-1 pt-2 pb-1"
+              />
+              <IconTextPair
+                text="Phone number"
+                icon={<AddIcon />}
+                textTailwindCss="text-base font-medium"
+                containerTailwindCss="gap-1 py-1"
+              />
+              <IconTextPair
+                text="Email"
+                icon={<AddIcon />}
+                textTailwindCss="text-base font-medium"
+                containerTailwindCss="gap-1 py-1"
+              />
+              <IconTextPair
+                text="Address"
+                icon={<AddIcon />}
+                textTailwindCss="text-base font-medium"
+                containerTailwindCss="gap-1 py-1"
+              />
+              <IconTextPair
+                text="Registered vehicles"
+                icon={<AddIcon />}
+                textTailwindCss="text-base font-medium"
+                containerTailwindCss="gap-1 py-1"
+              />
+              <IconTextPair
+                text="Favorite workshops"
+                icon={<AddIcon />}
+                textTailwindCss="text-base font-medium"
+                containerTailwindCss="gap-1 py-1"
+              />
+            </View>
           </View>
-        </View>
-        <HorizontalLine />
-        <View className='my-4'>
-          <Text className='font-medium text-2xl'>Payment information</Text>
-          <View>
-            <IconTextPair text='Payment method' icon={<AddIcon />} textTailwindCss='text-base font-medium' containerTailwindCss='gap-1 pt-2 pb-1'/>
-            <IconTextPair text='Receipts' icon={<AddIcon />} textTailwindCss='text-base font-medium' containerTailwindCss='gap-1 py-1'/>
+          <HorizontalLine />
+          <View className="my-4">
+            <Text className="font-medium text-2xl">Payment information</Text>
+            <View>
+              <IconTextPair
+                text="Payment method"
+                icon={<AddIcon />}
+                textTailwindCss="text-base font-medium"
+                containerTailwindCss="gap-1 pt-2 pb-1"
+              />
+              <IconTextPair
+                text="Receipts"
+                icon={<AddIcon />}
+                textTailwindCss="text-base font-medium"
+                containerTailwindCss="gap-1 py-1"
+              />
+            </View>
           </View>
-        </View>
-        <HorizontalLine />
-        <View className='my-4'>
-          <Text className='font-medium text-2xl'>Help and support</Text>
-          <View>
-            <IconTextPair text='Customer support' icon={<AddIcon />} textTailwindCss='text-base font-medium' containerTailwindCss='gap-1 pt-2 pb-1'/>
-            <IconTextPair text='Security information and resources' icon={<AddIcon />} textTailwindCss='text-base font-medium' containerTailwindCss='gap-1 py-1'/>
+          <HorizontalLine />
+          <View className="my-4">
+            <Text className="font-medium text-2xl">Help and support</Text>
+            <View>
+              <IconTextPair
+                text="Customer support"
+                icon={<AddIcon />}
+                textTailwindCss="text-base font-medium"
+                containerTailwindCss="gap-1 pt-2 pb-1"
+              />
+              <IconTextPair
+                text="Security information and resources"
+                icon={<AddIcon />}
+                textTailwindCss="text-base font-medium"
+                containerTailwindCss="gap-1 py-1"
+              />
+            </View>
           </View>
-        </View>
-        <HorizontalLine />
+          <HorizontalLine />
         </ScrollView>
       </SafeAreaViewLayout>
     </LinearGradientViewLayout>

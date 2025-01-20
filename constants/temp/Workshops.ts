@@ -1,3 +1,5 @@
+import Workshop from '@/types/workshops/Workshop';
+
 const workshops: Workshop[] = [
   {
     id: 5,

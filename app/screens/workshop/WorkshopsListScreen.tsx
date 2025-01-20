@@ -4,20 +4,13 @@ import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
 import WorkshopCards from '@/components/WorkshopCards';
 import {useContext} from 'react';
-import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
-import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
-import navigationPush from '@/services/navigation/push';
-import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
 import LinearGradientViewLayout from '@/app/layouts/LinearGradientViewLayout';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 
 export default function WorkshopsListScreen() {
   const {setWorkshopFilter} = useContext(GlobalContext);
-  const {navigation} = useContext(NavigationContext);
-  const {areServicesAvailable} = useAreServicesAvailable();
-
   return (
     <LinearGradientViewLayout>
       <SafeAreaViewLayout>
@@ -37,17 +30,6 @@ export default function WorkshopsListScreen() {
         <HorizontalLine color={Colors.light.lightGrey} />
         <View className="flex-1">
           <WorkshopCards tailwindContainerCss="mb-0" />
-          {/* {!areServicesAvailable && (
-            <View>
-              <HorizontalLine />
-              <TicDriveButton
-                text="Book a service"
-                onClick={() =>
-                  navigationPush(navigation, 'ChooseServicesScreen')
-                }
-              />
-            </View>
-          )} */}
         </View>
       </SafeAreaViewLayout>
     </LinearGradientViewLayout>

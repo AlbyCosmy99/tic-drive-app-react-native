@@ -95,7 +95,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
             onPress={() => console.log('pressed')}
           >
             <Text className="text-base font-medium">
-              {servicesChoosenByUsers[0].name}
+              {servicesChoosenByUsers[0].title}
             </Text>
             <View>
               <View className="flex flex-row justify-between items-center">

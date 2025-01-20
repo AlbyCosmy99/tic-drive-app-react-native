@@ -39,28 +39,6 @@ export default function UserTabLayout() {
         }}
       />
       <Tab.Screen
-        name="Bookings"
-        component={UserBookings}
-        options={{
-          title: 'Bookings',
-          headerShown: false,
-          tabBarIcon: ({color}) => (
-            <BookingsIcon width={28} fill={color} name="Home" />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Favourite"
-        component={UserFavourite}
-        options={{
-          title: 'Favourite',
-          headerShown: false,
-          tabBarIcon: ({color}) => (
-            <FavouriteIcon width={28} fill={color} name="Home" />
-          ),
-        }}
-      />
-      <Tab.Screen
         name="Chat"
         component={UserChat}
         options={{
@@ -72,10 +50,32 @@ export default function UserTabLayout() {
         }}
       />
       <Tab.Screen
-        name="Account"
+        name="Services"
+        component={UserFavourite}
+        options={{
+          title: 'Services',
+          headerShown: false,
+          tabBarIcon: ({color}) => (
+            <FavouriteIcon width={28} fill={color} name="Home" />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Bookings"
+        component={UserBookings}
+        options={{
+          title: 'Bookings',
+          headerShown: false,
+          tabBarIcon: ({color}) => (
+            <BookingsIcon width={28} fill={color} name="Home" />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
         component={UserAccount}
         options={{
-          title: 'Account',
+          title: 'Profile',
           headerShown: false,
           tabBarIcon: ({color}) => (
             <AccountIcon width={28} fill={color} name="Home" />

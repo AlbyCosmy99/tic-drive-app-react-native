@@ -3,7 +3,7 @@ import {SvgProps} from 'react-native-svg';
 
 interface Service {
   id: number;
-  name: string; //to-do: title???
+  title: string;
   description?: string;
   icon: string | FC<SvgProps>;
 }

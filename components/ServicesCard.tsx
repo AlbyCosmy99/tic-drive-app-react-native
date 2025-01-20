@@ -88,12 +88,30 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
     } else {
       if (isSingleChoice) {
         type === 'user'
-          ? dispatch(setServicesChoosenByUsers({id, name: title}))
-          : dispatch(setServicesChoosenByWorkshops({id, name: title}));
+          ? dispatch(
+              setServicesChoosenByUsers({id, name: title, description, icon}),
+            )
+          : dispatch(
+              setServicesChoosenByWorkshops({
+                id,
+                name: title,
+                description,
+                icon,
+              }),
+            );
       } else {
         type === 'user'
-          ? dispatch(addServiceChoosenByUsers({id, name: title}))
-          : dispatch(addServiceChoosenByWorkshops({id, name: title}));
+          ? dispatch(
+              addServiceChoosenByUsers({id, name: title, description, icon}),
+            )
+          : dispatch(
+              addServiceChoosenByWorkshops({
+                id,
+                name: title,
+                description,
+                icon,
+              }),
+            );
       }
     }
     setIsPressed(!isPressed);
