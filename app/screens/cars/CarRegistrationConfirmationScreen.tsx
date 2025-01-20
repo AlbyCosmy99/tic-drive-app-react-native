@@ -71,10 +71,7 @@ const CarRegistrationConfirmationScreen = () => {
           </View>
         </View>
       </View>
-      <TicDriveButton
-        text="Confirm"
-        routeName="WorkshopsListScreen"
-      />
+      <TicDriveButton text="Confirm" routeName="WorkshopsListScreen" />
     </SafeAreaViewLayout>
   );
 };

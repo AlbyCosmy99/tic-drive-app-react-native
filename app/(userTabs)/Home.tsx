@@ -20,7 +20,7 @@ export default function UserHome() {
 
   const handleOnSeeAllWorkshops = () => {
     navigationPush(navigation, 'WorkshopsListScreen');
-  }
+  };
 
   return (
     <LinearGradientViewLayout>
@@ -37,18 +37,23 @@ export default function UserHome() {
               setWorkshopFilter(text);
             }}
           />
-        </View>    
-        <Text className='font-semibold text-xl m-2.5 mt-0'>Find the workshop that's right for you</Text>
+        </View>
+        <Text className="font-semibold text-xl m-2.5 mt-0">
+          Find the workshop that's right for you
+        </Text>
         <View className="flex-1">
           {/* <WorkshopCards tailwindContainerCss="mb-0" /> */}
-          <View className='flex-1'>
-            <View className='flex-row mx-2.5 justify-start items-start'>
-              <WorkshopCardMini workshop={workshops[0]}/>
-              <WorkshopCardMini workshop={workshops[1]}/>
+          <View className="flex-1">
+            <View className="flex-row mx-2.5 justify-start items-start">
+              <WorkshopCardMini workshop={workshops[0]} />
+              <WorkshopCardMini workshop={workshops[1]} />
             </View>
-            <Pressable className='border-2 border-grey-light items-center justify-center p-1 m-2.5 rounded-xl' onPress={handleOnSeeAllWorkshops}>
-              <Text className='text-base font-medium'>See all workshops</Text>
-              </Pressable>
+            <Pressable
+              className="border-2 border-grey-light items-center justify-center p-1 m-2.5 rounded-xl"
+              onPress={handleOnSeeAllWorkshops}
+            >
+              <Text className="text-base font-medium">See all workshops</Text>
+            </Pressable>
           </View>
           {!areServicesAvailable && (
             <View>

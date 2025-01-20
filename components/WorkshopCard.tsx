@@ -3,9 +3,11 @@ import {Colors} from '@/constants/Colors';
 import {
   ActivityIndicator,
   Pressable,
+  StyleProp,
   StyleSheet,
   Text,
   View,
+  ViewStyle,
 } from 'react-native';
 import {Image} from 'react-native-elements';
 import PinLocationIcon from '@/assets/svg/location/PinLocation.svg';
@@ -20,7 +22,23 @@ import {useAppSelector} from '@/stateManagement/redux/hooks';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 
-function WorkshopCard({workshop}: {workshop: Workshop}) {
+interface WorkshopCardProps {
+  workshop: Workshop;
+  pressableContainerStyle?: StyleProp<ViewStyle>;
+  iconTextPairsContainerTailwindCss?: string;
+  iconTextPairContainerTailwindCss?: string;
+  iconTextPairTextTailwindCss?: string;
+  imageContainerStyle?: StyleProp<ViewStyle>;
+}
+
+const WorkshopCard: React.FC<WorkshopCardProps> = ({
+  workshop,
+  pressableContainerStyle,
+  iconTextPairsContainerTailwindCss,
+  iconTextPairContainerTailwindCss,
+  iconTextPairTextTailwindCss,
+  imageContainerStyle,
+}) => {
   const {areServicesAvailable} = useAreServicesAvailable();
   const servicesChoosenByUsers = useAppSelector(
     state => state.services.servicesChoosenByUsers,
@@ -32,11 +50,15 @@ function WorkshopCard({workshop}: {workshop: Workshop}) {
   };
 
   return (
-    <Pressable style={styles.container} onPress={() => handleCardPress(workshop)}>
+    <Pressable
+      style={[styles.container, pressableContainerStyle]}
+      className="flex-1"
+      onPress={() => handleCardPress(workshop)}
+    >
       <View className="border-2 rounded-2xl" style={styles.cardContainer}>
         <Image
           source={{uri: workshop.imageUrl}}
-          containerStyle={styles.image}
+          containerStyle={[styles.image, imageContainerStyle]}
           PlaceholderContent={
             <ActivityIndicator
               size="large"
@@ -44,28 +66,30 @@ function WorkshopCard({workshop}: {workshop: Workshop}) {
             />
           }
         />
-        <View className="mb-1.5 px-3 pb-1 pt-2">
+        <View
+          className={`mb-1.5 px-3 pb-1 pt-2 ${iconTextPairsContainerTailwindCss}`}
+        >
           <IconTextPair
-            containerTailwindCss="py-1.5"
-            textTailwindCss="text-xl font-semibold"
+            containerTailwindCss={`py-1.5 ${iconTextPairContainerTailwindCss}`}
+            textTailwindCss={`text-xl font-semibold ${iconTextPairTextTailwindCss}`}
             text={workshop.title}
             icon={<GreenCheckIcon />}
           />
           <IconTextPair
-            containerTailwindCss="py-1.5"
-            textTailwindCss="text-sm font-medium underline"
+            containerTailwindCss={`py-1.5 ${iconTextPairContainerTailwindCss}`}
+            textTailwindCss={`text-sm font-medium underline ${iconTextPairTextTailwindCss}`}
             text="indirizzo"
             icon={<PinLocationIcon />}
           />
           <IconTextPair
-            containerTailwindCss="py-1.5"
-            textTailwindCss="text-sm font-medium"
+            containerTailwindCss={`py-1.5 ${iconTextPairContainerTailwindCss}`}
+            textTailwindCss={`text-sm font-medium ${iconTextPairTextTailwindCss}`}
             text={`${calculateWorkshopStars(workshop.reviews).toString()}/5 (${workshop.reviews.length} reviews)`}
             icon={<StarIcon />}
           />
         </View>
         {areServicesAvailable && (
-          // quando pressed vai a disponibilita
+          // to-do: quando pressed vai a disponibilita
           <Pressable
             className="flex flex-row justify-between items-center border-2 border-grey-light m-2 p-3 mt-0 rounded-lg"
             onPress={() => console.log('pressed')}
@@ -90,7 +114,7 @@ function WorkshopCard({workshop}: {workshop: Workshop}) {
       </View>
     </Pressable>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

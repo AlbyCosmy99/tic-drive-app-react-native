@@ -22,7 +22,7 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
 }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const {services, loading} = useServices()
+  const {services, loading} = useServices();
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', e => {
