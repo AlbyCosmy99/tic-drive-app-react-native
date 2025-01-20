@@ -134,6 +134,25 @@ export default function ReviewBookingDetailsScreen() {
               />
             </View>
           </View>
+          <View className="mt-6">
+            <View className="flex flex-row justify-between items-center mb-3">
+              <Text className="text-tic">PAYMENT METHOD</Text>
+              <Pressable onPress={handlePaymentTypeChange}>
+                <Text className="text-drive font-semibold text-sm">Change</Text>
+              </Pressable>
+            </View>
+            <Pressable onPress={handlePaymentTypeChange}>
+              <PaymentCard
+                userName={userPaymentInfo?.choosenCard?.cardHolder ?? ''}
+                paymentType={
+                  userPaymentInfo?.choosenCard?.paymentType ?? 'Cash'
+                }
+                icon={userPaymentInfo?.choosenCard?.icon}
+                id={userPaymentInfo?.choosenCard?.id ?? 0}
+                optionsVisible={false}
+              />
+            </Pressable>
+          </View>
           <View className="my-5">
             <Text className="text-tic text-base mb-3">SUB TOTAL</Text>
             <View className="border rounded-xl border-slate-200 p-4">
@@ -183,27 +202,6 @@ export default function ReviewBookingDetailsScreen() {
                   ) + 14}
                 </Text>
               </View>
-            </View>
-            <View className="mt-6">
-              <View className="flex flex-row justify-between items-center mb-3">
-                <Text className="text-tic">PAYMENT METHOD</Text>
-                <Pressable onPress={handlePaymentTypeChange}>
-                  <Text className="text-drive font-semibold text-sm">
-                    Change
-                  </Text>
-                </Pressable>
-              </View>
-              <Pressable onPress={handlePaymentTypeChange}>
-                <PaymentCard
-                  userName={userPaymentInfo?.choosenCard?.cardHolder ?? ''}
-                  paymentType={
-                    userPaymentInfo?.choosenCard?.paymentType ?? 'Cash'
-                  }
-                  icon={userPaymentInfo?.choosenCard?.icon}
-                  id={userPaymentInfo?.choosenCard?.id ?? 0}
-                  optionsVisible={false}
-                />
-              </Pressable>
             </View>
           </View>
         </ScrollView>
