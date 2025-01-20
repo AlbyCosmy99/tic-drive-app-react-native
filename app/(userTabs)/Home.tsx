@@ -12,11 +12,13 @@ import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
 import workshops from '@/constants/temp/Workshops';
 import WorkshopCardMini from '@/components/workshop/WorkshopCardMini';
+import { useAppSelector } from '@/stateManagement/redux/hooks';
 
 export default function UserHome() {
   const {setWorkshopFilter} = useContext(GlobalContext);
   const {navigation} = useContext(NavigationContext);
   const {areServicesAvailable} = useAreServicesAvailable();
+  const token = useAppSelector(state => state.auth.token)
 
   const handleOnSeeAllWorkshops = () => {
     navigationPush(navigation, 'WorkshopsListScreen');
@@ -56,7 +58,7 @@ export default function UserHome() {
             </Pressable>
           </View>
           {!areServicesAvailable && (
-            <View>
+            <View className={`${token && 'mb-3'}`}>
               <HorizontalLine />
               <TicDriveButton
                 text="Book a service"
