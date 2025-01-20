@@ -1,5 +1,5 @@
 import {Colors} from '@/constants/Colors';
-import {Pressable, ScrollView, Text, View} from 'react-native';
+import { ScrollView, Text, View} from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
@@ -8,10 +8,10 @@ import HorizontalLine from '@/components/ui/HorizontalLine';
 import TicDriveOptionButton from '@/components/ui/buttons/TicDriveOptionButton';
 import AddIcon from '../../assets/svg/add.svg';
 import UserCarCards from '@/components/ui/cards/user/UserCarCards';
-import navigationPush from '@/services/navigation/push';
 import {useContext} from 'react';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
+import IconTextPair from '@/components/ui/IconTextPair';
 
 export default function UserAccount() {
   const {navigation} = useContext(NavigationContext);
@@ -21,19 +21,7 @@ export default function UserAccount() {
     <LinearGradientViewLayout>
       <SafeAreaViewLayout tailwindCss="mx-3.5">
         <TicDriveNavbar isLoginAvailable={false} />
-        <View className="flex flex-row justify-between items-center mb-4">
-          <Text className="font-bold text-2xl text-center mb-2 mt-1">
-            My Account
-          </Text>
-          <Pressable
-            onPress={() =>
-              navigationPush(navigation, 'UserAccountDetailsScreen')
-            }
-          >
-            <Text className="text-3xl">☰</Text>
-          </Pressable>
-        </View>
-        <View className="flex flex-row items-center mb-4">
+        <View className="flex flex-row items-center mb-4 mt-1">
           <CircularUserAvatar
             styles={{
               width: 70,
@@ -47,17 +35,36 @@ export default function UserAccount() {
             <Text className="text-tic">New Your, USA</Text>
           </View>
         </View>
-        <HorizontalLine color={Colors.light.lightGrey} />
-        <View className="flex flex-row justify-between items-center my-4 mx-2">
-          <View className="flex gap-0.5">
-            <Text className="font-semibold text-lg">My vehicles</Text>
-            <Text className="text-tic">3 vehicles registered</Text>
+        <HorizontalLine />
+        <ScrollView>
+        <View className='my-4'>
+          <Text className='font-medium text-2xl'>Account</Text>
+          <View>
+            <IconTextPair text='Personal informations' icon={<AddIcon />} textTailwindCss='text-base font-medium' containerTailwindCss='gap-1 pt-2 pb-1'/>
+            <IconTextPair text='Phone number' icon={<AddIcon />} textTailwindCss='text-base font-medium' containerTailwindCss='gap-1 py-1'/>
+            <IconTextPair text='Email' icon={<AddIcon />} textTailwindCss='text-base font-medium' containerTailwindCss='gap-1 py-1'/>
+            <IconTextPair text='Address' icon={<AddIcon />} textTailwindCss='text-base font-medium' containerTailwindCss='gap-1 py-1'/>
+            <IconTextPair text='Registered vehicles' icon={<AddIcon />} textTailwindCss='text-base font-medium' containerTailwindCss='gap-1 py-1'/>
+            <IconTextPair text='Favorite workshops' icon={<AddIcon />} textTailwindCss='text-base font-medium' containerTailwindCss='gap-1 py-1'/>
           </View>
-          <TicDriveOptionButton text="Register new" icon={<AddIcon />} />
         </View>
-        <HorizontalLine color={Colors.light.lightGrey} />
-        <ScrollView className="px-4 mb-2">
-          <UserCarCards />
+        <HorizontalLine />
+        <View className='my-4'>
+          <Text className='font-medium text-2xl'>Payment information</Text>
+          <View>
+            <IconTextPair text='Payment method' icon={<AddIcon />} textTailwindCss='text-base font-medium' containerTailwindCss='gap-1 pt-2 pb-1'/>
+            <IconTextPair text='Receipts' icon={<AddIcon />} textTailwindCss='text-base font-medium' containerTailwindCss='gap-1 py-1'/>
+          </View>
+        </View>
+        <HorizontalLine />
+        <View className='my-4'>
+          <Text className='font-medium text-2xl'>Help and support</Text>
+          <View>
+            <IconTextPair text='Customer support' icon={<AddIcon />} textTailwindCss='text-base font-medium' containerTailwindCss='gap-1 pt-2 pb-1'/>
+            <IconTextPair text='Security information and resources' icon={<AddIcon />} textTailwindCss='text-base font-medium' containerTailwindCss='gap-1 py-1'/>
+          </View>
+        </View>
+        <HorizontalLine />
         </ScrollView>
       </SafeAreaViewLayout>
     </LinearGradientViewLayout>
