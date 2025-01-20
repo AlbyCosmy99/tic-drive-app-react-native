@@ -8,6 +8,7 @@ import {useDispatch} from 'react-redux';
 import {UserCategory} from '@/types/User';
 import {reset} from '@/stateManagement/redux/slices/servicesSlice';
 import useServices from '@/hooks/api/useServices';
+import LoadingSpinner from './ui/loading/LoadingSpinner';
 
 interface ServicesCardsProps {
   isSingleChoice?: boolean;
@@ -20,7 +21,7 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
 }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const {services, loading} = useServices();
+  const {services, loadingServices} = useServices();
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', e => {
@@ -32,17 +33,12 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
     return unsubscribe;
   }, [navigation, dispatch]);
 
-  return loading ? (
-    <View className="flex-1 justify-center items-center">
-      <ActivityIndicator
-        size="large"
-        color={Colors.light.bookingsOptionsText}
-      />
-    </View>
+  return loadingServices ? (
+    <LoadingSpinner />
   ) : (
     <ScrollView contentContainerStyle={styles.container}>
       {services.map((elem, index) => (
-        <View key={elem.id} style={styles.cardContainer}>
+        <View key={elem.id} style={styles.cardContainer} className={(services.length%2===0 && (index ===services.length-1 || index===services.length - 2)) || (services.length%2!==0 && index === services.length-1) ? `mb-1` : ''}>
           <ServicesCard
             id={elem.id}
             title={elem.title}

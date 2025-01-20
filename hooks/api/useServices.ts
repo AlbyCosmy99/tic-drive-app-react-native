@@ -4,7 +4,7 @@ import Service from '@/types/Service';
 
 const useServices = () => {
   const [services, setServices] = useState<Service[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loadingServices, setLoadingServices] = useState(true);
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -15,14 +15,14 @@ const useServices = () => {
         alert('Al momento il servizio non è disponibile. Riprova più tardi.');
         console.error(err);
       } finally {
-        setLoading(false);
+        setLoadingServices(false);
       }
     };
 
     fetchServices();
   }, []);
 
-  return {services, loading};
+  return {services, loadingServices};
 };
 
 export default useServices;
