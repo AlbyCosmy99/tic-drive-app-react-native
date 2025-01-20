@@ -8,9 +8,9 @@ import {
   View,
 } from 'react-native';
 import {Image} from 'react-native-elements';
-import PinLocationIcon from '../assets/svg/location/PinLocation.svg';
-import GreenCheckIcon from '../assets/svg/check_green.svg';
-import StarIcon from '../assets/svg/star.svg';
+import PinLocationIcon from '@/assets/svg/location/PinLocation.svg';
+import GreenCheckIcon from '@/assets/svg/check_green.svg';
+import StarIcon from '@/assets/svg/star.svg';
 import calculateWorkshopStars from '@/utils/workshops/calculateWorkshopStars';
 import Workshop from '@/types/workshops/Workshop';
 import IconTextPair from './ui/IconTextPair';
