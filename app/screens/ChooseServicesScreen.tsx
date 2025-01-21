@@ -65,7 +65,7 @@ export default function ChooseServicesScreen() {
             type={isUserLookingForServices() ? 'user' : 'workshop'}
           />
         </View>
-        <View className='mb-2'>
+        <View className="mb-2">
           <TicDriveButton
             text={isUserLookingForServices() ? 'Book a service' : 'Continue'}
             routeName={

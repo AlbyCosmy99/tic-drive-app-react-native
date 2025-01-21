@@ -58,7 +58,7 @@ export default function UserTabLayout() {
           headerShown: false,
           tabBarIcon: ({color}) => (
             <FavouriteIcon width={28} fill={color} name="Home" />
-          )
+          ),
         }}
       />
       <Tab.Screen

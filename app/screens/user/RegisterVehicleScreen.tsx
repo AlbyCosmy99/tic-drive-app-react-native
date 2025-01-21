@@ -16,13 +16,12 @@ import Car from '@/types/Car';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import TicDriveDropdown from '@/components/ui/dropdowns/TicDriveDropdown';
-import CarMake from '@/types/cars/CarMake';
 import TicDriveDropdownData from '@/types/ui/dropdown/TicDriveDropdownData';
-import getCarsMakes from '@/services/http/requests/cars/getCarsMakes';
 import getCarModelsByCarMakeId from '@/services/http/requests/cars/getCarModelsByCarMakeId';
 import CarDetailsByMakeAndModel from '@/components/cars/registration/CarDetailsByMakeAndModel';
 import CarContext from '@/stateManagement/contexts/car/CarContext';
 import BoldTitle1 from '@/components/ui/text/BoldTitle1';
+import useCarsMakes from '@/hooks/api/cars/useCarsMakes';
 
 function RegisterVehicleScreen() {
   const [segmentedControlSelection, setSegmentedControlSelection] =
@@ -36,7 +35,6 @@ function RegisterVehicleScreen() {
   const {carNotFound, setCarNotFound} = useContext(GlobalContext);
   const [isCarSearched, setIsCarSearched] = useState(false);
   const [loadingCarModels, setLoadingCarModels] = useState(false);
-  const [makes, setMakes] = useState<Array<CarMake>>([]);
   const [models, setModels] = useState<Array<Car>>([]);
 
   const [carMakeDropdownData, setCarMakeDropdownData] = useState<
@@ -53,10 +51,7 @@ function RegisterVehicleScreen() {
   } = useContext(CarContext);
 
   const colorScheme = useColorScheme();
-
-  useEffect(() => {}, [carSelectedByMakeAndModelCtx]);
-
-  useEffect(() => {}, [carSelectedByMakeAndModelCtx]);
+  const {carsMakes: makes, loadingCarsMakes} = useCarsMakes();
 
   const buttonIsEnabled = useMemo(() => {
     return (
@@ -74,14 +69,6 @@ function RegisterVehicleScreen() {
         ? Colors.light.backgroundLinearGradient.end
         : Colors.dark.background,
   };
-
-  useEffect(() => {
-    const getMakes = async () => {
-      const data = await getCarsMakes();
-      setMakes(data);
-    };
-    getMakes();
-  }, []);
 
   useEffect(() => {
     if (carMakeDropdownData) {
@@ -142,86 +129,75 @@ function RegisterVehicleScreen() {
           style={styles.bookingDetailsContainer}
           className="flex-1 m-3.5 border-2 rounded-xl"
         >
-          {options.map((option, index) => {
-            return (
-              ((!segmentedControlSelection && index === 0) ||
-                (segmentedControlSelection &&
-                  segmentedControlSelection.name === option.name)) && (
-                <View key={index} className="h-full">
-                  <Text
-                    className="font-semibold mx-3.5 my-3.5 mb-0 text-lg"
-                    key={index}
-                  >
-                    {option.inputLabel}
-                  </Text>
-                  {option.keyString === 'plateNumber' && (
-                    <TicDriveInput
-                      placeholder={option.placeholder}
-                      isRightIcon={true}
-                      isTextUppercase={true}
-                      onRightIcon={handleOnRightIcon}
-                      onSubmit={value => {
-                        const car = cars.find(
-                          car =>
-                            //@ts-ignore
-                            car[option.keyString as CarRegistrationOptions]
-                              ?.toLowerCase()
-                              .trim() === value.toLowerCase().trim(),
-                        );
-                        setCarSelectedByPlate(car ? car : defaultCar);
-                        setIsCarSearched(true);
-                      }}
-                    />
-                  )}
-                  {option.keyString === 'make and model' && (
-                    <ScrollView
-                      className="mt-6 px-4"
-                      automaticallyAdjustKeyboardInsets
-                    >
-                      <TicDriveDropdown
-                        title="Make"
-                        data={makes.map(make => ({
-                          id: make.id,
-                          value: make.name,
-                        }))}
-                        value={carMakeDropdownData}
-                        setValue={setCarMakeDropdownData}
-                        placeholder="Select car make"
-                        searchPlaceholder="Search make"
-                      />
-                      <TicDriveDropdown
-                        title="Model"
-                        data={
-                          models
-                            ? models.map(model => ({
-                                id: model.id,
-                                value: model.name,
-                              }))
-                            : []
-                        }
-                        value={carModelDropdownData}
-                        setValue={setCarModelDropdownData}
-                        placeholder="Select car model"
-                        searchPlaceholder="Search model"
-                        disabled={!carMakeDropdownData || loadingCarModels}
-                      />
-                      {carSelectedByMakeAndModel && carModelDropdownData && (
-                        <CarDetailsByMakeAndModel
-                          key={carModelDropdownData?.id}
-                          carSelected={carSelectedByMakeAndModel}
-                        />
-                      )}
-                    </ScrollView>
-                  )}
-                  {carNotFound && isCarSearched && (
-                    <Text className="text-base mx-auto text-red-600">
-                      Car not found. Try again.
-                    </Text>
-                  )}
-                </View>
-              )
-            );
-          })}
+          <View className="h-full">
+            <Text className="font-semibold mx-3.5 my-3.5 mb-0 text-lg">
+              {segmentedControlSelection?.name}
+            </Text>
+            {segmentedControlSelection?.index === 1 && (
+              <TicDriveInput
+                placeholder={segmentedControlSelection.placeholder ?? ''}
+                isRightIcon={true}
+                isTextUppercase={true}
+                onRightIcon={handleOnRightIcon}
+                onSubmit={value => {
+                  const car = cars.find(
+                    car =>
+                      //@ts-ignore
+                      car[option.keyString as CarRegistrationOptions]
+                        ?.toLowerCase()
+                        .trim() === value.toLowerCase().trim(),
+                  );
+                  setCarSelectedByPlate(car ? car : defaultCar);
+                  setIsCarSearched(true);
+                }}
+              />
+            )}
+            {segmentedControlSelection?.index === 0 && (
+              <ScrollView
+                className="mt-6 px-4"
+                automaticallyAdjustKeyboardInsets
+              >
+                <TicDriveDropdown
+                  title="Make"
+                  data={makes.map(make => ({
+                    id: make.id,
+                    value: make.name,
+                  }))}
+                  value={carMakeDropdownData}
+                  setValue={setCarMakeDropdownData}
+                  placeholder="Select car make"
+                  searchPlaceholder="Search make"
+                />
+                <TicDriveDropdown
+                  title="Model"
+                  data={
+                    models
+                      ? models.map(model => ({
+                          id: model.id,
+                          value: model.name,
+                        }))
+                      : []
+                  }
+                  value={carModelDropdownData}
+                  setValue={setCarModelDropdownData}
+                  placeholder="Select car model"
+                  searchPlaceholder="Search model"
+                  disabled={!carMakeDropdownData || loadingCarModels}
+                />
+                {carSelectedByMakeAndModel && carModelDropdownData && (
+                  <CarDetailsByMakeAndModel
+                    key={carModelDropdownData?.id}
+                    carSelected={carSelectedByMakeAndModel}
+                  />
+                )}
+              </ScrollView>
+            )}
+            {carNotFound && isCarSearched && (
+              <Text className="text-base mx-auto text-red-600">
+                Car not found. Try again.
+              </Text>
+            )}
+          </View>
           <ScrollView>
             {carSelectedByPlate &&
               segmentedControlSelection?.name === 'Plate' && (
@@ -306,12 +282,6 @@ function RegisterVehicleScreen() {
         routeParams={{carSelected: carSelectedByMakeAndModelCtx}}
         disabled={!buttonIsEnabled}
       />
-      {/* <TicDriveButton
-        text="Confirm"
-        routeName="userTabs"
-        stateRouteName="Home"
-        disabled={!buttonIsEnabled}
-      /> */}
     </SafeAreaViewLayout>
   );
 }

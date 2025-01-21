@@ -38,7 +38,18 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
   ) : (
     <ScrollView contentContainerStyle={styles.container}>
       {services.map((elem, index) => (
-        <View key={elem.id} style={styles.cardContainer} className={(services.length%2===0 && (index ===services.length-1 || index===services.length - 2)) || (services.length%2!==0 && index === services.length-1) ? `mb-1` : ''}>
+        <View
+          key={elem.id}
+          style={styles.cardContainer}
+          className={
+            (services.length % 2 === 0 &&
+              (index === services.length - 1 ||
+                index === services.length - 2)) ||
+            (services.length % 2 !== 0 && index === services.length - 1)
+              ? `mb-1`
+              : ''
+          }
+        >
           <ServicesCard
             id={elem.id}
             title={elem.title}
