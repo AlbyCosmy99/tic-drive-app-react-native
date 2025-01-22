@@ -7,7 +7,6 @@ import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext'
 import navigationPush from '@/services/navigation/push';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
-import workshops from '@/constants/temp/Workshops';
 import WorkshopCardMini from '@/components/workshop/WorkshopCardMini';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import useServices from '@/hooks/api/useServices';
@@ -22,12 +21,17 @@ import {ScrollView} from 'react-native-gesture-handler';
 import IconTextPair from '@/components/ui/IconTextPair';
 import AddIcon from '@/assets/svg/add.svg';
 import LoadingSpinner from '@/components/ui/loading/LoadingSpinner';
+import useWorkshops from '@/hooks/api/workshops/useWorkshops';
+import useJwtToken from '@/hooks/auth/useJwtToken';
 
 export default function UserHome() {
   const {setWorkshopFilter} = useContext(GlobalContext);
   const {navigation} = useContext(NavigationContext);
   const {services, loadingServices} = useServices();
+  const {workshops, loadingWorkshops} = useWorkshops(0, 2);
+
   const dispatch = useAppDispatch();
+  const token = useJwtToken();
 
   const handleOnSeeAllWorkshops = () => {
     navigationPush(navigation, 'WorkshopsListScreen');
@@ -76,22 +80,34 @@ export default function UserHome() {
             <View>
               <View>
                 <View className="flex-row mx-2.5 justify-start items-start">
-                  <WorkshopCardMini workshop={workshops[0]} />
-                  <WorkshopCardMini workshop={workshops[1]} />
+                  {loadingWorkshops ? (
+                    <LoadingSpinner />
+                  ) : (
+                    <View className="flex-column w-full">
+                      <View className="flex-row  justify-start items-start">
+                        {workshops.map(workshop => (
+                          <WorkshopCardMini
+                            key={workshop.id}
+                            workshop={workshop}
+                          />
+                        ))}
+                      </View>
+                      <Pressable
+                        className="border-2 border-grey-light items-center justify-center p-1 my-2.5 rounded-xl"
+                        onPress={handleOnSeeAllWorkshops}
+                      >
+                        <Text className="text-base font-medium">
+                          See all workshops
+                        </Text>
+                      </Pressable>
+                    </View>
+                  )}
                 </View>
-                <Pressable
-                  className="border-2 border-grey-light items-center justify-center p-1 m-2.5 rounded-xl"
-                  onPress={handleOnSeeAllWorkshops}
-                >
-                  <Text className="text-base font-medium">
-                    See all workshops
-                  </Text>
-                </Pressable>
               </View>
             </View>
           </View>
           <View className="mt-1">
-            <Text className="font-semibold text-xl m-2.5 mt-0">
+            <Text className="font-semibold text-xl m-2.5">
               Discover services and book
             </Text>
             {loadingServices ? (
@@ -125,21 +141,23 @@ export default function UserHome() {
               </View>
             )}
           </View>
-          <View className="mt-2.5 mb-1">
-            <Text className="font-semibold text-xl m-2.5 mt-0">Reminder</Text>
-            <Pressable
-              className="border-2 border-grey-light items-center justify-center p-1 mx-2.5 my-0.5 rounded-xl"
-              onPress={() => handleOnRegisterVehicle()}
-            >
-              <IconTextPair
-                text="Register your first vehicle"
-                icon={<AddIcon />}
-                textTailwindCss="text-base font-medium text-drive"
-                containerTailwindCss="py-0"
-                reverseIcon={true}
-              />
-            </Pressable>
-          </View>
+          {token && (
+            <View className="mt-2.5 mb-1">
+              <Text className="font-semibold text-xl m-2.5 mt-1">Reminder</Text>
+              <Pressable
+                className="border-2 border-grey-light items-center justify-center p-1 mx-2.5 my-0.5 rounded-xl"
+                onPress={() => handleOnRegisterVehicle()}
+              >
+                <IconTextPair
+                  text="Register your first vehicle"
+                  icon={<AddIcon />}
+                  textTailwindCss="text-base font-medium text-drive"
+                  containerTailwindCss="py-0"
+                  reverseIcon={true}
+                />
+              </Pressable>
+            </View>
+          )}
         </ScrollView>
       </SafeAreaViewLayout>
     </LinearGradientViewLayout>

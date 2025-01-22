@@ -24,6 +24,7 @@ import AssistantDirection from '../../../assets/svg/assistant_direction';
 import TicDriveOptionButton from '@/components/ui/buttons/TicDriveOptionButton';
 import UserCalendarModal from '@/components/ui/modals/UserCalendarModal';
 import Workshop from '@/types/workshops/Workshop';
+import useJwtToken from '@/hooks/auth/useJwtToken';
 
 export default function WorkshopDetails() {
   const route = useRoute();
@@ -36,8 +37,10 @@ export default function WorkshopDetails() {
     state => state.services.servicesChoosenByUsers,
   );
 
+  const token = useJwtToken();
+
   useEffect(() => {
-    setWorkshop(workshops.find(workshop => workshop.id === id) || null);
+    setWorkshop(workshops.find(workshop => workshop.id === 5) || null);
   }, [id]);
 
   return (
@@ -54,7 +57,8 @@ export default function WorkshopDetails() {
         {workshop && (
           <>
             <Text className="font-bold text-lg">Workshop</Text>
-            <View>
+            {/* todo: if the favorite icon is pressable, make it not pressable if !token */}
+            <View className={`${!token && 'opacity-0'}`}>
               {workshop.favourite ? (
                 <Icon name="heart" size={30} color="red" />
               ) : (
@@ -138,7 +142,8 @@ export default function WorkshopDetails() {
                     {workshop.reviews.length} reviews)
                   </Text>
                 </View>
-                <ClientReviewCards id={Array.isArray(id) ? id[0] : id} />
+                {/* todo */}
+                <ClientReviewCards id={5} />
               </View>
             </View>
           </ScrollView>

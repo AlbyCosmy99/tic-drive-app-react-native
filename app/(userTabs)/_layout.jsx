@@ -8,7 +8,6 @@ import HomeTab from './Home';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import UserHome from './Home';
 import UserBookings from './Bookings';
-import UserFavourite from './Favourite';
 import UserChat from './Chat';
 import UserAccount from './Account';
 import useJwtToken from '@/hooks/auth/useJwtToken';

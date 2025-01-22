@@ -13,8 +13,7 @@ import {Image} from 'react-native-elements';
 import PinLocationIcon from '@/assets/svg/location/PinLocation.svg';
 import GreenCheckIcon from '@/assets/svg/check_green.svg';
 import StarIcon from '@/assets/svg/star.svg';
-import calculateWorkshopStars from '@/utils/workshops/calculateWorkshopStars';
-import Workshop from '@/types/workshops/Workshop';
+import {WorkshopMini} from '@/types/workshops/Workshop';
 import IconTextPair from './ui/IconTextPair';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
@@ -23,7 +22,7 @@ import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 
 interface WorkshopCardProps {
-  workshop: Workshop;
+  workshop: WorkshopMini;
   pressableContainerStyle?: StyleProp<ViewStyle>;
   iconTextPairsContainerTailwindCss?: string;
   iconTextPairContainerTailwindCss?: string;
@@ -45,7 +44,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
   );
   const {navigation} = useContext(NavigationContext);
 
-  const handleCardPress = (workshop: Workshop) => {
+  const handleCardPress = (workshop: WorkshopMini) => {
     navigationPush(navigation, 'WorkshopDetails', {id: workshop.id});
   };
 
@@ -57,7 +56,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
     >
       <View className="border-2 rounded-2xl" style={styles.cardContainer}>
         <Image
-          source={{uri: workshop.imageUrl}}
+          source={{uri: workshop.profileImageUrl}}
           containerStyle={[styles.image, imageContainerStyle]}
           PlaceholderContent={
             <ActivityIndicator
@@ -72,19 +71,19 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
           <IconTextPair
             containerTailwindCss={`py-1.5 ${iconTextPairContainerTailwindCss}`}
             textTailwindCss={`text-xl font-semibold ${iconTextPairTextTailwindCss}`}
-            text={workshop.title}
+            text={workshop.name}
             icon={<GreenCheckIcon />}
           />
           <IconTextPair
             containerTailwindCss={`py-1.5 ${iconTextPairContainerTailwindCss}`}
             textTailwindCss={`text-sm font-medium underline ${iconTextPairTextTailwindCss}`}
-            text="indirizzo"
+            text={workshop.address}
             icon={<PinLocationIcon />}
           />
           <IconTextPair
             containerTailwindCss={`py-1.5 ${iconTextPairContainerTailwindCss}`}
             textTailwindCss={`text-sm font-medium ${iconTextPairTextTailwindCss}`}
-            text={`${calculateWorkshopStars(workshop.reviews).toString()}/5 (${workshop.reviews.length} reviews)`}
+            text={`${workshop.meanStars}/5 (${workshop.numberOfReviews} reviews)`}
             icon={<StarIcon />}
           />
         </View>

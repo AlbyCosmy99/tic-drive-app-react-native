@@ -1,8 +1,8 @@
 import {memo} from 'react';
-import Workshop from '@/types/workshops/Workshop';
+import {WorkshopExtended, WorkshopMini} from '@/types/workshops/Workshop';
 import WorkshopCard from '../WorkshopCard';
 
-function WorkshopCardMini({workshop}: {workshop: Workshop}) {
+function WorkshopCardMini({workshop}: {workshop: WorkshopMini}) {
   return (
     <WorkshopCard
       workshop={workshop}

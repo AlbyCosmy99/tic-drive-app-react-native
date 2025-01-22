@@ -1,9 +1,18 @@
 import Review from '@/constants/temp/Review';
 
-interface Workshop {
+export interface WorkshopMini {
   id: number;
-  title: string;
-  imageUrl: string;
+  name: string;
+  address: string;
+  longitude: number;
+  latitude: number;
+  profileImageUrl: string;
+  meanStars: number;
+  numberOfReviews: number;
+  ProfileImageUrl: string;
+}
+
+export interface WorkshopExtended extends WorkshopMini {
   favourite: boolean;
   position: string;
   reviews: Review[];
@@ -16,4 +25,4 @@ interface Workshop {
   images: string[];
 }
 
-export default Workshop;
+export default WorkshopExtended;

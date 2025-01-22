@@ -1,14 +1,15 @@
 import WorkshopCard from './WorkshopCard';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
-import workshops from '../constants/temp/Workshops';
 import {memo, useContext, useEffect} from 'react';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
-import Workshop from '@/types/workshops/Workshop';
+import {WorkshopMini} from '@/types/workshops/Workshop';
 import {useServicesChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
+import useWorkshops from '@/hooks/api/workshops/useWorkshops';
+import LoadingSpinner from './ui/loading/LoadingSpinner';
 
 interface WorkshopCardsProps {
   tailwindContainerCss?: string;
@@ -22,13 +23,14 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
 
   const servicesChoosen = useServicesChoosenByUsers();
   const {areServicesAvailable} = useAreServicesAvailable();
+  const {workshops, loadingWorkshops} = useWorkshops();
 
   useEffect(() => {
     console.log(areServicesAvailable);
   }, []);
 
   const token = useJwtToken();
-  const handleCardPress = (workshop: Workshop) => {
+  const handleCardPress = (workshop: WorkshopMini) => {
     navigationPush(navigation, 'WorkshopDetails', {id: workshop.id});
   };
 
@@ -40,14 +42,16 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
     return false;
   };
 
-  return (
+  return loadingWorkshops ? (
+    <LoadingSpinner />
+  ) : (
     <ScrollView className={`${!token ? 'mb-2' : ''} ${tailwindContainerCss}`}>
       {workshops
         .filter(
           workshop =>
             // (!areServicesAvailable || (areServicesAvailable && anyService(workshop.services))) &&
             workshopFilter.length === 0 ||
-            workshop.title
+            workshop.name
               ?.toLowerCase()
               .trim()
               .includes(workshopFilter?.toLowerCase().trim()),
