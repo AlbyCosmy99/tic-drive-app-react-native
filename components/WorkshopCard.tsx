@@ -45,7 +45,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
   const {navigation} = useContext(NavigationContext);
 
   const handleCardPress = (workshop: WorkshopMini) => {
-    navigationPush(navigation, 'WorkshopDetails', {id: workshop.id});
+    navigationPush(navigation, 'WorkshopDetails', {workshop});
   };
 
   return (

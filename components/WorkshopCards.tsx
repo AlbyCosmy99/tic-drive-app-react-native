@@ -38,7 +38,7 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
 
   const token = useJwtToken();
   const handleCardPress = (workshop: WorkshopMini) => {
-    navigationPush(navigation, 'WorkshopDetails', {id: workshop.id});
+    navigationPush(navigation, 'WorkshopDetails', {workshop});
   };
 
   const onRefresh = () => {

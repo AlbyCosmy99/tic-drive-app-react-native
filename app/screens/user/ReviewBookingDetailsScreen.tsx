@@ -87,7 +87,7 @@ export default function ReviewBookingDetailsScreen() {
             <View className="flex flex-row my-4">
               {/* to do- spostare le immagini in un componente */}
               <Image
-                source={{uri: workshop?.imageUrl}}
+                source={{uri: workshop?.profileImageUrl}}
                 containerStyle={styles.image}
                 PlaceholderContent={
                   <ActivityIndicator
@@ -99,7 +99,7 @@ export default function ReviewBookingDetailsScreen() {
               <View>
                 <View className="flex flex-row items-center gap-1">
                   <Text className="text-xl font-semibold">
-                    {workshop?.title}
+                    {workshop?.name}
                   </Text>
                   {workshop?.verified && (
                     <Verified width={24} name="verified" />
@@ -121,7 +121,7 @@ export default function ReviewBookingDetailsScreen() {
             <HorizontalLine color={Colors.light.lightGrey} />
             <View className="my-2">
               <IconTextPair
-                text={servicesChoosen[0].name}
+                text={servicesChoosen[0].title}
                 icon={<CarRepair width={24} fill={Colors.light.ticText} />}
               />
               <IconTextPair
@@ -158,11 +158,14 @@ export default function ReviewBookingDetailsScreen() {
             <View className="border rounded-xl border-slate-200 p-4">
               <View className="flex flex-row justify-between items-center">
                 <Text className="text-sm text-tic">
-                  Service ({servicesChoosen[0].name})
+                  Service ({servicesChoosen[0].title})
                 </Text>
                 <Text>
                   $
-                  {calculateWorkshopDiscount(workshop.price, workshop.discount)}
+                  {calculateWorkshopDiscount(
+                    workshop.servicePrice ?? 0,
+                    workshop.discount,
+                  )}
                 </Text>
               </View>
               <View
@@ -181,7 +184,7 @@ export default function ReviewBookingDetailsScreen() {
                   <Text>
                     $
                     {calculateWorkshopDiscount(
-                      workshop.price,
+                      workshop.servicePrice ?? 0,
                       workshop.discount,
                     )}
                   </Text>
@@ -197,7 +200,7 @@ export default function ReviewBookingDetailsScreen() {
                 <Text className="text-lg font-medium">
                   $
                   {calculateWorkshopDiscount(
-                    workshop.price,
+                    workshop.servicePrice ?? 0,
                     workshop.discount,
                   ) + 14}
                 </Text>
@@ -211,8 +214,10 @@ export default function ReviewBookingDetailsScreen() {
             <Text className="text-base text-tic">Total</Text>
             <Text className="text-xl font-medium">
               $
-              {calculateWorkshopDiscount(workshop.price, workshop.discount) +
-                14}
+              {calculateWorkshopDiscount(
+                workshop.servicePrice ?? 0,
+                workshop.discount,
+              ) + 14}
             </Text>
           </View>
           <TicDriveButton

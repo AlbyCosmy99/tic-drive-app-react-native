@@ -26,7 +26,7 @@ const PaymentConfirmationCard = ({
       <View className="flex flex-row my-4">
         {/* to do- spostare le immagini in un componente */}
         <Image
-          source={{uri: workshop?.imageUrl}}
+          source={{uri: workshop?.profileImageUrl}}
           containerStyle={styles.image}
           PlaceholderContent={
             <ActivityIndicator
@@ -39,10 +39,10 @@ const PaymentConfirmationCard = ({
           <Text className="text-xs font-medium" style={styles.pendingText}>
             Pending confirmation
           </Text>
-          <Text className="font-medium text-xl">{workshop.title}</Text>
+          <Text className="font-medium text-xl">{workshop.name}</Text>
           <View className="bg-green-light p-1.5 rounded self-start">
             <Text className="text-green-dark font-semibold">
-              {servicesChoosen.length ? servicesChoosen[0].name : ''}
+              {servicesChoosen.length ? servicesChoosen[0].title : ''}
             </Text>
           </View>
         </View>

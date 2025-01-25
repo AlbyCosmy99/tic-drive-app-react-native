@@ -1,27 +1,19 @@
 import {Colors} from '@/constants/Colors';
-import workshops from '@/constants/temp/Workshops';
 import {Image} from '@rneui/themed';
-import {useContext, useEffect, useState} from 'react';
+import {useContext} from 'react';
 import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LocationPin from '../../../assets/svg/location_on.svg';
 import Verified from '../../../assets/svg/verified.svg';
 import Star from '../../../assets/svg/star.svg';
-import Acute from '../../../assets/svg/acute.svg';
-import FreeCancellation from '../../../assets/svg/free_cancellation.svg';
-import CalendarIcon from '../../../assets/svg/calendar_add_on.svg';
-import ChatIcon from '../../../assets/svg/chat.svg';
 import {Ionicons} from '@expo/vector-icons';
 import ClientReviewCards from '@/components/ClientReviewCards';
-import calculateWorkshopStars from '@/utils/workshops/calculateWorkshopStars';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import {useRoute} from '@react-navigation/native';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
-import AssistantDirection from '../../../assets/svg/assistant_direction';
-import TicDriveOptionButton from '@/components/ui/buttons/TicDriveOptionButton';
 import UserCalendarModal from '@/components/ui/modals/UserCalendarModal';
 import Workshop from '@/types/workshops/Workshop';
 import useJwtToken from '@/hooks/auth/useJwtToken';
@@ -29,19 +21,13 @@ import useJwtToken from '@/hooks/auth/useJwtToken';
 export default function WorkshopDetails() {
   const route = useRoute();
   //@ts-ignore
-  const {id} = route?.params;
+  const {workshop} = (route?.params as Workshop) || {};
   const {navigation} = useContext(NavigationContext);
-
-  const [workshop, setWorkshop] = useState<Workshop | null>(null);
   const servicesChoosen = useAppSelector(
     state => state.services.servicesChoosenByUsers,
   );
 
   const token = useJwtToken();
-
-  useEffect(() => {
-    setWorkshop(workshops.find(workshop => workshop.id === 5) || null);
-  }, [id]);
 
   return (
     <SafeAreaViewLayout tailwindCss="p-2.5" styles={[styles.container]}>
@@ -76,12 +62,9 @@ export default function WorkshopDetails() {
         <>
           <ScrollView>
             <View style={styles.container} className="flex-1 p-2.5">
-              <View
-                className="w-full relative border-b-2"
-                style={styles.cardContainer}
-              >
+              <View className="w-full relative" style={styles.cardContainer}>
                 <Image
-                  source={{uri: workshop.imageUrl}}
+                  source={{uri: workshop?.profileImageUrl}}
                   containerStyle={styles.image}
                   PlaceholderContent={
                     <ActivityIndicator
@@ -92,45 +75,16 @@ export default function WorkshopDetails() {
                 />
                 <View className="flex-1 flex-row items-center gap-0.5 mt-2">
                   <Text className="text-2xl font-semibold">
-                    {workshop.title}
+                    {workshop.name}
                   </Text>
                   {workshop.verified && <Verified width={24} />}
-                </View>
-                <View className="flex-1 flex-row mt-2.5">
-                  <View className="flex-1 flex-row items-center gap-0.5">
-                    <Acute width={24} />
-                    <Text className="text-base">Express service</Text>
-                  </View>
-                  {workshop.freeCancellation && (
-                    <View className="flex-1 flex-row items-center gap-0.5">
-                      <FreeCancellation width={24} />
-                      <Text className="text-base">Free cancellation</Text>
-                    </View>
-                  )}
-                </View>
-                <View className="flex-1 flex-row gap-2.5 mt-2.5 mb-3.5 flex-wrap">
-                  <TicDriveOptionButton
-                    text="Directions"
-                    icon={<AssistantDirection width={24} />}
-                    containerTailwindCss="gap-0.5"
-                  />
-                  <TicDriveOptionButton
-                    text="Check availability"
-                    icon={<CalendarIcon width={24} />}
-                    containerTailwindCss="gap-0.5"
-                  />
-                  <TicDriveOptionButton
-                    text="Message"
-                    icon={<ChatIcon width={24} />}
-                    containerTailwindCss="gap-0.5"
-                  />
                 </View>
               </View>
               <View className="mt-2.5">
                 <Text className="text-xl font-semibold">Location</Text>
                 <View className="flex-1 flex-row items-center gap-0.5 mt-2.5">
                   <LocationPin width={24} fill={Colors.light.ticText} />
-                  <Text className="text-base">{workshop.position}</Text>
+                  <Text className="text-base">{workshop.address}</Text>
                 </View>
               </View>
               <View className="mt-2.5">
@@ -138,8 +92,7 @@ export default function WorkshopDetails() {
                 <View className="flex-1 flex-row items-center gap-0.5 mt-2.5">
                   <Star width={24} fill={Colors.light.ticText} />
                   <Text className="text-base">
-                    {calculateWorkshopStars(workshop.reviews)} (
-                    {workshop.reviews.length} reviews)
+                    {workshop.meanStars} ({workshop.numberOfReviews} reviews)
                   </Text>
                 </View>
                 {/* todo */}
@@ -147,45 +100,47 @@ export default function WorkshopDetails() {
               </View>
             </View>
           </ScrollView>
-          <View
-            style={styles.bottom}
-            className="flex-row justify-between items-center mx-2.5 border-t"
-          >
-            <View className="flex-1 flex-col mt-2.5">
-              <Text className="text-base" style={styles.startingFrom}>
-                Starting from
-              </Text>
-              <View className="flex-row items-center">
-                <View>
-                  <Text
-                    className={[
-                      workshop.discount !== 0 ? 'text-red-500' : '',
-                      'font-semibold text-xl mx-1',
-                    ].join(' ')}
-                  >
-                    {workshop.price}
-                  </Text>
+          {servicesChoosen.length > 0 && (
+            <View
+              style={styles.bottom}
+              className="flex-row justify-between items-center mx-2.5 border-t"
+            >
+              <View className="flex-1 flex-col mt-2.5">
+                <Text className="text-base" style={styles.startingFrom}>
+                  Starting from
+                </Text>
+                <View className="flex-row items-center">
+                  <View>
+                    <Text
+                      className={[
+                        workshop.discount !== 0 ? 'text-red-500' : '',
+                        'font-semibold text-xl mx-1',
+                      ].join(' ')}
+                    >
+                      {workshop.servicePrice}
+                    </Text>
+                    {workshop.discount !== 0 && (
+                      <View style={styles.strikethroughLine} />
+                    )}
+                  </View>
                   {workshop.discount !== 0 && (
-                    <View style={styles.strikethroughLine} />
+                    <Text className="font-semibold text-xl mx-1">
+                      $
+                      {calculateWorkshopDiscount(
+                        workshop.servicePrice ?? 0,
+                        workshop.discount,
+                      )}
+                    </Text>
                   )}
                 </View>
-                {workshop.discount !== 0 && (
-                  <Text className="font-semibold text-xl mx-1">
-                    $
-                    {calculateWorkshopDiscount(
-                      workshop.servicePrice ?? 0,
-                      workshop.discount,
-                    )}
-                  </Text>
+              </View>
+              <View className="flex justify-center items-center">
+                {servicesChoosen.length > 0 && (
+                  <UserCalendarModal workshop={workshop} />
                 )}
               </View>
             </View>
-            <View className="flex justify-center items-center">
-              {servicesChoosen.length > 0 && (
-                <UserCalendarModal workshop={workshop} />
-              )}
-            </View>
-          </View>
+          )}
         </>
       )}
     </SafeAreaViewLayout>
