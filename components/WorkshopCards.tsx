@@ -1,6 +1,6 @@
 import WorkshopCard from './WorkshopCard';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
-import {memo, useContext, useEffect} from 'react';
+import {memo, useContext} from 'react';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
@@ -23,23 +23,11 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
 
   const servicesChoosen = useServicesChoosenByUsers();
   const {areServicesAvailable} = useAreServicesAvailable();
-  const {workshops, loadingWorkshops} = useWorkshops();
-
-  useEffect(() => {
-    console.log(areServicesAvailable);
-  }, []);
+  const {workshops, loadingWorkshops} = useWorkshops(0,10, areServicesAvailable ? servicesChoosen[0].id: 0);
 
   const token = useJwtToken();
   const handleCardPress = (workshop: WorkshopMini) => {
     navigationPush(navigation, 'WorkshopDetails', {id: workshop.id});
-  };
-
-  //checking if servicesChoosen are in the services offered by a workshop
-  const anyService = (services: string[]) => {
-    for (let serviceChoosen of servicesChoosen) {
-      if (services.includes(serviceChoosen.title?.toLowerCase())) return true;
-    }
-    return false;
   };
 
   return loadingWorkshops ? (
@@ -49,7 +37,6 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
       {workshops
         .filter(
           workshop =>
-            // (!areServicesAvailable || (areServicesAvailable && anyService(workshop.services))) &&
             workshopFilter.length === 0 ||
             workshop.name
               ?.toLowerCase()

@@ -10,6 +10,9 @@ export interface WorkshopMini {
   meanStars: number;
   numberOfReviews: number;
   ProfileImageUrl: string;
+  servicePrice?: number;
+  currency?: string;
+  discount?: number;
 }
 
 export interface WorkshopExtended extends WorkshopMini {

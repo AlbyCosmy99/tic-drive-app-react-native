@@ -1,5 +1,5 @@
 import {memo} from 'react';
-import {WorkshopExtended, WorkshopMini} from '@/types/workshops/Workshop';
+import { WorkshopMini} from '@/types/workshops/Workshop';
 import WorkshopCard from '../WorkshopCard';
 
 function WorkshopCardMini({workshop}: {workshop: WorkshopMini}) {

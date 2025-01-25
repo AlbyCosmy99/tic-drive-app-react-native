@@ -173,7 +173,7 @@ export default function WorkshopDetails() {
                   <Text className="font-semibold text-xl mx-1">
                     $
                     {calculateWorkshopDiscount(
-                      workshop.price,
+                      workshop.servicePrice ?? 0,
                       workshop.discount,
                     )}
                   </Text>

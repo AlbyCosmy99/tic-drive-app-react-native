@@ -91,7 +91,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
           // to-do: quando pressed vai a disponibilita
           <Pressable
             className="flex flex-row justify-between items-center border-2 border-grey-light m-2 p-3 mt-0 rounded-lg"
-            onPress={() => console.log('pressed')}
+            onPress={() => alert('pressed')}
           >
             <Text className="text-base font-medium">
               {servicesChoosenByUsers[0].title}
@@ -100,8 +100,8 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
               <View className="flex flex-row justify-between items-center">
                 <Text className="text-base font-medium">Total</Text>
                 <Text className="text-base font-medium">
-                  ${' '}
-                  {calculateWorkshopDiscount(workshop.price, workshop.discount)}
+                  {workshop.currency + ' '}
+                  {calculateWorkshopDiscount(workshop.servicePrice ?? 0, workshop.discount ?? 0)}
                 </Text>
               </View>
               <Text className="font-medium text-xs text-tic">

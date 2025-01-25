@@ -22,6 +22,9 @@ import CarDetailsByMakeAndModel from '@/components/cars/registration/CarDetailsB
 import CarContext from '@/stateManagement/contexts/car/CarContext';
 import BoldTitle1 from '@/components/ui/text/BoldTitle1';
 import useCarsMakes from '@/hooks/api/cars/useCarsMakes';
+import { useFocusEffect } from '@react-navigation/native';
+import { useAppDispatch } from '@/stateManagement/redux/hooks';
+import { setAreServicesOn } from '@/stateManagement/redux/slices/servicesSlice';
 
 function RegisterVehicleScreen() {
   const [segmentedControlSelection, setSegmentedControlSelection] =
@@ -52,6 +55,7 @@ function RegisterVehicleScreen() {
 
   const colorScheme = useColorScheme();
   const {carsMakes: makes, loadingCarsMakes} = useCarsMakes();
+  const dispatch = useAppDispatch()
 
   const buttonIsEnabled = useMemo(() => {
     return (
@@ -112,6 +116,10 @@ function RegisterVehicleScreen() {
     setCarSelectedByPlate(undefined);
     setIsCarSearched(false);
   };
+
+   useFocusEffect(() => {
+      dispatch(setAreServicesOn(false));
+    });
 
   return (
     <SafeAreaViewLayout styles={[backgroundStyle]}>
