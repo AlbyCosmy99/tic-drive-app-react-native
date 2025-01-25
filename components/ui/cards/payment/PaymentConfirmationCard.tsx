@@ -52,7 +52,7 @@ const PaymentConfirmationCard = ({
         <IconTextPair icon={<CalendarIcon />} text={timeDate} />
         <IconTextPair
           icon={<CreditCardIcon />}
-          text={`$${calculateWorkshopDiscount(workshop.price, workshop.discount)} total paid`}
+          text={`${workshop.currency} ${calculateWorkshopDiscount(workshop.servicePrice ?? 0, workshop.discount)} total paid`}
         />
         <IconTextPair
           icon={<PinIcon fill={Colors.light.ticText} />}
