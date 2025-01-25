@@ -13,13 +13,18 @@ import AuthAction from '@/types/auth/Action';
 import isIOSPlatform from '@/utils/devices/IsIOSPlatform';
 import {useRoute} from '@react-navigation/native';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
-const {width, height} = Dimensions.get('window');
+import WorkshopExtended from '@/types/workshops/Workshop';
+const {height} = Dimensions.get('window');
 
 export default function UserAuthenticationScreen() {
   const [isUserRegistering, setIsUserRegistering] = useState<boolean>(false);
   const route = useRoute();
   //@ts-ignore
-  const {register, isUser} = route.params;
+  const {register, isUser, workshop} = route.params as {
+    register: boolean;
+    isUser: boolean;
+    workshop: WorkshopExtended;
+  };
 
   useEffect(() => {
     if (register) {

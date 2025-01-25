@@ -7,6 +7,7 @@ import HorizontalLine from '@/components/ui/HorizontalLine';
 import AddIcon from '../../assets/svg/add.svg';
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 import IconTextPair from '@/components/ui/IconTextPair';
+import TicDriveAuthButton from '@/components/ui/buttons/TicDriveAuthButton';
 
 export default function UserAccount() {
   const user = useAppSelector(state => state.auth.user);
@@ -110,6 +111,9 @@ export default function UserAccount() {
           </View>
           <HorizontalLine />
         </ScrollView>
+        <View className="my-2">
+          <TicDriveAuthButton action="logout" />
+        </View>
       </SafeAreaViewLayout>
     </LinearGradientViewLayout>
   );

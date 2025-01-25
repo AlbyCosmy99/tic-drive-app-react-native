@@ -56,7 +56,7 @@ const PaymentConfirmationCard = ({
         />
         <IconTextPair
           icon={<PinIcon fill={Colors.light.ticText} />}
-          text={workshop.position}
+          text={workshop.address}
         />
       </View>
       <TicDriveOptionButton

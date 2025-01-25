@@ -93,6 +93,8 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
 
         if (res.emailConfirmed) {
           if (loginRouteName) {
+            console.log('aaazzzz');
+            console.log(loginRouteParams);
             navigationReset(navigation, 0, loginRouteName, loginRouteParams);
             setLoginRouteName('');
           } else if (navigation?.canGoBack()) {

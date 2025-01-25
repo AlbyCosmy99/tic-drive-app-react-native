@@ -31,13 +31,13 @@ import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import navigationReset from '@/services/navigation/reset';
-import Workshop from '@/types/workshops/Workshop';
 import {useServicesChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
+import WorkshopExtended from '@/types/workshops/Workshop';
 
 export default function ReviewBookingDetailsScreen() {
   const route = useRoute();
   const {workshop, date, time} = route?.params as {
-    workshop: Workshop;
+    workshop: WorkshopExtended;
     date: string;
     time: string;
   };
@@ -49,6 +49,7 @@ export default function ReviewBookingDetailsScreen() {
   const servicesChoosen = useServicesChoosenByUsers();
 
   useEffect(() => {
+    console.log(workshop);
     if (!userPaymentInfo?.choosenCard) {
       setUserPaymentInfo({
         ...userPaymentInfo,
@@ -112,8 +113,7 @@ export default function ReviewBookingDetailsScreen() {
                     fill={Colors.light.ticText}
                   />
                   <Text className="text-sm" style={styles.serviceInfo}>
-                    {calculateWorkshopStars(workshop?.reviews)} (
-                    {workshop?.reviews.length} reviews)
+                    {workshop.meanStars} ({workshop?.numberOfReviews} reviews)
                   </Text>
                 </View>
               </View>
@@ -129,7 +129,7 @@ export default function ReviewBookingDetailsScreen() {
                 icon={<CalendarIcon width={24} fill={Colors.light.ticText} />}
               />
               <IconTextPair
-                text={workshop.position}
+                text={workshop.address}
                 icon={<LocationPin width={24} fill={Colors.light.ticText} />}
               />
             </View>
