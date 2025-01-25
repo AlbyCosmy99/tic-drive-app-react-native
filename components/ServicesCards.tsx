@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView} from 'react-native-gesture-handler';
+import {RefreshControl, ScrollView} from 'react-native-gesture-handler';
 import ServicesCard from './ServicesCard';
-import {ActivityIndicator, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Colors} from '@/constants/Colors';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
@@ -21,7 +21,9 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
 }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const {services, loadingServices} = useServices();
+  const [refreshing, setRefreshing] = useState(false);
+
+  const {services, loadingServices, setLoadingServices} = useServices();
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', e => {
@@ -33,33 +35,55 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
     return unsubscribe;
   }, [navigation, dispatch]);
 
-  return loadingServices ? (
-    <LoadingSpinner />
-  ) : (
-    <ScrollView contentContainerStyle={styles.container}>
-      {services.map((elem, index) => (
-        <View
-          key={elem.id}
-          style={styles.cardContainer}
-          className={
-            (services.length % 2 === 0 &&
-              (index === services.length - 1 ||
-                index === services.length - 2)) ||
-            (services.length % 2 !== 0 && index === services.length - 1)
-              ? `mb-1`
-              : ''
-          }
-        >
-          <ServicesCard
-            id={elem.id}
-            title={elem.title}
-            description={elem.description}
-            icon={elem.icon}
-            type={type}
-            isSingleChoice={isSingleChoice}
-          />
+  const onRefresh = () => {
+    setRefreshing(true);
+    setLoadingServices(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  };
+
+  return (
+    <ScrollView
+      contentContainerStyle={styles.container}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          colors={[Colors.light.ticText]}
+          tintColor={Colors.light.ticText}
+        />
+      }
+    >
+      {loadingServices && !refreshing ? (
+        <View className="w-full h-full justify-center items-center mt-40">
+          <LoadingSpinner />
         </View>
-      ))}
+      ) : (
+        services.map((elem, index) => (
+          <View
+            key={elem.id}
+            style={styles.cardContainer}
+            className={
+              (services.length % 2 === 0 &&
+                (index === services.length - 1 ||
+                  index === services.length - 2)) ||
+              (services.length % 2 !== 0 && index === services.length - 1)
+                ? `mb-1`
+                : ''
+            }
+          >
+            <ServicesCard
+              id={elem.id}
+              title={elem.title}
+              description={elem.description}
+              icon={elem.icon}
+              type={type}
+              isSingleChoice={isSingleChoice}
+            />
+          </View>
+        ))
+      )}
     </ScrollView>
   );
 };

@@ -101,7 +101,10 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
                 <Text className="text-base font-medium">Total</Text>
                 <Text className="text-base font-medium">
                   {workshop.currency + ' '}
-                  {calculateWorkshopDiscount(workshop.servicePrice ?? 0, workshop.discount ?? 0)}
+                  {calculateWorkshopDiscount(
+                    workshop.servicePrice ?? 0,
+                    workshop.discount ?? 0,
+                  )}
                 </Text>
               </View>
               <Text className="font-medium text-xs text-tic">

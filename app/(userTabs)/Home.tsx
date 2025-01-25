@@ -1,7 +1,7 @@
 import {Pressable, Text, View} from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
-import {useContext} from 'react';
+import {useContext, useState} from 'react';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import navigationPush from '@/services/navigation/push';
@@ -17,18 +17,21 @@ import {
 } from '@/stateManagement/redux/slices/servicesSlice';
 import Service from '@/types/Service';
 import {useFocusEffect} from '@react-navigation/native';
-import {ScrollView} from 'react-native-gesture-handler';
+import {RefreshControl, ScrollView} from 'react-native-gesture-handler';
 import IconTextPair from '@/components/ui/IconTextPair';
 import AddIcon from '@/assets/svg/add.svg';
 import LoadingSpinner from '@/components/ui/loading/LoadingSpinner';
 import useWorkshops from '@/hooks/api/workshops/useWorkshops';
 import useJwtToken from '@/hooks/auth/useJwtToken';
+import {Colors} from '@/constants/Colors';
 
 export default function UserHome() {
   const {setWorkshopFilter} = useContext(GlobalContext);
   const {navigation} = useContext(NavigationContext);
-  const {services, loadingServices} = useServices();
-  const {workshops, loadingWorkshops} = useWorkshops(0, 2);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const {services, loadingServices, setLoadingServices} = useServices();
+  const {workshops, loadingWorkshops, setLoadingWorkshops} = useWorkshops(0, 2);
 
   const dispatch = useAppDispatch();
   const token = useJwtToken();
@@ -49,6 +52,15 @@ export default function UserHome() {
   const handleOnRegisterVehicle = () => {
     navigationPush(navigation, 'RegisterVehicleScreen');
     //to-do: once the vehicle is registered instead of going to workshops, go to vehicles and register it on account
+  };
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    setLoadingServices(true);
+    setLoadingWorkshops(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
   };
 
   useFocusEffect(() => {
@@ -72,7 +84,17 @@ export default function UserHome() {
             }}
           />
         </View>
-        <ScrollView className="mb-2">
+        <ScrollView
+          className="mb-2"
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              colors={[Colors.light.ticText]}
+              tintColor={Colors.light.ticText}
+            />
+          }
+        >
           <View>
             <Text className="font-semibold text-xl m-2.5 mt-0">
               Find the workshop that's right for you

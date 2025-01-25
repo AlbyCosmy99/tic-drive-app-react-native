@@ -19,10 +19,12 @@ const useServices = () => {
       }
     };
 
-    fetchServices();
-  }, []);
+    if (loadingServices) {
+      fetchServices();
+    }
+  }, [loadingServices]);
 
-  return {services, loadingServices};
+  return {services, loadingServices, setLoadingServices};
 };
 
 export default useServices;
