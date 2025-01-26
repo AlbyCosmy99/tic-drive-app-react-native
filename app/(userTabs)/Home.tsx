@@ -1,4 +1,4 @@
-import {Pressable, Text, View} from 'react-native';
+import {Image, Pressable, Text, View} from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
 import {useContext, useState} from 'react';
@@ -24,6 +24,7 @@ import LoadingSpinner from '@/components/ui/loading/LoadingSpinner';
 import useWorkshops from '@/hooks/api/workshops/useWorkshops';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import {Colors} from '@/constants/Colors';
+import HorizontalLine from '@/components/ui/HorizontalLine';
 
 export default function UserHome() {
   const {setWorkshopFilter} = useContext(GlobalContext);
@@ -76,9 +77,9 @@ export default function UserHome() {
           <TicDriveInput
             isLeftIcon={true}
             isRightIcon={true}
-            placeholder="Search workshop"
-            containerViewStyleTailwind="flex-1 justify-center items-center"
-            inputContainerStyle={{marginTop: 4}}
+            placeholder="Search workshop or service"
+            containerViewStyleTailwind="flex-1"
+            inputContainerStyle={{marginTop: 4, height: 48}}
             onChange={text => {
               setWorkshopFilter(text);
             }}
@@ -96,7 +97,7 @@ export default function UserHome() {
           }
         >
           <View>
-            <Text className="font-semibold text-xl m-2.5 mt-0">
+            <Text className="font-semibold text-xl m-2.5 mt-1">
               Find the workshop that's right for you
             </Text>
             <View>
@@ -128,8 +129,9 @@ export default function UserHome() {
               </View>
             </View>
           </View>
-          <View className="mt-1">
-            <Text className="font-semibold text-xl m-2.5">
+          <HorizontalLine />
+          <View className="mt-1 mb-3">
+            <Text className="font-semibold text-xl m-2.5 mt-0">
               Discover services and book
             </Text>
             {loadingServices ? (
@@ -141,11 +143,18 @@ export default function UserHome() {
                     {services.slice(0, 4).map((service, index) => (
                       <Pressable
                         key={service.id}
-                        className="border-2 border-grey-light items-center justify-center p-2 mx-2.5 my-1 rounded-xl"
+                        className="border-2 border-grey-light items-center justify-center p-2 mx-2.5 my-1 rounded-xl flex-row"
                         onPress={() => handleOnSelectService(service)}
-                        style={{width: '40%'}}
+                        style={{width: '40%', height: 40}}
                       >
-                        <Text className="text-base font-medium">
+                        {service?.icon && (
+                          <Image
+                            source={{uri: service.icon}}
+                            width={24}
+                            height={24}
+                          />
+                        )}
+                        <Text className="text-sm font-medium ml-2">
                           {service.title}
                         </Text>
                       </Pressable>
@@ -163,8 +172,9 @@ export default function UserHome() {
               </View>
             )}
           </View>
+          <HorizontalLine />
           {token && (
-            <View className="mt-2.5 mb-1">
+            <View className="mt-0.5 mb-1">
               <Text className="font-semibold text-xl m-2.5 mt-1">Reminder</Text>
               <Pressable
                 className="border-2 border-grey-light items-center justify-center p-1 mx-2.5 my-0.5 rounded-xl"
