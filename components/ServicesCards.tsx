@@ -93,10 +93,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    marginHorizontal: 7,
+    marginHorizontal: 7
   },
   cardContainer: {
-    width: '50%',
+    width: '50%'
   },
 });
 
