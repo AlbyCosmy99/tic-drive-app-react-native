@@ -1,5 +1,5 @@
 import {useAppSelector} from '@/stateManagement/redux/hooks';
-import {useEffect, useMemo} from 'react';
+import {useMemo} from 'react';
 
 const useAreServicesAvailable = () => {
   const servicesChoosenByUsers = useAppSelector(

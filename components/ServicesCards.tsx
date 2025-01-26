@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { ScrollView} from 'react-native-gesture-handler';
+import {ScrollView} from 'react-native-gesture-handler';
 import ServicesCard from './ServicesCard';
 import {StyleSheet, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
@@ -34,9 +34,7 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
   }, [navigation, dispatch]);
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.container}
-    >
+    <ScrollView contentContainerStyle={styles.container}>
       {loadingServices ? (
         <View className="w-full h-full justify-center items-center mt-40">
           <LoadingSpinner />
@@ -75,10 +73,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    marginHorizontal: 7
+    marginHorizontal: 7,
   },
   cardContainer: {
-    width: '50%'
+    width: '50%',
   },
 });
 

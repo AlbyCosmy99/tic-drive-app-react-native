@@ -10,23 +10,20 @@ import Star from '../../../assets/svg/star.svg';
 import {Ionicons} from '@expo/vector-icons';
 import ClientReviewCards from '@/components/ClientReviewCards';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
-import {useAppSelector} from '@/stateManagement/redux/hooks';
 import {useRoute} from '@react-navigation/native';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import UserCalendarModal from '@/components/ui/modals/UserCalendarModal';
 import Workshop from '@/types/workshops/Workshop';
 import useJwtToken from '@/hooks/auth/useJwtToken';
-import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
+import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
 
 export default function WorkshopDetails() {
   const route = useRoute();
   //@ts-ignore
   const {workshop} = (route?.params as Workshop) || {};
   const {navigation} = useContext(NavigationContext);
-  const servicesChoosen = useAppSelector(
-    state => state.services.servicesChoosenByUsers,
-  );
+  const {areServicesAvailable} = useAreServicesAvailable();
 
   const token = useJwtToken();
 
@@ -101,11 +98,11 @@ export default function WorkshopDetails() {
               </View>
             </View>
           </ScrollView>
-          {servicesChoosen.length > 0 && (
-            <View
-              style={styles.bottom}
-              className="flex-row justify-between items-center mx-2.5 border-t"
-            >
+          <View
+            style={styles.bottom}
+            className="flex-row justify-between items-center mx-2.5 border-t"
+          >
+            {areServicesAvailable && (
               <View className="flex-1 flex-col mt-2.5">
                 <Text className="text-base" style={styles.startingFrom}>
                   Starting from
@@ -129,22 +126,19 @@ export default function WorkshopDetails() {
                       $
                       {calculateWorkshopDiscount(
                         workshop.servicePrice ?? 0,
-                        workshop.discount,
+                        workshop?.discount ?? 0,
                       )}
                     </Text>
                   )}
                 </View>
               </View>
-              <View className="flex justify-center items-center">
-                {servicesChoosen.length > 0 && (
-                  <UserCalendarModal workshop={workshop} />
-                )}
-              </View>
+            )}
+            <View className="flex justify-center items-center flex-1">
+              <UserCalendarModal workshop={workshop} />
             </View>
-          )}
+          </View>
         </>
       )}
-      <TicDriveButton text='Book a service'/>
     </SafeAreaViewLayout>
   );
 }
