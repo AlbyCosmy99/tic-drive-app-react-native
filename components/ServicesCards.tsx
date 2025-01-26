@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import {RefreshControl, ScrollView} from 'react-native-gesture-handler';
+import React, {useEffect} from 'react';
+import { ScrollView} from 'react-native-gesture-handler';
 import ServicesCard from './ServicesCard';
 import {StyleSheet, View} from 'react-native';
-import {Colors} from '@/constants/Colors';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {UserCategory} from '@/types/User';
@@ -21,9 +20,8 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
 }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const [refreshing, setRefreshing] = useState(false);
 
-  const {services, loadingServices, setLoadingServices} = useServices();
+  const {services, loadingServices} = useServices();
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', e => {
@@ -35,27 +33,11 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
     return unsubscribe;
   }, [navigation, dispatch]);
 
-  const onRefresh = () => {
-    setRefreshing(true);
-    setLoadingServices(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 1000);
-  };
-
   return (
     <ScrollView
       contentContainerStyle={styles.container}
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-          colors={[Colors.light.ticText]}
-          tintColor={Colors.light.ticText}
-        />
-      }
     >
-      {loadingServices && !refreshing ? (
+      {loadingServices ? (
         <View className="w-full h-full justify-center items-center mt-40">
           <LoadingSpinner />
         </View>

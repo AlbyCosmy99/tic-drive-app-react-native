@@ -55,7 +55,6 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
   return (
     <View
       className={containerViewStyleTailwind && containerViewStyleTailwind}
-      style={{height: 60}}
     >
       <Input
         placeholder={placeholder}

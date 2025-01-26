@@ -78,7 +78,7 @@ export default function UserHome() {
             isLeftIcon={true}
             isRightIcon={true}
             placeholder="Search workshop or service"
-            containerViewStyleTailwind="flex-1"
+            containerViewStyleTailwind="flex-1 h-[60px]"
             inputContainerStyle={{marginTop: 4, height: 48}}
             onChange={text => {
               setWorkshopFilter(text);
@@ -129,7 +129,7 @@ export default function UserHome() {
               </View>
             </View>
           </View>
-          <HorizontalLine />
+          {!loadingWorkshops && <HorizontalLine />}
           <View className="mt-1 mb-3">
             <Text className="font-semibold text-xl m-2.5 mt-0">
               Discover services and book
@@ -172,7 +172,7 @@ export default function UserHome() {
               </View>
             )}
           </View>
-          <HorizontalLine />
+          {!loadingServices && <HorizontalLine />}
           {token && (
             <View className="mt-0.5 mb-1">
               <Text className="font-semibold text-xl m-2.5 mt-1">Reminder</Text>

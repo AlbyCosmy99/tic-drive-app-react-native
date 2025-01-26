@@ -21,7 +21,7 @@ export default function WorkshopsListScreen() {
             isRightIcon={true}
             placeholder="Search workshop"
             containerViewStyleTailwind="flex-1 justify-center items-center"
-            inputContainerStyle={{marginTop: 4}}
+            inputContainerStyle={{marginTop: 4, height: 48}}
             onChange={text => {
               setWorkshopFilter(text);
             }}
