@@ -45,7 +45,7 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({
       buttonStyle={[
         {
           borderRadius: 40,
-          height: 60,
+          height: 48,
           backgroundColor: Colors.light.green.drive,
         },
 

@@ -17,6 +17,7 @@ import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import UserCalendarModal from '@/components/ui/modals/UserCalendarModal';
 import Workshop from '@/types/workshops/Workshop';
 import useJwtToken from '@/hooks/auth/useJwtToken';
+import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 
 export default function WorkshopDetails() {
   const route = useRoute();
@@ -143,6 +144,7 @@ export default function WorkshopDetails() {
           )}
         </>
       )}
+      <TicDriveButton text='Book a service'/>
     </SafeAreaViewLayout>
   );
 }
