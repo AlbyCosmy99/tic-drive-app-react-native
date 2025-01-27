@@ -78,7 +78,7 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
   return filteredWorkshops.length === 0 && !loadingWorkshops ? (
     <View className="flex-1 justify-center items-center mx-2.5">
       <Text className="text-lg text-gray-600 text-center">
-        No workshops found. Try with a different service, or go to the
+        No workshop found. Try with a different service, or go to the
         dashboard.
       </Text>
       <TicDriveButton
