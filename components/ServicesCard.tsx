@@ -88,9 +88,7 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
     } else {
       if (isSingleChoice) {
         type === 'user'
-          ? dispatch(
-              setServicesChoosenByUsers({id, title, description, icon}),
-            )
+          ? dispatch(setServicesChoosenByUsers({id, title, description, icon}))
           : dispatch(
               setServicesChoosenByWorkshops({
                 id,
@@ -101,9 +99,7 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
             );
       } else {
         type === 'user'
-          ? dispatch(
-              addServiceChoosenByUsers({id, title, description, icon}),
-            )
+          ? dispatch(addServiceChoosenByUsers({id, title, description, icon}))
           : dispatch(
               addServiceChoosenByWorkshops({
                 id,

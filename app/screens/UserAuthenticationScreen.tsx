@@ -7,23 +7,20 @@ import {Image} from '@rneui/themed';
 import TicDriveLogo from '../../assets/images/TicDriveLogo.jpeg';
 import UserAuthenticationContent from '@/components/auth/UserAuthentificationContent';
 import smallDevicebreakpointHeight from '@/constants/smallDevicebreakpointHeight';
-
 import {Dimensions} from 'react-native';
 import AuthAction from '@/types/auth/Action';
 import isIOSPlatform from '@/utils/devices/IsIOSPlatform';
 import {useRoute} from '@react-navigation/native';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
-import WorkshopExtended from '@/types/workshops/Workshop';
 const {height} = Dimensions.get('window');
 
 export default function UserAuthenticationScreen() {
   const [isUserRegistering, setIsUserRegistering] = useState<boolean>(false);
   const route = useRoute();
   //@ts-ignore
-  const {register, isUser, workshop} = route.params as {
+  const {register, isUser} = route.params as {
     register: boolean;
     isUser: boolean;
-    workshop: WorkshopExtended;
   };
 
   useEffect(() => {

@@ -1,10 +1,6 @@
 import WorkshopCard from './WorkshopCard';
-import {
-  RefreshControl,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
-import {memo, useContext, useState} from 'react';
+import {RefreshControl, ScrollView, Text, TouchableOpacity} from 'react-native';
+import {memo, useContext, useEffect, useMemo, useState} from 'react';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
@@ -16,13 +12,19 @@ import useWorkshops from '@/hooks/api/workshops/useWorkshops';
 import LoadingSpinner from './ui/loading/LoadingSpinner';
 import {Colors} from '@/constants/Colors';
 import {View} from 'react-native';
+import TicDriveButton from './ui/buttons/TicDriveButton';
+import navigationReset from '@/services/navigation/reset';
+import {reset} from '@/stateManagement/redux/slices/servicesSlice';
+import {useAppDispatch} from '@/stateManagement/redux/hooks';
 
 interface WorkshopCardsProps {
   tailwindContainerCss?: string;
+  setAreNoWorkshop?: (areNoWorkshops: boolean) => void;
 }
 
 const WorkshopCards: React.FC<WorkshopCardsProps> = ({
   tailwindContainerCss = '',
+  setAreNoWorkshop = () => {},
 }) => {
   const {workshopFilter} = useContext(GlobalContext);
   const {navigation} = useContext(NavigationContext);
@@ -33,10 +35,34 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
   const {workshops, loadingWorkshops, setLoadingWorkshops} = useWorkshops(
     0,
     10,
-    areServicesAvailable ? servicesChoosen[0].id : 0,
+    areServicesAvailable ? servicesChoosen[0]?.id : 0,
   );
 
   const token = useJwtToken();
+  const dispatch = useAppDispatch();
+
+  const handleChooseDifferentService = () => {
+    dispatch(reset());
+    navigationPush(navigation, 'ChooseServicesScreen');
+  };
+
+  const filteredWorkshops = useMemo(
+    () =>
+      workshops.filter(
+        workshop =>
+          workshopFilter.length === 0 ||
+          workshop.name
+            ?.toLowerCase()
+            .trim()
+            .includes(workshopFilter.toLowerCase().trim()),
+      ),
+    [workshops, workshopFilter],
+  );
+
+  useEffect(() => {
+    setAreNoWorkshop(false);
+  }, [filteredWorkshops]);
+
   const handleCardPress = (workshop: WorkshopMini) => {
     navigationPush(navigation, 'WorkshopDetails', {workshop});
   };
@@ -49,7 +75,24 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
     }, 1000);
   };
 
-  return (
+  return filteredWorkshops.length === 0 && !loadingWorkshops ? (
+    <View className="flex-1 justify-center items-center mx-2.5">
+      <Text className="text-lg text-gray-600 text-center">
+        No workshops found. Try with a different service, or go to the
+        dashboard.
+      </Text>
+      <TicDriveButton
+        text="Look for a different service"
+        onClick={handleChooseDifferentService}
+      />
+      <TicDriveButton
+        text="Go back to dashboard"
+        onClick={() => {
+          navigationReset(navigation, 0, 'Hub', 'Home');
+        }}
+      />
+    </View>
+  ) : (
     <ScrollView
       className={`${!token ? 'mb-2' : ''} ${tailwindContainerCss}`}
       refreshControl={
@@ -66,25 +109,14 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
           <LoadingSpinner />
         </View>
       ) : (
-        workshops
-          .filter(
-            workshop =>
-              workshopFilter.length === 0 ||
-              workshop.name
-                ?.toLowerCase()
-                .trim()
-                .includes(workshopFilter?.toLowerCase().trim()),
-          )
-          .map((workshop, index) => {
-            return (
-              <TouchableOpacity
-                key={index}
-                onPress={() => handleCardPress(workshop)}
-              >
-                <WorkshopCard workshop={workshop} />
-              </TouchableOpacity>
-            );
-          })
+        filteredWorkshops.map((workshop, index) => (
+          <TouchableOpacity
+            key={workshop.id || index}
+            onPress={() => handleCardPress(workshop)}
+          >
+            <WorkshopCard workshop={workshop} />
+          </TouchableOpacity>
+        ))
       )}
     </ScrollView>
   );
