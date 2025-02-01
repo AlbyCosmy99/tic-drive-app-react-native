@@ -1,14 +1,24 @@
 import WorkshopsState from '@/types/reduxTypes/states/WorkshopsState';
-import {createSlice} from '@reduxjs/toolkit';
+import  { WorkshopMini } from '@/types/workshops/Workshop';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-const initialState: WorkshopsState = {};
+const initialState: WorkshopsState = {
+  selectedWorkshop: null
+};
 
 const workshopSlice = createSlice({
   name: 'workshops',
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    setSelectedWorkshop(
+      state: WorkshopsState,
+      action: PayloadAction<WorkshopMini>,
+    ) {
+      state.selectedWorkshop = action.payload;
+    },
+  },
 });
 
-export const {} = workshopSlice.actions;
+export const {setSelectedWorkshop} = workshopSlice.actions;
 
 export default workshopSlice.reducer;

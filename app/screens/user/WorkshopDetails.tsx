@@ -10,18 +10,15 @@ import Star from '../../../assets/svg/star.svg';
 import {Ionicons} from '@expo/vector-icons';
 import ClientReviewCards from '@/components/ClientReviewCards';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
-import {useRoute} from '@react-navigation/native';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import UserCalendarModal from '@/components/ui/modals/UserCalendarModal';
-import Workshop from '@/types/workshops/Workshop';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
+import { useAppSelector } from '@/stateManagement/redux/hooks';
 
 export default function WorkshopDetails() {
-  const route = useRoute();
-  //@ts-ignore
-  const {workshop} = (route?.params as Workshop) || {};
+  const workshop = useAppSelector(state => state.workshops.selectedWorkshop)
   const {navigation} = useContext(NavigationContext);
   const {areServicesAvailable} = useAreServicesAvailable();
 
@@ -134,7 +131,7 @@ export default function WorkshopDetails() {
               </View>
             )}
             <View className="flex justify-center items-center flex-1">
-              <UserCalendarModal workshop={workshop} />
+              <UserCalendarModal />
             </View>
           </View>
         </>

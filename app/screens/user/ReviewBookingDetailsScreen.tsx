@@ -16,7 +16,6 @@ import {useRoute} from '@react-navigation/native';
 import {Image} from '@rneui/themed';
 import {ActivityIndicator} from 'react-native';
 import Star from '../../../assets/svg/star.svg';
-import calculateWorkshopStars from '@/utils/workshops/calculateWorkshopStars';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import Verified from '../../../assets/svg/verified.svg';
 import CarRepair from '../../../assets/svg/servicesIcons/car_repair.svg';
@@ -32,12 +31,12 @@ import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import navigationReset from '@/services/navigation/reset';
 import {useServicesChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
-import WorkshopExtended from '@/types/workshops/Workshop';
+import { useAppSelector } from '@/stateManagement/redux/hooks';
+import WorkshopReviewinfo from '@/components/workshop/reviews/WorkshopReviewInfo';
 
 export default function ReviewBookingDetailsScreen() {
   const route = useRoute();
-  const {workshop, date, time} = route?.params as {
-    workshop: WorkshopExtended;
+  const {date, time} = route?.params as {
     date: string;
     time: string;
   };
@@ -47,6 +46,7 @@ export default function ReviewBookingDetailsScreen() {
   const timeDate = useMemo(() => time + ', ' + date, [date, time]);
 
   const servicesChoosen = useServicesChoosenByUsers();
+  const workshop = useAppSelector(state => state.workshops.selectedWorkshop)
 
   useEffect(() => {
     console.log(workshop);
@@ -106,16 +106,7 @@ export default function ReviewBookingDetailsScreen() {
                     <Verified width={24} name="verified" />
                   )}
                 </View>
-                <View style={styles.servicePositionContainer}>
-                  <Star
-                    width={24}
-                    name="location-pin"
-                    fill={Colors.light.ticText}
-                  />
-                  <Text className="text-sm" style={styles.serviceInfo}>
-                    {workshop.meanStars} ({workshop?.numberOfReviews} reviews)
-                  </Text>
-                </View>
+                <WorkshopReviewinfo meanStars={workshop?.meanStars} numberOfReviews={workshop?.numberOfReviews}/>
               </View>
             </View>
             <HorizontalLine color={Colors.light.lightGrey} />
@@ -129,7 +120,7 @@ export default function ReviewBookingDetailsScreen() {
                 icon={<CalendarIcon width={24} fill={Colors.light.ticText} />}
               />
               <IconTextPair
-                text={workshop.address}
+                text={workshop?.address}
                 icon={<LocationPin width={24} fill={Colors.light.ticText} />}
               />
             </View>
@@ -253,15 +244,6 @@ const styles = StyleSheet.create({
     height: 70,
     borderRadius: 10,
     marginRight: 12,
-  },
-  servicePositionContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 3,
-    marginTop: 10,
-  },
-  serviceInfo: {
-    color: Colors.light.placeholderText,
   },
   promoCodeContainer: {
     backgroundColor: '#F4F9F7',

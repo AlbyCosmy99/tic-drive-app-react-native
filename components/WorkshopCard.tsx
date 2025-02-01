@@ -17,9 +17,10 @@ import {WorkshopMini} from '@/types/workshops/Workshop';
 import IconTextPair from './ui/IconTextPair';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
-import {useAppSelector} from '@/stateManagement/redux/hooks';
+import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
+import { setSelectedWorkshop } from '@/stateManagement/redux/slices/workshopsSlice';
 
 interface WorkshopCardProps {
   workshop: WorkshopMini;
@@ -36,16 +37,18 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
   iconTextPairsContainerTailwindCss,
   iconTextPairContainerTailwindCss,
   iconTextPairTextTailwindCss,
-  imageContainerStyle,
+  imageContainerStyle
 }) => {
   const {areServicesAvailable} = useAreServicesAvailable();
   const servicesChoosenByUsers = useAppSelector(
     state => state.services.servicesChoosenByUsers,
   );
   const {navigation} = useContext(NavigationContext);
+  const dispatch = useAppDispatch()
 
   const handleCardPress = (workshop: WorkshopMini) => {
-    navigationPush(navigation, 'WorkshopDetails', {workshop});
+    navigationPush(navigation, 'WorkshopDetails');
+    dispatch(setSelectedWorkshop(workshop))
   };
 
   return (

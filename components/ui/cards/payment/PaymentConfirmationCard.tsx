@@ -1,6 +1,6 @@
 import {Colors} from '@/constants/Colors';
 import {useServicesChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
-import Workshop from '@/types/workshops/Workshop';
+import { WorkshopMini } from '@/types/workshops/Workshop';
 import {Image} from '@rneui/themed';
 import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
 import HorizontalLine from '../../HorizontalLine';
@@ -16,7 +16,7 @@ const PaymentConfirmationCard = ({
   workshop,
   timeDate,
 }: {
-  workshop: Workshop;
+  workshop: WorkshopMini | null | undefined;
   timeDate: string;
 }) => {
   const servicesChoosen = useServicesChoosenByUsers();

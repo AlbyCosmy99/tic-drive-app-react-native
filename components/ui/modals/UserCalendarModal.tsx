@@ -1,4 +1,4 @@
-import React, {useState, useRef, useContext, useMemo} from 'react';
+import {useState, useRef, useContext, useMemo} from 'react';
 import {
   Modal,
   View,
@@ -18,17 +18,14 @@ import {Colors} from '@/constants/Colors';
 import Day from '@/types/calendar/Day';
 import UserTimeSlot from '@/constants/temp/UserTimeSlots';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
-import Workshop from '@/types/workshops/Workshop';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
+import { useAppSelector } from '@/stateManagement/redux/hooks';
 
 const {height} = Dimensions.get('window');
 
-interface UserCalendarModalProps {
-  workshop: Workshop;
-}
 
-const UserCalendarModal: React.FC<UserCalendarModalProps> = ({workshop}) => {
+const UserCalendarModal = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const slideAnim = useRef(new Animated.Value(height)).current;
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
@@ -36,6 +33,7 @@ const UserCalendarModal: React.FC<UserCalendarModalProps> = ({workshop}) => {
   const token = useJwtToken();
   const {setLoginRouteName, setLoginRouteParams} = useContext(AuthContext);
   const {areServicesAvailable} = useAreServicesAvailable();
+  const workshop = useAppSelector(state => state.workshops.selectedWorkshop)
 
   const buttonText = useMemo(() => {
     if (!areServicesAvailable) {

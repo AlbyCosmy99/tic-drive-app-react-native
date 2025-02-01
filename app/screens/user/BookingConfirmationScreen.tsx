@@ -4,24 +4,24 @@ import {LinearGradient} from 'expo-linear-gradient';
 import {StyleSheet, Text, View} from 'react-native';
 import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
 import CheckIcon from '@/assets/svg/check_circle.svg';
-import {useAppDispatch} from '@/stateManagement/redux/hooks';
+import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import {reset} from '@/stateManagement/redux/slices/servicesSlice';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import formatCurrentDate from '@/utils/dates/FormatCurrentDate';
 import PaymentConfirmationCard from '@/components/ui/cards/payment/PaymentConfirmationCard';
 import {useRoute} from '@react-navigation/native';
-import Workshop from '@/types/workshops/Workshop';
 import {useMemo} from 'react';
 
 export default function BookingConfirmationScreen() {
   const dispatch = useAppDispatch();
 
   const route = useRoute();
-  const {workshop, date, time} = route?.params as {
-    workshop: Workshop;
+  const {date, time} = route?.params as {
     date: string;
     time: string;
   };
+
+  const workshop = useAppSelector(state => state.workshops.selectedWorkshop)
 
   const timeDate = useMemo(() => time + ', ' + date, [date, time]);
 
