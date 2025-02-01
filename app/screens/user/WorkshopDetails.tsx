@@ -16,6 +16,7 @@ import UserCalendarModal from '@/components/ui/modals/UserCalendarModal';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
 import { useAppSelector } from '@/stateManagement/redux/hooks';
+import WorkshopReviewinfo from '@/components/workshop/reviews/WorkshopReviewInfo';
 
 export default function WorkshopDetails() {
   const workshop = useAppSelector(state => state.workshops.selectedWorkshop)
@@ -84,12 +85,13 @@ export default function WorkshopDetails() {
               </View>
               <View className="mt-2.5">
                 <Text className="text-xl font-semibold">What people say</Text>
-                <View className="flex-1 flex-row items-center gap-0.5 mt-2.5">
+                {/* <View className="flex-1 flex-row items-center gap-0.5 mt-2.5">
                   <Star width={24} fill={Colors.light.ticText} />
                   <Text className="text-base">
                     {workshop.meanStars} ({workshop.numberOfReviews} reviews)
                   </Text>
-                </View>
+                </View> */}
+                <WorkshopReviewinfo meanStars={workshop.meanStars} numberOfReviews={workshop.numberOfReviews} containerTailwindCss='flex-1 flex-row items-center gap-1' textTailwindCss='text-base'/>
                 {/* todo */}
                 <ClientReviewCards id={5} />
               </View>

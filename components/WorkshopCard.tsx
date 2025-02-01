@@ -21,6 +21,7 @@ import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import { setSelectedWorkshop } from '@/stateManagement/redux/slices/workshopsSlice';
+import WorkshopReviewinfo from './workshop/reviews/WorkshopReviewInfo';
 
 interface WorkshopCardProps {
   workshop: WorkshopMini;
@@ -83,11 +84,11 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
             text={workshop.address}
             icon={<PinLocationIcon />}
           />
-          <IconTextPair
+          <WorkshopReviewinfo 
+            meanStars={workshop?.meanStars} 
+            numberOfReviews={workshop?.numberOfReviews}
             containerTailwindCss={`py-1.5 ${iconTextPairContainerTailwindCss}`}
-            textTailwindCss={`text-sm font-medium ${iconTextPairTextTailwindCss}`}
-            text={`${workshop.meanStars}/5 (${workshop.numberOfReviews} reviews)`}
-            icon={<StarIcon />}
+            textTailwindCss={`text-sm font-medium underline ${iconTextPairTextTailwindCss}`}
           />
         </View>
         {areServicesAvailable && (

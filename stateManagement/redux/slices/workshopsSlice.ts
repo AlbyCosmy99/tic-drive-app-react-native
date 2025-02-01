@@ -12,7 +12,7 @@ const workshopSlice = createSlice({
   reducers: {
     setSelectedWorkshop(
       state: WorkshopsState,
-      action: PayloadAction<WorkshopMini>,
+      action: PayloadAction<WorkshopMini | null>,
     ) {
       state.selectedWorkshop = action.payload;
     },

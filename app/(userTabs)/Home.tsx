@@ -8,7 +8,7 @@ import navigationPush from '@/services/navigation/push';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 import WorkshopCardMini from '@/components/workshop/WorkshopCardMini';
-import {useAppDispatch} from '@/stateManagement/redux/hooks';
+import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import useServices from '@/hooks/api/useServices';
 import {
   reset,
@@ -25,6 +25,7 @@ import useWorkshops from '@/hooks/api/workshops/useWorkshops';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import {Colors} from '@/constants/Colors';
 import HorizontalLine from '@/components/ui/HorizontalLine';
+import { setSelectedWorkshop } from '@/stateManagement/redux/slices/workshopsSlice';
 
 export default function UserHome() {
   const {setWorkshopFilter} = useContext(GlobalContext);
@@ -67,6 +68,7 @@ export default function UserHome() {
   useFocusEffect(() => {
     dispatch(setAreServicesOn(false));
     dispatch(reset());
+    dispatch(setSelectedWorkshop(null))
   });
 
   return (

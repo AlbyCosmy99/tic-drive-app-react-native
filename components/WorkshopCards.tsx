@@ -26,7 +26,7 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
   tailwindContainerCss = '',
   setAreNoWorkshop = () => {},
 }) => {
-  const {workshopFilter} = useContext(GlobalContext);
+  const {workshopFilter, setWorkshopFilter} = useContext(GlobalContext);
   const {navigation} = useContext(NavigationContext);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -61,7 +61,14 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
 
   useEffect(() => {
     setAreNoWorkshop(false);
+
   }, [filteredWorkshops]);
+
+  useEffect(() => {
+    return () => {
+      setWorkshopFilter('')
+    }
+  }, [])
 
   const handleCardPress = (workshop: WorkshopMini) => {
     navigationPush(navigation, 'WorkshopDetails', {workshop});

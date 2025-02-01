@@ -106,7 +106,7 @@ export default function ReviewBookingDetailsScreen() {
                     <Verified width={24} name="verified" />
                   )}
                 </View>
-                <WorkshopReviewinfo meanStars={workshop?.meanStars} numberOfReviews={workshop?.numberOfReviews}/>
+                <WorkshopReviewinfo meanStars={workshop?.meanStars} numberOfReviews={workshop?.numberOfReviews} textTailwindCss='text-tic' containerTailwindCss='gap-1'/>
               </View>
             </View>
             <HorizontalLine color={Colors.light.lightGrey} />

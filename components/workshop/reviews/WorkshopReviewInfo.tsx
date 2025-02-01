@@ -1,41 +1,34 @@
-import { Colors } from "@/constants/Colors"
 import { WorkshopMini } from "@/types/workshops/Workshop"
-import { StyleSheet, Text, View } from "react-native"
 import Star from '../../../assets/svg/star.svg';
+import IconTextPair from "@/components/ui/IconTextPair";
+import { useMemo } from "react";
 
 interface WorkshopReviewinfoProps {
     meanStars?: WorkshopMini['meanStars'],
     numberOfReviews?: WorkshopMini['numberOfReviews']
+    containerTailwindCss?: string;
+    textTailwindCss?: string;
 }
-const WorkshopReviewinfo: React.FC<WorkshopReviewinfoProps> = ({meanStars,numberOfReviews }) => {
+const WorkshopReviewinfo: React.FC<WorkshopReviewinfoProps> = ({meanStars,numberOfReviews,containerTailwindCss,textTailwindCss }) => {
     const maxReview = 5
+
+    const text = useMemo(() => {
+        if(numberOfReviews && numberOfReviews > 0) {
+            return `${meanStars}/${maxReview} (${numberOfReviews} ${numberOfReviews !== 1 ? 'reviews' : 'review'})`
+        }
+        return `${numberOfReviews} ${numberOfReviews !== 1 ? 'reviews' : 'review'}`
+    }, [numberOfReviews, meanStars])
     
     return (
-        meanStars && numberOfReviews && (
-            <View style={styles.servicePositionContainer}>
-              <Star
-                width={24}
-                name="location-pin"
-                fill={Colors.light.ticText}
-              />
-              <Text className="text-sm" style={styles.serviceInfo}>
-                {meanStars}/{maxReview} ({numberOfReviews} {numberOfReviews !== 1 ? 'reviews' : 'review'})
-              </Text>
-            </View>
+        (numberOfReviews || numberOfReviews === 0) && (
+            <IconTextPair
+                containerTailwindCss={`py-1.5 ${containerTailwindCss}`}
+                textTailwindCss={`text-sm font-medium ${textTailwindCss}`}
+                text={text}
+                icon={<Star />}
+            />
         )
     )
 }
-
-const styles = StyleSheet.create({
-    servicePositionContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 3,
-        marginTop: 10,
-    },
-    serviceInfo: {
-        color: Colors.light.placeholderText,
-    },
-})
 
 export default WorkshopReviewinfo
