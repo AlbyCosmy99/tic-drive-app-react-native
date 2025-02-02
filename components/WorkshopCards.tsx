@@ -16,6 +16,8 @@ import TicDriveButton from './ui/buttons/TicDriveButton';
 import navigationReset from '@/services/navigation/reset';
 import {reset} from '@/stateManagement/redux/slices/servicesSlice';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
+import { useFocusEffect } from 'expo-router';
+import { setSelectedWorkshop } from '@/stateManagement/redux/slices/workshopsSlice';
 
 interface WorkshopCardsProps {
   tailwindContainerCss?: string;
@@ -69,6 +71,10 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
       setWorkshopFilter('')
     }
   }, [])
+
+  useFocusEffect(() => {
+    dispatch(setSelectedWorkshop(null))
+  })
 
   const handleCardPress = (workshop: WorkshopMini) => {
     navigationPush(navigation, 'WorkshopDetails', {workshop});

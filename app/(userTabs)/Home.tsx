@@ -8,7 +8,7 @@ import navigationPush from '@/services/navigation/push';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 import WorkshopCardMini from '@/components/workshop/WorkshopCardMini';
-import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
+import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import useServices from '@/hooks/api/useServices';
 import {
   reset,

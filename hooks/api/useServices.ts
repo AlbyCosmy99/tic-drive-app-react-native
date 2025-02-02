@@ -1,12 +1,10 @@
 import {useEffect, useState} from 'react';
 import apiClient from '@/services/http/axiosClient';
 import Service from '@/types/Service';
-import { useAppSelector } from '@/stateManagement/redux/hooks';
 
-const useServices = () => {
+const useServices = (workshopId?: number) => {
   const [services, setServices] = useState<Service[]>([]);
   const [loadingServices, setLoadingServices] = useState(true);
-  const workshopId = useAppSelector(state => state.workshops.selectedWorkshop)?.id
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -25,10 +23,6 @@ const useServices = () => {
       fetchServices();
     }
   }, [loadingServices]);
-
-  useEffect(() => {
-    setLoadingServices(true)
-  }, [workshopId])
 
   return {services, loadingServices, setLoadingServices};
 };

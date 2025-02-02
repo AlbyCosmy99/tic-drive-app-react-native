@@ -4,7 +4,7 @@ import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import RegistrationCarDetailCard from '@/components/ui/cards/cars/RegistrationCarDetailCard';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import BoldTitle1 from '@/components/ui/text/BoldTitle1';
-import {useAppDispatch} from '@/stateManagement/redux/hooks';
+import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import {setAreServicesOn} from '@/stateManagement/redux/slices/servicesSlice';
 import Car from '@/types/Car';
 import {RouteProp, useRoute} from '@react-navigation/native';
@@ -23,6 +23,7 @@ const CarRegistrationConfirmationScreen = () => {
   const {carSelected} = route.params;
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
+  const selectedWorkshop = useAppSelector(state => state.workshops.selectedWorkshop)
 
   useFocusEffect(() => {
     dispatch(setAreServicesOn(true));
@@ -71,7 +72,7 @@ const CarRegistrationConfirmationScreen = () => {
           </View>
         </View>
       </View>
-      <TicDriveButton text="Confirm" routeName="WorkshopsListScreen" />
+      <TicDriveButton text="Confirm" routeName={`${selectedWorkshop ? 'ReviewBookingDetailsScreen' : 'WorkshopsListScreen'}`} />
     </SafeAreaViewLayout>
   );
 };
