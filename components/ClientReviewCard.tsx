@@ -1,43 +1,63 @@
 import {Colors} from '@/constants/Colors';
 import {StyleSheet, Text, View} from 'react-native';
-import Star from '../assets/svg/star.svg';
-import Review from '../constants/temp/Review';
 import {memo} from 'react';
 import CircularUserAvatar from './ui/avatars/CircularUserAvatar';
+import Review from '@/types/workshops/Review';
+import GradeIcon from '@/assets/svg/grades/grade.svg';
 
 type ClientReviewCardProps = {
   review: Review;
 };
 
 function ClientReviewCard({review}: ClientReviewCardProps) {
-  const calculateTimeFromReview = (when: Date) => {
-    const days = (Date.now() - when.getTime()) / (1000 * 60 * 60 * 24);
-    if (days < 30) return Math.floor(days) + ' days ago';
-    if (days < 365) return Math.floor(days / 30) + ' months ago';
-    const years = Math.floor(days / 365);
-    return years + (years === 1 ? ' year' : ' years') + ' ago';
-  };
+  function timeAgo(propDate: Date) {
+    const date = new Date(propDate);
+    const now = new Date();
+    const secondsDiff = Math.floor((now.getTime() - date.getTime()) / 1000);
+
+    const units: {[key: string]: number} = {
+      year: 31536000,
+      month: 2592000,
+      week: 604800,
+      day: 86400,
+      hour: 3600,
+      minute: 60,
+      second: 1,
+    };
+
+    for (const unit in units) {
+      const interval = Math.floor(secondsDiff / units[unit]);
+      if (interval >= 1) {
+        return `${interval} ${unit}${interval !== 1 ? 's' : ''} ago`;
+      }
+    }
+
+    return 'just now';
+  }
 
   return (
     <View
       className="flex-1 mt-5 pt-3.5 border-t-2"
       style={styles.reviewContainer}
     >
-      <View className="flex-row items-center justify-between">
+      <View className="flex-row items-start justify-between">
         <View className="flex-row">
-          <View>
-            <CircularUserAvatar uri={review.authorImageUrl} />
-          </View>
-          <View className="justify-center ml-2.5">
-            <Text className="text-base">{review.authorName}</Text>
+          <CircularUserAvatar uri={review.authorImageUrl} />
+          <View className="ml-2.5 flex-1">
+            <View className="flex-row justify-between">
+              <View className="justify-center">
+                <Text className="text-base font-medium">Nome autore</Text>
+              </View>
+              <View className="flex-row items-center mt-2.5 mr-3.5 gap-0.5">
+                {Array.from({length: review.stars}).map((_, index) => (
+                  <GradeIcon key={index} />
+                ))}
+              </View>
+            </View>
             <Text className="text-sm text-tic">
-              {calculateTimeFromReview(review.when)}
+              {timeAgo(review.whenPublished)}
             </Text>
           </View>
-        </View>
-        <View className="flex-row items-center mt-2.5 mr-3.5 gap-0.5">
-          <Star width={24} fill={Colors.light.ticText} />
-          <Text className="text-base">{review.stars}</Text>
         </View>
       </View>
       <View className="mt-2.5">
