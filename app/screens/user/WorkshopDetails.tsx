@@ -6,7 +6,6 @@ import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LocationPin from '../../../assets/svg/location_on.svg';
 import Verified from '../../../assets/svg/verified.svg';
-import Star from '../../../assets/svg/star.svg';
 import {Ionicons} from '@expo/vector-icons';
 import ClientReviewCards from '@/components/ClientReviewCards';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
@@ -38,7 +37,7 @@ export default function WorkshopDetails() {
         </TouchableOpacity>
         {workshop && (
           <>
-            <Text className="font-bold text-lg">Workshop</Text>
+            <Text className="font-bold text-lg">{workshop.name}</Text>
             {/* todo: if the favorite icon is pressable, make it not pressable if !token */}
             <View className={`${!token && 'opacity-0'}`}>
               {workshop.favourite ? (

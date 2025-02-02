@@ -12,8 +12,6 @@ import {
 import {Image} from 'react-native-elements';
 import PinLocationIcon from '@/assets/svg/location/PinLocation.svg';
 import GreenCheckIcon from '@/assets/svg/check_green.svg';
-import StarIcon from '@/assets/svg/star.svg';
-import {WorkshopMini} from '@/types/workshops/Workshop';
 import IconTextPair from './ui/IconTextPair';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
@@ -22,9 +20,10 @@ import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import { setSelectedWorkshop } from '@/stateManagement/redux/slices/workshopsSlice';
 import WorkshopReviewinfo from './workshop/reviews/WorkshopReviewInfo';
+import Workshop from '@/types/workshops/Workshop';
 
 interface WorkshopCardProps {
-  workshop: WorkshopMini;
+  workshop: Workshop;
   pressableContainerStyle?: StyleProp<ViewStyle>;
   iconTextPairsContainerTailwindCss?: string;
   iconTextPairContainerTailwindCss?: string;
@@ -47,7 +46,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
   const {navigation} = useContext(NavigationContext);
   const dispatch = useAppDispatch()
 
-  const handleCardPress = (workshop: WorkshopMini) => {
+  const handleCardPress = (workshop: Workshop) => {
     navigationPush(navigation, 'WorkshopDetails');
     dispatch(setSelectedWorkshop(workshop))
   };

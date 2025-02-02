@@ -1,5 +1,5 @@
 import WorkshopsState from '@/types/reduxTypes/states/WorkshopsState';
-import  { WorkshopMini } from '@/types/workshops/Workshop';
+import Workshop from '@/types/workshops/Workshop';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 const initialState: WorkshopsState = {
@@ -12,7 +12,7 @@ const workshopSlice = createSlice({
   reducers: {
     setSelectedWorkshop(
       state: WorkshopsState,
-      action: PayloadAction<WorkshopMini | null>,
+      action: PayloadAction<Workshop | null>,
     ) {
       state.selectedWorkshop = action.payload;
     },

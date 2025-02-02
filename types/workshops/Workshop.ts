@@ -1,6 +1,4 @@
-import Review from '@/constants/temp/Review';
-
-export interface WorkshopMini {
+export interface Workshop {
   id: number;
   name: string;
   address: string;
@@ -13,19 +11,8 @@ export interface WorkshopMini {
   servicePrice?: number;
   currency?: string;
   discount?: number;
+  favourite?: boolean;
+  verified?: boolean;
 }
 
-export interface WorkshopExtended extends WorkshopMini {
-  favourite: boolean;
-  position: string;
-  reviews: Review[];
-  freeCancellation: boolean;
-  price: string;
-  discount: number;
-  freeService: string;
-  verified: boolean;
-  services: string[];
-  images: string[];
-}
-
-export default WorkshopExtended;
+export default Workshop;

@@ -4,7 +4,6 @@ import {memo, useContext, useEffect, useMemo, useState} from 'react';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
-import {WorkshopMini} from '@/types/workshops/Workshop';
 import {useServicesChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
@@ -18,6 +17,7 @@ import {reset} from '@/stateManagement/redux/slices/servicesSlice';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import { useFocusEffect } from 'expo-router';
 import { setSelectedWorkshop } from '@/stateManagement/redux/slices/workshopsSlice';
+import Workshop from '@/types/workshops/Workshop';
 
 interface WorkshopCardsProps {
   tailwindContainerCss?: string;
@@ -76,7 +76,7 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
     dispatch(setSelectedWorkshop(null))
   })
 
-  const handleCardPress = (workshop: WorkshopMini) => {
+  const handleCardPress = (workshop: Workshop) => {
     navigationPush(navigation, 'WorkshopDetails', {workshop});
   };
 

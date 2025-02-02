@@ -1,6 +1,5 @@
 import {Colors} from '@/constants/Colors';
 import {useServicesChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
-import { WorkshopMini } from '@/types/workshops/Workshop';
 import {Image} from '@rneui/themed';
 import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
 import HorizontalLine from '../../HorizontalLine';
@@ -11,12 +10,13 @@ import PinIcon from '../../../../assets/svg/location_on.svg';
 import DirectionIcon from '../../../../assets/svg/assistant_direction.svg';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 import TicDriveOptionButton from '../../buttons/TicDriveOptionButton';
+import Workshop from '@/types/workshops/Workshop';
 
 const PaymentConfirmationCard = ({
   workshop,
   timeDate,
 }: {
-  workshop: WorkshopMini | null | undefined;
+  workshop: Workshop | null | undefined;
   timeDate: string;
 }) => {
   const servicesChoosen = useServicesChoosenByUsers();
@@ -39,7 +39,7 @@ const PaymentConfirmationCard = ({
           <Text className="text-xs font-medium" style={styles.pendingText}>
             Pending confirmation
           </Text>
-          <Text className="font-medium text-xl">{workshop.name}</Text>
+          <Text className="font-medium text-xl">{workshop?.name}</Text>
           <View className="bg-green-light p-1.5 rounded self-start">
             <Text className="text-green-dark font-semibold">
               {servicesChoosen.length ? servicesChoosen[0].title : ''}
@@ -54,10 +54,14 @@ const PaymentConfirmationCard = ({
           icon={<CreditCardIcon />}
           text={`${workshop.currency} ${calculateWorkshopDiscount(workshop.servicePrice ?? 0, workshop.discount)} total paid`}
         />
-        <IconTextPair
-          icon={<PinIcon fill={Colors.light.ticText} />}
-          text={workshop.address}
-        />
+        {
+          workshop?.address && (
+            <IconTextPair
+              icon={<PinIcon fill={Colors.light.ticText} />}
+              text={workshop.address}
+            />
+          )
+        }
       </View>
       <TicDriveOptionButton
         icon={<DirectionIcon />}

@@ -1,11 +1,11 @@
-import { WorkshopMini } from "@/types/workshops/Workshop"
 import Star from '../../../assets/svg/star.svg';
 import IconTextPair from "@/components/ui/IconTextPair";
+import Workshop from '@/types/workshops/Workshop';
 import { useMemo } from "react";
 
 interface WorkshopReviewinfoProps {
-    meanStars?: WorkshopMini['meanStars'],
-    numberOfReviews?: WorkshopMini['numberOfReviews']
+    meanStars?: Workshop['meanStars'],
+    numberOfReviews?: Workshop['numberOfReviews']
     containerTailwindCss?: string;
     textTailwindCss?: string;
 }

@@ -1,7 +1,7 @@
-import { WorkshopMini } from "@/types/workshops/Workshop";
+import Workshop from "@/types/workshops/Workshop";
 
 interface WorkshopsState {
-    selectedWorkshop: WorkshopMini | null | undefined
+    selectedWorkshop: Workshop | null | undefined
 }
 
 export default WorkshopsState;

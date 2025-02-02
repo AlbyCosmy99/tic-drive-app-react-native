@@ -1,13 +1,13 @@
 import {useEffect, useState} from 'react';
 import apiClient from '@/services/http/axiosClient';
-import {WorkshopMini} from '@/types/workshops/Workshop';
+import Workshop from '@/types/workshops/Workshop';
 
 const useWorkshops = (
   skip: number = 0,
   take: number = 10,
   serviceId: number = 0,
 ) => {
-  const [workshops, setWorkshops] = useState<WorkshopMini[]>([]);
+  const [workshops, setWorkshops] = useState<Workshop[]>([]);
   const [loadingWorkshops, setLoadingWorkshops] = useState(true);
 
   useEffect(() => {
