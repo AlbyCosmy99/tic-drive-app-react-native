@@ -1,11 +1,14 @@
 import {Colors} from '@/constants/Colors';
 import {Image} from '@rneui/themed';
 import {useContext} from 'react';
-import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import {ActivityIndicator, Share, StyleSheet, Text, View} from 'react-native';
+import {
+  Pressable,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LocationPin from '../../../assets/svg/location_on.svg';
-import Verified from '../../../assets/svg/verified.svg';
 import {Ionicons} from '@expo/vector-icons';
 import ClientReviewCards from '@/components/ClientReviewCards';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
@@ -14,18 +17,45 @@ import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import UserCalendarModal from '@/components/ui/modals/UserCalendarModal';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
-import { useAppSelector } from '@/stateManagement/redux/hooks';
+import {useAppSelector} from '@/stateManagement/redux/hooks';
 import WorkshopReviewinfo from '@/components/workshop/reviews/WorkshopReviewInfo';
+import GreenCheckIcon from '@/assets/svg/check_green.svg';
+import IconTextPair from '@/components/ui/IconTextPair';
+import ShareIcon from '@/assets/svg/share/shareIcon.svg';
+import SeeAllServicesCards from '@/components/services/SeeAllServicesCards';
+import HorizontalLine from '@/components/ui/HorizontalLine';
 
 export default function WorkshopDetails() {
-  const workshop = useAppSelector(state => state.workshops.selectedWorkshop)
+  const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
   const {navigation} = useContext(NavigationContext);
   const {areServicesAvailable} = useAreServicesAvailable();
 
   const token = useJwtToken();
 
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: `🚗✨ Discover ${workshop?.name} on TicDrive! ✨🚗\n
+      📍 *Location:* ${workshop?.address}\n
+      ⭐ *Rating:* ${workshop?.meanStars?.toFixed(1)} (${workshop?.numberOfReviews} reviews)\n
+      💰 ${workshop?.servicePrice ? `**Starting from:** ${workshop?.servicePrice} ${workshop?.currency}` : 'Check out our services!'}${workshop?.discount ? ` 🔥 **Limited-time discount:** ${workshop?.discount}% off!` : ''}\n
+      ${workshop?.isVerified ? '✅ *This workshop is verified by TicDrive!* 🔥' : ''}\n
+      🔗 *Book now on TicDrive!*`,
+      });
+
+      if (result.action === Share.sharedAction) {
+        console.log('Content shared');
+      } else if (result.action === Share.dismissedAction) {
+        console.log('Share dismissed');
+      }
+    } catch (error) {
+      console.error('Error sharing:', error);
+    }
+  };
+
   return (
     <SafeAreaViewLayout tailwindCss="p-2.5" styles={[styles.container]}>
+      {/* custom navbar */}
       <View className="flex-row items-center justify-between mr-2.5">
         <TouchableOpacity
           onPress={() => navigation?.goBack()}
@@ -36,18 +66,30 @@ export default function WorkshopDetails() {
           <Ionicons name="arrow-back" size={30} color="#000" />
         </TouchableOpacity>
         {workshop && (
-          <>
-            <Text className="font-bold text-lg">{workshop.name}</Text>
-            {/* todo: if the favorite icon is pressable, make it not pressable if !token */}
+          <IconTextPair
+            text={workshop.name}
+            icon={
+              workshop.isVerified && <GreenCheckIcon width={22} height={22} />
+            }
+            reverseIcon
+            containerTailwindCss="flex flex-row justify-center items-center gap-x-1.5"
+            textTailwindCss="font-semibold text-lg"
+          />
+        )}
+        <View className="flex flex-row gap-x-4 justify-center items-center">
+          {workshop && (
             <View className={`${!token && 'opacity-0'}`}>
               {workshop.favourite ? (
-                <Icon name="heart" size={30} color="red" />
+                <Icon name="heart" size={22} color="red" />
               ) : (
-                <Icon name="heart" size={30} color="white" />
+                <Icon name="heart" size={22} color="red" />
               )}
             </View>
-          </>
-        )}
+          )}
+          <Pressable onPress={onShare}>
+            <ShareIcon />
+          </Pressable>
+        </View>
       </View>
       {!workshop ? (
         <View className="flex-1 justify-center items-center">
@@ -57,7 +99,10 @@ export default function WorkshopDetails() {
         <>
           <ScrollView>
             <View style={styles.container} className="flex-1 p-2.5">
-              <View className="w-full relative" style={styles.cardContainer}>
+              <View
+                className="w-full relative mb-2"
+                style={styles.cardContainer}
+              >
                 <Image
                   source={{uri: workshop?.profileImageUrl}}
                   containerStyle={styles.image}
@@ -68,31 +113,37 @@ export default function WorkshopDetails() {
                     />
                   }
                 />
-                <View className="flex-1 flex-row items-center gap-0.5 mt-2">
+                <View className="flex-1 flex-row items-center gap-x-1.5 mt-2">
                   <Text className="text-2xl font-semibold">
                     {workshop.name}
                   </Text>
-                  {workshop.verified && <Verified width={24} />}
+                  {workshop.isVerified && (
+                    <GreenCheckIcon width={24} height={24} />
+                  )}
                 </View>
               </View>
-              <View className="mt-2.5">
+              <HorizontalLine />
+              <View className="mt-2">
+                <SeeAllServicesCards workshopId={workshop.id} />
+              </View>
+              <HorizontalLine />
+              <View className="mt-2">
                 <Text className="text-xl font-semibold">Location</Text>
-                <View className="flex-1 flex-row items-center gap-0.5 mt-2.5">
-                  <LocationPin width={24} fill={Colors.light.ticText} />
-                  <Text className="text-base">{workshop.address}</Text>
+                <View className="flex-1 flex-row items-center gap-0.5">
+                  <Text className="text-base font-medium underline text-tic">
+                    {workshop.address}
+                  </Text>
                 </View>
               </View>
               <View className="mt-2.5">
                 <Text className="text-xl font-semibold">What people say</Text>
-                {/* <View className="flex-1 flex-row items-center gap-0.5 mt-2.5">
-                  <Star width={24} fill={Colors.light.ticText} />
-                  <Text className="text-base">
-                    {workshop.meanStars} ({workshop.numberOfReviews} reviews)
-                  </Text>
-                </View> */}
-                <WorkshopReviewinfo meanStars={workshop.meanStars} numberOfReviews={workshop.numberOfReviews} containerTailwindCss='flex-1 flex-row items-center gap-1' textTailwindCss='text-base'/>
-                {/* todo */}
-                <ClientReviewCards id={5} />
+                <WorkshopReviewinfo
+                  meanStars={workshop.meanStars}
+                  numberOfReviews={workshop.numberOfReviews}
+                  containerTailwindCss="flex-1 flex-row items-center gap-x-1"
+                  textTailwindCss="text-base font-medium"
+                />
+                <ClientReviewCards workshopId={workshop.id} />
               </View>
             </View>
           </ScrollView>

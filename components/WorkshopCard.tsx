@@ -18,7 +18,7 @@ import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
-import { setSelectedWorkshop } from '@/stateManagement/redux/slices/workshopsSlice';
+import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice';
 import WorkshopReviewinfo from './workshop/reviews/WorkshopReviewInfo';
 import Workshop from '@/types/workshops/Workshop';
 
@@ -37,18 +37,18 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
   iconTextPairsContainerTailwindCss,
   iconTextPairContainerTailwindCss,
   iconTextPairTextTailwindCss,
-  imageContainerStyle
+  imageContainerStyle,
 }) => {
   const {areServicesAvailable} = useAreServicesAvailable();
   const servicesChoosenByUsers = useAppSelector(
     state => state.services.servicesChoosenByUsers,
   );
   const {navigation} = useContext(NavigationContext);
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   const handleCardPress = (workshop: Workshop) => {
     navigationPush(navigation, 'WorkshopDetails');
-    dispatch(setSelectedWorkshop(workshop))
+    dispatch(setSelectedWorkshop(workshop));
   };
 
   return (
@@ -83,8 +83,8 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
             text={workshop.address}
             icon={<PinLocationIcon />}
           />
-          <WorkshopReviewinfo 
-            meanStars={workshop?.meanStars} 
+          <WorkshopReviewinfo
+            meanStars={workshop?.meanStars}
             numberOfReviews={workshop?.numberOfReviews}
             containerTailwindCss={`py-1.5 ${iconTextPairContainerTailwindCss}`}
             textTailwindCss={`text-sm font-medium underline ${iconTextPairTextTailwindCss}`}

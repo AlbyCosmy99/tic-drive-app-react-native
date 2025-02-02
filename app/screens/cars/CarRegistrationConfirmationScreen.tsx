@@ -23,7 +23,9 @@ const CarRegistrationConfirmationScreen = () => {
   const {carSelected} = route.params;
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
-  const selectedWorkshop = useAppSelector(state => state.workshops.selectedWorkshop)
+  const selectedWorkshop = useAppSelector(
+    state => state.workshops.selectedWorkshop,
+  );
 
   useFocusEffect(() => {
     dispatch(setAreServicesOn(true));
@@ -72,7 +74,10 @@ const CarRegistrationConfirmationScreen = () => {
           </View>
         </View>
       </View>
-      <TicDriveButton text="Confirm" routeName={`${selectedWorkshop ? 'ReviewBookingDetailsScreen' : 'WorkshopsListScreen'}`} />
+      <TicDriveButton
+        text="Confirm"
+        routeName={`${selectedWorkshop ? 'ReviewBookingDetailsScreen' : 'WorkshopsListScreen'}`}
+      />
     </SafeAreaViewLayout>
   );
 };

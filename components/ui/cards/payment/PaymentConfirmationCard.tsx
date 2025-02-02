@@ -54,14 +54,12 @@ const PaymentConfirmationCard = ({
           icon={<CreditCardIcon />}
           text={`${workshop.currency} ${calculateWorkshopDiscount(workshop.servicePrice ?? 0, workshop.discount)} total paid`}
         />
-        {
-          workshop?.address && (
-            <IconTextPair
-              icon={<PinIcon fill={Colors.light.ticText} />}
-              text={workshop.address}
-            />
-          )
-        }
+        {workshop?.address && (
+          <IconTextPair
+            icon={<PinIcon fill={Colors.light.ticText} />}
+            text={workshop.address}
+          />
+        )}
       </View>
       <TicDriveOptionButton
         icon={<DirectionIcon />}

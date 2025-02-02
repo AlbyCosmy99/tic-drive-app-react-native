@@ -3,7 +3,7 @@ import Workshop from '@/types/workshops/Workshop';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 const initialState: WorkshopsState = {
-  selectedWorkshop: null
+  selectedWorkshop: null,
 };
 
 const workshopSlice = createSlice({

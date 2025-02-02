@@ -8,7 +8,7 @@ import {UserCategory} from '@/types/User';
 import {reset} from '@/stateManagement/redux/slices/servicesSlice';
 import useServices from '@/hooks/api/useServices';
 import LoadingSpinner from './ui/loading/LoadingSpinner';
-import { useAppSelector } from '@/stateManagement/redux/hooks';
+import {useAppSelector} from '@/stateManagement/redux/hooks';
 
 interface ServicesCardsProps {
   isSingleChoice?: boolean;
@@ -22,7 +22,9 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const selectedWorkshop = useAppSelector(state => state.workshops.selectedWorkshop)
+  const selectedWorkshop = useAppSelector(
+    state => state.workshops.selectedWorkshop,
+  );
   const {services, loadingServices} = useServices(selectedWorkshop?.id);
 
   useEffect(() => {

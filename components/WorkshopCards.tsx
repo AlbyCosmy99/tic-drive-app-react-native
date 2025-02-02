@@ -15,8 +15,8 @@ import TicDriveButton from './ui/buttons/TicDriveButton';
 import navigationReset from '@/services/navigation/reset';
 import {reset} from '@/stateManagement/redux/slices/servicesSlice';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
-import { useFocusEffect } from 'expo-router';
-import { setSelectedWorkshop } from '@/stateManagement/redux/slices/workshopsSlice';
+import {useFocusEffect} from 'expo-router';
+import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice';
 import Workshop from '@/types/workshops/Workshop';
 
 interface WorkshopCardsProps {
@@ -63,18 +63,17 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
 
   useEffect(() => {
     setAreNoWorkshop(false);
-
   }, [filteredWorkshops]);
 
   useEffect(() => {
     return () => {
-      setWorkshopFilter('')
-    }
-  }, [])
+      setWorkshopFilter('');
+    };
+  }, []);
 
   useFocusEffect(() => {
-    dispatch(setSelectedWorkshop(null))
-  })
+    dispatch(setSelectedWorkshop(null));
+  });
 
   const handleCardPress = (workshop: Workshop) => {
     navigationPush(navigation, 'WorkshopDetails', {workshop});
@@ -91,8 +90,7 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
   return filteredWorkshops.length === 0 && !loadingWorkshops ? (
     <View className="flex-1 justify-center items-center mx-2.5">
       <Text className="text-lg text-gray-600 text-center">
-        No workshop found. Try with a different service, or go to the
-        dashboard.
+        No workshop found. Try with a different service, or go to the dashboard.
       </Text>
       <TicDriveButton
         text="Look for a different service"

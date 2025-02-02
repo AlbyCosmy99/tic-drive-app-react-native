@@ -6,7 +6,7 @@ import workshopsReducer from './workshopsSlice';
 const rootReducer = combineReducers({
   auth: authReducer,
   services: servicesReducer,
-  workshops: workshopsReducer
+  workshops: workshopsReducer,
 });
 
 export default rootReducer;

@@ -31,7 +31,7 @@ import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import navigationReset from '@/services/navigation/reset';
 import {useServicesChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
-import { useAppSelector } from '@/stateManagement/redux/hooks';
+import {useAppSelector} from '@/stateManagement/redux/hooks';
 import WorkshopReviewinfo from '@/components/workshop/reviews/WorkshopReviewInfo';
 
 export default function ReviewBookingDetailsScreen() {
@@ -46,7 +46,7 @@ export default function ReviewBookingDetailsScreen() {
   const timeDate = useMemo(() => time + ', ' + date, [date, time]);
 
   const servicesChoosen = useServicesChoosenByUsers();
-  const workshop = useAppSelector(state => state.workshops.selectedWorkshop)
+  const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
 
   useEffect(() => {
     console.log(workshop);
@@ -106,7 +106,12 @@ export default function ReviewBookingDetailsScreen() {
                     <Verified width={24} name="verified" />
                   )}
                 </View>
-                <WorkshopReviewinfo meanStars={workshop?.meanStars} numberOfReviews={workshop?.numberOfReviews} textTailwindCss='text-tic' containerTailwindCss='gap-1'/>
+                <WorkshopReviewinfo
+                  meanStars={workshop?.meanStars}
+                  numberOfReviews={workshop?.numberOfReviews}
+                  textTailwindCss="text-tic"
+                  containerTailwindCss="gap-1"
+                />
               </View>
             </View>
             <HorizontalLine color={Colors.light.lightGrey} />

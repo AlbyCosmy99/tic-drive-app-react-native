@@ -21,7 +21,7 @@ export default function BookingConfirmationScreen() {
     time: string;
   };
 
-  const workshop = useAppSelector(state => state.workshops.selectedWorkshop)
+  const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
 
   const timeDate = useMemo(() => time + ', ' + date, [date, time]);
 

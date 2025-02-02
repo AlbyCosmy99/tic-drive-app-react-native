@@ -1,4 +1,4 @@
-export interface Workshop {
+interface Workshop {
   id: number;
   name: string;
   address: string;
@@ -12,7 +12,7 @@ export interface Workshop {
   currency?: string;
   discount?: number;
   favourite?: boolean;
-  verified?: boolean;
+  isVerified?: boolean;
 }
 
 export default Workshop;

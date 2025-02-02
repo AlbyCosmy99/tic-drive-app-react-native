@@ -20,10 +20,9 @@ import UserTimeSlot from '@/constants/temp/UserTimeSlots';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
-import { useAppSelector } from '@/stateManagement/redux/hooks';
+import {useAppSelector} from '@/stateManagement/redux/hooks';
 
 const {height} = Dimensions.get('window');
-
 
 const UserCalendarModal = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -33,7 +32,7 @@ const UserCalendarModal = () => {
   const token = useJwtToken();
   const {setLoginRouteName, setLoginRouteParams} = useContext(AuthContext);
   const {areServicesAvailable} = useAreServicesAvailable();
-  const workshop = useAppSelector(state => state.workshops.selectedWorkshop)
+  const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
 
   const buttonText = useMemo(() => {
     if (!areServicesAvailable) {
