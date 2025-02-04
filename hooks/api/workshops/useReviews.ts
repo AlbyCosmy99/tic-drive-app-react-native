@@ -13,7 +13,9 @@ const useReviews = (
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const res = await apiClient.get('reviews/' + workshopId);
+        const res = await apiClient.get(
+          `reviews/${workshopId}?skip=${skip}&take=${take}`,
+        );
         setReviews(res.data);
       } catch (err) {
         alert('Al momento il servizio non è disponibile. Riprova più tardi.');

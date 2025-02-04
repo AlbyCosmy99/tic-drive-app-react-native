@@ -24,6 +24,7 @@ import IconTextPair from '@/components/ui/IconTextPair';
 import ShareIcon from '@/assets/svg/share/shareIcon.svg';
 import SeeAllServicesCards from '@/components/services/SeeAllServicesCards';
 import HorizontalLine from '@/components/ui/HorizontalLine';
+import SeeAllReviewsCards from '@/components/workshop/reviews/SeeAllReviewsCards';
 
 export default function WorkshopDetails() {
   const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
@@ -143,7 +144,7 @@ export default function WorkshopDetails() {
                   containerTailwindCss="flex-1 flex-row items-center gap-x-1"
                   textTailwindCss="text-base font-medium"
                 />
-                <ClientReviewCards workshopId={workshop.id} />
+                <SeeAllReviewsCards workshopId={workshop.id} />
               </View>
             </View>
           </ScrollView>

@@ -15,7 +15,6 @@ import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import {useRoute} from '@react-navigation/native';
 import {Image} from '@rneui/themed';
 import {ActivityIndicator} from 'react-native';
-import Star from '../../../assets/svg/star.svg';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import Verified from '../../../assets/svg/verified.svg';
 import CarRepair from '../../../assets/svg/servicesIcons/car_repair.svg';
