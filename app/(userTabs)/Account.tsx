@@ -8,7 +8,7 @@ import AddIcon from '../../assets/svg/add.svg';
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 import IconTextPair from '@/components/ui/IconTextPair';
 import TicDriveAuthButton from '@/components/ui/buttons/TicDriveAuthButton';
-
+import FavoriteIcon from '@/assets/svg/favouriteIcon.svg';
 export default function UserAccount() {
   const user = useAppSelector(state => state.auth.user);
 
@@ -35,12 +35,6 @@ export default function UserAccount() {
           <View className="my-4">
             <Text className="font-medium text-2xl">Account</Text>
             <View>
-              <IconTextPair
-                text="Personal informations"
-                icon={<AddIcon />}
-                textTailwindCss="text-base font-medium"
-                containerTailwindCss="gap-1 pt-2 pb-1"
-              />
               <IconTextPair
                 text="Phone number"
                 icon={<AddIcon />}

@@ -1,7 +1,7 @@
 import {Colors} from '../../constants/Colors';
 import HomeIcon from '../../assets/svg/homeIcon.svg';
 import BookingsIcon from '../../assets/svg/bookingsIcon.svg';
-import FavouriteIcon from '../../assets/svg/favouriteIcon.svg';
+import ServicesIcon from '@/assets/svg/servicesIcons/services.svg';
 import ChatIcon from '../../assets/svg/chatIcon.svg';
 import AccountIcon from '../../assets/svg/accountIcon.svg';
 import HomeTab from './Home';
@@ -56,7 +56,7 @@ export default function UserTabLayout() {
           title: 'Services',
           headerShown: false,
           tabBarIcon: ({color}) => (
-            <FavouriteIcon width={28} fill={color} name="Home" />
+            <ServicesIcon width={28} fill={color} name="Services" />
           ),
         }}
       />

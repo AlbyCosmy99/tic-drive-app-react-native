@@ -1,4 +1,3 @@
-import {Colors} from '@/constants/Colors';
 import {StyleSheet, Text, View} from 'react-native';
 import {memo} from 'react';
 import CircularUserAvatar from './ui/avatars/CircularUserAvatar';
@@ -36,10 +35,7 @@ function ClientReviewCard({review}: ClientReviewCardProps) {
   }
 
   return (
-    <View
-      className="flex-1 mt-5 pt-3.5 border-t-2"
-      style={styles.reviewContainer}
-    >
+    <View style={[styles.container, styles.shadow]}>
       <View className="flex-row items-start justify-between">
         <View className="flex-row">
           <CircularUserAvatar uri={review.authorImageUrl} />
@@ -68,11 +64,20 @@ function ClientReviewCard({review}: ClientReviewCardProps) {
 }
 
 const styles = StyleSheet.create({
-  reviewContainer: {
-    borderTopColor: '#ebebeb',
+  container: {
+    flex: 1,
+    marginTop: 20,
+    paddingTop: 14,
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: 'white',
   },
-  when: {
-    color: Colors.light.placeholderText,
+  shadow: {
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 4},
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 4,
   },
 });
 
