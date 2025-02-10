@@ -13,10 +13,21 @@ import HorizontalLine from '../ui/HorizontalLine';
 
 interface SeeAllServicesCardsProps {
   workshopId?: number;
+  topHorizontalLine?: boolean;
+  bottomHorizontalLine?: boolean;
+  showSubtitle?: boolean;
 }
 
 const SeeAllServicesCards = forwardRef(
-  ({workshopId}: SeeAllServicesCardsProps, ref) => {
+  (
+    {
+      workshopId,
+      topHorizontalLine = true,
+      bottomHorizontalLine = true,
+      showSubtitle = false,
+    }: SeeAllServicesCardsProps,
+    ref,
+  ) => {
     const dispatch = useAppDispatch();
     const {navigation} = useContext(NavigationContext);
     const {services, loadingServices, setLoadingServices} =
@@ -41,10 +52,12 @@ const SeeAllServicesCards = forwardRef(
     ) : (
       services.length > 0 && (
         <View>
-          <HorizontalLine />
-          <Text className="font-medium text-base mt-2 mb-3">
-            Services offered
-          </Text>
+          {topHorizontalLine && <HorizontalLine />}
+          {showSubtitle && (
+            <Text className="font-medium text-base mt-2 mb-3 mx-2.5">
+              Services offered
+            </Text>
+          )}
           <View className="flex-row flex-wrap justify-center items-start">
             {services.slice(0, 4).map((service, index) => (
               <CrossPlatformButtonLayout
@@ -68,7 +81,9 @@ const SeeAllServicesCards = forwardRef(
               <Text className="text-base font-medium">See all services</Text>
             </Pressable>
           )}
-          <HorizontalLine tailwindCssContainer="mt-2" />
+          {bottomHorizontalLine && (
+            <HorizontalLine tailwindCssContainer="mt-2" />
+          )}
         </View>
       )
     );

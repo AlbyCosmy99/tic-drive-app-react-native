@@ -121,7 +121,7 @@ export default function WorkshopDetails() {
               </View>
 
               <View className="mt-2">
-                <SeeAllServicesCards workshopId={workshop.id} />
+                <SeeAllServicesCards workshopId={workshop.id} showSubtitle />
               </View>
               <View className="mt-2">
                 <Text className="text-xl font-semibold">Location</Text>

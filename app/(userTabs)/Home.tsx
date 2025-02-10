@@ -128,9 +128,8 @@ export default function UserHome() {
             <Text className="font-semibold text-xl m-2.5 mt-0">
               Discover services and book
             </Text>
-            <SeeAllServicesCards ref={servicesRef} />
+            <SeeAllServicesCards ref={servicesRef} topHorizontalLine={false} />
           </View>
-          {!servicesRef.current?.loadingServices && <HorizontalLine />}
           <View className="mt-0.5 mb-1">
             <Text className="font-semibold text-xl m-2.5 mt-1">Reminder</Text>
             <Pressable
