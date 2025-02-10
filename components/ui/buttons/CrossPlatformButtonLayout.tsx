@@ -1,6 +1,6 @@
 import isAndroidPlatform from "@/utils/devices/isAndroidPlatform";
 import { View } from "react-native";
-import { Pressable, TouchableOpacity, TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { Pressable, TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 interface CrossPlatformButtonLayoutProps {
     children: React.ReactNode;

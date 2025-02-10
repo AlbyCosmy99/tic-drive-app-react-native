@@ -1,4 +1,5 @@
 import {removeSecureToken} from '@/services/auth/secureStore/setToken';
+import navigationPush from '@/services/navigation/push';
 import navigationReplace from '@/services/navigation/replace';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
@@ -36,9 +37,14 @@ const TicDriveAuthButton: React.FC<TicDriveAuthButtonProps> = ({
     if (action === 'logout') {
       handleLogout();
     }
+    if(action === 'login') {
+      navigationPush(navigation, 'UserAuthenticationScreen', {
+        isUser: true,
+      });
+    }
   };
 
-  return loading ? (
+  return loading && action === 'logout' ? (
     <View className="p-2.5">
       <Text className="text-lg text-center text-tic">Goodbye!</Text>
     </View>

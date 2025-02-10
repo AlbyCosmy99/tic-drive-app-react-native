@@ -42,7 +42,9 @@ export default function UserHome() {
   };
 
   const handleOnRegisterVehicle = () => {
-    navigationPush(navigation, 'RegisterVehicleScreen');
+    token ? navigationPush(navigation, 'RegisterVehicleScreen') : navigationPush(navigation, 'UserAuthenticationScreen', {
+      isUser: true,
+    });
     //to-do: once the vehicle is registered instead of going to workshops, go to vehicles and register it on account
   };
 
@@ -127,8 +129,7 @@ export default function UserHome() {
             <SeeAllServicesCards ref={servicesRef} />
           </View>
           {!servicesRef.current?.loadingServices && <HorizontalLine />}
-          {token && (
-            <View className="mt-0.5 mb-1">
+          <View className="mt-0.5 mb-1">
               <Text className="font-semibold text-xl m-2.5 mt-1">Reminder</Text>
               <Pressable
                 className="border-2 border-grey-light items-center justify-center p-1 mx-2.5 my-0.5 rounded-xl"
@@ -143,7 +144,6 @@ export default function UserHome() {
                 />
               </Pressable>
             </View>
-          )}
         </ScrollView>
       </SafeAreaViewLayout>
     </LinearGradientViewLayout>

@@ -41,7 +41,7 @@ const SeeAllServicesCards = forwardRef(
       <View>
         <View className="flex-row flex-wrap justify-center items-start">
           {services.slice(0, 4).map((service, index) => (
-            <CrossPlatformButtonLayout onPress={() => handleOnSelectService(service)}>
+            <CrossPlatformButtonLayout onPress={() => handleOnSelectService(service)} key={service.id}>
               {service?.icon && (
                 <Image source={{uri: service.icon}} width={24} height={24} />
               )}

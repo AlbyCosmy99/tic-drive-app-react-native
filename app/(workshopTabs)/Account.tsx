@@ -1,10 +1,7 @@
-import {Colors} from '@/constants/Colors';
-import {SafeAreaView, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
-import {LinearGradient} from 'expo-linear-gradient';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
-import {globalStyles} from '@/styles/globalStyles';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
