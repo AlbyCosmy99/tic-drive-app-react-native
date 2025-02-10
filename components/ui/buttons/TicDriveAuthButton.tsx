@@ -37,7 +37,7 @@ const TicDriveAuthButton: React.FC<TicDriveAuthButtonProps> = ({
     if (action === 'logout') {
       handleLogout();
     }
-    if(action === 'login') {
+    if (action === 'login') {
       navigationPush(navigation, 'UserAuthenticationScreen', {
         isUser: true,
       });

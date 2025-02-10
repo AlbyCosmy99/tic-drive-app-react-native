@@ -42,9 +42,11 @@ export default function UserHome() {
   };
 
   const handleOnRegisterVehicle = () => {
-    token ? navigationPush(navigation, 'RegisterVehicleScreen') : navigationPush(navigation, 'UserAuthenticationScreen', {
-      isUser: true,
-    });
+    token
+      ? navigationPush(navigation, 'RegisterVehicleScreen')
+      : navigationPush(navigation, 'UserAuthenticationScreen', {
+          isUser: true,
+        });
     //to-do: once the vehicle is registered instead of going to workshops, go to vehicles and register it on account
   };
 
@@ -130,20 +132,20 @@ export default function UserHome() {
           </View>
           {!servicesRef.current?.loadingServices && <HorizontalLine />}
           <View className="mt-0.5 mb-1">
-              <Text className="font-semibold text-xl m-2.5 mt-1">Reminder</Text>
-              <Pressable
-                className="border-2 border-grey-light items-center justify-center p-1 mx-2.5 my-0.5 rounded-xl"
-                onPress={() => handleOnRegisterVehicle()}
-              >
-                <IconTextPair
-                  text="Register your first vehicle"
-                  icon={<AddIcon />}
-                  textTailwindCss="text-base font-medium text-drive"
-                  containerTailwindCss="py-0"
-                  reverseIcon={true}
-                />
-              </Pressable>
-            </View>
+            <Text className="font-semibold text-xl m-2.5 mt-1">Reminder</Text>
+            <Pressable
+              className="border-2 border-grey-light items-center justify-center p-1 mx-2.5 my-0.5 rounded-xl"
+              onPress={() => handleOnRegisterVehicle()}
+            >
+              <IconTextPair
+                text="Register your first vehicle"
+                icon={<AddIcon />}
+                textTailwindCss="text-base font-medium text-drive"
+                containerTailwindCss="py-0"
+                reverseIcon={true}
+              />
+            </Pressable>
+          </View>
         </ScrollView>
       </SafeAreaViewLayout>
     </LinearGradientViewLayout>

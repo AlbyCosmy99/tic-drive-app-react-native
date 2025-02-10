@@ -12,12 +12,10 @@ import useJwtToken from '@/hooks/auth/useJwtToken';
 import NotLogged from '@/components/auth/NotLogged';
 export default function UserAccount() {
   const user = useAppSelector(state => state.auth.user);
-  const token = useJwtToken()
+  const token = useJwtToken();
 
-  if(!token) {
-    return (
-      <NotLogged />
-    )
+  if (!token) {
+    return <NotLogged />;
   }
 
   return (
@@ -34,7 +32,7 @@ export default function UserAccount() {
             uri="https://images.ladbible.com/resize?type=webp&quality=70&width=3840&fit=contain&gravity=auto&url=https://images.ladbiblegroup.com/v3/assets/bltb5d92757ac1ee045/bltc86e7943bcc0e006/6569cbef0b642304079a348b/AI-creates-what-the-average-person.png%3Fcrop%3D590%2C590%2Cx0%2Cy0"
           />
           <View>
-          <Text className="font-semibold text-xl">{user?.name}</Text>
+            <Text className="font-semibold text-xl">{user?.name}</Text>
             <Text className="text-tic">New York, USA</Text>
           </View>
         </View>

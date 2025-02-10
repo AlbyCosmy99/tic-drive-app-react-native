@@ -1,5 +1,8 @@
 import {Image, Text, View} from 'react-native';
-import {Pressable, TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import {
+  Pressable,
+  TouchableWithoutFeedback,
+} from 'react-native-gesture-handler';
 import LoadingSpinner from '../ui/loading/LoadingSpinner';
 import navigationPush from '@/services/navigation/push';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
@@ -41,7 +44,10 @@ const SeeAllServicesCards = forwardRef(
       <View>
         <View className="flex-row flex-wrap justify-center items-start">
           {services.slice(0, 4).map((service, index) => (
-            <CrossPlatformButtonLayout onPress={() => handleOnSelectService(service)} key={service.id}>
+            <CrossPlatformButtonLayout
+              onPress={() => handleOnSelectService(service)}
+              key={service.id}
+            >
               {service?.icon && (
                 <Image source={{uri: service.icon}} width={24} height={24} />
               )}

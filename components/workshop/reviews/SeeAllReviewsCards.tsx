@@ -1,11 +1,11 @@
 import ClientReviewCard from '@/components/ClientReviewCard';
 import LoadingSpinner from '@/components/ui/loading/LoadingSpinner';
 import useReviews from '@/hooks/api/workshops/useReviews';
-import { Text, View, StyleSheet } from 'react-native';
-import { Pressable } from 'react-native-gesture-handler';
+import {Text, View, StyleSheet} from 'react-native';
+import {Pressable} from 'react-native-gesture-handler';
 
-const SeeAllReviewsCards = ({ workshopId }: { workshopId: number }) => {
-  const { reviews, loadingReviews } = useReviews(workshopId, 0, 2);
+const SeeAllReviewsCards = ({workshopId}: {workshopId: number}) => {
+  const {reviews, loadingReviews} = useReviews(workshopId, 0, 2);
 
   const handleOnSeeAllReviews = () => {
     console.log('all reviews');

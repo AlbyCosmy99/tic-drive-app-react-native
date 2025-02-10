@@ -15,7 +15,7 @@ import ChooseServicesScreen from '../screens/ChooseServicesScreen';
 const Tab = createBottomTabNavigator();
 
 export default function UserTabLayout() {
-  const PRESSED_COLOR = Colors.light.green.drive
+  const PRESSED_COLOR = Colors.light.green.drive;
   return (
     <Tab.Navigator
       screenOptions={{
@@ -50,9 +50,12 @@ export default function UserTabLayout() {
         options={{
           title: 'Services',
           headerShown: false,
-          tabBarIcon: ({color}) => (
-            color === PRESSED_COLOR ? <ServicesPressedIcon width={28} fill={color} name="Services" /> : <ServicesIcon width={28} fill={color} name="Services" />
-          ),
+          tabBarIcon: ({color}) =>
+            color === PRESSED_COLOR ? (
+              <ServicesPressedIcon width={28} fill={color} name="Services" />
+            ) : (
+              <ServicesIcon width={28} fill={color} name="Services" />
+            ),
         }}
       />
       <Tab.Screen
