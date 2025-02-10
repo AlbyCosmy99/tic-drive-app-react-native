@@ -1,5 +1,5 @@
 import {Image, Text, View} from 'react-native';
-import {Pressable} from 'react-native-gesture-handler';
+import {Pressable, TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import LoadingSpinner from '../ui/loading/LoadingSpinner';
 import navigationPush from '@/services/navigation/push';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
@@ -8,6 +8,7 @@ import {setServicesChoosenByUsers} from '@/stateManagement/redux/slices/services
 import {forwardRef, useContext, useImperativeHandle} from 'react';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import useServices from '@/hooks/api/useServices';
+import CrossPlatformButtonLayout from '../ui/buttons/CrossPlatformButtonLayout';
 
 interface SeeAllServicesCardsProps {
   workshopId?: number;
@@ -40,17 +41,12 @@ const SeeAllServicesCards = forwardRef(
       <View>
         <View className="flex-row flex-wrap justify-center items-start">
           {services.slice(0, 4).map((service, index) => (
-            <Pressable
-              key={service.id}
-              className="border-2 border-grey-light items-center justify-center p-2 mx-2.5 my-1 rounded-xl flex-row"
-              onPress={() => handleOnSelectService(service)}
-              style={{width: '40%', height: 40}}
-            >
+            <CrossPlatformButtonLayout onPress={() => handleOnSelectService(service)}>
               {service?.icon && (
                 <Image source={{uri: service.icon}} width={24} height={24} />
               )}
               <Text className="text-sm font-medium ml-2">{service.title}</Text>
-            </Pressable>
+            </CrossPlatformButtonLayout>
           ))}
         </View>
         {services.length > 4 && (
