@@ -1,6 +1,6 @@
 import {Colors} from '@/constants/Colors';
 import {Image} from '@rneui/themed';
-import {useContext} from 'react';
+import {useContext, useRef} from 'react';
 import {ActivityIndicator, Share, StyleSheet, Text, View} from 'react-native';
 import {
   Pressable,
@@ -8,9 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import LocationPin from '../../../assets/svg/location_on.svg';
 import {Ionicons} from '@expo/vector-icons';
-import ClientReviewCards from '@/components/ClientReviewCards';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
@@ -23,14 +21,12 @@ import GreenCheckIcon from '@/assets/svg/check_green.svg';
 import IconTextPair from '@/components/ui/IconTextPair';
 import ShareIcon from '@/assets/svg/share/shareIcon.svg';
 import SeeAllServicesCards from '@/components/services/SeeAllServicesCards';
-import HorizontalLine from '@/components/ui/HorizontalLine';
 import SeeAllReviewsCards from '@/components/workshop/reviews/SeeAllReviewsCards';
 
 export default function WorkshopDetails() {
   const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
   const {navigation} = useContext(NavigationContext);
   const {areServicesAvailable} = useAreServicesAvailable();
-
   const token = useJwtToken();
 
   const onShare = async () => {
@@ -123,11 +119,10 @@ export default function WorkshopDetails() {
                   )}
                 </View>
               </View>
-              <HorizontalLine />
+
               <View className="mt-2">
                 <SeeAllServicesCards workshopId={workshop.id} />
               </View>
-              <HorizontalLine />
               <View className="mt-2">
                 <Text className="text-xl font-semibold">Location</Text>
                 <View className="flex-1 flex-row items-center gap-0.5">

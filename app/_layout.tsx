@@ -31,6 +31,7 @@ import CarProvider from '@/stateManagement/contexts/car/CarProvider';
 import CarRegistrationConfirmationScreen from './screens/cars/CarRegistrationConfirmationScreen';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import WorkshopsListScreen from './screens/workshop/WorkshopsListScreen';
+import WorkshopReviewsListScreen from './screens/workshop/reviews/WorkshopReviewsListScreen';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -163,6 +164,16 @@ export default function RootLayout() {
                         options={({route}) => ({
                           title: 'ReviewBookingDetailsScreen',
                           headerShown: false,
+                          animation: getAnimation(route),
+                        })}
+                      />
+                      <Stack.Screen
+                        name="WorkshopReviewsListScreen"
+                        component={WorkshopReviewsListScreen}
+                        options={({route}) => ({
+                          title: 'WorkshopReviewsListScreen',
+                          headerShown: false,
+                          presentation: 'modal',
                           animation: getAnimation(route),
                         })}
                       />
