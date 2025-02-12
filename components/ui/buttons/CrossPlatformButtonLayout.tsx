@@ -16,7 +16,7 @@ const CrossPlatformButtonLayout: React.FC<CrossPlatformButtonLayoutProps> = ({
   children,
   onPress,
   containerTailwindCss = '',
-  styleContainer
+  styleContainer,
 }) => {
   return (
     <View

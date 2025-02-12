@@ -1,10 +1,10 @@
-import smallDevicebreakpointHeight from "@/constants/smallDevicebreakpointHeight";
-import { Dimensions } from "react-native";
+import smallDevicebreakpointHeight from '@/constants/smallDevicebreakpointHeight';
+import {Dimensions} from 'react-native';
 
 const {height} = Dimensions.get('window');
 
 const isScreenSmall = () => {
-    return height < smallDevicebreakpointHeight
-}
+  return height < smallDevicebreakpointHeight;
+};
 
-export default isScreenSmall
+export default isScreenSmall;
