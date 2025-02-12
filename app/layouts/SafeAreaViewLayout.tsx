@@ -2,6 +2,7 @@ import {globalStyles} from '@/styles/globalStyles';
 import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
 import React, {ReactNode} from 'react';
 import {SafeAreaView, StyleProp, ViewStyle} from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 interface SafeAreaViewLayoutProps {
   children: ReactNode;
@@ -15,12 +16,12 @@ const SafeAreaViewLayout: React.FC<SafeAreaViewLayoutProps> = ({
   tailwindCss = '',
 }) => {
   return (
-    <SafeAreaView
+    <SafeAreaProvider
       style={[...styles, globalStyles().safeAreaView]}
       className={`flex-1 ${tailwindCss} ${necessaryDeviceBottomInset()}`}
     >
       {children}
-    </SafeAreaView>
+    </SafeAreaProvider>
   );
 };
 
