@@ -25,6 +25,7 @@ import Workshop from '@/types/workshops/Workshop';
 interface WorkshopCardProps {
   workshop: Workshop;
   pressableContainerStyle?: StyleProp<ViewStyle>;
+  viewContainerStyle?: StyleProp<ViewStyle>;
   iconTextPairsContainerTailwindCss?: string;
   iconTextPairContainerTailwindCss?: string;
   iconTextPairTextTailwindCss?: string;
@@ -34,6 +35,7 @@ interface WorkshopCardProps {
 const WorkshopCard: React.FC<WorkshopCardProps> = ({
   workshop,
   pressableContainerStyle,
+  viewContainerStyle,
   iconTextPairsContainerTailwindCss,
   iconTextPairContainerTailwindCss,
   iconTextPairTextTailwindCss,
@@ -57,7 +59,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
       className="flex-1"
       onPress={() => handleCardPress(workshop)}
     >
-      <View className="border-2 rounded-2xl" style={styles.cardContainer}>
+      <View className="border-2 rounded-2xl" style={[styles.cardContainer, viewContainerStyle]}>
         <Image
           source={{uri: workshop.profileImageUrl}}
           containerStyle={[styles.image, imageContainerStyle]}
@@ -144,7 +146,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     position: 'relative',
     width: '100%',
-    borderColor: Colors.light.lightGrey,
+    borderColor: Colors.light.lightGrey
   },
   image: {
     width: '100%',
