@@ -1,5 +1,5 @@
 import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
-import {View} from 'react-native';
+import {View, ViewStyle} from 'react-native';
 import {
   Pressable,
   TouchableWithoutFeedback,
@@ -8,16 +8,20 @@ import {
 interface CrossPlatformButtonLayoutProps {
   children: React.ReactNode;
   onPress: () => void;
+  containerTailwindCss?: string;
+  styleContainer?: ViewStyle;
 }
 
 const CrossPlatformButtonLayout: React.FC<CrossPlatformButtonLayoutProps> = ({
   children,
   onPress,
+  containerTailwindCss = '',
+  styleContainer
 }) => {
   return (
     <View
-      style={{width: '40%', height: 40}}
-      className="border-2 border-grey-light p-2 mx-2.5 my-1 rounded-xl items-center justify-center flex-row"
+      style={styleContainer}
+      className={`border-2 border-grey-light p-2 my-1 rounded-xl items-center justify-center flex-row ${containerTailwindCss}`}
     >
       {isAndroidPlatform() ? (
         <TouchableWithoutFeedback

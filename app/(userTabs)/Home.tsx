@@ -25,6 +25,7 @@ import {Colors} from '@/constants/Colors';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice';
 import SeeAllServicesCards from '@/components/services/SeeAllServicesCards';
+import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
 
 export default function UserHome() {
   const {setWorkshopFilter} = useContext(GlobalContext);
@@ -110,14 +111,11 @@ export default function UserHome() {
                         />
                       ))}
                     </View>
-                    <Pressable
-                      className="border-2 border-grey-light items-center justify-center p-1 my-2.5 rounded-xl"
-                      onPress={handleOnSeeAllWorkshops}
-                    >
+                    <CrossPlatformButtonLayout onPress={handleOnSeeAllWorkshops} containerTailwindCss='border-2 border-grey-light items-center justify-center p-1 my-2.5 rounded-xl'>
                       <Text className="text-base font-medium">
-                        See all workshops
+                          See all workshops
                       </Text>
-                    </Pressable>
+                    </CrossPlatformButtonLayout>
                   </View>
                 )}
               </View>
