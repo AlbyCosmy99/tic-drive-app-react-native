@@ -26,14 +26,14 @@ const CrossPlatformButtonLayout: React.FC<CrossPlatformButtonLayoutProps> = ({
       {isAndroidPlatform() ? (
         <TouchableWithoutFeedback
           onPress={onPress}
-          className="items-center justify-center flex-row"
+          className="items-center justify-center flex-row bg-red-300 min-w-full"
         >
           {children}
         </TouchableWithoutFeedback>
       ) : (
         <Pressable
           onPress={onPress}
-          className="items-center justify-center flex-row"
+          className="items-center justify-center flex-row flex-1"
         >
           {children}
         </Pressable>
