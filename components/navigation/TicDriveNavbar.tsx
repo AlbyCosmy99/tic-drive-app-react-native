@@ -17,12 +17,14 @@ import navigationReplace from '@/services/navigation/replace';
 import TicDriveAuthButton from '../ui/buttons/TicDriveAuthButton';
 import navigationPush from '@/services/navigation/push';
 import useJwtToken from '@/hooks/auth/useJwtToken';
+import CrossPlatformButtonLayout from '../ui/buttons/CrossPlatformButtonLayout';
 
 interface TicDriveNavbarProps {
   isLoginAvailable?: boolean;
   canGoBack?: boolean;
   topContent?: React.ReactNode;
   rightContent?: React.ReactNode;
+  onRightContent?: () => void;
 }
 
 const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
@@ -30,6 +32,7 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
   canGoBack = null,
   topContent,
   rightContent,
+  onRightContent = () => {},
 }) => {
   const colorScheme = useColorScheme();
   const token = useJwtToken();
@@ -81,19 +84,23 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
         topContent
       )}
       <View className="flex-1 justify-end flex-row">
-        {!rightContent
-          ? isLoginAvailable &&
-            (token ? (
-              <TicDriveAuthButton action="logout" />
-            ) : (
-              <TicDriveAuthButton
-                onPress={() => {
-                  navigationPush(navigation, 'UserAuthenticationScreen');
-                }}
-                action="login"
-              />
-            ))
-          : rightContent}
+        {!rightContent ? (
+          isLoginAvailable &&
+          (token ? (
+            <TicDriveAuthButton action="logout" />
+          ) : (
+            <TicDriveAuthButton
+              onPress={() => {
+                navigationPush(navigation, 'UserAuthenticationScreen');
+              }}
+              action="login"
+            />
+          ))
+        ) : (
+          <CrossPlatformButtonLayout removeAllStyles onPress={onRightContent}>
+            {rightContent}
+          </CrossPlatformButtonLayout>
+        )}
       </View>
     </View>
   );

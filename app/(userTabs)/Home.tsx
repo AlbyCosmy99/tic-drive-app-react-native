@@ -3,13 +3,11 @@ import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
 import {useContext, useRef, useState} from 'react';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
-import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import navigationPush from '@/services/navigation/push';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 import WorkshopCardMini from '@/components/workshop/WorkshopCardMini';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
-import useServices from '@/hooks/api/useServices';
 import {
   reset,
   setAreServicesOn,
@@ -27,6 +25,7 @@ import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice
 import SeeAllServicesCards from '@/components/services/SeeAllServicesCards';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
+import {Entypo} from '@expo/vector-icons';
 
 export default function UserHome() {
   const {setWorkshopFilter} = useContext(GlobalContext);
@@ -70,7 +69,19 @@ export default function UserHome() {
   return (
     <LinearGradientViewLayout>
       <SafeAreaViewLayout>
-        <TicDriveNavbar isLoginAvailable={false} />
+        <TicDriveNavbar
+          isLoginAvailable={false}
+          rightContent={
+            !token && (
+              <Entypo name="login" size={32} color={Colors.light.ticText} />
+            )
+          }
+          onRightContent={() => {
+            navigationPush(navigation, 'UserAuthenticationScreen', {
+              isUser: true,
+            });
+          }}
+        />
         <View className="flex-row items-center">
           <TicDriveInput
             isLeftIcon={true}
@@ -133,7 +144,7 @@ export default function UserHome() {
             <SeeAllServicesCards ref={servicesRef} topHorizontalLine={false} />
           </View>
           <View
-            className="mt-0.5 mx-3 mb-1 p-1 pb-2 rounded-xl"
+            className="mx-3 mb-1 p-1 pb-2 rounded-xl"
             style={{backgroundColor: '#FFF8D5'}}
           >
             <Text className="font-semibold text-xl m-2.5 mt-1">Reminder</Text>

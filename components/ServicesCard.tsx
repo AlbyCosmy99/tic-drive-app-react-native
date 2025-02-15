@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     padding: 15,
     elevation: 1,
     borderWidth: 1,
-    height: height > smallDevicebreakpointHeight ? 130 : 120,
+    height: height > smallDevicebreakpointHeight ? 110 : 100,
   },
   pressedCard: {
     borderColor: Colors.light.green.drive,
