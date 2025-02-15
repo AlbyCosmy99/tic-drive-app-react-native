@@ -10,30 +10,32 @@ interface CrossPlatformButtonLayoutProps {
   onPress: () => void;
   containerTailwindCss?: string;
   styleContainer?: ViewStyle;
+  removeAllStyles?: boolean;
 }
 
 const CrossPlatformButtonLayout: React.FC<CrossPlatformButtonLayoutProps> = ({
   children,
   onPress,
+  removeAllStyles= false,
   containerTailwindCss = '',
   styleContainer,
 }) => {
   return (
     <View
       style={styleContainer}
-      className={`border-2 border-grey-light p-2 my-1 rounded-xl items-center justify-center flex-row ${containerTailwindCss}`}
+      className={`${removeAllStyles ? `${containerTailwindCss}` : `border-2 border-grey-light p-2 my-1 rounded-xl items-center justify-center flex-row ${containerTailwindCss}`}`}
     >
       {isAndroidPlatform() ? (
         <TouchableWithoutFeedback
           onPress={onPress}
-          className="items-center justify-center flex-row min-w-full"
+          className={`${removeAllStyles ? '' : 'items-center justify-center flex-row min-w-full'}`}
         >
           {children}
         </TouchableWithoutFeedback>
       ) : (
         <Pressable
           onPress={onPress}
-          className="items-center justify-center flex-row flex-1"
+          className={`${removeAllStyles ? '' : 'items-center justify-center flex-row flex-1'}`}
         >
           {children}
         </Pressable>

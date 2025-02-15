@@ -32,6 +32,7 @@ import CarRegistrationConfirmationScreen from './screens/cars/CarRegistrationCon
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import WorkshopsListScreen from './screens/workshop/WorkshopsListScreen';
 import WorkshopReviewsListScreen from './screens/workshop/reviews/WorkshopReviewsListScreen';
+import ChatScreen from './screens/chat/ChatScreen';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -219,6 +220,15 @@ export default function RootLayout() {
                         component={ConfirmEmailScreen}
                         options={({route}) => ({
                           title: 'ConfirmEmailScreen',
+                          headerShown: false,
+                          animation: getAnimation(route),
+                        })}
+                      />
+                         <Stack.Screen
+                        name="ChatScreen"
+                        component={ChatScreen}
+                        options={({route}) => ({
+                          title: 'ChatScreen',
                           headerShown: false,
                           animation: getAnimation(route),
                         })}

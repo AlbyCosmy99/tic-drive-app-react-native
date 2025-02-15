@@ -17,7 +17,7 @@ export default function ChooseServicesScreen() {
   const dispatch = useAppDispatch();
 
   //@ts-ignore
-  const {category} = route?.params ?? 'user';
+  const { category, buttonContainerTailwindCss } = route?.params ?? { category: 'user', buttonContainerTailwindCss: '' };
 
   const isUserLookingForServices = () => {
     return !(category === 'workshop');
@@ -65,7 +65,7 @@ export default function ChooseServicesScreen() {
             type={isUserLookingForServices() ? 'user' : 'workshop'}
           />
         </View>
-        <View className="mb-2">
+        <View className={`mb-2 ${buttonContainerTailwindCss}`}>
           <TicDriveButton
             text={isUserLookingForServices() ? 'Book a service' : 'Continue'}
             routeName={

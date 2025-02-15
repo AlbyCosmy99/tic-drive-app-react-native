@@ -57,6 +57,7 @@ export default function UserTabLayout() {
               <ServicesIcon width={28} fill={color} name="Services" />
             ),
         }}
+        initialParams={{buttonContainerTailwindCss: 'pb-1'}}
       />
       <Tab.Screen
         name="Bookings"
