@@ -16,7 +16,7 @@ interface CrossPlatformButtonLayoutProps {
 const CrossPlatformButtonLayout: React.FC<CrossPlatformButtonLayoutProps> = ({
   children,
   onPress,
-  removeAllStyles= false,
+  removeAllStyles = false,
   containerTailwindCss = '',
   styleContainer,
 }) => {

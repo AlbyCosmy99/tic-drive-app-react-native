@@ -224,7 +224,7 @@ export default function RootLayout() {
                           animation: getAnimation(route),
                         })}
                       />
-                         <Stack.Screen
+                      <Stack.Screen
                         name="ChatScreen"
                         component={ChatScreen}
                         options={({route}) => ({

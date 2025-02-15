@@ -17,7 +17,10 @@ export default function ChooseServicesScreen() {
   const dispatch = useAppDispatch();
 
   //@ts-ignore
-  const { category, buttonContainerTailwindCss } = route?.params ?? { category: 'user', buttonContainerTailwindCss: '' };
+  const {category, buttonContainerTailwindCss} = route?.params ?? {
+    category: 'user',
+    buttonContainerTailwindCss: '',
+  };
 
   const isUserLookingForServices = () => {
     return !(category === 'workshop');

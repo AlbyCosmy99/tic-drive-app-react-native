@@ -30,7 +30,7 @@ import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 
 export default function UserHome() {
   const {setWorkshopFilter} = useContext(GlobalContext);
-  const navigation = useTicDriveNavigation()
+  const navigation = useTicDriveNavigation();
   const [refreshing, setRefreshing] = useState(false);
   const servicesRef = useRef();
 
@@ -132,7 +132,10 @@ export default function UserHome() {
             </Text>
             <SeeAllServicesCards ref={servicesRef} topHorizontalLine={false} />
           </View>
-          <View className="mt-0.5 mx-3 mb-1 p-1 pb-2 rounded-xl" style={{backgroundColor: '#FFF8D5'}}>
+          <View
+            className="mt-0.5 mx-3 mb-1 p-1 pb-2 rounded-xl"
+            style={{backgroundColor: '#FFF8D5'}}
+          >
             <Text className="font-semibold text-xl m-2.5 mt-1">Reminder</Text>
             <Pressable
               className="border-2 border-grey-light items-center justify-center p-1 mx-2.5 my-0.5 rounded-xl bg-white"
