@@ -25,6 +25,8 @@ import useCarsMakes from '@/hooks/api/cars/useCarsMakes';
 import {useFocusEffect} from '@react-navigation/native';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import {setAreServicesOn} from '@/stateManagement/redux/slices/servicesSlice';
+import axios from 'axios';
+import isPlateNumber from '@/utils/car/isPlateNumber';
 
 function RegisterVehicleScreen() {
   const [segmentedControlSelection, setSegmentedControlSelection] =
@@ -39,6 +41,8 @@ function RegisterVehicleScreen() {
   const [isCarSearched, setIsCarSearched] = useState(false);
   const [loadingCarModels, setLoadingCarModels] = useState(false);
   const [models, setModels] = useState<Array<Car>>([]);
+  const [isPlateError, setIsPlateError] = useState(false)
+  const [errorYear, setErrorYear] = useState(false)
 
   const [carMakeDropdownData, setCarMakeDropdownData] = useState<
     TicDriveDropdownData | undefined
@@ -63,9 +67,11 @@ function RegisterVehicleScreen() {
       carSelectedByMakeAndModelCtx &&
       !!carSelectedByMakeAndModelCtx.engineDisplacement &&
       !!carSelectedByMakeAndModelCtx.fuel &&
-      !!carSelectedByMakeAndModelCtx.mileage
+      !!carSelectedByMakeAndModelCtx.year &&
+      !!carSelectedByMakeAndModelCtx.mileage &&
+      !errorYear
     );
-  }, [segmentedControlSelection, carSelectedByMakeAndModelCtx]);
+  }, [segmentedControlSelection, carSelectedByMakeAndModelCtx, errorYear]);
 
   const backgroundStyle = {
     backgroundColor:
@@ -73,6 +79,25 @@ function RegisterVehicleScreen() {
         ? Colors.light.backgroundLinearGradient.end
         : Colors.dark.background,
   };
+
+  const fetchByPlate = (plate: string) => {
+    if(isPlateNumber(plate)) {
+      // axios.get("https://automotive.openapi.com/IT-car/FV181EX", {
+      //   headers: {
+      //     "accept": "application/json",
+      //     "Authorization": "Bearer 67b1f7439ad74bab6d03ae1a"
+      //   }
+      // })
+      //   .then(response => console.log(response.data))
+      //   .catch(error => {
+      //     console.error('Error:', error)
+      //     setIsPlateError(true)
+      //   });
+    } else {
+      setIsPlateError(true)
+    }
+  }
+  // {"data": {"ABS": "", "AirBag": "", "CarMake": "MAZDA", "CarModel": "CX-5 2ª serie", "Description": "MAZDA CX-5 2ª serie", "EngineSize": "2191", "FuelType": "Diesel", "Immobiliser": "", "KType": "", "LicensePlate": "FV181EX", "MakeDescription": "MAZDA", "ModelDescription": "CX-5 2ª serie", "NumberOfDoors": "", "PowerCV": 184, "PowerFiscal": 21, "PowerKW": 135, "RegistrationYear": "2019", "TimeStamp": 1739716456, "Version": "MAZDA CX-5 2.2L Skyactiv-D 184 CV aut. AWD Exceed ( 1/2019 )", "Vin": ""}, "error": null, "message": "", "success": true}
 
   useEffect(() => {
     if (carMakeDropdownData) {
@@ -94,6 +119,7 @@ function RegisterVehicleScreen() {
         ...car,
         make: carMakeDropdownData?.value,
         model: carModelDropdownData?.value,
+        year: null //todo: ignorando l'year preso dal db e lo stiamo chiedendo sempre all'utente. Controllare se e' cio che desideriamo
       });
     }
   }, [carModelDropdownData]);
@@ -115,6 +141,7 @@ function RegisterVehicleScreen() {
   const handleOnRightIcon = () => {
     setCarSelectedByPlate(undefined);
     setIsCarSearched(false);
+    setIsPlateError(false)
   };
 
   useFocusEffect(() => {
@@ -141,25 +168,6 @@ function RegisterVehicleScreen() {
             <Text className="font-semibold mx-3.5 my-3.5 mb-0 text-lg">
               {segmentedControlSelection?.name}
             </Text>
-            {segmentedControlSelection?.index === 1 && (
-              <TicDriveInput
-                placeholder={segmentedControlSelection.placeholder ?? ''}
-                isRightIcon={true}
-                isTextUppercase={true}
-                onRightIcon={handleOnRightIcon}
-                onSubmit={value => {
-                  const car = cars.find(
-                    car =>
-                      //@ts-ignore
-                      car[option.keyString as CarRegistrationOptions]
-                        ?.toLowerCase()
-                        .trim() === value.toLowerCase().trim(),
-                  );
-                  setCarSelectedByPlate(car ? car : defaultCar);
-                  setIsCarSearched(true);
-                }}
-              />
-            )}
             {segmentedControlSelection?.index === 0 && (
               <ScrollView
                 className="mt-6 px-4"
@@ -196,9 +204,24 @@ function RegisterVehicleScreen() {
                   <CarDetailsByMakeAndModel
                     key={carModelDropdownData?.id}
                     carSelected={carSelectedByMakeAndModel}
+                    errorYear={errorYear}
+                    setErrorYear={setErrorYear}
                   />
                 )}
               </ScrollView>
+            )}
+            {segmentedControlSelection?.index === 1 && (
+              <>
+                <TicDriveInput
+                  placeholder={segmentedControlSelection.placeholder ?? ''}
+                  isRightIcon={true}
+                  isTextUppercase={true}
+                  onRightIcon={handleOnRightIcon}
+                  onSubmit={value => {fetchByPlate(value)}}
+                  containerStyle={{height: 85}}
+                />
+                {isPlateError && <Text className='font-medium text-md text-red-500 text-center'>Insert a valid plate number. Format: AA123BB</Text>}
+              </>
             )}
             {carNotFound && isCarSearched && (
               <Text className="text-base mx-auto text-red-600">

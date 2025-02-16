@@ -7,10 +7,14 @@ import React, {useContext, useEffect} from 'react';
 
 interface CarDetailsByMakeAndModelProps {
   carSelected: Car;
+  errorYear: boolean;
+  setErrorYear: (errorYear: boolean) => {}
 }
 
 const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
   carSelected,
+  errorYear,
+  setErrorYear
 }) => {
   const {carSelectedByMakeAndModel, setCarSelectedByMakeAndModel} =
     useContext(CarContext);
@@ -43,11 +47,7 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
   };
 
   const setCarYear = (year: number) => {
-    if (year >= 1886 && year <= new Date().getFullYear()) {
-      updateCarField({year});
-    } else {
-      console.error('Invalid year');
-    }
+    updateCarField({year});
   };
 
   const setCarEngineDisplacement = (engineDisplacement: string) => {
@@ -66,13 +66,23 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
     updateCarField({mileage});
   };
 
+  useEffect(() => {
+    console.log(carSelectedByMakeAndModel)
+  }, [carSelectedByMakeAndModel])
+
   return (
     <>
+    
       <TicDriveTextOrInput
         title="Year"
         placeholder="Insert car year"
         value={carSelected?.year}
         setValue={setCarYear}
+        keyboardType='numeric'
+        isErrorMessage={errorYear}
+        setIsErrorMessage={setErrorYear}
+        errorMessage='Invalid year'
+        onCheckError={() => carSelectedByMakeAndModel?.year > 0 &&  !(carSelectedByMakeAndModel?.year >= 1886 && carSelectedByMakeAndModel?.year <= new Date().getFullYear())}
       />
       <TicDriveDropdown
         placeholder="Choose the car fuel type"
@@ -90,15 +100,17 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
       /> */}
       <TicDriveTextOrInput
         title="Engine size"
-        placeholder="Es. 2.0"
+        placeholder="Es. 2,0"
         value={carSelected?.engineDisplacement}
         setValue={setCarEngineDisplacement}
+        keyboardType='numeric'
       />
       <TicDriveTextOrInput
         title="Mileage"
-        placeholder="Es. 10.000km"
+        placeholder="Es. 10000km"
         value={carSelected?.mileage}
         setValue={setCarMileage}
+        keyboardType='numeric'
       />
     </>
   );

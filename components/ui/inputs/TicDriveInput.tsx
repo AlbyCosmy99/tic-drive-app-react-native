@@ -2,6 +2,7 @@ import {
   ReturnKeyTypeOptions,
   StyleProp,
   StyleSheet,
+  TextInputProps,
   View,
   ViewStyle,
 } from 'react-native';
@@ -23,6 +24,7 @@ interface TicDriveInputProps {
   returnKeyType?: ReturnKeyTypeOptions;
   onChange?: (text: string) => void;
   isPassword?: boolean;
+  keyboardType?: TextInputProps['keyboardType']
 }
 
 const TicDriveInput: React.FC<TicDriveInputProps> = ({
@@ -39,6 +41,7 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
   returnKeyType = 'default',
   isPassword = false,
   onChange,
+  keyboardType = 'default'
 }) => {
   const [value, setValue] = useState<string>(customValue);
 
@@ -80,9 +83,19 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
           setValue(isTextUppercase ? text.toUpperCase() : text);
           onChange && onChange(text.trim());
         }}
-        onSubmitEditing={handleSubmitEditing}
+        onSubmitEditing={() => {
+          if(keyboardType !== 'numeric') {
+            handleSubmitEditing()
+          }
+        }}
+        onEndEditing={() => {
+          if(keyboardType === 'numeric') {
+            handleSubmitEditing()
+          }
+        }}
         returnKeyType={returnKeyType}
         secureTextEntry={isPassword}
+        keyboardType={keyboardType}
       />
     </View>
   );

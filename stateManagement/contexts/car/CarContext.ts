@@ -3,9 +3,9 @@ import {createContext} from 'react';
 
 interface CarContextType {
   carSelectedByMakeAndModel: Car | undefined;
-  setCarSelectedByMakeAndModel?: (carSelectedByMakeAndModel: Car) => void;
+  setCarSelectedByMakeAndModel?: (carSelectedByMakeAndModel: Car | undefined) => void;
   carSelectedByPlate: Car | undefined;
-  setCarSelectedByPlate?: (carSelectedByPlate: Car) => void;
+  setCarSelectedByPlate?: (carSelectedByPlate: Car | undefined) => void;
 }
 
 const defaultContextValue: CarContextType = {

@@ -10,10 +10,15 @@ import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import formatCurrentDate from '@/utils/dates/FormatCurrentDate';
 import PaymentConfirmationCard from '@/components/ui/cards/payment/PaymentConfirmationCard';
 import {useRoute} from '@react-navigation/native';
-import {useMemo} from 'react';
+import {useContext, useMemo} from 'react';
+import CarContext from '@/stateManagement/contexts/car/CarContext';
 
 export default function BookingConfirmationScreen() {
   const dispatch = useAppDispatch();
+
+  const {
+    setCarSelectedByMakeAndModel
+  } = useContext(CarContext);
 
   const route = useRoute();
   const {date, time} = route?.params as {
@@ -24,6 +29,13 @@ export default function BookingConfirmationScreen() {
   const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
 
   const timeDate = useMemo(() => time + ', ' + date, [date, time]);
+
+  const onConfirmToHome = () => {
+    dispatch(reset());
+    if(setCarSelectedByMakeAndModel) {
+      setCarSelectedByMakeAndModel(undefined)
+    }
+  }
 
   return (
     <LinearGradient
@@ -53,9 +65,7 @@ export default function BookingConfirmationScreen() {
           routeName="userTabs"
           routeParams={{animation: 'fade'}}
           stateRouteName="Home"
-          onClick={() => {
-            dispatch(reset());
-          }}
+          onClick={onConfirmToHome}
         />
       </SafeAreaViewLayout>
     </LinearGradient>
