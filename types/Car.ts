@@ -14,7 +14,7 @@ export type FuelType = (typeof fuels)[number];
 
 interface Car {
   id: number;
-  carMakeId: number;
+  // carMakeId: number;
   make: string;
   name: string;
   year: number | null;
@@ -22,7 +22,9 @@ interface Car {
   model: string;
   engineDisplacement?: string;
   fuel: FuelType;
-  mileage: number;
+  mileage?: number;
+  vin?: string;
+  powerCV?: number;
 }
 
 export default Car;

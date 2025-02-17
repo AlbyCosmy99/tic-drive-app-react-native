@@ -1,6 +1,6 @@
 import {Colors} from '@/constants/Colors';
 import React, {useMemo, useState} from 'react';
-import {StyleSheet, TextInput, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import TicDriveInput from '../inputs/TicDriveInput';
 import TicDriveDropdownData from '@/types/ui/dropdown/TicDriveDropdownData';

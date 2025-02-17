@@ -16,9 +16,7 @@ import CarContext from '@/stateManagement/contexts/car/CarContext';
 export default function BookingConfirmationScreen() {
   const dispatch = useAppDispatch();
 
-  const {
-    setCarSelectedByMakeAndModel
-  } = useContext(CarContext);
+  const {setCarSelectedByMakeAndModel} = useContext(CarContext);
 
   const route = useRoute();
   const {date, time} = route?.params as {
@@ -32,10 +30,10 @@ export default function BookingConfirmationScreen() {
 
   const onConfirmToHome = () => {
     dispatch(reset());
-    if(setCarSelectedByMakeAndModel) {
-      setCarSelectedByMakeAndModel(undefined)
+    if (setCarSelectedByMakeAndModel) {
+      setCarSelectedByMakeAndModel(undefined);
     }
-  }
+  };
 
   return (
     <LinearGradient

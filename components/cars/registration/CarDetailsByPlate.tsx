@@ -4,43 +4,42 @@ import CarContext from '@/stateManagement/contexts/car/CarContext';
 import Car, {fuels, FuelType} from '@/types/Car';
 import TicDriveDropdownData from '@/types/ui/dropdown/TicDriveDropdownData';
 import React, {useContext, useEffect} from 'react';
+import {Text, View} from 'react-native';
 
-interface CarDetailsByMakeAndModelProps {
+interface CarDetailsByPlateProps {
   carSelected: Car;
   errorYear: boolean;
   setErrorYear: (errorYear: boolean) => {};
 }
 
-const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
+const CarDetailsByPlate: React.FC<CarDetailsByPlateProps> = ({
   carSelected,
   errorYear,
   setErrorYear,
 }) => {
-  const {carSelectedByMakeAndModel, setCarSelectedByMakeAndModel} =
-    useContext(CarContext);
+  const {carSelectedByPlate, setCarSelectedByPlate} = useContext(CarContext);
 
   useEffect(() => {
-    if (setCarSelectedByMakeAndModel) {
-      console.log(carSelectedByMakeAndModel);
-      setCarSelectedByMakeAndModel({
-        ...carSelectedByMakeAndModel,
+    if (setCarSelectedByPlate) {
+      setCarSelectedByPlate({
+        ...carSelectedByPlate,
         ...carSelected,
       });
     }
   }, []);
 
   useEffect(() => {
-    if (carSelectedByMakeAndModel?.fuel && setCarSelectedByMakeAndModel) {
-      const {fuel, ...carWithoutFuel} = carSelectedByMakeAndModel;
-      setCarSelectedByMakeAndModel(carWithoutFuel as Car);
+    if (carSelectedByPlate?.fuel && setCarSelectedByPlate) {
+      const {fuel, ...carWithoutFuel} = carSelectedByPlate;
+      setCarSelectedByPlate(carWithoutFuel as Car);
     }
   }, [carSelected]);
 
   const updateCarField = (field: Partial<Car>) => {
-    if (setCarSelectedByMakeAndModel) {
+    if (setCarSelectedByPlate) {
       //@ts-ignore
-      setCarSelectedByMakeAndModel({
-        ...carSelectedByMakeAndModel,
+      setCarSelectedByPlate({
+        ...carSelectedByPlate,
         ...field,
       });
     }
@@ -67,8 +66,8 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
   };
 
   useEffect(() => {
-    console.log(carSelectedByMakeAndModel);
-  }, [carSelectedByMakeAndModel]);
+    console.log(carSelectedByPlate);
+  }, [carSelectedByPlate]);
 
   return (
     <>
@@ -83,11 +82,11 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
         errorMessage={`Year must be between 1886 and ${new Date().getFullYear()}`}
         onCheckError={() => {
           if (
-            carSelectedByMakeAndModel?.year &&
-            carSelectedByMakeAndModel.year > 0 &&
+            carSelectedByPlate?.year &&
+            carSelectedByPlate.year > 0 &&
             !(
-              carSelectedByMakeAndModel.year >= 1886 &&
-              carSelectedByMakeAndModel.year <= new Date().getFullYear()
+              carSelectedByPlate.year >= 1886 &&
+              carSelectedByPlate.year <= new Date().getFullYear()
             )
           ) {
             return true;
@@ -100,7 +99,7 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
         searchPlaceholder="Search fuel type"
         title="Fuel"
         data={fuels.map((fuel, index) => ({id: index, value: fuel}))}
-        value={{id: -1, value: carSelectedByMakeAndModel?.fuel!}}
+        value={{id: -1, value: carSelectedByPlate?.fuel!}}
         setValue={setCarFuelType}
       />
       {/* <TicDriveTextOrInput
@@ -123,8 +122,28 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
         setValue={setCarMileage}
         keyboardType="numeric"
       />
+      <View className="mx-3 my-1">
+        {carSelected?.name && (
+          <View>
+            <Text className="font-bold mb-0.5 text-lg">Name</Text>
+            <Text className="text-lg mb-1.5">{carSelected?.name}</Text>
+          </View>
+        )}
+        {carSelected?.vin && (
+          <View>
+            <Text className="font-bold mb-0.5 text-lg">VIN</Text>
+            <Text className="text-lg mb-1.5">{carSelected?.vin}</Text>
+          </View>
+        )}
+        {carSelected?.powerCV && (
+          <View>
+            <Text className="font-bold mb-0.5 text-lg">CV</Text>
+            <Text className="text-lg mb-1.5">{carSelected?.powerCV}</Text>
+          </View>
+        )}
+      </View>
     </>
   );
 };
 
-export default CarDetailsByMakeAndModel;
+export default CarDetailsByPlate;

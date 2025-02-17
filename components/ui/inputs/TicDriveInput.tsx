@@ -24,7 +24,7 @@ interface TicDriveInputProps {
   returnKeyType?: ReturnKeyTypeOptions;
   onChange?: (text: string) => void;
   isPassword?: boolean;
-  keyboardType?: TextInputProps['keyboardType']
+  keyboardType?: TextInputProps['keyboardType'];
 }
 
 const TicDriveInput: React.FC<TicDriveInputProps> = ({
@@ -41,7 +41,7 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
   returnKeyType = 'default',
   isPassword = false,
   onChange,
-  keyboardType = 'default'
+  keyboardType = 'default',
 }) => {
   const [value, setValue] = useState<string>(customValue);
 
@@ -84,13 +84,13 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
           onChange && onChange(text.trim());
         }}
         onSubmitEditing={() => {
-          if(keyboardType !== 'numeric') {
-            handleSubmitEditing()
+          if (keyboardType !== 'numeric') {
+            handleSubmitEditing();
           }
         }}
         onEndEditing={() => {
-          if(keyboardType === 'numeric') {
-            handleSubmitEditing()
+          if (keyboardType === 'numeric') {
+            handleSubmitEditing();
           }
         }}
         returnKeyType={returnKeyType}
