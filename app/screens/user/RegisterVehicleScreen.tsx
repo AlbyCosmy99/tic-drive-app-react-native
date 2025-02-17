@@ -46,6 +46,7 @@ function RegisterVehicleScreen() {
 
   const {
     carSelectedByMakeAndModel: carSelectedByMakeAndModelCtx,
+    setCarSelectedByMakeAndModel: setCarSelectedByMakeAndModelCtx,
     carSelectedByPlate: carSelectedByPlateCtx,
     setCarSelectedByPlate: setCarSelectedByPlateCtx,
   } = useContext(CarContext);
@@ -85,6 +86,12 @@ function RegisterVehicleScreen() {
 
   useEffect(() => {
     handleOnRightIcon();
+    if(setCarSelectedByMakeAndModelCtx) {
+      setCarSelectedByMakeAndModelCtx(undefined)
+    }
+    if(setCarSelectedByPlateCtx) {
+      setCarSelectedByPlateCtx(undefined)
+    }
   }, [segmentedControlSelection]);
 
   const backgroundStyle = {
