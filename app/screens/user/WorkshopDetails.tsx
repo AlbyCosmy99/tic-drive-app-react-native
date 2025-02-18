@@ -51,7 +51,7 @@ export default function WorkshopDetails() {
   };
 
   return (
-    <SafeAreaViewLayout tailwindCss="p-2.5" styles={[styles.container]}>
+    <SafeAreaViewLayout styles={[styles.container]}>
       {/* custom navbar */}
       <View className="flex-row items-center justify-between mr-2.5">
         <TouchableOpacity

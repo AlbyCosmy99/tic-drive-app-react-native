@@ -21,7 +21,7 @@ const SafeAreaViewLayout: React.FC<SafeAreaViewLayoutProps> = ({
 
   return (
     <View
-      className={`flex-1 ${tailwindCss} ${necessaryDeviceBottomInset()}`}
+      className={`flex-1 pb-8 ${tailwindCss} ${necessaryDeviceBottomInset()}`}
       style={[{marginTop: insets.top}, ...styles, globalStyles().safeAreaView]}
     >
       {children}
