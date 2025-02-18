@@ -86,11 +86,11 @@ function RegisterVehicleScreen() {
 
   useEffect(() => {
     handleOnRightIcon();
-    if(setCarSelectedByMakeAndModelCtx) {
-      setCarSelectedByMakeAndModelCtx(undefined)
+    if (setCarSelectedByMakeAndModelCtx) {
+      setCarSelectedByMakeAndModelCtx(undefined);
     }
-    if(setCarSelectedByPlateCtx) {
-      setCarSelectedByPlateCtx(undefined)
+    if (setCarSelectedByPlateCtx) {
+      setCarSelectedByPlateCtx(undefined);
     }
   }, [segmentedControlSelection]);
 

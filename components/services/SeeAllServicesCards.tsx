@@ -63,8 +63,9 @@ const SeeAllServicesCards = forwardRef(
               <CrossPlatformButtonLayout
                 onPress={() => handleOnSelectService(service)}
                 key={service.id}
-                styleContainer={{width: '40%', height: 40}}
+                styleContainer={{width: '42%', height: 40}}
                 containerTailwindCss="mx-2.5"
+                buttonTailwindCss='justify-start'
               >
                 {service?.icon && (
                   <Image source={{uri: service.icon}} width={24} height={24} />

@@ -11,6 +11,7 @@ interface CrossPlatformButtonLayoutProps {
   containerTailwindCss?: string;
   styleContainer?: ViewStyle;
   removeAllStyles?: boolean;
+  buttonTailwindCss?: string;
 }
 
 const CrossPlatformButtonLayout: React.FC<CrossPlatformButtonLayoutProps> = ({
@@ -18,6 +19,7 @@ const CrossPlatformButtonLayout: React.FC<CrossPlatformButtonLayoutProps> = ({
   onPress,
   removeAllStyles = false,
   containerTailwindCss = '',
+  buttonTailwindCss = '',
   styleContainer,
 }) => {
   return (
@@ -28,14 +30,14 @@ const CrossPlatformButtonLayout: React.FC<CrossPlatformButtonLayoutProps> = ({
       {isAndroidPlatform() ? (
         <TouchableWithoutFeedback
           onPress={onPress}
-          className={`${removeAllStyles ? '' : 'items-center justify-center flex-row min-w-full'}`}
+          className={`${removeAllStyles ? '' : 'items-center justify-center flex-row min-w-full'} ${buttonTailwindCss}`}
         >
           {children}
         </TouchableWithoutFeedback>
       ) : (
         <Pressable
           onPress={onPress}
-          className={`${removeAllStyles ? '' : 'items-center justify-center flex-row flex-1'}`}
+          className={`${removeAllStyles ? '' : 'items-center justify-center flex-row flex-1'} ${buttonTailwindCss}`}
         >
           {children}
         </Pressable>
