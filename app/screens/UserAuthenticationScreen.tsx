@@ -34,12 +34,11 @@ export default function UserAuthenticationScreen() {
   }, [isUserRegistering]);
 
   return (
-    <KeyboardAvoidingView
-      className="flex-1"
+    <View
+      className="flex-1 bg-white pt-2"
       behavior={isIOSPlatform() ? 'padding' : 'height'}
     >
-      <SafeAreaViewLayout tailwindCss="bg-white">
-        <View className="flex-1 justify-between">
+       <View className="flex-1 justify-between">
           <View>
             <View style={{height: 60}}>
               <ToPreviousPage containerClassName="m-2 mb-7" />
@@ -48,7 +47,7 @@ export default function UserAuthenticationScreen() {
               <Image source={TicDriveLogo} style={styles.logoImage} />
             </View>
           </View>
-          <ScrollView className="flex-1">
+          <ScrollView className="flex-1" automaticallyAdjustKeyboardInsets>
             <UserAuthenticationContent
               action={action}
               isUserRegistering={isUserRegistering}
@@ -57,8 +56,7 @@ export default function UserAuthenticationScreen() {
             />
           </ScrollView>
         </View>
-      </SafeAreaViewLayout>
-    </KeyboardAvoidingView>
+    </View>
   );
 }
 
