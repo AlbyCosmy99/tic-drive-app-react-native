@@ -11,76 +11,82 @@ import UserBookings from './Bookings';
 import UserChat from './Chat';
 import UserAccount from './Account';
 import ChooseServicesScreen from '../screens/ChooseServicesScreen';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const Tab = createBottomTabNavigator();
 
 export default function UserTabLayout() {
   const PRESSED_COLOR = Colors.light.green.drive;
   return (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarActiveTintColor: PRESSED_COLOR,
-      }}
-    >
-      <Tab.Screen
-        name="Home"
-        component={UserHome}
-        options={{
-          title: 'Home',
-          headerShown: false,
-          tabBarIcon: ({color}) => (
-            <HomeIcon width={28} fill={color} name="Home" />
-          ),
+    <SafeAreaView className="flex-1 bg-white" edges={['top', 'left', 'right']}>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarActiveTintColor: PRESSED_COLOR,
         }}
-      />
-      <Tab.Screen
-        name="Chat"
-        component={UserChat}
-        options={{
-          title: 'Chat',
-          headerShown: false,
-          tabBarIcon: ({color}) => (
-            <ChatIcon width={28} fill={color} name="Home" />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Services"
-        component={ChooseServicesScreen}
-        options={{
-          title: 'Services',
-          headerShown: false,
-          tabBarIcon: ({color}) =>
-            color === PRESSED_COLOR ? (
-              <ServicesPressedIcon width={28} fill={color} name="Services" />
-            ) : (
-              <ServicesIcon width={28} fill={color} name="Services" />
+      >
+        <Tab.Screen
+          name="Home"
+          component={UserHome}
+          options={{
+            title: 'Home',
+            headerShown: false,
+            tabBarIcon: ({color}) => (
+              <HomeIcon width={28} fill={color} name="Home" />
             ),
-        }}
-        initialParams={{buttonContainerTailwindCss: 'pb-1'}}
-      />
-      <Tab.Screen
-        name="Bookings"
-        component={UserBookings}
-        options={{
-          title: 'Bookings',
-          headerShown: false,
-          tabBarIcon: ({color}) => (
-            <BookingsIcon width={28} fill={color} name="Home" />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={UserAccount}
-        options={{
-          title: 'Profile',
-          headerShown: false,
-          tabBarIcon: ({color}) => (
-            <AccountIcon width={28} fill={color} name="Home" />
-          ),
-        }}
-      />
-    </Tab.Navigator>
+          }}
+        />
+        <Tab.Screen
+          name="Chat"
+          component={UserChat}
+          options={{
+            title: 'Chat',
+            headerShown: false,
+            tabBarIcon: ({color}) => (
+              <ChatIcon width={28} fill={color} name="Home" />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Services"
+          component={ChooseServicesScreen}
+          options={{
+            title: 'Services',
+            headerShown: false,
+            tabBarIcon: ({color}) =>
+              color === PRESSED_COLOR ? (
+                <ServicesPressedIcon width={28} fill={color} name="Services" />
+              ) : (
+                <ServicesIcon width={28} fill={color} name="Services" />
+              ),
+          }}
+          initialParams={{
+            buttonContainerTailwindCss: 'pb-1',
+            withSafeAreaView: false,
+          }}
+        />
+        <Tab.Screen
+          name="Bookings"
+          component={UserBookings}
+          options={{
+            title: 'Bookings',
+            headerShown: false,
+            tabBarIcon: ({color}) => (
+              <BookingsIcon width={28} fill={color} name="Home" />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Profile"
+          component={UserAccount}
+          options={{
+            title: 'Profile',
+            headerShown: false,
+            tabBarIcon: ({color}) => (
+              <AccountIcon width={28} fill={color} name="Home" />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    </SafeAreaView>
   );
 }

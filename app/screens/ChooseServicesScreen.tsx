@@ -17,10 +17,12 @@ export default function ChooseServicesScreen() {
   const dispatch = useAppDispatch();
 
   //@ts-ignore
-  const {category, buttonContainerTailwindCss} = route?.params ?? {
-    category: 'user',
-    buttonContainerTailwindCss: '',
-  };
+  const {category, buttonContainerTailwindCss, withSafeAreaView} =
+    route?.params ?? {
+      category: 'user',
+      buttonContainerTailwindCss: '',
+      withSafeAreaView: true,
+    };
 
   const isUserLookingForServices = () => {
     return !(category === 'workshop');
@@ -46,7 +48,9 @@ export default function ChooseServicesScreen() {
         ]}
         className="flex-1 absolute w-full h-full"
       />
-      <SafeAreaViewLayout>
+      <SafeAreaViewLayout
+        disabled={withSafeAreaView !== undefined && !withSafeAreaView}
+      >
         <TicDriveNavbar isLoginAvailable={false} />
         <View className="flex-1 justify-between">
           <Text

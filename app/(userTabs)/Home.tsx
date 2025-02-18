@@ -68,7 +68,7 @@ export default function UserHome() {
 
   return (
     <LinearGradientViewLayout>
-      <SafeAreaViewLayout>
+      <>
         <TicDriveNavbar
           isLoginAvailable={false}
           rightContent={
@@ -162,7 +162,7 @@ export default function UserHome() {
             </Pressable>
           </View>
         </ScrollView>
-      </SafeAreaViewLayout>
+      </>
     </LinearGradientViewLayout>
   );
 }

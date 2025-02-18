@@ -10,7 +10,7 @@ export default function UserBookings() {
 
   return (
     <LinearGradientViewLayout>
-      <SafeAreaViewLayout tailwindCss="mx-3.5">
+      <>
         <TicDriveNavbar isLoginAvailable={false} />
         {token ? (
           <View>
@@ -19,7 +19,7 @@ export default function UserBookings() {
         ) : (
           <NotLogged />
         )}
-      </SafeAreaViewLayout>
+      </>
     </LinearGradientViewLayout>
   );
 }

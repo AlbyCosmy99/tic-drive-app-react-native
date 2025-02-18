@@ -65,7 +65,7 @@ const SeeAllServicesCards = forwardRef(
                 key={service.id}
                 styleContainer={{width: '42%', height: 40}}
                 containerTailwindCss="mx-2.5"
-                buttonTailwindCss='justify-start'
+                buttonTailwindCss="justify-start"
               >
                 {service?.icon && (
                   <Image source={{uri: service.icon}} width={24} height={24} />

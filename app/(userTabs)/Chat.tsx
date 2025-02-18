@@ -15,7 +15,7 @@ export default function UserChat() {
 
   return (
     <LinearGradientViewLayout>
-      <SafeAreaViewLayout>
+      <>
         <TicDriveNavbar isLoginAvailable={false} />
         {token ? (
           <ScrollView className="w-full h-full">
@@ -33,7 +33,7 @@ export default function UserChat() {
         ) : (
           <NotLogged />
         )}
-      </SafeAreaViewLayout>
+      </>
     </LinearGradientViewLayout>
   );
 }
