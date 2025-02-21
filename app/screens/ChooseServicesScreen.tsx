@@ -12,7 +12,6 @@ import {setAreServicesOn} from '@/stateManagement/redux/slices/servicesSlice';
 
 export default function ChooseServicesScreen() {
   const route = useRoute();
-  const colorScheme = useColorScheme();
   const user = useAppSelector(state => state.auth.user);
   const dispatch = useAppDispatch();
 

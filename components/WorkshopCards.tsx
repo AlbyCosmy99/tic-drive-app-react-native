@@ -83,6 +83,7 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
   });
 
   const handleCardPress = (workshop: Workshop) => {
+    //todo: controllare se il param workshop viene utilizzato davvero
     navigationPush(navigation, 'WorkshopDetails', {workshop});
   };
 

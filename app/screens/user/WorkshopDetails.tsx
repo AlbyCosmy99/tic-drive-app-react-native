@@ -1,6 +1,5 @@
 import {Colors} from '@/constants/Colors';
 import {Image} from '@rneui/themed';
-import {useContext, useRef} from 'react';
 import {ActivityIndicator, Share, StyleSheet, Text, View} from 'react-native';
 import {
   Pressable,
@@ -10,7 +9,6 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Ionicons} from '@expo/vector-icons';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
-import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import UserCalendarModal from '@/components/ui/modals/UserCalendarModal';
 import useJwtToken from '@/hooks/auth/useJwtToken';
@@ -22,10 +20,11 @@ import IconTextPair from '@/components/ui/IconTextPair';
 import ShareIcon from '@/assets/svg/share/shareIcon.svg';
 import SeeAllServicesCards from '@/components/services/SeeAllServicesCards';
 import SeeAllReviewsCards from '@/components/workshop/reviews/SeeAllReviewsCards';
+import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 
 export default function WorkshopDetails() {
   const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
-  const {navigation} = useContext(NavigationContext);
+  const navigation = useTicDriveNavigation();
   const {areServicesAvailable} = useAreServicesAvailable();
   const token = useJwtToken();
 

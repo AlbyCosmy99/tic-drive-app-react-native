@@ -15,11 +15,19 @@ interface ChatCardProps {
   whenLastMessage: string;
 }
 
-const ChatCard:React.FC<ChatCardProps> = ({receiver, lastAccess, lastMessage, whenLastMessage, image}) => {
+const ChatCard: React.FC<ChatCardProps> = ({
+  receiver,
+  lastAccess,
+  lastMessage,
+  whenLastMessage,
+  image,
+}) => {
   const navigation = useTicDriveNavigation();
   return (
     <CrossPlatformButtonLayout
-      onPress={() => navigationPush(navigation, 'ChatScreen')}
+      onPress={() =>
+        navigationPush(navigation, 'ChatScreen', {image, receiver, lastAccess})
+      }
       removeAllStyles
     >
       <HorizontalLine />
