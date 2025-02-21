@@ -55,8 +55,7 @@ export default function ChooseServicesScreen() {
         <View className="flex-1 justify-between">
           <Text
             style={{
-              color:
-              Colors.light.text
+              color: Colors.light.text,
             }}
             className="font-medium text-2xl mx-3.5 mb-2"
           >

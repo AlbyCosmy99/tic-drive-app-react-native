@@ -56,7 +56,7 @@ export default function UserAccount() {
               </View>
             </View>
             <HorizontalLine />
-            <ScrollView className='px-1'>
+            <ScrollView className="px-1">
               <View className="my-4">
                 <Text className="font-medium text-2xl">Account</Text>
                 <View>

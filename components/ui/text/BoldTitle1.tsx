@@ -11,7 +11,7 @@ const BoldTitle1: React.FC<BoldTitle1Props> = ({title}) => {
   return (
     <Text
       style={{
-        color: Colors.light.text
+        color: Colors.light.text,
       }}
       className="font-medium mb-2 text-3xl mx-3.5"
     >

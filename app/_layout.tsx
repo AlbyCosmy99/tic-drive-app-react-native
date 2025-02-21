@@ -61,9 +61,7 @@ export default function RootLayout() {
   return (
     <Provider store={store}>
       <SafeAreaProvider>
-        <ThemeProvider
-          value={DefaultTheme}
-        >
+        <ThemeProvider value={DefaultTheme}>
           <GlobalProvider>
             <CarProvider>
               <NavigationContext.Provider value={{navigation, setNavigation}}>

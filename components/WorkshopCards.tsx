@@ -1,5 +1,11 @@
 import WorkshopCard from './WorkshopCard';
-import {RefreshControl, ScrollView, Text, TouchableOpacity} from 'react-native';
+import {
+  ActivityIndicator,
+  RefreshControl,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import {memo, useContext, useEffect, useMemo, useState} from 'react';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import navigationPush from '@/services/navigation/push';
@@ -18,6 +24,7 @@ import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import {useFocusEffect} from 'expo-router';
 import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice';
 import Workshop from '@/types/workshops/Workshop';
+import {FlatList} from 'react-native-gesture-handler';
 
 interface WorkshopCardsProps {
   tailwindContainerCss?: string;
@@ -104,32 +111,52 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
       />
     </View>
   ) : (
-    <ScrollView
+    <View
       className={`${!token ? 'mb-2' : ''} ${tailwindContainerCss}`}
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-          colors={[Colors.light.ticText]}
-          tintColor={Colors.light.ticText}
-        />
-      }
+      // refreshControl={
+      //   <RefreshControl
+      //     refreshing={refreshing}
+      //     onRefresh={onRefresh}
+      //     colors={[Colors.light.ticText]}
+      //     tintColor={Colors.light.ticText}
+      //   />
+      // }
     >
       {loadingWorkshops ? (
         <View className="w-full h-full justify-center items-center mt-40">
           <LoadingSpinner />
         </View>
       ) : (
-        filteredWorkshops.map((workshop, index) => (
-          <TouchableOpacity
-            key={workshop.id || index}
-            onPress={() => handleCardPress(workshop)}
-          >
-            <WorkshopCard workshop={workshop} />
-          </TouchableOpacity>
-        ))
+        // filteredWorkshops.map((workshop, index) => (
+        //   <TouchableOpacity
+        //     key={workshop.id || index}
+        //     onPress={() => handleCardPress(workshop)}
+        //   >
+        //     <WorkshopCard workshop={workshop} />
+        //   </TouchableOpacity>
+        // ))
+        <FlatList
+          data={filteredWorkshops}
+          keyExtractor={item => item.id.toString()}
+          renderItem={({item}) => (
+            <TouchableOpacity onPress={() => handleCardPress(item)}>
+              <WorkshopCard workshop={item} />
+            </TouchableOpacity>
+          )}
+          //onEndReached={() => setLoadingWorkshops}
+          onEndReachedThreshold={0.5}
+          ListFooterComponent={() =>
+            loadingWorkshops ? (
+              <ActivityIndicator
+                size="large"
+                color="green"
+                style={{margin: 20}}
+              />
+            ) : null
+          }
+        />
       )}
-    </ScrollView>
+    </View>
   );
 };
 

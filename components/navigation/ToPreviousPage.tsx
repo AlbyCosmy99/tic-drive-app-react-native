@@ -23,11 +23,7 @@ const ToPreviousPage: React.FC<ToPreviousPageProps> = ({
       accessible={true}
       accessibilityLabel="Back to previous page"
     >
-      <Ionicons
-        name="arrow-back"
-        size={30}
-        color={Colors.white}
-      />
+      <Ionicons name="arrow-back" size={30} color={Colors.white} />
     </TouchableOpacity>
   );
 };
