@@ -1,3 +1,4 @@
+import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import {removeSecureToken} from '@/services/auth/secureStore/setToken';
 import navigationPush from '@/services/navigation/push';
 import navigationReplace from '@/services/navigation/replace';
@@ -16,26 +17,36 @@ interface TicDriveAuthButtonProps {
   action: AuthAction;
 }
 
+export const handleLogout = async (
+  dispatch: ReturnType<typeof useAppDispatch>,
+  navigation: any,
+) => {
+  await removeSecureToken();
+  navigationReplace(navigation, 'Hub');
+  dispatch(logout());
+  dispatch(reset());
+};
+
 const TicDriveAuthButton: React.FC<TicDriveAuthButtonProps> = ({
   onPress,
   action,
 }) => {
   const dispatch = useAppDispatch();
-  const {navigation} = useContext(NavigationContext);
+  const navigation = useTicDriveNavigation();
   const [loading, setLoading] = useState(false);
 
-  const handleLogout = async () => {
-    await removeSecureToken();
-    navigationReplace(navigation, 'Hub');
-    dispatch(logout());
-    dispatch(reset());
-  };
+  // const handleLogout = async () => {
+  //   await removeSecureToken();
+  //   navigationReplace(navigation, 'Hub');
+  //   dispatch(logout());
+  //   dispatch(reset());
+  // };
 
   const handleOnPress = () => {
     setLoading(true);
     onPress && onPress();
     if (action === 'logout') {
-      handleLogout();
+      handleLogout(dispatch, navigation);
     }
     if (action === 'login') {
       navigationPush(navigation, 'UserAuthenticationScreen', {

@@ -1,27 +1,46 @@
 import {ScrollView, Text, View} from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
-import {useAppSelector} from '@/stateManagement/redux/hooks';
+import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 import CircularUserAvatar from '@/components/ui/avatars/CircularUserAvatar';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import AddIcon from '../../assets/svg/add.svg';
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 import IconTextPair from '@/components/ui/IconTextPair';
-import TicDriveAuthButton from '@/components/ui/buttons/TicDriveAuthButton';
+import TicDriveAuthButton, {
+  handleLogout,
+} from '@/components/ui/buttons/TicDriveAuthButton';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import NotLogged from '@/components/auth/NotLogged';
 import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
+import PhoneIcon from '@/assets/svg/notifications/phone.svg';
+import MailIcon from '@/assets/svg/notifications/mail.svg';
+import AddressIcon from '@/assets/svg/notifications/address.svg';
+import VehicleIcon from '@/assets/svg/vehicles/car2.svg';
+import HeartIcon from '@/assets/svg/emotions/EmptyHeartGrey.svg';
+import CreditCardIcon from '@/assets/svg/payment/creditCard.svg';
+import ReceiptIcon from '@/assets/svg/payment/receipt.svg';
+import CustomerServiceIcon from '@/assets/svg/support/customerService.svg';
+import {useEffect} from 'react';
+import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
+import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 
 export default function UserAccount() {
   const user = useAppSelector(state => state.auth.user);
   const token = useJwtToken();
+  const dispatch = useAppDispatch();
+  const navigation = useTicDriveNavigation();
+
+  useEffect(() => {
+    console.log(user);
+  }, []);
 
   return (
     <LinearGradientViewLayout>
       <SafeAreaViewLayout disabled={!isAndroidPlatform()}>
         <TicDriveNavbar isLoginAvailable={false} />
         {token ? (
-          <>
+          <View className="mx-2.5">
             <View className="flex flex-row items-center mb-4 mt-1">
               <CircularUserAvatar
                 styles={{
@@ -37,40 +56,61 @@ export default function UserAccount() {
               </View>
             </View>
             <HorizontalLine />
-            <ScrollView>
+            <ScrollView className='px-1'>
               <View className="my-4">
                 <Text className="font-medium text-2xl">Account</Text>
                 <View>
                   <IconTextPair
                     text="Phone number"
-                    icon={<AddIcon />}
+                    icon={<PhoneIcon />}
                     textTailwindCss="text-base font-medium"
-                    containerTailwindCss="gap-1 py-1"
+                    containerTailwindCss="gap-2 py-1"
                   />
                   <IconTextPair
-                    text="Email"
-                    icon={<AddIcon />}
+                    text={user?.email}
+                    icon={<MailIcon />}
                     textTailwindCss="text-base font-medium"
-                    containerTailwindCss="gap-1 py-1"
+                    containerTailwindCss="gap-2 py-1"
                   />
                   <IconTextPair
                     text="Address"
-                    icon={<AddIcon />}
+                    icon={<AddressIcon />}
                     textTailwindCss="text-base font-medium"
-                    containerTailwindCss="gap-1 py-1"
+                    containerTailwindCss="gap-2 py-1"
                   />
-                  <IconTextPair
-                    text="Registered vehicles"
-                    icon={<AddIcon />}
-                    textTailwindCss="text-base font-medium"
-                    containerTailwindCss="gap-1 py-1"
-                  />
-                  <IconTextPair
-                    text="Favorite workshops"
-                    icon={<AddIcon />}
-                    textTailwindCss="text-base font-medium"
-                    containerTailwindCss="gap-1 py-1"
-                  />
+                  <CrossPlatformButtonLayout
+                    removeAllStyles
+                    onPress={() => alert('personal vehicles')}
+                  >
+                    <IconTextPair
+                      text="Registered vehicles"
+                      icon={<VehicleIcon />}
+                      textTailwindCss="text-base font-medium underline"
+                      containerTailwindCss="gap-2 py-1"
+                    />
+                  </CrossPlatformButtonLayout>
+                  <CrossPlatformButtonLayout
+                    removeAllStyles
+                    onPress={() => alert('favorite workshops')}
+                  >
+                    <IconTextPair
+                      text="Favorite workshops"
+                      icon={<HeartIcon />}
+                      textTailwindCss="text-base font-medium underline"
+                      containerTailwindCss="gap-2 py-1"
+                    />
+                  </CrossPlatformButtonLayout>
+                  <CrossPlatformButtonLayout
+                    removeAllStyles
+                    onPress={() => handleLogout(dispatch, navigation)}
+                  >
+                    <IconTextPair
+                      text="Logout"
+                      icon={<HeartIcon />}
+                      textTailwindCss="text-base font-medium underline"
+                      containerTailwindCss="gap-2 py-1"
+                    />
+                  </CrossPlatformButtonLayout>
                 </View>
               </View>
               <HorizontalLine />
@@ -79,44 +119,49 @@ export default function UserAccount() {
                   Payment information
                 </Text>
                 <View>
-                  <IconTextPair
-                    text="Payment method"
-                    icon={<AddIcon />}
-                    textTailwindCss="text-base font-medium"
-                    containerTailwindCss="gap-1 pt-2 pb-1"
-                  />
-                  <IconTextPair
-                    text="Receipts"
-                    icon={<AddIcon />}
-                    textTailwindCss="text-base font-medium"
-                    containerTailwindCss="gap-1 py-1"
-                  />
+                  <CrossPlatformButtonLayout
+                    removeAllStyles
+                    onPress={() => alert('payment methods')}
+                  >
+                    <IconTextPair
+                      text="Payment method"
+                      icon={<CreditCardIcon />}
+                      textTailwindCss="text-base font-medium underline"
+                      containerTailwindCss="gap-2 pt-2 pb-1"
+                    />
+                  </CrossPlatformButtonLayout>
+                  <CrossPlatformButtonLayout
+                    removeAllStyles
+                    onPress={() => alert('receipts')}
+                  >
+                    <IconTextPair
+                      text="Receipts"
+                      icon={<ReceiptIcon />}
+                      textTailwindCss="text-base font-medium underline"
+                      containerTailwindCss="gap-2 py-1"
+                    />
+                  </CrossPlatformButtonLayout>
                 </View>
               </View>
               <HorizontalLine />
               <View className="my-4">
                 <Text className="font-medium text-2xl">Help and support</Text>
                 <View>
-                  <IconTextPair
-                    text="Customer support"
-                    icon={<AddIcon />}
-                    textTailwindCss="text-base font-medium"
-                    containerTailwindCss="gap-1 pt-2 pb-1"
-                  />
-                  <IconTextPair
-                    text="Security information and resources"
-                    icon={<AddIcon />}
-                    textTailwindCss="text-base font-medium"
-                    containerTailwindCss="gap-1 py-1"
-                  />
+                  <CrossPlatformButtonLayout
+                    removeAllStyles
+                    onPress={() => alert('customer support')}
+                  >
+                    <IconTextPair
+                      text="Customer support"
+                      icon={<CustomerServiceIcon />}
+                      textTailwindCss="text-base font-medium underline"
+                      containerTailwindCss="gap-2 pt-2 pb-1"
+                    />
+                  </CrossPlatformButtonLayout>
                 </View>
               </View>
-              <HorizontalLine />
             </ScrollView>
-            <View className="my-2">
-              <TicDriveAuthButton action="logout" />
-            </View>
-          </>
+          </View>
         ) : (
           <NotLogged />
         )}
