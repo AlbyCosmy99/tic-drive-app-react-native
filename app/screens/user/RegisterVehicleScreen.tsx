@@ -95,10 +95,7 @@ function RegisterVehicleScreen() {
   }, [segmentedControlSelection]);
 
   const backgroundStyle = {
-    backgroundColor:
-      colorScheme === 'light'
-        ? Colors.light.backgroundLinearGradient.end
-        : Colors.dark.background,
+    backgroundColor:Colors.light.backgroundLinearGradient.end
   };
 
   const fetchByPlate = (plate: string) => {

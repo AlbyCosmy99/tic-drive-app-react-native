@@ -40,10 +40,7 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
   const {navigation} = useContext(NavigationContext);
 
   const backgroundStyle = {
-    backgroundColor:
-      colorScheme === 'light'
-        ? Colors.light.background
-        : Colors.dark.background,
+    backgroundColor:Colors.light.background
   };
 
   return (

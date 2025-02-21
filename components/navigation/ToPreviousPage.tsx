@@ -26,7 +26,7 @@ const ToPreviousPage: React.FC<ToPreviousPageProps> = ({
       <Ionicons
         name="arrow-back"
         size={30}
-        color={colorScheme === 'light' ? Colors.white : Colors.black}
+        color={Colors.white}
       />
     </TouchableOpacity>
   );

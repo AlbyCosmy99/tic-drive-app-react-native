@@ -56,7 +56,7 @@ export default function ChooseServicesScreen() {
           <Text
             style={{
               color:
-                colorScheme === 'light' ? Colors.light.text : Colors.dark.text,
+              Colors.light.text
             }}
             className="font-medium text-2xl mx-3.5 mb-2"
           >

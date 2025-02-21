@@ -62,7 +62,7 @@ export default function RootLayout() {
     <Provider store={store}>
       <SafeAreaProvider>
         <ThemeProvider
-          value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+          value={DefaultTheme}
         >
           <GlobalProvider>
             <CarProvider>
