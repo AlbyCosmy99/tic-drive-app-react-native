@@ -9,13 +9,14 @@ import {Image} from '@rneui/themed';
 import CircularUserAvatar from '@/components/ui/avatars/CircularUserAvatar';
 import ChatCard from '@/components/ui/cards/chat/ChatCard';
 import {ScrollView} from 'react-native-gesture-handler';
+import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
 
 export default function UserChat() {
   const token = useJwtToken();
 
   return (
     <LinearGradientViewLayout>
-      <>
+      <SafeAreaViewLayout disabled={!isAndroidPlatform()}>
         <TicDriveNavbar isLoginAvailable={false} />
         {token ? (
           <ScrollView className="w-full h-full">
@@ -33,7 +34,7 @@ export default function UserChat() {
         ) : (
           <NotLogged />
         )}
-      </>
+      </SafeAreaViewLayout>
     </LinearGradientViewLayout>
   );
 }

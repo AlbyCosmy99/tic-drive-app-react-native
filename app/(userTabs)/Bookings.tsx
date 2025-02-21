@@ -4,13 +4,14 @@ import {View, Text} from 'react-native';
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
+import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
 
 export default function UserBookings() {
   const token = useJwtToken();
 
   return (
     <LinearGradientViewLayout>
-      <>
+      <SafeAreaViewLayout disabled={!isAndroidPlatform()}>
         <TicDriveNavbar isLoginAvailable={false} />
         {token ? (
           <View>
@@ -19,7 +20,7 @@ export default function UserBookings() {
         ) : (
           <NotLogged />
         )}
-      </>
+      </SafeAreaViewLayout>
     </LinearGradientViewLayout>
   );
 }

@@ -26,6 +26,7 @@ import SeeAllServicesCards from '@/components/services/SeeAllServicesCards';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import {Entypo} from '@expo/vector-icons';
+import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
 
 export default function UserHome() {
   const {setWorkshopFilter} = useContext(GlobalContext);
@@ -68,7 +69,7 @@ export default function UserHome() {
 
   return (
     <LinearGradientViewLayout>
-      <>
+      <SafeAreaViewLayout disabled={!isAndroidPlatform()}>
         <TicDriveNavbar
           isLoginAvailable={false}
           rightContent={
@@ -162,7 +163,7 @@ export default function UserHome() {
             </Pressable>
           </View>
         </ScrollView>
-      </>
+      </SafeAreaViewLayout>
     </LinearGradientViewLayout>
   );
 }
