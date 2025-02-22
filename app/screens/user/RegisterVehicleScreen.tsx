@@ -24,6 +24,7 @@ import isPlateNumber from '@/utils/car/isPlateNumber';
 import CarDetailsByPlate from '@/components/cars/registration/CarDetailsByPlate';
 import RegistrationCarDetailCard from '@/components/ui/cards/cars/RegistrationCarDetailCard';
 import HorizontalLine from '@/components/ui/HorizontalLine';
+import CarConfirmationDetails from '@/components/cars/registration/CarConfirmationDetails';
 
 function RegisterVehicleScreen() {
   const [segmentedControlSelection, setSegmentedControlSelection] =
@@ -65,8 +66,12 @@ function RegisterVehicleScreen() {
 
   const routeName = useMemo(() => {
     if (
-      (segmentedControlSelection?.index === 0 && carSelectedByMakeAndModelCtx && makeAndModelConfirmation) ||
-      (segmentedControlSelection?.index === 1 && carSelectedByPlateCtx && plateConfirmation)
+      (segmentedControlSelection?.index === 0 &&
+        carSelectedByMakeAndModelCtx &&
+        makeAndModelConfirmation) ||
+      (segmentedControlSelection?.index === 1 &&
+        carSelectedByPlateCtx &&
+        plateConfirmation)
     ) {
       return `${selectedWorkshop ? 'ReviewBookingDetailsScreen' : 'WorkshopsListScreen'}`;
     }
@@ -110,12 +115,6 @@ function RegisterVehicleScreen() {
 
   useEffect(() => {
     handleOnRightIcon();
-    // if (setCarSelectedByMakeAndModelCtx) {
-    //   setCarSelectedByMakeAndModelCtx(undefined);
-    // }
-    // if (setCarSelectedByPlateCtx) {
-    //   setCarSelectedByPlateCtx(undefined);
-    // }
   }, [segmentedControlSelection]);
 
   const backgroundStyle = {
@@ -280,56 +279,16 @@ function RegisterVehicleScreen() {
                   </View>
                 )}
                 {makeAndModelConfirmation && carSelectedByMakeAndModelCtx && (
-                  <View className="mx-3 p-4 border-2 border-grey-light rounded-xl">
-                    <View className="mb-2">
-                      <RegistrationCarDetailCard
-                        title="Make"
-                        value={carSelectedByMakeAndModelCtx.make}
-                      />
-                      <RegistrationCarDetailCard
-                        title="Model"
-                        value={carSelectedByMakeAndModelCtx.model}
-                      />
-                      {carSelectedByMakeAndModelCtx.year && (
-                        <RegistrationCarDetailCard
-                          title="Year"
-                          value={carSelectedByMakeAndModelCtx.year.toString()}
-                        />
-                      )}
-                      <RegistrationCarDetailCard
-                        title="Engine displacement"
-                        value={carSelectedByMakeAndModelCtx.engineDisplacement!}
-                      />
-                      <RegistrationCarDetailCard
-                        title="Fuel"
-                        value={carSelectedByMakeAndModelCtx.fuel}
-                      />
-                      {carSelectedByMakeAndModelCtx.mileage && (
-                        <RegistrationCarDetailCard
-                          title="Mileage"
-                          value={carSelectedByMakeAndModelCtx.mileage.toString()}
-                        />
-                      )}
-                    </View>
-                    <HorizontalLine />
-                    <Pressable
-                      onPress={() => {
-                        setMakeAndModelConfirmation(false);
-                        if (setCarSelectedByMakeAndModelCtx) {
-                          setCarSelectedByMakeAndModelCtx(undefined);
-                        }
-                      }}
-                    >
-                      <Text className="text-base font-medium mt-2 text-orange-500">
-                        Change
-                      </Text>
-                    </Pressable>
-                  </View>
+                  <CarConfirmationDetails
+                    carSelected={carSelectedByMakeAndModelCtx}
+                    setCarSelected={setCarSelectedByMakeAndModelCtx}
+                    setConfirmation={setMakeAndModelConfirmation}
+                  />
                 )}
               </ScrollView>
             )}
             {segmentedControlSelection?.index === 1 && (
-              <ScrollView className="mx-4" automaticallyAdjustKeyboardInsets>
+              <ScrollView className="mt-6" automaticallyAdjustKeyboardInsets>
                 {!plateConfirmation ? (
                   <View>
                     <TicDriveInput
@@ -355,7 +314,14 @@ function RegisterVehicleScreen() {
                     )}
                   </View>
                 ) : (
-                  <Text>confirmation</Text>
+                  plateConfirmation &&
+                  carSelectedByPlateCtx && (
+                    <CarConfirmationDetails
+                      carSelected={carSelectedByPlateCtx}
+                      setCarSelected={setCarSelectedByPlateCtx}
+                      setConfirmation={setPlateConfirmation}
+                    />
+                  )
                 )}
               </ScrollView>
             )}
