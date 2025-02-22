@@ -21,7 +21,6 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
 
   useEffect(() => {
     if (setCarSelectedByMakeAndModel) {
-      console.log(carSelectedByMakeAndModel);
       setCarSelectedByMakeAndModel({
         ...carSelectedByMakeAndModel,
         ...carSelected,
@@ -65,10 +64,6 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
   const setCarMileage = (mileage: number) => {
     updateCarField({mileage});
   };
-
-  useEffect(() => {
-    console.log(carSelectedByMakeAndModel);
-  }, [carSelectedByMakeAndModel]);
 
   return (
     <>

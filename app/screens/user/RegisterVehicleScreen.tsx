@@ -1,7 +1,7 @@
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import {Colors} from '@/constants/Colors';
 import {StyleSheet, Text, useColorScheme, View} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
+import {Pressable, ScrollView} from 'react-native-gesture-handler';
 import SegmentedControl from '@/components/SegmentedControl';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
 import {useContext, useEffect, useMemo, useState} from 'react';
@@ -18,10 +18,12 @@ import CarContext from '@/stateManagement/contexts/car/CarContext';
 import BoldTitle1 from '@/components/ui/text/BoldTitle1';
 import useCarsMakes from '@/hooks/api/cars/useCarsMakes';
 import {useFocusEffect} from '@react-navigation/native';
-import {useAppDispatch} from '@/stateManagement/redux/hooks';
+import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import {setAreServicesOn} from '@/stateManagement/redux/slices/servicesSlice';
 import isPlateNumber from '@/utils/car/isPlateNumber';
 import CarDetailsByPlate from '@/components/cars/registration/CarDetailsByPlate';
+import RegistrationCarDetailCard from '@/components/ui/cards/cars/RegistrationCarDetailCard';
+import HorizontalLine from '@/components/ui/HorizontalLine';
 
 function RegisterVehicleScreen() {
   const [segmentedControlSelection, setSegmentedControlSelection] =
@@ -36,6 +38,8 @@ function RegisterVehicleScreen() {
   const [models, setModels] = useState<Array<Car>>([]);
   const [isPlateError, setIsPlateError] = useState(false);
   const [errorYear, setErrorYear] = useState(false);
+  const [makeAndModelConfirmation, setMakeAndModelConfirmation] =
+    useState(false);
 
   const [carMakeDropdownData, setCarMakeDropdownData] = useState<
     TicDriveDropdownData | undefined
@@ -51,9 +55,12 @@ function RegisterVehicleScreen() {
     setCarSelectedByPlate: setCarSelectedByPlateCtx,
   } = useContext(CarContext);
 
-  const colorScheme = useColorScheme();
   const {carsMakes: makes, loadingCarsMakes} = useCarsMakes();
   const dispatch = useAppDispatch();
+
+  const selectedWorkshop = useAppSelector(
+    state => state.workshops.selectedWorkshop,
+  );
 
   useEffect(() => {
     setErrorYear(false);
@@ -86,12 +93,12 @@ function RegisterVehicleScreen() {
 
   useEffect(() => {
     handleOnRightIcon();
-    if (setCarSelectedByMakeAndModelCtx) {
-      setCarSelectedByMakeAndModelCtx(undefined);
-    }
-    if (setCarSelectedByPlateCtx) {
-      setCarSelectedByPlateCtx(undefined);
-    }
+    // if (setCarSelectedByMakeAndModelCtx) {
+    //   setCarSelectedByMakeAndModelCtx(undefined);
+    // }
+    // if (setCarSelectedByPlateCtx) {
+    //   setCarSelectedByPlateCtx(undefined);
+    // }
   }, [segmentedControlSelection]);
 
   const backgroundStyle = {
@@ -216,40 +223,92 @@ function RegisterVehicleScreen() {
             </Text>
             {segmentedControlSelection?.index === 0 && (
               <ScrollView className="mt-6" automaticallyAdjustKeyboardInsets>
-                <TicDriveDropdown
-                  title="Make"
-                  data={makes.map(make => ({
-                    id: make.id,
-                    value: make.name,
-                  }))}
-                  value={carMakeDropdownData}
-                  setValue={setCarMakeDropdownData}
-                  placeholder="Select car make"
-                  searchPlaceholder="Search make"
-                />
-                <TicDriveDropdown
-                  title="Model"
-                  data={
-                    models
-                      ? models.map(model => ({
-                          id: model.id,
-                          value: model.name,
-                        }))
-                      : []
-                  }
-                  value={carModelDropdownData}
-                  setValue={setCarModelDropdownData}
-                  placeholder="Select car model"
-                  searchPlaceholder="Search model"
-                  disabled={!carMakeDropdownData || loadingCarModels}
-                />
-                {carSelectedByMakeAndModel && carModelDropdownData && (
-                  <CarDetailsByMakeAndModel
-                    key={carModelDropdownData?.id}
-                    carSelected={carSelectedByMakeAndModel}
-                    errorYear={errorYear}
-                    setErrorYear={setErrorYear}
-                  />
+                {!makeAndModelConfirmation && (
+                  <View>
+                    <TicDriveDropdown
+                      title="Make"
+                      data={makes.map(make => ({
+                        id: make.id,
+                        value: make.name,
+                      }))}
+                      value={carMakeDropdownData}
+                      setValue={setCarMakeDropdownData}
+                      placeholder="Select car make"
+                      searchPlaceholder="Search make"
+                    />
+                    <TicDriveDropdown
+                      title="Model"
+                      data={
+                        models
+                          ? models.map(model => ({
+                              id: model.id,
+                              value: model.name,
+                            }))
+                          : []
+                      }
+                      value={carModelDropdownData}
+                      setValue={setCarModelDropdownData}
+                      placeholder="Select car model"
+                      searchPlaceholder="Search model"
+                      disabled={!carMakeDropdownData || loadingCarModels}
+                    />
+                    {carSelectedByMakeAndModel && carModelDropdownData && (
+                      <CarDetailsByMakeAndModel
+                        key={carModelDropdownData?.id}
+                        carSelected={carSelectedByMakeAndModel}
+                        errorYear={errorYear}
+                        setErrorYear={setErrorYear}
+                      />
+                    )}
+                  </View>
+                )}
+                {makeAndModelConfirmation && carSelectedByMakeAndModelCtx && (
+                  <View className="mx-3 p-4 border-2 border-grey-light rounded-xl">
+                    <View className="mb-2">
+                      <RegistrationCarDetailCard
+                        title="Make"
+                        value={carSelectedByMakeAndModelCtx.make}
+                      />
+                      <RegistrationCarDetailCard
+                        title="Model"
+                        value={carSelectedByMakeAndModelCtx.model}
+                      />
+                      {carSelectedByMakeAndModelCtx.year && (
+                        <RegistrationCarDetailCard
+                          title="Year"
+                          value={carSelectedByMakeAndModelCtx.year.toString()}
+                        />
+                      )}
+                      <RegistrationCarDetailCard
+                        title="Engine displacement"
+                        value={carSelectedByMakeAndModelCtx.engineDisplacement!}
+                      />
+                      <RegistrationCarDetailCard
+                        title="Fuel"
+                        value={carSelectedByMakeAndModelCtx.fuel}
+                      />
+                      {carSelectedByMakeAndModelCtx.mileage && (
+                        <RegistrationCarDetailCard
+                          title="Mileage"
+                          value={carSelectedByMakeAndModelCtx.mileage.toString()}
+                        />
+                      )}
+                    </View>
+                    <HorizontalLine />
+                    <Pressable
+                      onPress={() => {
+                        setMakeAndModelConfirmation(false);
+                        if (setCarSelectedByMakeAndModelCtx) {
+                          console.log('aaaa');
+                          setCarSelectedByMakeAndModelCtx(undefined);
+                        }
+                      }}
+                    >
+                      <Text className="text-base font-medium mt-2 text-orange-500">
+                        Change
+                      </Text>
+                    </Pressable>
+                  </View>
                 )}
               </ScrollView>
             )}
@@ -283,7 +342,21 @@ function RegisterVehicleScreen() {
       </View>
       <TicDriveButton
         text="Confirm"
-        routeName="CarRegistrationConfirmationScreen"
+        onClick={() => {
+          setMakeAndModelConfirmation(true);
+          if (setCarSelectedByMakeAndModelCtx) {
+            setCarSelectedByMakeAndModelCtx({
+              ...carSelectedByMakeAndModelCtx,
+              make: carMakeDropdownData?.value,
+              model: carModelDropdownData?.value,
+            });
+          }
+        }}
+        routeName={
+          carSelectedByMakeAndModelCtx &&
+          makeAndModelConfirmation &&
+          `${selectedWorkshop ? 'ReviewBookingDetailsScreen' : 'WorkshopsListScreen'}`
+        }
         routeParams={{carSelected: carSelectedByMakeAndModelCtx}}
         disabled={!buttonIsEnabled}
       />
