@@ -1,6 +1,6 @@
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import {Colors} from '@/constants/Colors';
-import {StyleSheet, Text, useColorScheme, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {Pressable, ScrollView} from 'react-native-gesture-handler';
 import SegmentedControl from '@/components/SegmentedControl';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
@@ -40,6 +40,7 @@ function RegisterVehicleScreen() {
   const [errorYear, setErrorYear] = useState(false);
   const [makeAndModelConfirmation, setMakeAndModelConfirmation] =
     useState(false);
+  const [plateConfirmation, setPlateConfirmation] = useState(false);
 
   const [carMakeDropdownData, setCarMakeDropdownData] = useState<
     TicDriveDropdownData | undefined
@@ -61,6 +62,22 @@ function RegisterVehicleScreen() {
   const selectedWorkshop = useAppSelector(
     state => state.workshops.selectedWorkshop,
   );
+
+  const routeName = useMemo(() => {
+    if (
+      (segmentedControlSelection?.index === 0 && carSelectedByMakeAndModelCtx && makeAndModelConfirmation) ||
+      (segmentedControlSelection?.index === 1 && carSelectedByPlateCtx && plateConfirmation)
+    ) {
+      return `${selectedWorkshop ? 'ReviewBookingDetailsScreen' : 'WorkshopsListScreen'}`;
+    }
+    return '';
+  }, [
+    carSelectedByMakeAndModelCtx,
+    makeAndModelConfirmation,
+    carSelectedByPlateCtx,
+    plateConfirmation,
+    selectedWorkshop,
+  ]);
 
   useEffect(() => {
     setErrorYear(false);
@@ -299,7 +316,6 @@ function RegisterVehicleScreen() {
                       onPress={() => {
                         setMakeAndModelConfirmation(false);
                         if (setCarSelectedByMakeAndModelCtx) {
-                          console.log('aaaa');
                           setCarSelectedByMakeAndModelCtx(undefined);
                         }
                       }}
@@ -314,26 +330,32 @@ function RegisterVehicleScreen() {
             )}
             {segmentedControlSelection?.index === 1 && (
               <ScrollView className="mx-4" automaticallyAdjustKeyboardInsets>
-                <TicDriveInput
-                  placeholder={segmentedControlSelection.placeholder ?? ''}
-                  isRightIcon={true}
-                  isTextUppercase={true}
-                  onRightIcon={handleOnRightIcon}
-                  onSubmit={value => fetchByPlate(value)}
-                  containerStyle={{height: 85}}
-                />
-                {isPlateError && (
-                  <Text className="font-medium text-md text-red-500 text-center">
-                    Insert a valid plate number. Format: AA123BB
-                  </Text>
-                )}
-                {!isPlateError && carSelectedByPlate && (
-                  <CarDetailsByPlate
-                    key={carModelDropdownData?.id}
-                    carSelected={carSelectedByPlate}
-                    errorYear={errorYear}
-                    setErrorYear={setErrorYear}
-                  />
+                {!plateConfirmation ? (
+                  <View>
+                    <TicDriveInput
+                      placeholder={segmentedControlSelection.placeholder ?? ''}
+                      isRightIcon={true}
+                      isTextUppercase={true}
+                      onRightIcon={handleOnRightIcon}
+                      onSubmit={value => fetchByPlate(value)}
+                      containerStyle={{height: 85}}
+                    />
+                    {isPlateError && (
+                      <Text className="font-medium text-md text-red-500 text-center">
+                        Insert a valid plate number. Format: AA123BB
+                      </Text>
+                    )}
+                    {!isPlateError && carSelectedByPlate && (
+                      <CarDetailsByPlate
+                        key={carModelDropdownData?.id}
+                        carSelected={carSelectedByPlate}
+                        errorYear={errorYear}
+                        setErrorYear={setErrorYear}
+                      />
+                    )}
+                  </View>
+                ) : (
+                  <Text>confirmation</Text>
                 )}
               </ScrollView>
             )}
@@ -343,20 +365,27 @@ function RegisterVehicleScreen() {
       <TicDriveButton
         text="Confirm"
         onClick={() => {
-          setMakeAndModelConfirmation(true);
-          if (setCarSelectedByMakeAndModelCtx) {
-            setCarSelectedByMakeAndModelCtx({
-              ...carSelectedByMakeAndModelCtx,
-              make: carMakeDropdownData?.value,
-              model: carModelDropdownData?.value,
-            });
+          if (segmentedControlSelection?.index === 0) {
+            setMakeAndModelConfirmation(true);
+            if (setCarSelectedByMakeAndModelCtx) {
+              setCarSelectedByMakeAndModelCtx({
+                ...carSelectedByMakeAndModelCtx,
+                make: carMakeDropdownData?.value,
+                model: carModelDropdownData?.value,
+              });
+            }
+          } else if (segmentedControlSelection?.index === 1) {
+            setPlateConfirmation(true);
+            if (setCarSelectedByPlateCtx) {
+              setCarSelectedByPlateCtx({
+                ...carSelectedByMakeAndModelCtx,
+                make: carMakeDropdownData?.value,
+                model: carModelDropdownData?.value,
+              });
+            }
           }
         }}
-        routeName={
-          carSelectedByMakeAndModelCtx &&
-          makeAndModelConfirmation &&
-          `${selectedWorkshop ? 'ReviewBookingDetailsScreen' : 'WorkshopsListScreen'}`
-        }
+        routeName={routeName}
         routeParams={{carSelected: carSelectedByMakeAndModelCtx}}
         disabled={!buttonIsEnabled}
       />
