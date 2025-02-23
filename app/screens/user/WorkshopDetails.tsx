@@ -29,8 +29,9 @@ import ShareIcon from '@/assets/svg/share/shareIcon.svg';
 import SeeAllServicesCards from '@/components/services/SeeAllServicesCards';
 import SeeAllReviewsCards from '@/components/workshop/reviews/SeeAllReviewsCards';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
-import {WebView, WebViewMessageEvent} from 'react-native-webview';
+// import {WebView, WebViewMessageEvent} from 'react-native-webview';
 import Constants from 'expo-constants';
+import ServicesMap from '@/components/ServicesMap';
 
 export default function WorkshopDetails() {
   const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
@@ -85,23 +86,23 @@ export default function WorkshopDetails() {
     lng: number;
   }
 
-  const onMessageHandler = (event: WebViewMessageEvent): void => {
-    try {
-      const data = JSON.parse(event.nativeEvent.data) as OpenMapMessage;
-      if (data.type === 'openMap') {
-        const {lat, lng} = data;
-        const url = Platform.select({
-          ios: `maps://?q=${lat},${lng}`,
-          android: `geo:${lat},${lng}?q=${lat},${lng}`,
-        });
-        if (url) {
-          Linking.openURL(url);
-        }
-      }
-    } catch (error) {
-      console.error('Error parsing message from WebView', error);
-    }
-  };
+  // const onMessageHandler = (event: WebViewMessageEvent): void => {
+  //   try {
+  //     const data = JSON.parse(event.nativeEvent.data) as OpenMapMessage;
+  //     if (data.type === 'openMap') {
+  //       const {lat, lng} = data;
+  //       const url = Platform.select({
+  //         ios: `maps://?q=${lat},${lng}`,
+  //         android: `geo:${lat},${lng}?q=${lat},${lng}`,
+  //       });
+  //       if (url) {
+  //         Linking.openURL(url);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error('Error parsing message from WebView', error);
+  //   }
+  // };
 
   const onShare = async () => {
     try {
@@ -206,12 +207,13 @@ export default function WorkshopDetails() {
                 </View>
                 {lat && lng && (
                   <View className="mt-2" style={{height: 140}}>
-                    <WebView
+                    {/* <WebView
                       style={{flex: 1}}
                       originWhitelist={['*']}
                       source={{html: htmlContent}}
                       onMessage={onMessageHandler}
-                    />
+                    /> */}
+                    <ServicesMap />
                   </View>
                 )}
               </View>

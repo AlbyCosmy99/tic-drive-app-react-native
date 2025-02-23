@@ -73,7 +73,8 @@
     "react-native-webview": "13.12.5",
     "react-redux": "9.1.2",
     "redux": "5.0.1",
-    "ticdrive-mobile": "file:"
+    "ticdrive-mobile": "file:",
+    "react-native-maps": "1.18.0"
   },
   "devDependencies": {
     "@babel/core": "7.25.2",
