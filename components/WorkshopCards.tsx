@@ -1,8 +1,6 @@
 import WorkshopCard from './WorkshopCard';
 import {
   ActivityIndicator,
-  RefreshControl,
-  ScrollView,
   Text,
   TouchableOpacity,
 } from 'react-native';
@@ -15,7 +13,6 @@ import useJwtToken from '@/hooks/auth/useJwtToken';
 import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
 import useWorkshops from '@/hooks/api/workshops/useWorkshops';
 import LoadingSpinner from './ui/loading/LoadingSpinner';
-import {Colors} from '@/constants/Colors';
 import {View} from 'react-native';
 import TicDriveButton from './ui/buttons/TicDriveButton';
 import navigationReset from '@/services/navigation/reset';
@@ -41,15 +38,18 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
 
   const servicesChoosen = useServicesChoosenByUsers();
   const {areServicesAvailable} = useAreServicesAvailable();
-  const {workshops, loadingWorkshops, setLoadingWorkshops} = useWorkshops(
-    0,
-    10,
-    areServicesAvailable ? servicesChoosen[0]?.id : 0,
-  );
+  const [currentPage, setCurrentPage] = useState(1)
 
+  const workshopsPerPage = 10
+  const {workshops, loadingWorkshops, setLoadingWorkshops, count} = useWorkshops(
+    currentPage - 1 * workshopsPerPage,
+    workshopsPerPage,
+    areServicesAvailable ? servicesChoosen[0]?.id : 0,
+    true
+  );
+  const pages = count / workshopsPerPage
   const token = useJwtToken();
   const dispatch = useAppDispatch();
-
   const handleChooseDifferentService = () => {
     dispatch(reset());
     navigationPush(navigation, 'ChooseServicesScreen');
@@ -70,6 +70,7 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
 
   useEffect(() => {
     setAreNoWorkshop(false);
+    console.log('pages', pages)
   }, [filteredWorkshops]);
 
   useEffect(() => {
@@ -85,14 +86,6 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
   const handleCardPress = (workshop: Workshop) => {
     //todo: controllare se il param workshop viene utilizzato davvero
     navigationPush(navigation, 'WorkshopDetails', {workshop});
-  };
-
-  const onRefresh = () => {
-    setRefreshing(true);
-    setLoadingWorkshops(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 1000);
   };
 
   return filteredWorkshops.length === 0 && !loadingWorkshops ? (
@@ -114,40 +107,29 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
   ) : (
     <View
       className={`${!token ? 'mb-2' : ''} ${tailwindContainerCss}`}
-      // refreshControl={
-      //   <RefreshControl
-      //     refreshing={refreshing}
-      //     onRefresh={onRefresh}
-      //     colors={[Colors.light.ticText]}
-      //     tintColor={Colors.light.ticText}
-      //   />
-      // }
     >
       {loadingWorkshops ? (
         <View className="w-full h-full justify-center items-center mt-40">
           <LoadingSpinner />
         </View>
       ) : (
-        // filteredWorkshops.map((workshop, index) => (
-        //   <TouchableOpacity
-        //     key={workshop.id || index}
-        //     onPress={() => handleCardPress(workshop)}
-        //   >
-        //     <WorkshopCard workshop={workshop} />
-        //   </TouchableOpacity>
-        // ))
         <FlatList
           data={filteredWorkshops}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={(item) => item.id.toString()}
           renderItem={({item}) => (
             <TouchableOpacity onPress={() => handleCardPress(item)}>
               <WorkshopCard workshop={item} />
             </TouchableOpacity>
           )}
-          //onEndReached={() => setLoadingWorkshops}
+          onEndReached={() => {
+            if(currentPage < pages) {
+              setCurrentPage(currentPage + 1)
+              setLoadingWorkshops(true)
+            }
+          }}
           onEndReachedThreshold={0.5}
           ListFooterComponent={() =>
-            loadingWorkshops ? (
+            loadingWorkshops && currentPage < pages ? (
               <ActivityIndicator
                 size="large"
                 color="green"
