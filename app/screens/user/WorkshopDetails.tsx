@@ -32,6 +32,7 @@ import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import Constants from 'expo-constants';
 import MapView, {Marker} from 'react-native-maps';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
+import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
 
 export default function WorkshopDetails() {
   const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
@@ -53,24 +54,6 @@ export default function WorkshopDetails() {
       Linking.openURL(url);
     }
   };
-
-  // const onMessageHandler = (event: WebViewMessageEvent): void => {
-  //   try {
-  //     const data = JSON.parse(event.nativeEvent.data) as OpenMapMessage;
-  //     if (data.type === 'openMap') {
-  //       const {lat, lng} = data;
-  //       const url = Platform.select({
-  //         ios: `maps://?q=${lat},${lng}`,
-  //         android: `geo:${lat},${lng}?q=${lat},${lng}`,
-  //       });
-  //       if (url) {
-  //         Linking.openURL(url);
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error('Error parsing message from WebView', error);
-  //   }
-  // };
 
   const onShare = async () => {
     try {
@@ -169,16 +152,21 @@ export default function WorkshopDetails() {
               <View className="mt-2">
                 <Text className="text-xl font-semibold">Location</Text>
                 <View className="flex-1 flex-row items-center gap-0.5">
-                  <Text className="text-base font-medium underline text-tic">
-                    {workshop.address}
-                  </Text>
+                  <CrossPlatformButtonLayout
+                    removeAllStyles
+                    onPress={openGoogleMaps}
+                  >
+                    <Text className="text-base font-medium underline text-tic">
+                      {workshop.address}
+                    </Text>
+                  </CrossPlatformButtonLayout>
                 </View>
                 {lat && lng && (
                   <View className="mt-2" style={{height: 140}}>
                     <GooglePlacesAutocomplete
                       placeholder="Search"
                       query={{
-                        key: 'AIzaSyBpJqSqJaYw7xrmzjPxfLZhqU9M7R5ZRVk',
+                        key: 'AIzaSyA4RElAzKK4A46CGKArVpOW5fXoTRLKAso',
                         language: 'en',
                       }}
                       fetchDetails={true}
