@@ -29,10 +29,8 @@ import ShareIcon from '@/assets/svg/share/shareIcon.svg';
 import SeeAllServicesCards from '@/components/services/SeeAllServicesCards';
 import SeeAllReviewsCards from '@/components/workshop/reviews/SeeAllReviewsCards';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
-// import {WebView, WebViewMessageEvent} from 'react-native-webview';
 import Constants from 'expo-constants';
-import ServicesMap from '@/components/ServicesMap';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, {Marker} from 'react-native-maps';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 
 export default function WorkshopDetails() {
@@ -41,52 +39,20 @@ export default function WorkshopDetails() {
   const {areServicesAvailable} = useAreServicesAvailable();
   const token = useJwtToken();
 
-  const apiKey = 'AIzaSyA4RElAzKK4A46CGKArVpOW5fXoTRLKAso';
   const lat = workshop?.latitude || null;
   const lng = workshop?.longitude || null;
 
-  const htmlContent = `
-  <!DOCTYPE html>
-  <html>
-    <head>
-      <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-      <style>
-        html, body, #map { height: 100%; margin: 0; padding: 0; }
-      </style>
-      <script src="https://maps.googleapis.com/maps/api/js?key=${apiKey}"></script>
-      <script>
-        function initMap() {
-          var center = {lat: ${lat}, lng: ${lng}};
-          var map = new google.maps.Map(document.getElementById('map'), {
-            center: center,
-            zoom: 12
-          });
-          var marker = new google.maps.Marker({
-            position: center,
-            map: map,
-            title: "Tap for directions"
-          });
-          marker.addListener('click', function() {
-            window.ReactNativeWebView.postMessage(JSON.stringify({
-              type: 'openMap',
-              lat: center.lat,
-              lng: center.lng
-            }));
-          });
-        }
-      </script>
-    </head>
-    <body onload="initMap()">
-      <div id="map"></div>
-    </body>
-  </html>
-`;
-
-  interface OpenMapMessage {
-    type: 'openMap';
-    lat: number;
-    lng: number;
-  }
+  const openGoogleMaps = () => {
+    if (workshop?.address) {
+      const encodedAddress = encodeURIComponent(workshop?.address);
+      const url = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+      Linking.openURL(url);
+    } else {
+      // Fallback to using coordinates
+      const url = `https://www.google.com/maps/search/?api=1&query=${workshop?.latitude},${workshop?.longitude}`;
+      Linking.openURL(url);
+    }
+  };
 
   // const onMessageHandler = (event: WebViewMessageEvent): void => {
   //   try {
@@ -234,7 +200,14 @@ export default function WorkshopDetails() {
                             latitude: workshop.latitude,
                             longitude: workshop.longitude,
                           }}
-                        />
+                        >
+                          <TouchableOpacity
+                            onPress={openGoogleMaps}
+                            activeOpacity={1}
+                          >
+                            <Text>LOCATION</Text>
+                          </TouchableOpacity>
+                        </Marker>
                       </MapView>
                     )}
                   </View>
