@@ -3,7 +3,6 @@ import {Image} from '@rneui/themed';
 import {
   ActivityIndicator,
   Linking,
-  Platform,
   Share,
   StyleSheet,
   Text,
@@ -31,7 +30,6 @@ import SeeAllReviewsCards from '@/components/workshop/reviews/SeeAllReviewsCards
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import Constants from 'expo-constants';
 import MapView, {Marker} from 'react-native-maps';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
 
 export default function WorkshopDetails() {
@@ -163,14 +161,6 @@ export default function WorkshopDetails() {
                 </View>
                 {lat && lng && (
                   <View className="mt-2" style={{height: 140}}>
-                    {/* <GooglePlacesAutocomplete
-                      placeholder="Search"
-                      query={{
-                        key: 'AIzaSyA4RElAzKK4A46CGKArVpOW5fXoTRLKAso',
-                        language: 'en',
-                      }}
-                      fetchDetails={true}
-                    /> */}
                     {workshop.latitude && workshop.longitude && (
                       <MapView
                         style={StyleSheet.absoluteFillObject}
