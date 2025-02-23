@@ -39,8 +39,8 @@ export default function WorkshopDetails() {
   const token = useJwtToken();
 
   const apiKey = 'AIzaSyA4RElAzKK4A46CGKArVpOW5fXoTRLKAso';
-  const lat = workshop?.latitude || 40.73061;
-  const lng = workshop?.longitude || -73.935242;
+  const lat = workshop?.latitude || null;
+  const lng = workshop?.longitude || null;
 
   const htmlContent = `
   <!DOCTYPE html>
@@ -204,14 +204,16 @@ export default function WorkshopDetails() {
                     {workshop.address}
                   </Text>
                 </View>
-                <View className="mt-2" style={{height: 140}}>
-                  <WebView
-                    style={{flex: 1}}
-                    originWhitelist={['*']}
-                    source={{html: htmlContent}}
-                    onMessage={onMessageHandler}
-                  />
-                </View>
+                {lat && lng && (
+                  <View className="mt-2" style={{height: 140}}>
+                    <WebView
+                      style={{flex: 1}}
+                      originWhitelist={['*']}
+                      source={{html: htmlContent}}
+                      onMessage={onMessageHandler}
+                    />
+                  </View>
+                )}
               </View>
               <View className="mt-2.5">
                 <Text className="text-xl font-semibold">What people say</Text>
