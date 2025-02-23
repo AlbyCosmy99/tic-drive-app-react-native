@@ -50,7 +50,7 @@ const CarConfirmationDetails: React.FC<CarConfirmationDetailsProps> = ({
         )}
         {carSelected.powerCV && (
           <RegistrationCarDetailCard
-            title="Mileage"
+            title="CV"
             value={carSelected.powerCV.toString()}
           />
         )}

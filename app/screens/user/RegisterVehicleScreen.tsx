@@ -1,7 +1,7 @@
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import {Colors} from '@/constants/Colors';
 import {StyleSheet, Text, View} from 'react-native';
-import {Pressable, ScrollView} from 'react-native-gesture-handler';
+import { ScrollView} from 'react-native-gesture-handler';
 import SegmentedControl from '@/components/SegmentedControl';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
 import {useContext, useEffect, useMemo, useState} from 'react';
@@ -22,8 +22,6 @@ import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import {setAreServicesOn} from '@/stateManagement/redux/slices/servicesSlice';
 import isPlateNumber from '@/utils/car/isPlateNumber';
 import CarDetailsByPlate from '@/components/cars/registration/CarDetailsByPlate';
-import RegistrationCarDetailCard from '@/components/ui/cards/cars/RegistrationCarDetailCard';
-import HorizontalLine from '@/components/ui/HorizontalLine';
 import CarConfirmationDetails from '@/components/cars/registration/CarConfirmationDetails';
 
 function RegisterVehicleScreen() {
