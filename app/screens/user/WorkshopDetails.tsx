@@ -163,14 +163,14 @@ export default function WorkshopDetails() {
                 </View>
                 {lat && lng && (
                   <View className="mt-2" style={{height: 140}}>
-                    <GooglePlacesAutocomplete
+                    {/* <GooglePlacesAutocomplete
                       placeholder="Search"
                       query={{
                         key: 'AIzaSyA4RElAzKK4A46CGKArVpOW5fXoTRLKAso',
                         language: 'en',
                       }}
                       fetchDetails={true}
-                    />
+                    /> */}
                     {workshop.latitude && workshop.longitude && (
                       <MapView
                         style={StyleSheet.absoluteFillObject}
