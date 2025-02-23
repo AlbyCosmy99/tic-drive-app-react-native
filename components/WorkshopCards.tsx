@@ -1,9 +1,5 @@
 import WorkshopCard from './WorkshopCard';
-import {
-  ActivityIndicator,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import {ActivityIndicator, Text, TouchableOpacity} from 'react-native';
 import {memo, useContext, useEffect, useMemo, useState} from 'react';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import navigationPush from '@/services/navigation/push';
@@ -38,16 +34,17 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
 
   const servicesChoosen = useServicesChoosenByUsers();
   const {areServicesAvailable} = useAreServicesAvailable();
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const workshopsPerPage = 10
-  const {workshops, loadingWorkshops, setLoadingWorkshops, count} = useWorkshops(
-    currentPage - 1 * workshopsPerPage,
-    workshopsPerPage,
-    areServicesAvailable ? servicesChoosen[0]?.id : 0,
-    true
-  );
-  const pages = count / workshopsPerPage
+  const workshopsPerPage = 10;
+  const {workshops, loadingWorkshops, setLoadingWorkshops, count} =
+    useWorkshops(
+      currentPage - 1 * workshopsPerPage,
+      workshopsPerPage,
+      areServicesAvailable ? servicesChoosen[0]?.id : 0,
+      true,
+    );
+  const pages = count / workshopsPerPage;
   const token = useJwtToken();
   const dispatch = useAppDispatch();
   const handleChooseDifferentService = () => {
@@ -70,7 +67,7 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
 
   useEffect(() => {
     setAreNoWorkshop(false);
-    console.log('pages', pages)
+    console.log('pages', pages);
   }, [filteredWorkshops]);
 
   useEffect(() => {
@@ -105,9 +102,7 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
       />
     </View>
   ) : (
-    <View
-      className={`${!token ? 'mb-2' : ''} ${tailwindContainerCss}`}
-    >
+    <View className={`${!token ? 'mb-2' : ''} ${tailwindContainerCss}`}>
       {loadingWorkshops ? (
         <View className="w-full h-full justify-center items-center mt-40">
           <LoadingSpinner />
@@ -115,16 +110,16 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
       ) : (
         <FlatList
           data={filteredWorkshops}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={item => item.id.toString()}
           renderItem={({item}) => (
             <TouchableOpacity onPress={() => handleCardPress(item)}>
               <WorkshopCard workshop={item} />
             </TouchableOpacity>
           )}
           onEndReached={() => {
-            if(currentPage < pages) {
-              setCurrentPage(currentPage + 1)
-              setLoadingWorkshops(true)
+            if (currentPage < pages) {
+              setCurrentPage(currentPage + 1);
+              setLoadingWorkshops(true);
             }
           }}
           onEndReachedThreshold={0.5}

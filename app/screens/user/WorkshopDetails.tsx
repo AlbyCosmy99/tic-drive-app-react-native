@@ -1,6 +1,14 @@
 import {Colors} from '@/constants/Colors';
 import {Image} from '@rneui/themed';
-import {ActivityIndicator, Share, StyleSheet, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Linking,
+  Platform,
+  Share,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {
   Pressable,
   ScrollView,
@@ -21,12 +29,79 @@ import ShareIcon from '@/assets/svg/share/shareIcon.svg';
 import SeeAllServicesCards from '@/components/services/SeeAllServicesCards';
 import SeeAllReviewsCards from '@/components/workshop/reviews/SeeAllReviewsCards';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
+import {WebView, WebViewMessageEvent} from 'react-native-webview';
+import Constants from 'expo-constants';
 
 export default function WorkshopDetails() {
   const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
   const navigation = useTicDriveNavigation();
   const {areServicesAvailable} = useAreServicesAvailable();
   const token = useJwtToken();
+
+  const apiKey = 'AIzaSyA4RElAzKK4A46CGKArVpOW5fXoTRLKAso';
+  const lat = workshop?.latitude || 40.73061;
+  const lng = workshop?.longitude || -73.935242;
+
+  const htmlContent = `
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+      <style>
+        html, body, #map { height: 100%; margin: 0; padding: 0; }
+      </style>
+      <script src="https://maps.googleapis.com/maps/api/js?key=${apiKey}"></script>
+      <script>
+        function initMap() {
+          var center = {lat: ${lat}, lng: ${lng}};
+          var map = new google.maps.Map(document.getElementById('map'), {
+            center: center,
+            zoom: 12
+          });
+          var marker = new google.maps.Marker({
+            position: center,
+            map: map,
+            title: "Tap for directions"
+          });
+          marker.addListener('click', function() {
+            window.ReactNativeWebView.postMessage(JSON.stringify({
+              type: 'openMap',
+              lat: center.lat,
+              lng: center.lng
+            }));
+          });
+        }
+      </script>
+    </head>
+    <body onload="initMap()">
+      <div id="map"></div>
+    </body>
+  </html>
+`;
+
+  interface OpenMapMessage {
+    type: 'openMap';
+    lat: number;
+    lng: number;
+  }
+
+  const onMessageHandler = (event: WebViewMessageEvent): void => {
+    try {
+      const data = JSON.parse(event.nativeEvent.data) as OpenMapMessage;
+      if (data.type === 'openMap') {
+        const {lat, lng} = data;
+        const url = Platform.select({
+          ios: `maps://?q=${lat},${lng}`,
+          android: `geo:${lat},${lng}?q=${lat},${lng}`,
+        });
+        if (url) {
+          Linking.openURL(url);
+        }
+      }
+    } catch (error) {
+      console.error('Error parsing message from WebView', error);
+    }
+  };
 
   const onShare = async () => {
     try {
@@ -36,7 +111,7 @@ export default function WorkshopDetails() {
       ⭐ *Rating:* ${workshop?.meanStars?.toFixed(1)} (${workshop?.numberOfReviews} reviews)\n
       💰 ${workshop?.servicePrice ? `**Starting from:** ${workshop?.servicePrice} ${workshop?.currency}` : 'Check out our services!'}${workshop?.discount ? ` 🔥 **Limited-time discount:** ${workshop?.discount}% off!` : ''}\n
       ${workshop?.isVerified ? '✅ *This workshop is verified by TicDrive!* 🔥' : ''}\n
-      🔗 *Book now on TicDrive!*`,
+      🔗 *Book now on TicDrive!* ${Constants.expoConfig?.extra?.googleMapsApiKey}`,
       });
 
       if (result.action === Share.sharedAction) {
@@ -128,6 +203,14 @@ export default function WorkshopDetails() {
                   <Text className="text-base font-medium underline text-tic">
                     {workshop.address}
                   </Text>
+                </View>
+                <View className="mt-2" style={{height: 140}}>
+                  <WebView
+                    style={{flex: 1}}
+                    originWhitelist={['*']}
+                    source={{html: htmlContent}}
+                    onMessage={onMessageHandler}
+                  />
                 </View>
               </View>
               <View className="mt-2.5">

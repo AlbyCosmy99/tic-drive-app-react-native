@@ -1,7 +1,7 @@
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import {Colors} from '@/constants/Colors';
 import {StyleSheet, Text, View} from 'react-native';
-import { ScrollView} from 'react-native-gesture-handler';
+import {ScrollView} from 'react-native-gesture-handler';
 import SegmentedControl from '@/components/SegmentedControl';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
 import {useContext, useEffect, useMemo, useState} from 'react';

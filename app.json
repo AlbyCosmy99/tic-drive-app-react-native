@@ -24,6 +24,9 @@
       "jsEngine": "hermes",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
+      },
+      "config": {
+        "googleMapsApiKey": "AIzaSyA4RElAzKK4A46CGKArVpOW5fXoTRLKAso"
       }
     },
     "android": {
@@ -32,7 +35,12 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.albycosmy99.ticdrive",
-      "jsEngine": "hermes"
+      "jsEngine": "hermes",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyA4RElAzKK4A46CGKArVpOW5fXoTRLKAso"
+        }
+      }
     },
     "web": {
       "bundler": "metro",
