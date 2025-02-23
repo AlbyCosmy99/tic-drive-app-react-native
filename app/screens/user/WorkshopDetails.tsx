@@ -29,7 +29,7 @@ import ShareIcon from '@/assets/svg/share/shareIcon.svg';
 import SeeAllServicesCards from '@/components/services/SeeAllServicesCards';
 import SeeAllReviewsCards from '@/components/workshop/reviews/SeeAllReviewsCards';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
-// import {WebView, WebViewMessageEvent} from 'react-native-webview';
+import {WebView, WebViewMessageEvent} from 'react-native-webview';
 import Constants from 'expo-constants';
 
 export default function WorkshopDetails() {
@@ -85,23 +85,23 @@ export default function WorkshopDetails() {
     lng: number;
   }
 
-  // const onMessageHandler = (event: WebViewMessageEvent): void => {
-  //   try {
-  //     const data = JSON.parse(event.nativeEvent.data) as OpenMapMessage;
-  //     if (data.type === 'openMap') {
-  //       const {lat, lng} = data;
-  //       const url = Platform.select({
-  //         ios: `maps://?q=${lat},${lng}`,
-  //         android: `geo:${lat},${lng}?q=${lat},${lng}`,
-  //       });
-  //       if (url) {
-  //         Linking.openURL(url);
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error('Error parsing message from WebView', error);
-  //   }
-  // };
+  const onMessageHandler = (event: WebViewMessageEvent): void => {
+    try {
+      const data = JSON.parse(event.nativeEvent.data) as OpenMapMessage;
+      if (data.type === 'openMap') {
+        const {lat, lng} = data;
+        const url = Platform.select({
+          ios: `maps://?q=${lat},${lng}`,
+          android: `geo:${lat},${lng}?q=${lat},${lng}`,
+        });
+        if (url) {
+          Linking.openURL(url);
+        }
+      }
+    } catch (error) {
+      console.error('Error parsing message from WebView', error);
+    }
+  };
 
   const onShare = async () => {
     try {
@@ -204,7 +204,7 @@ export default function WorkshopDetails() {
                     {workshop.address}
                   </Text>
                 </View>
-                {/* {lat && lng && (
+                {lat && lng && (
                   <View className="mt-2" style={{height: 140}}>
                     <WebView
                       style={{flex: 1}}
@@ -213,7 +213,7 @@ export default function WorkshopDetails() {
                       onMessage={onMessageHandler}
                     />
                   </View>
-                )} */}
+                )}
               </View>
               <View className="mt-2.5">
                 <Text className="text-xl font-semibold">What people say</Text>
