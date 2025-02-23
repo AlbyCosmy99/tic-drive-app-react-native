@@ -32,6 +32,8 @@ import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 // import {WebView, WebViewMessageEvent} from 'react-native-webview';
 import Constants from 'expo-constants';
 import ServicesMap from '@/components/ServicesMap';
+import MapView, { Marker } from 'react-native-maps';
+import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 
 export default function WorkshopDetails() {
   const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
@@ -207,13 +209,34 @@ export default function WorkshopDetails() {
                 </View>
                 {lat && lng && (
                   <View className="mt-2" style={{height: 140}}>
-                    {/* <WebView
-                      style={{flex: 1}}
-                      originWhitelist={['*']}
-                      source={{html: htmlContent}}
-                      onMessage={onMessageHandler}
-                    /> */}
-                    <ServicesMap />
+                    <GooglePlacesAutocomplete
+                      placeholder="Search"
+                      query={{
+                        key: 'AIzaSyBpJqSqJaYw7xrmzjPxfLZhqU9M7R5ZRVk',
+                        language: 'en',
+                      }}
+                      fetchDetails={true}
+                    />
+                    {workshop.latitude && workshop.longitude && (
+                      <MapView
+                        style={StyleSheet.absoluteFillObject}
+                        initialRegion={{
+                          latitude: workshop.latitude,
+                          longitude: workshop.longitude,
+                          latitudeDelta: 0.0922,
+                          longitudeDelta: 0.0421,
+                        }}
+                        scrollEnabled={true}
+                        zoomEnabled={true}
+                      >
+                        <Marker
+                          coordinate={{
+                            latitude: workshop.latitude,
+                            longitude: workshop.longitude,
+                          }}
+                        />
+                      </MapView>
+                    )}
                   </View>
                 )}
               </View>

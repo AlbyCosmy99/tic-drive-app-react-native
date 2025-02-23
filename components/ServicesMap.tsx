@@ -53,37 +53,37 @@ const ServicesMap: React.FC = () => {
 
   useEffect(() => {
     let isMounted = true;
-  
+
     (async () => {
       try {
-        const { status } = await Location.requestForegroundPermissionsAsync();
-  
+        const {status} = await Location.requestForegroundPermissionsAsync();
+
         if (status !== 'granted') {
           Alert.alert(
             'Permission Denied',
             'Enable location access in Settings to see nearby workshops.',
-            [{ text: 'OK' }]
+            [{text: 'OK'}],
           );
           return;
         }
-  
+
         const location = await Location.getCurrentPositionAsync({});
         if (!isMounted) return;
-  
-        const { latitude, longitude } = location.coords;
+
+        const {latitude, longitude} = location.coords;
         setInitialRegion({
           latitude,
           longitude,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         });
-  
+
         addCustomPOIs(latitude, longitude);
       } catch (error) {
         console.error('Error fetching location:', error);
       }
     })();
-  
+
     return () => {
       isMounted = false;
     };
