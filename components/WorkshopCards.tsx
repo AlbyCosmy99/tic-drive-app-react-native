@@ -18,35 +18,35 @@ import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice
 import Workshop from '@/types/workshops/Workshop';
 import {FlatList} from 'react-native-gesture-handler';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
-import { useRoute } from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
 
 interface WorkshopCardsProps {
   tailwindContainerCss?: string;
   setAreNoWorkshop?: (areNoWorkshops: boolean) => void;
-  favorite?: boolean
+  favorite?: boolean;
 }
 
 const WorkshopCards: React.FC<WorkshopCardsProps> = ({
   tailwindContainerCss = '',
   setAreNoWorkshop = () => {},
-  favorite = false
+  favorite = false,
 }) => {
   const {workshopFilter, setWorkshopFilter} = useContext(GlobalContext);
-  const navigation = useTicDriveNavigation()
+  const navigation = useTicDriveNavigation();
 
   const servicesChoosen = useServicesChoosenByUsers();
   const {areServicesAvailable} = useAreServicesAvailable();
   const [currentPage, setCurrentPage] = useState(1);
 
   const workshopsPerPage = 10;
- 
+
   const {workshops, loadingWorkshops, setLoadingWorkshops, count} =
     useWorkshops(
       currentPage - 1 * workshopsPerPage,
       workshopsPerPage,
       areServicesAvailable ? servicesChoosen[0]?.id : 0,
       true,
-      favorite
+      favorite,
     );
   const pages = count / workshopsPerPage;
   const token = useJwtToken();

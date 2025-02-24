@@ -8,32 +8,31 @@ const useWorkshops = (
   take: number = 10,
   serviceId: number = 0,
   cumulative: boolean = false,
-  favorite: boolean = false
+  favorite: boolean = false,
 ) => {
   const [workshops, setWorkshops] = useState<Workshop[]>([]);
   const [loadingWorkshops, setLoadingWorkshops] = useState(true);
   const [count, setCount] = useState(0);
-  const token = useJwtToken()
+  const token = useJwtToken();
 
   useEffect(() => {
     const fetchWorkshops = async () => {
       try {
-        
         let res;
-        if(!favorite) {
+        if (!favorite) {
           res = await apiClient.get(
             `workshops?skip=${skip}&take=${take}&serviceId=${serviceId}`,
           );
-        } else if(token) {
+        } else if (token) {
           res = await apiClient.get(
             `customer/workshops/favorite?skip=${skip}&take=${take}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
-            }
+            },
           );
-        } 
+        }
         let newWorkshops = res?.data.workshops;
         if (cumulative) {
           setWorkshops([...workshops, ...newWorkshops]);

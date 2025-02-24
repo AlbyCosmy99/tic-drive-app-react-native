@@ -34,7 +34,7 @@ export default function UserAccount() {
 
   const onFavoriteWorkshops = () => {
     navigationPush(navigation, 'WorkshopsListScreen', {favorite: true});
-  }
+  };
 
   return (
     <LinearGradientViewLayout>
