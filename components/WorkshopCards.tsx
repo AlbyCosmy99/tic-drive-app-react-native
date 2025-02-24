@@ -3,7 +3,6 @@ import {ActivityIndicator, Text, TouchableOpacity} from 'react-native';
 import {memo, useContext, useEffect, useMemo, useState} from 'react';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import navigationPush from '@/services/navigation/push';
-import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import {useServicesChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
@@ -18,31 +17,36 @@ import {useFocusEffect} from 'expo-router';
 import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice';
 import Workshop from '@/types/workshops/Workshop';
 import {FlatList} from 'react-native-gesture-handler';
+import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
+import { useRoute } from '@react-navigation/native';
 
 interface WorkshopCardsProps {
   tailwindContainerCss?: string;
   setAreNoWorkshop?: (areNoWorkshops: boolean) => void;
+  favorite?: boolean
 }
 
 const WorkshopCards: React.FC<WorkshopCardsProps> = ({
   tailwindContainerCss = '',
   setAreNoWorkshop = () => {},
+  favorite = false
 }) => {
   const {workshopFilter, setWorkshopFilter} = useContext(GlobalContext);
-  const {navigation} = useContext(NavigationContext);
-  const [refreshing, setRefreshing] = useState(false);
+  const navigation = useTicDriveNavigation()
 
   const servicesChoosen = useServicesChoosenByUsers();
   const {areServicesAvailable} = useAreServicesAvailable();
   const [currentPage, setCurrentPage] = useState(1);
 
   const workshopsPerPage = 10;
+ 
   const {workshops, loadingWorkshops, setLoadingWorkshops, count} =
     useWorkshops(
       currentPage - 1 * workshopsPerPage,
       workshopsPerPage,
       areServicesAvailable ? servicesChoosen[0]?.id : 0,
       true,
+      favorite
     );
   const pages = count / workshopsPerPage;
   const token = useJwtToken();

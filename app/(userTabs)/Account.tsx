@@ -24,6 +24,7 @@ import CustomerServiceIcon from '@/assets/svg/support/customerService.svg';
 import {useEffect} from 'react';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
+import navigationPush from '@/services/navigation/push';
 
 export default function UserAccount() {
   const user = useAppSelector(state => state.auth.user);
@@ -31,9 +32,9 @@ export default function UserAccount() {
   const dispatch = useAppDispatch();
   const navigation = useTicDriveNavigation();
 
-  useEffect(() => {
-    console.log(user);
-  }, []);
+  const onFavoriteWorkshops = () => {
+    navigationPush(navigation, 'WorkshopsListScreen', {favorite: true});
+  }
 
   return (
     <LinearGradientViewLayout>
@@ -91,7 +92,7 @@ export default function UserAccount() {
                   </CrossPlatformButtonLayout>
                   <CrossPlatformButtonLayout
                     removeAllStyles
-                    onPress={() => alert('favorite workshops')}
+                    onPress={onFavoriteWorkshops}
                   >
                     <IconTextPair
                       text="Favorite workshops"

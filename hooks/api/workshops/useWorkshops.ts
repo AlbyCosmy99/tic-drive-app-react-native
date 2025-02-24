@@ -1,30 +1,46 @@
 import {useEffect, useState} from 'react';
 import apiClient from '@/services/http/axiosClient';
 import Workshop from '@/types/workshops/Workshop';
+import useJwtToken from '@/hooks/auth/useJwtToken';
 
 const useWorkshops = (
   skip: number = 0,
   take: number = 10,
   serviceId: number = 0,
   cumulative: boolean = false,
+  favorite: boolean = false
 ) => {
   const [workshops, setWorkshops] = useState<Workshop[]>([]);
   const [loadingWorkshops, setLoadingWorkshops] = useState(true);
   const [count, setCount] = useState(0);
+  const token = useJwtToken()
 
   useEffect(() => {
     const fetchWorkshops = async () => {
       try {
-        const res = await apiClient.get(
-          `workshops?skip=${skip}&take=${take}&serviceId=${serviceId}`,
-        );
-        const newWorkshops = res.data.workshops;
+        
+        let res;
+        if(!favorite) {
+          res = await apiClient.get(
+            `workshops?skip=${skip}&take=${take}&serviceId=${serviceId}`,
+          );
+        } else if(token) {
+          res = await apiClient.get(
+            `customer/workshops/favorite?skip=${skip}&take=${take}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+        } 
+        let newWorkshops = res?.data.workshops;
         if (cumulative) {
           setWorkshops([...workshops, ...newWorkshops]);
         } else {
           setWorkshops(newWorkshops);
         }
-        setCount(res.data.count);
+        setCount(res?.data.count);
       } catch (err) {
         alert('Al momento il servizio non è disponibile. Riprova più tardi.');
         console.error(err);
