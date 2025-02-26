@@ -12,12 +12,12 @@ import UserChat from './Chat';
 import UserAccount from './Account';
 import ChooseServicesScreen from '../screens/ChooseServicesScreen';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
 const Tab = createBottomTabNavigator();
 
 export default function UserTabLayout() {
-  const {t} = useTranslation()
+  const {t} = useTranslation();
 
   const PRESSED_COLOR = Colors.light.green.drive;
   return (

@@ -1,5 +1,26 @@
 {
+    "reminder": "Reminder",
+    "bookNow": "Book Now",
+    "RemindMeLater": "Remind me later",
+    "services": "Services",
+    "bookings": "Bookings",
+    "account": "Profile",
+    "seeAll": {
+      "workshops": "See all workshops",
+      "services": "See all services"
+    },
+    "vehicles": {
+      "registerVehicle": "Register vehicle"
+    },
     "home": {
-        "reminder": "Reminder"
+      "notifications": {
+        "first": "Last service: 12 months ago.\nSchedule now!",
+        "second": "And it's time to change your tires for the winter season, discover the offers dedicated to you!",
+        "third": "Your vehicle tax expires on 01/01/2025!"
+      },
+      "findRightWorkshop": "Find the workshop that's right for you",
+      "searchInput": "Search for a workshop or service",
+      "discoverServicesAndBook": "Discover services and book"
     }
-}
+  }
+  

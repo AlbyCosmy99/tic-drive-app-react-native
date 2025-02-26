@@ -9,6 +9,7 @@ const resources = {
   it: {translation: it},
 };
 
+// const languageCode = Localization.locale.split('-')[0];
 const languageCode = 'it'; //todo: make the language dynamic
 
 i18n.use(initReactI18next).init({
