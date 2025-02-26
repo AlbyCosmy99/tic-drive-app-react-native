@@ -176,7 +176,6 @@ export default function UserHome() {
               logo={<NissanIcon />}
               text={`Il tuo bollo scade il 01/01/2025 !`}
             />
-
           </View>
         </ScrollView>
       </SafeAreaViewLayout>
