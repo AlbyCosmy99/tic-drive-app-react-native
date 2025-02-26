@@ -1,0 +1,12 @@
+{
+    "reminder": "Promemoria",
+    "bookNow": "Prenota ora",
+    "RemindMeLater": "Ricordamelo piú tardi",
+    "home": {
+        "notifications": {
+            "first": "Ultimo tagliando: 12 mesi fa.\nPianifica ora!",
+            "second": "E arrivata l’ora di cambiare le gomme per la stagione invernale, scopri le offerte dedicate a te!",
+            "third": "Il tuo bollo scade il 01/01/2025 !"
+        }
+    }
+}

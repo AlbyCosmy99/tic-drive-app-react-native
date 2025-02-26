@@ -46,6 +46,7 @@
     "expo-updates": "~0.27.1",
     "expo-web-browser": "14.0.2",
     "hermes-engine": "0.11.0",
+    "i18next": "^24.2.2",
     "lottie-react-native": "7.1.0",
     "micromatch": "4.0.8",
     "moti": "0.29.0",
@@ -53,6 +54,7 @@
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-hook-form": "7.53.0",
+    "react-i18next": "^15.4.1",
     "react-native": "0.76.6",
     "react-native-calendars": "1.1307.0",
     "react-native-device-info": "13.0.0",
@@ -74,11 +76,13 @@
     "react-native-webview": "13.12.5",
     "react-redux": "9.1.2",
     "redux": "5.0.1",
-    "ticdrive-mobile": "file:"
+    "ticdrive-mobile": "file:",
+    "expo-localization": "~16.0.1"
   },
   "devDependencies": {
     "@babel/core": "7.25.2",
     "@expo/cli": "0.22.5",
+    "@types/i18next": "^13.0.0",
     "@types/jest": "29.5.12",
     "@types/react": "18.3.12",
     "@types/react-native": "0.72.8",

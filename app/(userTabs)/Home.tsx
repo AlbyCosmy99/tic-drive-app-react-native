@@ -30,12 +30,14 @@ import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
 import TicDriveReminderCard from '@/components/ui/cards/notifications/TicDriveReminderCard';
 import NissanIcon from '@/assets/svg/vehicles/makes/nissan.svg';
 import PeugeotIcon from '@/assets/svg/vehicles/makes/peugeot.svg';
+import { useTranslation } from 'react-i18next';
 
 export default function UserHome() {
   const {setWorkshopFilter} = useContext(GlobalContext);
   const navigation = useTicDriveNavigation();
   const [refreshing, setRefreshing] = useState(false);
   const servicesRef = useRef();
+  const { t } = useTranslation();
 
   const {workshops, loadingWorkshops, setLoadingWorkshops} = useWorkshops(0, 2);
 
@@ -151,7 +153,7 @@ export default function UserHome() {
             className="mx-3 mb-1 p-1 pb-2 rounded-xl"
             style={{backgroundColor: '#FFF8D5'}}
           >
-            <Text className="font-semibold text-xl m-2.5 mt-1">Reminder</Text>
+            <Text className="font-semibold text-xl m-2.5 mt-1">{t('reminder')}</Text>
             <Pressable
               className="border-2 border-grey-light items-center justify-center p-1 mx-2.5 my-0.5 rounded-xl bg-white"
               onPress={() => handleOnRegisterVehicle()}
@@ -165,16 +167,22 @@ export default function UserHome() {
               />
             </Pressable>
             <TicDriveReminderCard
+              leftButtonText={t('bookNow')}
+              rightButtonText={t('RemindMeLater')}
               logo={<NissanIcon />}
-              text={`Ultimo tagliando: 12 mesi fa.\nPianifica ora!`}
+              text={t('home.notifications.first')}
             />
             <TicDriveReminderCard
+            leftButtonText={t('bookNow')}
+            rightButtonText={t('RemindMeLater')}
               logo={<PeugeotIcon />}
-              text={`E arrivata l’ora di cambiare le gomme per la stagione invernale, scopri le offerte dedicate a te!`}
+              text={t('home.notifications.second')}
             />
             <TicDriveReminderCard
+            leftButtonText={t('bookNow')}
+            rightButtonText={t('RemindMeLater')}
               logo={<NissanIcon />}
-              text={`Il tuo bollo scade il 01/01/2025 !`}
+              text={t('home.notifications.third')}
             />
           </View>
         </ScrollView>

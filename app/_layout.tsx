@@ -1,4 +1,4 @@
-import {DarkTheme, DefaultTheme, ThemeProvider} from '@react-navigation/native';
+import {DefaultTheme, ThemeProvider} from '@react-navigation/native';
 import {useFonts} from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import {useState} from 'react';
@@ -32,14 +32,12 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import WorkshopsListScreen from './screens/workshop/WorkshopsListScreen';
 import WorkshopReviewsListScreen from './screens/workshop/reviews/WorkshopReviewsListScreen';
 import ChatScreen from './screens/chat/ChatScreen';
-
+import '@/i18n';
 SplashScreen.preventAutoHideAsync();
 
 const Stack = createNativeStackNavigator();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-
   //AuthContext data
   const [loginRouteName, setLoginRouteName] = useState('');
   const [loginRouteParams, setLoginRouteParams] = useState<any>({});
