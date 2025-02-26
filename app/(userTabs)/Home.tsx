@@ -27,6 +27,9 @@ import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButt
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import {Entypo} from '@expo/vector-icons';
 import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
+import TicDriveReminderCard from '@/components/ui/cards/notifications/TicDriveReminderCard';
+import NissanIcon from '@/assets/svg/vehicles/makes/nissan.svg';
+import PeugeotIcon from '@/assets/svg/vehicles/makes/peugeot.svg';
 
 export default function UserHome() {
   const {setWorkshopFilter} = useContext(GlobalContext);
@@ -161,6 +164,19 @@ export default function UserHome() {
                 reverseIcon={true}
               />
             </Pressable>
+            <TicDriveReminderCard
+              logo={<NissanIcon />}
+              text={`Ultimo tagliando: 12 mesi fa.\nPianifica ora!`}
+            />
+            <TicDriveReminderCard
+              logo={<PeugeotIcon />}
+              text={`E arrivata l’ora di cambiare le gomme per la stagione invernale, scopri le offerte dedicate a te!`}
+            />
+            <TicDriveReminderCard
+              logo={<NissanIcon />}
+              text={`Il tuo bollo scade il 01/01/2025 !`}
+            />
+
           </View>
         </ScrollView>
       </SafeAreaViewLayout>
