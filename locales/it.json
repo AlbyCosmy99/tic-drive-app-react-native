@@ -2,11 +2,24 @@
     "reminder": "Promemoria",
     "bookNow": "Prenota ora",
     "RemindMeLater": "Ricordamelo piú tardi",
+    "services": "Servizi",
+    "bookings": "Prenotazioni",
+    "account": "Profilo",
+    "seeAll": {
+        "workshops":"Vedi tutte le officine",
+        "services": "Vedi tutti i servizi"
+    },
+    "vehicles": {
+        "registerVehicle": "Registra veicolo"
+    },
     "home": {
         "notifications": {
             "first": "Ultimo tagliando: 12 mesi fa.\nPianifica ora!",
             "second": "E arrivata l’ora di cambiare le gomme per la stagione invernale, scopri le offerte dedicate a te!",
             "third": "Il tuo bollo scade il 01/01/2025 !"
-        }
+        },
+        "findRightWorkshop": "Trova l’officina che fa per te",
+        "searchInput": "Cerca officina o servizio",
+        "discoverServicesAndBook": "Scopri i servizi e prenota"
     }
 }

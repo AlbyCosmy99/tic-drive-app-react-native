@@ -92,7 +92,7 @@ export default function UserHome() {
           <TicDriveInput
             isLeftIcon={true}
             isRightIcon={true}
-            placeholder="Search workshop or service"
+            placeholder={t('home.searchInput')}
             containerViewStyleTailwind="flex-1 h-[60px]"
             inputContainerStyle={{marginTop: 4, height: 48}}
             onChange={text => {
@@ -113,7 +113,7 @@ export default function UserHome() {
         >
           <View>
             <Text className="font-semibold text-xl m-2.5 mt-1">
-              Find the workshop that's right for you
+              {t('home.findRightWorkshop')}
             </Text>
             <View>
               <View className="flex-row mx-2.5 justify-start items-start">
@@ -134,7 +134,7 @@ export default function UserHome() {
                       containerTailwindCss="border-2 border-grey-light items-center justify-center p-1 my-2.5 rounded-xl"
                     >
                       <Text className="text-base font-medium">
-                        See all workshops
+                        {t('seeAll.workshops')}
                       </Text>
                     </CrossPlatformButtonLayout>
                   </View>
@@ -145,7 +145,7 @@ export default function UserHome() {
           {!loadingWorkshops && <HorizontalLine />}
           <View className="mt-1 mb-3">
             <Text className="font-semibold text-xl m-2.5 mt-0">
-              Discover services and book
+              {t('home.discoverServicesAndBook')}
             </Text>
             <SeeAllServicesCards ref={servicesRef} topHorizontalLine={false} />
           </View>
@@ -161,7 +161,7 @@ export default function UserHome() {
               onPress={() => handleOnRegisterVehicle()}
             >
               <IconTextPair
-                text="Register your first vehicle"
+                text={t('vehicles.registerVehicle')}
                 icon={<AddIcon />}
                 textTailwindCss="text-base font-medium text-drive"
                 containerTailwindCss="py-0"

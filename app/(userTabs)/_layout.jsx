@@ -12,10 +12,13 @@ import UserChat from './Chat';
 import UserAccount from './Account';
 import ChooseServicesScreen from '../screens/ChooseServicesScreen';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 
 const Tab = createBottomTabNavigator();
 
 export default function UserTabLayout() {
+  const {t} = useTranslation()
+
   const PRESSED_COLOR = Colors.light.green.drive;
   return (
     <SafeAreaView className="flex-1 bg-white" edges={['top', 'left', 'right']}>
@@ -50,7 +53,7 @@ export default function UserTabLayout() {
           name="Services"
           component={ChooseServicesScreen}
           options={{
-            title: 'Services',
+            title: t('services'),
             headerShown: false,
             tabBarIcon: ({color}) =>
               color === PRESSED_COLOR ? (
@@ -68,7 +71,7 @@ export default function UserTabLayout() {
           name="Bookings"
           component={UserBookings}
           options={{
-            title: 'Bookings',
+            title: t('bookings'),
             headerShown: false,
             tabBarIcon: ({color}) => (
               <BookingsIcon width={28} fill={color} name="Home" />
@@ -79,7 +82,7 @@ export default function UserTabLayout() {
           name="Profile"
           component={UserAccount}
           options={{
-            title: 'Profile',
+            title: t('account'),
             headerShown: false,
             tabBarIcon: ({color}) => (
               <AccountIcon width={28} fill={color} name="Home" />

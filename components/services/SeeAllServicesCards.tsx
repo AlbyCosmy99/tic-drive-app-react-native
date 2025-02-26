@@ -10,6 +10,7 @@ import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext'
 import useServices from '@/hooks/api/useServices';
 import CrossPlatformButtonLayout from '../ui/buttons/CrossPlatformButtonLayout';
 import HorizontalLine from '../ui/HorizontalLine';
+import { useTranslation } from 'react-i18next';
 
 interface SeeAllServicesCardsProps {
   workshopId?: number;
@@ -32,6 +33,7 @@ const SeeAllServicesCards = forwardRef(
     const {navigation} = useContext(NavigationContext);
     const {services, loadingServices, setLoadingServices} =
       useServices(workshopId);
+    const {t} = useTranslation()
 
     useImperativeHandle(ref, () => ({
       loadingServices,
@@ -81,7 +83,7 @@ const SeeAllServicesCards = forwardRef(
               onPress={handleOnSeeAllServices}
               containerTailwindCss="border-2 border-grey-light items-center justify-center p-1 mx-2.5 my-0.5 rounded-xl"
             >
-              <Text className="text-base font-medium">See all services</Text>
+              <Text className="text-base font-medium">{t('seeAll.services')}</Text>
             </CrossPlatformButtonLayout>
           )}
           {bottomHorizontalLine && (
