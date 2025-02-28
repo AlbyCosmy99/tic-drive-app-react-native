@@ -4,10 +4,9 @@ import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 import CircularUserAvatar from '@/components/ui/avatars/CircularUserAvatar';
 import HorizontalLine from '@/components/ui/HorizontalLine';
-import AddIcon from '../../assets/svg/add.svg';
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 import IconTextPair from '@/components/ui/IconTextPair';
-import TicDriveAuthButton, {
+import {
   handleLogout,
 } from '@/components/ui/buttons/TicDriveAuthButton';
 import useJwtToken from '@/hooks/auth/useJwtToken';
@@ -17,11 +16,10 @@ import PhoneIcon from '@/assets/svg/notifications/phone.svg';
 import MailIcon from '@/assets/svg/notifications/mail.svg';
 import AddressIcon from '@/assets/svg/notifications/address.svg';
 import VehicleIcon from '@/assets/svg/vehicles/car2.svg';
-import HeartIcon from '@/assets/svg/emotions/EmptyHeartGrey.svg';
+import HeartIcon from '@/assets/svg/emotions/EmptyHeart.svg';
 import CreditCardIcon from '@/assets/svg/payment/creditCard.svg';
 import ReceiptIcon from '@/assets/svg/payment/receipt.svg';
 import CustomerServiceIcon from '@/assets/svg/support/customerService.svg';
-import {useEffect} from 'react';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import navigationPush from '@/services/navigation/push';

@@ -22,6 +22,11 @@ const useWorkshops = (
         if (!favorite) {
           res = await apiClient.get(
             `workshops?skip=${skip}&take=${take}&serviceId=${serviceId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            },
           );
         } else if (token) {
           res = await apiClient.get(

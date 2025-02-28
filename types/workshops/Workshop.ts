@@ -11,7 +11,7 @@ interface Workshop {
   servicePrice?: number;
   currency?: string;
   discount?: number;
-  favourite?: boolean;
+  isFavorite?: boolean;
   isVerified?: boolean;
 }
 

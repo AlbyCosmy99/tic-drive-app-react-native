@@ -20,7 +20,7 @@ import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import UserCalendarModal from '@/components/ui/modals/UserCalendarModal';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
-import {useAppSelector} from '@/stateManagement/redux/hooks';
+import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import WorkshopReviewinfo from '@/components/workshop/reviews/WorkshopReviewInfo';
 import GreenCheckIcon from '@/assets/svg/check_green.svg';
 import IconTextPair from '@/components/ui/IconTextPair';
@@ -31,15 +31,16 @@ import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import Constants from 'expo-constants';
 import MapView, {Marker} from 'react-native-maps';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
+import axiosClient from '@/services/http/axiosClient';
+import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice';
+import EmptyHeartIcon from '@/assets/svg/emotions/EmptyHeart.svg';
 
 export default function WorkshopDetails() {
   const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
   const navigation = useTicDriveNavigation();
   const {areServicesAvailable} = useAreServicesAvailable();
   const token = useJwtToken();
-  const selectedServices = useAppSelector(
-    state => state.services.servicesChoosenByUsers,
-  );
+  const dispatch = useAppDispatch();
 
   const lat = workshop?.latitude || null;
   const lng = workshop?.longitude || null;
@@ -77,6 +78,25 @@ export default function WorkshopDetails() {
     }
   };
 
+  const handleOnFavoritePress = async () => {
+    try {
+      await axiosClient.post(
+        '/customer/workshops/favorite?workshopId=' + workshop?.id,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      dispatch(
+        setSelectedWorkshop({...workshop, isFavorite: !workshop?.isFavorite}),
+      );
+    } catch (e) {
+      console.error('error while adding/removing a workshop to/from favorite');
+    }
+  };
+
   return (
     <SafeAreaViewLayout styles={[styles.container]}>
       {/* custom navbar */}
@@ -102,13 +122,18 @@ export default function WorkshopDetails() {
         )}
         <View className="flex flex-row gap-x-4 justify-center items-center">
           {workshop && (
-            <View className={`${!token && 'opacity-0'}`}>
-              {workshop.favourite ? (
-                <Icon name="heart" size={22} color="red" />
-              ) : (
-                <Icon name="heart" size={22} color="red" />
-              )}
-            </View>
+            <CrossPlatformButtonLayout
+              removeAllStyles
+              onPress={handleOnFavoritePress}
+            >
+              <View className={`${!token && 'opacity-0'}`}>
+                {workshop.isFavorite ? (
+                  <Icon name="heart" size={22} color="red" />
+                ) : (
+                  <EmptyHeartIcon />
+                )}
+              </View>
+            </CrossPlatformButtonLayout>
           )}
           <Pressable onPress={onShare}>
             <ShareIcon />
