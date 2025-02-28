@@ -4,6 +4,7 @@ import useReviews from '@/hooks/api/workshops/useReviews';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import {useContext} from 'react';
+import { useTranslation } from 'react-i18next';
 import {Text, View, StyleSheet} from 'react-native';
 import {Pressable} from 'react-native-gesture-handler';
 
@@ -13,6 +14,7 @@ const SeeAllReviewsCards = ({workshopId}: {workshopId: number}) => {
   const handleOnSeeAllReviews = () => {
     navigationPush(navigation, 'WorkshopReviewsListScreen');
   };
+  const {t} = useTranslation()
 
   if (loadingReviews) return <LoadingSpinner />;
   if (!reviews?.length) return null;
@@ -26,7 +28,7 @@ const SeeAllReviewsCards = ({workshopId}: {workshopId: number}) => {
           style={styles.button}
           onPress={handleOnSeeAllReviews}
         >
-          <Text className="my-0.5 text-base font-medium">See all reviews</Text>
+          <Text className="my-0.5 text-base font-medium">{t('seeAll.reviews')}</Text>
         </Pressable>
       )}
     </View>

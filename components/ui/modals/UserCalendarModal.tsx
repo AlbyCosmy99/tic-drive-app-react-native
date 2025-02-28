@@ -27,6 +27,7 @@ import UserTimeSlot from '@/constants/temp/UserTimeSlots';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
+import { useTranslation } from 'react-i18next';
 
 const {height} = Dimensions.get('window');
 
@@ -54,10 +55,11 @@ const UserCalendarModal = forwardRef<
     state => state.services.servicesChoosenByUsers,
   )[0];
   const carSelected = useAppSelector(state => state.cars.selectedCar);
+  const {t} = useTranslation()
 
   const buttonText = useMemo(() => {
     if (!service) {
-      return 'Choose service';
+      return t('service.chooseService');
     } else if (!carSelected) {
       return 'Register car';
     }
@@ -172,7 +174,7 @@ const UserCalendarModal = forwardRef<
           text={
             service?.title
               ? `Book ${service?.title.toLowerCase()} service`
-              : 'Book a service'
+              : t('service.bookAService')
           }
           onClick={openModal}
           customButtonStyle={styles.customButtonStyle}
@@ -199,7 +201,7 @@ const UserCalendarModal = forwardRef<
               <View style={styles.dragHandle} />
               <View className="mb-2" style={styles.scrollContent}>
                 <Text className="text-sm mt-2 mb-1 text-tic">
-                  SELECT A DATE
+                  {t('date.selectADate').toUpperCase()}
                 </Text>
                 <Calendar
                   onDayPress={(day: Day) => {

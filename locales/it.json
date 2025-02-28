@@ -5,9 +5,19 @@
     "services": "Servizi",
     "bookings": "Prenotazioni",
     "account": "Profilo",
+    "location": "Posizione",
+    "service": {
+        "bookAService": "Prenota un servizio",
+        "chooseService": "Scegli servizio"
+    },
+    "continue": "Continua",
+    "date": {
+        "selectADate": "Seleziona una data"
+    },
     "seeAll": {
         "workshops":"Vedi tutte le officine",
-        "services": "Vedi tutti i servizi"
+        "services": "Vedi tutti i servizi",
+        "reviews": "Vedi tutte le recensioni"
     },
     "vehicles": {
         "registerVehicle": "Registra veicolo"
@@ -21,5 +31,14 @@
         "findRightWorkshop": "Trova l’officina che fa per te",
         "searchInput": "Cerca officina o servizio",
         "discoverServicesAndBook": "Scopri i servizi e prenota"
+    },
+    "workshops": {
+        "servicesOffered": "Servizi offerti",
+        "reviews": {
+            "whatPeopleSay": "Cosa dicono gli altri",
+            "title": "recensioni",
+            "review": "recensione"
+        },
+        "searchWorkshop": "Cerca officina"
     }
 }

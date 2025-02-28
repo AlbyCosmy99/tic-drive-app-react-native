@@ -34,6 +34,7 @@ import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButt
 import axiosClient from '@/services/http/axiosClient';
 import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice';
 import EmptyHeartIcon from '@/assets/svg/emotions/EmptyHeart.svg';
+import { useTranslation } from 'react-i18next';
 
 export default function WorkshopDetails() {
   const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
@@ -41,6 +42,7 @@ export default function WorkshopDetails() {
   const {areServicesAvailable} = useAreServicesAvailable();
   const token = useJwtToken();
   const dispatch = useAppDispatch();
+  const {t} = useTranslation()
 
   const lat = workshop?.latitude || null;
   const lng = workshop?.longitude || null;
@@ -180,7 +182,7 @@ export default function WorkshopDetails() {
                 />
               </View>
               <View className="mt-2">
-                <Text className="text-xl font-semibold">Location</Text>
+                <Text className="text-xl font-semibold">{t('location')}</Text>
                 <View className="flex-1 flex-row items-center gap-0.5">
                   <CrossPlatformButtonLayout
                     removeAllStyles
@@ -224,7 +226,7 @@ export default function WorkshopDetails() {
                 )}
               </View>
               <View className="mt-2.5">
-                <Text className="text-xl font-semibold">What people say</Text>
+                <Text className="text-xl font-semibold">{t('workshops.reviews.whatPeopleSay')}</Text>
                 <WorkshopReviewinfo
                   meanStars={workshop.meanStars}
                   numberOfReviews={workshop.numberOfReviews}

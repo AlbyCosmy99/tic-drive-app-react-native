@@ -74,7 +74,7 @@ const SeeAllServicesCards = forwardRef(
           {topHorizontalLine && <HorizontalLine />}
           {showSubtitle && (
             <Text className="font-medium text-base mt-2 mb-3 mx-2.5">
-              Services offered
+              {t('workshops.servicesOffered')}
             </Text>
           )}
           <View className="flex justify-center items-center flex-1">

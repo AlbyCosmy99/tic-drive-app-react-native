@@ -9,10 +9,12 @@ import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import LinearGradientViewLayout from '@/app/layouts/LinearGradientViewLayout';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import {useRoute} from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
 export default function WorkshopsListScreen() {
   const {setWorkshopFilter} = useContext(GlobalContext);
   const route = useRoute();
+  const {t} = useTranslation()
   const {favorite} = route.params as {favorite: boolean};
   return (
     <LinearGradientViewLayout>
@@ -22,7 +24,7 @@ export default function WorkshopsListScreen() {
           <TicDriveInput
             isLeftIcon={true}
             isRightIcon={true}
-            placeholder="Search workshop"
+            placeholder={t('workshops.searchWorkshop')}
             containerViewStyleTailwind="flex-1 justify-center items-center"
             inputContainerStyle={{marginTop: 4, height: 48}}
             onChange={text => {
