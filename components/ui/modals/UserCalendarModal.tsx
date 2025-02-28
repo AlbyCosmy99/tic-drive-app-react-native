@@ -19,7 +19,6 @@ import Day from '@/types/calendar/Day';
 import UserTimeSlot from '@/constants/temp/UserTimeSlots';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
 import useJwtToken from '@/hooks/auth/useJwtToken';
-import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 
 const {height} = Dimensions.get('window');
@@ -31,22 +30,27 @@ const UserCalendarModal = () => {
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const token = useJwtToken();
   const {setLoginRouteName, setLoginRouteParams} = useContext(AuthContext);
-  const {areServicesAvailable} = useAreServicesAvailable();
   const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
+  const service = useAppSelector(
+    state => state.services.servicesChoosenByUsers,
+  )[0];
+  const carSelected = useAppSelector(state => state.cars.selectedCar)
 
   const buttonText = useMemo(() => {
-    if (!areServicesAvailable) {
+    if (!service) {
       return 'Choose service';
+    } else if(!carSelected){
+      return 'Register car'
     }
     return 'Confirm ' + (!token ? 'and login' : '');
-  }, [token, areServicesAvailable]);
+  }, [token, service]);
 
   const routeName = useMemo(() => {
-    if (!areServicesAvailable) {
+    if (!service) {
       return 'ChooseServicesScreen';
     }
     return token ? 'ReviewBookingDetailsScreen' : 'UserAuthenticationScreen';
-  }, [token, areServicesAvailable]);
+  }, [token, service]);
 
   const openModal = (): void => {
     setModalVisible(true);
@@ -135,11 +139,16 @@ const UserCalendarModal = () => {
   return (
     <>
       <TicDriveButton
-        text="Book a service"
+        text={
+          service?.title
+            ? `Book ${service?.title.toLowerCase()} service`
+            : 'Book a service'
+        }
         onClick={openModal}
         customButtonStyle={styles.customButtonStyle}
         customContainerStyle={{width: '100%'}}
       />
+
       {modalVisible && (
         <Modal
           transparent={true}

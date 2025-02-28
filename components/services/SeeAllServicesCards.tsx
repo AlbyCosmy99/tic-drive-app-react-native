@@ -45,6 +45,7 @@ const SeeAllServicesCards = forwardRef(
     };
 
     const handleOnSelectService = (service: Service) => {
+      
       navigationPush(navigation, 'RegisterVehicleScreen');
       dispatch(setServicesChoosenByUsers(service));
     };

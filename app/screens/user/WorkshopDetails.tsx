@@ -37,6 +37,9 @@ export default function WorkshopDetails() {
   const navigation = useTicDriveNavigation();
   const {areServicesAvailable} = useAreServicesAvailable();
   const token = useJwtToken();
+  const selectedServices = useAppSelector(
+    state => state.services.servicesChoosenByUsers,
+  );
 
   const lat = workshop?.latitude || null;
   const lng = workshop?.longitude || null;
@@ -144,9 +147,11 @@ export default function WorkshopDetails() {
                 </View>
               </View>
 
-              <View className="mt-2">
-                <SeeAllServicesCards workshopId={workshop.id} showSubtitle />
-              </View>
+              {selectedServices.length === 0 && (
+                <View className="mt-2">
+                  <SeeAllServicesCards workshopId={workshop.id} showSubtitle />
+                </View>
+              )}
               <View className="mt-2">
                 <Text className="text-xl font-semibold">Location</Text>
                 <View className="flex-1 flex-row items-center gap-0.5">
