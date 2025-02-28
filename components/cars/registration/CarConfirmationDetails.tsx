@@ -1,6 +1,7 @@
 import RegistrationCarDetailCard from '@/components/ui/cards/cars/RegistrationCarDetailCard';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import Car from '@/types/Car';
+import {useEffect} from 'react';
 import {Text, View} from 'react-native';
 import {Pressable} from 'react-native-gesture-handler';
 
@@ -15,6 +16,10 @@ const CarConfirmationDetails: React.FC<CarConfirmationDetailsProps> = ({
   setCarSelected,
   setConfirmation,
 }) => {
+  useEffect(() => {
+    console.log(carSelected);
+  });
+
   return (
     <View className="mx-3 p-4 border-2 border-grey-light rounded-xl">
       <View className="mb-2">
@@ -23,6 +28,12 @@ const CarConfirmationDetails: React.FC<CarConfirmationDetailsProps> = ({
         )}
         {carSelected?.model && (
           <RegistrationCarDetailCard title="Model" value={carSelected.model} />
+        )}
+        {carSelected?.plateNumber && (
+          <RegistrationCarDetailCard
+            title="Plate number"
+            value={carSelected.plateNumber}
+          />
         )}
         {carSelected.year && (
           <RegistrationCarDetailCard

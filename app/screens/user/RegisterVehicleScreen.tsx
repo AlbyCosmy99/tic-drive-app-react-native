@@ -23,6 +23,7 @@ import {setAreServicesOn} from '@/stateManagement/redux/slices/servicesSlice';
 import isPlateNumber from '@/utils/car/isPlateNumber';
 import CarDetailsByPlate from '@/components/cars/registration/CarDetailsByPlate';
 import CarConfirmationDetails from '@/components/cars/registration/CarConfirmationDetails';
+import {setSelectedCar} from '@/stateManagement/redux/slices/carsSlice';
 
 function RegisterVehicleScreen() {
   const [segmentedControlSelection, setSegmentedControlSelection] =
@@ -342,15 +343,24 @@ function RegisterVehicleScreen() {
             setPlateConfirmation(true);
             if (setCarSelectedByPlateCtx) {
               setCarSelectedByPlateCtx({
-                ...carSelectedByMakeAndModelCtx,
+                ...carSelectedByPlateCtx,
                 make: carMakeDropdownData?.value,
                 model: carModelDropdownData?.value,
               });
             }
           }
+
+          if (makeAndModelConfirmation || plateConfirmation) {
+            dispatch(
+              setSelectedCar(
+                segmentedControlSelection?.index === 0
+                  ? carSelectedByMakeAndModelCtx
+                  : carSelectedByPlateCtx,
+              ),
+            );
+          }
         }}
         routeName={routeName}
-        routeParams={{carSelected: carSelectedByMakeAndModelCtx}}
         disabled={!buttonIsEnabled}
       />
     </SafeAreaViewLayout>
