@@ -27,6 +27,7 @@ interface SeeAllServicesCardsProps {
   topHorizontalLine?: boolean;
   bottomHorizontalLine?: boolean;
   showSubtitle?: boolean;
+  showCalendarModal?: boolean;
 }
 
 const SeeAllServicesCards = forwardRef(
@@ -36,6 +37,7 @@ const SeeAllServicesCards = forwardRef(
       topHorizontalLine = true,
       bottomHorizontalLine = true,
       showSubtitle = false,
+      showCalendarModal = false,
     }: SeeAllServicesCardsProps,
     ref,
   ) => {
@@ -56,8 +58,11 @@ const SeeAllServicesCards = forwardRef(
     };
 
     const handleOnSelectService = (service: Service) => {
-      modalRef.current?.openModal();
-      //navigationPush(navigation, 'RegisterVehicleScreen');
+      if (showCalendarModal) {
+        modalRef.current?.openModal();
+      } else {
+        navigationPush(navigation, 'RegisterVehicleScreen');
+      }
       dispatch(setServicesChoosenByUsers(service));
     };
 

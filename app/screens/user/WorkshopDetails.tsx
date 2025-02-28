@@ -148,7 +148,11 @@ export default function WorkshopDetails() {
               </View>
 
               <View className="mt-2">
-                <SeeAllServicesCards workshopId={workshop.id} showSubtitle />
+                <SeeAllServicesCards
+                  workshopId={workshop.id}
+                  showSubtitle
+                  showCalendarModal
+                />
               </View>
               <View className="mt-2">
                 <Text className="text-xl font-semibold">Location</Text>

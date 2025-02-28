@@ -63,6 +63,8 @@ function RegisterVehicleScreen() {
     state => state.workshops.selectedWorkshop,
   );
 
+  const token = useAppSelector(state => state.auth.token);
+
   const routeName = useMemo(() => {
     if (
       (segmentedControlSelection?.index === 0 &&
@@ -72,7 +74,10 @@ function RegisterVehicleScreen() {
         carSelectedByPlateCtx &&
         plateConfirmation)
     ) {
-      return `${selectedWorkshop ? 'ReviewBookingDetailsScreen' : 'WorkshopsListScreen'}`;
+      if (selectedWorkshop) {
+        return `${token ? 'ReviewBookingDetailsScreen' : 'UserAuthenticationScreen'}`;
+      }
+      return 'WorkshopsListScreen';
     }
     return '';
   }, [
