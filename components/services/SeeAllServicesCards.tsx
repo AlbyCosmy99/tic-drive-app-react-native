@@ -5,12 +5,22 @@ import navigationPush from '@/services/navigation/push';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import Service from '@/types/Service';
 import {setServicesChoosenByUsers} from '@/stateManagement/redux/slices/servicesSlice';
-import {forwardRef, useContext, useImperativeHandle} from 'react';
+import {
+  forwardRef,
+  useContext,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import useServices from '@/hooks/api/useServices';
 import CrossPlatformButtonLayout from '../ui/buttons/CrossPlatformButtonLayout';
 import HorizontalLine from '../ui/HorizontalLine';
 import {useTranslation} from 'react-i18next';
+import UserCalendarModal, {
+  UserCalendarModalRef,
+} from '../ui/modals/UserCalendarModal';
 
 interface SeeAllServicesCardsProps {
   workshopId?: number;
@@ -34,6 +44,7 @@ const SeeAllServicesCards = forwardRef(
     const {services, loadingServices, setLoadingServices} =
       useServices(workshopId);
     const {t} = useTranslation();
+    const modalRef = useRef<UserCalendarModalRef>(null);
 
     useImperativeHandle(ref, () => ({
       loadingServices,
@@ -45,8 +56,8 @@ const SeeAllServicesCards = forwardRef(
     };
 
     const handleOnSelectService = (service: Service) => {
-      
-      navigationPush(navigation, 'RegisterVehicleScreen');
+      modalRef.current?.openModal();
+      //navigationPush(navigation, 'RegisterVehicleScreen');
       dispatch(setServicesChoosenByUsers(service));
     };
 
@@ -61,6 +72,9 @@ const SeeAllServicesCards = forwardRef(
               Services offered
             </Text>
           )}
+          <View className="flex justify-center items-center flex-1">
+            <UserCalendarModal showButton={false} ref={modalRef} />
+          </View>
           <View className="flex-row flex-wrap justify-center items-start">
             {services.slice(0, 4).map((service, index) => (
               <CrossPlatformButtonLayout

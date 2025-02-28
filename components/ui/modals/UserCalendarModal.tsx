@@ -1,4 +1,11 @@
-import {useState, useRef, useContext, useMemo} from 'react';
+import React, {
+  useState,
+  useRef,
+  useContext,
+  useMemo,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
 import {
   Modal,
   View,
@@ -23,7 +30,19 @@ import {useAppSelector} from '@/stateManagement/redux/hooks';
 
 const {height} = Dimensions.get('window');
 
-const UserCalendarModal = () => {
+export interface UserCalendarModalRef {
+  openModal: () => void;
+  closeModal: () => void;
+}
+
+interface UserCalendarModalProps {
+  showButton?: boolean;
+}
+
+const UserCalendarModal = forwardRef<
+  UserCalendarModalRef,
+  UserCalendarModalProps
+>(({showButton = true}, ref) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const slideAnim = useRef(new Animated.Value(height)).current;
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
@@ -34,22 +53,26 @@ const UserCalendarModal = () => {
   const service = useAppSelector(
     state => state.services.servicesChoosenByUsers,
   )[0];
-  const carSelected = useAppSelector(state => state.cars.selectedCar)
+  const carSelected = useAppSelector(state => state.cars.selectedCar);
 
   const buttonText = useMemo(() => {
     if (!service) {
       return 'Choose service';
-    } else if(!carSelected){
-      return 'Register car'
+    } else if (!carSelected) {
+      return 'Register car';
     }
     return 'Confirm ' + (!token ? 'and login' : '');
-  }, [token, service]);
+  }, [token, service, carSelected]);
 
   const routeName = useMemo(() => {
     if (!service) {
       return 'ChooseServicesScreen';
     }
-    return token ? 'ReviewBookingDetailsScreen' : 'UserAuthenticationScreen';
+    return token
+      ? carSelected
+        ? 'ReviewBookingDetailsScreen'
+        : 'RegisterVehicleScreen'
+      : 'UserAuthenticationScreen';
   }, [token, service]);
 
   const openModal = (): void => {
@@ -68,6 +91,12 @@ const UserCalendarModal = () => {
       useNativeDriver: true,
     }).start(() => setModalVisible(false));
   };
+
+  // Expose methods to parent components using the ref.
+  useImperativeHandle(ref, () => ({
+    openModal,
+    closeModal,
+  }));
 
   const onClick = () => {
     if (token) {
@@ -138,16 +167,18 @@ const UserCalendarModal = () => {
 
   return (
     <>
-      <TicDriveButton
-        text={
-          service?.title
-            ? `Book ${service?.title.toLowerCase()} service`
-            : 'Book a service'
-        }
-        onClick={openModal}
-        customButtonStyle={styles.customButtonStyle}
-        customContainerStyle={{width: '100%'}}
-      />
+      {showButton && (
+        <TicDriveButton
+          text={
+            service?.title
+              ? `Book ${service?.title.toLowerCase()} service`
+              : 'Book a service'
+          }
+          onClick={openModal}
+          customButtonStyle={styles.customButtonStyle}
+          customContainerStyle={{width: '100%'}}
+        />
+      )}
 
       {modalVisible && (
         <Modal
@@ -207,11 +238,15 @@ const UserCalendarModal = () => {
                             setSelectedTime(selectedTime === time ? null : time)
                           }
                           key={index}
-                          className={`border border-tic rounded-2xl p-1 px-2 ${selectedTime === time && 'bg-drive border-drive'}`}
+                          className={`border border-tic rounded-2xl p-1 px-2 ${
+                            selectedTime === time && 'bg-drive border-drive'
+                          }`}
                           style={styles.timeSlotContainer}
                         >
                           <Text
-                            className={`text-tic text-base text-center ${selectedTime === time && 'text-black'}`}
+                            className={`text-tic text-base text-center ${
+                              selectedTime === time && 'text-black'
+                            }`}
                           >
                             {time}
                           </Text>
@@ -239,7 +274,7 @@ const UserCalendarModal = () => {
       )}
     </>
   );
-};
+});
 
 const styles = StyleSheet.create({
   button: {

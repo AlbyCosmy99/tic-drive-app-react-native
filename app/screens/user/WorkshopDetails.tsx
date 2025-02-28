@@ -147,11 +147,9 @@ export default function WorkshopDetails() {
                 </View>
               </View>
 
-              {selectedServices.length === 0 && (
-                <View className="mt-2">
-                  <SeeAllServicesCards workshopId={workshop.id} showSubtitle />
-                </View>
-              )}
+              <View className="mt-2">
+                <SeeAllServicesCards workshopId={workshop.id} showSubtitle />
+              </View>
               <View className="mt-2">
                 <Text className="text-xl font-semibold">Location</Text>
                 <View className="flex-1 flex-row items-center gap-0.5">
