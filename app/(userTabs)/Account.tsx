@@ -58,7 +58,7 @@ export default function UserAccount() {
                 <Text className="font-medium text-2xl">Account</Text>
                 <View>
                   <IconTextPair
-                    text="Phone number"
+                    text={user?.phoneNumber}
                     icon={<PhoneIcon />}
                     textTailwindCss="text-base font-medium"
                     containerTailwindCss="gap-2 py-1"
@@ -70,7 +70,7 @@ export default function UserAccount() {
                     containerTailwindCss="gap-2 py-1"
                   />
                   <IconTextPair
-                    text="Address"
+                    text={user?.address}
                     icon={<AddressIcon />}
                     textTailwindCss="text-base font-medium"
                     containerTailwindCss="gap-2 py-1"

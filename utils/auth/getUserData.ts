@@ -7,7 +7,9 @@ const getUserData = (payload: any): User => {
         email: payload.email,
         category: 'user', //to-do: integrare anche il tipo di utente officina (workshop),
         emailConfirmed: payload.emailConfirmed,
-        imageurl: payload.imageUrl
+        imageurl: payload.imageUrl,
+        phoneNumber: payload.phoneNumber,
+        address: payload.address
     }
 }
 

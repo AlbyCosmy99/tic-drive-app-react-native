@@ -7,6 +7,8 @@ export default interface User {
   password?: string;
   repeatedPassword?: string;
   imageurl?: string;
+  phoneNumber?: string;
+  address?: string;
 }
 
 export type UserCategory = 'user' | 'workshop';
