@@ -38,12 +38,7 @@ const useWorkshops = (
             },
           );
         }
-        let newWorkshops = res?.data.workshops;
-        if (cumulative) {
-          setWorkshops([...workshops, ...newWorkshops]);
-        } else {
-          setWorkshops(newWorkshops);
-        }
+        setWorkshops(res?.data.workshops);
         setCount(res?.data.count);
       } catch (err) {
         alert('Al momento il servizio non è disponibile. Riprova più tardi.');

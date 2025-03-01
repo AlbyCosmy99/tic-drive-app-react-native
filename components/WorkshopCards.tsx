@@ -18,7 +18,6 @@ import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice
 import Workshop from '@/types/workshops/Workshop';
 import {FlatList} from 'react-native-gesture-handler';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
-import {useRoute} from '@react-navigation/native';
 
 interface WorkshopCardsProps {
   tailwindContainerCss?: string;
@@ -42,13 +41,15 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
 
   const {workshops, loadingWorkshops, setLoadingWorkshops, count} =
     useWorkshops(
-      currentPage - 1 * workshopsPerPage,
+      (currentPage - 1) * workshopsPerPage,
       workshopsPerPage,
       areServicesAvailable ? servicesChoosen[0]?.id : 0,
       true,
       favorite,
     );
-  const pages = count / workshopsPerPage;
+
+  const [accWorkshops, setAccWorkshops] = useState<Workshop[]>([]);
+
   const token = useJwtToken();
   const dispatch = useAppDispatch();
   const handleChooseDifferentService = () => {
@@ -56,9 +57,19 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
     navigationPush(navigation, 'ChooseServicesScreen');
   };
 
+  useEffect(() => {
+    if (!loadingWorkshops) {
+      if (currentPage === 1) {
+        setAccWorkshops(workshops);
+      } else {
+        setAccWorkshops(prev => [...prev, ...workshops]);
+      }
+    }
+  }, [workshops, loadingWorkshops, currentPage]);
+
   const filteredWorkshops = useMemo(
     () =>
-      workshops.filter(
+      accWorkshops.filter(
         workshop =>
           workshopFilter.length === 0 ||
           workshop.name
@@ -66,28 +77,28 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
             .trim()
             .includes(workshopFilter.toLowerCase().trim()),
       ),
-    [workshops, workshopFilter],
+    [accWorkshops, workshopFilter],
   );
 
   useEffect(() => {
     setAreNoWorkshop(false);
-    console.log('pages', pages);
-  }, [filteredWorkshops]);
+  }, [filteredWorkshops, setAreNoWorkshop]);
 
   useEffect(() => {
     return () => {
       setWorkshopFilter('');
     };
-  }, []);
+  }, [setWorkshopFilter]);
 
   useFocusEffect(() => {
     dispatch(setSelectedWorkshop(null));
   });
 
   const handleCardPress = (workshop: Workshop) => {
-    //todo: controllare se il param workshop viene utilizzato davvero
     navigationPush(navigation, 'WorkshopDetails', {workshop});
   };
+
+  const pages = Math.ceil(20 / workshopsPerPage);
 
   return filteredWorkshops.length === 0 && !loadingWorkshops ? (
     <View className="flex-1 justify-center items-center mx-2.5">
@@ -100,15 +111,13 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
       />
       <TicDriveButton
         text="Go back to dashboard"
-        onClick={() => {
-          navigationReset(navigation, 0, 'Hub', 'Home');
-        }}
+        onClick={() => navigationReset(navigation, 0, 'Hub', 'Home')}
       />
     </View>
   ) : (
     <View className={`${!token ? 'mb-2' : ''} ${tailwindContainerCss}`}>
-      {loadingWorkshops ? (
-        <View className="w-full h-full justify-center items-center mt-40">
+      {loadingWorkshops && currentPage === 1 ? (
+        <View className="w-full h-full justify-center items-center">
           <LoadingSpinner />
         </View>
       ) : (
