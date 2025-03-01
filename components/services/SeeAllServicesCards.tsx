@@ -92,7 +92,7 @@ const SeeAllServicesCards = forwardRef(
                 {service?.icon && (
                   <Image source={{uri: service.icon}} width={24} height={24} />
                 )}
-                <Text className="text-sm font-medium ml-2">
+                <Text className="text-sm font-medium ml-0.5">
                   {service.title}
                 </Text>
               </CrossPlatformButtonLayout>
