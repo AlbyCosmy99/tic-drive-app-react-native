@@ -149,15 +149,15 @@ export default function UserHome() {
             </Text>
             <SeeAllServicesCards ref={servicesRef} topHorizontalLine={false} />
           </View>
-          <View
-            className="mx-3 mb-1 p-1 pb-2 rounded-xl"
-
-          >
+          <View className="mx-3 mb-1 p-1 pb-2 rounded-xl">
             <Text className="font-semibold text-xl m-2.5 mt-1">
               {t('reminder')}
             </Text>
-         
-            <View style={{backgroundColor: '#FFFBE5'}} className='py-2 rounded-xl'>
+
+            <View
+              style={{backgroundColor: '#FFFBE5'}}
+              className="py-2 rounded-xl"
+            >
               <TicDriveReminderCard
                 leftButtonText={t('bookNow')}
                 rightButtonText={t('RemindMeLater')}
@@ -181,7 +181,9 @@ export default function UserHome() {
               containerTailwindCss="border-2 border-grey-light items-center justify-center p-1 m-2.5 rounded-xl bg-white"
               onPress={() => handleOnRegisterVehicle()}
             >
-              <Text className='text-base font-medium text-drive'>{t('vehicles.handleVehicles')}</Text>
+              <Text className="text-base font-medium text-drive">
+                {t('vehicles.handleVehicles')}
+              </Text>
             </CrossPlatformButtonLayout>
           </View>
         </ScrollView>

@@ -30,9 +30,7 @@ const Hub = () => {
           dispatch(setToken(token));
           try {
             const payload = await getPayload(token);
-            dispatch(
-              login(getUserData(payload)),
-            );
+            dispatch(login(getUserData(payload)));
             if (payload.emailConfirmed) {
               navigationReset(
                 navigation,

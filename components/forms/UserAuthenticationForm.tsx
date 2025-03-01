@@ -82,9 +82,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
         dispatch(setToken(res.token));
 
         const payload = await getPayload(res.token);
-        dispatch(
-          login(getUserData(payload))
-        );
+        dispatch(login(getUserData(payload)));
 
         if (res.emailConfirmed) {
           if (loginRouteName) {
