@@ -49,7 +49,7 @@ export default function UserAccount() {
               />
               <View>
                 <Text className="font-semibold text-xl">{user?.name}</Text>
-                <Text className="text-tic">New York, USA</Text>
+                {/* <Text className="text-tic">New York, USA</Text> */}
               </View>
             </View>
             <HorizontalLine />
