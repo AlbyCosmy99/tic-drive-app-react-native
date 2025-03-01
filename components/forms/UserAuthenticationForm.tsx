@@ -14,6 +14,7 @@ import register from '@/services/auth/register';
 import {setSecureToken} from '@/services/auth/secureStore/setToken';
 import {login as authLogin} from '@/services/auth/login';
 import {getPayload} from '@/services/auth/getPayload';
+import getUserData from '@/utils/auth/getUserData';
 
 type FormData = {
   email: string;
@@ -82,13 +83,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
 
         const payload = await getPayload(res.token);
         dispatch(
-          login({
-            userId: payload.userId,
-            name: payload.name,
-            email: payload.email,
-            category: 'user', //to-do: integrare anche il tipo di utente officina (workshop),
-            emailConfirmed: payload.emailConfirmed,
-          }),
+          login(getUserData(payload))
         );
 
         if (res.emailConfirmed) {

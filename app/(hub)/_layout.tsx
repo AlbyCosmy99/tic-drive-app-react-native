@@ -11,6 +11,7 @@ import {getPayload} from '@/services/auth/getPayload';
 import {removeSecureToken} from '@/services/auth/secureStore/setToken';
 import navigationPush from '@/services/navigation/push';
 import {Colors} from '@/constants/Colors';
+import getUserData from '@/utils/auth/getUserData';
 
 const Hub = () => {
   const dispatch = useAppDispatch();
@@ -30,13 +31,7 @@ const Hub = () => {
           try {
             const payload = await getPayload(token);
             dispatch(
-              login({
-                userId: payload.userId,
-                name: payload.name,
-                email: payload.email,
-                category: 'user', //to-do: integrare anche il tipo di utente officina (workshop),
-                emailConfirmed: payload.emailConfirmed,
-              }),
+              login(getUserData(payload)),
             );
             if (payload.emailConfirmed) {
               navigationReset(

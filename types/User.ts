@@ -6,6 +6,7 @@ export default interface User {
   emailConfirmed?: boolean;
   password?: string;
   repeatedPassword?: string;
+  imageurl?: string;
 }
 
 export type UserCategory = 'user' | 'workshop';
