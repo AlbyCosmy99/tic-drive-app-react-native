@@ -27,7 +27,7 @@ import UserTimeSlot from '@/constants/temp/UserTimeSlots';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
 const {height} = Dimensions.get('window');
 
@@ -55,7 +55,7 @@ const UserCalendarModal = forwardRef<
     state => state.services.servicesChoosenByUsers,
   )[0];
   const carSelected = useAppSelector(state => state.cars.selectedCar);
-  const {t} = useTranslation()
+  const {t} = useTranslation();
 
   const buttonText = useMemo(() => {
     if (!service) {

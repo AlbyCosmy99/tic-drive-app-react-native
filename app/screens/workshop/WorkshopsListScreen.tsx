@@ -9,12 +9,12 @@ import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import LinearGradientViewLayout from '@/app/layouts/LinearGradientViewLayout';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import {useRoute} from '@react-navigation/native';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
 export default function WorkshopsListScreen() {
   const {setWorkshopFilter} = useContext(GlobalContext);
   const route = useRoute();
-  const {t} = useTranslation()
+  const {t} = useTranslation();
   const {favorite} = route.params as {favorite: boolean};
   return (
     <LinearGradientViewLayout>

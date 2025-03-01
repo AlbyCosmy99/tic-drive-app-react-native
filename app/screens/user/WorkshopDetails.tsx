@@ -34,7 +34,9 @@ import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButt
 import axiosClient from '@/services/http/axiosClient';
 import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice';
 import EmptyHeartIcon from '@/assets/svg/emotions/EmptyHeart.svg';
-import { useTranslation } from 'react-i18next';
+import RedHeartIcon from '@/assets/svg/emotions/RedHeart.svg';
+import CarPinIcon from '@/assets/svg/vehicles/car3.svg';
+import {useTranslation} from 'react-i18next';
 
 export default function WorkshopDetails() {
   const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
@@ -42,7 +44,7 @@ export default function WorkshopDetails() {
   const {areServicesAvailable} = useAreServicesAvailable();
   const token = useJwtToken();
   const dispatch = useAppDispatch();
-  const {t} = useTranslation()
+  const {t} = useTranslation();
 
   const lat = workshop?.latitude || null;
   const lng = workshop?.longitude || null;
@@ -123,17 +125,15 @@ export default function WorkshopDetails() {
           />
         )}
         <View className="flex flex-row gap-x-4 justify-center items-center">
-          {workshop && (
+          {workshop && token && (
             <CrossPlatformButtonLayout
               removeAllStyles
               onPress={handleOnFavoritePress}
             >
-              <View className={`${!token && 'opacity-0'}`}>
-                {workshop.isFavorite ? (
-                  <Icon name="heart" size={22} color="red" />
-                ) : (
-                  <EmptyHeartIcon />
-                )}
+              <View
+                className={`${!token && 'opacity-0'} w-6 h-6 justify-center items-center`}
+              >
+                {workshop.isFavorite ? <RedHeartIcon /> : <EmptyHeartIcon />}
               </View>
             </CrossPlatformButtonLayout>
           )}
@@ -217,7 +217,7 @@ export default function WorkshopDetails() {
                             onPress={openGoogleMaps}
                             activeOpacity={1}
                           >
-                            <Text>LOCATION</Text>
+                            <CarPinIcon />
                           </TouchableOpacity>
                         </Marker>
                       </MapView>
@@ -226,7 +226,9 @@ export default function WorkshopDetails() {
                 )}
               </View>
               <View className="mt-2.5">
-                <Text className="text-xl font-semibold">{t('workshops.reviews.whatPeopleSay')}</Text>
+                <Text className="text-xl font-semibold">
+                  {t('workshops.reviews.whatPeopleSay')}
+                </Text>
                 <WorkshopReviewinfo
                   meanStars={workshop.meanStars}
                   numberOfReviews={workshop.numberOfReviews}

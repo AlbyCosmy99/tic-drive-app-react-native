@@ -34,7 +34,6 @@ const TicDriveReminderCard: React.FC<TicDriveReminderCardProps> = ({
           buttonTailwindCss="flex-row items-center gap-x-1 justify-center"
         >
           <Text className="text-xs text-tic font-bold">{rightButtonText}</Text>
-          <BellIcon width={15} height={15} />
         </CrossPlatformButtonLayout>
       </View>
     </View>

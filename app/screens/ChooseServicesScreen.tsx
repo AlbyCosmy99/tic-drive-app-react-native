@@ -9,13 +9,13 @@ import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import {useFocusEffect, useRoute} from '@react-navigation/native';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 import {setAreServicesOn} from '@/stateManagement/redux/slices/servicesSlice';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
 export default function ChooseServicesScreen() {
   const route = useRoute();
   const user = useAppSelector(state => state.auth.user);
   const dispatch = useAppDispatch();
-  const {t} = useTranslation()
+  const {t} = useTranslation();
 
   //@ts-ignore
   const {category, buttonContainerTailwindCss, withSafeAreaView} =
@@ -74,7 +74,11 @@ export default function ChooseServicesScreen() {
         </View>
         <View className={`mb-2 ${buttonContainerTailwindCss}`}>
           <TicDriveButton
-            text={isUserLookingForServices() ? t('service.bookAService') : t('continue')}
+            text={
+              isUserLookingForServices()
+                ? t('service.bookAService')
+                : t('continue')
+            }
             routeName={
               isUserLookingForServices()
                 ? 'RegisterVehicleScreen'

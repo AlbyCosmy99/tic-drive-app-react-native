@@ -6,9 +6,7 @@ import CircularUserAvatar from '@/components/ui/avatars/CircularUserAvatar';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 import IconTextPair from '@/components/ui/IconTextPair';
-import {
-  handleLogout,
-} from '@/components/ui/buttons/TicDriveAuthButton';
+import {handleLogout} from '@/components/ui/buttons/TicDriveAuthButton';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import NotLogged from '@/components/auth/NotLogged';
 import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
