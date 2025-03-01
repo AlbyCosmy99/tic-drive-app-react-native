@@ -20,7 +20,8 @@
         "reviews": "Vedi tutte le recensioni"
     },
     "vehicles": {
-        "registerVehicle": "Registra veicolo"
+        "registerVehicle": "Registra veicolo",
+        "handleVehicles": "Gestisci veicoli"
     },
     "home": {
         "notifications": {

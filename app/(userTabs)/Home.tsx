@@ -151,41 +151,38 @@ export default function UserHome() {
           </View>
           <View
             className="mx-3 mb-1 p-1 pb-2 rounded-xl"
-            style={{backgroundColor: '#FFF8D5'}}
+
           >
             <Text className="font-semibold text-xl m-2.5 mt-1">
               {t('reminder')}
             </Text>
-            <Pressable
-              className="border-2 border-grey-light items-center justify-center p-1 mx-2.5 my-0.5 rounded-xl bg-white"
+         
+            <View style={{backgroundColor: '#FFFBE5'}} className='py-2 rounded-xl'>
+              <TicDriveReminderCard
+                leftButtonText={t('bookNow')}
+                rightButtonText={t('RemindMeLater')}
+                logo={<NissanIcon />}
+                text={t('home.notifications.first')}
+              />
+              <TicDriveReminderCard
+                leftButtonText={t('bookNow')}
+                rightButtonText={t('RemindMeLater')}
+                logo={<PeugeotIcon />}
+                text={t('home.notifications.second')}
+              />
+              <TicDriveReminderCard
+                leftButtonText={t('bookNow')}
+                rightButtonText={t('RemindMeLater')}
+                logo={<NissanIcon />}
+                text={t('home.notifications.third')}
+              />
+            </View>
+            <CrossPlatformButtonLayout
+              containerTailwindCss="border-2 border-grey-light items-center justify-center p-1 m-2.5 rounded-xl bg-white"
               onPress={() => handleOnRegisterVehicle()}
             >
-              <IconTextPair
-                text={t('vehicles.registerVehicle')}
-                icon={<AddIcon />}
-                textTailwindCss="text-base font-medium text-drive"
-                containerTailwindCss="py-0"
-                reverseIcon={true}
-              />
-            </Pressable>
-            <TicDriveReminderCard
-              leftButtonText={t('bookNow')}
-              rightButtonText={t('RemindMeLater')}
-              logo={<NissanIcon />}
-              text={t('home.notifications.first')}
-            />
-            <TicDriveReminderCard
-              leftButtonText={t('bookNow')}
-              rightButtonText={t('RemindMeLater')}
-              logo={<PeugeotIcon />}
-              text={t('home.notifications.second')}
-            />
-            <TicDriveReminderCard
-              leftButtonText={t('bookNow')}
-              rightButtonText={t('RemindMeLater')}
-              logo={<NissanIcon />}
-              text={t('home.notifications.third')}
-            />
+              <Text className='text-base font-medium text-drive'>{t('vehicles.handleVehicles')}</Text>
+            </CrossPlatformButtonLayout>
           </View>
         </ScrollView>
       </SafeAreaViewLayout>
