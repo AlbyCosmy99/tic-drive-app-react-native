@@ -117,7 +117,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
 
   return (
     <View
-    className='pb-0'
+      className="pb-0"
       style={[
         styles.container,
         isUserRegistering && styles.containerUserRegistering,
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   inputContainerStyle: {
-    marginTop: 0
+    marginTop: 0,
   },
   containerUserRegistering: {
     paddingBottom: 0,

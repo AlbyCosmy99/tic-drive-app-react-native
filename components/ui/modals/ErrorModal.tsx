@@ -54,14 +54,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   modalButton: {
-    backgroundColor: 'red',
+    backgroundColor: 'orange',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
   },
   modalButtonText: {
-    color: 'orange',
     fontWeight: 'bold',
+    color: 'white',
   },
 });
 

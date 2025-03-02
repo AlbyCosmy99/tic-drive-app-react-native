@@ -10,6 +10,7 @@ import React, {useState} from 'react';
 import {UserCategory} from '@/types/User';
 import AuthAction from '@/types/auth/Action';
 import CrossPlatformButtonLayout from '../ui/buttons/CrossPlatformButtonLayout';
+import ForgotPasswordModal from '../ui/modals/ForgotPasswordModal';
 
 interface UserAuthenticationContentProps {
   action: AuthAction;
@@ -26,6 +27,7 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
 }) => {
   const [loading, setLoading] = useState(false);
   const [onFormSubmit, setOnFormSubmit] = useState<(() => void) | null>(null);
+  const [forgotPasswordVisible, setForgotPasswordVisible] = useState(false);
 
   const handleLoginPressed = async () => {
     onFormSubmit && onFormSubmit();
@@ -59,16 +61,24 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
           </Text>
         </TouchableOpacity>
       </View>
-      <View className='flex-col mb-2'>
+      <View className="flex-col mb-2">
         <UserAuthenticationForm
           isUserRegistering={isUserRegistering}
           setOnFormSubmit={setOnFormSubmit}
           clientCategory={clientCategory}
           setLoading={setLoading}
         />
-        <CrossPlatformButtonLayout removeAllStyles onPress={() => console.log('forgot password')} containerTailwindCss='mx-8'>
-          <Text className='font-medium text-sm self-end'>Forgot password?</Text>
+        <CrossPlatformButtonLayout
+          removeAllStyles
+          onPress={() => setForgotPasswordVisible(true)}
+          containerTailwindCss="mx-8"
+        >
+          <Text className="font-medium text-sm self-end">Forgot password?</Text>
         </CrossPlatformButtonLayout>
+        <ForgotPasswordModal
+          visible={forgotPasswordVisible}
+          onDismiss={() => setForgotPasswordVisible(false)}
+        />
       </View>
       <View>
         <TicDriveButton
