@@ -67,7 +67,7 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
           setLoading={setLoading}
         />
         <CrossPlatformButtonLayout removeAllStyles onPress={() => console.log('forgot password')} containerTailwindCss='mx-8'>
-          <Text className='font-medium text-base self-end'>Forgot password?</Text>
+          <Text className='font-medium text-sm self-end'>Forgot password?</Text>
         </CrossPlatformButtonLayout>
       </View>
       <View>
