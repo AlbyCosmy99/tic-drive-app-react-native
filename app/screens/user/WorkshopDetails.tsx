@@ -125,28 +125,6 @@ export default function WorkshopDetails() {
           </View>
         }
       />
-      {/* <View className="flex-row items-center justify-between mr-2.5">
-        <TouchableOpacity
-          onPress={() => navigation?.goBack()}
-          className="m-2 mb-2.5"
-          accessible={true}
-          accessibilityLabel="Back to previous page"
-        >
-          <Ionicons name="arrow-back" size={30} color="#000" />
-        </TouchableOpacity>
-        {workshop && (
-          <IconTextPair
-            text={workshop.name}
-            icon={
-              workshop.isVerified && <GreenCheckIcon width={22} height={22} />
-            }
-            reverseIcon
-            containerTailwindCss="flex flex-row justify-center items-center gap-x-1.5"
-            textTailwindCss="font-semibold text-lg"
-          />
-        )}
-      
-      </View> */}
       {!workshop ? (
         <View className="flex-1 justify-center items-center">
           <Text className="text-red-600 text-xl">Workshop not found.</Text>
