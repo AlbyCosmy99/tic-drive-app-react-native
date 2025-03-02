@@ -13,7 +13,6 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {Ionicons} from '@expo/vector-icons';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';

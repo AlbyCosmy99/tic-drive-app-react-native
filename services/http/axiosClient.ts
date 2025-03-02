@@ -23,12 +23,17 @@ axiosClient.interceptors.request.use(
 );
 
 axiosClient.interceptors.response.use(
-  response => {
-    return response;
-  },
+  response => response,
   error => {
-    console.error(error);
-    return Promise.reject(error);
+    const errorMessage =
+      error.response && error.response.data && error.response.data.message
+        ? error.response.data.message
+        : 'Errore generico';
+    console.error('Backend error:', errorMessage);
+    return Promise.reject({
+      status: error.response?.status,
+      message: errorMessage,
+    });
   },
 );
 

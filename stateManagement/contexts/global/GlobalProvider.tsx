@@ -15,6 +15,7 @@ const GlobalProvider: FC<{children: ReactNode}> = ({children}) => {
   const [userPaymentInfo, setUserPaymentInfo] =
     useState<UserPaymentInfo | null>(null);
   const user = useAppSelector(state => state.auth.user);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const defaultPaymentTypes: PaymentCard[] = [
@@ -61,6 +62,8 @@ const GlobalProvider: FC<{children: ReactNode}> = ({children}) => {
         setCarNotFound,
         userPaymentInfo,
         setUserPaymentInfo,
+        errorMessage,
+        setErrorMessage,
       }}
     >
       {children}

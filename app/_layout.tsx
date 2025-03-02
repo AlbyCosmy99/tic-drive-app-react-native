@@ -3,7 +3,6 @@ import {useFonts} from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import {useState} from 'react';
 import 'react-native-reanimated';
-import {useColorScheme} from '@/hooks/useColorScheme';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {Provider} from 'react-redux';
 import getAnimation from '@/utils/route/getAnimation';

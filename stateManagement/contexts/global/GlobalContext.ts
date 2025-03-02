@@ -10,6 +10,8 @@ interface GlobalServiceType {
   setCarNotFound: (carNotFound: boolean) => void;
   userPaymentInfo: UserPaymentInfo | null;
   setUserPaymentInfo: (UserPaymentInfo: UserPaymentInfo) => void;
+  errorMessage: string;
+  setErrorMessage: (errorMessage: string) => void;
 }
 
 const defaultContextValue: GlobalServiceType = {
@@ -25,6 +27,8 @@ const defaultContextValue: GlobalServiceType = {
     customPaymentTypes: [],
   },
   setUserPaymentInfo: () => {},
+  errorMessage: '',
+  setErrorMessage: () => {},
 };
 
 const GlobalContext = createContext<GlobalServiceType>(defaultContextValue);

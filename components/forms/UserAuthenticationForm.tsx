@@ -15,6 +15,8 @@ import {setSecureToken} from '@/services/auth/secureStore/setToken';
 import {login as authLogin} from '@/services/auth/login';
 import {getPayload} from '@/services/auth/getPayload';
 import getUserData from '@/utils/auth/getUserData';
+import ErrorModal from '../ui/modals/ErrorModal';
+import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 
 type FormData = {
   email: string;
@@ -38,7 +40,6 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
 }) => {
   const {
     control,
-    setValue,
     handleSubmit,
     clearErrors,
     watch,
@@ -49,10 +50,11 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
     React.useContext(AuthContext);
   const {navigation} = React.useContext(NavigationContext);
   const dispatch = useAppDispatch();
+  const {setErrorMessage} = React.useContext(GlobalContext);
 
   React.useEffect(() => {
     clearErrors();
-  }, [isUserRegistering]);
+  }, [isUserRegistering, clearErrors]);
 
   const onSubmit = async (data: FormData, isUserRegistering: boolean) => {
     const user: User = {
@@ -68,19 +70,21 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
         setLoading(true);
         const res = await register(user);
         setSecureToken(res.token);
-        dispatch(setToken(res.setToken));
+        dispatch(setToken(res.token));
         navigationReset(navigation, 0, 'ConfirmEmailScreen');
       } catch (err) {
-        alert('User already registered. Login or try with a new email.');
+        console.log(err);
+        setErrorMessage(err.message);
+      } finally {
+        setLoading(false);
       }
     } else {
       try {
         setLoading(true);
         const res = await authLogin(user);
-
+        console.log(res);
         setSecureToken(res.token);
         dispatch(setToken(res.token));
-
         const payload = await getPayload(res.token);
         dispatch(login(getUserData(payload)));
 
@@ -97,19 +101,19 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
           navigationReset(navigation, 0, 'ConfirmEmailScreen');
         }
       } catch (err) {
-        alert('User not registered.');
+        console.log(err);
+        setErrorMessage(err.message);
+      } finally {
+        setLoading(false);
       }
     }
-    setLoading(false);
   };
 
   React.useEffect(() => {
-    setOnFormSubmit(() => {
-      return handleSubmit(data => {
-        onSubmit(data, isUserRegistering);
-      });
-    });
-  }, [isUserRegistering]);
+    setOnFormSubmit(() =>
+      handleSubmit(data => onSubmit(data, isUserRegistering)),
+    );
+  }, [isUserRegistering, handleSubmit, setOnFormSubmit]);
 
   return (
     <View
@@ -124,7 +128,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
             control={control}
             name="name"
             rules={{required: 'Name is required'}}
-            render={({field: {onChange, value, onBlur}}) => (
+            render={({field: {onChange, value}}) => (
               <TicDriveInput
                 placeholder="Name"
                 isRightIcon={true}
@@ -147,11 +151,11 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
         rules={{
           required: 'Email is required',
           pattern: {
-            value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, //is an email
+            value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
             message: 'Please enter a valid email address',
           },
         }}
-        render={({field: {onChange, value, onBlur}}) => (
+        render={({field: {onChange, value}}) => (
           <TicDriveInput
             placeholder="Email"
             isRightIcon={true}
@@ -176,7 +180,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
               'Password must be at least 8 characters long, include letters (at least one uppercase), numbers, and at least one special character',
           },
         }}
-        render={({field: {onChange, value, onBlur}}) => (
+        render={({field: {onChange, value}}) => (
           <TicDriveInput
             placeholder="Password"
             isRightIcon={true}
@@ -202,7 +206,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
               validate: value =>
                 value === watch('password') || 'Passwords do not match',
             }}
-            render={({field: {onChange, value, onBlur}}) => (
+            render={({field: {onChange, value}}) => (
               <TicDriveInput
                 placeholder="Repeat password"
                 isRightIcon={true}
@@ -219,6 +223,8 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
           )}
         </>
       )}
+
+      <ErrorModal />
     </View>
   );
 };
@@ -226,13 +232,6 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 10,
-    marginVertical: 10,
-    borderRadius: 5,
   },
   error: {
     color: 'red',
