@@ -36,6 +36,7 @@ import EmptyHeartIcon from '@/assets/svg/emotions/EmptyHeart.svg';
 import RedHeartIcon from '@/assets/svg/emotions/RedHeart.svg';
 import CarPinIcon from '@/assets/svg/vehicles/car3.svg';
 import {useTranslation} from 'react-i18next';
+import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 
 export default function WorkshopDetails() {
   const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
@@ -103,7 +104,28 @@ export default function WorkshopDetails() {
   return (
     <SafeAreaViewLayout styles={[styles.container]}>
       {/* custom navbar */}
-      <View className="flex-row items-center justify-between mr-2.5">
+      <TicDriveNavbar
+        rightContent={
+          <View className="flex flex-row gap-x-4 justify-center items-center">
+            {workshop && token && (
+              <CrossPlatformButtonLayout
+                removeAllStyles
+                onPress={handleOnFavoritePress}
+              >
+                <View
+                  className={`${!token && 'opacity-0'} w-6 h-6 justify-center items-center`}
+                >
+                  {workshop.isFavorite ? <RedHeartIcon /> : <EmptyHeartIcon />}
+                </View>
+              </CrossPlatformButtonLayout>
+            )}
+            <Pressable onPress={onShare}>
+              <ShareIcon />
+            </Pressable>
+          </View>
+        }
+      />
+      {/* <View className="flex-row items-center justify-between mr-2.5">
         <TouchableOpacity
           onPress={() => navigation?.goBack()}
           className="m-2 mb-2.5"
@@ -123,24 +145,8 @@ export default function WorkshopDetails() {
             textTailwindCss="font-semibold text-lg"
           />
         )}
-        <View className="flex flex-row gap-x-4 justify-center items-center">
-          {workshop && token && (
-            <CrossPlatformButtonLayout
-              removeAllStyles
-              onPress={handleOnFavoritePress}
-            >
-              <View
-                className={`${!token && 'opacity-0'} w-6 h-6 justify-center items-center`}
-              >
-                {workshop.isFavorite ? <RedHeartIcon /> : <EmptyHeartIcon />}
-              </View>
-            </CrossPlatformButtonLayout>
-          )}
-          <Pressable onPress={onShare}>
-            <ShareIcon />
-          </Pressable>
-        </View>
-      </View>
+      
+      </View> */}
       {!workshop ? (
         <View className="flex-1 justify-center items-center">
           <Text className="text-red-600 text-xl">Workshop not found.</Text>

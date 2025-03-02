@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   modalButtonText: {
-    color: '#fff',
+    color: 'orange',
     fontWeight: 'bold',
   },
 });
