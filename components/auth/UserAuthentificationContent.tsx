@@ -9,6 +9,7 @@ import {Colors} from '@/constants/Colors';
 import React, {useState} from 'react';
 import {UserCategory} from '@/types/User';
 import AuthAction from '@/types/auth/Action';
+import CrossPlatformButtonLayout from '../ui/buttons/CrossPlatformButtonLayout';
 
 interface UserAuthenticationContentProps {
   action: AuthAction;
@@ -58,13 +59,16 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
           </Text>
         </TouchableOpacity>
       </View>
-      <View>
+      <View className='flex-col mb-2'>
         <UserAuthenticationForm
           isUserRegistering={isUserRegistering}
           setOnFormSubmit={setOnFormSubmit}
           clientCategory={clientCategory}
           setLoading={setLoading}
         />
+        <CrossPlatformButtonLayout removeAllStyles onPress={() => console.log('forgot password')} containerTailwindCss='mx-8'>
+          <Text className='font-medium text-base self-end'>Forgot password?</Text>
+        </CrossPlatformButtonLayout>
       </View>
       <View>
         <TicDriveButton

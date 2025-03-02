@@ -1,5 +1,5 @@
 import ToPreviousPage from '@/components/navigation/ToPreviousPage';
-import {KeyboardAvoidingView, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {useEffect, useMemo, useState} from 'react';
 import {Colors} from '@/constants/Colors';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -11,7 +11,6 @@ import {Dimensions} from 'react-native';
 import AuthAction from '@/types/auth/Action';
 import isIOSPlatform from '@/utils/devices/IsIOSPlatform';
 import {useRoute} from '@react-navigation/native';
-import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 const {height} = Dimensions.get('window');
 
 export default function UserAuthenticationScreen() {
