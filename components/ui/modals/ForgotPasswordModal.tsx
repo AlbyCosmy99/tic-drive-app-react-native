@@ -3,7 +3,7 @@ import {Modal, StyleSheet, Text, View} from 'react-native';
 import TicDriveInput from '../inputs/TicDriveInput';
 import CrossPlatformButtonLayout from '../buttons/CrossPlatformButtonLayout';
 import axiosClient from '@/services/http/axiosClient';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 
 interface ForgotPasswordModalProps {
   visible: boolean;
@@ -27,6 +27,9 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
     defaultValues: {email: ''},
   });
 
+  const [successMessage, setSuccessMessage] = useState('')
+  const [loading, setLoading] = useState(false)
+
   useEffect(() => {
     if (visible) {
       reset();
@@ -34,10 +37,15 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
   }, [visible, reset]);
 
   const onSendEmail = (data: FormValues) => {
+    setLoading(true)
     axiosClient
       .post('/auth/forgot-password', {email: data.email})
       .then(response => {
-        onDismiss();
+        setLoading(false)
+        setSuccessMessage('A verification email has been sent to your inbox.');
+        setTimeout(() => {
+          onDismiss();
+        }, 1000);
       })
       .catch(error => {
         console.error(error);
@@ -86,6 +94,7 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
               removeAllStyles
               onPress={handleSubmit(onSendEmail)}
               containerTailwindCss="flex-1 bg-drive p-2 px-4 rounded-lg"
+              disabled={loading}
             >
               <Text className="font-medium text-base text-white text-center">
                 Send verification email
@@ -95,6 +104,7 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
               removeAllStyles
               onPress={onDismiss}
               containerTailwindCss="bg-red-500 ml-4 p-2 px-4 rounded-lg"
+              disabled={loading}
             >
               <Text className="font-medium text-base text-white text-center">
                 Close
