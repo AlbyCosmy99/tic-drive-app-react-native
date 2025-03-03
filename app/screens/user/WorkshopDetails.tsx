@@ -13,7 +13,6 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native-gesture-handler';
-import {Ionicons} from '@expo/vector-icons';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import UserCalendarModal from '@/components/ui/modals/UserCalendarModal';
@@ -22,7 +21,6 @@ import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import WorkshopReviewinfo from '@/components/workshop/reviews/WorkshopReviewInfo';
 import GreenCheckIcon from '@/assets/svg/check_green.svg';
-import IconTextPair from '@/components/ui/IconTextPair';
 import ShareIcon from '@/assets/svg/share/shareIcon.svg';
 import SeeAllServicesCards from '@/components/services/SeeAllServicesCards';
 import SeeAllReviewsCards from '@/components/workshop/reviews/SeeAllReviewsCards';
@@ -40,7 +38,6 @@ import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 
 export default function WorkshopDetails() {
   const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
-  const navigation = useTicDriveNavigation();
   const {areServicesAvailable} = useAreServicesAvailable();
   const token = useJwtToken();
   const dispatch = useAppDispatch();
