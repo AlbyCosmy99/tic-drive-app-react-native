@@ -53,7 +53,7 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({
         {
           borderRadius: 40,
           height: 48,
-          backgroundColor: Colors.light.green.drive
+          backgroundColor: Colors.light.green.drive,
         },
 
         customButtonStyle,
@@ -61,7 +61,7 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({
       containerStyle={[
         {
           margin: 15,
-          marginBottom: 0
+          marginBottom: 0,
         },
         customContainerStyle,
       ]}

@@ -29,7 +29,7 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
   const [loading, setLoading] = useState(false);
   const [onFormSubmit, setOnFormSubmit] = useState<(() => void) | null>(null);
   const [forgotPasswordVisible, setForgotPasswordVisible] = useState(false);
-  const navigation = useTicDriveNavigation()
+  const navigation = useTicDriveNavigation();
 
   const handleLoginPressed = async () => {
     onFormSubmit && onFormSubmit();
