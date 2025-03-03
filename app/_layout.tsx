@@ -32,6 +32,7 @@ import WorkshopsListScreen from './screens/workshop/WorkshopsListScreen';
 import WorkshopReviewsListScreen from './screens/workshop/reviews/WorkshopReviewsListScreen';
 import ChatScreen from './screens/chat/ChatScreen';
 import '@/i18n';
+import ForgotPasswordScreen from './screens/user/ForgotPasswordScreen';
 SplashScreen.preventAutoHideAsync();
 
 const Stack = createNativeStackNavigator();
@@ -214,6 +215,15 @@ export default function RootLayout() {
                         component={ChatScreen}
                         options={({route}) => ({
                           title: 'ChatScreen',
+                          headerShown: false,
+                          animation: getAnimation(route),
+                        })}
+                      />
+                      <Stack.Screen
+                        name="ForgotPasswordScreen"
+                        component={ForgotPasswordScreen}
+                        options={({route}) => ({
+                          title: 'ForgotPasswordScreen',
                           headerShown: false,
                           animation: getAnimation(route),
                         })}

@@ -1,6 +1,6 @@
 import React, {memo, useContext} from 'react';
 import {Button} from '@rneui/themed';
-import {StyleProp, ViewStyle} from 'react-native';
+import {StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {Colors} from '@/constants/Colors';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
@@ -12,6 +12,8 @@ interface TicDriveButtonProps {
   text: string;
   customButtonStyle?: StyleProp<ViewStyle>;
   customContainerStyle?: StyleProp<ViewStyle>;
+  customDisabledStyle?: StyleProp<ViewStyle>;
+  customTitleStyle?: StyleProp<TextStyle>;
   routeName?: string;
   routeParams?: any;
   stateRouteName?: string;
@@ -26,6 +28,8 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({
   text,
   customButtonStyle,
   customContainerStyle,
+  customDisabledStyle,
+  customTitleStyle,
   routeName,
   routeParams = {},
   stateRouteName,
@@ -42,11 +46,14 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({
     <Button
       title={text}
       disabled={disabled}
+      disabledStyle={customDisabledStyle}
+      disabledTitleStyle={{color: 'white'}}
+      titleStyle={customTitleStyle}
       buttonStyle={[
         {
           borderRadius: 40,
           height: 48,
-          backgroundColor: Colors.light.green.drive,
+          backgroundColor: Colors.light.green.drive
         },
 
         customButtonStyle,
@@ -54,7 +61,7 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({
       containerStyle={[
         {
           margin: 15,
-          marginBottom: 0,
+          marginBottom: 0
         },
         customContainerStyle,
       ]}
