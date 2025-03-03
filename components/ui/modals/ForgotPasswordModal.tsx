@@ -27,8 +27,8 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
     defaultValues: {email: ''},
   });
 
-  const [successMessage, setSuccessMessage] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [successMessage, setSuccessMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (visible) {
@@ -37,11 +37,11 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
   }, [visible, reset]);
 
   const onSendEmail = (data: FormValues) => {
-    setLoading(true)
+    setLoading(true);
     axiosClient
       .post('/auth/forgot-password', {email: data.email})
       .then(response => {
-        setLoading(false)
+        setLoading(false);
         setSuccessMessage('A verification email has been sent to your inbox.');
         setTimeout(() => {
           onDismiss();

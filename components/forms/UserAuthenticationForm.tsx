@@ -17,6 +17,8 @@ import {getPayload} from '@/services/auth/getPayload';
 import getUserData from '@/utils/auth/getUserData';
 import ErrorModal from '../ui/modals/ErrorModal';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
+import VisibilityOffIcon from '@/assets/svg/access/visibility_off.svg';
+import VisibilityOnIcon from '@/assets/svg/access/visibility_on.svg';
 
 type FormData = {
   email: string;
@@ -51,6 +53,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
   const {navigation} = React.useContext(NavigationContext);
   const dispatch = useAppDispatch();
   const {setErrorMessage} = React.useContext(GlobalContext);
+  const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
 
   React.useEffect(() => {
     clearErrors();
@@ -189,8 +192,20 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
             onChange={onChange}
             inputContainerStyle={styles.inputContainerStyle}
             returnKeyType="send"
-            isPassword={true}
+            isPassword={!isPasswordVisible}
             containerStyle={{height: 65}}
+            rightIcon={
+              isPasswordVisible ? (
+                <View className="mt-1">
+                  <VisibilityOffIcon />
+                </View>
+              ) : (
+                <VisibilityOnIcon />
+              )
+            }
+            onRightIcon={() =>
+              setIsPasswordVisible(previousValue => !previousValue)
+            }
           />
         )}
       />

@@ -165,13 +165,13 @@ export default function UserHome() {
                 text={t('home.notifications.first')}
               />
               <TicDriveReminderCard
-                leftButtonText={t('bookNow')}
+                leftButtonText={t('discoverNow')}
                 rightButtonText={t('RemindMeLater')}
                 logo={<PeugeotIcon />}
                 text={t('home.notifications.second')}
               />
               <TicDriveReminderCard
-                leftButtonText={t('bookNow')}
+                leftButtonText={t('payNow')}
                 rightButtonText={t('RemindMeLater')}
                 logo={<NissanIcon />}
                 text={t('home.notifications.third')}

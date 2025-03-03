@@ -9,6 +9,7 @@ import {
 import {Icon, Input} from '@rneui/themed';
 import {Colors} from '@/constants/Colors';
 import React, {memo, useState} from 'react';
+import CrossPlatformButtonLayout from '../buttons/CrossPlatformButtonLayout';
 
 interface TicDriveInputProps {
   placeholder: string;
@@ -25,6 +26,7 @@ interface TicDriveInputProps {
   onChange?: (text: string) => void;
   isPassword?: boolean;
   keyboardType?: TextInputProps['keyboardType'];
+  rightIcon?: React.ReactNode;
 }
 
 const TicDriveInput: React.FC<TicDriveInputProps> = ({
@@ -42,11 +44,11 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
   isPassword = false,
   onChange,
   keyboardType = 'default',
+  rightIcon,
 }) => {
   const [value, setValue] = useState<string>(customValue);
 
   const handleOnPress = () => {
-    setValue('');
     onRightIcon && onRightIcon();
     onChange && onChange('');
   };
@@ -65,13 +67,26 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
           ) : undefined
         }
         rightIcon={
-          isRightIcon && value ? (
-            <Icon
-              name="cancel"
-              size={24}
-              color={Colors.light.ticText}
-              onPress={handleOnPress}
-            />
+          isRightIcon ? (
+            rightIcon ? (
+              <CrossPlatformButtonLayout
+                containerTailwindCss="justify-center items-center"
+                removeAllStyles
+                onPress={handleOnPress}
+              >
+                {rightIcon}
+              </CrossPlatformButtonLayout>
+            ) : value ? (
+              <Icon
+                name="cancel"
+                size={24}
+                color={Colors.light.ticText}
+                onPress={() => {
+                  setValue('');
+                  handleOnPress();
+                }}
+              />
+            ) : undefined
           ) : undefined
         }
         containerStyle={containerStyle}
