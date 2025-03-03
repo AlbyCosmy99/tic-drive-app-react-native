@@ -1,7 +1,7 @@
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import {useEffect, useMemo, useRef, useState} from 'react';
 import {ActivityIndicator, Text, View} from 'react-native';
-import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
+import {FlatList} from 'react-native-gesture-handler';
 import LoadingSpinner from '../loading/LoadingSpinner';
 import WorkshopCard from '@/components/WorkshopCard';
 import Workshop from '@/types/workshops/Workshop';
