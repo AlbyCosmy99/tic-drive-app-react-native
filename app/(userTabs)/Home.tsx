@@ -1,8 +1,8 @@
 import {Pressable, Text, View} from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
-import {useContext, useRef, useState} from 'react';
-import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
+import {useCallback, useRef, useState} from 'react';
+import debounce from 'lodash.debounce';
 import navigationPush from '@/services/navigation/push';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
@@ -11,11 +11,10 @@ import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import {
   reset,
   setAreServicesOn,
+  setServicesChoosenByUsers,
 } from '@/stateManagement/redux/slices/servicesSlice';
 import {useFocusEffect} from '@react-navigation/native';
 import {RefreshControl, ScrollView} from 'react-native-gesture-handler';
-import IconTextPair from '@/components/ui/IconTextPair';
-import AddIcon from '@/assets/svg/add.svg';
 import LoadingSpinner from '@/components/ui/loading/LoadingSpinner';
 import useWorkshops from '@/hooks/api/workshops/useWorkshops';
 import useJwtToken from '@/hooks/auth/useJwtToken';
@@ -31,13 +30,18 @@ import TicDriveReminderCard from '@/components/ui/cards/notifications/TicDriveRe
 import NissanIcon from '@/assets/svg/vehicles/makes/nissan.svg';
 import PeugeotIcon from '@/assets/svg/vehicles/makes/peugeot.svg';
 import {useTranslation} from 'react-i18next';
+import axiosClient from '@/services/http/axiosClient';
+import Service from '@/types/Service';
+import Workshop from '@/types/workshops/Workshop';
 
 export default function UserHome() {
-  const {setWorkshopFilter} = useContext(GlobalContext);
+  const [filter, setFilter] = useState('');
   const navigation = useTicDriveNavigation();
   const [refreshing, setRefreshing] = useState(false);
   const servicesRef = useRef();
   const {t} = useTranslation();
+  const [filteredServices, setFilteredServices] = useState<Service[]>([]);
+  const [filteredWorkshops, setFilteredWorkshops] = useState<Workshop[]>([]);
 
   const {workshops, loadingWorkshops, setLoadingWorkshops} = useWorkshops(0, 2);
 
@@ -72,6 +76,28 @@ export default function UserHome() {
     dispatch(setSelectedWorkshop(null));
   });
 
+  const onHomeSearch = async (search: string) => {
+    setFilter(search);
+
+    if (!search.trim()) {
+      setFilteredServices([]);
+      setFilteredWorkshops([]);
+      return;
+    }
+
+    const filteredServices = await axiosClient.get(
+      `services?take=3&filter=${search}`,
+    );
+    setFilteredServices(filteredServices.data);
+
+    const filteredWorkshops = await axiosClient.get(
+      `workshops?take=3&filter=${search}`,
+    );
+    setFilteredWorkshops(filteredWorkshops.data.workshops);
+  };
+
+  const debouncedOnHomeSearch = useCallback(debounce(onHomeSearch, 500), []);
+
   return (
     <LinearGradientViewLayout>
       <SafeAreaViewLayout disabled={!isAndroidPlatform()}>
@@ -87,18 +113,78 @@ export default function UserHome() {
             });
           }}
         />
-        <View className="flex-row items-center">
+        <View className="flex-row items-center relative">
           <TicDriveInput
             isLeftIcon={true}
             isRightIcon={true}
             placeholder={t('home.searchInput')}
             containerViewStyleTailwind="flex-1 h-[60px]"
             inputContainerStyle={{marginTop: 4, height: 48}}
-            onChange={text => {
-              setWorkshopFilter(text);
-            }}
+            onChange={text => debouncedOnHomeSearch(text)}
           />
+          {filter && (
+            <View className="absolute top-[60px] bg-white w-full z-10 p-2">
+              <View className="border-black border-2 p-2">
+                <Text className="text-center text-base font-semibold">
+                  Workshops
+                </Text>
+                {filteredWorkshops.length > 0 ? (
+                  <View className="mb-1">
+                    {filteredWorkshops.map(workshop => (
+                      <CrossPlatformButtonLayout
+                        key={workshop.id}
+                        removeAllStyles
+                        onPress={() => {
+                          navigationPush(navigation, 'WorkshopDetails');
+                          dispatch(setSelectedWorkshop(workshop));
+                        }}
+                      >
+                        <Text className="text-center mt-1 font-semibold p-1">
+                          {workshop.name}
+                        </Text>
+                      </CrossPlatformButtonLayout>
+                    ))}
+                  </View>
+                ) : (
+                  <Text className="text-center mt-1 mb-2">
+                    No workshops with this filter.
+                  </Text>
+                )}
+                <HorizontalLine />
+                <Text className="text-center text-base font-semibold">
+                  Services
+                </Text>
+                <View className="mb-1">
+                  {filteredServices.length > 0 ? (
+                    <View>
+                      {filteredServices.map(service => (
+                        <CrossPlatformButtonLayout
+                          removeAllStyles
+                          onPress={() => {
+                            navigationPush(navigation, 'RegisterVehicleScreen');
+                            dispatch(setServicesChoosenByUsers(service));
+                          }}
+                        >
+                          <Text
+                            className="text-center mt-1 font-semibold p-1"
+                            key={service.id}
+                          >
+                            {service.title}
+                          </Text>
+                        </CrossPlatformButtonLayout>
+                      ))}
+                    </View>
+                  ) : (
+                    <Text className="text-center mt-1">
+                      No services with this filter.
+                    </Text>
+                  )}
+                </View>
+              </View>
+            </View>
+          )}
         </View>
+
         <ScrollView
           className="mb-2"
           refreshControl={
