@@ -14,6 +14,8 @@ import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import TicDriveInfinitePaginationList from './ui/Lists/TicDriveInfinitePaginationList';
 import {useState} from 'react';
+import Workshop from '@/types/workshops/Workshop';
+import WorkshopCard from './WorkshopCard';
 
 interface WorkshopCardsProps {
   setAreNoWorkshop?: (areNoWorkshops: boolean) => void;
@@ -65,21 +67,24 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
       setFilter={setWorkshopFilter}
       currentPage={currentPage}
       setCurrentPage={setCurrentPage}
+      noDataContent={
+        <View className="flex-1 justify-center items-center mx-2.5">
+          <Text className="text-lg text-gray-600 text-center">
+            No workshop found. Try with a different service, or go to the
+            dashboard.
+          </Text>
+          <TicDriveButton
+            text="Look for a different service"
+            onClick={handleChooseDifferentService}
+          />
+          <TicDriveButton
+            text="Go back to dashboard"
+            onClick={() => navigationReset(navigation, 0, 'Hub', 'Home')}
+          />
+        </View>
+      }
     >
-      <View className="flex-1 justify-center items-center mx-2.5">
-        <Text className="text-lg text-gray-600 text-center">
-          No workshop found. Try with a different service, or go to the
-          dashboard.
-        </Text>
-        <TicDriveButton
-          text="Look for a different service"
-          onClick={handleChooseDifferentService}
-        />
-        <TicDriveButton
-          text="Go back to dashboard"
-          onClick={() => navigationReset(navigation, 0, 'Hub', 'Home')}
-        />
-      </View>
+      {(workshop: Workshop) => <WorkshopCard workshop={workshop} />}
     </TicDriveInfinitePaginationList>
   );
 };

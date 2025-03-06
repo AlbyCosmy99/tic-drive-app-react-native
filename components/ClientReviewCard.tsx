@@ -10,8 +10,8 @@ type ClientReviewCardProps = {
 
 function ClientReviewCard({review}: ClientReviewCardProps) {
   useEffect(() => {
-    console.log('review', review)
-  }, [])
+    console.log('review', review);
+  }, []);
   function timeAgo(propDate: Date) {
     const date = new Date(propDate);
     const now = new Date();
@@ -38,7 +38,7 @@ function ClientReviewCard({review}: ClientReviewCardProps) {
   }
 
   return (
-    <View className='my-1.5' style={[styles.container, styles.shadow]}>
+    <View className="my-1.5" style={[styles.container, styles.shadow]}>
       <View className="flex-row items-start justify-between">
         <View className="flex-row">
           <CircularUserAvatar uri={review.customerImageUrl} />

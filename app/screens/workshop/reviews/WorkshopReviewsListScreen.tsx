@@ -21,8 +21,8 @@ const WorkshopReviewsListScreen = () => {
   );
 
   useEffect(() => {
-    console.log(reviews)
-  }, [reviews])
+    console.log(reviews);
+  }, [reviews]);
 
   const fiveStarsReviews = useMemo(() => {
     return reviews.filter(review => review.stars === 5).length;
@@ -65,15 +65,13 @@ const WorkshopReviewsListScreen = () => {
         <ReviewsProgressStars reviews={twoStarsReviews} stars={2} />
         <ReviewsProgressStars reviews={oneStarReviews} stars={1} />
       </View>
-      {
-        !loadingReviews && (
-          <View className='mt-4'>
-            <ClientReviewCard review={reviews[0]} />
-            <ClientReviewCard review={reviews[0]} />
-            <ClientReviewCard review={reviews[0]} />
-          </View>
-        )
-      }
+      {!loadingReviews && (
+        <View className="mt-4">
+          <ClientReviewCard review={reviews[0]} />
+          <ClientReviewCard review={reviews[0]} />
+          <ClientReviewCard review={reviews[0]} />
+        </View>
+      )}
     </SafeAreaViewLayout>
   );
 };

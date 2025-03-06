@@ -20,7 +20,8 @@ interface TicDriveInfinitePaginationListProps {
   dataPerPage: number;
   setLoadingData: (loading: boolean) => void;
   data: Workshop[];
-  children?: React.ReactNode;
+  children?: (item: any) => React.ReactNode;
+  noDataContent?: React.ReactNode;
   currentPage: number;
   setCurrentPage: (page: number) => void;
 }
@@ -36,7 +37,8 @@ const TicDriveInfinitePaginationList: React.FC<
   dataPerPage = 10,
   setLoadingData,
   data,
-  children = <Text>No data found</Text>,
+  children,
+  noDataContent = <Text>No data found</Text>,
   currentPage,
   setCurrentPage,
 }) => {
@@ -83,7 +85,7 @@ const TicDriveInfinitePaginationList: React.FC<
   }, [setFilter]);
 
   return filteredData.length === 0 && !loading ? (
-    children
+    noDataContent
   ) : (
     <View className={`${!token ? 'mb-2' : ''} ${tailwindContainerCss}`}>
       {loading && currentPage === 1 ? (
@@ -99,7 +101,7 @@ const TicDriveInfinitePaginationList: React.FC<
               removeAllStyles
               onPress={() => handleCardPress(item)}
             >
-              <WorkshopCard workshop={item} />
+              {children && children(item)}
             </CrossPlatformButtonLayout>
           )}
           onMomentumScrollBegin={() => {
