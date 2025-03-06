@@ -16,6 +16,7 @@ import TicDriveInfinitePaginationList from './ui/Lists/TicDriveInfinitePaginatio
 import {useState} from 'react';
 import Workshop from '@/types/workshops/Workshop';
 import WorkshopCard from './WorkshopCard';
+import CrossPlatformButtonLayout from './ui/buttons/CrossPlatformButtonLayout';
 
 interface WorkshopCardsProps {
   setAreNoWorkshop?: (areNoWorkshops: boolean) => void;
@@ -56,6 +57,11 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
     navigationPush(navigation, 'ChooseServicesScreen');
   };
 
+  const handleCardPress = (workshop: Workshop) => {
+    dispatch(setSelectedWorkshop(workshop));
+    navigationPush(navigation, 'WorkshopDetails');
+  };
+
   return (
     <TicDriveInfinitePaginationList
       loading={loadingWorkshops}
@@ -84,7 +90,14 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
         </View>
       }
     >
-      {(workshop: Workshop) => <WorkshopCard workshop={workshop} />}
+      {(workshop: Workshop) => (
+        <CrossPlatformButtonLayout
+          removeAllStyles
+          onPress={() => handleCardPress(workshop)}
+        >
+          <WorkshopCard workshop={workshop} />
+        </CrossPlatformButtonLayout>
+      )}
     </TicDriveInfinitePaginationList>
   );
 };

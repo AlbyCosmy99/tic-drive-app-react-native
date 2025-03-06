@@ -3,11 +3,9 @@ import {useEffect, useMemo, useRef, useState} from 'react';
 import {ActivityIndicator, Text, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import LoadingSpinner from '../loading/LoadingSpinner';
-import WorkshopCard from '@/components/WorkshopCard';
 import Workshop from '@/types/workshops/Workshop';
 import navigationPush from '@/services/navigation/push';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
-import CrossPlatformButtonLayout from '../buttons/CrossPlatformButtonLayout';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice';
 
@@ -71,11 +69,6 @@ const TicDriveInfinitePaginationList: React.FC<
     [accData, filter],
   );
 
-  const handleCardPress = (workshop: Workshop) => {
-    dispatch(setSelectedWorkshop(workshop));
-    navigationPush(navigation, 'WorkshopDetails');
-  };
-
   useEffect(() => {
     return () => {
       if (setFilter) {
@@ -96,14 +89,7 @@ const TicDriveInfinitePaginationList: React.FC<
         <FlatList
           data={filteredData}
           keyExtractor={item => item.id.toString()}
-          renderItem={({item}) => (
-            <CrossPlatformButtonLayout
-              removeAllStyles
-              onPress={() => handleCardPress(item)}
-            >
-              {children && children(item)}
-            </CrossPlatformButtonLayout>
-          )}
+          renderItem={({item}) => <View>{children && children(item)}</View>}
           onMomentumScrollBegin={() => {
             onEndReachedCalledDuringMomentum.current = false;
           }}
