@@ -14,7 +14,6 @@ import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import TicDriveInfinitePaginationList from './ui/Lists/TicDriveInfinitePaginationList';
 import {useState} from 'react';
-import CrossPlatformButtonLayout from './ui/buttons/CrossPlatformButtonLayout';
 
 interface WorkshopCardsProps {
   setAreNoWorkshop?: (areNoWorkshops: boolean) => void;
@@ -38,7 +37,6 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
       (currentPage - 1) * workshopsPerPage,
       workshopsPerPage,
       areServicesAvailable ? servicesChoosen[0]?.id : 0,
-      true,
       favorite,
     );
   const dispatch = useAppDispatch();

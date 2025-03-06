@@ -52,7 +52,7 @@ export default function ChooseServicesScreen() {
       <SafeAreaViewLayout
         disabled={withSafeAreaView !== undefined && !withSafeAreaView}
       >
-        <TicDriveNavbar isLoginAvailable={false} />
+        <TicDriveNavbar />
         <View className="flex-1 justify-between">
           <Text
             style={{

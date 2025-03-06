@@ -12,7 +12,7 @@ const ConfirmEmailScreen = () => {
   return (
     <LinearGradientViewLayout>
       <SafeAreaViewLayout tailwindCss="mx-3.5">
-        <TicDriveNavbar isLoginAvailable={false} />
+        <TicDriveNavbar />
         <View className="flex-1 justify-center items-center">
           <Text className="text-center text-3xl font-medium m-1.5 mb-3">
             Welcome {user?.name}!

@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import ServicesCard from './ServicesCard';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {UserCategory} from '@/types/User';
@@ -9,6 +9,7 @@ import {reset} from '@/stateManagement/redux/slices/servicesSlice';
 import useServices from '@/hooks/api/useServices';
 import LoadingSpinner from './ui/loading/LoadingSpinner';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
+import TicDriveInfinitePaginationList from './ui/Lists/TicDriveInfinitePaginationList';
 
 interface ServicesCardsProps {
   isSingleChoice?: boolean;
@@ -25,7 +26,12 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
   const selectedWorkshop = useAppSelector(
     state => state.workshops.selectedWorkshop,
   );
-  const {services, loadingServices} = useServices(selectedWorkshop?.id);
+
+  const servicesPerPage = 20;
+  const [currentPage, setCurrentPage] = useState(1);
+  const {services, loadingServices, setLoadingServices} = useServices(
+    selectedWorkshop?.id,
+  );
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', e => {
@@ -69,6 +75,18 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
         ))
       )}
     </ScrollView>
+
+    // <TicDriveInfinitePaginationList
+    // loading={loadingServices}
+    // count={count}
+    // setLoadingData={setLoadingServices}
+    // dataPerPage={servicesPerPage}
+    // data={services}
+    // currentPage={currentPage}
+    // setCurrentPage={setCurrentPage}
+    // >
+    //     <Text>services</Text>
+    // </TicDriveInfinitePaginationList>
   );
 };
 

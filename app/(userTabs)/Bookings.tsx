@@ -12,7 +12,7 @@ export default function UserBookings() {
   return (
     <LinearGradientViewLayout>
       <SafeAreaViewLayout disabled={!isAndroidPlatform()}>
-        <TicDriveNavbar isLoginAvailable={false} />
+        <TicDriveNavbar />
         {token ? (
           <View className="bg-red-300 mx-2.5">
             <Text>bookings</Text>

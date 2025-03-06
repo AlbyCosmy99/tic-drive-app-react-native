@@ -25,16 +25,17 @@ interface TicDriveNavbarProps {
   topContent?: React.ReactNode;
   rightContent?: React.ReactNode;
   onRightContent?: () => void;
+  containerTailwindCss?: string;
 }
 
 const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
-  isLoginAvailable = true,
+  isLoginAvailable = false,
   canGoBack = null,
   topContent,
   rightContent,
   onRightContent = () => {},
+  containerTailwindCss = '',
 }) => {
-  const colorScheme = useColorScheme();
   const token = useJwtToken();
   const dispatch = useAppDispatch();
   const {navigation} = useContext(NavigationContext);
@@ -45,7 +46,7 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
 
   return (
     <View
-      className={`flex-row items-center ${!isLoginAvailable ? 'justify-center' : 'justify-between'} px-2.5 h-14`}
+      className={`flex-row items-center ${!isLoginAvailable ? 'justify-center' : 'justify-between'} px-2.5 h-14 ${containerTailwindCss}`}
       style={backgroundStyle}
     >
       <View className="flex-1 justify-start flex-row">

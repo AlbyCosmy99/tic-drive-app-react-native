@@ -19,7 +19,7 @@ export default function WorkshopsListScreen() {
   return (
     <LinearGradientViewLayout>
       <SafeAreaViewLayout>
-        <TicDriveNavbar isLoginAvailable={false} />
+        <TicDriveNavbar />
         <View className="flex-row items-center">
           <TicDriveInput
             isLeftIcon={true}

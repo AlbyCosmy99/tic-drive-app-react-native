@@ -46,7 +46,6 @@ const PaymentCardsScreen = () => {
       <SafeAreaViewLayout>
         <View className="flex-1 mx-3.5">
           <TicDriveNavbar
-            isLoginAvailable={false}
             topContent={
               <Text className="font-semibold text-lg">Payment methods</Text>
             }

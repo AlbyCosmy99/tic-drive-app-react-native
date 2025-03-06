@@ -77,7 +77,6 @@ export default function ReviewBookingDetailsScreen() {
     >
       <SafeAreaViewLayout styles={[styles.container]}>
         <TicDriveNavbar
-          isLoginAvailable={false}
           topContent={
             <Text className="font-semibold text-lg">Review details</Text>
           }

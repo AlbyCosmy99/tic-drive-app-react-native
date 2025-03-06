@@ -21,7 +21,7 @@ const UserAccountDetailsScreen = () => {
     <LinearGradientViewLayout>
       <SafeAreaViewLayout tailwindCss="mx-3.5">
         <View className="flex-1">
-          <TicDriveNavbar isLoginAvailable={false} canGoBack={true} />
+          <TicDriveNavbar canGoBack={true} />
           <View className="flex flex-row justify-center items-center mb-4">
             <Text className="font-bold text-2xl text-center mb-2 mt-1">
               Menu

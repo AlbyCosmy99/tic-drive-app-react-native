@@ -43,7 +43,6 @@ const AddNewPaymentMethodScreen = () => {
     <LinearGradientViewLayout>
       <SafeAreaViewLayout>
         <TicDriveNavbar
-          isLoginAvailable={false}
           topContent={
             <Text className="font-semibold text-lg">Enter payment details</Text>
           }

@@ -17,7 +17,7 @@ export default function WorkshopBookings() {
   return (
     <LinearGradientViewLayout>
       <SafeAreaViewLayout tailwindCss="mx-3.5">
-        <TicDriveNavbar isLoginAvailable={false} canGoBack={false} />
+        <TicDriveNavbar canGoBack={false} />
         <Text className="font-semibold text-2xl mb-7 mt-2 text-3xl">
           Bookings
         </Text>

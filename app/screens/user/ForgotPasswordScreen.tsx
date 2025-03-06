@@ -10,7 +10,7 @@ const ForgotPasswordScreen = () => {
   const [email, setEmail] = useState('');
   return (
     <SafeAreaViewLayout>
-      <TicDriveNavbar isLoginAvailable={false} />
+      <TicDriveNavbar />
       <View className="mx-6 mt-10">
         <Text className="text-xl font-medium">Password dimenticata</Text>
         <Text className="text-base font-medium text-tic mr-4 my-2">

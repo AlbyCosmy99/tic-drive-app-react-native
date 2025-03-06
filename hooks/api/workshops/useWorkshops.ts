@@ -7,7 +7,6 @@ const useWorkshops = (
   skip: number = 0,
   take: number = 10,
   serviceId: number = 0,
-  cumulative: boolean = false,
   favorite: boolean = false,
 ) => {
   const [workshops, setWorkshops] = useState<Workshop[]>([]);

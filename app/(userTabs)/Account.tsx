@@ -35,7 +35,7 @@ export default function UserAccount() {
   return (
     <LinearGradientViewLayout>
       <SafeAreaViewLayout disabled={!isAndroidPlatform()}>
-        <TicDriveNavbar isLoginAvailable={false} />
+        <TicDriveNavbar />
         {token ? (
           <View className="mx-2.5">
             <View className="flex flex-row items-center mb-4 mt-1">

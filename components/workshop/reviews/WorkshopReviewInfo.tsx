@@ -16,12 +16,12 @@ const WorkshopReviewinfo: React.FC<WorkshopReviewinfoProps> = ({
   containerTailwindCss,
   textTailwindCss,
 }) => {
-  const maxReview = 5;
+  const maxGrade = 5;
   const {t} = useTranslation();
 
   const text = useMemo(() => {
     if (numberOfReviews && numberOfReviews > 0) {
-      return `${meanStars}/${maxReview} (${numberOfReviews} ${numberOfReviews !== 1 ? t('workshops.reviews.title') : t('workshops.reviews.review')})`;
+      return `${meanStars}/${maxGrade} (${numberOfReviews} ${numberOfReviews !== 1 ? t('workshops.reviews.title') : t('workshops.reviews.review')})`;
     }
     return `${numberOfReviews} ${numberOfReviews !== 1 ? t('workshops.reviews.title') : t('workshops.reviews.review')}`;
   }, [numberOfReviews, meanStars]);
