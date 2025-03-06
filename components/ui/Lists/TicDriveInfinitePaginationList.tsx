@@ -19,7 +19,7 @@ interface TicDriveInfinitePaginationListProps {
   count: number;
   dataPerPage: number;
   setLoadingData: (loading: boolean) => void;
-  data: Workshop[];
+  data: any[];
   children?: (item: any) => React.ReactNode;
   noDataContent?: React.ReactNode;
   currentPage: number;

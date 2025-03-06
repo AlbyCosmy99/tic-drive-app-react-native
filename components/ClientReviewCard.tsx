@@ -1,8 +1,8 @@
 import {StyleSheet, Text, View} from 'react-native';
 import {memo, useEffect} from 'react';
 import CircularUserAvatar from './ui/avatars/CircularUserAvatar';
-import Review from '@/types/workshops/Review';
 import FiveStarsGrade from './ui/grades/FiveStarsGrade';
+import Review from '@/types/workshops/Review';
 
 type ClientReviewCardProps = {
   review: Review;
