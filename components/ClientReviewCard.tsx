@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View} from 'react-native';
-import {memo} from 'react';
+import {memo, useEffect} from 'react';
 import CircularUserAvatar from './ui/avatars/CircularUserAvatar';
 import Review from '@/types/workshops/Review';
 import FiveStarsGrade from './ui/grades/FiveStarsGrade';
@@ -9,6 +9,9 @@ type ClientReviewCardProps = {
 };
 
 function ClientReviewCard({review}: ClientReviewCardProps) {
+  useEffect(() => {
+    console.log('review', review)
+  }, [])
   function timeAgo(propDate: Date) {
     const date = new Date(propDate);
     const now = new Date();
@@ -35,7 +38,7 @@ function ClientReviewCard({review}: ClientReviewCardProps) {
   }
 
   return (
-    <View style={[styles.container, styles.shadow]}>
+    <View className='my-1.5' style={[styles.container, styles.shadow]}>
       <View className="flex-row items-start justify-between">
         <View className="flex-row">
           <CircularUserAvatar uri={review.customerImageUrl} />
@@ -63,9 +66,6 @@ function ClientReviewCard({review}: ClientReviewCardProps) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginTop: 20,
-    paddingTop: 14,
     padding: 10,
     borderRadius: 10,
     backgroundColor: 'white',

@@ -1,14 +1,12 @@
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
+import ClientReviewCard from '@/components/ClientReviewCard';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
-import FiveStarsGrade from '@/components/ui/grades/FiveStarsGrade';
 import ReviewsProgressStars from '@/components/workshop/reviews/ReviewsProgressStars';
 import WorkshopReviewinfo from '@/components/workshop/reviews/WorkshopReviewInfo';
-import {Colors} from '@/constants/Colors';
 import useReviews from '@/hooks/api/workshops/useReviews';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import {useEffect, useMemo} from 'react';
 import {Text, View} from 'react-native';
-import * as Progress from 'react-native-progress';
 
 const WorkshopReviewsListScreen = () => {
   const selectedWorkshop = useAppSelector(
@@ -21,6 +19,10 @@ const WorkshopReviewsListScreen = () => {
     skip,
     take,
   );
+
+  useEffect(() => {
+    console.log(reviews)
+  }, [reviews])
 
   const fiveStarsReviews = useMemo(() => {
     return reviews.filter(review => review.stars === 5).length;
@@ -63,6 +65,15 @@ const WorkshopReviewsListScreen = () => {
         <ReviewsProgressStars reviews={twoStarsReviews} stars={2} />
         <ReviewsProgressStars reviews={oneStarReviews} stars={1} />
       </View>
+      {
+        !loadingReviews && (
+          <View className='mt-4'>
+            <ClientReviewCard review={reviews[0]} />
+            <ClientReviewCard review={reviews[0]} />
+            <ClientReviewCard review={reviews[0]} />
+          </View>
+        )
+      }
     </SafeAreaViewLayout>
   );
 };
