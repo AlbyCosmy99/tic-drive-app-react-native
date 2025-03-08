@@ -21,11 +21,13 @@ import CrossPlatformButtonLayout from './ui/buttons/CrossPlatformButtonLayout';
 interface WorkshopCardsProps {
   setAreNoWorkshop?: (areNoWorkshops: boolean) => void;
   favorite?: boolean;
+  order?: 'asc' | 'desc';
 }
 
 const WorkshopCards: React.FC<WorkshopCardsProps> = ({
   setAreNoWorkshop = () => {},
   favorite = false,
+  order = 'asc',
 }) => {
   const {workshopFilter, setWorkshopFilter} = useContext(GlobalContext);
   const navigation = useTicDriveNavigation();
@@ -41,8 +43,13 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
       workshopsPerPage,
       areServicesAvailable ? servicesChoosen[0]?.id : 0,
       favorite,
+      {order, filter: workshopFilter},
     );
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [workshopFilter, order]);
 
   useEffect(() => {
     setAreNoWorkshop(false);

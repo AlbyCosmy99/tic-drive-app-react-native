@@ -4,10 +4,8 @@ import {ActivityIndicator, Text, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import LoadingSpinner from '../loading/LoadingSpinner';
 import Workshop from '@/types/workshops/Workshop';
-import navigationPush from '@/services/navigation/push';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
-import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice';
 
 interface TicDriveInfinitePaginationListProps {
   loading: boolean;
