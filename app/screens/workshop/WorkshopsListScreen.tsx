@@ -133,7 +133,7 @@ export default function WorkshopsListScreen() {
                 renderDropdown(
                   orderOptions,
                   option => {
-                    setSelectedOrder(option);
+                    setSelectedOrder(option as OrderOption);
                   },
                   () => setOrderDropdownVisible(false),
                 )}
@@ -156,14 +156,14 @@ export default function WorkshopsListScreen() {
                   iconContainerTailwindCss="mr-1"
                 />
               </CrossPlatformButtonLayout>
-              {filterDropdownVisible &&
+              {/* {filterDropdownVisible &&
                 renderDropdown(
                   filterOptions,
                   option => {
-                    setSelectedFilter(option);
+                    setSelectedFilter(option as FilterOption);
                   },
                   () => setFilterDropdownVisible(false),
-                )}
+                )} */}
             </View>
 
             {/* Map Button */}
