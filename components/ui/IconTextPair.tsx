@@ -6,6 +6,7 @@ interface IconTextPairProps {
   icon?: React.ReactNode;
   containerTailwindCss?: string;
   textTailwindCss?: string;
+  iconContainerTailwindCss?: string;
   reverseIcon?: boolean;
 }
 
@@ -14,6 +15,7 @@ const IconTextPair: React.FC<IconTextPairProps> = ({
   icon,
   containerTailwindCss = '',
   textTailwindCss = '',
+  iconContainerTailwindCss = '',
   reverseIcon = false,
 }) => {
   return (
@@ -22,7 +24,9 @@ const IconTextPair: React.FC<IconTextPairProps> = ({
         className={`flex flex-row items-center gap-2 py-3 ${containerTailwindCss}`}
       >
         {!reverseIcon && (
-          <View className="flex items-center justify-center w-5 h-5">
+          <View
+            className={`flex items-center justify-center w-5 h-5 ${iconContainerTailwindCss}`}
+          >
             {icon}
           </View>
         )}
