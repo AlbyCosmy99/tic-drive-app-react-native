@@ -55,9 +55,6 @@ export default function WorkshopsListScreen() {
     label: 'Ascending',
     value: 'asc',
   });
-  const [selectedFilter, setSelectedFilter] = useState<FilterOption | null>(
-    null,
-  );
 
   const renderDropdown = (
     options: FilterOption[] | OrderOption[],
@@ -188,7 +185,6 @@ export default function WorkshopsListScreen() {
         <HorizontalLine color={Colors.light.lightGrey} />
         <View className="flex-1">
           <WorkshopCards
-            tailwindContainerCss="mb-0"
             favorite={favorite}
             order={selectedOrder.value}
           />

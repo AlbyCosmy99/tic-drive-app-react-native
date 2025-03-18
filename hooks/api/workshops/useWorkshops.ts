@@ -53,7 +53,7 @@ const useWorkshops = (
           );
         } else if (token) {
           res = await apiClient.get(
-            `customer/workshops/favorite?skip=${skip}&take=${take}`,
+            `customer/workshops/favorite?skip=${skip}&take=${take}&filter=${debouncedFilter}&order=${params?.order ?? 'asc'}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
