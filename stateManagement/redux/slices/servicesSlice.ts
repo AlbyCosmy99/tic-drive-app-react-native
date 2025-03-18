@@ -6,6 +6,7 @@ const initialState: ServicesState = {
   servicesChoosenByUsers: [],
   servicesChoosenByWorkshops: [],
   areServicesOn: false,
+  lastServiceSelectedFromFilter: undefined,
 };
 
 const servicesSlice = createSlice({
@@ -87,6 +88,12 @@ const servicesSlice = createSlice({
     setAreServicesOn(state: ServicesState, action: PayloadAction<boolean>) {
       state.areServicesOn = action.payload;
     },
+    setLastServiceSelectedFromFilter(
+      state: ServicesState,
+      action: PayloadAction<Service | undefined>,
+    ) {
+      state.lastServiceSelectedFromFilter = action.payload;
+    },
     reset(state: ServicesState) {
       state.servicesChoosenByUsers = [];
       state.servicesChoosenByWorkshops = [];
@@ -102,6 +109,7 @@ export const {
   removeServiceChoosenByUsers,
   removeServiceChoosenByWorkshops,
   setAreServicesOn,
+  setLastServiceSelectedFromFilter,
   reset,
 } = servicesSlice.actions;
 

@@ -184,10 +184,7 @@ export default function WorkshopsListScreen() {
 
         <HorizontalLine color={Colors.light.lightGrey} />
         <View className="flex-1">
-          <WorkshopCards
-            favorite={favorite}
-            order={selectedOrder.value}
-          />
+          <WorkshopCards favorite={favorite} order={selectedOrder.value} />
         </View>
       </SafeAreaViewLayout>
     </LinearGradientViewLayout>

@@ -1,5 +1,5 @@
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 import {LinearGradient} from 'expo-linear-gradient';
 import ServicesCards from '@/components/ServicesCards';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
@@ -8,14 +8,29 @@ import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomIns
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import {useFocusEffect, useRoute} from '@react-navigation/native';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
-import {setAreServicesOn} from '@/stateManagement/redux/slices/servicesSlice';
+import {
+  reset,
+  setAreServicesOn,
+  setLastServiceSelectedFromFilter,
+  setServicesChoosenByUsers,
+} from '@/stateManagement/redux/slices/servicesSlice';
 import {useTranslation} from 'react-i18next';
+import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
+import {useCallback, useState} from 'react';
+import debounce from 'lodash.debounce';
+import Service from '@/types/Service';
+import axiosClient from '@/services/http/axiosClient';
+import FilterSearchModal from '@/components/modal/FilterSearchModal';
+import navigationPush from '@/services/navigation/push';
+import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 
 export default function ChooseServicesScreen() {
   const route = useRoute();
-  const user = useAppSelector(state => state.auth.user);
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
+  const [filter, setFilter] = useState('');
+  const [filteredServices, setFilteredServices] = useState<Service[]>([]);
+  const navigation = useTicDriveNavigation();
 
   //@ts-ignore
   const {category, buttonContainerTailwindCss, withSafeAreaView} =
@@ -29,12 +44,32 @@ export default function ChooseServicesScreen() {
     return !(category === 'workshop');
   };
 
+  const lastServiceSelectedFromFilter = useAppSelector(
+    state => state.services.lastServiceSelectedFromFilter,
+  );
+
+  const onSearch = async (search: string) => {
+    setFilter(search);
+
+    if (!search.trim()) {
+      setFilteredServices([]);
+      return;
+    }
+
+    const filteredServices = await axiosClient.get(
+      `services?take=5&filter=${search}`,
+    );
+    setFilteredServices(filteredServices.data);
+  };
+
   const isButtonDisabled =
     category === 'workshop'
       ? useAppSelector(state => state.services.servicesChoosenByWorkshops)
           .length === 0
       : useAppSelector(state => state.services.servicesChoosenByUsers)
           .length === 0;
+
+  const debouncedOnHomeSearch = useCallback(debounce(onSearch, 500), []);
 
   useFocusEffect(() => {
     dispatch(setAreServicesOn(false));
@@ -54,42 +89,58 @@ export default function ChooseServicesScreen() {
       >
         <TicDriveNavbar />
         <View className="flex-1 justify-between">
-          <Text
-            style={{
-              color: Colors.light.text,
-            }}
-            className="font-medium text-2xl mx-3.5 mb-2"
-          >
-            {user ? `${user?.name ? user.name : 'Andrei'}, w` : 'W'}hat service
-            {isUserLookingForServices() ? '' : 's'}{' '}
-            {isUserLookingForServices()
-              ? 'are you looking for'
-              : 'do you want to offer'}
-            ?
-          </Text>
-          <ServicesCards
-            isSingleChoice={isUserLookingForServices() ? true : false}
-            type={isUserLookingForServices() ? 'user' : 'workshop'}
-          />
+          <View className="flex-row items-center relative">
+            <TicDriveInput
+              isLeftIcon={true}
+              isRightIcon={true}
+              placeholder={t('service.searchService')}
+              containerViewStyleTailwind="flex-1 h-[60px]"
+              inputContainerStyle={{marginTop: 4, height: 48}}
+              onChange={text => debouncedOnHomeSearch(text)}
+              onRightIcon={() => dispatch(reset())}
+            />
+            {filter && (
+              <FilterSearchModal
+                elements={filteredServices}
+                idToCompareForClock={lastServiceSelectedFromFilter?.id}
+                emptyElementsMessage="No services with this filter."
+                onElementPress={(elem: any) => {
+                  navigationPush(navigation, 'RegisterVehicleScreen');
+                  dispatch(setServicesChoosenByUsers(elem));
+                  dispatch(setLastServiceSelectedFromFilter(elem));
+                }}
+              />
+            )}
+          </View>
+          {!filter && (
+            <ServicesCards
+              isSingleChoice={isUserLookingForServices() ? true : false}
+              type={isUserLookingForServices() ? 'user' : 'workshop'}
+            />
+          )}
         </View>
-        <View className={`mb-2 ${buttonContainerTailwindCss}`}>
-          <TicDriveButton
-            text={
-              isUserLookingForServices()
-                ? t('service.bookAService')
-                : t('continue')
-            }
-            routeName={
-              isUserLookingForServices()
-                ? 'RegisterVehicleScreen'
-                : 'UserAuthenticationScreen'
-            }
-            routeParams={
-              isUserLookingForServices() ? {} : {register: true, isUser: false}
-            }
-            disabled={isButtonDisabled}
-          />
-        </View>
+        {!filter && (
+          <View className={`mb-2 ${buttonContainerTailwindCss}`}>
+            <TicDriveButton
+              text={
+                isUserLookingForServices()
+                  ? t('service.bookAService')
+                  : t('continue')
+              }
+              routeName={
+                isUserLookingForServices()
+                  ? 'RegisterVehicleScreen'
+                  : 'UserAuthenticationScreen'
+              }
+              routeParams={
+                isUserLookingForServices()
+                  ? {}
+                  : {register: true, isUser: false}
+              }
+              disabled={isButtonDisabled}
+            />
+          </View>
+        )}
       </SafeAreaViewLayout>
     </View>
   );

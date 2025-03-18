@@ -33,9 +33,8 @@ import NissanIcon from '@/assets/svg/vehicles/makes/nissan.svg';
 import PeugeotIcon from '@/assets/svg/vehicles/makes/peugeot.svg';
 import {useTranslation} from 'react-i18next';
 import axiosClient from '@/services/http/axiosClient';
-import Service from '@/types/Service';
 import Workshop from '@/types/workshops/Workshop';
-import ClockIcon from '@/assets/svg/time/clock.svg';
+import FilterSearchModal from '@/components/modal/FilterSearchModal';
 
 export default function UserHome() {
   const [filter, setFilter] = useState('');
@@ -43,7 +42,6 @@ export default function UserHome() {
   const [refreshing, setRefreshing] = useState(false);
   const servicesRef = useRef();
   const {t} = useTranslation();
-  const [filteredServices, setFilteredServices] = useState<Service[]>([]);
   const [filteredWorkshops, setFilteredWorkshops] = useState<Workshop[]>([]);
 
   const {workshops, loadingWorkshops, setLoadingWorkshops} = useWorkshops(0, 2);
@@ -79,19 +77,13 @@ export default function UserHome() {
     dispatch(setSelectedWorkshop(null));
   });
 
-  const onHomeSearch = async (search: string) => {
+  const onSearch = async (search: string) => {
     setFilter(search);
 
     if (!search.trim()) {
-      setFilteredServices([]);
       setFilteredWorkshops([]);
       return;
     }
-
-    const filteredServices = await axiosClient.get(
-      `services?take=3&filter=${search}`,
-    );
-    setFilteredServices(filteredServices.data);
 
     const filteredWorkshops = await axiosClient.get(
       `workshops?take=5&filter=${search}`,
@@ -99,7 +91,7 @@ export default function UserHome() {
     setFilteredWorkshops(filteredWorkshops.data.workshops);
   };
 
-  const debouncedOnHomeSearch = useCallback(debounce(onHomeSearch, 500), []);
+  const debouncedOnHomeSearch = useCallback(debounce(onSearch, 500), []);
 
   const lastWorkshopSelectedFromFilter = useAppSelector(
     state => state.workshops.lastWorkshopSelectedFromFilter,
@@ -124,73 +116,22 @@ export default function UserHome() {
           <TicDriveInput
             isLeftIcon={true}
             isRightIcon={true}
-            placeholder={t('home.searchWorkshop')}
+            placeholder={t('workshops.searchWorkshop')}
             containerViewStyleTailwind="flex-1 h-[60px]"
             inputContainerStyle={{marginTop: 4, height: 48}}
             onChange={text => debouncedOnHomeSearch(text)}
           />
           {filter && (
-            <View className="absolute top-[60px] bg-white w-full z-10 p-2">
-              <View className="p-2 rounded-xl bg-white shadow-lg mx-1.5">
-                {filteredWorkshops.length > 0 ? (
-                  <View className="mb-1">
-                    {filteredWorkshops.map(workshop => (
-                      <CrossPlatformButtonLayout
-                        key={workshop.id}
-                        removeAllStyles
-                        onPress={() => {
-                          navigationPush(navigation, 'WorkshopDetails');
-                          dispatch(setSelectedWorkshop(workshop));
-                          dispatch(setLastWorkshopSelectedFromFilter(workshop));
-                        }}
-                      >
-                        <View className="flex flex-row justify-between items-center mx-2.5">
-                          <Text className="mt-1 font-normal text-xl p-1 px-2.5 text-tic">
-                            {workshop.name}
-                          </Text>
-                          {lastWorkshopSelectedFromFilter?.id ===
-                            workshop.id && <ClockIcon />}
-                        </View>
-                      </CrossPlatformButtonLayout>
-                    ))}
-                  </View>
-                ) : (
-                  <Text className="text-center mt-1 mb-2 font-normal text-xl">
-                    No workshops with this filter.
-                  </Text>
-                )}
-                {/* <HorizontalLine />
-                <Text className="text-center text-base font-semibold">
-                  Services
-                </Text>
-                <View className="mb-1">
-                  {filteredServices.length > 0 ? (
-                    <View>
-                      {filteredServices.map(service => (
-                        <CrossPlatformButtonLayout
-                          removeAllStyles
-                          onPress={() => {
-                            navigationPush(navigation, 'RegisterVehicleScreen');
-                            dispatch(setServicesChoosenByUsers(service));
-                          }}
-                        >
-                          <Text
-                            className="text-center mt-1 font-semibold p-1"
-                            key={service.id}
-                          >
-                            {service.title}
-                          </Text>
-                        </CrossPlatformButtonLayout>
-                      ))}
-                    </View>
-                  ) : (
-                    <Text className="text-center mt-1">
-                      No services with this filter.
-                    </Text>
-                  )}
-                </View> */}
-              </View>
-            </View>
+            <FilterSearchModal
+              elements={filteredWorkshops}
+              idToCompareForClock={lastWorkshopSelectedFromFilter?.id}
+              emptyElementsMessage="No workshops with this filter."
+              onElementPress={(elem: any) => {
+                navigationPush(navigation, 'WorkshopDetails');
+                dispatch(setSelectedWorkshop(elem));
+                dispatch(setLastWorkshopSelectedFromFilter(elem));
+              }}
+            />
           )}
         </View>
 

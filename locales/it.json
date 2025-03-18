@@ -10,7 +10,8 @@
     "location": "Posizione",
     "service": {
         "bookAService": "Prenota un servizio",
-        "chooseService": "Scegli servizio"
+        "chooseService": "Scegli servizio",
+        "searchService": "Cerca servizio"
     },
     "continue": "Continua",
     "date": {
@@ -32,7 +33,6 @@
             "third": "Il tuo bollo scade il 01/01/2025 !"
         },
         "findRightWorkshop": "Trova l’officina che fa per te",
-        "searchWorkshop": "Cerca officina",
         "discoverServicesAndBook": "Scopri i servizi e prenota"
     },
     "workshops": {
