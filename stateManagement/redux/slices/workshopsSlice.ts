@@ -4,6 +4,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 const initialState: WorkshopsState = {
   selectedWorkshop: null,
+  lastWorkshopSelectedFromFilter: undefined,
 };
 
 const workshopSlice = createSlice({
@@ -16,9 +17,16 @@ const workshopSlice = createSlice({
     ) {
       state.selectedWorkshop = action.payload;
     },
+    setLastWorkshopSelectedFromFilter(
+      state: WorkshopsState,
+      action: PayloadAction<Workshop | undefined>,
+    ) {
+      state.lastWorkshopSelectedFromFilter = action.payload;
+    },
   },
 });
 
-export const {setSelectedWorkshop} = workshopSlice.actions;
+export const {setSelectedWorkshop, setLastWorkshopSelectedFromFilter} =
+  workshopSlice.actions;
 
 export default workshopSlice.reducer;

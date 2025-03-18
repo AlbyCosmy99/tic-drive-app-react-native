@@ -32,7 +32,7 @@
             "third": "Il tuo bollo scade il 01/01/2025 !"
         },
         "findRightWorkshop": "Trova l’officina che fa per te",
-        "searchInput": "Cerca officina o servizio",
+        "searchWorkshop": "Cerca officina",
         "discoverServicesAndBook": "Scopri i servizi e prenota"
     },
     "workshops": {

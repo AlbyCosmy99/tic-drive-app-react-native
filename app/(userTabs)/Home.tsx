@@ -7,11 +7,10 @@ import navigationPush from '@/services/navigation/push';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 import WorkshopCardMini from '@/components/workshop/WorkshopCardMini';
-import {useAppDispatch} from '@/stateManagement/redux/hooks';
+import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import {
   reset,
   setAreServicesOn,
-  setServicesChoosenByUsers,
 } from '@/stateManagement/redux/slices/servicesSlice';
 import {useFocusEffect} from '@react-navigation/native';
 import {RefreshControl, ScrollView} from 'react-native-gesture-handler';
@@ -20,7 +19,10 @@ import useWorkshops from '@/hooks/api/workshops/useWorkshops';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import {Colors} from '@/constants/Colors';
 import HorizontalLine from '@/components/ui/HorizontalLine';
-import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice';
+import {
+  setLastWorkshopSelectedFromFilter,
+  setSelectedWorkshop,
+} from '@/stateManagement/redux/slices/workshopsSlice';
 import SeeAllServicesCards from '@/components/services/SeeAllServicesCards';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
@@ -33,6 +35,7 @@ import {useTranslation} from 'react-i18next';
 import axiosClient from '@/services/http/axiosClient';
 import Service from '@/types/Service';
 import Workshop from '@/types/workshops/Workshop';
+import ClockIcon from '@/assets/svg/time/clock.svg';
 
 export default function UserHome() {
   const [filter, setFilter] = useState('');
@@ -91,12 +94,16 @@ export default function UserHome() {
     setFilteredServices(filteredServices.data);
 
     const filteredWorkshops = await axiosClient.get(
-      `workshops?take=3&filter=${search}`,
+      `workshops?take=5&filter=${search}`,
     );
     setFilteredWorkshops(filteredWorkshops.data.workshops);
   };
 
   const debouncedOnHomeSearch = useCallback(debounce(onHomeSearch, 500), []);
+
+  const lastWorkshopSelectedFromFilter = useAppSelector(
+    state => state.workshops.lastWorkshopSelectedFromFilter,
+  );
 
   return (
     <LinearGradientViewLayout>
@@ -117,17 +124,14 @@ export default function UserHome() {
           <TicDriveInput
             isLeftIcon={true}
             isRightIcon={true}
-            placeholder={t('home.searchInput')}
+            placeholder={t('home.searchWorkshop')}
             containerViewStyleTailwind="flex-1 h-[60px]"
             inputContainerStyle={{marginTop: 4, height: 48}}
             onChange={text => debouncedOnHomeSearch(text)}
           />
           {filter && (
             <View className="absolute top-[60px] bg-white w-full z-10 p-2">
-              <View className="border-black border-2 p-2">
-                <Text className="text-center text-base font-semibold">
-                  Workshops
-                </Text>
+              <View className="p-2 rounded-xl bg-white shadow-lg mx-1.5">
                 {filteredWorkshops.length > 0 ? (
                   <View className="mb-1">
                     {filteredWorkshops.map(workshop => (
@@ -137,20 +141,25 @@ export default function UserHome() {
                         onPress={() => {
                           navigationPush(navigation, 'WorkshopDetails');
                           dispatch(setSelectedWorkshop(workshop));
+                          dispatch(setLastWorkshopSelectedFromFilter(workshop));
                         }}
                       >
-                        <Text className="text-center mt-1 font-semibold p-1">
-                          {workshop.name}
-                        </Text>
+                        <View className="flex flex-row justify-between items-center mx-2.5">
+                          <Text className="mt-1 font-normal text-xl p-1 px-2.5 text-tic">
+                            {workshop.name}
+                          </Text>
+                          {lastWorkshopSelectedFromFilter?.id ===
+                            workshop.id && <ClockIcon />}
+                        </View>
                       </CrossPlatformButtonLayout>
                     ))}
                   </View>
                 ) : (
-                  <Text className="text-center mt-1 mb-2">
+                  <Text className="text-center mt-1 mb-2 font-normal text-xl">
                     No workshops with this filter.
                   </Text>
                 )}
-                <HorizontalLine />
+                {/* <HorizontalLine />
                 <Text className="text-center text-base font-semibold">
                   Services
                 </Text>
@@ -179,99 +188,104 @@ export default function UserHome() {
                       No services with this filter.
                     </Text>
                   )}
-                </View>
+                </View> */}
               </View>
             </View>
           )}
         </View>
 
-        <ScrollView
-          className="mb-2"
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-              colors={[Colors.light.ticText]}
-              tintColor={Colors.light.ticText}
-            />
-          }
-        >
-          <View>
-            <Text className="font-semibold text-xl m-2.5 mt-1">
-              {t('home.findRightWorkshop')}
-            </Text>
+        {!filter && (
+          <ScrollView
+            className="mb-2"
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                colors={[Colors.light.ticText]}
+                tintColor={Colors.light.ticText}
+              />
+            }
+          >
             <View>
-              <View className="flex-row mx-2.5 justify-start items-start">
-                {loadingWorkshops ? (
-                  <LoadingSpinner />
-                ) : (
-                  <View className="flex-column w-full">
-                    <View className="flex-row  justify-start items-start">
-                      {workshops.map(workshop => (
-                        <WorkshopCardMini
-                          key={workshop.id}
-                          workshop={workshop}
-                        />
-                      ))}
+              <Text className="font-semibold text-xl m-2.5 mt-1">
+                {t('home.findRightWorkshop')}
+              </Text>
+              <View>
+                <View className="flex-row mx-2.5 justify-start items-start">
+                  {loadingWorkshops ? (
+                    <LoadingSpinner />
+                  ) : (
+                    <View className="flex-column w-full">
+                      <View className="flex-row  justify-start items-start">
+                        {workshops.map(workshop => (
+                          <WorkshopCardMini
+                            key={workshop.id}
+                            workshop={workshop}
+                          />
+                        ))}
+                      </View>
+                      <CrossPlatformButtonLayout
+                        onPress={handleOnSeeAllWorkshops}
+                        containerTailwindCss="border-2 border-grey-light items-center justify-center p-1 my-2.5 rounded-xl"
+                      >
+                        <Text className="text-base font-medium">
+                          {t('seeAll.workshops')}
+                        </Text>
+                      </CrossPlatformButtonLayout>
                     </View>
-                    <CrossPlatformButtonLayout
-                      onPress={handleOnSeeAllWorkshops}
-                      containerTailwindCss="border-2 border-grey-light items-center justify-center p-1 my-2.5 rounded-xl"
-                    >
-                      <Text className="text-base font-medium">
-                        {t('seeAll.workshops')}
-                      </Text>
-                    </CrossPlatformButtonLayout>
-                  </View>
-                )}
+                  )}
+                </View>
               </View>
             </View>
-          </View>
-          {!loadingWorkshops && <HorizontalLine />}
-          <View className="mt-1 mb-3">
-            <Text className="font-semibold text-xl m-2.5 mt-0">
-              {t('home.discoverServicesAndBook')}
-            </Text>
-            <SeeAllServicesCards ref={servicesRef} topHorizontalLine={false} />
-          </View>
-          <View className="mx-3 mb-1 p-1 pb-2 rounded-xl">
-            <Text className="font-semibold text-xl m-2.5 mt-1">
-              {t('reminder')}
-            </Text>
-
-            <View
-              style={{backgroundColor: '#FFFBE5'}}
-              className="py-2 rounded-xl"
-            >
-              <TicDriveReminderCard
-                leftButtonText={t('bookNow')}
-                rightButtonText={t('RemindMeLater')}
-                logo={<NissanIcon />}
-                text={t('home.notifications.first')}
-              />
-              <TicDriveReminderCard
-                leftButtonText={t('discoverNow')}
-                rightButtonText={t('RemindMeLater')}
-                logo={<PeugeotIcon />}
-                text={t('home.notifications.second')}
-              />
-              <TicDriveReminderCard
-                leftButtonText={t('payNow')}
-                rightButtonText={t('RemindMeLater')}
-                logo={<NissanIcon />}
-                text={t('home.notifications.third')}
+            {!loadingWorkshops && <HorizontalLine />}
+            <View className="mt-1 mb-3">
+              <Text className="font-semibold text-xl m-2.5 mt-0">
+                {t('home.discoverServicesAndBook')}
+              </Text>
+              <SeeAllServicesCards
+                ref={servicesRef}
+                topHorizontalLine={false}
               />
             </View>
-            <CrossPlatformButtonLayout
-              containerTailwindCss="border-2 border-grey-light items-center justify-center p-1 m-2.5 rounded-xl bg-white"
-              onPress={() => handleOnRegisterVehicle()}
-            >
-              <Text className="text-base font-medium text-drive">
-                {t('vehicles.handleVehicles')}
+            <View className="mx-3 mb-1 p-1 pb-2 rounded-xl">
+              <Text className="font-semibold text-xl m-2.5 mt-1">
+                {t('reminder')}
               </Text>
-            </CrossPlatformButtonLayout>
-          </View>
-        </ScrollView>
+
+              <View
+                style={{backgroundColor: '#FFFBE5'}}
+                className="py-2 rounded-xl"
+              >
+                <TicDriveReminderCard
+                  leftButtonText={t('bookNow')}
+                  rightButtonText={t('RemindMeLater')}
+                  logo={<NissanIcon />}
+                  text={t('home.notifications.first')}
+                />
+                <TicDriveReminderCard
+                  leftButtonText={t('discoverNow')}
+                  rightButtonText={t('RemindMeLater')}
+                  logo={<PeugeotIcon />}
+                  text={t('home.notifications.second')}
+                />
+                <TicDriveReminderCard
+                  leftButtonText={t('payNow')}
+                  rightButtonText={t('RemindMeLater')}
+                  logo={<NissanIcon />}
+                  text={t('home.notifications.third')}
+                />
+              </View>
+              <CrossPlatformButtonLayout
+                containerTailwindCss="border-2 border-grey-light items-center justify-center p-1 m-2.5 rounded-xl bg-white"
+                onPress={() => handleOnRegisterVehicle()}
+              >
+                <Text className="text-base font-medium text-drive">
+                  {t('vehicles.handleVehicles')}
+                </Text>
+              </CrossPlatformButtonLayout>
+            </View>
+          </ScrollView>
+        )}
       </SafeAreaViewLayout>
     </LinearGradientViewLayout>
   );
