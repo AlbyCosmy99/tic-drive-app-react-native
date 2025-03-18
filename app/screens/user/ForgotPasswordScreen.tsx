@@ -12,8 +12,8 @@ const ForgotPasswordScreen = () => {
     <SafeAreaViewLayout>
       <TicDriveNavbar />
       <View className="mx-6 mt-10">
-        <Text className="text-xl font-medium">Password dimenticata</Text>
-        <Text className="text-base font-medium text-tic mr-4 my-2">
+        <Text className="text-xl font-medium">Password dimenticata?</Text>
+        <Text className="text-base font-medium text-tic mr-4 mb-4">
           Inserisci la tua email per reimpostare la password
         </Text>
         <Text className="font-base font-semibold my-0.5">Your email</Text>
