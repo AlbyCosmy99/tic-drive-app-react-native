@@ -221,18 +221,24 @@ function RegisterVehicleScreen() {
     dispatch(setAreServicesOn(false));
   });
 
+  //todo: to remove it when plate option on car registration is added back
+  useEffect(() => {
+    setSegmentedControlSelection(options[0]) //make and model
+  })
+
   return (
     <SafeAreaViewLayout styles={[backgroundStyle]}>
       <ToPreviousPage containerClassName="m-2 mb-7" />
       <View className="flex-1 justify-between">
         <BoldTitle1 title="Register your vehicle for service bookings" />
+        {/* todo: to add it when plate option on car registration is added back
         <View className="m-3.5">
           <SegmentedControl
             options={options}
             segmentedControlSelection={segmentedControlSelection}
             setSegmentedControlSelection={setSegmentedControlSelection}
           />
-        </View>
+        </View> */}
         <View
           style={styles.bookingDetailsContainer}
           className="flex-1 m-3.5 border-2 rounded-xl"
