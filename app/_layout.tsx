@@ -33,11 +33,13 @@ import WorkshopReviewsListScreen from './screens/workshop/reviews/WorkshopReview
 import ChatScreen from './screens/chat/ChatScreen';
 import '@/i18n';
 import ForgotPasswordScreen from './screens/user/ForgotPasswordScreen';
+import useDeepLinking from '@/hooks/useDeepLinking';
 SplashScreen.preventAutoHideAsync();
 
 const Stack = createNativeStackNavigator();
 
 export default function RootLayout() {
+  useDeepLinking('ForgotPasswordScreen')
   //AuthContext data
   const [loginRouteName, setLoginRouteName] = useState('');
   const [loginRouteParams, setLoginRouteParams] = useState<any>({});
@@ -54,6 +56,8 @@ export default function RootLayout() {
   if (!loaded) {
     return null;
   }
+
+
 
   return (
     <Provider store={store}>

@@ -2,26 +2,22 @@
   "expo": {
     "name": "TicDrive",
     "slug": "tic-drive",
-    "platforms": [
-      "ios",
-      "android"
-    ],
+    "platforms": ["ios", "android"],
     "sdkVersion": "52.0.0",
     "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/images/TicDriveLogo.jpeg",
-    "scheme": "myapp",
+    "scheme": "ticdrive",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/TicDriveLogo.jpeg",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "jsEngine": "hermes",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.ticdrive.ios",
-      "jsEngine": "hermes",
+      "associatedDomains": ["applinks:ticdrive.com"],
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSLocationWhenInUseUsageDescription": "This app requires access to your location to show nearby workshops.",
@@ -36,8 +32,14 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.albycosmy99.ticdrive",
-      "jsEngine": "hermes",
+      "package": "com.android.ticdrive",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": {"scheme": "ticdrive", "host": "*"},
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ],
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyA4RElAzKK4A46CGKArVpOW5fXoTRLKAso"
