@@ -35,6 +35,7 @@ import {useTranslation} from 'react-i18next';
 import axiosClient from '@/services/http/axiosClient';
 import Workshop from '@/types/workshops/Workshop';
 import FilterSearchModal from '@/components/modal/FilterSearchModal';
+import ErrorModal from '@/components/ui/modals/ErrorModal';
 
 export default function UserHome() {
   const [filter, setFilter] = useState('');
@@ -227,6 +228,7 @@ export default function UserHome() {
             </View>
           </ScrollView>
         )}
+        <ErrorModal />
       </SafeAreaViewLayout>
     </LinearGradientViewLayout>
   );

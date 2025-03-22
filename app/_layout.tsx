@@ -33,6 +33,8 @@ import WorkshopReviewsListScreen from './screens/workshop/reviews/WorkshopReview
 import ChatScreen from './screens/chat/ChatScreen';
 import '@/i18n';
 import ForgotPasswordScreen from './screens/user/ForgotPasswordScreen';
+import ResetPasswordWithCodeScreen from './screens/user/ResetPasswordWithCodeScreen';
+import ChangePasswordScreen from './screens/user/ChangePasswordScreen';
 SplashScreen.preventAutoHideAsync();
 
 const Stack = createNativeStackNavigator();
@@ -224,6 +226,24 @@ export default function RootLayout() {
                         component={ForgotPasswordScreen}
                         options={({route}) => ({
                           title: 'ForgotPasswordScreen',
+                          headerShown: false,
+                          animation: getAnimation(route),
+                        })}
+                      />
+                      <Stack.Screen
+                        name="ResetPasswordWithCodeScreen"
+                        component={ResetPasswordWithCodeScreen}
+                        options={({route}) => ({
+                          title: 'ResetPasswordWithCodeScreen',
+                          headerShown: false,
+                          animation: getAnimation(route),
+                        })}
+                      />
+                      <Stack.Screen
+                        name="ChangePasswordScreen"
+                        component={ChangePasswordScreen}
+                        options={({route}) => ({
+                          title: 'ChangePasswordScreen',
                           headerShown: false,
                           animation: getAnimation(route),
                         })}

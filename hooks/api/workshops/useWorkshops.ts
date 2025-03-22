@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import apiClient from '@/services/http/axiosClient';
 import Workshop from '@/types/workshops/Workshop';
 import useJwtToken from '@/hooks/auth/useJwtToken';
+import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
 
 interface Params {
   order: 'asc' | 'desc';
@@ -19,6 +20,7 @@ const useWorkshops = (
   const [loadingWorkshops, setLoadingWorkshops] = useState(true);
   const [count, setCount] = useState(0);
   const token = useJwtToken();
+  const {setErrorMessage} = useGlobalErrors();
 
   const [debouncedFilter, setDebouncedFilter] = useState<string>(
     params?.filter ?? '',
@@ -64,8 +66,7 @@ const useWorkshops = (
         setWorkshops(res?.data.workshops);
         setCount(res?.data.count);
       } catch (err) {
-        alert('Al momento il servizio non è disponibile. Riprova più tardi.');
-        console.error(err);
+        setErrorMessage(err.message);
       } finally {
         setLoadingWorkshops(false);
       }

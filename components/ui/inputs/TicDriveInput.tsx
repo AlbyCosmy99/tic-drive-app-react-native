@@ -2,6 +2,7 @@ import {
   ReturnKeyTypeOptions,
   StyleProp,
   StyleSheet,
+  TextInputIOSProps,
   TextInputProps,
   View,
   ViewStyle,
@@ -12,7 +13,7 @@ import React, {memo, useState} from 'react';
 import CrossPlatformButtonLayout from '../buttons/CrossPlatformButtonLayout';
 
 interface TicDriveInputProps {
-  placeholder: string;
+  placeholder?: string;
   isLeftIcon?: boolean;
   isRightIcon?: boolean;
   onRightIcon?: () => void;
@@ -27,6 +28,8 @@ interface TicDriveInputProps {
   isPassword?: boolean;
   keyboardType?: TextInputProps['keyboardType'];
   rightIcon?: React.ReactNode;
+  textContentType?: TextInputIOSProps['textContentType'];
+  maxLength?: number;
 }
 
 const TicDriveInput: React.FC<TicDriveInputProps> = ({
@@ -45,6 +48,8 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
   onChange,
   keyboardType = 'default',
   rightIcon,
+  textContentType = 'none',
+  maxLength,
 }) => {
   const [value, setValue] = useState<string>(customValue);
 
@@ -61,6 +66,8 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
     <View className={containerViewStyleTailwind && containerViewStyleTailwind}>
       <Input
         placeholder={placeholder}
+        textContentType={textContentType}
+        maxLength={maxLength}
         leftIcon={
           isLeftIcon ? (
             <Icon name="search" size={24} color={Colors.light.ticText} />

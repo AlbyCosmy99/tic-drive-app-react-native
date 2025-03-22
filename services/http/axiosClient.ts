@@ -26,8 +26,8 @@ axiosClient.interceptors.response.use(
   response => response,
   error => {
     const errorMessage =
-      error.response && error.response.data && error.response.data.message
-        ? error.response.data.message
+      error.response && error.response.data
+        ? error.response.data
         : 'Errore generico';
     console.error('Backend error:', errorMessage);
     return Promise.reject({

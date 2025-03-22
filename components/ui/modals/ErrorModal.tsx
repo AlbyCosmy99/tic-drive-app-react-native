@@ -3,7 +3,16 @@ import * as React from 'react';
 import {Modal, View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 
 const ErrorModal = () => {
-  const {errorMessage, setErrorMessage} = React.useContext(GlobalContext);
+  const globalContext = React.useContext(GlobalContext);
+
+  if (!globalContext) {
+    console.error(
+      'Error: GlobalContext is not available. Make sure the provider is wrapping the app.',
+    );
+    return null;
+  }
+
+  const {errorMessage, setErrorMessage} = globalContext;
 
   const onDismiss = () => {
     setErrorMessage('');
@@ -12,7 +21,7 @@ const ErrorModal = () => {
   return (
     <Modal
       animationType="fade"
-      transparent={true}
+      transparent
       visible={!!errorMessage}
       onRequestClose={onDismiss}
     >
@@ -31,7 +40,7 @@ const ErrorModal = () => {
 
 const styles = StyleSheet.create({
   overlay: {
-    flex: 1,
+    ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(0,0,0,0.5)',
     justifyContent: 'center',
     alignItems: 'center',
@@ -42,6 +51,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 10,
     alignItems: 'center',
+    elevation: 10, // Adds shadow on Android
+    shadowColor: '#000', // Adds shadow on iOS
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
   modalTitle: {
     fontSize: 20,
@@ -54,7 +68,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   modalButton: {
-    backgroundColor: 'orange',
+    backgroundColor: 'red',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
