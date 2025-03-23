@@ -51,7 +51,7 @@ const ChangePasswordScreen = () => {
         confirmPassword,
       });
       setLoading(false);
-      navigationReset(navigation, 0, 'userTabs', {}, 'Home');
+      navigationReset(navigation, 0, 'SuccessfullyPasswordChangedScreen');
       await login({
         email,
         category: 'user',

@@ -35,6 +35,7 @@ import '@/i18n';
 import ForgotPasswordScreen from './screens/user/ForgotPasswordScreen';
 import ResetPasswordWithCodeScreen from './screens/user/ResetPasswordWithCodeScreen';
 import ChangePasswordScreen from './screens/user/ChangePasswordScreen';
+import SuccessfullyPasswordChangedScreen from './screens/user/SuccessfullyPasswordChangedScreen';
 SplashScreen.preventAutoHideAsync();
 
 const Stack = createNativeStackNavigator();
@@ -244,6 +245,15 @@ export default function RootLayout() {
                         component={ChangePasswordScreen}
                         options={({route}) => ({
                           title: 'ChangePasswordScreen',
+                          headerShown: false,
+                          animation: getAnimation(route),
+                        })}
+                      />
+                      <Stack.Screen
+                        name="SuccessfullyPasswordChangedScreen"
+                        component={SuccessfullyPasswordChangedScreen}
+                        options={({route}) => ({
+                          title: 'SuccessfullyPasswordChangedScreen',
                           headerShown: false,
                           animation: getAnimation(route),
                         })}
