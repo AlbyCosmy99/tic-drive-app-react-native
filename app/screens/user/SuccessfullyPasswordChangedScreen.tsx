@@ -1,20 +1,18 @@
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
-import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import {Colors} from '@/constants/Colors';
 import {StyleSheet, Text} from 'react-native';
 import {View} from 'react-native';
-import CheckIcon from '@/assets/svg/check_circle.svg';
+import TicDriveSuccessCard from '@/components/ui/cards/notifications/TicDriveSuccessCard';
 
 const SuccessfullyPasswordChangedScreen = () => {
   return (
     <SafeAreaViewLayout styles={[styles.container]}>
       <View className="flex-1 justify-center items-center mx-2.5">
-        <CheckIcon height={60} width={60} />
-        <Text className="font-bold text-2xl mt-2">Successful</Text>
-        <Text className="text-tic text-base text-center">
-          Congratulations! Your password has been changed. Continue to Home.
-        </Text>
+        <TicDriveSuccessCard
+          title="Successful"
+          subtitle="Congratulations! Your password has been changed. Continue to Home."
+        />
       </View>
       <TicDriveButton
         replace={true}

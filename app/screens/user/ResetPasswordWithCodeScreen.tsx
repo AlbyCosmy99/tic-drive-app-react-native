@@ -62,8 +62,8 @@ const ResetPasswordWithCodeScreen = () => {
       <View className="mx-6 mt-10">
         <Text className="text-xl font-medium">Check your email</Text>
         <Text className="text-base font-medium text-tic mr-4 mb-4 mt-1">
-          Abbiamo inviato un link di reimpostazione a {email.toLowerCase()}. Inserisci il
-          codice a 6 cifre menzionato nell'email.
+          Abbiamo inviato un link di reimpostazione a {email.toLowerCase()}.
+          Inserisci il codice a 6 cifre menzionato nell'email.
         </Text>
       </View>
 
