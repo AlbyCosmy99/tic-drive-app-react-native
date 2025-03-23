@@ -7,11 +7,15 @@ import ErrorModal from '@/components/ui/modals/ErrorModal';
 import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import axiosClient from '@/services/http/axiosClient';
-import navigationPush from '@/services/navigation/push';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import axios from 'axios';
 import {useMemo, useState} from 'react';
-import {Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
+import VisibilityOffIcon from '@/assets/svg/access/visibility_off.svg';
+import VisibilityOnIcon from '@/assets/svg/access/visibility_on.svg';
+import isAcceptablePassword from '@/utils/auth/isAcceptablePassword';
+import navigationReset from '@/services/navigation/reset';
+import useLogin from '@/hooks/auth/useLogin';
 
 const ChangePasswordScreen = () => {
   type RootStackParamList = {
@@ -23,24 +27,37 @@ const ChangePasswordScreen = () => {
   const {email} = route.params;
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const {setErrorMessage} = useGlobalErrors();
   const [loading, setLoading] = useState(false);
   const navigation = useTicDriveNavigation();
+  const {login} = useLogin();
 
   const buttonDisabled = useMemo(() => {
-    return true;
-  }, []);
+    return (
+      !password ||
+      !confirmPassword ||
+      password !== confirmPassword ||
+      !isAcceptablePassword(password)
+    );
+  }, [password, confirmPassword]);
 
   const onClick = async () => {
     try {
       setLoading(true);
       await axiosClient.post('auth/reset-password', {
         email,
-        password,
+        newPassword: password,
         confirmPassword,
       });
       setLoading(false);
-      navigationPush(navigation, 'ResetPasswordWithCodeScreen', {email});
+      navigationReset(navigation, 0, 'userTabs', {}, 'Home');
+      await login({
+        email,
+        category: 'user',
+        password,
+        repeatedPassword: confirmPassword,
+      });
     } catch (e: any) {
       if (axios.isAxiosError(e)) {
         if (e.response?.status === 400) {
@@ -53,8 +70,9 @@ const ChangePasswordScreen = () => {
           setErrorMessage('Unexpected error: ' + e.response?.status);
         }
       } else {
-        console.error('aa:', e);
-        setErrorMessage('Codice errato. Riprova');
+        console.error('error:', e);
+        setErrorMessage('Qualcosa è andato storto. Riprova.');
+        navigationReset(navigation, 0, 'ForgotPasswordScreen');
       }
     }
   };
@@ -75,8 +93,52 @@ const ChangePasswordScreen = () => {
           </View>
 
           <View className="mx-6 mt-4">
-            <Text>pass</Text>
-            <Text>confirm pass</Text>
+            <TicDriveInput
+              containerViewStyleTailwind="mt-4"
+              placeholder="Password"
+              isRightIcon={true}
+              customValue={password}
+              onChange={e => setPassword(e)}
+              inputContainerStyle={styles.inputContainerStyle}
+              returnKeyType="send"
+              isPassword={!isPasswordVisible}
+              containerStyle={{height: 65}}
+              rightIcon={
+                isPasswordVisible ? (
+                  <View className="mt-1">
+                    <VisibilityOffIcon />
+                  </View>
+                ) : (
+                  <VisibilityOnIcon />
+                )
+              }
+              onRightIcon={() =>
+                setIsPasswordVisible(previousValue => !previousValue)
+              }
+            />
+            <TicDriveInput
+              containerViewStyleTailwind="mt-4"
+              placeholder="Repeat Password"
+              isRightIcon={true}
+              customValue={confirmPassword}
+              onChange={e => setConfirmPassword(e)}
+              inputContainerStyle={styles.inputContainerStyle}
+              returnKeyType="send"
+              isPassword={!isPasswordVisible}
+              containerStyle={{height: 65}}
+              rightIcon={
+                isPasswordVisible ? (
+                  <View className="mt-1">
+                    <VisibilityOffIcon />
+                  </View>
+                ) : (
+                  <VisibilityOnIcon />
+                )
+              }
+              onRightIcon={() =>
+                setIsPasswordVisible(previousValue => !previousValue)
+              }
+            />
           </View>
 
           <TicDriveButton
@@ -94,5 +156,11 @@ const ChangePasswordScreen = () => {
     </SafeAreaViewLayout>
   );
 };
+
+const styles = StyleSheet.create({
+  inputContainerStyle: {
+    marginTop: 0,
+  },
+});
 
 export default ChangePasswordScreen;

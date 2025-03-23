@@ -19,6 +19,7 @@ import ErrorModal from '../ui/modals/ErrorModal';
 import VisibilityOffIcon from '@/assets/svg/access/visibility_off.svg';
 import VisibilityOnIcon from '@/assets/svg/access/visibility_on.svg';
 import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
+import useLogin from '@/hooks/auth/useLogin';
 
 type FormData = {
   email: string;
@@ -54,6 +55,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
   const dispatch = useAppDispatch();
   const {setErrorMessage} = useGlobalErrors();
   const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
+  const {login: onLogin} = useLogin();
 
   React.useEffect(() => {
     clearErrors();
@@ -84,24 +86,22 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
     } else {
       try {
         setLoading(true);
-        const res = await authLogin(user);
-        console.log(res);
-        setSecureToken(res.token);
-        dispatch(setToken(res.token));
-        const payload = await getPayload(res.token);
-        dispatch(login(getUserData(payload)));
 
-        if (res.emailConfirmed) {
-          if (loginRouteName) {
-            navigationReset(navigation, 0, loginRouteName, loginRouteParams);
-            setLoginRouteName('');
-          } else if (navigation?.canGoBack()) {
-            navigationReplace(navigation, 'Hub');
+        //login
+        const res = await onLogin(user);
+        if (res) {
+          if (res.emailConfirmed) {
+            if (loginRouteName) {
+              navigationReset(navigation, 0, loginRouteName, loginRouteParams);
+              setLoginRouteName('');
+            } else if (navigation?.canGoBack()) {
+              navigationReplace(navigation, 'Hub');
+            } else {
+              navigationPush(navigation, 'Hub');
+            }
           } else {
-            navigationPush(navigation, 'Hub');
+            navigationReset(navigation, 0, 'ConfirmEmailScreen');
           }
-        } else {
-          navigationReset(navigation, 0, 'ConfirmEmailScreen');
         }
       } catch (err) {
         console.log(err);
