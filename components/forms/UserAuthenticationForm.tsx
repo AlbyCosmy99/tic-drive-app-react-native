@@ -225,13 +225,27 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
             }}
             render={({field: {onChange, value}}) => (
               <TicDriveInput
-                placeholder="Repeat password"
+                containerViewStyleTailwind="mt-4"
+                placeholder="Repeat Password"
                 isRightIcon={true}
                 customValue={value}
                 onChange={onChange}
                 inputContainerStyle={styles.inputContainerStyle}
                 returnKeyType="send"
-                isPassword={true}
+                isPassword={!isPasswordVisible}
+                containerStyle={{height: 65}}
+                rightIcon={
+                  isPasswordVisible ? (
+                    <View className="mt-1">
+                      <VisibilityOffIcon />
+                    </View>
+                  ) : (
+                    <VisibilityOnIcon />
+                  )
+                }
+                onRightIcon={() =>
+                  setIsPasswordVisible(previousValue => !previousValue)
+                }
               />
             )}
           />

@@ -94,7 +94,7 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
           <OAuth2Button text="Google" icon={<GoogleIcon />} />
           <OAuth2Button text="Apple ID" icon={<AppleIcon />} />
         </View>
-        <View className="flex-row justify-center gap-1 flex-wrap text-center mx-3.5 my-3">
+        <View className="flex-row justify-center gap-1 flex-wrap text-center mx-3.5 my-3 mb-8">
           <Text style={styles.footerText}>
             By clicking {action}, you agree to our
           </Text>
