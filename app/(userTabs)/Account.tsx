@@ -77,7 +77,9 @@ export default function UserAccount() {
                   />
                   <CrossPlatformButtonLayout
                     removeAllStyles
-                    onPress={() => alert('personal vehicles')}
+                    onPress={() =>
+                      navigationPush(navigation, 'UserVehiclesScreen')
+                    }
                   >
                     <IconTextPair
                       text="Registered vehicles"

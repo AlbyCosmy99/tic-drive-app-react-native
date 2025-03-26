@@ -1,9 +1,8 @@
-import RegistrationCarDetailCard from '@/components/ui/cards/cars/RegistrationCarDetailCard';
-import HorizontalLine from '@/components/ui/HorizontalLine';
 import Car from '@/types/Car';
 import {useEffect} from 'react';
 import {Text, View} from 'react-native';
 import {Pressable} from 'react-native-gesture-handler';
+import CarDetailsLayout from '@/app/layouts/vehicles/CarDetailsLayout';
 
 interface CarConfirmationDetailsProps {
   carSelected: Car;
@@ -21,52 +20,7 @@ const CarConfirmationDetails: React.FC<CarConfirmationDetailsProps> = ({
   });
 
   return (
-    <View className="mx-3 p-4 border-2 border-grey-light rounded-xl">
-      <View className="mb-2">
-        {carSelected?.make && (
-          <RegistrationCarDetailCard title="Make" value={carSelected.make} />
-        )}
-        {carSelected?.model && (
-          <RegistrationCarDetailCard title="Model" value={carSelected.model} />
-        )}
-        {carSelected?.plateNumber && (
-          <RegistrationCarDetailCard
-            title="Plate number"
-            value={carSelected.plateNumber}
-          />
-        )}
-        {carSelected.year && (
-          <RegistrationCarDetailCard
-            title="Year"
-            value={carSelected.year.toString()}
-          />
-        )}
-        {carSelected.engineDisplacement && (
-          <RegistrationCarDetailCard
-            title="Engine displacement"
-            value={carSelected.engineDisplacement!}
-          />
-        )}
-        {carSelected.fuel && (
-          <RegistrationCarDetailCard title="Fuel" value={carSelected.fuel} />
-        )}
-        {carSelected.mileage && (
-          <RegistrationCarDetailCard
-            title="Mileage"
-            value={carSelected.mileage.toString()}
-          />
-        )}
-        {carSelected.name && (
-          <RegistrationCarDetailCard title="Name" value={carSelected.name} />
-        )}
-        {carSelected.powerCV && (
-          <RegistrationCarDetailCard
-            title="CV"
-            value={carSelected.powerCV.toString()}
-          />
-        )}
-      </View>
-      <HorizontalLine />
+    <CarDetailsLayout carSelected={carSelected}>
       <Pressable
         onPress={() => {
           setConfirmation(false);
@@ -79,7 +33,7 @@ const CarConfirmationDetails: React.FC<CarConfirmationDetailsProps> = ({
           Change
         </Text>
       </Pressable>
-    </View>
+    </CarDetailsLayout>
   );
 };
 
