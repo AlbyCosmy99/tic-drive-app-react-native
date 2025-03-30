@@ -28,9 +28,6 @@ import {setSelectedCar} from '@/stateManagement/redux/slices/carsSlice';
 function RegisterVehicleScreen() {
   const [segmentedControlSelection, setSegmentedControlSelection] =
     useState<SegmentedControlSelection | null>(options[0]);
-  const [carSelectedByMakeAndModel, setCarSelectedByMakeAndModel] = useState<
-    Car | undefined
-  >(undefined);
   const [carSelectedByPlate, setCarSelectedByPlate] = useState<Car | undefined>(
     undefined,
   );
@@ -50,8 +47,8 @@ function RegisterVehicleScreen() {
   >(undefined);
 
   const {
-    carSelectedByMakeAndModel: carSelectedByMakeAndModelCtx,
-    setCarSelectedByMakeAndModel: setCarSelectedByMakeAndModelCtx,
+    carSelectedByMakeAndModel,
+    setCarSelectedByMakeAndModel,
     carSelectedByPlate: carSelectedByPlateCtx,
     setCarSelectedByPlate: setCarSelectedByPlateCtx,
   } = useContext(CarContext);
@@ -68,7 +65,7 @@ function RegisterVehicleScreen() {
   const routeName = useMemo(() => {
     if (
       (segmentedControlSelection?.index === 0 &&
-        carSelectedByMakeAndModelCtx &&
+        carSelectedByMakeAndModel &&
         makeAndModelConfirmation) ||
       (segmentedControlSelection?.index === 1 &&
         carSelectedByPlateCtx &&
@@ -81,7 +78,7 @@ function RegisterVehicleScreen() {
     }
     return '';
   }, [
-    carSelectedByMakeAndModelCtx,
+    carSelectedByMakeAndModel,
     makeAndModelConfirmation,
     carSelectedByPlateCtx,
     plateConfirmation,
@@ -95,11 +92,11 @@ function RegisterVehicleScreen() {
   const buttonIsEnabled = useMemo(() => {
     return (
       (segmentedControlSelection?.index === 0 &&
-        carSelectedByMakeAndModelCtx &&
-        !!carSelectedByMakeAndModelCtx.engineDisplacement &&
-        !!carSelectedByMakeAndModelCtx.fuel &&
-        !!carSelectedByMakeAndModelCtx.year &&
-        !!carSelectedByMakeAndModelCtx.mileage &&
+        carSelectedByMakeAndModel &&
+        !!carSelectedByMakeAndModel.engineDisplacement &&
+        !!carSelectedByMakeAndModel.fuel &&
+        !!carSelectedByMakeAndModel.year &&
+        !!carSelectedByMakeAndModel.mileage &&
         !errorYear) ||
       (segmentedControlSelection?.index === 1 &&
         carSelectedByPlateCtx &&
@@ -112,7 +109,7 @@ function RegisterVehicleScreen() {
     );
   }, [
     segmentedControlSelection,
-    carSelectedByMakeAndModelCtx,
+    carSelectedByMakeAndModel,
     carSelectedByPlateCtx,
     errorYear,
   ]);
@@ -196,12 +193,14 @@ function RegisterVehicleScreen() {
   useEffect(() => {
     if (carModelDropdownData) {
       const car = models.find(model => model.id === carModelDropdownData.id);
-      setCarSelectedByMakeAndModel({
-        ...car,
-        make: carMakeDropdownData?.value,
-        model: carModelDropdownData?.value,
-        year: null, //todo: ignorando l'year preso dal db e lo stiamo chiedendo sempre all'utente. Controllare se e' cio che desideriamo
-      });
+      if (setCarSelectedByMakeAndModel) {
+        setCarSelectedByMakeAndModel({
+          ...car,
+          make: carMakeDropdownData?.value,
+          model: carModelDropdownData?.value,
+          year: null, //todo: ignorando l'year preso dal db e lo stiamo chiedendo sempre all'utente. Controllare se e' cio che desideriamo
+        });
+      }
     }
   }, [carModelDropdownData]);
 
@@ -288,10 +287,10 @@ function RegisterVehicleScreen() {
                     )}
                   </View>
                 )}
-                {makeAndModelConfirmation && carSelectedByMakeAndModelCtx && (
+                {makeAndModelConfirmation && carSelectedByMakeAndModel && (
                   <CarConfirmationDetails
-                    carSelected={carSelectedByMakeAndModelCtx}
-                    setCarSelected={setCarSelectedByMakeAndModelCtx}
+                    carSelected={carSelectedByMakeAndModel}
+                    setCarSelected={setCarSelectedByMakeAndModel}
                     setConfirmation={setMakeAndModelConfirmation}
                   />
                 )}
@@ -343,9 +342,9 @@ function RegisterVehicleScreen() {
         onClick={() => {
           if (segmentedControlSelection?.index === 0) {
             setMakeAndModelConfirmation(true);
-            if (setCarSelectedByMakeAndModelCtx) {
-              setCarSelectedByMakeAndModelCtx({
-                ...carSelectedByMakeAndModelCtx,
+            if (setCarSelectedByMakeAndModel) {
+              setCarSelectedByMakeAndModel({
+                ...carSelectedByMakeAndModel,
                 make: carMakeDropdownData?.value,
                 model: carModelDropdownData?.value,
               });
@@ -365,7 +364,7 @@ function RegisterVehicleScreen() {
             dispatch(
               setSelectedCar(
                 segmentedControlSelection?.index === 0
-                  ? carSelectedByMakeAndModelCtx
+                  ? carSelectedByMakeAndModel
                   : carSelectedByPlateCtx,
               ),
             );

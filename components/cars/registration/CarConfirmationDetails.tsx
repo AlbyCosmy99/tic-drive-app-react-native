@@ -6,13 +6,11 @@ import CarDetailsLayout from '@/app/layouts/vehicles/CarDetailsLayout';
 
 interface CarConfirmationDetailsProps {
   carSelected: Car;
-  setCarSelected: (car: Car | undefined) => void;
   setConfirmation: (confirm: boolean) => void;
 }
 
 const CarConfirmationDetails: React.FC<CarConfirmationDetailsProps> = ({
   carSelected,
-  setCarSelected,
   setConfirmation,
 }) => {
   useEffect(() => {
@@ -24,9 +22,6 @@ const CarConfirmationDetails: React.FC<CarConfirmationDetailsProps> = ({
       <Pressable
         onPress={() => {
           setConfirmation(false);
-          if (setCarSelected) {
-            setCarSelected(undefined);
-          }
         }}
       >
         <Text className="text-base font-medium mt-2 text-orange-500">
