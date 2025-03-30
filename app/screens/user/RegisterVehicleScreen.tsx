@@ -2,7 +2,6 @@ import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import {Colors} from '@/constants/Colors';
 import {StyleSheet, Text, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
-import SegmentedControl from '@/components/SegmentedControl';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
 import {useContext, useEffect, useMemo, useState} from 'react';
 import options from '../../../constants/VehicleRegistrationOptions';
@@ -17,7 +16,7 @@ import CarDetailsByMakeAndModel from '@/components/cars/registration/CarDetailsB
 import CarContext from '@/stateManagement/contexts/car/CarContext';
 import BoldTitle1 from '@/components/ui/text/BoldTitle1';
 import useCarsMakes from '@/hooks/api/cars/useCarsMakes';
-import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect, useRoute} from '@react-navigation/native';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import {setAreServicesOn} from '@/stateManagement/redux/slices/servicesSlice';
 import isPlateNumber from '@/utils/car/isPlateNumber';
@@ -62,6 +61,9 @@ function RegisterVehicleScreen() {
 
   const token = useAppSelector(state => state.auth.token);
 
+  const route = useRoute();
+  const {carSelected, goToVehicles} = route.params;
+
   const routeName = useMemo(() => {
     if (
       (segmentedControlSelection?.index === 0 &&
@@ -71,10 +73,17 @@ function RegisterVehicleScreen() {
         carSelectedByPlateCtx &&
         plateConfirmation)
     ) {
-      if (selectedWorkshop) {
-        return `${token ? 'ReviewBookingDetailsScreen' : 'UserAuthenticationScreen'}`;
+      if (goToVehicles) {
+        //todo: richiesta post di registrare l auto
+        //se va a buon fine vai a UserVehiclesScreen
+        //reset e non push
+        return 'UserVehiclesScreen';
+      } else {
+        if (selectedWorkshop) {
+          return `${token ? 'ReviewBookingDetailsScreen' : 'UserAuthenticationScreen'}`;
+        }
+        return 'WorkshopsListScreen';
       }
-      return 'WorkshopsListScreen';
     }
     return '';
   }, [
@@ -223,7 +232,7 @@ function RegisterVehicleScreen() {
   //todo: to remove it when plate option on car registration is added back
   useEffect(() => {
     setSegmentedControlSelection(options[0]); //make and model
-  });
+  }, []);
 
   return (
     <SafeAreaViewLayout styles={[backgroundStyle]}>

@@ -54,9 +54,9 @@ export default function UserHome() {
     navigationPush(navigation, 'WorkshopsListScreen');
   };
 
-  const handleOnRegisterVehicle = () => {
+  const handleVehicles = () => {
     token
-      ? navigationPush(navigation, 'RegisterVehicleScreen')
+      ? navigationPush(navigation, 'UserVehiclesScreen')
       : navigationPush(navigation, 'UserAuthenticationScreen', {
           isUser: true,
         });
@@ -219,7 +219,7 @@ export default function UserHome() {
               </View>
               <CrossPlatformButtonLayout
                 containerTailwindCss="border-2 border-grey-light items-center justify-center p-1 m-2.5 rounded-xl bg-white"
-                onPress={() => handleOnRegisterVehicle()}
+                onPress={() => handleVehicles()}
               >
                 <Text className="text-base font-medium text-drive">
                   {t('vehicles.handleVehicles')}
