@@ -110,7 +110,7 @@ export default function WorkshopDetails() {
                 onPress={handleOnFavoritePress}
               >
                 <View
-                  className={`${!token && 'opacity-0'} w-6 h-6 justify-center items-center`}
+                  className={`${!token && 'opacity-0'} w-6 h-6 p-6 pr-4 justify-center items-center`}
                 >
                   {workshop.isFavorite ? <RedHeartIcon /> : <EmptyHeartIcon />}
                 </View>
