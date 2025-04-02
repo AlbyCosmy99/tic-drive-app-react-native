@@ -5,16 +5,13 @@ import TicDriveInput from '../ui/inputs/TicDriveInput';
 import User, {UserCategory} from '@/types/User';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
-import {setToken, login} from '@/stateManagement/redux/slices/authSlice';
+import {setToken} from '@/stateManagement/redux/slices/authSlice';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import navigationPush from '@/services/navigation/push';
 import navigationReset from '@/services/navigation/reset';
 import navigationReplace from '@/services/navigation/replace';
 import register from '@/services/auth/register';
 import {setSecureToken} from '@/services/auth/secureStore/setToken';
-import {login as authLogin} from '@/services/auth/login';
-import {getPayload} from '@/services/auth/getPayload';
-import getUserData from '@/utils/auth/getUserData';
 import ErrorModal from '../ui/modals/ErrorModal';
 import VisibilityOffIcon from '@/assets/svg/access/visibility_off.svg';
 import VisibilityOnIcon from '@/assets/svg/access/visibility_on.svg';
@@ -88,6 +85,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
         setLoading(true);
 
         //login
+        console.log(user);
         const res = await onLogin(user);
         if (res) {
           if (res.emailConfirmed) {

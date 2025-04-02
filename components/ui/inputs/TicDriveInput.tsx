@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {Icon, Input} from '@rneui/themed';
 import {Colors} from '@/constants/Colors';
-import React, {memo, useState} from 'react';
+import React, {memo} from 'react';
 import CrossPlatformButtonLayout from '../buttons/CrossPlatformButtonLayout';
 
 interface TicDriveInputProps {
@@ -51,15 +51,13 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
   textContentType = 'none',
   maxLength,
 }) => {
-  const [value, setValue] = useState<string>(customValue);
-
   const handleOnPress = () => {
     onRightIcon && onRightIcon();
-    onChange && onChange('');
+    // Removed onChange('') to prevent clearing the field on eye icon toggle
   };
 
   const handleSubmitEditing = () => {
-    onSubmit && onSubmit(value);
+    onSubmit && onSubmit(customValue ?? '');
   };
 
   return (
@@ -83,16 +81,6 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
               >
                 {rightIcon}
               </CrossPlatformButtonLayout>
-            ) : value ? (
-              <Icon
-                name="cancel"
-                size={24}
-                color={Colors.light.ticText}
-                onPress={() => {
-                  setValue('');
-                  handleOnPress();
-                }}
-              />
             ) : undefined
           ) : undefined
         }
@@ -100,10 +88,10 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
         inputContainerStyle={[styles.inputContainer, inputContainerStyle]}
         inputStyle={styles.inputText}
         placeholderTextColor="#8b8b8b"
-        value={value}
+        value={customValue}
         onChangeText={text => {
-          setValue(isTextUppercase ? text.toUpperCase() : text);
-          onChange && onChange(text.trim());
+          const formatted = isTextUppercase ? text.toUpperCase() : text;
+          onChange?.(formatted.trim());
         }}
         onSubmitEditing={() => {
           if (keyboardType !== 'numeric') {
