@@ -24,7 +24,6 @@ import GreenCheckIcon from '@/assets/svg/check_green.svg';
 import ShareIcon from '@/assets/svg/share/shareIcon.svg';
 import SeeAllServicesCards from '@/components/services/SeeAllServicesCards';
 import SeeAllReviewsCards from '@/components/workshop/reviews/SeeAllReviewsCards';
-import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import Constants from 'expo-constants';
 import MapView, {Marker} from 'react-native-maps';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
@@ -35,6 +34,7 @@ import RedHeartIcon from '@/assets/svg/emotions/RedHeart.svg';
 import CarPinIcon from '@/assets/svg/vehicles/car3.svg';
 import {useTranslation} from 'react-i18next';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
+import openGoogleMaps from '@/services/map/openGoogleMaps';
 
 export default function WorkshopDetails() {
   const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
@@ -46,17 +46,7 @@ export default function WorkshopDetails() {
   const lat = workshop?.latitude || null;
   const lng = workshop?.longitude || null;
 
-  const openGoogleMaps = () => {
-    if (workshop?.address) {
-      const encodedAddress = encodeURIComponent(workshop?.address);
-      const url = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
-      Linking.openURL(url);
-    } else {
-      // Fallback to using coordinates
-      const url = `https://www.google.com/maps/search/?api=1&query=${workshop?.latitude},${workshop?.longitude}`;
-      Linking.openURL(url);
-    }
-  };
+
 
   const onShare = async () => {
     try {
@@ -166,7 +156,7 @@ export default function WorkshopDetails() {
                 <View className="flex-1 flex-row items-center gap-0.5">
                   <CrossPlatformButtonLayout
                     removeAllStyles
-                    onPress={openGoogleMaps}
+                    onPress={() => openGoogleMaps(workshop?.address, workshop?.latitude, workshop?.longitude)}
                   >
                     <Text className="text-base font-medium underline text-tic">
                       {workshop.address}
@@ -194,7 +184,7 @@ export default function WorkshopDetails() {
                           }}
                         >
                           <TouchableOpacity
-                            onPress={openGoogleMaps}
+                            onPress={() => openGoogleMaps(workshop?.address, workshop?.latitude, workshop?.longitude)}
                             activeOpacity={1}
                           >
                             <CarPinIcon />

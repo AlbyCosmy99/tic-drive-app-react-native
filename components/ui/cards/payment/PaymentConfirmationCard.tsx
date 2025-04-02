@@ -11,6 +11,7 @@ import DirectionIcon from '../../../../assets/svg/assistant_direction.svg';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 import TicDriveOptionButton from '../../buttons/TicDriveOptionButton';
 import Workshop from '@/types/workshops/Workshop';
+import openGoogleMaps from '@/services/map/openGoogleMaps';
 
 const PaymentConfirmationCard = ({
   workshop,
@@ -22,9 +23,8 @@ const PaymentConfirmationCard = ({
   const servicesChoosen = useServicesChoosenByUsers();
 
   return (
-    <View className="rounded-lg border p-4 pt-0 border-grey-light">
+    <View className="rounded-lg border p-4 pt-0 border-grey-light w-full">
       <View className="flex flex-row my-4">
-        {/* to do- spostare le immagini in un componente */}
         <Image
           source={{uri: workshop?.profileImageUrl}}
           containerStyle={styles.image}
@@ -40,19 +40,19 @@ const PaymentConfirmationCard = ({
             Pending confirmation
           </Text>
           <Text className="font-medium text-xl">{workshop?.name}</Text>
-          <View className="bg-green-light p-1.5 rounded self-start">
+          <View className="bg-green-light p-1.5 rounded self-start mt-1">
             <Text className="text-green-dark font-semibold">
               {servicesChoosen.length ? servicesChoosen[0].title : ''}
             </Text>
           </View>
         </View>
       </View>
-      <HorizontalLine color="red" />
+      <HorizontalLine />
       <View className="mb-2">
         <IconTextPair icon={<CalendarIcon />} text={timeDate} />
         <IconTextPair
           icon={<CreditCardIcon />}
-          text={`${workshop.currency} ${calculateWorkshopDiscount(workshop.servicePrice ?? 0, workshop.discount)} total paid`}
+          text={`${workshop?.currency} ${calculateWorkshopDiscount(workshop?.servicePrice ?? 0, workshop?.discount ?? 0)} total to pay`}
         />
         {workshop?.address && (
           <IconTextPair
@@ -65,6 +65,13 @@ const PaymentConfirmationCard = ({
         icon={<DirectionIcon />}
         text="Directions"
         textTailwindCss="font-medium text-base"
+        onPress={() =>
+          openGoogleMaps(
+            workshop?.address,
+            workshop?.latitude,
+            workshop?.longitude,
+          )
+        }
       />
     </View>
   );

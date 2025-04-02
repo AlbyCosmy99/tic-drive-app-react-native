@@ -1,4 +1,3 @@
-import Car from '@/types/Car';
 import React from 'react';
 import {Text, View} from 'react-native';
 

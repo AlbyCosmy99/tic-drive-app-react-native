@@ -33,6 +33,8 @@ import {useServicesChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import WorkshopReviewinfo from '@/components/workshop/reviews/WorkshopReviewInfo';
 import CashIcon from '@/assets/svg/payment/cash.svg';
+import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
+import openGoogleMaps from '@/services/map/openGoogleMaps';
 
 export default function ReviewBookingDetailsScreen() {
   const route = useRoute();
@@ -124,11 +126,22 @@ export default function ReviewBookingDetailsScreen() {
                 text={timeDate}
                 icon={<CalendarIcon width={16} fill={Colors.light.ticText} />}
               />
-              <IconTextPair
-                text={workshop?.address}
-                textTailwindCss="underline text-tic"
-                icon={<LocationPin width={16} fill={Colors.light.ticText} />}
-              />
+              <CrossPlatformButtonLayout
+                removeAllStyles
+                onPress={() =>
+                  openGoogleMaps(
+                    workshop?.address ?? '',
+                    workshop?.latitude ?? 0,
+                    workshop?.longitude ?? 0,
+                  )
+                }
+              >
+                <IconTextPair
+                  text={workshop?.address}
+                  textTailwindCss="underline text-tic"
+                  icon={<LocationPin width={16} fill={Colors.light.ticText} />}
+                />
+              </CrossPlatformButtonLayout>
             </View>
           </View>
           <View className="my-3">
@@ -141,8 +154,8 @@ export default function ReviewBookingDetailsScreen() {
                 <Text>
                   $
                   {calculateWorkshopDiscount(
-                    workshop.servicePrice ?? 0,
-                    workshop.discount,
+                    workshop?.servicePrice ?? 0,
+                    workshop?.discount ?? 0,
                   )}
                 </Text>
               </View>
@@ -150,7 +163,7 @@ export default function ReviewBookingDetailsScreen() {
                 style={styles.promoCodeContainer}
                 className="mt-3 mb-3 flex flex-row justify-between items-center p-4 rounded-xl border-tic"
               >
-                <TextInput placeholder="Promo code" />
+                <TextInput placeholder="Promo code" style={{flex: 1}} />
                 <Pressable>
                   <Text className="text-drive">Apply</Text>
                 </Pressable>
@@ -216,7 +229,7 @@ export default function ReviewBookingDetailsScreen() {
           <TicDriveButton
             replace={true}
             toTop={true}
-            text="Pay now"
+            text="Book now"
             routeName="userTabs"
             routeParams={{animation: 'fade'}}
             stateRouteName="Home"
