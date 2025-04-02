@@ -133,7 +133,7 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
       <TicDriveTextOrInput
         title="Plate"
         placeholder="Es. AB123CD"
-        value={carSelected?.plateNumber}
+        value={carSelected?.plateNumber?.toUpperCase()}
         setValue={setPlateNumber}
       />
     </>

@@ -24,7 +24,7 @@ const CarDetailsLayout: React.FC<CarDetailsGeneralProps> = ({
         {carSelected?.plateNumber && (
           <RegistrationCarDetailCard
             title="Plate number"
-            value={carSelected.plateNumber}
+            value={carSelected.plateNumber.toUpperCase()}
           />
         )}
         {carSelected.year && (

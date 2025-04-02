@@ -106,7 +106,7 @@ function RegisterVehicleScreen() {
         !!carSelectedByMakeAndModel.fuel &&
         !!carSelectedByMakeAndModel.year &&
         !!carSelectedByMakeAndModel.mileage &&
-        !!carSelectedByMakeAndModel.plateNumber &&
+        isPlateNumber(carSelectedByMakeAndModel.plateNumber) &&
         !errorYear) ||
       (segmentedControlSelection?.index === 1 &&
         carSelectedByPlateCtx &&
