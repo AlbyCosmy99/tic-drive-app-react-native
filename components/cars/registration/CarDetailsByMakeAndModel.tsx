@@ -1,7 +1,7 @@
 import TicDriveDropdown from '@/components/ui/dropdowns/TicDriveDropdown';
 import TicDriveTextOrInput from '@/components/ui/inputs/TicDriveTextOrInput';
 import CarContext from '@/stateManagement/contexts/car/CarContext';
-import Car, {fuels, FuelType} from '@/types/Car';
+import Car, {fuels, FuelType, transmissionType} from '@/types/Car';
 import TicDriveDropdownData from '@/types/ui/dropdown/TicDriveDropdownData';
 import React, {useContext, useEffect} from 'react';
 
@@ -23,6 +23,14 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
     id: index,
     value: fuel,
   }));
+
+  const transmissionsOptions: TicDriveDropdownData[] = [
+    {
+      id: 1,
+      value: 'manual',
+    },
+    {id: 2, value: 'automatic'},
+  ];
 
   useEffect(() => {
     if (setCarSelectedByMakeAndModel) {
@@ -50,24 +58,48 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
     updateCarField({engineDisplacement});
   };
 
-  const setCarPlateNumber = (plateNumber: string) => {
-    updateCarField({plateNumber});
-  };
-
   const setCarFuelType = (fuel: TicDriveDropdownData) => {
     updateCarField({fuel: fuel.value as FuelType});
+  };
+
+  const setSelectedTransmission = (transmission: TicDriveDropdownData) => {
+    updateCarField({transmission: transmission.value as transmissionType});
   };
 
   const setCarMileage = (mileage: number) => {
     updateCarField({mileage});
   };
 
+  const setPlateNumber = (plate: string) => {
+    updateCarField({plateNumber: plate});
+  };
+
   const selectedFuel = fuelOptions.find(
     item => item.value === carSelectedByMakeAndModel?.fuel,
   ) || {id: -1, value: ''};
 
+  const selectedTransmission = transmissionsOptions.find(
+    item => item.value === carSelectedByMakeAndModel?.transmission,
+  ) || {id: -1, value: ''};
+
   return (
     <>
+      <TicDriveDropdown
+        placeholder="Choose the car fuel type"
+        searchPlaceholder="Search fuel type"
+        title="Fuel"
+        data={fuelOptions}
+        value={selectedFuel}
+        setValue={setCarFuelType}
+      />
+      <TicDriveDropdown
+        placeholder="Choose the car fuel transmission"
+        searchPlaceholder="Search fuel transmission"
+        title="Transmission"
+        data={transmissionsOptions}
+        value={selectedTransmission}
+        setValue={setSelectedTransmission}
+      />
       <TicDriveTextOrInput
         title="Year"
         placeholder="Insert car year"
@@ -81,15 +113,6 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
           const year = carSelectedByMakeAndModel?.year;
           return year && (year < 1886 || year > new Date().getFullYear());
         }}
-      />
-
-      <TicDriveDropdown
-        placeholder="Choose the car fuel type"
-        searchPlaceholder="Search fuel type"
-        title="Fuel"
-        data={fuelOptions}
-        value={selectedFuel}
-        setValue={setCarFuelType}
       />
 
       <TicDriveTextOrInput
@@ -106,6 +129,12 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
         value={carSelected?.mileage}
         setValue={setCarMileage}
         keyboardType="numeric"
+      />
+      <TicDriveTextOrInput
+        title="Plate"
+        placeholder="Es. AB123CD"
+        value={carSelected?.plateNumber}
+        setValue={setPlateNumber}
       />
     </>
   );

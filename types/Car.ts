@@ -11,7 +11,7 @@ export const fuels = [
 ] as const;
 
 export type FuelType = (typeof fuels)[number];
-
+export type transmissionType = 'manual' | 'automatic';
 interface Car {
   id: number;
   // carMakeId: number;
@@ -25,6 +25,7 @@ interface Car {
   mileage?: number;
   vin?: string;
   powerCV?: number;
+  transmission: transmissionType;
 }
 
 export default Car;
