@@ -3,7 +3,8 @@ export type PaymentType =
   | 'Mastercard'
   | 'Apple Pay'
   | 'Google Pay'
-  | 'Cash';
+  | 'Cash'
+  | 'Pay in the workshop';
 
 export interface PaymentCard {
   id: number;

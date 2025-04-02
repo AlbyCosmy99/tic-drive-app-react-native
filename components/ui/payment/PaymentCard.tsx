@@ -51,7 +51,8 @@ const PaymentCard: React.FC<PaymentCardProps> = ({
       <View className="mx-3">
         <View className="mb-2">
           <Text className="text-base font-medium">{paymentType}</Text>
-          <Text className="text-tic text-sm">{userName}</Text>
+          {/* todo: da rimettere appena si abilita la possibilita di pagare in app */}
+          {/* <Text className="text-tic text-sm">{userName}</Text> */}
         </View>
         {optionsVisible && isCustomCard && (
           <View className="flex flex-row gap-8">
@@ -62,11 +63,12 @@ const PaymentCard: React.FC<PaymentCardProps> = ({
           </View>
         )}
       </View>
-      {isDefault && (
+      {/* todo: da rimettere appena si abilita la possibilita di pagare in app */}
+      {/* {isDefault && (
         <Text className="absolute bg-green-light text-tic p-2 py-1 rounded-md top-3 right-3">
           Default
         </Text>
-      )}
+      )} */}
     </View>
   );
 };

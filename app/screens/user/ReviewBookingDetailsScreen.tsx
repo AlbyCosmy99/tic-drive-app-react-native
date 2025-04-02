@@ -32,6 +32,7 @@ import navigationReset from '@/services/navigation/reset';
 import {useServicesChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import WorkshopReviewinfo from '@/components/workshop/reviews/WorkshopReviewInfo';
+import CashIcon from '@/assets/svg/payment/cash.svg';
 
 export default function ReviewBookingDetailsScreen() {
   const route = useRoute();
@@ -81,7 +82,10 @@ export default function ReviewBookingDetailsScreen() {
             <Text className="font-semibold text-lg">Review details</Text>
           }
         />
-        <ScrollView className="flex-1 m-4" showsVerticalScrollIndicator={false}>
+        <ScrollView
+          className="flex-1 mx-4 my-0 mb-2"
+          showsVerticalScrollIndicator={false}
+        >
           <View className="border rounded-xl border-slate-200 px-4">
             <View className="flex flex-row my-4">
               {/* to do- spostare le immagini in un componente */}
@@ -97,10 +101,8 @@ export default function ReviewBookingDetailsScreen() {
               />
               <View>
                 <View className="flex flex-row items-center gap-1">
-                  <Text className="text-xl font-semibold">
-                    {workshop?.name}
-                  </Text>
-                  {workshop?.verified && (
+                  <Text className="text-xl font-medium">{workshop?.name}</Text>
+                  {workshop?.isVerified && (
                     <Verified width={24} name="verified" />
                   )}
                 </View>
@@ -113,42 +115,24 @@ export default function ReviewBookingDetailsScreen() {
               </View>
             </View>
             <HorizontalLine color={Colors.light.lightGrey} />
-            <View className="my-2">
+            <View>
               <IconTextPair
                 text={servicesChoosen[0].title}
-                icon={<CarRepair width={24} fill={Colors.light.ticText} />}
+                icon={<CarRepair width={16} fill={Colors.light.ticText} />}
               />
               <IconTextPair
                 text={timeDate}
-                icon={<CalendarIcon width={24} fill={Colors.light.ticText} />}
+                icon={<CalendarIcon width={16} fill={Colors.light.ticText} />}
               />
               <IconTextPair
                 text={workshop?.address}
-                icon={<LocationPin width={24} fill={Colors.light.ticText} />}
+                textTailwindCss="underline text-tic"
+                icon={<LocationPin width={16} fill={Colors.light.ticText} />}
               />
             </View>
           </View>
-          <View className="mt-6">
-            <View className="flex flex-row justify-between items-center mb-3">
-              <Text className="text-tic">PAYMENT METHOD</Text>
-              <Pressable onPress={handlePaymentTypeChange}>
-                <Text className="text-drive font-semibold text-sm">Change</Text>
-              </Pressable>
-            </View>
-            <Pressable onPress={handlePaymentTypeChange}>
-              <PaymentCard
-                userName={userPaymentInfo?.choosenCard?.cardHolder ?? ''}
-                paymentType={
-                  userPaymentInfo?.choosenCard?.paymentType ?? 'Cash'
-                }
-                icon={userPaymentInfo?.choosenCard?.icon}
-                id={userPaymentInfo?.choosenCard?.id ?? 0}
-                optionsVisible={false}
-              />
-            </Pressable>
-          </View>
-          <View className="my-5">
-            <Text className="text-tic text-base mb-3">SUB TOTAL</Text>
+          <View className="my-3">
+            <Text className="text-tic text-sm font-medium mb-3">SUBTOTAL</Text>
             <View className="border rounded-xl border-slate-200 p-4">
               <View className="flex flex-row justify-between items-center">
                 <Text className="text-sm text-tic">
@@ -172,34 +156,49 @@ export default function ReviewBookingDetailsScreen() {
                 </Pressable>
               </View>
               <HorizontalLine />
-              <View className="mb-3">
-                <View className="flex flex-row justify-between items-center my-1">
-                  <Text className="text-sm text-tic">Sub total</Text>
-                  <Text>
-                    $
-                    {calculateWorkshopDiscount(
-                      workshop.servicePrice ?? 0,
-                      workshop.discount,
-                    )}
-                  </Text>
-                </View>
-                <View className="flex flex-row justify-between items-center">
-                  <Text className="text-sm text-tic">Tax</Text>
-                  <Text>$14</Text>
-                </View>
-              </View>
-              <HorizontalLine />
               <View className="flex flex-row justify-between items-center mt-2">
                 <Text className="text-base text-tic">Total</Text>
                 <Text className="text-lg font-medium">
                   $
                   {calculateWorkshopDiscount(
-                    workshop.servicePrice ?? 0,
-                    workshop.discount,
+                    workshop?.servicePrice ?? 0,
+                    workshop?.discount ?? 0,
                   ) + 14}
                 </Text>
               </View>
             </View>
+          </View>
+          <View>
+            <View className="flex flex-row justify-between items-center mb-3">
+              <Text className="text-tic text-sm font-medium">
+                PAYMENT METHOD
+              </Text>
+              {/* todo: da rimettere appena si abilita la possibilita di pagare in app */}
+              {/* <Pressable onPress={handlePaymentTypeChange}>
+                <Text className="text-drive font-semibold text-sm">Change</Text>
+              </Pressable> */}
+            </View>
+            <PaymentCard
+              userName={userPaymentInfo?.choosenCard?.cardHolder ?? ''}
+              paymentType={'Pay in the workshop'}
+              icon={<CashIcon width={24} fill={Colors.light.ticText} />}
+              //todo: da rimettere appena si abilita la possibilita di pagare in app
+              // icon={userPaymentInfo?.choosenCard?.icon}
+              id={userPaymentInfo?.choosenCard?.id ?? 0}
+              optionsVisible={false}
+            />
+            {/* todo: da attivare quando si permettono i pagamenti in app */}
+            {/* <Pressable onPress={handlePaymentTypeChange}>
+              <PaymentCard
+                userName={userPaymentInfo?.choosenCard?.cardHolder ?? ''}
+                paymentType={
+                  userPaymentInfo?.choosenCard?.paymentType ?? 'Cash'
+                }
+                icon={userPaymentInfo?.choosenCard?.icon}
+                id={userPaymentInfo?.choosenCard?.id ?? 0}
+                optionsVisible={false}
+              />
+            </Pressable> */}
           </View>
         </ScrollView>
         <HorizontalLine />
@@ -209,8 +208,8 @@ export default function ReviewBookingDetailsScreen() {
             <Text className="text-xl font-medium">
               $
               {calculateWorkshopDiscount(
-                workshop.servicePrice ?? 0,
-                workshop.discount,
+                workshop?.servicePrice ?? 0,
+                workshop?.discount ?? 0,
               ) + 14}
             </Text>
           </View>
