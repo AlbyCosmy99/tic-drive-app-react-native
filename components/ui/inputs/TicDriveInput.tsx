@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {Icon, Input} from '@rneui/themed';
 import {Colors} from '@/constants/Colors';
-import React, {memo} from 'react';
+import React, {memo, useState} from 'react';
 import CrossPlatformButtonLayout from '../buttons/CrossPlatformButtonLayout';
 
 interface TicDriveInputProps {
@@ -30,6 +30,7 @@ interface TicDriveInputProps {
   rightIcon?: React.ReactNode;
   textContentType?: TextInputIOSProps['textContentType'];
   maxLength?: number;
+  itHandlesPassword?: boolean;
 }
 
 const TicDriveInput: React.FC<TicDriveInputProps> = ({
@@ -50,14 +51,19 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
   rightIcon,
   textContentType = 'none',
   maxLength,
+  itHandlesPassword = false,
 }) => {
+  const [value, setValue] = useState<string>(customValue);
+
   const handleOnPress = () => {
     onRightIcon && onRightIcon();
-    // Removed onChange('') to prevent clearing the field on eye icon toggle
+    if (!itHandlesPassword) {
+      onChange && onChange('');
+    }
   };
 
   const handleSubmitEditing = () => {
-    onSubmit && onSubmit(customValue ?? '');
+    onSubmit && onSubmit(itHandlesPassword ? customValue : value);
   };
 
   return (
@@ -81,6 +87,16 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
               >
                 {rightIcon}
               </CrossPlatformButtonLayout>
+            ) : value ? (
+              <Icon
+                name="cancel"
+                size={24}
+                color={Colors.light.ticText}
+                onPress={() => {
+                  setValue('');
+                  handleOnPress();
+                }}
+              />
             ) : undefined
           ) : undefined
         }
@@ -88,10 +104,15 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
         inputContainerStyle={[styles.inputContainer, inputContainerStyle]}
         inputStyle={styles.inputText}
         placeholderTextColor="#8b8b8b"
-        value={customValue}
+        value={itHandlesPassword ? customValue : value}
         onChangeText={text => {
           const formatted = isTextUppercase ? text.toUpperCase() : text;
-          onChange?.(formatted.trim());
+          if (itHandlesPassword) {
+            onChange?.(formatted.trim());
+          } else {
+            setValue(isTextUppercase ? text.toUpperCase() : text);
+            onChange && onChange(text.trim());
+          }
         }}
         onSubmitEditing={() => {
           if (keyboardType !== 'numeric') {

@@ -192,6 +192,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
             returnKeyType="send"
             isPassword={!isPasswordVisible}
             containerStyle={{height: 65}}
+            itHandlesPassword
             rightIcon={
               isPasswordVisible ? (
                 <View className="mt-1">
