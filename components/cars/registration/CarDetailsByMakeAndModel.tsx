@@ -71,7 +71,7 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
   };
 
   const setPlateNumber = (plate: string) => {
-    updateCarField({plateNumber: plate});
+    updateCarField({plateNumber: plate.toUpperCase()});
   };
 
   const selectedFuel = fuelOptions.find(

@@ -6,7 +6,6 @@ import AddIcon from '@/assets/svg/add.svg';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import Car from '@/types/Car';
 import CarDetailsLayout from '@/app/layouts/vehicles/CarDetailsLayout';
-import {Pressable} from 'react-native-gesture-handler';
 import navigationPush from '@/services/navigation/push';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
@@ -26,6 +25,7 @@ const UserVehiclesScreen = () => {
       fuel: 'Hybrid',
       mileage: 45000,
       vin: 'JTDBR32E620123456',
+      transmission: 'manual',
       powerCV: 122,
     },
     // {

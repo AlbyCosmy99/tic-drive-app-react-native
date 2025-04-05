@@ -38,8 +38,7 @@ export default function UserTabLayout() {
             ),
           }}
         />
-        {/* todo: abilitare chat appena implementato il resto e testare bene */}
-        {/* <Tab.Screen
+        <Tab.Screen
           name="Chat"
           component={UserChat}
           options={{
@@ -49,7 +48,7 @@ export default function UserTabLayout() {
               <ChatIcon width={28} fill={color} name="Home" />
             ),
           }}
-        /> */}
+        />
         <Tab.Screen
           name="Services"
           component={ChooseServicesScreen}
