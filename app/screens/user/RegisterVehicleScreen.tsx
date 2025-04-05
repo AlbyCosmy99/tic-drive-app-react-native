@@ -23,6 +23,11 @@ import isPlateNumber from '@/utils/car/isPlateNumber';
 import CarDetailsByPlate from '@/components/cars/registration/CarDetailsByPlate';
 import CarConfirmationDetails from '@/components/cars/registration/CarConfirmationDetails';
 import {setSelectedCar} from '@/stateManagement/redux/slices/carsSlice';
+import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
+import axiosClient from '@/services/http/axiosClient';
+import ErrorModal from '@/components/ui/modals/ErrorModal';
+import navigationPush from '@/services/navigation/push';
+import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 
 function RegisterVehicleScreen() {
   const [segmentedControlSelection, setSegmentedControlSelection] =
@@ -45,6 +50,11 @@ function RegisterVehicleScreen() {
     TicDriveDropdownData | undefined
   >(undefined);
 
+  const [
+    loadingCarRegistrationConfirmation,
+    setLoadingCarRegistrationConfirmation,
+  ] = useState(false);
+
   const {
     carSelectedByMakeAndModel,
     setCarSelectedByMakeAndModel,
@@ -62,7 +72,9 @@ function RegisterVehicleScreen() {
   const token = useAppSelector(state => state.auth.token);
 
   const route = useRoute();
-  const {carSelected, goToVehicles} = route.params;
+  const {goToVehicles} = route.params;
+
+  const navigation = useTicDriveNavigation();
 
   const routeName = useMemo(() => {
     if (
@@ -186,6 +198,52 @@ function RegisterVehicleScreen() {
     }
   };
   // {"data": {"ABS": "", "AirBag": "", "CarMake": "MAZDA", "CarModel": "CX-5 2ª serie", "Description": "MAZDA CX-5 2ª serie", "EngineSize": "2191", "FuelType": "Diesel", "Immobiliser": "", "KType": "", "LicensePlate": "FV181EX", "MakeDescription": "MAZDA", "ModelDescription": "CX-5 2ª serie", "NumberOfDoors": "", "PowerCV": 184, "PowerFiscal": 21, "PowerKW": 135, "RegistrationYear": "2019", "TimeStamp": 1739716456, "Version": "MAZDA CX-5 2.2L Skyactiv-D 184 CV aut. AWD Exceed ( 1/2019 )", "Vin": ""}, "error": null, "message": "", "success": true}
+
+  const {setErrorMessage} = useContext(GlobalContext);
+
+  const user = useAppSelector(state => state.auth.user);
+  const languageCode = useAppSelector(state => state.language.languageCode);
+
+  const confirmCarSelected = async () => {
+    const carSelected =
+      segmentedControlSelection?.index === 0
+        ? carSelectedByMakeAndModel
+        : carSelectedByPlateCtx;
+
+    dispatch(setSelectedCar(carSelected));
+
+    try {
+      setLoadingCarRegistrationConfirmation(true);
+      await axiosClient.post(
+        'cars',
+        {
+          name:
+            languageCode === 'it'
+              ? `La ${carSelected?.make} ${carSelected?.model} di ${user?.name}`
+              : `${user?.name}'s ${carSelected?.make} ${carSelected?.model}`,
+          plate: carSelected?.plateNumber,
+          make: carSelected?.make,
+          model: carSelected?.model,
+          year: carSelected?.year,
+          fuelType: carSelected?.fuel,
+          transmissionType: carSelected?.transmission,
+          engineDisplacement: carSelected?.engineDisplacement,
+          km: carSelected?.mileage,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      navigationPush(navigation, routeName);
+    } catch (e: any) {
+      setErrorMessage('A problem occured during the car registration.');
+    } finally {
+      setLoadingCarRegistrationConfirmation(false);
+    }
+  };
 
   useEffect(() => {
     if (carMakeDropdownData) {
@@ -348,7 +406,11 @@ function RegisterVehicleScreen() {
         </View>
       </View>
       <TicDriveButton
-        text="Confirm"
+        text={
+          loadingCarRegistrationConfirmation
+            ? 'Confimation in progress...'
+            : 'Confirm'
+        }
         onClick={() => {
           if (segmentedControlSelection?.index === 0) {
             setMakeAndModelConfirmation(true);
@@ -371,18 +433,12 @@ function RegisterVehicleScreen() {
           }
 
           if (makeAndModelConfirmation || plateConfirmation) {
-            dispatch(
-              setSelectedCar(
-                segmentedControlSelection?.index === 0
-                  ? carSelectedByMakeAndModel
-                  : carSelectedByPlateCtx,
-              ),
-            );
+            confirmCarSelected();
           }
         }}
-        routeName={routeName}
         disabled={!buttonIsEnabled}
       />
+      <ErrorModal />
     </SafeAreaViewLayout>
   );
 }

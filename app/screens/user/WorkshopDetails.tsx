@@ -46,8 +46,6 @@ export default function WorkshopDetails() {
   const lat = workshop?.latitude || null;
   const lng = workshop?.longitude || null;
 
-
-
   const onShare = async () => {
     try {
       const result = await Share.share({
@@ -156,7 +154,13 @@ export default function WorkshopDetails() {
                 <View className="flex-1 flex-row items-center gap-0.5">
                   <CrossPlatformButtonLayout
                     removeAllStyles
-                    onPress={() => openGoogleMaps(workshop?.address, workshop?.latitude, workshop?.longitude)}
+                    onPress={() =>
+                      openGoogleMaps(
+                        workshop?.address,
+                        workshop?.latitude,
+                        workshop?.longitude,
+                      )
+                    }
                   >
                     <Text className="text-base font-medium underline text-tic">
                       {workshop.address}
@@ -184,7 +188,13 @@ export default function WorkshopDetails() {
                           }}
                         >
                           <TouchableOpacity
-                            onPress={() => openGoogleMaps(workshop?.address, workshop?.latitude, workshop?.longitude)}
+                            onPress={() =>
+                              openGoogleMaps(
+                                workshop?.address,
+                                workshop?.latitude,
+                                workshop?.longitude,
+                              )
+                            }
                             activeOpacity={1}
                           >
                             <CarPinIcon />

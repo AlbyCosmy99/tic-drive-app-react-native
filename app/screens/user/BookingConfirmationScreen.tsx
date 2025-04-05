@@ -10,8 +10,11 @@ import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import formatCurrentDate from '@/utils/dates/FormatCurrentDate';
 import PaymentConfirmationCard from '@/components/ui/cards/payment/PaymentConfirmationCard';
 import {useRoute} from '@react-navigation/native';
-import {useContext, useMemo} from 'react';
+import {useContext, useEffect, useMemo} from 'react';
 import CarContext from '@/stateManagement/contexts/car/CarContext';
+import axiosClient from '@/services/http/axiosClient';
+import ErrorModal from '@/components/ui/modals/ErrorModal';
+import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 
 export default function BookingConfirmationScreen() {
   const dispatch = useAppDispatch();
@@ -66,6 +69,7 @@ export default function BookingConfirmationScreen() {
           onClick={onConfirmToHome}
         />
       </SafeAreaViewLayout>
+      <ErrorModal />
     </LinearGradient>
   );
 }

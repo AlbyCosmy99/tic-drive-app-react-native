@@ -1,7 +1,7 @@
 import {DefaultTheme, ThemeProvider} from '@react-navigation/native';
 import {useFonts} from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import 'react-native-reanimated';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {Provider} from 'react-redux';
@@ -37,6 +37,7 @@ import ResetPasswordWithCodeScreen from './screens/user/ResetPasswordWithCodeScr
 import ChangePasswordScreen from './screens/user/ChangePasswordScreen';
 import SuccessfullyPasswordChangedScreen from './screens/user/SuccessfullyPasswordChangedScreen';
 import UserVehiclesScreen from './screens/vehicles/UserVehiclesScreen';
+import i18n from '@/i18n';
 SplashScreen.preventAutoHideAsync();
 
 const Stack = createNativeStackNavigator();

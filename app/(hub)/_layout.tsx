@@ -12,6 +12,7 @@ import {removeSecureToken} from '@/services/auth/secureStore/setToken';
 import navigationPush from '@/services/navigation/push';
 import {Colors} from '@/constants/Colors';
 import getUserData from '@/utils/auth/getUserData';
+import i18n from '@/i18n';
 
 const Hub = () => {
   const dispatch = useAppDispatch();
@@ -19,6 +20,7 @@ const Hub = () => {
   const {setNavigation} = useContext(NavigationContext);
 
   let user = useAppSelector(state => state.auth.user);
+  const languageCode = useAppSelector(state => state.language.languageCode);
 
   useEffect(() => {
     setNavigation(navigation);
@@ -57,6 +59,8 @@ const Hub = () => {
       }
     };
     checkAuth();
+
+    i18n.changeLanguage(languageCode);
   }, []);
 
   useEffect(() => {

@@ -14,7 +14,6 @@ export type FuelType = (typeof fuels)[number];
 export type transmissionType = 'manual' | 'automatic';
 interface Car {
   id: number;
-  // carMakeId: number;
   make: string;
   name: string;
   year: number | null;
