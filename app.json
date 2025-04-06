@@ -15,6 +15,7 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
+      "buildNumber": "3",
       "supportsTablet": true,
       "bundleIdentifier": "com.ticdrive.ios",
       "associatedDomains": ["applinks:ticdrive.com"],
