@@ -1,9 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {StyleSheet, View, Modal, Button, Text, Image} from 'react-native';
 import MapView, {Marker, Region, LatLng} from 'react-native-maps';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import * as Location from 'expo-location';
 import {router} from 'expo-router';
+import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
+import ErrorModal from './ui/modals/ErrorModal';
 
 interface POIMarker {
   coordinate: LatLng;
@@ -41,11 +42,13 @@ export default function ServicesMapModal({
   const [userLocation, setUserLocation] = useState<LatLng | null>(null);
   const [selectedPrice, setSelectedPrice] = useState<number | null>(null);
 
+  const {setErrorMessage} = useContext(GlobalContext);
+
   useEffect(() => {
     (async () => {
       let {status} = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        alert('Permission to access location was denied');
+        setErrorMessage('Permission to access location was denied');
         return;
       }
 
@@ -74,57 +77,60 @@ export default function ServicesMapModal({
   };
 
   return (
-    <Modal visible={isMapVisible} animationType="slide" transparent={false}>
-      <View style={styles.modalContent}>
-        {initialRegion && (
-          <MapView
-            style={StyleSheet.absoluteFillObject}
-            initialRegion={initialRegion}
-            scrollEnabled={true}
-            zoomEnabled={true}
-          >
-            {userLocation && ( // User location
-              <Marker coordinate={userLocation} title="Your Location">
-                <View style={styles.userIconContainer}>
-                  <Image
-                    source={require('../assets/images/favicon.png')}
-                    style={styles.userIcon}
-                    resizeMode="contain"
-                  />
-                </View>
-              </Marker>
-            )}
-
-            {selectedLocation &&
-              selectedPrice !== null && ( //selected location
-                <Marker coordinate={selectedLocation}>
-                  <View style={styles.selectedMarker}>
-                    <Text style={styles.priceText}>{selectedPrice}</Text>
+    <>
+      <Modal visible={isMapVisible} animationType="slide" transparent={false}>
+        <View style={styles.modalContent}>
+          {initialRegion && (
+            <MapView
+              style={StyleSheet.absoluteFillObject}
+              initialRegion={initialRegion}
+              scrollEnabled={true}
+              zoomEnabled={true}
+            >
+              {userLocation && ( // User location
+                <Marker coordinate={userLocation} title="Your Location">
+                  <View style={styles.userIconContainer}>
+                    <Image
+                      source={require('../assets/images/favicon.png')}
+                      style={styles.userIcon}
+                      resizeMode="contain"
+                    />
                   </View>
                 </Marker>
               )}
 
-            {poiMarkers.map((poi, index) => (
-              <Marker
-                key={index}
-                coordinate={poi.coordinate}
-                title={poi.name}
-                description={`Price: ${poi.price}`}
-                image={poi.icon ? {uri: poi.icon} : undefined}
-                onPress={() => handlePOISelect(poi)}
-              >
-                <View style={styles.markerContent}>
-                  <Text style={styles.markerText}>{poi.price}</Text>
-                </View>
-              </Marker>
-            ))}
-          </MapView>
-        )}
-        <View style={styles.closeButtonContainer}>
-          <Button title="Close" onPress={() => setIsMapVisible(false)} />
+              {selectedLocation &&
+                selectedPrice !== null && ( //selected location
+                  <Marker coordinate={selectedLocation}>
+                    <View style={styles.selectedMarker}>
+                      <Text style={styles.priceText}>{selectedPrice}</Text>
+                    </View>
+                  </Marker>
+                )}
+
+              {poiMarkers.map((poi, index) => (
+                <Marker
+                  key={index}
+                  coordinate={poi.coordinate}
+                  title={poi.name}
+                  description={`Price: ${poi.price}`}
+                  image={poi.icon ? {uri: poi.icon} : undefined}
+                  onPress={() => handlePOISelect(poi)}
+                >
+                  <View style={styles.markerContent}>
+                    <Text style={styles.markerText}>{poi.price}</Text>
+                  </View>
+                </Marker>
+              ))}
+            </MapView>
+          )}
+          <View style={styles.closeButtonContainer}>
+            <Button title="Close" onPress={() => setIsMapVisible(false)} />
+          </View>
         </View>
-      </View>
-    </Modal>
+      </Modal>
+      <ErrorModal />
+    </>
   );
 }
 
