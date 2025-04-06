@@ -15,7 +15,7 @@ import OrderIcon from '@/assets/svg/operations/order.svg';
 import FilterIcon from '@/assets/svg/operations/filter.svg';
 import MapIcon from '@/assets/svg/location/map.svg';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
-import ServicesMapModal from '@/components/ServiceMapModal';
+import MapModal from '@/components/modal/MapModal';
 import { LatLng, Region } from 'react-native-maps';
 
 interface OrderOption {
@@ -198,7 +198,7 @@ export default function WorkshopsListScreen() {
         </View>
 
         {/* ✅ MAP MODAL */}
-        <ServicesMapModal
+        <MapModal
           isMapVisible={isMapVisible}
           setIsMapVisible={setIsMapVisible}
           selectedLocation={selectedLocation}

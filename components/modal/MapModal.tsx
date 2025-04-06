@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   StyleSheet,
   View,
@@ -13,6 +13,8 @@ import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete'
 import * as Location from 'expo-location';
 import {Ionicons} from '@expo/vector-icons';
 import {router} from 'expo-router';
+import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
+import ToPreviousPage from '../navigation/ToPreviousPage';
 
 interface POIMarker {
   coordinate: LatLng;
@@ -22,7 +24,7 @@ interface POIMarker {
   id: number;
 }
 
-interface ServicesMapModalProps {
+interface MapModalProps {
   isMapVisible: boolean;
   setIsMapVisible: React.Dispatch<React.SetStateAction<boolean>>;
   selectedLocation: LatLng | null;
@@ -35,7 +37,7 @@ interface ServicesMapModalProps {
   setInitialRegion: React.Dispatch<React.SetStateAction<Region | null>>;
 }
 
-export default function ServicesMapModal({
+export default function MapModal({
   isMapVisible,
   setIsMapVisible,
   selectedLocation,
@@ -46,26 +48,25 @@ export default function ServicesMapModal({
   setPoiMarkers,
   initialRegion,
   setInitialRegion,
-}: ServicesMapModalProps) {
+}: MapModalProps) {
   const [userLocation, setUserLocation] = useState<LatLng | null>(null);
+  const {setErrorMessage} = useContext(GlobalContext);
 
   useEffect(() => {
     (async () => {
       try {
         const servicesEnabled = await Location.hasServicesEnabledAsync();
         if (!servicesEnabled) {
-          Alert.alert(
-            'Location Disabled',
-            'Please enable location services in your phone settings.',
+          setErrorMessage(
+            'Location Disabled. Please enable location services in your phone settings.',
           );
           return;
         }
 
         const {status} = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
-          Alert.alert(
-            'Permission Denied',
-            'Enable location access from Settings > Privacy > Location Services.',
+          setErrorMessage(
+            'Permission Denied. Enable location access from Settings.',
           );
           return;
         }
@@ -120,42 +121,11 @@ export default function ServicesMapModal({
           </MapView>
         )}
 
-        {/* Google Search Bar */}
-        <View style={styles.searchContainer}>
-          <GooglePlacesAutocomplete
-            placeholder="Padova, Italia, 35133"
-            onPress={(data, details = null) => {
-              if (details) {
-                const {lat, lng} = details.geometry.location;
-                setSelectedLocation({latitude: lat, longitude: lng});
-                setLocationName(details.formatted_address || data.description);
-              }
-              setIsMapVisible(false);
-            }}
-            query={{
-              key: 'AIzaSyBpJqSqJaYw7xrmzjPxfLZhqU9M7R5ZRVk',
-              language: 'en',
-            }}
-            fetchDetails={true}
-            styles={{
-              textInputContainer: styles.textInputContainer,
-              textInput: styles.textInput,
-              listView: styles.listView,
-            }}
-          />
-        </View>
-
-        {/* Filter Button */}
-        <TouchableOpacity style={styles.filterButton}>
-          <Text style={styles.filterText}>Filtra</Text>
-        </TouchableOpacity>
-
-        {/* Close Button */}
         <TouchableOpacity
-          onPress={() => setIsMapVisible(false)}
           style={styles.closeButton}
+          onPress={() => setIsMapVisible(false)}
         >
-          <Ionicons name="close" size={30} color="black" />
+          <Ionicons name="close" size={24} color="#333" />
         </TouchableOpacity>
       </View>
     </Modal>
@@ -165,15 +135,14 @@ export default function ServicesMapModal({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    position: 'relative',
     backgroundColor: 'white',
   },
   searchContainer: {
     position: 'absolute',
     top: Platform.OS === 'ios' ? 60 : 40,
-    left: 20,
-    right: 20,
-    zIndex: 10,
+    left: 16,
+    right: 16,
+    zIndex: 20,
   },
   textInputContainer: {
     backgroundColor: 'transparent',
@@ -213,33 +182,41 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   filterButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
     position: 'absolute',
-    top: Platform.OS === 'ios' ? 110 : 90,
-    left: 30,
-    backgroundColor: 'white',
-    paddingHorizontal: 16,
+    top: Platform.OS === 'ios' ? 120 : 100,
+    right: 20,
+    backgroundColor: '#fff',
+    paddingHorizontal: 12,
     paddingVertical: 6,
-    borderRadius: 20,
+    borderRadius: 18,
     borderWidth: 1,
-    borderColor: '#ccc',
-    zIndex: 10,
+    borderColor: '#ddd',
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 1},
+    shadowOpacity: 0.15,
+    shadowRadius: 2,
+    elevation: 3,
+    zIndex: 20,
   },
   filterText: {
-    fontWeight: '600',
     fontSize: 14,
+    fontWeight: '500',
+    color: '#333',
   },
   closeButton: {
     position: 'absolute',
-    top: Platform.OS === 'ios' ? 55 : 35,
-    right: 20,
-    backgroundColor: 'white',
-    padding: 6,
-    borderRadius: 30,
+    top: Platform.OS === 'ios' ? 60 : 40,
+    right: 16,
+    backgroundColor: '#fff',
+    padding: 8,
+    borderRadius: 24,
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 1},
-    shadowOpacity: 0.3,
-    shadowRadius: 3,
-    elevation: 6,
-    zIndex: 20,
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 4,
+    zIndex: 30,
   },
 });

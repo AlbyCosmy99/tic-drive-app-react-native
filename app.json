@@ -21,7 +21,8 @@
       "associatedDomains": ["applinks:ticdrive.com"],
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
-        "NSLocationWhenInUseUsageDescription": "This app requires access to your location to show nearby workshops."
+        "NSLocationWhenInUseUsageDescription": "This app requires access to your location to show nearby workshops.",
+        "NSLocationAlwaysUsageDescription": "This app requires background location access to enhance the user experience and show nearby workshops."
       },
       "config": {
         "googleMapsApiKey": "AIzaSyA4RElAzKK4A46CGKArVpOW5fXoTRLKAso"
