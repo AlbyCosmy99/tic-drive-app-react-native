@@ -114,7 +114,7 @@ export default function MapModal({
                 onPress={() => handlePOISelect(poi)}
               >
                 <View style={styles.priceBubble}>
-                  <Text style={styles.priceText}>€{poi.price}</Text>
+                  <Text style={styles.priceText}>{poi.price}€</Text>
                 </View>
               </Marker>
             ))}
