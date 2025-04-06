@@ -1,6 +1,6 @@
-import {useState, useContext} from 'react';
-import {View, Text} from 'react-native';
-import {Colors} from '@/constants/Colors';
+import { useState, useContext } from 'react';
+import { View, Text } from 'react-native';
+import { Colors } from '@/constants/Colors';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
 import WorkshopCards from '@/components/WorkshopCards';
@@ -8,13 +8,16 @@ import HorizontalLine from '@/components/ui/HorizontalLine';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import LinearGradientViewLayout from '@/app/layouts/LinearGradientViewLayout';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
-import {useRoute, RouteProp} from '@react-navigation/native';
-import {useTranslation} from 'react-i18next';
+import { useRoute, RouteProp } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 import IconTextPair from '@/components/ui/IconTextPair';
 import OrderIcon from '@/assets/svg/operations/order.svg';
 import FilterIcon from '@/assets/svg/operations/filter.svg';
 import MapIcon from '@/assets/svg/location/map.svg';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
+import ServicesMapModal from '@/components/ServiceMapModal';
+import { LatLng, Region } from 'react-native-maps';
+import workshops from '@/constants/temp/Workshops'; // in case you use mock POIs
 
 interface OrderOption {
   label: string;
@@ -26,40 +29,56 @@ interface FilterOption {
   value: string;
 }
 
+interface POIMarker {
+  coordinate: LatLng;
+  name: string;
+  price: string;
+  icon?: string;
+  id: number;
+}
+
 const orderOptions: OrderOption[] = [
-  {label: 'Ascending', value: 'asc'},
-  {label: 'Descending', value: 'desc'},
+  { label: 'Ascending', value: 'asc' },
+  { label: 'Descending', value: 'desc' },
 ];
 
 const filterOptions: FilterOption[] = [
-  {label: 'Price', value: 'price'},
-  {label: 'Rating', value: 'rating'},
+  { label: 'Price', value: 'price' },
+  { label: 'Rating', value: 'rating' },
 ];
 
 type RootStackParamList = {
-  WorkshopsListScreen: {favorite: boolean};
+  WorkshopsListScreen: { favorite: boolean };
 };
 
 export default function WorkshopsListScreen() {
-  const {setWorkshopFilter} = useContext(GlobalContext);
-  const route =
-    useRoute<RouteProp<RootStackParamList, 'WorkshopsListScreen'>>();
-  const {t} = useTranslation();
-  const {favorite} = route.params;
+  const { setWorkshopFilter } = useContext(GlobalContext);
+  const route = useRoute<RouteProp<RootStackParamList, 'WorkshopsListScreen'>>();
+  const { t } = useTranslation();
+  const { favorite } = route.params;
 
-  const [orderDropdownVisible, setOrderDropdownVisible] =
-    useState<boolean>(false);
-  const [filterDropdownVisible, setFilterDropdownVisible] =
-    useState<boolean>(false);
+  const [orderDropdownVisible, setOrderDropdownVisible] = useState(false);
+  const [filterDropdownVisible, setFilterDropdownVisible] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<OrderOption>({
     label: 'Ascending',
     value: 'asc',
   });
 
+  // ✅ Map Modal State
+  const [isMapVisible, setIsMapVisible] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState<LatLng | null>(null);
+  const [locationName, setLocationName] = useState<string | null>(null);
+  const [poiMarkers, setPoiMarkers] = useState<POIMarker[]>([]);
+  const [initialRegion, setInitialRegion] = useState<Region | null>(null);
+
+  const onOpenMap = () => {
+    setIsMapVisible(true);
+  };
+
   const renderDropdown = (
     options: FilterOption[] | OrderOption[],
     onSelect: (option: FilterOption | OrderOption) => void,
-    onClose: () => void,
+    onClose: () => void
   ) => (
     <View
       style={{
@@ -73,7 +92,7 @@ export default function WorkshopsListScreen() {
         width: 150,
       }}
     >
-      {options.map(option => (
+      {options.map((option) => (
         <CrossPlatformButtonLayout
           removeAllStyles
           styleContainer={{
@@ -97,17 +116,19 @@ export default function WorkshopsListScreen() {
     <LinearGradientViewLayout>
       <SafeAreaViewLayout>
         <TicDriveNavbar />
+
         <View className="flex-col items-center h-[102px] relative">
           <TicDriveInput
             isLeftIcon={true}
             isRightIcon={true}
             placeholder={t('workshops.searchWorkshop')}
             containerViewStyleTailwind="flex-1 items-center"
-            inputContainerStyle={{marginTop: 4, height: 48}}
+            inputContainerStyle={{ marginTop: 4, height: 48 }}
             onChange={(text: string) => {
               setWorkshopFilter(text);
             }}
           />
+
           <View className="flex-row justify-between mx-1 mb-2 absolute bottom-0 w-full px-4">
             <View className="flex-1 relative">
               <CrossPlatformButtonLayout
@@ -129,10 +150,8 @@ export default function WorkshopsListScreen() {
               {orderDropdownVisible &&
                 renderDropdown(
                   orderOptions,
-                  option => {
-                    setSelectedOrder(option as OrderOption);
-                  },
-                  () => setOrderDropdownVisible(false),
+                  (option) => setSelectedOrder(option as OrderOption),
+                  () => setOrderDropdownVisible(false)
                 )}
             </View>
 
@@ -153,22 +172,14 @@ export default function WorkshopsListScreen() {
                   iconContainerTailwindCss="mr-1"
                 />
               </CrossPlatformButtonLayout>
-              {/* {filterDropdownVisible &&
-                renderDropdown(
-                  filterOptions,
-                  option => {
-                    setSelectedFilter(option as FilterOption);
-                  },
-                  () => setFilterDropdownVisible(false),
-                )} */}
+              {/* future dropdown here */}
             </View>
 
-            {/* Map Button */}
             <View className="flex-1">
               <CrossPlatformButtonLayout
                 containerTailwindCss="flex-1"
                 removeAllStyles
-                onPress={() => console.log('Map pressed')}
+                onPress={onOpenMap}
               >
                 <IconTextPair
                   text="Map"
@@ -186,6 +197,20 @@ export default function WorkshopsListScreen() {
         <View className="flex-1">
           <WorkshopCards favorite={favorite} order={selectedOrder.value} />
         </View>
+
+        {/* ✅ MAP MODAL */}
+        <ServicesMapModal
+          isMapVisible={isMapVisible}
+          setIsMapVisible={setIsMapVisible}
+          selectedLocation={selectedLocation}
+          setSelectedLocation={setSelectedLocation}
+          locationName={locationName}
+          setLocationName={setLocationName}
+          poiMarkers={poiMarkers}
+          setPoiMarkers={setPoiMarkers}
+          initialRegion={initialRegion}
+          setInitialRegion={setInitialRegion}
+        />
       </SafeAreaViewLayout>
     </LinearGradientViewLayout>
   );

@@ -76,27 +76,6 @@ export default function ServicesMapModal({
   return (
     <Modal visible={isMapVisible} animationType="slide" transparent={false}>
       <View style={styles.modalContent}>
-        <GooglePlacesAutocomplete
-          placeholder="Search"
-          onPress={(data, details = null) => {
-            if (details) {
-              const {lat, lng} = details.geometry.location;
-              setSelectedLocation({latitude: lat, longitude: lng});
-              setLocationName(details.formatted_address || data.description);
-            }
-            setIsMapVisible(false);
-          }}
-          query={{
-            key: 'AIzaSyBpJqSqJaYw7xrmzjPxfLZhqU9M7R5ZRVk',
-            language: 'en',
-          }}
-          styles={{
-            textInputContainer: styles.textInputContainer,
-            textInput: styles.searchInput,
-            listView: styles.listView,
-          }}
-          fetchDetails={true}
-        />
         {initialRegion && (
           <MapView
             style={StyleSheet.absoluteFillObject}
