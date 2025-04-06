@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -8,11 +8,11 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import MapView, { Marker, Region, LatLng } from 'react-native-maps';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import MapView, {Marker, Region, LatLng} from 'react-native-maps';
+import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import * as Location from 'expo-location';
-import { Ionicons } from '@expo/vector-icons';
-import { router } from 'expo-router';
+import {Ionicons} from '@expo/vector-icons';
+import {router} from 'expo-router';
 
 interface POIMarker {
   coordinate: LatLng;
@@ -56,26 +56,24 @@ export default function ServicesMapModal({
         if (!servicesEnabled) {
           Alert.alert(
             'Location Disabled',
-            'Location services are off. Defaulting to Padova.'
+            'Please enable location services in your phone settings.',
           );
-          setFallbackToPadova();
           return;
         }
 
-        const { status } = await Location.requestForegroundPermissionsAsync();
+        const {status} = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
           Alert.alert(
             'Permission Denied',
-            'Location permission denied. Showing Padova by default.'
+            'Enable location access from Settings > Privacy > Location Services.',
           );
-          setFallbackToPadova();
           return;
         }
 
         const location = await Location.getCurrentPositionAsync({});
-        const { latitude, longitude } = location.coords;
+        const {latitude, longitude} = location.coords;
 
-        setUserLocation({ latitude, longitude });
+        setUserLocation({latitude, longitude});
         setInitialRegion({
           latitude,
           longitude,
@@ -84,20 +82,10 @@ export default function ServicesMapModal({
         });
       } catch (err) {
         console.error('Location error:', err);
-        Alert.alert('Error', 'Could not get your location. Showing Padova.');
-        setFallbackToPadova();
+        Alert.alert('Error', 'Could not get your location. Please try again.');
       }
     })();
   }, []);
-
-  const setFallbackToPadova = () => {
-    setInitialRegion({
-      latitude: 45.4064,
-      longitude: 11.8768,
-      latitudeDelta: 0.05,
-      longitudeDelta: 0.025,
-    });
-  };
 
   const handlePOISelect = (poi: POIMarker) => {
     setSelectedLocation(poi.coordinate);
@@ -105,7 +93,7 @@ export default function ServicesMapModal({
     setIsMapVisible(false);
     router.push({
       pathname: '../screens/user/WorkshopDetails',
-      params: { id: poi.id },
+      params: {id: poi.id},
     });
   };
 
@@ -118,7 +106,7 @@ export default function ServicesMapModal({
             initialRegion={initialRegion}
             showsUserLocation
           >
-            {poiMarkers.map((poi) => (
+            {poiMarkers.map(poi => (
               <Marker
                 key={poi.id}
                 coordinate={poi.coordinate}
@@ -138,8 +126,8 @@ export default function ServicesMapModal({
             placeholder="Padova, Italia, 35133"
             onPress={(data, details = null) => {
               if (details) {
-                const { lat, lng } = details.geometry.location;
-                setSelectedLocation({ latitude: lat, longitude: lng });
+                const {lat, lng} = details.geometry.location;
+                setSelectedLocation({latitude: lat, longitude: lng});
                 setLocationName(details.formatted_address || data.description);
               }
               setIsMapVisible(false);
@@ -214,7 +202,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
+    shadowOffset: {width: 0, height: 1},
     shadowOpacity: 0.3,
     shadowRadius: 2,
     elevation: 5,
@@ -248,7 +236,7 @@ const styles = StyleSheet.create({
     padding: 6,
     borderRadius: 30,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
+    shadowOffset: {width: 0, height: 1},
     shadowOpacity: 0.3,
     shadowRadius: 3,
     elevation: 6,

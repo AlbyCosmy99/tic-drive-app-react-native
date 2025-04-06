@@ -32,7 +32,7 @@
     "axios": "1.7.9",
     "expo": "~52.0.36",
     "expo-constants": "~17.0.5",
-    "expo-dev-client": "~5.0.11",
+    "expo-dev-client": "~5.0.19",
     "expo-device": "7.0.2",
     "expo-font": "~13.0.3",
     "expo-linear-gradient": "14.0.2",
