@@ -1,10 +1,17 @@
-import React, {useState, useEffect, useContext} from 'react';
-import {StyleSheet, View, Modal, Button, Text, Image} from 'react-native';
-import MapView, {Marker, Region, LatLng} from 'react-native-maps';
+import React, { useState, useEffect } from 'react';
+import {
+  StyleSheet,
+  View,
+  Modal,
+  Text,
+  Platform,
+  TouchableOpacity,
+} from 'react-native';
+import MapView, { Marker, Region, LatLng } from 'react-native-maps';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import * as Location from 'expo-location';
-import {router} from 'expo-router';
-import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
-import ErrorModal from './ui/modals/ErrorModal';
+import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 
 interface POIMarker {
   coordinate: LatLng;
@@ -40,171 +47,182 @@ export default function ServicesMapModal({
   setInitialRegion,
 }: ServicesMapModalProps) {
   const [userLocation, setUserLocation] = useState<LatLng | null>(null);
-  const [selectedPrice, setSelectedPrice] = useState<number | null>(null);
-
-  const {setErrorMessage} = useContext(GlobalContext);
 
   useEffect(() => {
     (async () => {
-      let {status} = await Location.requestForegroundPermissionsAsync();
+      const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        setErrorMessage('Permission to access location was denied');
-        return;
+        alert('Permission to access location was denied');
+        // return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
-      const {latitude, longitude} = location.coords;
+      const location = await Location.getCurrentPositionAsync({});
+      const { latitude, longitude } = location.coords;
 
-      setUserLocation({latitude, longitude});
+      setUserLocation({ latitude, longitude });
       setInitialRegion({
         latitude,
         longitude,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
+        latitudeDelta: 0.05,
+        longitudeDelta: 0.025,
       });
     })();
   }, []);
 
   const handlePOISelect = (poi: POIMarker) => {
     setSelectedLocation(poi.coordinate);
-    setSelectedPrice(poi.price);
     setLocationName(poi.name);
     setIsMapVisible(false);
     router.push({
       pathname: '../screens/user/WorkshopDetails',
-      params: {id: poi.id},
+      params: { id: poi.id },
     });
   };
 
   return (
-    <>
-      <Modal visible={isMapVisible} animationType="slide" transparent={false}>
-        <View style={styles.modalContent}>
-          {initialRegion && (
-            <MapView
-              style={StyleSheet.absoluteFillObject}
-              initialRegion={initialRegion}
-              scrollEnabled={true}
-              zoomEnabled={true}
-            >
-              {userLocation && ( // User location
-                <Marker coordinate={userLocation} title="Your Location">
-                  <View style={styles.userIconContainer}>
-                    <Image
-                      source={require('../assets/images/favicon.png')}
-                      style={styles.userIcon}
-                      resizeMode="contain"
-                    />
-                  </View>
-                </Marker>
-              )}
+    <Modal visible={isMapVisible} animationType="slide">
+      <View style={styles.container}>
+        {initialRegion && (
+          <MapView
+            style={StyleSheet.absoluteFillObject}
+            initialRegion={initialRegion}
+            showsUserLocation
+          >
+            {poiMarkers.map((poi) => (
+              <Marker
+                key={poi.id}
+                coordinate={poi.coordinate}
+                onPress={() => handlePOISelect(poi)}
+              >
+                <View style={styles.priceBubble}>
+                  <Text style={styles.priceText}>€{poi.price}</Text>
+                </View>
+              </Marker>
+            ))}
+          </MapView>
+        )}
 
-              {selectedLocation &&
-                selectedPrice !== null && ( //selected location
-                  <Marker coordinate={selectedLocation}>
-                    <View style={styles.selectedMarker}>
-                      <Text style={styles.priceText}>{selectedPrice}</Text>
-                    </View>
-                  </Marker>
-                )}
-
-              {poiMarkers.map((poi, index) => (
-                <Marker
-                  key={index}
-                  coordinate={poi.coordinate}
-                  title={poi.name}
-                  description={`Price: ${poi.price}`}
-                  image={poi.icon ? {uri: poi.icon} : undefined}
-                  onPress={() => handlePOISelect(poi)}
-                >
-                  <View style={styles.markerContent}>
-                    <Text style={styles.markerText}>{poi.price}</Text>
-                  </View>
-                </Marker>
-              ))}
-            </MapView>
-          )}
-          <View style={styles.closeButtonContainer}>
-            <Button title="Close" onPress={() => setIsMapVisible(false)} />
-          </View>
+        {/* Google Search Bar */}
+        <View style={styles.searchContainer}>
+          
+          <GooglePlacesAutocomplete
+            placeholder="Padova, Italia, 35133"
+            onPress={(data, details = null) => {
+              if (details) {
+                const { lat, lng } = details.geometry.location;
+                setSelectedLocation({ latitude: lat, longitude: lng });
+                setLocationName(details.formatted_address || data.description);
+              }
+              setIsMapVisible(false);
+            }}
+            query={{
+              key: 'AIzaSyBpJqSqJaYw7xrmzjPxfLZhqU9M7R5ZRVk',
+              language: 'en',
+            }}
+            fetchDetails={true}
+            styles={{
+              textInputContainer: styles.textInputContainer,
+              textInput: styles.textInput,
+              listView: styles.listView,
+            }}
+          />
         </View>
-      </Modal>
-      <ErrorModal />
-    </>
+
+        {/* Filter Button (Optional) */}
+        <TouchableOpacity style={styles.filterButton}>
+          <Text style={styles.filterText}>Filtra</Text>
+        </TouchableOpacity>
+
+        {/* Close Button */}
+        <TouchableOpacity
+          onPress={() => setIsMapVisible(false)}
+          style={styles.closeButton}
+        >
+          <Ionicons name="close" size={30} color="black" />
+        </TouchableOpacity>
+      </View>
+    </Modal>
   );
 }
 
 const styles = StyleSheet.create({
-  modalContent: {
+  container: {
     flex: 1,
+    position: 'relative',
     backgroundColor: 'white',
   },
-  map: {
-    ...StyleSheet.absoluteFillObject,
+  searchContainer: {
+    position: 'absolute',
+    top: Platform.OS === 'ios' ? 60 : 40,
+    left: 20,
+    right: 20,
+    zIndex: 10,
   },
   textInputContainer: {
-    width: '100%',
     backgroundColor: 'transparent',
-    position: 'absolute',
-    top: 20,
-    zIndex: 1,
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
   },
-  searchInput: {
+  textInput: {
     height: 44,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: '#ddd',
+    paddingHorizontal: 15,
+    borderRadius: 12,
+    backgroundColor: '#f5f5f5',
     fontSize: 16,
+    borderColor: '#ccc',
+    borderWidth: 1,
   },
   listView: {
     backgroundColor: 'white',
-    position: 'absolute',
-    top: 64,
-    zIndex: 2,
+    borderRadius: 12,
+    marginTop: 5,
   },
-  closeButtonContainer: {
-    position: 'absolute',
-    bottom: 20,
-    left: 20,
-    right: 20,
-    backgroundColor: 'white',
-    padding: 10,
-    borderRadius: 8,
-  },
-  markerContent: {
+  priceBubble: {
+    backgroundColor: '#4CAF50',
+    borderRadius: 30,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'white',
-    borderRadius: 5,
-    padding: 2,
-    paddingHorizontal: 3,
-  },
-  markerText: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: 'black',
-  },
-  selectedMarker: {
-    //container selected marker
-    backgroundColor: 'black',
-    borderRadius: 5,
-    padding: 2,
-    paddingHorizontal: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 5,
   },
   priceText: {
-    //text selected marker
-    fontSize: 25,
-    fontWeight: 'bold',
     color: 'white',
+    fontWeight: 'bold',
+    fontSize: 14,
   },
-  userIconContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
+  filterButton: {
+    position: 'absolute',
+    top: Platform.OS === 'ios' ? 110 : 90,
+    left: 30,
+    backgroundColor: 'white',
+    paddingHorizontal: 16,
+    paddingVertical: 6,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    zIndex: 10,
   },
-  userIcon: {
-    width: 45,
-    height: 45,
+  filterText: {
+    fontWeight: '600',
+    fontSize: 14,
+  },
+  closeButton: {
+    position: 'absolute',
+    top: Platform.OS === 'ios' ? 55 : 35,
+    right: 20,
+    backgroundColor: 'white',
+    padding: 6,
+    borderRadius: 30,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
+    elevation: 6,
+    zIndex: 20,
   },
 });

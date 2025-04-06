@@ -1,6 +1,6 @@
-import { useState, useContext } from 'react';
-import { View, Text } from 'react-native';
-import { Colors } from '@/constants/Colors';
+import {useState, useContext} from 'react';
+import {View, Text} from 'react-native';
+import {Colors} from '@/constants/Colors';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
 import WorkshopCards from '@/components/WorkshopCards';
@@ -8,16 +8,15 @@ import HorizontalLine from '@/components/ui/HorizontalLine';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import LinearGradientViewLayout from '@/app/layouts/LinearGradientViewLayout';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
-import { useRoute, RouteProp } from '@react-navigation/native';
-import { useTranslation } from 'react-i18next';
+import {useRoute, RouteProp} from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 import IconTextPair from '@/components/ui/IconTextPair';
 import OrderIcon from '@/assets/svg/operations/order.svg';
 import FilterIcon from '@/assets/svg/operations/filter.svg';
 import MapIcon from '@/assets/svg/location/map.svg';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
 import ServicesMapModal from '@/components/ServiceMapModal';
-import { LatLng, Region } from 'react-native-maps';
-import workshops from '@/constants/temp/Workshops'; // in case you use mock POIs
+import {LatLng, Region} from 'react-native-maps';
 
 interface OrderOption {
   label: string;
@@ -38,24 +37,25 @@ interface POIMarker {
 }
 
 const orderOptions: OrderOption[] = [
-  { label: 'Ascending', value: 'asc' },
-  { label: 'Descending', value: 'desc' },
+  {label: 'Ascending', value: 'asc'},
+  {label: 'Descending', value: 'desc'},
 ];
 
 const filterOptions: FilterOption[] = [
-  { label: 'Price', value: 'price' },
-  { label: 'Rating', value: 'rating' },
+  {label: 'Price', value: 'price'},
+  {label: 'Rating', value: 'rating'},
 ];
 
 type RootStackParamList = {
-  WorkshopsListScreen: { favorite: boolean };
+  WorkshopsListScreen: {favorite: boolean};
 };
 
 export default function WorkshopsListScreen() {
-  const { setWorkshopFilter } = useContext(GlobalContext);
-  const route = useRoute<RouteProp<RootStackParamList, 'WorkshopsListScreen'>>();
-  const { t } = useTranslation();
-  const { favorite } = route.params;
+  const {setWorkshopFilter} = useContext(GlobalContext);
+  const route =
+    useRoute<RouteProp<RootStackParamList, 'WorkshopsListScreen'>>();
+  const {t} = useTranslation();
+  const {favorite} = route.params;
 
   const [orderDropdownVisible, setOrderDropdownVisible] = useState(false);
   const [filterDropdownVisible, setFilterDropdownVisible] = useState(false);
@@ -78,7 +78,7 @@ export default function WorkshopsListScreen() {
   const renderDropdown = (
     options: FilterOption[] | OrderOption[],
     onSelect: (option: FilterOption | OrderOption) => void,
-    onClose: () => void
+    onClose: () => void,
   ) => (
     <View
       style={{
@@ -92,7 +92,7 @@ export default function WorkshopsListScreen() {
         width: 150,
       }}
     >
-      {options.map((option) => (
+      {options.map(option => (
         <CrossPlatformButtonLayout
           removeAllStyles
           styleContainer={{
@@ -123,7 +123,7 @@ export default function WorkshopsListScreen() {
             isRightIcon={true}
             placeholder={t('workshops.searchWorkshop')}
             containerViewStyleTailwind="flex-1 items-center"
-            inputContainerStyle={{ marginTop: 4, height: 48 }}
+            inputContainerStyle={{marginTop: 4, height: 48}}
             onChange={(text: string) => {
               setWorkshopFilter(text);
             }}
@@ -150,8 +150,8 @@ export default function WorkshopsListScreen() {
               {orderDropdownVisible &&
                 renderDropdown(
                   orderOptions,
-                  (option) => setSelectedOrder(option as OrderOption),
-                  () => setOrderDropdownVisible(false)
+                  option => setSelectedOrder(option as OrderOption),
+                  () => setOrderDropdownVisible(false),
                 )}
             </View>
 
@@ -199,18 +199,20 @@ export default function WorkshopsListScreen() {
         </View>
 
         {/* ✅ MAP MODAL */}
-        <ServicesMapModal
-          isMapVisible={isMapVisible}
-          setIsMapVisible={setIsMapVisible}
-          selectedLocation={selectedLocation}
-          setSelectedLocation={setSelectedLocation}
-          locationName={locationName}
-          setLocationName={setLocationName}
-          poiMarkers={poiMarkers}
-          setPoiMarkers={setPoiMarkers}
-          initialRegion={initialRegion}
-          setInitialRegion={setInitialRegion}
-        />
+        {isMapVisible && (
+          <ServicesMapModal
+            isMapVisible={isMapVisible}
+            setIsMapVisible={setIsMapVisible}
+            selectedLocation={selectedLocation}
+            setSelectedLocation={setSelectedLocation}
+            locationName={locationName}
+            setLocationName={setLocationName}
+            poiMarkers={poiMarkers}
+            setPoiMarkers={setPoiMarkers}
+            initialRegion={initialRegion}
+            setInitialRegion={setInitialRegion}
+          />
+        )}
       </SafeAreaViewLayout>
     </LinearGradientViewLayout>
   );
