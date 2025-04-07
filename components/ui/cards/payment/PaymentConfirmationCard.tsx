@@ -12,6 +12,8 @@ import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscou
 import TicDriveOptionButton from '../../buttons/TicDriveOptionButton';
 import Workshop from '@/types/workshops/Workshop';
 import openGoogleMaps from '@/services/map/openGoogleMaps';
+import {useEffect, useState} from 'react';
+import axiosClient from '@/services/http/axiosClient';
 
 const PaymentConfirmationCard = ({
   workshop,
@@ -21,12 +23,50 @@ const PaymentConfirmationCard = ({
   timeDate: string;
 }) => {
   const servicesChoosen = useServicesChoosenByUsers();
+  const [loadingServiceOfferedDetails, setLoadingServiceOfferedDetails] =
+    useState(false);
+  const [workshopDetailed, setWorkshopDetailed] = useState(workshop);
+
+  useEffect(() => {
+    const fetchServiceOfferedDetails = async () => {
+      try {
+        setLoadingServiceOfferedDetails(true);
+        const response = await axiosClient.get(
+          `OfferedServices?WorkshopId=${workshop?.id}&ServiceId=${servicesChoosen[0].id}`,
+        );
+
+        const serviceOffered = response?.data?.length
+          ? response?.data[0]
+          : null;
+
+        setWorkshopDetailed(prev => {
+          if (!prev) return prev;
+
+          return {
+            ...prev,
+            currency: serviceOffered.currency,
+            servicePrice: serviceOffered.price,
+            discount: serviceOffered.discount,
+          };
+        });
+        console.log(serviceOffered);
+      } catch (e) {
+        console.error('Error fetching service offered details:', e);
+      } finally {
+        setLoadingServiceOfferedDetails(false);
+      }
+    };
+
+    if (workshop?.id && servicesChoosen.length > 0) {
+      fetchServiceOfferedDetails();
+    }
+  }, [workshop?.id, servicesChoosen]);
 
   return (
     <View className="rounded-lg border p-4 pt-0 border-grey-light w-full">
       <View className="flex flex-row my-4">
         <Image
-          source={{uri: workshop?.profileImageUrl}}
+          source={{uri: workshopDetailed?.profileImageUrl}}
           containerStyle={styles.image}
           PlaceholderContent={
             <ActivityIndicator
@@ -39,7 +79,7 @@ const PaymentConfirmationCard = ({
           <Text className="text-xs font-medium" style={styles.pendingText}>
             Pending confirmation
           </Text>
-          <Text className="font-medium text-xl">{workshop?.name}</Text>
+          <Text className="font-medium text-xl">{workshopDetailed?.name}</Text>
           <View className="bg-green-light p-1.5 rounded self-start mt-1">
             <Text className="text-green-dark font-semibold">
               {servicesChoosen.length ? servicesChoosen[0].title : ''}
@@ -48,28 +88,35 @@ const PaymentConfirmationCard = ({
         </View>
       </View>
       <HorizontalLine />
-      <View className="mb-2">
-        <IconTextPair icon={<CalendarIcon />} text={timeDate} />
-        <IconTextPair
-          icon={<CreditCardIcon />}
-          text={`${workshop?.currency} ${calculateWorkshopDiscount(workshop?.servicePrice ?? 0, workshop?.discount ?? 0)} total to pay`}
+      {loadingServiceOfferedDetails ? (
+        <ActivityIndicator
+          size="large"
+          color={Colors.light.bookingsOptionsText}
         />
-        {workshop?.address && (
+      ) : (
+        <View className="mb-2">
+          <IconTextPair icon={<CalendarIcon />} text={timeDate} />
           <IconTextPair
-            icon={<PinIcon fill={Colors.light.ticText} />}
-            text={workshop.address}
+            icon={<CreditCardIcon />}
+            text={`${workshopDetailed?.currency}${calculateWorkshopDiscount(workshopDetailed?.servicePrice ?? 0, workshop?.discount ?? 0)} total to pay`}
           />
-        )}
-      </View>
+          {workshopDetailed?.address && (
+            <IconTextPair
+              icon={<PinIcon fill={Colors.light.ticText} />}
+              text={workshopDetailed.address}
+            />
+          )}
+        </View>
+      )}
       <TicDriveOptionButton
         icon={<DirectionIcon />}
         text="Directions"
         textTailwindCss="font-medium text-base"
         onPress={() =>
           openGoogleMaps(
-            workshop?.address,
-            workshop?.latitude,
-            workshop?.longitude,
+            workshopDetailed?.address,
+            workshopDetailed?.latitude,
+            workshopDetailed?.longitude,
           )
         }
       />
