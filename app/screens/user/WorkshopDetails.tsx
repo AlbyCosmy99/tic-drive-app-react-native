@@ -178,8 +178,8 @@ export default function WorkshopDetails() {
                           latitudeDelta: 0.0922,
                           longitudeDelta: 0.0421,
                         }}
-                        scrollEnabled={true}
-                        zoomEnabled={true}
+                        scrollEnabled={false}
+                        zoomEnabled={false}
                       >
                         <Marker
                           coordinate={{
