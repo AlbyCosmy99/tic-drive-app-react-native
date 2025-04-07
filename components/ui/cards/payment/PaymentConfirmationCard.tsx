@@ -88,26 +88,30 @@ const PaymentConfirmationCard = ({
         </View>
       </View>
       <HorizontalLine />
-      {loadingServiceOfferedDetails ? (
-        <ActivityIndicator
-          size="large"
-          color={Colors.light.bookingsOptionsText}
-        />
-      ) : (
-        <View className="mb-2">
-          <IconTextPair icon={<CalendarIcon />} text={timeDate} />
-          <IconTextPair
-            icon={<CreditCardIcon />}
-            text={`${workshopDetailed?.currency}${calculateWorkshopDiscount(workshopDetailed?.servicePrice ?? 0, workshop?.discount ?? 0)} total to pay`}
-          />
-          {workshopDetailed?.address && (
-            <IconTextPair
-              icon={<PinIcon fill={Colors.light.ticText} />}
-              text={workshopDetailed.address}
+      <View className="h-32">
+        {loadingServiceOfferedDetails ? (
+          <View className='justify-center items-center w-full h-full'>
+            <ActivityIndicator
+              size="large"
+              color={Colors.light.bookingsOptionsText}
             />
-          )}
-        </View>
-      )}
+          </View>
+        ) : (
+          <View className="mb-2">
+            <IconTextPair icon={<CalendarIcon />} text={timeDate} />
+            <IconTextPair
+              icon={<CreditCardIcon />}
+              text={`${workshopDetailed?.currency}${calculateWorkshopDiscount(workshopDetailed?.servicePrice ?? 0, workshop?.discount ?? 0)} total to pay`}
+            />
+            {workshopDetailed?.address && (
+              <IconTextPair
+                icon={<PinIcon fill={Colors.light.ticText} />}
+                text={workshopDetailed.address}
+              />
+            )}
+          </View>
+        )}
+      </View>
       <TicDriveOptionButton
         icon={<DirectionIcon />}
         text="Directions"
