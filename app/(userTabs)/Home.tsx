@@ -221,7 +221,7 @@ export default function UserHome() {
                 containerTailwindCss="border-2 border-grey-light items-center justify-center p-1 m-2.5 rounded-xl bg-white"
                 onPress={() => handleVehicles()}
               >
-                <Text className="text-base font-medium text-drive">
+                <Text className="text-base font-semibold">
                   {t('vehicles.handleVehicles')}
                 </Text>
               </CrossPlatformButtonLayout>
