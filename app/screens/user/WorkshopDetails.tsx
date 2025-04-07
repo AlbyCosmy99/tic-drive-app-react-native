@@ -187,7 +187,8 @@ export default function WorkshopDetails() {
                             longitude: workshop.longitude,
                           }}
                         >
-                          <TouchableOpacity
+                          <CrossPlatformButtonLayout
+                            removeAllStyles
                             onPress={() =>
                               openGoogleMaps(
                                 workshop?.address,
@@ -195,10 +196,9 @@ export default function WorkshopDetails() {
                                 workshop?.longitude,
                               )
                             }
-                            activeOpacity={1}
                           >
                             <CarPinIcon />
-                          </TouchableOpacity>
+                          </CrossPlatformButtonLayout>
                         </Marker>
                       </MapView>
                     )}
