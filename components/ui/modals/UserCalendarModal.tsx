@@ -140,7 +140,12 @@ const UserCalendarModal = forwardRef<
   ).current;
 
   // Array of custom days to disable
-  const customDisabledDays = ['2024-12-08', '2024-12-10', '2024-12-15'];
+  const customDisabledDays = [
+    '2024-12-08',
+    '2024-12-10',
+    '2024-12-15',
+    '2025-04-16',
+  ];
 
   // Generate disabled dates object
   const generateDisabledDates = () => {
