@@ -22,7 +22,22 @@
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSLocationWhenInUseUsageDescription": "This app requires access to your location to show nearby workshops.",
-        "NSLocationAlwaysUsageDescription": "This app requires background location access to enhance the user experience and show nearby workshops."
+        "NSLocationAlwaysUsageDescription": "This app requires background location access to enhance the user experience and show nearby workshops.",
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true,
+          "NSExceptionDomains": {
+            "static.36.245.90.157.clients.your-server.de": {
+              "NSIncludesSubdomains": true,
+              "NSTemporaryExceptionAllowsInsecureHTTPLoads": true,
+              "NSTemporaryExceptionMinimumTLSVersion": "TLSv1.1"
+            },
+            "localhost": {
+              "NSIncludesSubdomains": true,
+              "NSTemporaryExceptionAllowsInsecureHTTPLoads": true,
+              "NSTemporaryExceptionMinimumTLSVersion": "TLSv1.1"
+            }
+          }
+        }
       },
       "config": {
         "googleMapsApiKey": "AIzaSyA4RElAzKK4A46CGKArVpOW5fXoTRLKAso"
