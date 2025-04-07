@@ -72,42 +72,45 @@ const SeeAllServicesCards = forwardRef(
       services.length > 0 && (
         <View>
           {topHorizontalLine && <HorizontalLine />}
-          {showSubtitle && (
-            <Text className="font-medium text-base mt-2 mb-3 mx-2.5">
-              {t('workshops.servicesOffered')}
-            </Text>
-          )}
-          <View className="flex justify-center items-center flex-1">
+          <View className="flex justify-center items-center flex-1 mt-2">
             <UserCalendarModal showButton={false} ref={modalRef} />
           </View>
-          <View className="flex-row flex-wrap justify-center items-start">
-            {services.slice(0, 4).map((service, index) => (
-              <CrossPlatformButtonLayout
-                onPress={() => handleOnSelectService(service)}
-                key={service.id}
-                styleContainer={{width: '42%', height: 40}}
-                containerTailwindCss="mx-2.5"
-                buttonTailwindCss="justify-start"
-              >
-                {service?.icon && (
-                  <Image source={{uri: service.icon}} width={24} height={24} />
-                )}
-                <Text className="text-sm font-medium ml-0.5">
-                  {service.title}
-                </Text>
-              </CrossPlatformButtonLayout>
+          <View className="flex flex-wrap flex-row justify-between px-2">
+            {services.slice(0, 4).map(service => (
+              <View key={service.id} className="w-[48%] mb-2">
+                <CrossPlatformButtonLayout
+                  onPress={() => handleOnSelectService(service)}
+                  styleContainer={{height: 40}}
+                  containerTailwindCss="border border-gray-300 flex-row items-center justify-start p-2 rounded-xl"
+                  buttonTailwindCss="justify-start"
+                >
+                  {service?.icon && (
+                    <Image
+                      source={{uri: service.icon}}
+                      width={24}
+                      height={24}
+                    />
+                  )}
+                  <Text className="text-sm font-medium ml-2">
+                    {service.title}
+                  </Text>
+                </CrossPlatformButtonLayout>
+              </View>
             ))}
+            {services.length > 4 && (
+              <View className="mb-2 w-full">
+                <CrossPlatformButtonLayout
+                  onPress={handleOnSeeAllServices}
+                  containerTailwindCss="border-2 border-grey-light items-center justify-center p-2 rounded-xl"
+                >
+                  <Text className="text-base font-medium">
+                    {t('seeAll.services')}
+                  </Text>
+                </CrossPlatformButtonLayout>
+              </View>
+            )}
           </View>
-          {services.length > 4 && (
-            <CrossPlatformButtonLayout
-              onPress={handleOnSeeAllServices}
-              containerTailwindCss="border-2 border-grey-light items-center justify-center p-1 mx-2.5 my-0.5 rounded-xl"
-            >
-              <Text className="text-base font-medium">
-                {t('seeAll.services')}
-              </Text>
-            </CrossPlatformButtonLayout>
-          )}
+
           {bottomHorizontalLine && (
             <HorizontalLine tailwindCssContainer="mt-2" />
           )}
