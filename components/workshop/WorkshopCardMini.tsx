@@ -12,6 +12,7 @@ function WorkshopCardMini({workshop}: {workshop: Workshop}) {
       iconTextPairContainerTailwindCss="gap-1 py-0.5 min-h-14 w-40"
       imageContainerStyle={{height: 80}}
       viewContainerStyle={{height: 190}}
+      isServiceDetailsEnabled={false}
     />
   );
 }

@@ -24,6 +24,7 @@ import Workshop from '@/types/workshops/Workshop';
 
 interface WorkshopCardProps {
   workshop: Workshop;
+  isServiceDetailsEnabled?: boolean;
   pressableContainerStyle?: StyleProp<ViewStyle>;
   viewContainerStyle?: StyleProp<ViewStyle>;
   iconTextPairsContainerTailwindCss?: string;
@@ -40,6 +41,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
   iconTextPairContainerTailwindCss,
   iconTextPairTextTailwindCss,
   imageContainerStyle,
+  isServiceDetailsEnabled = true
 }) => {
   const servicesChoosenByUsers = useAppSelector(
     state => state.services.servicesChoosenByUsers,
@@ -94,7 +96,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
             textTailwindCss={`text-sm font-medium underline ${iconTextPairTextTailwindCss}`}
           />
         </View>
-        {servicesChoosenByUsers.length > 0 && (
+        {servicesChoosenByUsers.length > 0 && isServiceDetailsEnabled && (
           // to-do: quando pressed vai a disponibilita
           <Pressable
             className="flex flex-row justify-between items-center border-2 border-grey-light m-2 p-3 mt-0 rounded-lg"
