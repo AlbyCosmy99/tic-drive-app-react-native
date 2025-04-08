@@ -50,11 +50,6 @@ function RegisterVehicleScreen() {
     TicDriveDropdownData | undefined
   >(undefined);
 
-  const [
-    loadingCarRegistrationConfirmation,
-    setLoadingCarRegistrationConfirmation,
-  ] = useState(false);
-
   const {
     carSelectedByMakeAndModel,
     setCarSelectedByMakeAndModel,
@@ -201,8 +196,7 @@ function RegisterVehicleScreen() {
 
   const {setErrorMessage} = useContext(GlobalContext);
 
-  const user = useAppSelector(state => state.auth.user);
-  const languageCode = useAppSelector(state => state.language.languageCode);
+
 
   const confirmCarSelected = async () => {
     const carSelected =
@@ -211,38 +205,7 @@ function RegisterVehicleScreen() {
         : carSelectedByPlateCtx;
 
     dispatch(setSelectedCar(carSelected));
-
-    try {
-      setLoadingCarRegistrationConfirmation(true);
-      await axiosClient.post(
-        'cars',
-        {
-          name:
-            languageCode === 'it'
-              ? `La ${carSelected?.make} ${carSelected?.model} di ${user?.name}`
-              : `${user?.name}'s ${carSelected?.make} ${carSelected?.model}`,
-          plate: carSelected?.plateNumber,
-          make: carSelected?.make,
-          model: carSelected?.model,
-          year: carSelected?.year,
-          fuelType: carSelected?.fuel,
-          transmissionType: carSelected?.transmission,
-          engineDisplacement: carSelected?.engineDisplacement,
-          km: carSelected?.mileage,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-
-      navigationPush(navigation, routeName);
-    } catch (e: any) {
-      setErrorMessage('A problem occured during the car registration.');
-    } finally {
-      setLoadingCarRegistrationConfirmation(false);
-    }
+    navigationPush(navigation, routeName);
   };
 
   useEffect(() => {
@@ -406,11 +369,7 @@ function RegisterVehicleScreen() {
         </View>
       </View>
       <TicDriveButton
-        text={
-          loadingCarRegistrationConfirmation
-            ? 'Confimation in progress...'
-            : 'Confirm'
-        }
+        text='Confirm'
         onClick={() => {
           if (segmentedControlSelection?.index === 0) {
             setMakeAndModelConfirmation(true);

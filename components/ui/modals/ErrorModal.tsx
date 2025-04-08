@@ -2,7 +2,11 @@ import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import * as React from 'react';
 import {Modal, View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 
-const ErrorModal = () => {
+interface ErroModalProps {
+  title?: string;
+}
+
+const ErrorModal: React.FC<ErroModalProps> = ({title = 'Try Again'}) => {
   const globalContext = React.useContext(GlobalContext);
 
   if (!globalContext) {
@@ -27,7 +31,7 @@ const ErrorModal = () => {
     >
       <View style={styles.overlay}>
         <View style={styles.modalContainer}>
-          <Text style={styles.modalTitle}>Try again</Text>
+          <Text style={styles.modalTitle}>{title}</Text>
           <Text style={styles.modalMessage}>{errorMessage}</Text>
           <TouchableOpacity onPress={onDismiss} style={styles.modalButton}>
             <Text style={styles.modalButtonText}>OK</Text>

@@ -69,7 +69,7 @@ export default function BookingConfirmationScreen() {
           onClick={onConfirmToHome}
         />
       </SafeAreaViewLayout>
-      <ErrorModal />
+      <ErrorModal title='An error occured'/>
     </LinearGradient>
   );
 }

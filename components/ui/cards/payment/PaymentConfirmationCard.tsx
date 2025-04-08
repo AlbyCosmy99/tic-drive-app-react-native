@@ -12,8 +12,10 @@ import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscou
 import TicDriveOptionButton from '../../buttons/TicDriveOptionButton';
 import Workshop from '@/types/workshops/Workshop';
 import openGoogleMaps from '@/services/map/openGoogleMaps';
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import axiosClient from '@/services/http/axiosClient';
+import {useAppSelector} from '@/stateManagement/redux/hooks';
+import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 
 const PaymentConfirmationCard = ({
   workshop,
@@ -26,6 +28,50 @@ const PaymentConfirmationCard = ({
   const [loadingServiceOfferedDetails, setLoadingServiceOfferedDetails] =
     useState(false);
   const [workshopDetailed, setWorkshopDetailed] = useState(workshop);
+
+  const user = useAppSelector(state => state.auth.user);
+  const languageCode = useAppSelector(state => state.language.languageCode);
+  const carSelected = useAppSelector(state => state.cars.selectedCar);
+  const token = useAppSelector(state => state.auth.token);
+
+  const {setErrorMessage} = useContext(GlobalContext);
+
+  const [
+    loadingCarRegistrationConfirmation,
+    setLoadingCarRegistrationConfirmation,
+  ] = useState(false);
+
+  const confirmCarSelected = async () => {
+    try {
+      setLoadingCarRegistrationConfirmation(true);
+      await axiosClient.post(
+        'cars',
+        {
+          name:
+            languageCode === 'it'
+              ? `La ${carSelected?.make} ${carSelected?.model} di ${user?.name}`
+              : `${user?.name}'s ${carSelected?.make} ${carSelected?.model}`,
+          plate: carSelected?.plateNumber,
+          make: carSelected?.make,
+          model: carSelected?.model,
+          year: carSelected?.year,
+          fuelType: carSelected?.fuel,
+          transmissionType: carSelected?.transmission,
+          engineDisplacement: carSelected?.engineDisplacement,
+          km: carSelected?.mileage,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+    } catch (e: any) {
+      setErrorMessage('A problem occured during the car registration.');
+    } finally {
+      setLoadingCarRegistrationConfirmation(false);
+    }
+  };
 
   useEffect(() => {
     const fetchServiceOfferedDetails = async () => {
@@ -56,6 +102,8 @@ const PaymentConfirmationCard = ({
         setLoadingServiceOfferedDetails(false);
       }
     };
+
+    confirmCarSelected();
 
     if (workshop?.id && servicesChoosen.length > 0) {
       fetchServiceOfferedDetails();
@@ -89,8 +137,8 @@ const PaymentConfirmationCard = ({
       </View>
       <HorizontalLine />
       <View className="h-32">
-        {loadingServiceOfferedDetails ? (
-          <View className='justify-center items-center w-full h-full'>
+        {loadingServiceOfferedDetails || loadingCarRegistrationConfirmation ? (
+          <View className="justify-center items-center w-full h-full">
             <ActivityIndicator
               size="large"
               color={Colors.light.bookingsOptionsText}
