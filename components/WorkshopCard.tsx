@@ -41,7 +41,6 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
   iconTextPairTextTailwindCss,
   imageContainerStyle,
 }) => {
-  const {areServicesAvailable} = useAreServicesAvailable();
   const servicesChoosenByUsers = useAppSelector(
     state => state.services.servicesChoosenByUsers,
   );
@@ -95,7 +94,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
             textTailwindCss={`text-sm font-medium underline ${iconTextPairTextTailwindCss}`}
           />
         </View>
-        {areServicesAvailable && (
+        {servicesChoosenByUsers.length > 0 && (
           // to-do: quando pressed vai a disponibilita
           <Pressable
             className="flex flex-row justify-between items-center border-2 border-grey-light m-2 p-3 mt-0 rounded-lg"

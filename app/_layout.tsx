@@ -1,7 +1,7 @@
 import {DefaultTheme, ThemeProvider} from '@react-navigation/native';
 import {useFonts} from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import { useState} from 'react';
+import {useState} from 'react';
 import 'react-native-reanimated';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {Provider} from 'react-redux';

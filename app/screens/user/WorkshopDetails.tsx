@@ -88,7 +88,6 @@ export default function WorkshopDetails() {
 
   return (
     <SafeAreaViewLayout styles={[styles.container]}>
-      {/* custom navbar */}
       <TicDriveNavbar
         rightContent={
           <View className="flex flex-row gap-x-4 justify-center items-center">

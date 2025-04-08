@@ -1,7 +1,7 @@
 import {Pressable, Text, View} from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
-import {useCallback, useRef, useState} from 'react';
+import {useCallback, useContext, useRef, useState} from 'react';
 import debounce from 'lodash.debounce';
 import navigationPush from '@/services/navigation/push';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
@@ -36,6 +36,8 @@ import axiosClient from '@/services/http/axiosClient';
 import Workshop from '@/types/workshops/Workshop';
 import FilterSearchModal from '@/components/modal/FilterSearchModal';
 import ErrorModal from '@/components/ui/modals/ErrorModal';
+import {setSelectedCar} from '@/stateManagement/redux/slices/carsSlice';
+import CarContext from '@/stateManagement/contexts/car/CarContext';
 
 export default function UserHome() {
   const [filter, setFilter] = useState('');
@@ -46,6 +48,9 @@ export default function UserHome() {
   const [filteredWorkshops, setFilteredWorkshops] = useState<Workshop[]>([]);
 
   const {workshops, loadingWorkshops, setLoadingWorkshops} = useWorkshops(0, 2);
+
+  const {setCarSelectedByMakeAndModel, setCarSelectedByPlate} =
+    useContext(CarContext);
 
   const dispatch = useAppDispatch();
   const token = useJwtToken();
@@ -76,6 +81,13 @@ export default function UserHome() {
     dispatch(setAreServicesOn(false));
     dispatch(reset());
     dispatch(setSelectedWorkshop(null));
+    dispatch(setSelectedCar(undefined));
+    if (setCarSelectedByMakeAndModel) {
+      setCarSelectedByMakeAndModel(undefined);
+    }
+    if (setCarSelectedByPlate) {
+      setCarSelectedByPlate(undefined);
+    }
   });
 
   const onSearch = async (search: string) => {

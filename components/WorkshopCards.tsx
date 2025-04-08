@@ -33,7 +33,6 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
   const navigation = useTicDriveNavigation();
 
   const servicesChoosen = useServicesChoosenByUsers();
-  const {areServicesAvailable} = useAreServicesAvailable();
   const workshopsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -41,7 +40,7 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
     useWorkshops(
       (currentPage - 1) * workshopsPerPage,
       workshopsPerPage,
-      areServicesAvailable ? servicesChoosen[0]?.id : 0,
+      servicesChoosen.length > 0 ? servicesChoosen[0]?.id : 0,
       favorite,
       {order, filter: workshopFilter},
     );
@@ -49,6 +48,7 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
 
   useEffect(() => {
     setCurrentPage(1);
+    console.log(servicesChoosen);
   }, [workshopFilter, order]);
 
   useEffect(() => {

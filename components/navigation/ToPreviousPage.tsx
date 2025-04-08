@@ -5,6 +5,7 @@ import {useColorScheme} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {router} from 'expo-router';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
+import CrossPlatformButtonLayout from '../ui/buttons/CrossPlatformButtonLayout';
 
 interface ToPreviousPageProps {
   containerClassName?: string;
@@ -17,14 +18,16 @@ const ToPreviousPage: React.FC<ToPreviousPageProps> = ({
   const {navigation} = useContext(NavigationContext);
 
   return (
-    <TouchableOpacity
+    <CrossPlatformButtonLayout
+      removeAllStyles
       onPress={() => navigation?.goBack()}
-      className={containerClassName}
-      accessible={true}
-      accessibilityLabel="Back to previous page"
+      containerTailwindCss={containerClassName}
+      //todo: add accessibility to CrossPlatformButtonLayout
+      // accessible={true}
+      // accessibilityLabel="Back to previous page"
     >
       <Ionicons name="arrow-back" size={30} color={Colors.white} />
-    </TouchableOpacity>
+    </CrossPlatformButtonLayout>
   );
 };
 
