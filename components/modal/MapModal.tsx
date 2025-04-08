@@ -15,13 +15,17 @@ import {Ionicons} from '@expo/vector-icons';
 import {router} from 'expo-router';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import ToPreviousPage from '../navigation/ToPreviousPage';
+import navigationPush from '@/services/navigation/push';
+import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
+import { useAppDispatch } from '@/stateManagement/redux/hooks';
+import { setSelectedWorkshop } from '@/stateManagement/redux/slices/workshopsSlice';
+import Workshop from '@/types/workshops/Workshop';
 
 interface POIMarker {
   coordinate: LatLng;
-  name: string;
   price: number;
-  icon?: string;
   id: number;
+  workshop: Workshop
 }
 
 interface MapModalProps {
@@ -51,6 +55,9 @@ export default function MapModal({
 }: MapModalProps) {
   const [userLocation, setUserLocation] = useState<LatLng | null>(null);
   const {setErrorMessage} = useContext(GlobalContext);
+
+  const navigation = useTicDriveNavigation()
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     (async () => {
@@ -89,13 +96,10 @@ export default function MapModal({
   }, []);
 
   const handlePOISelect = (poi: POIMarker) => {
-    setSelectedLocation(poi.coordinate);
-    setLocationName(poi.name);
+    console.log(poi)
+    dispatch(setSelectedWorkshop(poi.workshop))
     setIsMapVisible(false);
-    router.push({
-      pathname: '../screens/user/WorkshopDetails',
-      params: {id: poi.id},
-    });
+    navigationPush(navigation, 'WorkshopDetails')
   };
 
   return (
