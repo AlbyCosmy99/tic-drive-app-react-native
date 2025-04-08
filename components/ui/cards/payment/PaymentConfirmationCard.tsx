@@ -59,6 +59,7 @@ const PaymentConfirmationCard = ({
           transmissionType: carSelected?.transmission,
           engineDisplacement: carSelected?.engineDisplacement,
           km: carSelected?.mileage,
+          cv: carSelected?.powerCV
         },
         {
           headers: {
