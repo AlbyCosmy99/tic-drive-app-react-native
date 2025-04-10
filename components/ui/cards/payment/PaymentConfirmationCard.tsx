@@ -12,67 +12,26 @@ import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscou
 import TicDriveOptionButton from '../../buttons/TicDriveOptionButton';
 import Workshop from '@/types/workshops/Workshop';
 import openGoogleMaps from '@/services/map/openGoogleMaps';
-import {useContext, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import axiosClient from '@/services/http/axiosClient';
-import {useAppSelector} from '@/stateManagement/redux/hooks';
-import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
-
-const PaymentConfirmationCard = ({
-  workshop,
-  timeDate,
-}: {
+import clsx from 'clsx';
+interface PaymentConfirmationCardProps {
   workshop: Workshop | null | undefined;
   timeDate: string;
+  showDirectionsButton?: boolean;
+  type: 'Confirmed' | 'Pending confirmation';
+}
+
+const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
+  workshop,
+  timeDate,
+  showDirectionsButton = true,
+  type,
 }) => {
   const servicesChoosen = useServicesChoosenByUsers();
   const [loadingServiceOfferedDetails, setLoadingServiceOfferedDetails] =
     useState(false);
   const [workshopDetailed, setWorkshopDetailed] = useState(workshop);
-
-  const user = useAppSelector(state => state.auth.user);
-  const languageCode = useAppSelector(state => state.language.languageCode);
-  const carSelected = useAppSelector(state => state.cars.selectedCar);
-  const token = useAppSelector(state => state.auth.token);
-
-  const {setErrorMessage} = useContext(GlobalContext);
-
-  const [
-    loadingCarRegistrationConfirmation,
-    setLoadingCarRegistrationConfirmation,
-  ] = useState(false);
-
-  const confirmCarSelected = async () => {
-    try {
-      setLoadingCarRegistrationConfirmation(true);
-      await axiosClient.post(
-        'cars',
-        {
-          name:
-            languageCode === 'it'
-              ? `La ${carSelected?.make} ${carSelected?.model} di ${user?.name}`
-              : `${user?.name}'s ${carSelected?.make} ${carSelected?.model}`,
-          plate: carSelected?.plateNumber,
-          make: carSelected?.make,
-          model: carSelected?.model,
-          year: carSelected?.year,
-          fuelType: carSelected?.fuel,
-          transmissionType: carSelected?.transmission,
-          engineDisplacement: carSelected?.engineDisplacement,
-          km: carSelected?.mileage,
-          cv: carSelected?.powerCV,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-    } catch (e: any) {
-      setErrorMessage('A problem occured during the car registration.');
-    } finally {
-      setLoadingCarRegistrationConfirmation(false);
-    }
-  };
 
   useEffect(() => {
     const fetchServiceOfferedDetails = async () => {
@@ -91,9 +50,9 @@ const PaymentConfirmationCard = ({
 
           return {
             ...prev,
-            currency: serviceOffered.currency,
-            servicePrice: serviceOffered.price,
-            discount: serviceOffered.discount,
+            currency: serviceOffered?.currency,
+            servicePrice: serviceOffered?.price,
+            discount: serviceOffered?.discount,
           };
         });
         console.log(serviceOffered);
@@ -103,8 +62,6 @@ const PaymentConfirmationCard = ({
         setLoadingServiceOfferedDetails(false);
       }
     };
-
-    confirmCarSelected();
 
     if (workshop?.id && servicesChoosen.length > 0) {
       fetchServiceOfferedDetails();
@@ -125,20 +82,27 @@ const PaymentConfirmationCard = ({
           }
         />
         <View>
-          <Text className="text-xs font-medium" style={styles.pendingText}>
-            Pending confirmation
+          <Text
+            className={clsx(
+              'text-xs font-medium',
+              type === 'Confirmed' ? 'text-drive' : 'text-[#D28B30]',
+            )}
+          >
+            {type}
           </Text>
           <Text className="font-medium text-xl">{workshopDetailed?.name}</Text>
-          <View className="bg-green-light p-1.5 rounded self-start mt-1">
-            <Text className="text-green-dark font-semibold">
-              {servicesChoosen.length ? servicesChoosen[0].title : ''}
-            </Text>
-          </View>
+          {servicesChoosen.length > 0 && (
+            <View className="bg-green-light p-1.5 rounded self-start mt-1">
+              <Text className="text-green-dark font-semibold">
+                {servicesChoosen[0].title}
+              </Text>
+            </View>
+          )}
         </View>
       </View>
       <HorizontalLine />
       <View className="h-32">
-        {loadingServiceOfferedDetails || loadingCarRegistrationConfirmation ? (
+        {loadingServiceOfferedDetails ? (
           <View className="justify-center items-center w-full h-full">
             <ActivityIndicator
               size="large"
@@ -161,18 +125,20 @@ const PaymentConfirmationCard = ({
           </View>
         )}
       </View>
-      <TicDriveOptionButton
-        icon={<DirectionIcon />}
-        text="Directions"
-        textTailwindCss="font-medium text-base"
-        onPress={() =>
-          openGoogleMaps(
-            workshopDetailed?.address,
-            workshopDetailed?.latitude,
-            workshopDetailed?.longitude,
-          )
-        }
-      />
+      {showDirectionsButton && (
+        <TicDriveOptionButton
+          icon={<DirectionIcon />}
+          text="Directions"
+          textTailwindCss="font-medium text-base"
+          onPress={() =>
+            openGoogleMaps(
+              workshopDetailed?.address,
+              workshopDetailed?.latitude,
+              workshopDetailed?.longitude,
+            )
+          }
+        />
+      )}
     </View>
   );
 };
@@ -183,9 +149,6 @@ const styles = StyleSheet.create({
     height: 70,
     borderRadius: 10,
     marginRight: 12,
-  },
-  pendingText: {
-    color: '#D28B30',
   },
 });
 

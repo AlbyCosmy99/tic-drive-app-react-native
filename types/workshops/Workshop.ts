@@ -4,10 +4,9 @@ interface Workshop {
   address: string;
   longitude: number;
   latitude: number;
-  profileImageUrl: string;
   meanStars: number;
   numberOfReviews: number;
-  ProfileImageUrl: string;
+  profileImageUrl: string;
   servicePrice?: number;
   currency?: string;
   discount?: number;

@@ -41,7 +41,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
   iconTextPairContainerTailwindCss,
   iconTextPairTextTailwindCss,
   imageContainerStyle,
-  isServiceDetailsEnabled = true
+  isServiceDetailsEnabled = true,
 }) => {
   const servicesChoosenByUsers = useAppSelector(
     state => state.services.servicesChoosenByUsers,
