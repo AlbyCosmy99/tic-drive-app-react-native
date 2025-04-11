@@ -15,11 +15,13 @@ import {Colors} from '@/constants/Colors';
 import CarDetailsMiniCard from '@/components/ui/cards/cars/CarDetailsMiniCard';
 import {ScrollView} from 'react-native-gesture-handler';
 import CarDetailsCard from '@/components/ui/cards/cars/CarDetailsCard';
+import useOnRegisterVehicle from '@/hooks/cars/useOnRegisterVehicle';
 
 const UserVehiclesScreen = () => {
   const [cars, setCars] = useState<Car[]>([]);
   const navigation = useTicDriveNavigation();
   const {getCustomerCars, loadingCustomerCars} = useCustomerCars();
+  const onRegisterVehicle = useOnRegisterVehicle();
 
   useEffect(() => {
     const getCars = async () => {
@@ -32,13 +34,6 @@ const UserVehiclesScreen = () => {
 
   const handleOnMiniCarCardPress = (car: Car) => {
     navigationPush(navigation, 'UserVehicleDetailsScreen', {car});
-  };
-
-  const onRegisterVehicle = (carSelected?: Car) => {
-    navigationPush(navigation, 'RegisterVehicleScreen', {
-      carSelected,
-      goToVehicles: true,
-    });
   };
 
   return (

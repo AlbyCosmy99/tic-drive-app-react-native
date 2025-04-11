@@ -4,20 +4,15 @@ import {Text, View} from 'react-native';
 import CrossPlatformButtonLayout from '../../buttons/CrossPlatformButtonLayout';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import navigationPush from '@/services/navigation/push';
+import useOnRegisterVehicle from '@/hooks/cars/useOnRegisterVehicle';
 
 interface CarDetailsCardProps {
   car: Car;
 }
 
 const CarDetailsCard: React.FC<CarDetailsCardProps> = ({car}) => {
-  const navigation = useTicDriveNavigation();
+  const onRegisterVehicle = useOnRegisterVehicle();
 
-  const onRegisterVehicle = (carSelected?: Car) => {
-    navigationPush(navigation, 'RegisterVehicleScreen', {
-      carSelected,
-      goToVehicles: true,
-    });
-  };
   return (
     <CarDetailsLayout carSelected={car}>
       <View className="flex-row">
