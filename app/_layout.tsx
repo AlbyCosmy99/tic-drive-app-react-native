@@ -37,6 +37,7 @@ import ResetPasswordWithCodeScreen from './screens/user/ResetPasswordWithCodeScr
 import ChangePasswordScreen from './screens/user/ChangePasswordScreen';
 import SuccessfullyPasswordChangedScreen from './screens/user/SuccessfullyPasswordChangedScreen';
 import UserVehiclesScreen from './screens/vehicles/UserVehiclesScreen';
+import UserVehicleDetailsScreen from './screens/vehicles/UserVehicleDetailsScreen';
 SplashScreen.preventAutoHideAsync();
 
 const Stack = createNativeStackNavigator();
@@ -264,6 +265,15 @@ export default function RootLayout() {
                         component={UserVehiclesScreen}
                         options={({route}) => ({
                           title: 'UserVehiclesScreen',
+                          headerShown: false,
+                          animation: getAnimation(route),
+                        })}
+                      />
+                      <Stack.Screen
+                        name="UserVehicleDetailsScreen"
+                        component={UserVehicleDetailsScreen}
+                        options={({route}) => ({
+                          title: 'UserVehicleDetailsScreen',
                           headerShown: false,
                           animation: getAnimation(route),
                         })}

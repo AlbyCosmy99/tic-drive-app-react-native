@@ -1,59 +1,38 @@
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import IconTextPair from '@/components/ui/IconTextPair';
-import {Text, View} from 'react-native';
+import {ActivityIndicator, Text, View} from 'react-native';
 import AddIcon from '@/assets/svg/add.svg';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import Car from '@/types/Car';
-import CarDetailsLayout from '@/app/layouts/vehicles/CarDetailsLayout';
 import navigationPush from '@/services/navigation/push';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
+import useCustomerCars from '@/hooks/api/cars/useCustomerCars';
+import {useEffect, useState} from 'react';
+import ErrorModal from '@/components/ui/modals/ErrorModal';
+import {Colors} from '@/constants/Colors';
+import CarDetailsMiniCard from '@/components/ui/cards/cars/CarDetailsMiniCard';
+import {ScrollView} from 'react-native-gesture-handler';
+import CarDetailsCard from '@/components/ui/cards/cars/CarDetailsCard';
 
 const UserVehiclesScreen = () => {
+  const [cars, setCars] = useState<Car[]>([]);
   const navigation = useTicDriveNavigation();
+  const {getCustomerCars, loadingCustomerCars} = useCustomerCars();
 
-  const cars: Car[] = [
-    {
-      id: 1,
-      make: 'Toyota',
-      name: 'Corolla',
-      year: 2020,
-      plateNumber: 'AB123CD',
-      model: 'Corolla',
-      engineDisplacement: '1.8L',
-      fuel: 'Hybrid',
-      mileage: 45000,
-      vin: 'JTDBR32E620123456',
-      transmission: 'manual',
-      powerCV: 122,
-    },
-    // {
-    //   id: 2,
-    //   make: 'Tesla',
-    //   name: 'Model 3',
-    //   year: 2022,
-    //   plateNumber: 'EV456XY',
-    //   model: 'Sedan',
-    //   fuel: 'Electric',
-    //   mileage: 15000,
-    //   vin: '5YJ3E1EA7JF123456',
-    //   powerCV: 283,
-    // },
-    // {
-    //   id: 3,
-    //   make: 'Volkswagen',
-    //   name: 'Golf',
-    //   year: 2018,
-    //   plateNumber: 'VW789GH',
-    //   model: 'Hatchback',
-    //   engineDisplacement: '2.0L',
-    //   fuel: 'Diesel',
-    //   mileage: 87000,
-    //   vin: 'WVWZZZ1KZAW123456',
-    //   powerCV: 150,
-    // },
-  ];
+  useEffect(() => {
+    const getCars = async () => {
+      const customerCars = await getCustomerCars();
+      setCars(customerCars);
+    };
+
+    getCars();
+  }, []);
+
+  const handleOnMiniCarCardPress = (car: Car) => {
+    navigationPush(navigation, 'UserVehicleDetailsScreen', {car});
+  };
 
   const onRegisterVehicle = (carSelected?: Car) => {
     navigationPush(navigation, 'RegisterVehicleScreen', {
@@ -65,7 +44,7 @@ const UserVehiclesScreen = () => {
   return (
     <SafeAreaViewLayout>
       <TicDriveNavbar />
-      <View className="mx-2.5">
+      <View className="mx-2.5 flex-1">
         <View className="mx-2.5">
           <Text className="font-medium text-2xl mb-2">My Vehicles</Text>
           <CrossPlatformButtonLayout
@@ -82,48 +61,55 @@ const UserVehiclesScreen = () => {
           </CrossPlatformButtonLayout>
           <HorizontalLine />
         </View>
-        {cars.length === 0 && (
-          <View>
-            <Text className="text-center text-base text-gray-500 mt-6">
-              You haven't registered any vehicles yet. Tap on{' '}
-              <Text className="text-drive font-semibold">
-                "Register vehicle"
-              </Text>{' '}
-              to add your first car and get started!
-            </Text>
+        {loadingCustomerCars ? (
+          <View className="flex-1 justify-center items-center">
+            <ActivityIndicator
+              size="large"
+              color={Colors.light.bookingsOptionsText}
+            />
           </View>
-        )}
-        {cars.length === 1 && (
-          <View>
-            <CarDetailsLayout carSelected={cars[0]}>
-              <View className="flex-row">
-                <CrossPlatformButtonLayout
-                  removeAllStyles
-                  onPress={() => onRegisterVehicle(cars[0])}
-                  styleContainer={{marginRight: 24}}
-                >
-                  <Text className="text-base font-medium mt-2 text-drive">
-                    Change
-                  </Text>
-                </CrossPlatformButtonLayout>
-                <CrossPlatformButtonLayout
-                  removeAllStyles
-                  onPress={() => console.log('a')}
-                >
-                  <Text className="text-base font-medium mt-2 text-tic">
-                    Delete
-                  </Text>
-                </CrossPlatformButtonLayout>
+        ) : (
+          <>
+            {cars.length === 0 && (
+              <View>
+                <Text className="text-center text-base text-gray-500 mt-6">
+                  You haven't registered any vehicles yet. Tap on{' '}
+                  <CrossPlatformButtonLayout
+                    removeAllStyles
+                    onPress={onRegisterVehicle}
+                  >
+                    <Text className="text-drive font-semibold">
+                      "Register vehicle"
+                    </Text>
+                  </CrossPlatformButtonLayout>{' '}
+                  to add your first car and get started!
+                </Text>
               </View>
-            </CarDetailsLayout>
-          </View>
-        )}
-        {cars.length > 1 && (
-          <View>
-            <Text>more cars</Text>
-          </View>
+            )}
+            {cars.length === 1 && <CarDetailsCard car={cars[0]} />}
+            {cars.length > 1 && (
+              <ScrollView className="mt-2">
+                {cars.map(car => (
+                  <CrossPlatformButtonLayout
+                    key={car.id}
+                    removeAllStyles
+                    onPress={() => handleOnMiniCarCardPress(car)}
+                  >
+                    <CarDetailsMiniCard
+                      make={car.make}
+                      model={car.model}
+                      year={car.year ?? undefined}
+                      fuel={car.fuel}
+                      CV={car.powerCV}
+                    />
+                  </CrossPlatformButtonLayout>
+                ))}
+              </ScrollView>
+            )}
+          </>
         )}
       </View>
+      <ErrorModal />
     </SafeAreaViewLayout>
   );
 };

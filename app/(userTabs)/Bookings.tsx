@@ -5,12 +5,13 @@ import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
 import NissanLogo from '@/assets/svg/carLogos/nissan.svg';
-import HorizontalLine from '@/components/ui/HorizontalLine';
 import PaymentConfirmationCard from '@/components/ui/cards/payment/PaymentConfirmationCard';
 import Workshop from '@/types/workshops/Workshop';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import {useEffect} from 'react';
 import {setServicesChoosenByUsers} from '@/stateManagement/redux/slices/servicesSlice';
+import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
+import CarDetailsMiniCard from '@/components/ui/cards/cars/CarDetailsMiniCard';
 
 export default function UserBookings() {
   const token = useJwtToken();
@@ -54,15 +55,13 @@ export default function UserBookings() {
               <Text className="text-xl font-semibold text-center mb-2">
                 Auto di Marian
               </Text>
-              <View className=" mb-4 px-6 py-2 bg-white rounded-2xl shadow-md flex-row justify-between items-center">
-                <View>
-                  <Text className="text-sm font-medium">Nissan Micra IV</Text>
-                  <Text className="text-sm font-medium">2015</Text>
-                  <Text className="text-sm font-medium">Benzina</Text>
-                  <Text className="text-sm font-medium">80CV (59KW)</Text>
-                </View>
-                <NissanLogo />
-              </View>
+              <CarDetailsMiniCard
+                make="Nissan"
+                model="Micra IV"
+                year={2015}
+                fuel="Petrol"
+                CV={80}
+              />
               <PaymentConfirmationCard
                 showDirectionsButton={false}
                 workshop={sampleWorkshop}
@@ -72,7 +71,10 @@ export default function UserBookings() {
             </View>
           </View>
         ) : (
-          <NotLogged />
+          <>
+            <TicDriveNavbar />
+            <NotLogged />
+          </>
         )}
       </SafeAreaViewLayout>
     </LinearGradientViewLayout>
