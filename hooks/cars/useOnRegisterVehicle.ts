@@ -12,7 +12,7 @@ const useOnRegisterVehicle = () => {
     });
   };
 
-  return onRegisterVehicle
+  return onRegisterVehicle;
 };
 
 export default useOnRegisterVehicle;

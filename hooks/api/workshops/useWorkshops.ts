@@ -31,51 +31,60 @@ const useWorkshops = (
       setDebouncedFilter(params?.filter ?? '');
     }, 500);
 
-    return () => clearTimeout(handler);
+    return () => {
+      clearTimeout(handler);
+    };
   }, [params?.filter]);
 
-  const getUrl = () => {
-    const basePath = favorite ? 'customer/workshops/favorite' : 'workshops';
-    const query = new URLSearchParams({
-      skip: String(skip),
-      take: String(take),
-      filter: debouncedFilter,
-      order: params?.order ?? 'asc',
-    });
-
-    if (!favorite) query.append('serviceId', String(serviceId));
-    return `${basePath}?${query.toString()}`;
-  };
+  useEffect(() => {
+    setLoadingWorkshops(true);
+  }, [params?.order, debouncedFilter]);
 
   useEffect(() => {
     const fetchWorkshops = async () => {
       try {
-        if (!token) return;
-
-        const res = await apiClient.get(getUrl(), {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        setWorkshops(res.data.workshops);
-        setCount(res.data.count);
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          setErrorMessage(err.message);
-        } else {
-          setErrorMessage(
-            'An unknown error occurred while fetching workshops.',
+        let res;
+        if (!favorite) {
+          res = await apiClient.get(
+            `workshops?skip=${skip}&take=${take}&serviceId=${serviceId}&filter=${debouncedFilter}&order=${params?.order ?? 'asc'}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            },
+          );
+        } else if (token) {
+          res = await apiClient.get(
+            `customer/workshops/favorite?skip=${skip}&take=${take}&filter=${debouncedFilter}&order=${params?.order ?? 'asc'}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            },
           );
         }
+        setWorkshops(res?.data.workshops);
+        setCount(res?.data.count);
+      } catch (err) {
+        setErrorMessage(err.message);
       } finally {
         setLoadingWorkshops(false);
       }
     };
 
-    setLoadingWorkshops(true);
-    fetchWorkshops();
-  }, [skip, take, serviceId, favorite, params?.order, debouncedFilter, token]);
+    if (loadingWorkshops) {
+      fetchWorkshops();
+    }
+  }, [
+    loadingWorkshops,
+    params?.order,
+    debouncedFilter,
+    skip,
+    take,
+    serviceId,
+    favorite,
+    token,
+  ]);
 
   return {workshops, loadingWorkshops, setLoadingWorkshops, count};
 };

@@ -66,7 +66,10 @@ function RegisterVehicleScreen() {
   const token = useAppSelector(state => state.auth.token);
 
   const route = useRoute();
-  const {goToVehicles} = route.params as {carSelected?: Car, goToVehicles: boolean};
+  const {goToVehicles} = route.params as {
+    carSelected?: Car;
+    goToVehicles: boolean;
+  };
 
   const navigation = useTicDriveNavigation();
 
