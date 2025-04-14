@@ -114,14 +114,14 @@ export default function UserAccount() {
                 text={user?.email || 'Not available'}
                 icon={<MailIcon />}
                 textTailwindCss="text-base font-medium pl-1"
-                containerTailwindCss="py-2 my-0"
+                containerTailwindCss="py-2 my-0 pt-1"
               />
               <HorizontalLine />
               <IconTextPair
                 text={user?.address || 'Not available'}
                 icon={<AddressIcon />}
                 textTailwindCss="text-base font-medium pl-1"
-                containerTailwindCss="py-2 my-0"
+                 containerTailwindCss="py-2 my-0 pt-1"
               />
               <HorizontalLine />
 
@@ -133,7 +133,7 @@ export default function UserAccount() {
                   text="Registered vehicles"
                   icon={<VehicleIcon />}
                   textTailwindCss="text-base font-medium pl-1"
-                  containerTailwindCss="py-2 my-0"
+                  containerTailwindCss="py-2 my-0 pt-1"
                 />
               </CrossPlatformButtonLayout>
               <HorizontalLine />
@@ -145,7 +145,7 @@ export default function UserAccount() {
                   text="Favorite workshops"
                   icon={<HeartIcon />}
                   textTailwindCss="text-base font-medium pl-1"
-                  containerTailwindCss="py-2 my-0"
+                  containerTailwindCss="py-2 my-0 pt-1"
                 />
               </CrossPlatformButtonLayout>
               <HorizontalLine />
@@ -160,7 +160,7 @@ export default function UserAccount() {
                   text="Customer support"
                   icon={<CustomerServiceIcon />}
                   textTailwindCss="text-base font-medium pl-1"
-                  containerTailwindCss="py-2 my-0"
+                   containerTailwindCss="py-2 my-0 pt-1"
                 />
               </CrossPlatformButtonLayout>
               <HorizontalLine />
@@ -172,7 +172,7 @@ export default function UserAccount() {
                   text="Logout"
                   icon={<Logout />}
                   textTailwindCss="text-base font-medium pl-1"
-                  containerTailwindCss="py-2 my-0"
+                    containerTailwindCss="py-2 my-0 pt-1"
                 />
               </CrossPlatformButtonLayout>
               <HorizontalLine />
@@ -184,7 +184,7 @@ export default function UserAccount() {
                   text="Delete account"
                   icon={<Remove />}
                   textTailwindCss="text-base font-medium pl-1"
-                  containerTailwindCss="py-2 my-0"
+             containerTailwindCss="py-2 my-0 pt-1"
                 />
               </CrossPlatformButtonLayout>
             </Section>
