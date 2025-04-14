@@ -80,7 +80,7 @@ export default function UserAccount() {
                 <Text className="text-tic">Padova, Italy</Text>
               </View>
             </View>
-            <View className="flex-row items-center">
+            <View className="flex-row items-center self-start mt-4">
               <EditIcon width={20} height={20} />
               <Text className="text-green-600 font-medium ml-1" onPress={onEditProfile}>
                 Edit
@@ -94,24 +94,24 @@ export default function UserAccount() {
             {/* Account Info */}
             <Section title="Account">
               <IconTextPair
-                text={user?.phoneNumber || 'Not available'}
+                text={user?.phoneNumber || 'Not availabe'}
                 icon={<PhoneIcon />}
                 textTailwindCss="text-base font-medium"
-                containerTailwindCss="gap-2 py-1"
+                containerTailwindCss="gap-2 py-2"
               />
               <HorizontalLine />
               <IconTextPair
                 text={user?.email}
                 icon={<MailIcon />}
                 textTailwindCss="text-base font-medium"
-                containerTailwindCss="gap-2 py-1"
+                containerTailwindCss="gap-1 py-2 my-0"
               />
               <HorizontalLine />
               <IconTextPair
                 text={user?.address || 'Not available'}
                 icon={<AddressIcon />}
                 textTailwindCss="text-base font-medium"
-                containerTailwindCss="gap-2 py-1"
+                containerTailwindCss="gap-1 py-2 my-0"
               />
               <HorizontalLine />
 
@@ -123,7 +123,7 @@ export default function UserAccount() {
                   text="Registered vehicles"
                   icon={<VehicleIcon />}
                   textTailwindCss="text-base font-medium"
-                  containerTailwindCss="gap-2 py-1"
+                  containerTailwindCss="gap-1 py-2 my-0"
                 />
               </CrossPlatformButtonLayout>
               <HorizontalLine />
@@ -132,13 +132,11 @@ export default function UserAccount() {
                   text="Favorite workshops"
                   icon={<HeartIcon />}
                   textTailwindCss="text-base font-medium"
-                  containerTailwindCss="gap-2 py-1"
+                  containerTailwindCss="gap-1 py-2 my-0"
                 />
               </CrossPlatformButtonLayout>
-            </Section>
-
             <HorizontalLine />
-
+            </Section>
             {/* Support */}
             <Section title="Help and support">
               <CrossPlatformButtonLayout
@@ -149,7 +147,7 @@ export default function UserAccount() {
                   text="Customer support"
                   icon={<CustomerServiceIcon />}
                   textTailwindCss="text-base font-medium"
-                  containerTailwindCss="gap-2 py-2"
+                  containerTailwindCss="gap-1 py-2 my-0"
                 />
               </CrossPlatformButtonLayout>
               <HorizontalLine />
@@ -161,7 +159,7 @@ export default function UserAccount() {
                   text="Logout"
                   icon={<Logout />}
                   textTailwindCss="text-base font-medium text-500"
-                  containerTailwindCss="gap-2 py-2"
+                  containerTailwindCss="gap-1 py-2 my-0"
                 />
               </CrossPlatformButtonLayout>
               <HorizontalLine />
@@ -173,7 +171,7 @@ export default function UserAccount() {
                   text="Delete account"
                   icon={<Remove />}
                   textTailwindCss="text-base font-medium text-red-500"
-                  containerTailwindCss="gap-2 py-2"
+                  containerTailwindCss="gap-1 py-2 my-0"
                 />
               </CrossPlatformButtonLayout>
             </Section>
