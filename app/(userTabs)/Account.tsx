@@ -1,9 +1,9 @@
-import { ScrollView, Text, View } from 'react-native';
+import {ScrollView, Text, View} from 'react-native';
 
 // Navigation & State
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import navigationPush from '@/services/navigation/push';
-import { useAppDispatch, useAppSelector } from '@/stateManagement/redux/hooks';
+import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 
 // Layouts
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
@@ -14,7 +14,7 @@ import NotLogged from '@/components/auth/NotLogged';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import CircularUserAvatar from '@/components/ui/avatars/CircularUserAvatar';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
-import { handleLogout } from '@/components/ui/buttons/TicDriveAuthButton';
+import {handleLogout} from '@/components/ui/buttons/TicDriveAuthButton';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import IconTextPair from '@/components/ui/IconTextPair';
 
@@ -33,9 +33,15 @@ import Remove from '@/assets/svg/remove.svg';
 import VehicleIcon from '@/assets/svg/vehicles/car2.svg';
 import EditIcon from '@/assets/svg/writing/change.svg';
 
-const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
+const Section = ({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) => (
   <View className="my-4">
-    <Text className="font-medium text-2xl mb-2">{title}</Text>
+    <Text className="font-medium text-2xl">{title}</Text>
     {children}
   </View>
 );
@@ -47,21 +53,22 @@ export default function UserAccount() {
   const navigation = useTicDriveNavigation();
 
   const onFavoriteWorkshops = () => {
-    navigationPush(navigation, 'WorkshopsListScreen', { favorite: true });
+    navigationPush(navigation, 'WorkshopsListScreen', {favorite: true});
   };
 
   const onEditProfile = () => {
     navigationPush(navigation, 'EditUserProfileScreen');
   };
 
-  if (!token) return (
-    <LinearGradientViewLayout>
-      <SafeAreaViewLayout disabled={!isAndroidPlatform()}>
-        <TicDriveNavbar />
-        <NotLogged />
-      </SafeAreaViewLayout>
-    </LinearGradientViewLayout>
-  );
+  if (!token)
+    return (
+      <LinearGradientViewLayout>
+        <SafeAreaViewLayout disabled={!isAndroidPlatform()}>
+          <TicDriveNavbar />
+          <NotLogged />
+        </SafeAreaViewLayout>
+      </LinearGradientViewLayout>
+    );
 
   return (
     <LinearGradientViewLayout>
@@ -73,7 +80,7 @@ export default function UserAccount() {
             <View className="flex-row items-center">
               <CircularUserAvatar
                 uri={user?.imageurl}
-                styles={{ width: 70, height: 70, marginRight: 10 }}
+                styles={{width: 70, height: 70, marginRight: 10}}
               />
               <View>
                 <Text className="font-semibold text-xl">{user?.name}</Text>
@@ -82,9 +89,12 @@ export default function UserAccount() {
             </View>
             <View className="flex-row items-center self-start mt-4">
               <EditIcon width={20} height={20} />
-              <Text className="text-green-600 font-medium ml-1" onPress={onEditProfile}>
-                Edit
-              </Text>
+              <CrossPlatformButtonLayout
+                removeAllStyles
+                onPress={onEditProfile}
+              >
+                <Text className="text-green-600 font-medium ml-1">Edit</Text>
+              </CrossPlatformButtonLayout>
             </View>
           </View>
 
@@ -94,24 +104,24 @@ export default function UserAccount() {
             {/* Account Info */}
             <Section title="Account">
               <IconTextPair
-                text={user?.phoneNumber || 'Not availabe'}
+                text={user?.phoneNumber || 'Not available'}
                 icon={<PhoneIcon />}
-                textTailwindCss="text-base font-medium"
-                containerTailwindCss="gap-2 py-2"
+                textTailwindCss="text-base font-medium pl-1"
+                containerTailwindCss="py-2"
               />
               <HorizontalLine />
               <IconTextPair
-                text={user?.email}
+                text={user?.email || 'Not available'}
                 icon={<MailIcon />}
-                textTailwindCss="text-base font-medium"
-                containerTailwindCss="gap-1 py-2 my-0"
+                textTailwindCss="text-base font-medium pl-1"
+                containerTailwindCss="py-2 my-0"
               />
               <HorizontalLine />
               <IconTextPair
                 text={user?.address || 'Not available'}
                 icon={<AddressIcon />}
-                textTailwindCss="text-base font-medium"
-                containerTailwindCss="gap-1 py-2 my-0"
+                textTailwindCss="text-base font-medium pl-1"
+                containerTailwindCss="py-2 my-0"
               />
               <HorizontalLine />
 
@@ -122,20 +132,23 @@ export default function UserAccount() {
                 <IconTextPair
                   text="Registered vehicles"
                   icon={<VehicleIcon />}
-                  textTailwindCss="text-base font-medium"
-                  containerTailwindCss="gap-1 py-2 my-0"
+                  textTailwindCss="text-base font-medium pl-1"
+                  containerTailwindCss="py-2 my-0"
                 />
               </CrossPlatformButtonLayout>
               <HorizontalLine />
-              <CrossPlatformButtonLayout removeAllStyles onPress={onFavoriteWorkshops}>
+              <CrossPlatformButtonLayout
+                removeAllStyles
+                onPress={onFavoriteWorkshops}
+              >
                 <IconTextPair
                   text="Favorite workshops"
                   icon={<HeartIcon />}
-                  textTailwindCss="text-base font-medium"
-                  containerTailwindCss="gap-1 py-2 my-0"
+                  textTailwindCss="text-base font-medium pl-1"
+                  containerTailwindCss="py-2 my-0"
                 />
               </CrossPlatformButtonLayout>
-            <HorizontalLine />
+              <HorizontalLine />
             </Section>
             {/* Support */}
             <Section title="Help and support">
@@ -146,8 +159,8 @@ export default function UserAccount() {
                 <IconTextPair
                   text="Customer support"
                   icon={<CustomerServiceIcon />}
-                  textTailwindCss="text-base font-medium"
-                  containerTailwindCss="gap-1 py-2 my-0"
+                  textTailwindCss="text-base font-medium pl-1"
+                  containerTailwindCss="py-2 my-0"
                 />
               </CrossPlatformButtonLayout>
               <HorizontalLine />
@@ -158,8 +171,8 @@ export default function UserAccount() {
                 <IconTextPair
                   text="Logout"
                   icon={<Logout />}
-                  textTailwindCss="text-base font-medium text-500"
-                  containerTailwindCss="gap-1 py-2 my-0"
+                  textTailwindCss="text-base font-medium pl-1"
+                  containerTailwindCss="py-2 my-0"
                 />
               </CrossPlatformButtonLayout>
               <HorizontalLine />
@@ -170,8 +183,8 @@ export default function UserAccount() {
                 <IconTextPair
                   text="Delete account"
                   icon={<Remove />}
-                  textTailwindCss="text-base font-medium text-red-500"
-                  containerTailwindCss="gap-1 py-2 my-0"
+                  textTailwindCss="text-base font-medium pl-1"
+                  containerTailwindCss="py-2 my-0"
                 />
               </CrossPlatformButtonLayout>
             </Section>
