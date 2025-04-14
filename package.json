@@ -29,7 +29,7 @@
     "@types/react-native-maps": "0.24.2",
     "@types/react-router": "5.1.20",
     "autoprefixer": "10.4.20",
-    "axios": "1.7.9",
+    "axios": "^1.8.4",
     "clsx": "^2.1.1",
     "expo": "~52.0.36",
     "expo-constants": "~17.0.5",
