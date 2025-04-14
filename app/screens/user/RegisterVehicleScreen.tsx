@@ -27,6 +27,8 @@ import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import ErrorModal from '@/components/ui/modals/ErrorModal';
 import navigationPush from '@/services/navigation/push';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
+import useCustomerCars from '@/hooks/api/cars/useCustomerCars';
+import navigationReset from '@/services/navigation/reset';
 
 function RegisterVehicleScreen() {
   const [segmentedControlSelection, setSegmentedControlSelection] =
@@ -73,6 +75,8 @@ function RegisterVehicleScreen() {
 
   const navigation = useTicDriveNavigation();
 
+  const {registerCustomerCar, loadingCustomerCars} = useCustomerCars();
+
   const routeName = useMemo(() => {
     if (
       (segmentedControlSelection?.index === 0 &&
@@ -83,10 +87,7 @@ function RegisterVehicleScreen() {
         plateConfirmation)
     ) {
       if (goToVehicles) {
-        //todo: richiesta post di registrare l auto
-        //se va a buon fine vai a UserVehiclesScreen
-        //reset e non push
-        return 'UserVehiclesScreen'; //todo: go to car registered successfully screen
+        return 'CarRegistrationSuccessScreen';
       } else {
         if (selectedWorkshop) {
           return `${token ? 'ReviewBookingDetailsScreen' : 'UserAuthenticationScreen'}`;
@@ -196,7 +197,6 @@ function RegisterVehicleScreen() {
   };
   // {"data": {"ABS": "", "AirBag": "", "CarMake": "MAZDA", "CarModel": "CX-5 2ª serie", "Description": "MAZDA CX-5 2ª serie", "EngineSize": "2191", "FuelType": "Diesel", "Immobiliser": "", "KType": "", "LicensePlate": "FV181EX", "MakeDescription": "MAZDA", "ModelDescription": "CX-5 2ª serie", "NumberOfDoors": "", "PowerCV": 184, "PowerFiscal": 21, "PowerKW": 135, "RegistrationYear": "2019", "TimeStamp": 1739716456, "Version": "MAZDA CX-5 2.2L Skyactiv-D 184 CV aut. AWD Exceed ( 1/2019 )", "Vin": ""}, "error": null, "message": "", "success": true}
 
-  const {setErrorMessage} = useContext(GlobalContext);
   const selectedCar = useAppSelector(state => state.cars.selectedCar);
 
   const confirmCarSelected = async () => {
@@ -206,7 +206,11 @@ function RegisterVehicleScreen() {
         : carSelectedByPlateCtx;
 
     dispatch(setSelectedCar(carSelected));
-    navigationPush(navigation, routeName);
+    if (goToVehicles) navigationReset(navigation, 0, routeName);
+    else navigationPush(navigation, routeName);
+    if (goToVehicles && carSelectedByMakeAndModel) {
+      registerCustomerCar(carSelectedByMakeAndModel);
+    }
   };
 
   useEffect(() => {
@@ -375,6 +379,9 @@ function RegisterVehicleScreen() {
       <TicDriveButton
         text="Confirm"
         onClick={() => {
+          if (makeAndModelConfirmation || plateConfirmation) {
+            confirmCarSelected();
+          }
           if (segmentedControlSelection?.index === 0) {
             setMakeAndModelConfirmation(true);
             if (setCarSelectedByMakeAndModel) {
@@ -393,10 +400,6 @@ function RegisterVehicleScreen() {
                 model: carModelDropdownData?.value,
               });
             }
-          }
-
-          if (makeAndModelConfirmation || plateConfirmation) {
-            confirmCarSelected();
           }
         }}
         disabled={!buttonIsEnabled}
