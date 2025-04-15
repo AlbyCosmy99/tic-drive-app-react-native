@@ -59,7 +59,6 @@ export default function UserHome() {
   const handleOnSeeAllWorkshops = () => {
     navigationPush(navigation, 'WorkshopsListScreen');
   };
-  const userAddress = useAppSelector(state => state.auth.user?.address) ?? '';
 
   const handleVehicles = () => {
     token
@@ -69,6 +68,7 @@ export default function UserHome() {
         });
     //to-do: once the vehicle is registered instead of going to workshops, go to vehicles and register it on account
   };
+  const userAddress = useAppSelector(state => state.auth.user?.address) ?? '';
 
   const onRefresh = () => {
     setRefreshing(true);
