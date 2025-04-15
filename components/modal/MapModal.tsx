@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -6,20 +6,15 @@ import {
   Text,
   Platform,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
 import MapView, {Marker, Region, LatLng} from 'react-native-maps';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
-import * as Location from 'expo-location';
 import {Ionicons} from '@expo/vector-icons';
-import {router} from 'expo-router';
-import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
-import ToPreviousPage from '../navigation/ToPreviousPage';
 import navigationPush from '@/services/navigation/push';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice';
 import Workshop from '@/types/workshops/Workshop';
+import useUserLocation from '@/hooks/location/useUserLocation';
 
 interface POIMarker {
   coordinate: LatLng;
@@ -53,47 +48,21 @@ export default function MapModal({
   initialRegion,
   setInitialRegion,
 }: MapModalProps) {
-  const [userLocation, setUserLocation] = useState<LatLng | null>(null);
-  const {setErrorMessage} = useContext(GlobalContext);
-
   const navigation = useTicDriveNavigation();
   const dispatch = useAppDispatch();
 
+  const {userLocation, loading} = useUserLocation();
+
   useEffect(() => {
-    (async () => {
-      try {
-        const servicesEnabled = await Location.hasServicesEnabledAsync();
-        if (!servicesEnabled) {
-          setErrorMessage(
-            'Location Disabled. Please enable location services in your phone settings.',
-          );
-          return;
-        }
-
-        const {status} = await Location.requestForegroundPermissionsAsync();
-        if (status !== 'granted') {
-          setErrorMessage(
-            'Permission Denied. Enable location access from Settings.',
-          );
-          return;
-        }
-
-        const location = await Location.getCurrentPositionAsync({});
-        const {latitude, longitude} = location.coords;
-
-        setUserLocation({latitude, longitude});
-        setInitialRegion({
-          latitude,
-          longitude,
-          latitudeDelta: 0.05,
-          longitudeDelta: 0.025,
-        });
-      } catch (err) {
-        console.error('Location error:', err);
-        Alert.alert('Error', 'Could not get your location. Please try again.');
-      }
-    })();
-  }, []);
+    if (userLocation) {
+      setInitialRegion({
+        latitude: userLocation.latitude,
+        longitude: userLocation.longitude,
+        latitudeDelta: 0.05,
+        longitudeDelta: 0.025,
+      });
+    }
+  }, [userLocation]);
 
   const handlePOISelect = (poi: POIMarker) => {
     console.log(poi);
@@ -105,7 +74,9 @@ export default function MapModal({
   return (
     <Modal visible={isMapVisible} animationType="slide">
       <View style={styles.container}>
-        {initialRegion && (
+        {loading || !initialRegion ? (
+          <Text>loading map...</Text>
+        ) : (
           <MapView
             style={StyleSheet.absoluteFillObject}
             initialRegion={initialRegion}
@@ -124,7 +95,6 @@ export default function MapModal({
             ))}
           </MapView>
         )}
-
         <TouchableOpacity
           style={styles.closeButton}
           onPress={() => setIsMapVisible(false)}
