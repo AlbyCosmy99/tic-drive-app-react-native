@@ -3,7 +3,6 @@ import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import TicDriveSuccessCard from '@/components/ui/cards/notifications/TicDriveSuccessCard';
 import {Colors} from '@/constants/Colors';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
-import navigationPush from '@/services/navigation/push';
 import navigationReset from '@/services/navigation/reset';
 import {StyleSheet} from 'react-native';
 import {View} from 'react-native';
