@@ -57,7 +57,7 @@ export default function UserHome() {
   const dispatch = useAppDispatch();
   const token = useJwtToken();
 
-    const {userLocation, loading} = useUserLocation();
+  useUserLocation();
 
   const handleOnSeeAllWorkshops = () => {
     navigationPush(navigation, 'WorkshopsListScreen');

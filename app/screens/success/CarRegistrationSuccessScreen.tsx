@@ -22,7 +22,13 @@ const CarRegistrationSuccessScreen = () => {
         toTop={true}
         text="Continue"
         onClick={() => {
-          navigationReset(navigation, 0, 'userTabs',{animation: 'fade'},'Profile');
+          navigationReset(
+            navigation,
+            0,
+            'userTabs',
+            {animation: 'fade'},
+            'Profile',
+          );
         }}
       />
     </SafeAreaViewLayout>

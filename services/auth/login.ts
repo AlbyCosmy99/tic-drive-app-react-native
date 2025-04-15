@@ -6,7 +6,8 @@ export const login = async (user: User): Promise<any> => {
     const response = await axiosClient.post('auth/login', {
       email: user.email,
       password: user.password,
-      userType: user.category === 'user' ? 1 : (user.category === 'workshop' ? 2 : 0)
+      userType:
+        user.category === 'user' ? 1 : user.category === 'workshop' ? 2 : 0,
     });
 
     return response.data;
