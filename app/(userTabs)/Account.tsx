@@ -43,16 +43,6 @@ import Translate from '@/assets/svg/translate.svg';
 import VehicleIcon from '@/assets/svg/vehicles/car2.svg';
 import EditIcon from '@/assets/svg/writing/change.svg';
 
-// Mock API function
-const updateUserProfileAPI = async (updatedData: any) => {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      console.log('User profile updated:', updatedData);
-      resolve(updatedData); // return updated data for dispatch
-    }, 1000);
-  });
-};
-
 const Section = ({
   title,
   children,
@@ -75,30 +65,16 @@ export default function UserAccount() {
   const navigation = useTicDriveNavigation();
   const [language, setLanguage] = useState<'en' | 'it'>('en');
   const [faqVisible, setFaqVisible] = useState(false);
-  // Add this new local state if it's not already in the component:
   const [languageOptionsVisible, setLanguageOptionsVisible] = useState(false);
 
   useEffect(() => {
     if (user) {
-      // Clone to avoid direct mutation
       setEditedUser(JSON.parse(JSON.stringify(user)));
     }
   }, [user]);
 
   const handleSaveProfile = async () => {
-    try {
-      const updatedData = await updateUserProfileAPI(editedUser);
-
-      if (!updatedData?.id) {
-        throw new Error('Missing user ID in updated data');
-      }
-
-      dispatch({type: 'auth/setUser', payload: updatedData});
-      setIsEditing(false);
-    } catch (err) {
-      console.error('❌ Failed to update profile:', err);
-      alert('Something went wrong while saving profile.');
-    }
+    setIsEditing(false);
   };
 
   const onFavoriteWorkshops = () => {
@@ -178,44 +154,25 @@ export default function UserAccount() {
                 styles={{width: 70, height: 70, marginRight: 10}}
               />
               <View>
-                {isEditing ? (
-                  <TextInput
-                    className="font-semibold text-xl text-black"
-                    value={editedUser.name || ''}
-                    onChangeText={text =>
-                      setEditedUser({...editedUser, name: text})
-                    }
-                  />
-                ) : (
-                  <Text className="font-semibold text-xl">
-                    {user?.name || 'No Name'}
-                  </Text>
-                )}
-                <Text className="text-tic">Padova, Italy</Text>
+                <Text className="font-semibold text-xl">
+                  {user?.name || 'No Name'}
+                </Text>
+                <Text className="text-tic">{user?.address}</Text>
               </View>
             </View>
 
             <View className="flex-row items-center self-start mt-4">
-              {isEditing ? (
-                <CrossPlatformButtonLayout
-                  removeAllStyles
-                  onPress={handleSaveProfile}
-                >
-                  <Text className="text-green-600 font-bold">Save</Text>
-                </CrossPlatformButtonLayout>
-              ) : (
-                <>
+              <CrossPlatformButtonLayout
+                removeAllStyles
+                onPress={() => setIsEditing(!isEditing)}
+              >
+                <View className="flex-row items-center">
                   <EditIcon width={20} height={20} />
-                  <CrossPlatformButtonLayout
-                    removeAllStyles
-                    onPress={() => setIsEditing(true)}
-                  >
-                    <Text className="text-green-600 font-medium ml-1">
-                      Edit
-                    </Text>
-                  </CrossPlatformButtonLayout>
-                </>
-              )}
+                  <Text className="text-green-600 font-medium ml-1">
+                    {isEditing ? 'Save' : 'Edit'}
+                  </Text>
+                </View>
+              </CrossPlatformButtonLayout>
             </View>
           </View>
 
