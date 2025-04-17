@@ -42,6 +42,7 @@ import Translate from '@/assets/svg/translate.svg';
 
 import VehicleIcon from '@/assets/svg/vehicles/car2.svg';
 import EditIcon from '@/assets/svg/writing/change.svg';
+import SvgFromUrl from '@/components/ui/svg/SvgFromUrl';
 
 const Section = ({
   title,
@@ -373,7 +374,9 @@ export default function UserAccount() {
                 />
               </CrossPlatformButtonLayout>
             </Section>
+            
           </ScrollView>
+        
         </View>
       </SafeAreaViewLayout>
     </LinearGradientViewLayout>
