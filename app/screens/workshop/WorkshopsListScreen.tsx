@@ -1,22 +1,23 @@
-import {useState, useContext, useEffect} from 'react';
-import {View, Text} from 'react-native';
-import {Colors} from '@/constants/Colors';
-import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
-import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
-import WorkshopCards from '@/components/WorkshopCards';
-import HorizontalLine from '@/components/ui/HorizontalLine';
-import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import LinearGradientViewLayout from '@/app/layouts/LinearGradientViewLayout';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
-import {useRoute, RouteProp} from '@react-navigation/native';
-import {useTranslation} from 'react-i18next';
-import IconTextPair from '@/components/ui/IconTextPair';
-import OrderIcon from '@/assets/svg/operations/order.svg';
-import FilterIcon from '@/assets/svg/operations/filter.svg';
 import MapIcon from '@/assets/svg/location/map.svg';
-import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
+import FilterIcon from '@/assets/svg/operations/filter.svg';
+import OrderIcon from '@/assets/svg/operations/order.svg';
+import LocationPin from '@/components/modal/LocationPin';
 import MapModal from '@/components/modal/MapModal';
-import {LatLng, Region} from 'react-native-maps';
+import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
+import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
+import HorizontalLine from '@/components/ui/HorizontalLine';
+import IconTextPair from '@/components/ui/IconTextPair';
+import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
+import WorkshopCards from '@/components/WorkshopCards';
+import { Colors } from '@/constants/Colors';
+import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Text, View } from 'react-native';
+import { LatLng, Region } from 'react-native-maps';
 
 interface OrderOption {
   label: string;
@@ -340,8 +341,11 @@ export default function WorkshopsListScreen() {
     <LinearGradientViewLayout>
       <SafeAreaViewLayout>
         <TicDriveNavbar />
+        
+        <LocationPin />
 
         <View className="flex-col items-center h-[102px] relative">
+
           <TicDriveInput
             isLeftIcon={true}
             isRightIcon={true}

@@ -1,7 +1,7 @@
-import PinLocationIcon from '@/assets/svg/location/PinLocation.svg';
 import NissanIcon from '@/assets/svg/vehicles/makes/nissan.svg';
 import PeugeotIcon from '@/assets/svg/vehicles/makes/peugeot.svg';
 import FilterSearchModal from '@/components/modal/FilterSearchModal';
+import LocationPin from '@/components/modal/LocationPin';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import SeeAllServicesCards from '@/components/services/SeeAllServicesCards';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
@@ -11,15 +11,16 @@ import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
 import LoadingSpinner from '@/components/ui/loading/LoadingSpinner';
 import ErrorModal from '@/components/ui/modals/ErrorModal';
 import WorkshopCardMini from '@/components/workshop/WorkshopCardMini';
-import {Colors} from '@/constants/Colors';
+import { Colors } from '@/constants/Colors';
 import useWorkshops from '@/hooks/api/workshops/useWorkshops';
 import useJwtToken from '@/hooks/auth/useJwtToken';
+import useUserLocation from '@/hooks/location/useUserLocation';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import axiosClient from '@/services/http/axiosClient';
 import navigationPush from '@/services/navigation/push';
 import CarContext from '@/stateManagement/contexts/car/CarContext';
-import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
-import {setSelectedCar} from '@/stateManagement/redux/slices/carsSlice';
+import { useAppDispatch, useAppSelector } from '@/stateManagement/redux/hooks';
+import { setSelectedCar } from '@/stateManagement/redux/slices/carsSlice';
 import {
   reset,
   setAreServicesOn,
@@ -30,16 +31,15 @@ import {
 } from '@/stateManagement/redux/slices/workshopsSlice';
 import Workshop from '@/types/workshops/Workshop';
 import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
-import {Entypo} from '@expo/vector-icons';
-import {useFocusEffect} from '@react-navigation/native';
+import { Entypo } from '@expo/vector-icons';
+import { useFocusEffect } from '@react-navigation/native';
 import debounce from 'lodash.debounce';
-import {useCallback, useContext, useRef, useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {Text, View} from 'react-native';
-import {RefreshControl, ScrollView} from 'react-native-gesture-handler';
+import { useCallback, useContext, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Text, View } from 'react-native';
+import { RefreshControl, ScrollView } from 'react-native-gesture-handler';
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
-import useUserLocation from '@/hooks/location/useUserLocation';
 
 export default function UserHome() {
   const [filter, setFilter] = useState('');
@@ -130,16 +130,9 @@ export default function UserHome() {
             });
           }}
         />
-        <View className="flex-row items-center px-4 pt-1 pb-1">
-          <PinLocationIcon width={16} height={16} />
-          <Text
-            className="ml-1 text-sm font-medium text-gray-700"
-            numberOfLines={1}
-            ellipsizeMode="tail"
-          >
-            {userAddress}
-          </Text>
-        </View>
+        <LocationPin />
+
+
 
         <View className="flex-row items-center relative">
           <TicDriveInput
