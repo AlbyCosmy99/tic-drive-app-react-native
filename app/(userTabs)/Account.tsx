@@ -279,32 +279,7 @@ export default function UserAccount() {
               <HorizontalLine />
             </Section>
             <Section title="Help and support">
-              <CrossPlatformButtonLayout
-                removeAllStyles
-                onPress={() => alert('Customer support')}
-              >
-                <IconTextPair
-                  text="Customer support"
-                  icon={<CustomerServiceIcon />}
-                  textTailwindCss="text-base font-medium pl-1"
-                  containerTailwindCss="py-2 my-0 pt-1"
-                />
-              </CrossPlatformButtonLayout>
-              <HorizontalLine />
-
-              <CrossPlatformButtonLayout removeAllStyles onPress={handleFAQ}>
-                <IconTextPair
-                  text="FAQ"
-                  icon={<FAQ />}
-                  textTailwindCss="text-base font-medium pl-1"
-                  containerTailwindCss="py-2 my-0 pt-1"
-                />
-              </CrossPlatformButtonLayout>
-
-              {faqVisible && renderFAQ()}
-              <HorizontalLine />
-
-              <CrossPlatformButtonLayout
+            <CrossPlatformButtonLayout
                 removeAllStyles
                 onPress={() =>
                   setLanguageOptionsVisible(!languageOptionsVisible)
@@ -349,7 +324,34 @@ export default function UserAccount() {
                   </TouchableOpacity>
                 </View>
               )}
+              <HorizontalLine />
 
+             
+              <HorizontalLine />
+
+              <CrossPlatformButtonLayout removeAllStyles onPress={handleFAQ}>
+                <IconTextPair
+                  text="FAQ"
+                  icon={<FAQ />}
+                  textTailwindCss="text-base font-medium pl-1"
+                  containerTailwindCss="py-2 my-0 pt-1"
+                />
+              </CrossPlatformButtonLayout>
+
+              {faqVisible && renderFAQ()}
+              <HorizontalLine />
+              <CrossPlatformButtonLayout
+                removeAllStyles
+                onPress={() => alert('Customer support')}
+              >
+                <IconTextPair
+                  text="Customer support"
+                  icon={<CustomerServiceIcon />}
+                  textTailwindCss="text-base font-medium pl-1"
+                  containerTailwindCss="py-2 my-0 pt-1"
+                />
+              </CrossPlatformButtonLayout>
+              
               <HorizontalLine />
 
               <CrossPlatformButtonLayout
