@@ -75,7 +75,6 @@ export default function UserAccount() {
     <LinearGradientViewLayout>
       <SafeAreaViewLayout disabled={!isAndroidPlatform()}>
         <TicDriveNavbar />
-        <SvgFromUrl url="https://ticdrive.blob.core.windows.net/car-logos/nissan.svg" size={100} />
         <View className="mx-2.5">
           {/* Header Info */}
           <View className="flex-row justify-between items-center mt-1 mb-4">
