@@ -20,7 +20,7 @@ export default function WorkshopAccount() {
           <Text className="font-bold text-xl text-center mb-2">
             Quick Settings
           </Text>
-          <HorizontalLine /> 
+          <HorizontalLine />
           <View className="mx-6 mb-3">
             <TicDriveButton text="Update availability" />
             <TicDriveButton text="Change prices" />

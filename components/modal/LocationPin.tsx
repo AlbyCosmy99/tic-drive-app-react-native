@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import { useAppSelector } from '@/stateManagement/redux/hooks';
+import {View, Text} from 'react-native';
+import {useAppSelector} from '@/stateManagement/redux/hooks';
 import PinLocationIcon from '@/assets/svg/location/PinLocation.svg';
 
 export default function LocationPin() {

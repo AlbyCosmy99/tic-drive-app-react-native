@@ -57,21 +57,22 @@ const Section = ({
 );
 
 export default function UserAccount() {
-  const dispatch = useAppDispatch();
-  const user = useAppSelector(state => state.auth.user);
   const [isEditing, setIsEditing] = useState(false);
   const [editedUser, setEditedUser] = useState<any>({});
-  const token = useJwtToken();
-  const navigation = useTicDriveNavigation();
   const [language, setLanguage] = useState<'en' | 'it'>('en');
   const [faqVisible, setFaqVisible] = useState(false);
   const [languageOptionsVisible, setLanguageOptionsVisible] = useState(false);
 
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(state => state.auth.user);
+  const token = useJwtToken();
+  const navigation = useTicDriveNavigation();
+
   useEffect(() => {
-    if (user) {
-      setEditedUser(JSON.parse(JSON.stringify(user)));
+    if (isEditing) {
+      setEditedUser(user);
     }
-  }, [user]);
+  }, [isEditing]);
 
   const handleSaveProfile = async () => {
     setIsEditing(false);
@@ -187,11 +188,12 @@ export default function UserAccount() {
                 <PhoneIcon />
                 {isEditing ? (
                   <TextInput
-                    className="ml-2 flex-1 border-b border-gray-300"
-                    value={editedUser.phoneNumber || ''}
+                    className="ml-2 flex-1 border-b border-gray-300 pb-1"
+                    value={editedUser.phoneNumber}
                     onChangeText={text =>
                       setEditedUser({...editedUser, phoneNumber: text})
                     }
+                    placeholder="Insert phone number"
                   />
                 ) : (
                   <Text className="text-base font-medium pl-1">
@@ -206,11 +208,12 @@ export default function UserAccount() {
                 <MailIcon />
                 {isEditing ? (
                   <TextInput
-                    className="ml-2 flex-1 border-b border-gray-300"
-                    value={editedUser.email || ''}
+                    className="ml-2 flex-1 border-b border-gray-300 pb-1"
+                    value={editedUser.email}
                     onChangeText={text =>
                       setEditedUser({...editedUser, email: text})
                     }
+                    placeholder="Insert emaik"
                   />
                 ) : (
                   <Text className="text-base font-medium pl-1">
@@ -225,11 +228,12 @@ export default function UserAccount() {
                 <AddressIcon />
                 {isEditing ? (
                   <TextInput
-                    className="ml-2 flex-1 border-b border-gray-300"
-                    value={editedUser.address || ''}
+                    className="ml-2 flex-1 border-b border-gray-300 pb-1"
+                    value={editedUser.address}
                     onChangeText={text =>
                       setEditedUser({...editedUser, address: text})
                     }
+                    placeholder="Insert address"
                   />
                 ) : (
                   <Text className="text-base font-medium pl-1">
