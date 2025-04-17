@@ -18,6 +18,7 @@ import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButt
 import {handleLogout} from '@/components/ui/buttons/TicDriveAuthButton';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import IconTextPair from '@/components/ui/IconTextPair';
+import { WebView } from 'react-native-webview';
 
 // Utils & Hooks
 import useJwtToken from '@/hooks/auth/useJwtToken';
@@ -369,6 +370,16 @@ const [languageOptionsVisible, setLanguageOptionsVisible] = useState(false);
                   containerTailwindCss="py-2 my-0 pt-1"
                 />
               </CrossPlatformButtonLayout>
+              <View className="items-center my-4">
+  <Text className="text-base font-semibold mb-2">trying the Nissan Logo from Azure</Text>
+  <WebView
+    source={{ uri: 'https://ticdrive.blob.core.windows.net/car-logos/nissan.svg' }}
+    style={{ width: 100, height: 100 }}
+    originWhitelist={['*']}
+    scrollEnabled={false}
+  />
+</View>
+
             </Section>
           </ScrollView>
         </View>
