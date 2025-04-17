@@ -8,12 +8,10 @@ interface SvgFromUrlProps {
 
 const SvgFromUrl: React.FC<SvgFromUrlProps> = ({url, size = 150}) => {
   return (
-    <View className="items-center my-4">
-      <Text className="text-base font-semibold mb-2">Logo from Azure</Text>
-      <WebView
-        originWhitelist={['*']}
-        source={{
-          html: `
+    <WebView
+      originWhitelist={['*']}
+      source={{
+        html: `
             <html>
               <head>
                 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -38,15 +36,14 @@ const SvgFromUrl: React.FC<SvgFromUrlProps> = ({url, size = 150}) => {
               </body>
             </html>
           `,
-        }}
-        style={{
-          width: size,
-          height: size,
-          backgroundColor: 'transparent',
-        }}
-        scrollEnabled={false}
-      />
-    </View>
+      }}
+      style={{
+        width: size,
+        height: size,
+        backgroundColor: 'transparent',
+      }}
+      scrollEnabled={false}
+    />
   );
 };
 

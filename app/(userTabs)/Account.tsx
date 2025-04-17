@@ -32,6 +32,7 @@ import PhoneIcon from '@/assets/svg/notifications/phone.svg';
 import Remove from '@/assets/svg/remove.svg';
 import VehicleIcon from '@/assets/svg/vehicles/car2.svg';
 import EditIcon from '@/assets/svg/writing/change.svg';
+import SvgFromUrl from '@/components/ui/svg/SvgFromUrl';
 
 const Section = ({
   title,
@@ -74,6 +75,7 @@ export default function UserAccount() {
     <LinearGradientViewLayout>
       <SafeAreaViewLayout disabled={!isAndroidPlatform()}>
         <TicDriveNavbar />
+        <SvgFromUrl url="https://ticdrive.blob.core.windows.net/car-logos/nissan.svg" size={100} />
         <View className="mx-2.5">
           {/* Header Info */}
           <View className="flex-row justify-between items-center mt-1 mb-4">
@@ -188,7 +190,9 @@ export default function UserAccount() {
                 />
               </CrossPlatformButtonLayout>
             </Section>
+            
           </ScrollView>
+        
         </View>
       </SafeAreaViewLayout>
     </LinearGradientViewLayout>
