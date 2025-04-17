@@ -51,7 +51,7 @@ const Section = ({
   title: string;
   children: React.ReactNode;
 }) => (
-  <View className="my-4">
+  <View className="my-2">
     <Text className="font-medium text-2xl">{title}</Text>
     {children}
   </View>
@@ -274,7 +274,6 @@ export default function UserAccount() {
               </CrossPlatformButtonLayout>
               <HorizontalLine />
             </Section>
-
             <Section title="Help and support">
               <CrossPlatformButtonLayout
                 removeAllStyles
