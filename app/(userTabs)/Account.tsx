@@ -42,6 +42,7 @@ import Translate from '@/assets/svg/translate.svg';
 
 import VehicleIcon from '@/assets/svg/vehicles/car2.svg';
 import EditIcon from '@/assets/svg/writing/change.svg';
+import SaveIcon from '@/assets/svg/save.svg';
 
 const Section = ({
   title,
@@ -166,18 +167,22 @@ export default function UserAccount() {
             </View>
 
             <View className="flex-row items-center self-start mt-4">
-              <CrossPlatformButtonLayout
+            <CrossPlatformButtonLayout
                 removeAllStyles
                 onPress={() => setIsEditing(!isEditing)}
-              >
-                <View className="flex-row items-center">
-                  <EditIcon width={20} height={20} />
-                  <Text className="text-green-600 font-medium ml-1">
-                    {isEditing ? 'Save' : 'Edit'}
-                  </Text>
-                </View>
-              </CrossPlatformButtonLayout>
+            >
+            <View className="flex-row items-center">
+              {isEditing ? (
+                <SaveIcon width={20} height={20} /> 
+                  ) : (
+                 <EditIcon width={20} height={20} /> 
+                  )}
+                <Text className="text-green-600 font-medium ml-1">
+                  {isEditing ? 'Save' : 'Edit'}
+               </Text>
             </View>
+             </CrossPlatformButtonLayout>
+          </View>
           </View>
 
           <HorizontalLine />
