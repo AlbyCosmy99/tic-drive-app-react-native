@@ -11,13 +11,13 @@ import HorizontalLine from '@/components/ui/HorizontalLine';
 import IconTextPair from '@/components/ui/IconTextPair';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
 import WorkshopCards from '@/components/WorkshopCards';
-import { Colors } from '@/constants/Colors';
+import {Colors} from '@/constants/Colors';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
-import { RouteProp, useRoute } from '@react-navigation/native';
-import { useContext, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Text, View } from 'react-native';
-import { LatLng, Region } from 'react-native-maps';
+import {RouteProp, useRoute} from '@react-navigation/native';
+import {useContext, useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {Text, View} from 'react-native';
+import {LatLng, Region} from 'react-native-maps';
 
 interface OrderOption {
   label: string;
@@ -341,11 +341,10 @@ export default function WorkshopsListScreen() {
     <LinearGradientViewLayout>
       <SafeAreaViewLayout>
         <TicDriveNavbar />
-        
+
         <LocationPin />
 
         <View className="flex-col items-center h-[102px] relative">
-
           <TicDriveInput
             isLeftIcon={true}
             isRightIcon={true}

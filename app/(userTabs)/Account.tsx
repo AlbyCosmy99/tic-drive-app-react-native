@@ -1,4 +1,11 @@
-import {ScrollView, Text, View} from 'react-native';
+import {
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+} from 'react-native';
+import React, {useState, useEffect} from 'react';
 
 // Navigation & State
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
@@ -30,6 +37,9 @@ import AddressIcon from '@/assets/svg/map.svg';
 import MailIcon from '@/assets/svg/notifications/mail.svg';
 import PhoneIcon from '@/assets/svg/notifications/phone.svg';
 import Remove from '@/assets/svg/remove.svg';
+import FAQ from '@/assets/svg/faq.svg';
+import Translate from '@/assets/svg/translate.svg';
+
 import VehicleIcon from '@/assets/svg/vehicles/car2.svg';
 import EditIcon from '@/assets/svg/writing/change.svg';
 import SvgFromUrl from '@/components/ui/svg/SvgFromUrl';
@@ -48,18 +58,81 @@ const Section = ({
 );
 
 export default function UserAccount() {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedUser, setEditedUser] = useState<any>({});
+  const [language, setLanguage] = useState<'en' | 'it'>('en');
+  const [faqVisible, setFaqVisible] = useState(false);
+  const [languageOptionsVisible, setLanguageOptionsVisible] = useState(false);
+
+  const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.auth.user);
   const token = useJwtToken();
-  const dispatch = useAppDispatch();
   const navigation = useTicDriveNavigation();
+
+  useEffect(() => {
+    if (isEditing) {
+      setEditedUser(user);
+    }
+  }, [isEditing]);
+
+  const handleSaveProfile = async () => {
+    setIsEditing(false);
+  };
 
   const onFavoriteWorkshops = () => {
     navigationPush(navigation, 'WorkshopsListScreen', {favorite: true});
   };
 
-  const onEditProfile = () => {
-    navigationPush(navigation, 'EditUserProfileScreen');
+  const handleChangeLanguage = (newLanguage: 'en' | 'it') => {
+    setLanguage(newLanguage);
+    alert(
+      `Language changed to ${newLanguage === 'en' ? 'English' : 'Italian'}`,
+    );
   };
+
+  const handleFAQ = () => {
+    setFaqVisible(!faqVisible);
+  };
+
+  const renderFAQ = () => (
+    <View className="py-2">
+      <View className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm">
+        <Text className="font-medium text-lg">1. What is TicDrive?</Text>
+        <Text className="text-sm">
+          TicDrive is an innovative platform for vehicle-related services...
+        </Text>
+      </View>
+
+      <View className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm">
+        <Text className="font-medium text-lg mt-2">
+          2. How do I register a vehicle?
+        </Text>
+        <Text className="text-sm">
+          To register a vehicle, go to your profile and click on 'Add Vehicle'.
+        </Text>
+      </View>
+
+      <View className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm">
+        <Text className="font-medium text-lg mt-2">
+          3. How do I contact customer support?
+        </Text>
+        <Text className="text-sm">
+          You can contact customer support by clicking on the 'Customer Support'
+          button.
+        </Text>
+      </View>
+
+      <View className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm">
+        <Text className="font-medium text-lg mt-2">
+          4. How do I update my profile?
+        </Text>
+        <Text className="text-sm">
+          To update your profile, click on the 'Edit' button next to your name
+          in your profile section.
+        </Text>
+      </View>
+    </View>
+  );
 
   if (!token)
     return (
@@ -76,7 +149,6 @@ export default function UserAccount() {
       <SafeAreaViewLayout disabled={!isAndroidPlatform()}>
         <TicDriveNavbar />
         <View className="mx-2.5">
-          {/* Header Info */}
           <View className="flex-row justify-between items-center mt-1 mb-4">
             <View className="flex-row items-center">
               <CircularUserAvatar
@@ -84,46 +156,96 @@ export default function UserAccount() {
                 styles={{width: 70, height: 70, marginRight: 10}}
               />
               <View>
-                <Text className="font-semibold text-xl">{user?.name}</Text>
-                <Text className="text-tic">Padova, Italy</Text>
+                {user?.name ? (
+                  <Text className="font-semibold text-xl">{user?.name}</Text>
+                ) : (
+                  <Text className="font-base text-xl">
+                    {'Edit to add your name'}
+                  </Text>
+                )}
               </View>
             </View>
+
             <View className="flex-row items-center self-start mt-4">
-              <EditIcon width={20} height={20} />
               <CrossPlatformButtonLayout
                 removeAllStyles
-                onPress={onEditProfile}
+                onPress={() => setIsEditing(!isEditing)}
               >
-                <Text className="text-green-600 font-medium ml-1">Edit</Text>
+                <View className="flex-row items-center">
+                  <EditIcon width={20} height={20} />
+                  <Text className="text-green-600 font-medium ml-1">
+                    {isEditing ? 'Save' : 'Edit'}
+                  </Text>
+                </View>
               </CrossPlatformButtonLayout>
             </View>
           </View>
 
           <HorizontalLine />
 
-          <ScrollView className="px-1">
-            {/* Account Info */}
+          <ScrollView
+            className="px-1"
+            contentContainerStyle={{paddingBottom: 140}}
+          >
             <Section title="Account">
-              <IconTextPair
-                text={user?.phoneNumber || 'Not available'}
-                icon={<PhoneIcon />}
-                textTailwindCss="text-base font-medium pl-1"
-                containerTailwindCss="py-2"
-              />
+              <View className="flex-row items-center py-2">
+                <PhoneIcon />
+                {isEditing ? (
+                  <TextInput
+                    className="ml-2 flex-1 border-b border-gray-300 pb-1"
+                    value={editedUser.phoneNumber}
+                    onChangeText={text =>
+                      setEditedUser({...editedUser, phoneNumber: text})
+                    }
+                    placeholder="Insert phone number"
+                  />
+                ) : (
+                  <Text className="text-base font-medium pl-1">
+                    {user?.phoneNumber || 'Not available'}
+                  </Text>
+                )}
+              </View>
+
               <HorizontalLine />
-              <IconTextPair
-                text={user?.email || 'Not available'}
-                icon={<MailIcon />}
-                textTailwindCss="text-base font-medium pl-1"
-                containerTailwindCss="py-2 my-0 pt-1"
-              />
+
+              <View className="flex-row items-center py-2">
+                <MailIcon />
+                {isEditing ? (
+                  <TextInput
+                    className="ml-2 flex-1 border-b border-gray-300 pb-1"
+                    value={editedUser.email}
+                    onChangeText={text =>
+                      setEditedUser({...editedUser, email: text})
+                    }
+                    placeholder="Insert emaik"
+                  />
+                ) : (
+                  <Text className="text-base font-medium pl-1">
+                    {user?.email || 'Not available'}
+                  </Text>
+                )}
+              </View>
+
               <HorizontalLine />
-              <IconTextPair
-                text={user?.address || 'Not available'}
-                icon={<AddressIcon />}
-                textTailwindCss="text-base font-medium pl-1"
-                containerTailwindCss="py-2 my-0 pt-1"
-              />
+
+              <View className="flex-row items-center py-2">
+                <AddressIcon />
+                {isEditing ? (
+                  <TextInput
+                    className="ml-2 flex-1 border-b border-gray-300 pb-1"
+                    value={editedUser.address}
+                    onChangeText={text =>
+                      setEditedUser({...editedUser, address: text})
+                    }
+                    placeholder="Insert address"
+                  />
+                ) : (
+                  <Text className="text-base font-medium pl-1">
+                    {user?.address || 'Not available'}
+                  </Text>
+                )}
+              </View>
+
               <HorizontalLine />
 
               <CrossPlatformButtonLayout
@@ -138,6 +260,7 @@ export default function UserAccount() {
                 />
               </CrossPlatformButtonLayout>
               <HorizontalLine />
+
               <CrossPlatformButtonLayout
                 removeAllStyles
                 onPress={onFavoriteWorkshops}
@@ -151,7 +274,7 @@ export default function UserAccount() {
               </CrossPlatformButtonLayout>
               <HorizontalLine />
             </Section>
-            {/* Support */}
+
             <Section title="Help and support">
               <CrossPlatformButtonLayout
                 removeAllStyles
@@ -165,6 +288,67 @@ export default function UserAccount() {
                 />
               </CrossPlatformButtonLayout>
               <HorizontalLine />
+
+              <CrossPlatformButtonLayout removeAllStyles onPress={handleFAQ}>
+                <IconTextPair
+                  text="FAQ"
+                  icon={<FAQ />}
+                  textTailwindCss="text-base font-medium pl-1"
+                  containerTailwindCss="py-2 my-0 pt-1"
+                />
+              </CrossPlatformButtonLayout>
+
+              {faqVisible && renderFAQ()}
+              <HorizontalLine />
+
+              <CrossPlatformButtonLayout
+                removeAllStyles
+                onPress={() =>
+                  setLanguageOptionsVisible(!languageOptionsVisible)
+                }
+              >
+                <IconTextPair
+                  text="Change language"
+                  icon={<Translate />}
+                  textTailwindCss="text-base font-medium pl-1"
+                  containerTailwindCss="py-2 my-0 pt-1"
+                />
+              </CrossPlatformButtonLayout>
+
+              {languageOptionsVisible && (
+                <View className="ml-8 mt-2">
+                  <TouchableOpacity
+                    className="py-2"
+                    onPress={() => {
+                      handleChangeLanguage('en');
+                      setLanguageOptionsVisible(false);
+                    }}
+                  >
+                    <Text
+                      className={`text-base ${language === 'en' ? 'font-bold text-blue-600' : 'text-black'}`}
+                    >
+                      🇬🇧 English
+                    </Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    className="py-2"
+                    onPress={() => {
+                      handleChangeLanguage('it');
+                      setLanguageOptionsVisible(false);
+                    }}
+                  >
+                    <Text
+                      className={`text-base ${language === 'it' ? 'font-bold text-blue-600' : 'text-black'}`}
+                    >
+                      🇮🇹 Italian
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+
+              <HorizontalLine />
+
               <CrossPlatformButtonLayout
                 removeAllStyles
                 onPress={() => handleLogout(dispatch, navigation)}
@@ -177,6 +361,7 @@ export default function UserAccount() {
                 />
               </CrossPlatformButtonLayout>
               <HorizontalLine />
+
               <CrossPlatformButtonLayout
                 removeAllStyles
                 onPress={() => alert('Eliminate account')}
