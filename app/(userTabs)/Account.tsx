@@ -1,4 +1,10 @@
-import {ScrollView, Text, TextInput, View, TouchableOpacity} from 'react-native';
+import {
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
 
 // Navigation & State
@@ -69,8 +75,8 @@ export default function UserAccount() {
   const navigation = useTicDriveNavigation();
   const [language, setLanguage] = useState<'en' | 'it'>('en');
   const [faqVisible, setFaqVisible] = useState(false);
-// Add this new local state if it's not already in the component:
-const [languageOptionsVisible, setLanguageOptionsVisible] = useState(false);
+  // Add this new local state if it's not already in the component:
+  const [languageOptionsVisible, setLanguageOptionsVisible] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -101,7 +107,9 @@ const [languageOptionsVisible, setLanguageOptionsVisible] = useState(false);
 
   const handleChangeLanguage = (newLanguage: 'en' | 'it') => {
     setLanguage(newLanguage);
-    alert(`Language changed to ${newLanguage === 'en' ? 'English' : 'Italian'}`);
+    alert(
+      `Language changed to ${newLanguage === 'en' ? 'English' : 'Italian'}`,
+    );
   };
 
   const handleFAQ = () => {
@@ -112,22 +120,38 @@ const [languageOptionsVisible, setLanguageOptionsVisible] = useState(false);
     <View className="py-2">
       <View className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm">
         <Text className="font-medium text-lg">1. What is TicDrive?</Text>
-        <Text className="text-sm">TicDrive is an innovative platform for vehicle-related services...</Text>
+        <Text className="text-sm">
+          TicDrive is an innovative platform for vehicle-related services...
+        </Text>
       </View>
 
       <View className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm">
-        <Text className="font-medium text-lg mt-2">2. How do I register a vehicle?</Text>
-        <Text className="text-sm">To register a vehicle, go to your profile and click on 'Add Vehicle'.</Text>
+        <Text className="font-medium text-lg mt-2">
+          2. How do I register a vehicle?
+        </Text>
+        <Text className="text-sm">
+          To register a vehicle, go to your profile and click on 'Add Vehicle'.
+        </Text>
       </View>
 
       <View className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm">
-        <Text className="font-medium text-lg mt-2">3. How do I contact customer support?</Text>
-        <Text className="text-sm">You can contact customer support by clicking on the 'Customer Support' button.</Text>
+        <Text className="font-medium text-lg mt-2">
+          3. How do I contact customer support?
+        </Text>
+        <Text className="text-sm">
+          You can contact customer support by clicking on the 'Customer Support'
+          button.
+        </Text>
       </View>
 
       <View className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm">
-        <Text className="font-medium text-lg mt-2">4. How do I update my profile?</Text>
-        <Text className="text-sm">To update your profile, click on the 'Edit' button next to your name in your profile section.</Text>
+        <Text className="font-medium text-lg mt-2">
+          4. How do I update my profile?
+        </Text>
+        <Text className="text-sm">
+          To update your profile, click on the 'Edit' button next to your name
+          in your profile section.
+        </Text>
       </View>
     </View>
   );
@@ -175,7 +199,8 @@ const [languageOptionsVisible, setLanguageOptionsVisible] = useState(false);
               {isEditing ? (
                 <CrossPlatformButtonLayout
                   removeAllStyles
-                  onPress={handleSaveProfile}>
+                  onPress={handleSaveProfile}
+                >
                   <Text className="text-green-600 font-bold">Save</Text>
                 </CrossPlatformButtonLayout>
               ) : (
@@ -183,8 +208,11 @@ const [languageOptionsVisible, setLanguageOptionsVisible] = useState(false);
                   <EditIcon width={20} height={20} />
                   <CrossPlatformButtonLayout
                     removeAllStyles
-                    onPress={() => setIsEditing(true)} >
-                    <Text className="text-green-600 font-medium ml-1">Edit</Text>
+                    onPress={() => setIsEditing(true)}
+                  >
+                    <Text className="text-green-600 font-medium ml-1">
+                      Edit
+                    </Text>
                   </CrossPlatformButtonLayout>
                 </>
               )}
@@ -193,7 +221,10 @@ const [languageOptionsVisible, setLanguageOptionsVisible] = useState(false);
 
           <HorizontalLine />
 
-          <ScrollView className="px-1">
+          <ScrollView
+            className="px-1"
+            contentContainerStyle={{paddingBottom: 140}}
+          >
             <Section title="Account">
               <View className="flex-row items-center py-2">
                 <PhoneIcon />
@@ -254,9 +285,8 @@ const [languageOptionsVisible, setLanguageOptionsVisible] = useState(false);
 
               <CrossPlatformButtonLayout
                 removeAllStyles
-                onPress={() =>
-                  navigationPush(navigation, 'UserVehiclesScreen')
-                }>
+                onPress={() => navigationPush(navigation, 'UserVehiclesScreen')}
+              >
                 <IconTextPair
                   text="Registered vehicles"
                   icon={<VehicleIcon />}
@@ -268,7 +298,8 @@ const [languageOptionsVisible, setLanguageOptionsVisible] = useState(false);
 
               <CrossPlatformButtonLayout
                 removeAllStyles
-                onPress={onFavoriteWorkshops}>
+                onPress={onFavoriteWorkshops}
+              >
                 <IconTextPair
                   text="Favorite workshops"
                   icon={<HeartIcon />}
@@ -282,7 +313,8 @@ const [languageOptionsVisible, setLanguageOptionsVisible] = useState(false);
             <Section title="Help and support">
               <CrossPlatformButtonLayout
                 removeAllStyles
-                onPress={() => alert('Customer support')}>
+                onPress={() => alert('Customer support')}
+              >
                 <IconTextPair
                   text="Customer support"
                   icon={<CustomerServiceIcon />}
@@ -292,9 +324,7 @@ const [languageOptionsVisible, setLanguageOptionsVisible] = useState(false);
               </CrossPlatformButtonLayout>
               <HorizontalLine />
 
-              <CrossPlatformButtonLayout
-                removeAllStyles
-                onPress={handleFAQ}>
+              <CrossPlatformButtonLayout removeAllStyles onPress={handleFAQ}>
                 <IconTextPair
                   text="FAQ"
                   icon={<FAQ />}
@@ -307,49 +337,57 @@ const [languageOptionsVisible, setLanguageOptionsVisible] = useState(false);
               <HorizontalLine />
 
               <CrossPlatformButtonLayout
-               removeAllStyles
-              onPress={() => setLanguageOptionsVisible(!languageOptionsVisible)}>
-  <IconTextPair
-    text="Change language"
-    icon={<Translate />}
-    textTailwindCss="text-base font-medium pl-1"
-    containerTailwindCss="py-2 my-0 pt-1"
-  />
-</CrossPlatformButtonLayout>
+                removeAllStyles
+                onPress={() =>
+                  setLanguageOptionsVisible(!languageOptionsVisible)
+                }
+              >
+                <IconTextPair
+                  text="Change language"
+                  icon={<Translate />}
+                  textTailwindCss="text-base font-medium pl-1"
+                  containerTailwindCss="py-2 my-0 pt-1"
+                />
+              </CrossPlatformButtonLayout>
 
-{languageOptionsVisible && (
-  <View className="ml-8 mt-2">
-    <TouchableOpacity
-      className="py-2"
-      onPress={() => {
-        handleChangeLanguage('en');
-        setLanguageOptionsVisible(false);
-      }}>
-      <Text className={`text-base ${language === 'en' ? 'font-bold text-blue-600' : 'text-black'}`}>
-        🇬🇧 English
-      </Text>
-    </TouchableOpacity>
+              {languageOptionsVisible && (
+                <View className="ml-8 mt-2">
+                  <TouchableOpacity
+                    className="py-2"
+                    onPress={() => {
+                      handleChangeLanguage('en');
+                      setLanguageOptionsVisible(false);
+                    }}
+                  >
+                    <Text
+                      className={`text-base ${language === 'en' ? 'font-bold text-blue-600' : 'text-black'}`}
+                    >
+                      🇬🇧 English
+                    </Text>
+                  </TouchableOpacity>
 
-    <TouchableOpacity
-      className="py-2"
-      onPress={() => {
-        handleChangeLanguage('it');
-        setLanguageOptionsVisible(false);
-      }}>
-      <Text className={`text-base ${language === 'it' ? 'font-bold text-blue-600' : 'text-black'}`}>
-        🇮🇹 Italian
-      </Text>
-    </TouchableOpacity>
-  </View>
-)}
-
-
+                  <TouchableOpacity
+                    className="py-2"
+                    onPress={() => {
+                      handleChangeLanguage('it');
+                      setLanguageOptionsVisible(false);
+                    }}
+                  >
+                    <Text
+                      className={`text-base ${language === 'it' ? 'font-bold text-blue-600' : 'text-black'}`}
+                    >
+                      🇮🇹 Italian
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              )}
 
               <HorizontalLine />
 
               <CrossPlatformButtonLayout
                 removeAllStyles
-                onPress={() => handleLogout(dispatch, navigation)}>
+                onPress={() => handleLogout(dispatch, navigation)}
+              >
                 <IconTextPair
                   text="Logout"
                   icon={<Logout />}
@@ -361,7 +399,8 @@ const [languageOptionsVisible, setLanguageOptionsVisible] = useState(false);
 
               <CrossPlatformButtonLayout
                 removeAllStyles
-                onPress={() => alert('Eliminate account')}>
+                onPress={() => alert('Eliminate account')}
+              >
                 <IconTextPair
                   text="Delete account"
                   icon={<Remove />}
