@@ -155,9 +155,13 @@ export default function UserAccount() {
                 styles={{width: 70, height: 70, marginRight: 10}}
               />
               <View>
-                <Text className="font-semibold text-xl">
-                  {user?.name || 'No Name'}
-                </Text>
+                {user?.name ? (
+                  <Text className="font-semibold text-xl">{user?.name}</Text>
+                ) : (
+                  <Text className="font-base text-xl">
+                    {'Edit to add your name'}
+                  </Text>
+                )}
               </View>
             </View>
 
