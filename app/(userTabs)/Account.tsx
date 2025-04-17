@@ -158,7 +158,6 @@ export default function UserAccount() {
                 <Text className="font-semibold text-xl">
                   {user?.name || 'No Name'}
                 </Text>
-                <Text className="text-tic">{user?.address}</Text>
               </View>
             </View>
 
