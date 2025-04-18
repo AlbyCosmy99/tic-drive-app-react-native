@@ -185,14 +185,20 @@ export default function UserHome() {
                           />
                         ))}
                       </View>
-                      <CrossPlatformButtonLayout
-                        onPress={handleOnSeeAllWorkshops}
-                        containerTailwindCss="border-2 border-grey-light items-center justify-center p-1 my-2.5 rounded-xl"
-                      >
-                        <Text className="text-base font-medium">
-                          {t('seeAll.workshops')}
-                        </Text>
-                      </CrossPlatformButtonLayout>
+                      {workshops.length > 0 ? (
+                        (
+                          <CrossPlatformButtonLayout
+                            onPress={handleOnSeeAllWorkshops}
+                            containerTailwindCss="border-2 border-grey-light items-center justify-center p-1 my-2.5 rounded-xl"
+                          >
+                            <Text className="text-base font-medium">
+                              {t('seeAll.workshops')}
+                            </Text>
+                          </CrossPlatformButtonLayout>
+                        ) 
+                      ): (
+                        <Text className='font-medium mb-2'>No workshops available yet.</Text>
+                      )}
                     </View>
                   )}
                 </View>

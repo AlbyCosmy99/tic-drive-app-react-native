@@ -69,7 +69,7 @@ const SeeAllServicesCards = forwardRef(
     return loadingServices ? (
       <LoadingSpinner />
     ) : (
-      services.length > 0 && (
+      services.length > 0 ? (
         <View>
           {topHorizontalLine && <HorizontalLine />}
           <View className="flex justify-center items-center flex-1 mt-2">
@@ -115,6 +115,8 @@ const SeeAllServicesCards = forwardRef(
             <HorizontalLine tailwindCssContainer="mt-2" />
           )}
         </View>
+      ) : (
+        <Text className='font-medium mb-2 mx-2.5'>No services available yet.</Text>
       )
     );
   },
