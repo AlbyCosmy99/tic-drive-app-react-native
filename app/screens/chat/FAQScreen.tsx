@@ -1,4 +1,4 @@
-import { ScrollView, Text, View } from 'react-native';
+import {ScrollView, Text, View} from 'react-native';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import LinearGradientViewLayout from '@/app/layouts/LinearGradientViewLayout';
 import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
@@ -8,18 +8,17 @@ export default function FAQScreen() {
   return (
     <LinearGradientViewLayout>
       <SafeAreaViewLayout disabled={!isAndroidPlatform()}>
-        {/* Add padding for the content */}
-        <View className="flex-1 pt-16"> {/* Adjust pt-16 to match navbar height */}
+        <View className="flex-1 pt-16">
           <TicDriveNavbar />
           <ScrollView className="p-4">
-            {/* FAQ Title */}
             <Text className="text-2xl font-bold mb-4">FAQ</Text>
 
             {/* FAQ Section 1 */}
             <View className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm">
               <Text className="font-medium text-lg">1. What is TicDrive?</Text>
               <Text className="text-sm">
-                TicDrive is an innovative platform for vehicle-related services...
+                TicDrive is an innovative platform for vehicle-related
+                services...
               </Text>
             </View>
 
@@ -29,7 +28,8 @@ export default function FAQScreen() {
                 2. How do I register a vehicle?
               </Text>
               <Text className="text-sm">
-                To register a vehicle, go to your profile and click on 'Add Vehicle'.
+                To register a vehicle, go to your profile and click on 'Add
+                Vehicle'.
               </Text>
             </View>
 
@@ -39,8 +39,8 @@ export default function FAQScreen() {
                 3. How do I contact customer support?
               </Text>
               <Text className="text-sm">
-                You can contact customer support by clicking on the 'Customer Support'
-                button.
+                You can contact customer support by clicking on the 'Customer
+                Support' button.
               </Text>
             </View>
 
@@ -50,8 +50,8 @@ export default function FAQScreen() {
                 4. How do I update my profile?
               </Text>
               <Text className="text-sm">
-                To update your profile, click on the 'Edit' button next to your name
-                in your profile section.
+                To update your profile, click on the 'Edit' button next to your
+                name in your profile section.
               </Text>
             </View>
           </ScrollView>
