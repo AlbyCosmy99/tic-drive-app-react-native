@@ -43,13 +43,12 @@ import Translate from '@/assets/svg/translate.svg';
 import VehicleIcon from '@/assets/svg/vehicles/car2.svg';
 import EditIcon from '@/assets/svg/writing/change.svg';
 
-const Section = ({
-  title,
-  children,
-}: {
+interface SectionProps {
   title: string;
   children: React.ReactNode;
-}) => (
+}
+
+const Section: React.FC<SectionProps> = ({title, children}) => (
   <View className="my-2">
     <Text className="font-medium text-2xl">{title}</Text>
     {children}
@@ -372,9 +371,7 @@ export default function UserAccount() {
                 />
               </CrossPlatformButtonLayout>
             </Section>
-            
           </ScrollView>
-        
         </View>
       </SafeAreaViewLayout>
     </LinearGradientViewLayout>

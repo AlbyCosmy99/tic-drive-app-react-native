@@ -17,14 +17,12 @@ const useLogin = () => {
   const login = async (user: User) => {
     try {
       const res = await authLogin(user);
-      console.log('here');
       setSecureToken(res.token);
       dispatch(setToken(res.token));
       const payload = await getPayload(res.token);
       dispatch(stateLogin(getUserData(payload)));
       return res;
     } catch (e) {
-      console.log(e);
       setErrorMessage(e.message);
     }
   };
