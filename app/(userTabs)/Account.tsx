@@ -90,48 +90,9 @@ export default function UserAccount() {
   };
 
   const handleFAQ = () => {
-    setFaqVisible(!faqVisible);
+    navigationPush(navigation, 'FAQScreen');
   };
-
-  const renderFAQ = () => (
-    <View className="py-2">
-      <View className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm">
-        <Text className="font-medium text-lg">1. What is TicDrive?</Text>
-        <Text className="text-sm">
-          TicDrive is an innovative platform for vehicle-related services...
-        </Text>
-      </View>
-
-      <View className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm">
-        <Text className="font-medium text-lg mt-2">
-          2. How do I register a vehicle?
-        </Text>
-        <Text className="text-sm">
-          To register a vehicle, go to your profile and click on 'Add Vehicle'.
-        </Text>
-      </View>
-
-      <View className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm">
-        <Text className="font-medium text-lg mt-2">
-          3. How do I contact customer support?
-        </Text>
-        <Text className="text-sm">
-          You can contact customer support by clicking on the 'Customer Support'
-          button.
-        </Text>
-      </View>
-
-      <View className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm">
-        <Text className="font-medium text-lg mt-2">
-          4. How do I update my profile?
-        </Text>
-        <Text className="text-sm">
-          To update your profile, click on the 'Edit' button next to your name
-          in your profile section.
-        </Text>
-      </View>
-    </View>
-  );
+  
 
   if (!token)
     return (
@@ -344,7 +305,33 @@ export default function UserAccount() {
                   </TouchableOpacity>
                 </View>
               )}
+              <HorizontalLine />
 
+             
+              <HorizontalLine />
+
+              <CrossPlatformButtonLayout removeAllStyles onPress={handleFAQ}>
+                <IconTextPair
+                  text="FAQ"
+                  icon={<FAQ />}
+                  textTailwindCss="text-base font-medium pl-1"
+                  containerTailwindCss="py-2 my-0 pt-1"
+                />
+              </CrossPlatformButtonLayout>
+
+              <HorizontalLine />
+              <CrossPlatformButtonLayout
+                removeAllStyles
+                onPress={() => alert('Customer support')}
+              >
+                <IconTextPair
+                  text="Customer support"
+                  icon={<CustomerServiceIcon />}
+                  textTailwindCss="text-base font-medium pl-1"
+                  containerTailwindCss="py-2 my-0 pt-1"
+                />
+              </CrossPlatformButtonLayout>
+              
               <HorizontalLine />
 
               <CrossPlatformButtonLayout

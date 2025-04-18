@@ -31,6 +31,8 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import WorkshopsListScreen from './screens/workshop/WorkshopsListScreen';
 import WorkshopReviewsListScreen from './screens/workshop/reviews/WorkshopReviewsListScreen';
 import ChatScreen from './screens/chat/ChatScreen';
+import FAQScreen from './screens/chat/FAQScreen';
+
 import '@/i18n';
 import ForgotPasswordScreen from './screens/user/ForgotPasswordScreen';
 import ResetPasswordWithCodeScreen from './screens/user/ResetPasswordWithCodeScreen';
@@ -225,6 +227,16 @@ export default function RootLayout() {
                           animation: getAnimation(route),
                         })}
                       />
+                      <Stack.Screen
+                        name="FAQScreen"
+                         component={FAQScreen}
+                          options={({route}) => ({
+                          title: 'FAQScreen',
+                         headerShown: false,
+                        animation: getAnimation(route),
+                        })}
+                      />
+
                       <Stack.Screen
                         name="ForgotPasswordScreen"
                         component={ForgotPasswordScreen}
