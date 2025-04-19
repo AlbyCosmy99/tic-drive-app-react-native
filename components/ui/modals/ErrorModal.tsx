@@ -3,10 +3,10 @@ import * as React from 'react';
 import {Modal, View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 
 interface ErroModalProps {
-  title?: string;
+  title?: string; //TODO: move it in the context (not as prop)
 }
 
-const ErrorModal: React.FC<ErroModalProps> = ({title = 'Try Again'}) => {
+const ErrorModal: React.FC<ErroModalProps> = ({title = 'An error occured'}) => {
   const globalContext = React.useContext(GlobalContext);
 
   if (!globalContext) {

@@ -5,7 +5,7 @@ import TicDriveInput from '../ui/inputs/TicDriveInput';
 import User, {UserCategory} from '@/types/User';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
-import {setToken} from '@/stateManagement/redux/slices/authSlice';
+import {login, setToken} from '@/stateManagement/redux/slices/authSlice';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import navigationPush from '@/services/navigation/push';
 import navigationReset from '@/services/navigation/reset';
@@ -72,6 +72,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
         setLoading(true);
         const res = await register(user);
         setSecureToken(res.token);
+        dispatch(login(user));
         dispatch(setToken(res.token));
         navigationReset(navigation, 0, 'ConfirmEmailScreen');
       } catch (err) {
@@ -255,8 +256,6 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
           )}
         </>
       )}
-
-      <ErrorModal />
     </View>
   );
 };

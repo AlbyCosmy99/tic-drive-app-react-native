@@ -42,7 +42,9 @@ const Hub = () => {
                 user?.category === 'workshop' ? 'Requests' : 'Home',
               );
             } else {
-              navigationReset(navigation, 0, 'ConfirmEmailScreen');
+              navigationReset(navigation, 0, 'ConfirmEmailScreen', {
+                animation: 'fade',
+              });
             }
           } catch (err) {
             //if here, probably token is in secureStore but user is not registered in db - to solve, we make the user remove token from secureStore and retry

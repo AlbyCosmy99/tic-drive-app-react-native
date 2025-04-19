@@ -88,7 +88,6 @@ const ResetPasswordWithCodeScreen = () => {
         customContainerStyle={{marginHorizontal: 24}}
         onClick={onClick}
       />
-      <ErrorModal />
     </SafeAreaViewLayout>
   );
 };

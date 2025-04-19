@@ -3,7 +3,7 @@ import {ActivityIndicator, View} from 'react-native';
 
 const LoadingSpinner = () => {
   return (
-    <View className="flex-1 justify-center items-center">
+    <View className="justify-center items-center">
       <ActivityIndicator
         size="large"
         color={Colors.light.bookingsOptionsText}
