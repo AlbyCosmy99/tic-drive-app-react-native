@@ -7,6 +7,7 @@ import {Colors} from '@/constants/Colors';
 import UserPaymentInfo, {PaymentCard} from '@/types/payment/UserPaymentInfo';
 import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
+import ErrorModal from '@/components/ui/modals/ErrorModal';
 
 const GlobalProvider: FC<{children: ReactNode}> = ({children}) => {
   const [workshopFilter, setWorkshopFilter] = useState<string>('');
@@ -66,7 +67,10 @@ const GlobalProvider: FC<{children: ReactNode}> = ({children}) => {
         setErrorMessage,
       }}
     >
-      {children}
+      <>
+        {children}
+        <ErrorModal />
+      </>
     </GlobalContext.Provider>
   );
 };

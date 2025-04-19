@@ -152,7 +152,6 @@ const ChangePasswordScreen = () => {
           />
         </>
       )}
-      <ErrorModal />
     </SafeAreaViewLayout>
   );
 };

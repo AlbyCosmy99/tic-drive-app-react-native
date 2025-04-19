@@ -72,7 +72,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
         setLoading(true);
         const res = await register(user);
         setSecureToken(res.token);
-        dispatch(login(user))
+        dispatch(login(user));
         dispatch(setToken(res.token));
         navigationReset(navigation, 0, 'ConfirmEmailScreen');
       } catch (err) {
@@ -256,8 +256,6 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
           )}
         </>
       )}
-
-      <ErrorModal />
     </View>
   );
 };

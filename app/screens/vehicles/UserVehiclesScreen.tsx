@@ -104,7 +104,6 @@ const UserVehiclesScreen = () => {
           </>
         )}
       </View>
-      <ErrorModal />
     </SafeAreaViewLayout>
   );
 };

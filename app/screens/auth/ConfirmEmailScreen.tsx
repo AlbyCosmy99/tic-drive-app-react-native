@@ -4,20 +4,27 @@ import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
 import TicDriveAuthButton from '@/components/ui/buttons/TicDriveAuthButton';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
-import { useAppSelector } from '@/stateManagement/redux/hooks';
-import { useEffect } from 'react';
-import { Pressable, Text, View, Alert } from 'react-native';
-// Uncomment below if you're using navigation
-// import { useRouter } from 'expo-router';
+import LoadingSpinner from '@/components/ui/loading/LoadingSpinner';
+import TicDriveModal from '@/components/ui/modals/TicDriveModal';
+import sendConfirmationEmail from '@/services/http/requests/auth/sendConfirmationEmail';
+import {useAppSelector} from '@/stateManagement/redux/hooks';
+import {useEffect, useState} from 'react';
+import {Text, View, Alert} from 'react-native';
 
 const ConfirmEmailScreen = () => {
+  const [loading, setLoading] = useState(false);
+  const [confirmModalOpened, setConfirmModalOpened] = useState(false);
   const user = useAppSelector(state => state.auth.user);
 
-  const handleResendEmail = () => {
-    Alert.alert(
-      'Confirmation Email Sent',
-      'Please check your inbox (and spam folder).'
-    );
+  const handleResendEmail = async () => {
+    try {
+      setLoading(true);
+      await sendConfirmationEmail(user?.email);
+    } catch (e) {
+    } finally {
+      setLoading(false);
+      setConfirmModalOpened(true);
+    }
   };
 
   const handleCheckConfirmation = () => {
@@ -26,13 +33,12 @@ const ConfirmEmailScreen = () => {
     } else {
       Alert.alert(
         'Not Confirmed Yet',
-        'Please confirm your email before continuing.'
+        'Please confirm your email before continuing.',
       );
     }
-  }
+  };
   useEffect(() => {
     if (user?.emailConfirmed) {
-      // router.push('/dashboard'); // Uncomment if using expo-router
     }
   }, [user]);
 
@@ -52,12 +58,31 @@ const ConfirmEmailScreen = () => {
             check your inbox (and spam folder) and click the confirmation link
             to activate your account.
           </Text>
-          <CrossPlatformButtonLayout removeAllStyles onPress={handleResendEmail}>
-            <Text className="underline text-md">Resend Confirmation Email</Text>
-          </CrossPlatformButtonLayout>
+          <View className="h-6">
+            {loading ? (
+              <LoadingSpinner />
+            ) : (
+              <CrossPlatformButtonLayout
+                removeAllStyles
+                onPress={handleResendEmail}
+              >
+                <Text className="underline text-md">
+                  Resend Confirmation Email
+                </Text>
+              </CrossPlatformButtonLayout>
+            )}
+          </View>
+          <TicDriveModal
+            title="Confirmation email sent"
+            content="Check your email"
+            visible={confirmModalOpened}
+            cancelText=""
+            confirmText="Great"
+            onClose={() => setConfirmModalOpened(false)}
+          />
           <TicDriveButton
             text="I confirmed the email"
-            customContainerStyle={{ marginTop: 40 }}
+            customContainerStyle={{marginTop: 40}}
             onClick={handleCheckConfirmation}
           />
         </View>

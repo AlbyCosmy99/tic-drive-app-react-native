@@ -404,7 +404,6 @@ function RegisterVehicleScreen() {
         }}
         disabled={!buttonIsEnabled}
       />
-      <ErrorModal />
     </SafeAreaViewLayout>
   );
 }

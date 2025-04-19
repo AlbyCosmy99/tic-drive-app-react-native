@@ -83,7 +83,6 @@ const ForgotPasswordScreen = () => {
           />
         </>
       )}
-      <ErrorModal />
     </SafeAreaViewLayout>
   );
 };
