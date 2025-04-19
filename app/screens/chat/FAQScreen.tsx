@@ -40,6 +40,7 @@ export default function FAQScreen() {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
+  // ✅ Filter FAQ based on search text
   const filteredFAQs = faqData.filter(item =>
     item.question.toLowerCase().includes(searchText.toLowerCase()) ||
     item.answer.toLowerCase().includes(searchText.toLowerCase())
@@ -49,6 +50,7 @@ export default function FAQScreen() {
     <LinearGradientViewLayout>
       <SafeAreaViewLayout disabled={!isAndroidPlatform()}>
         <View className="flex-1 pt-16">
+          {/* Navbar with Back Button */}
           <TicDriveNavbar
             leftContent={
               <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -57,11 +59,13 @@ export default function FAQScreen() {
             }
           />
 
+          {/* Title & Subtitle */}
           <View className="items-center mt-4 mb-4">
             <Text className="text-2xl font-bold text-black">Frequently Asked Questions</Text>
             <Text className="text-base text-gray-500">How can we help you?</Text>
           </View>
 
+          {/* Search Bar using TicDriveInput */}
           <View className="mx-4">
             <TicDriveInput
               isLeftIcon={true}
@@ -73,11 +77,13 @@ export default function FAQScreen() {
             />
           </View>
 
+          {/* Subheading below search */}
           <View className="flex-row justify-between items-center px-4 mt-4 mb-2">
             <Text className="text-lg font-semibold text-black">Most frequently asked</Text>
             <Text className="text-sm font-semibold text-green-600">See all</Text>
           </View>
 
+          {/* Filtered FAQ List */}
           <ScrollView className="px-4">
             {filteredFAQs.map((item, index) => {
               const isExpanded = index === expandedIndex;

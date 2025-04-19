@@ -229,11 +229,11 @@ export default function RootLayout() {
                       />
                       <Stack.Screen
                         name="FAQScreen"
-                         component={FAQScreen}
-                          options={({route}) => ({
+                        component={FAQScreen}
+                        options={({route}) => ({
                           title: 'FAQScreen',
-                         headerShown: false,
-                        animation: getAnimation(route),
+                          headerShown: false,
+                          animation: getAnimation(route),
                         })}
                       />
 
