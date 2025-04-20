@@ -2,10 +2,10 @@ import useJwtToken from '@/hooks/auth/useJwtToken';
 import {useEffect, useMemo, useRef, useState} from 'react';
 import {ActivityIndicator, Text, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
-import LoadingSpinner from '../loading/LoadingSpinner';
 import Workshop from '@/types/workshops/Workshop';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
+import TicDriveSpinner from '../spinners/TicDriveSpinner';
 
 interface TicDriveInfinitePaginationListProps {
   loading: boolean;
@@ -81,7 +81,7 @@ const TicDriveInfinitePaginationList: React.FC<
     <View className={`${!token ? 'mb-2' : ''} ${tailwindContainerCss}`}>
       {loading && currentPage === 1 ? (
         <View className="w-full h-full justify-center items-center">
-          <LoadingSpinner />
+          <TicDriveSpinner />
         </View>
       ) : (
         <FlatList

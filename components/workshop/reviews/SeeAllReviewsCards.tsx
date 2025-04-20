@@ -1,6 +1,6 @@
 import ClientReviewCard from '@/components/ClientReviewCard';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
-import LoadingSpinner from '@/components/ui/loading/LoadingSpinner';
+import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 import useReviews from '@/hooks/api/workshops/useReviews';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
@@ -16,7 +16,7 @@ const SeeAllReviewsCards = ({workshopId}: {workshopId: number}) => {
   };
   const {t} = useTranslation();
 
-  if (loadingReviews) return <LoadingSpinner />;
+  if (loadingReviews) return <TicDriveSpinner />;
   if (!reviews?.length) return null;
 
   return (

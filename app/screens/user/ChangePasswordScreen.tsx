@@ -2,8 +2,6 @@ import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
-import LoadingSpinner from '@/components/ui/loading/LoadingSpinner';
-import ErrorModal from '@/components/ui/modals/ErrorModal';
 import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import axiosClient from '@/services/http/axiosClient';
@@ -16,6 +14,7 @@ import VisibilityOnIcon from '@/assets/svg/access/visibility_on.svg';
 import isAcceptablePassword from '@/utils/auth/isAcceptablePassword';
 import navigationReset from '@/services/navigation/reset';
 import useLogin from '@/hooks/auth/useLogin';
+import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 
 const ChangePasswordScreen = () => {
   type RootStackParamList = {
@@ -81,7 +80,7 @@ const ChangePasswordScreen = () => {
     <SafeAreaViewLayout>
       <TicDriveNavbar />
       {loading ? (
-        <LoadingSpinner />
+        <TicDriveSpinner />
       ) : (
         <>
           <View className="mx-6 mt-10">

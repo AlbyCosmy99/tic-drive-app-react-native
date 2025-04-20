@@ -8,7 +8,6 @@ import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButt
 import TicDriveReminderCard from '@/components/ui/cards/notifications/TicDriveReminderCard';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
-import LoadingSpinner from '@/components/ui/loading/LoadingSpinner';
 import WorkshopCardMini from '@/components/workshop/WorkshopCardMini';
 import {Colors} from '@/constants/Colors';
 import useWorkshops from '@/hooks/api/workshops/useWorkshops';
@@ -39,6 +38,7 @@ import {Text, View} from 'react-native';
 import {RefreshControl, ScrollView} from 'react-native-gesture-handler';
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
+import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 
 export default function UserHome() {
   const [filter, setFilter] = useState('');
@@ -173,7 +173,7 @@ export default function UserHome() {
               <View>
                 <View className="flex-row mx-2.5 justify-start items-start">
                   {loadingWorkshops ? (
-                    <LoadingSpinner />
+                    <TicDriveSpinner />
                   ) : (
                     <View className="flex-column w-full">
                       <View className="flex-row  justify-start items-start">

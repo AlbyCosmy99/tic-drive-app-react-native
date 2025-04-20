@@ -4,37 +4,48 @@ import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
 import TicDriveAuthButton from '@/components/ui/buttons/TicDriveAuthButton';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
-import LoadingSpinner from '@/components/ui/loading/LoadingSpinner';
 import TicDriveModal from '@/components/ui/modals/TicDriveModal';
+import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
+import useLogin from '@/hooks/auth/useLogin';
+import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
+import isEmailConfirmed from '@/services/http/requests/auth/isEmailConfirmed';
 import sendConfirmationEmail from '@/services/http/requests/auth/sendConfirmationEmail';
+import navigationReset from '@/services/navigation/reset';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import {useEffect, useState} from 'react';
-import {Text, View, Alert} from 'react-native';
+import {Text, View} from 'react-native';
 
 const ConfirmEmailScreen = () => {
-  const [loading, setLoading] = useState(false);
+  const [loadingSendConfirmationEmail, setLoadingConfirmationEmail] =
+    useState(false);
+  const [loadingCheckIsEmailConfirmed, setLoadingCheckIsEmailConfirmed] =
+    useState(false);
   const [confirmModalOpened, setConfirmModalOpened] = useState(false);
+  const [emailCheckedModalOpened, setEmailCheckedModalOpened] = useState(false);
   const user = useAppSelector(state => state.auth.user);
+  const {login} = useLogin();
+  const navigation = useTicDriveNavigation();
 
   const handleResendEmail = async () => {
     try {
-      setLoading(true);
+      setLoadingConfirmationEmail(true);
       await sendConfirmationEmail(user?.email);
     } catch (e) {
     } finally {
-      setLoading(false);
+      setLoadingConfirmationEmail(false);
       setConfirmModalOpened(true);
     }
   };
 
-  const handleCheckConfirmation = () => {
-    if (user?.emailConfirmed) {
-      Alert.alert('Email Confirmed', 'Redirecting to dashboard...');
-    } else {
-      Alert.alert(
-        'Not Confirmed Yet',
-        'Please confirm your email before continuing.',
-      );
+  const handleCheckConfirmation = async () => {
+    try {
+      setLoadingCheckIsEmailConfirmed(true);
+      await isEmailConfirmed(user?.email);
+      navigationReset(navigation, 0, 'Hub', 'Home');
+    } catch (e) {
+      setEmailCheckedModalOpened(true);
+    } finally {
+      setLoadingCheckIsEmailConfirmed(false);
     }
   };
   useEffect(() => {
@@ -59,8 +70,8 @@ const ConfirmEmailScreen = () => {
             to activate your account.
           </Text>
           <View className="h-6">
-            {loading ? (
-              <LoadingSpinner />
+            {loadingSendConfirmationEmail ? (
+              <TicDriveSpinner />
             ) : (
               <CrossPlatformButtonLayout
                 removeAllStyles
@@ -72,21 +83,39 @@ const ConfirmEmailScreen = () => {
               </CrossPlatformButtonLayout>
             )}
           </View>
-          <TicDriveModal
-            title="Confirmation email sent"
-            content="Check your email"
-            visible={confirmModalOpened}
-            cancelText=""
-            confirmText="Great"
-            onClose={() => setConfirmModalOpened(false)}
-          />
-          <TicDriveButton
-            text="I confirmed the email"
-            customContainerStyle={{marginTop: 40}}
-            onClick={handleCheckConfirmation}
-          />
+          <View className="h-12 mt-6">
+            {loadingCheckIsEmailConfirmed ? (
+              <TicDriveSpinner />
+            ) : (
+              <TicDriveButton
+                text="I confirmed the email"
+                onClick={handleCheckConfirmation}
+                customContainerStyle={{margin: 0}}
+              />
+            )}
+          </View>
         </View>
         <TicDriveAuthButton action="logout" />
+
+        {/* confirmation email sent modal */}
+        <TicDriveModal
+          title="Confirmation email sent"
+          content="Check your email"
+          visible={confirmModalOpened}
+          cancelText=""
+          confirmText="Great"
+          onClose={() => setConfirmModalOpened(false)}
+        />
+
+        {/* check is email confirmed modal */}
+        <TicDriveModal
+          title="Check your email"
+          content="Your email is not confirmed yet. Check your email or resend it pressing the 'Resend Confirmation Email' button."
+          visible={emailCheckedModalOpened}
+          cancelText=""
+          confirmText="Ok"
+          onClose={() => setEmailCheckedModalOpened(false)}
+        />
       </SafeAreaViewLayout>
     </LinearGradientViewLayout>
   );

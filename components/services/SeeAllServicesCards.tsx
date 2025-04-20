@@ -1,6 +1,4 @@
 import {Image, Text, View} from 'react-native';
-import {Pressable} from 'react-native-gesture-handler';
-import LoadingSpinner from '../ui/loading/LoadingSpinner';
 import navigationPush from '@/services/navigation/push';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import Service from '@/types/Service';
@@ -21,6 +19,7 @@ import {useTranslation} from 'react-i18next';
 import UserCalendarModal, {
   UserCalendarModalRef,
 } from '../ui/modals/UserCalendarModal';
+import TicDriveSpinner from '../ui/spinners/TicDriveSpinner';
 
 interface SeeAllServicesCardsProps {
   workshopId?: number;
@@ -67,7 +66,7 @@ const SeeAllServicesCards = forwardRef(
     };
 
     return loadingServices ? (
-      <LoadingSpinner />
+      <TicDriveSpinner />
     ) : services.length > 0 ? (
       <View>
         {topHorizontalLine && <HorizontalLine />}

@@ -1,15 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import ServicesCard from './ServicesCard';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {UserCategory} from '@/types/User';
 import {reset} from '@/stateManagement/redux/slices/servicesSlice';
 import useServices from '@/hooks/api/useServices';
-import LoadingSpinner from './ui/loading/LoadingSpinner';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
-import TicDriveInfinitePaginationList from './ui/Lists/TicDriveInfinitePaginationList';
+import TicDriveSpinner from './ui/spinners/TicDriveSpinner';
 
 interface ServicesCardsProps {
   isSingleChoice?: boolean;
@@ -47,7 +46,7 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
     <ScrollView contentContainerStyle={styles.container}>
       {loadingServices ? (
         <View className="w-full h-full justify-center items-center mt-40">
-          <LoadingSpinner />
+          <TicDriveSpinner />
         </View>
       ) : (
         services.map((elem, index) => (

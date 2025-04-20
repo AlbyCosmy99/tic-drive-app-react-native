@@ -2,8 +2,7 @@ import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
-import LoadingSpinner from '@/components/ui/loading/LoadingSpinner';
-import ErrorModal from '@/components/ui/modals/ErrorModal';
+import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import axiosClient from '@/services/http/axiosClient';
@@ -53,7 +52,7 @@ const ForgotPasswordScreen = () => {
     <SafeAreaViewLayout>
       <TicDriveNavbar />
       {loading ? (
-        <LoadingSpinner />
+        <TicDriveSpinner />
       ) : (
         <>
           <View className="mx-6 mt-10">
