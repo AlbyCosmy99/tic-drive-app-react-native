@@ -5,12 +5,12 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Navigation & State
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import navigationPush from '@/services/navigation/push';
-import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
+import { useAppDispatch, useAppSelector } from '@/stateManagement/redux/hooks';
 
 // Layouts
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
@@ -21,7 +21,7 @@ import NotLogged from '@/components/auth/NotLogged';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import CircularUserAvatar from '@/components/ui/avatars/CircularUserAvatar';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
-import {handleLogout} from '@/components/ui/buttons/TicDriveAuthButton';
+import { handleLogout } from '@/components/ui/buttons/TicDriveAuthButton';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import IconTextPair from '@/components/ui/IconTextPair';
 
@@ -49,9 +49,9 @@ interface SectionProps {
   children: React.ReactNode;
 }
 
-const Section: React.FC<SectionProps> = ({title, children}) => (
-  <View className="my-2">
-    <Text className="font-medium text-2xl">{title}</Text>
+const Section: React.FC<SectionProps> = ({ title, children }) => (
+  <View className="my-4">
+    <Text className="font-semibold text-xl mb-2">{title}</Text>
     {children}
   </View>
 );
@@ -79,7 +79,7 @@ export default function UserAccount() {
   };
 
   const onFavoriteWorkshops = () => {
-    navigationPush(navigation, 'WorkshopsListScreen', {favorite: true});
+    navigationPush(navigation, 'WorkshopsListScreen', { favorite: true });
   };
 
   const handleChangeLanguage = (newLanguage: 'en' | 'it') => {
@@ -107,25 +107,31 @@ export default function UserAccount() {
     <LinearGradientViewLayout>
       <SafeAreaViewLayout disabled={!isAndroidPlatform()}>
         <TicDriveNavbar />
-        <View className="mx-2.5">
-          <View className="flex-row justify-between items-center mt-1 mb-4">
+        <View className="mx-3 mt-4">
+          {/* Profile Header */}
+          <View className="flex-row justify-between items-center">
             <View className="flex-row items-center">
               <CircularUserAvatar
                 uri={user?.imageurl}
-                styles={{width: 70, height: 70, marginRight: 10}}
+                styles={{ width: 70, height: 70, marginRight: 12 }}
               />
               <View>
-                {user?.name ? (
-                  <Text className="font-semibold text-xl">{user?.name}</Text>
+                {isEditing ? (
+                  <TextInput
+                    className="font-semibold text-xl ml-2"
+                    value={editedUser.name}
+                    onChangeText={text => setEditedUser({ ...editedUser, name: text })}
+                    placeholder="Enter your name"
+                  />
                 ) : (
-                  <Text className="font-base text-xl">
-                    {'Edit to add your name'}
+                  <Text className="font-semibold text-xl">
+                    {user?.name || 'Edit to add your name'}
                   </Text>
                 )}
               </View>
             </View>
-
-            <View className="flex-row items-center self-start mt-4">
+            {/* Edit/Save Button */}
+            <View className="self-start mt-4">
               <CrossPlatformButtonLayout
                 removeAllStyles
                 onPress={() => setIsEditing(!isEditing)}
@@ -144,21 +150,23 @@ export default function UserAccount() {
             </View>
           </View>
 
+          {/* Horizontal Divider */}
           <HorizontalLine />
 
           <ScrollView
             className="px-1"
-            contentContainerStyle={{paddingBottom: 140}}
+            contentContainerStyle={{ paddingBottom: 140 }}
           >
+            {/* Account Section */}
             <Section title="Account">
-              <View className="flex-row items-center py-2">
+              <View className="flex-row items-center py-3">
                 <PhoneIcon />
                 {isEditing ? (
                   <TextInput
                     className="ml-2 flex-1 border-b border-gray-300 pb-1"
                     value={editedUser.phoneNumber}
                     onChangeText={text =>
-                      setEditedUser({...editedUser, phoneNumber: text})
+                      setEditedUser({ ...editedUser, phoneNumber: text })
                     }
                     placeholder="Insert phone number"
                   />
@@ -168,19 +176,17 @@ export default function UserAccount() {
                   </Text>
                 )}
               </View>
-
               <HorizontalLine />
-
-              <View className="flex-row items-center py-2">
+              <View className="flex-row items-center py-3">
                 <MailIcon />
                 {isEditing ? (
                   <TextInput
                     className="ml-2 flex-1 border-b border-gray-300 pb-1"
                     value={editedUser.email}
                     onChangeText={text =>
-                      setEditedUser({...editedUser, email: text})
+                      setEditedUser({ ...editedUser, email: text })
                     }
-                    placeholder="Insert emaik"
+                    placeholder="Insert email"
                   />
                 ) : (
                   <Text className="text-base font-medium pl-1">
@@ -188,17 +194,15 @@ export default function UserAccount() {
                   </Text>
                 )}
               </View>
-
               <HorizontalLine />
-
-              <View className="flex-row items-center py-2">
+              <View className="flex-row items-center py-3">
                 <AddressIcon />
                 {isEditing ? (
                   <TextInput
                     className="ml-2 flex-1 border-b border-gray-300 pb-1"
                     value={editedUser.address}
                     onChangeText={text =>
-                      setEditedUser({...editedUser, address: text})
+                      setEditedUser({ ...editedUser, address: text })
                     }
                     placeholder="Insert address"
                   />
@@ -208,9 +212,9 @@ export default function UserAccount() {
                   </Text>
                 )}
               </View>
-
               <HorizontalLine />
 
+              {/* Registered Vehicles Button */}
               <CrossPlatformButtonLayout
                 removeAllStyles
                 onPress={() => navigationPush(navigation, 'UserVehiclesScreen')}
@@ -224,6 +228,7 @@ export default function UserAccount() {
               </CrossPlatformButtonLayout>
               <HorizontalLine />
 
+              {/* Favorite Workshops Button */}
               <CrossPlatformButtonLayout
                 removeAllStyles
                 onPress={onFavoriteWorkshops}
@@ -237,12 +242,12 @@ export default function UserAccount() {
               </CrossPlatformButtonLayout>
               <HorizontalLine />
             </Section>
+
+            {/* Help and Support Section */}
             <Section title="Help and support">
               <CrossPlatformButtonLayout
                 removeAllStyles
-                onPress={() =>
-                  setLanguageOptionsVisible(!languageOptionsVisible)
-                }
+                onPress={() => setLanguageOptionsVisible(!languageOptionsVisible)}
               >
                 <IconTextPair
                   text="Change language"
@@ -252,6 +257,7 @@ export default function UserAccount() {
                 />
               </CrossPlatformButtonLayout>
 
+              {/* Language Options */}
               {languageOptionsVisible && (
                 <View className="ml-8 mt-2">
                   <TouchableOpacity
@@ -284,6 +290,8 @@ export default function UserAccount() {
                 </View>
               )}
               <HorizontalLine />
+
+              {/* FAQ Button */}
               <CrossPlatformButtonLayout removeAllStyles onPress={handleFAQ}>
                 <IconTextPair
                   text="FAQ"
@@ -292,8 +300,9 @@ export default function UserAccount() {
                   containerTailwindCss="py-2 my-0 pt-1"
                 />
               </CrossPlatformButtonLayout>
-
               <HorizontalLine />
+
+              {/* Customer Support Button */}
               <CrossPlatformButtonLayout
                 removeAllStyles
                 onPress={() => alert('Customer support')}
@@ -305,9 +314,9 @@ export default function UserAccount() {
                   containerTailwindCss="py-2 my-0 pt-1"
                 />
               </CrossPlatformButtonLayout>
-
               <HorizontalLine />
 
+              {/* Logout Button */}
               <CrossPlatformButtonLayout
                 removeAllStyles
                 onPress={() => handleLogout(dispatch, navigation)}
@@ -321,6 +330,7 @@ export default function UserAccount() {
               </CrossPlatformButtonLayout>
               <HorizontalLine />
 
+              {/* Delete Account Button */}
               <CrossPlatformButtonLayout
                 removeAllStyles
                 onPress={() => alert('Eliminate account')}
