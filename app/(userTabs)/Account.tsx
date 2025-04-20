@@ -42,6 +42,7 @@ import Translate from '@/assets/svg/translate.svg';
 
 import VehicleIcon from '@/assets/svg/vehicles/car2.svg';
 import EditIcon from '@/assets/svg/writing/change.svg';
+import SaveIcon from '@/assets/svg/operations/save.svg';
 
 interface SectionProps {
   title: string;
@@ -130,7 +131,11 @@ export default function UserAccount() {
                 onPress={() => setIsEditing(!isEditing)}
               >
                 <View className="flex-row items-center">
-                  <EditIcon width={20} height={20} />
+                  {isEditing ? (
+                    <SaveIcon width={20} height={20} />
+                  ) : (
+                    <EditIcon width={20} height={20} />
+                  )}
                   <Text className="text-green-600 font-medium ml-1">
                     {isEditing ? 'Save' : 'Edit'}
                   </Text>
@@ -279,9 +284,6 @@ export default function UserAccount() {
                 </View>
               )}
               <HorizontalLine />
-
-              <HorizontalLine />
-
               <CrossPlatformButtonLayout removeAllStyles onPress={handleFAQ}>
                 <IconTextPair
                   text="FAQ"
