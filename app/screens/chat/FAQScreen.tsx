@@ -52,16 +52,9 @@ export default function FAQScreen() {
         <TicDriveNavbar />
 
         <View className="items-center mt-6 px-4">
-          <Text
-            className="text-[24px] leading-[24px] font-semibold text-center"
-            style={{ fontFamily: 'Poppins-SemiBold', color: '#170F49' }}
-          >
-            Frequently Asked Questions
-            {'\n'}
-            <Text
-              className="text-[18px] leading-[18px] font-semibold"
-              style={{ fontFamily: 'Poppins-SemiBold', color: '#170F49' }}
-            >
+          <Text className="text-[24px] leading-6 font-semibold text-center text-[#170F49] font-poppins">
+            Frequently Asked Questions{'\n'}
+            <Text className="text-[18px] leading-[18px] font-semibold font-poppins text-[#170F49]">
               How can we help you?
             </Text>
           </Text>
@@ -80,10 +73,12 @@ export default function FAQScreen() {
         </View>
 
         <View className="flex-row justify-between items-center px-4 mt-4 mb-2">
-          <Text className="text-lg font-semibold text-black">
+          <Text className="text-base font-semibold text-black font-poppins">
             Most frequently asked
           </Text>
-          <Text className="text-sm font-semibold text-green-600">See all</Text>
+          <Text className="text-sm font-semibold text-green-600 font-poppins">
+            See all
+          </Text>
         </View>
 
         <ScrollView className="px-4">
