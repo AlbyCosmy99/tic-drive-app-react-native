@@ -68,11 +68,11 @@ export default function FAQScreen() {
             customValue={searchText}
             onChange={setSearchText}
             containerViewStyleTailwind="w-full"
-            inputContainerStyle={{ marginBottom: 12, height: 48 }}
+            inputContainerStyle={{ marginBottom: 1, height: 48 }}
           />
         </View>
 
-        <View className="flex-row justify-between items-center px-4 mt-4 mb-2">
+        <View className="flex-row justify-between items-center px-4  mb-2">
           <Text className="text-base font-semibold text-black font-poppins">
             Most frequently asked
           </Text>
