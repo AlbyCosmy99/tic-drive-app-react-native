@@ -45,16 +45,19 @@ export default function FAQScreen() {
   const filteredFAQs = faqData.filter(
     item =>
       item.question.toLowerCase().includes(searchText.toLowerCase()) ||
-      item.answer.toLowerCase().includes(searchText.toLowerCase())
+      item.answer.toLowerCase().includes(searchText.toLowerCase()),
   );
 
   return (
     <LinearGradientViewLayout>
       <SafeAreaViewLayout>
         <TicDriveNavbar />
-        <View className="items-center mt-4">
-          <Text className="text-2xl font-bold text-black">
-            Frequently Asked Questions
+        <View className="items-center mt-6 px-4">
+          <Text className="text-2xl leading-6 font-semibold text-center font-poppins">
+            Frequently Asked Questions{'\n'}
+            <Text className="text-lg leading-[24px] font-semibold font-poppins">
+              How can we help you?
+            </Text>
           </Text>
         </View>
 
