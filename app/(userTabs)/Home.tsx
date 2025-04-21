@@ -9,7 +9,7 @@ import TicDriveReminderCard from '@/components/ui/cards/notifications/TicDriveRe
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
 import WorkshopCardMini from '@/components/workshop/WorkshopCardMini';
-import {Colors} from '@/constants/Colors';
+import { Colors } from '@/constants/Colors';
 import useWorkshops from '@/hooks/api/workshops/useWorkshops';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import useUserLocation from '@/hooks/location/useUserLocation';
@@ -17,8 +17,8 @@ import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import axiosClient from '@/services/http/axiosClient';
 import navigationPush from '@/services/navigation/push';
 import CarContext from '@/stateManagement/contexts/car/CarContext';
-import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
-import {setSelectedCar} from '@/stateManagement/redux/slices/carsSlice';
+import { useAppDispatch, useAppSelector } from '@/stateManagement/redux/hooks';
+import { setSelectedCar } from '@/stateManagement/redux/slices/carsSlice';
 import {
   reset,
   setAreServicesOn,
@@ -29,13 +29,13 @@ import {
 } from '@/stateManagement/redux/slices/workshopsSlice';
 import Workshop from '@/types/workshops/Workshop';
 import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
-import {Entypo} from '@expo/vector-icons';
-import {useFocusEffect} from '@react-navigation/native';
+import { Entypo } from '@expo/vector-icons';
+import { useFocusEffect } from '@react-navigation/native';
 import debounce from 'lodash.debounce';
-import {useCallback, useContext, useRef, useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {Text, View} from 'react-native';
-import {RefreshControl, ScrollView} from 'react-native-gesture-handler';
+import { useCallback, useContext, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Text, View } from 'react-native';
+import { RefreshControl, ScrollView } from 'react-native-gesture-handler';
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
@@ -45,12 +45,12 @@ export default function UserHome() {
   const navigation = useTicDriveNavigation();
   const [refreshing, setRefreshing] = useState(false);
   const servicesRef = useRef();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const [filteredWorkshops, setFilteredWorkshops] = useState<Workshop[]>([]);
 
-  const {workshops, loadingWorkshops, setLoadingWorkshops} = useWorkshops(0, 2);
+  const { workshops, loadingWorkshops, setLoadingWorkshops } = useWorkshops(0, 2);
 
-  const {setCarSelectedByMakeAndModel, setCarSelectedByPlate} =
+  const { setCarSelectedByMakeAndModel, setCarSelectedByPlate } =
     useContext(CarContext);
 
   const dispatch = useAppDispatch();
@@ -66,8 +66,8 @@ export default function UserHome() {
     token
       ? navigationPush(navigation, 'UserVehiclesScreen')
       : navigationPush(navigation, 'UserAuthenticationScreen', {
-          isUser: true,
-        });
+        isUser: true,
+      });
     //to-do: once the vehicle is registered instead of going to workshops, go to vehicles and register it on account
   };
   const userAddress = useAppSelector(state => state.auth.user?.address) ?? '';
@@ -137,7 +137,7 @@ export default function UserHome() {
             isRightIcon={true}
             placeholder={t('workshops.searchWorkshop')}
             containerViewStyleTailwind="flex-1 h-[60px]"
-            inputContainerStyle={{marginTop: 4, height: 48}}
+            inputContainerStyle={{ marginTop: 4, height: 48 }}
             onChange={text => debouncedOnHomeSearch(text)}
           />
           {filter && (
@@ -219,7 +219,7 @@ export default function UserHome() {
               </Text>
 
               <View
-                style={{backgroundColor: '#FFFBE5'}}
+                style={{ backgroundColor: '#FFFBE5' }}
                 className="py-2 rounded-xl"
               >
                 <TicDriveReminderCard

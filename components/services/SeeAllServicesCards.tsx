@@ -108,7 +108,7 @@ const SeeAllServicesCards = forwardRef(
         {bottomHorizontalLine && <HorizontalLine tailwindCssContainer="mt-2" />}
       </View>
     ) : (
-      <Text className="font-medium mb-2 mx-2.5">
+      <Text className="font-medium mb-2">
         No services available yet.
       </Text>
     );
