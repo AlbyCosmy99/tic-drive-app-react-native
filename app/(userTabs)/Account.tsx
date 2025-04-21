@@ -44,7 +44,6 @@ import Translate from '@/assets/svg/translate.svg';
 import VehicleIcon from '@/assets/svg/vehicles/car2.svg';
 import EditIcon from '@/assets/svg/writing/change.svg';
 import SaveIcon from '@/assets/svg/operations/save.svg';
-// Importing the TicDriveModal from the path you provided
 import TicDriveModal from 'ticdrive-mobile/components/ui/modals/TicDriveModal';
 
 interface SectionProps {
