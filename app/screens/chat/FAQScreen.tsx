@@ -50,17 +50,16 @@ export default function FAQScreen() {
     <LinearGradientViewLayout>
       <SafeAreaViewLayout>
         <TicDriveNavbar />
-
         <View className="items-center mt-6 px-4">
-          <Text className="text-[24px] leading-6 font-semibold text-center text-[#170F49] font-poppins">
+          <Text className="text-2xl leading-6 font-semibold text-center font-poppins">
             Frequently Asked Questions{'\n'}
-            <Text className="text-[18px] leading-[18px] font-semibold font-poppins text-[#170F49]">
+            <Text className="text-lg leading-[24px] font-semibold font-poppins">
               How can we help you?
             </Text>
           </Text>
         </View>
 
-        <View className="mx-4 mt-4">
+        <View className="mx-2 mt-1">
           <TicDriveInput
             isLeftIcon
             isRightIcon
@@ -95,7 +94,7 @@ export default function FAQScreen() {
                   removeAllStyles
                   buttonTailwindCss="flex-row justify-between items-center"
                 >
-                  <Text className="text-[15px] leading-[20px] font-medium text-black flex-1 pr-2 font-poppins">
+                  <Text className="text-base leading-[20px] font-medium text-black flex-1 pr-2 font-poppins">
                     {item.question}
                   </Text>
 
