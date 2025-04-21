@@ -1,12 +1,7 @@
 import React from 'react';
-import {
-  Modal,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Pressable,
-} from 'react-native';
+import {ViewStyle} from 'react-native';
+import {StyleProp} from 'react-native';
+import {Modal, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 
 interface TicDriveModalProps {
   title: string;
@@ -16,6 +11,7 @@ interface TicDriveModalProps {
   onConfirm?: () => void;
   confirmText?: string;
   cancelText?: string;
+  confirmButtonStyle?: StyleProp<ViewStyle>;
 }
 
 const TicDriveModal: React.FC<TicDriveModalProps> = ({
@@ -26,6 +22,7 @@ const TicDriveModal: React.FC<TicDriveModalProps> = ({
   onConfirm,
   confirmText = 'Conferma',
   cancelText = 'Annulla',
+  confirmButtonStyle,
 }) => {
   return (
     <Modal
@@ -48,7 +45,7 @@ const TicDriveModal: React.FC<TicDriveModalProps> = ({
 
             <TouchableOpacity
               onPress={onConfirm || onClose}
-              style={styles.confirmButton}
+              style={[styles.confirmButton, confirmButtonStyle]}
               className="bg-drive"
             >
               <Text style={styles.confirmText}>{confirmText}</Text>

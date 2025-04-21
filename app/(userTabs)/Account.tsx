@@ -4,9 +4,9 @@ import {
   TextInput,
   View,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-
 // Navigation & State
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import navigationPush from '@/services/navigation/push';
@@ -43,6 +43,7 @@ import Translate from '@/assets/svg/translate.svg';
 import VehicleIcon from '@/assets/svg/vehicles/car2.svg';
 import EditIcon from '@/assets/svg/writing/change.svg';
 import SaveIcon from '@/assets/svg/operations/save.svg';
+import TicDriveModal from 'ticdrive-mobile/components/ui/modals/TicDriveModal';
 
 interface SectionProps {
   title: string;
@@ -62,7 +63,7 @@ export default function UserAccount() {
   const [language, setLanguage] = useState<'en' | 'it'>('en');
   const [faqVisible, setFaqVisible] = useState(false);
   const [languageOptionsVisible, setLanguageOptionsVisible] = useState(false);
-
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.auth.user);
   const token = useJwtToken();
@@ -75,6 +76,14 @@ export default function UserAccount() {
   }, [isEditing]);
 
   const handleSaveProfile = async () => {
+    if (JSON.stringify(editedUser) !== JSON.stringify(user)) {
+      try {
+        console.log('Profile updated:', editedUser);
+      } catch (error) {
+        console.error('Failed to save profile:', error);
+        alert('Could not save profile changes.');
+      }
+    }
     setIsEditing(false);
   };
 
@@ -91,6 +100,23 @@ export default function UserAccount() {
 
   const handleFAQ = () => {
     navigationPush(navigation, 'FAQScreen');
+  };
+  const handleDeleteAccount = () => {
+    Alert.alert(
+      'Delete Account',
+      'Are you sure you want to delete your account? This action is irreversible.',
+      [
+        {text: 'Cancel', style: 'cancel'},
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: () => {
+            // TODO: will do later the actual delete logic
+            alert('Account deleted (mock)');
+          },
+        },
+      ],
+    );
   };
 
   if (!token)
@@ -109,23 +135,33 @@ export default function UserAccount() {
         <TicDriveNavbar />
         <View className="mx-2.5">
           <View className="flex-row justify-between items-center mt-1 mb-4">
-            <View className="flex-row items-center">
+            <View className="flex-row items-center space-x-4 p-2">
               <CircularUserAvatar
                 uri={user?.imageurl}
-                styles={{width: 70, height: 70, marginRight: 10}}
+                styles={{width: 70, height: 70}}
               />
-              <View>
-                {user?.name ? (
-                  <Text className="font-semibold text-xl">{user?.name}</Text>
+              <View className="w-40">
+                {isEditing ? (
+                  <TextInput
+                    className="font-semibold text-lg border-b border-gray-300 pb-1"
+                    value={editedUser.name || ''}
+                    onChangeText={text =>
+                      setEditedUser({...editedUser, name: text})
+                    }
+                    placeholder="Enter your name"
+                    placeholderTextColor="#888"
+                    autoFocus
+                    accessibilityLabel="Name Input"
+                  />
                 ) : (
-                  <Text className="font-base text-xl">
-                    {'Edit to add your name'}
+                  <Text className="font-semibold text-xl text-gray-800">
+                    {user?.name || 'Tap edit to add your name'}
                   </Text>
                 )}
               </View>
             </View>
 
-            <View className="flex-row items-center self-start mt-4">
+            <View className="flex-row items-center">
               <CrossPlatformButtonLayout
                 removeAllStyles
                 onPress={() => setIsEditing(!isEditing)}
@@ -155,7 +191,7 @@ export default function UserAccount() {
                 <PhoneIcon />
                 {isEditing ? (
                   <TextInput
-                    className="ml-2 flex-1 border-b border-gray-300 pb-1"
+                    className="ml-2 flex-1 border-b border-gray-300 pb-2"
                     value={editedUser.phoneNumber}
                     onChangeText={text =>
                       setEditedUser({...editedUser, phoneNumber: text})
@@ -175,12 +211,12 @@ export default function UserAccount() {
                 <MailIcon />
                 {isEditing ? (
                   <TextInput
-                    className="ml-2 flex-1 border-b border-gray-300 pb-1"
+                    className="ml-2 flex-1 border-b border-gray-300 pb-2"
                     value={editedUser.email}
                     onChangeText={text =>
                       setEditedUser({...editedUser, email: text})
                     }
-                    placeholder="Insert emaik"
+                    placeholder="Insert email"
                   />
                 ) : (
                   <Text className="text-base font-medium pl-1">
@@ -195,7 +231,7 @@ export default function UserAccount() {
                 <AddressIcon />
                 {isEditing ? (
                   <TextInput
-                    className="ml-2 flex-1 border-b border-gray-300 pb-1"
+                    className="ml-2 flex-1 border-b border-gray-300 pb-2"
                     value={editedUser.address}
                     onChangeText={text =>
                       setEditedUser({...editedUser, address: text})
@@ -310,7 +346,7 @@ export default function UserAccount() {
 
               <CrossPlatformButtonLayout
                 removeAllStyles
-                onPress={() => handleLogout(dispatch, navigation)}
+                onPress={() => setShowLogoutModal(true)}
               >
                 <IconTextPair
                   text="Logout"
@@ -319,11 +355,12 @@ export default function UserAccount() {
                   containerTailwindCss="py-2 my-0 pt-1"
                 />
               </CrossPlatformButtonLayout>
+
               <HorizontalLine />
 
               <CrossPlatformButtonLayout
                 removeAllStyles
-                onPress={() => alert('Eliminate account')}
+                onPress={handleDeleteAccount}
               >
                 <IconTextPair
                   text="Delete account"
@@ -335,6 +372,19 @@ export default function UserAccount() {
             </Section>
           </ScrollView>
         </View>
+        <TicDriveModal
+          visible={showLogoutModal}
+          onClose={() => setShowLogoutModal(false)}
+          onConfirm={() => {
+            setShowLogoutModal(false);
+            handleLogout(dispatch, navigation);
+          }}
+          title="Logout"
+          content="Are you sure you want to log out?"
+          confirmText="Confirm"
+          cancelText="Cancel"
+          confirmButtonStyle={{backgroundColor: '#E53935'}}
+        />
       </SafeAreaViewLayout>
     </LinearGradientViewLayout>
   );

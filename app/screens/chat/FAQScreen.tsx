@@ -1,5 +1,7 @@
 import {useState} from 'react';
-import {ScrollView, Text, View} from 'react-native';
+import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {Feather, AntDesign} from '@expo/vector-icons';
+import {useNavigation} from '@react-navigation/native';
 
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import LinearGradientViewLayout from '@/app/layouts/LinearGradientViewLayout';
@@ -59,7 +61,7 @@ export default function FAQScreen() {
           </Text>
         </View>
 
-        <View className="mx-2 mt-1">
+        <View className="mx-4">
           <TicDriveInput
             isLeftIcon
             isRightIcon
@@ -67,7 +69,7 @@ export default function FAQScreen() {
             customValue={searchText}
             onChange={setSearchText}
             containerViewStyleTailwind="w-full"
-            inputContainerStyle={{marginBottom: 1, height: 48}}
+            inputContainerStyle={{marginBottom: 12, height: 48}}
           />
         </View>
 
@@ -94,7 +96,7 @@ export default function FAQScreen() {
                   removeAllStyles
                   buttonTailwindCss="flex-row justify-between items-center"
                 >
-                  <Text className="text-base leading-[20px] font-medium text-black flex-1 pr-2 font-poppins">
+                  <Text className="text-base font-medium text-black flex-1 pr-2">
                     {item.question}
                   </Text>
 
