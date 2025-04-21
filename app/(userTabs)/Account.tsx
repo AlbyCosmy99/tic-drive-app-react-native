@@ -362,7 +362,7 @@ export default function UserAccount() {
         {/* TicDriveModal for Logout Confirmation */}
         <TicDriveModal
   visible={showLogoutModal}
-  onClose={() => setShowLogoutModal(false)} // <- closes modal on cancel
+  onClose={() => setShowLogoutModal(false)}
   onConfirm={() => {
     setShowLogoutModal(false);
     handleLogout(dispatch, navigation);
