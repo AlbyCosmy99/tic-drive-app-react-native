@@ -6,11 +6,11 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 // Navigation & State
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import navigationPush from '@/services/navigation/push';
-import { useAppDispatch, useAppSelector } from '@/stateManagement/redux/hooks';
+import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 
 // Layouts
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
@@ -21,7 +21,7 @@ import NotLogged from '@/components/auth/NotLogged';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import CircularUserAvatar from '@/components/ui/avatars/CircularUserAvatar';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
-import { handleLogout } from '@/components/ui/buttons/TicDriveAuthButton';
+import {handleLogout} from '@/components/ui/buttons/TicDriveAuthButton';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import IconTextPair from '@/components/ui/IconTextPair';
 
@@ -106,7 +106,7 @@ export default function UserAccount() {
       'Delete Account',
       'Are you sure you want to delete your account? This action is irreversible.',
       [
-        { text: 'Cancel', style: 'cancel' },
+        {text: 'Cancel', style: 'cancel'},
         {
           text: 'Delete',
           style: 'destructive',
@@ -135,31 +135,33 @@ export default function UserAccount() {
         <TicDriveNavbar />
         <View className="mx-2.5">
           <View className="flex-row justify-between items-center mt-1 mb-4">
-            <View className="flex-row items-center">
+            <View className="flex-row items-center space-x-4 p-2">
               <CircularUserAvatar
                 uri={user?.imageurl}
-                styles={{width: 70, height: 70, marginRight: 10}}
+                styles={{width: 70, height: 70}}
               />
-                           <View>
+              <View className="w-40">
                 {isEditing ? (
                   <TextInput
-                    className="font-semibold text-xl ml-2"
+                    className="font-semibold text-lg border-b border-gray-300 pb-1"
                     value={editedUser.name || ''}
                     onChangeText={text =>
-                      setEditedUser({ ...editedUser, name: text })
+                      setEditedUser({...editedUser, name: text})
                     }
                     placeholder="Enter your name"
+                    placeholderTextColor="#888"
+                    autoFocus
+                    accessibilityLabel="Name Input"
                   />
                 ) : (
-                  <Text className="font-semibold text-xl">
-                    {user?.name || 'Edit to add your name'}
+                  <Text className="font-semibold text-xl text-gray-800">
+                    {user?.name || 'Tap edit to add your name'}
                   </Text>
                 )}
               </View>
-
             </View>
 
-            <View className="flex-row items-center self-start mt-4">
+            <View className="flex-row items-center">
               <CrossPlatformButtonLayout
                 removeAllStyles
                 onPress={() => setIsEditing(!isEditing)}
@@ -189,7 +191,7 @@ export default function UserAccount() {
                 <PhoneIcon />
                 {isEditing ? (
                   <TextInput
-                    className="ml-2 flex-1 border-b border-gray-300 pb-1"
+                    className="ml-2 flex-1 border-b border-gray-300 pb-2"
                     value={editedUser.phoneNumber}
                     onChangeText={text =>
                       setEditedUser({...editedUser, phoneNumber: text})
@@ -209,12 +211,12 @@ export default function UserAccount() {
                 <MailIcon />
                 {isEditing ? (
                   <TextInput
-                    className="ml-2 flex-1 border-b border-gray-300 pb-1"
+                    className="ml-2 flex-1 border-b border-gray-300 pb-2"
                     value={editedUser.email}
                     onChangeText={text =>
                       setEditedUser({...editedUser, email: text})
                     }
-                    placeholder="Insert emaik"
+                    placeholder="Insert email"
                   />
                 ) : (
                   <Text className="text-base font-medium pl-1">
@@ -229,7 +231,7 @@ export default function UserAccount() {
                 <AddressIcon />
                 {isEditing ? (
                   <TextInput
-                    className="ml-2 flex-1 border-b border-gray-300 pb-1"
+                    className="ml-2 flex-1 border-b border-gray-300 pb-2"
                     value={editedUser.address}
                     onChangeText={text =>
                       setEditedUser({...editedUser, address: text})
@@ -342,7 +344,10 @@ export default function UserAccount() {
 
               <HorizontalLine />
 
-              <CrossPlatformButtonLayout removeAllStyles onPress={() => setShowLogoutModal(true)}>
+              <CrossPlatformButtonLayout
+                removeAllStyles
+                onPress={() => setShowLogoutModal(true)}
+              >
                 <IconTextPair
                   text="Logout"
                   icon={<Logout />}
@@ -353,7 +358,10 @@ export default function UserAccount() {
 
               <HorizontalLine />
 
-              <CrossPlatformButtonLayout removeAllStyles onPress={handleDeleteAccount}>
+              <CrossPlatformButtonLayout
+                removeAllStyles
+                onPress={handleDeleteAccount}
+              >
                 <IconTextPair
                   text="Delete account"
                   icon={<Remove />}
@@ -361,26 +369,23 @@ export default function UserAccount() {
                   containerTailwindCss="py-2 my-0 pt-1"
                 />
               </CrossPlatformButtonLayout>
-
             </Section>
           </ScrollView>
         </View>
         <TicDriveModal
-  visible={showLogoutModal}
-  onClose={() => setShowLogoutModal(false)}
-  onConfirm={() => {
-    setShowLogoutModal(false);
-    handleLogout(dispatch, navigation);
-  }}
-  title="Logout"
-  content="Are you sure you want to log out?"
-  confirmText="Comfirm"
-  cancelText="Cancel"
-  confirmButtonStyle={{ backgroundColor: '#E53935' }}
-/>
-
+          visible={showLogoutModal}
+          onClose={() => setShowLogoutModal(false)}
+          onConfirm={() => {
+            setShowLogoutModal(false);
+            handleLogout(dispatch, navigation);
+          }}
+          title="Logout"
+          content="Are you sure you want to log out?"
+          confirmText="Confirm"
+          cancelText="Cancel"
+          confirmButtonStyle={{backgroundColor: '#E53935'}}
+        />
       </SafeAreaViewLayout>
     </LinearGradientViewLayout>
   );
 }
-
