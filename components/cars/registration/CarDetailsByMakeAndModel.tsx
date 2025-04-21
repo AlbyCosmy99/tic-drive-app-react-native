@@ -50,7 +50,7 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
         const response = await getCarModelVersionsByModelId(modelId ?? 0);
         if (response) {
           setYearOptions(
-            response.map(data => ({id: data.id, value: data.year})),
+            response.map(data => ({id: data.id, value: data.year.toString()})),
           );
         }
       } catch (err) {
@@ -110,7 +110,6 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
         data={yearOptions}
         value={selectedYear}
         setValue={setCarYear}
-        error={errorYear}
       />
       <TicDriveDropdown
         placeholder="Choose the car fuel type"

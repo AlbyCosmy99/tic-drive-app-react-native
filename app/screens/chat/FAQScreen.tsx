@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import {useState} from 'react';
+import {ScrollView, Text, View} from 'react-native';
 
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import LinearGradientViewLayout from '@/app/layouts/LinearGradientViewLayout';
@@ -43,7 +43,7 @@ export default function FAQScreen() {
   const filteredFAQs = faqData.filter(
     item =>
       item.question.toLowerCase().includes(searchText.toLowerCase()) ||
-      item.answer.toLowerCase().includes(searchText.toLowerCase())
+      item.answer.toLowerCase().includes(searchText.toLowerCase()),
   );
 
   return (
@@ -67,7 +67,7 @@ export default function FAQScreen() {
             customValue={searchText}
             onChange={setSearchText}
             containerViewStyleTailwind="w-full"
-            inputContainerStyle={{ marginBottom: 1, height: 48 }}
+            inputContainerStyle={{marginBottom: 1, height: 48}}
           />
         </View>
 

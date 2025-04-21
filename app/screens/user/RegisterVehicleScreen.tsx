@@ -316,7 +316,12 @@ function RegisterVehicleScreen() {
                       <CarDetailsByMakeAndModel
                         key={carModelDropdownData?.id}
                         carSelected={carSelectedByMakeAndModel}
-                        modelId={models?.find(model => model.name === carSelectedByMakeAndModel.name)?.id}
+                        modelId={
+                          models?.find(
+                            model =>
+                              model.name === carSelectedByMakeAndModel.name,
+                          )?.id
+                        }
                         errorYear={errorYear}
                         setErrorYear={setErrorYear}
                       />

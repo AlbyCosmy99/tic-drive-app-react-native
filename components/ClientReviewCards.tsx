@@ -3,7 +3,6 @@ import ClientReviewCard from './ClientReviewCard';
 import useReviews from '@/hooks/api/workshops/useReviews';
 import TicDriveSpinner from './ui/spinners/TicDriveSpinner';
 
-
 interface ClientReviewCardsProp {
   workshopId: number;
 }
