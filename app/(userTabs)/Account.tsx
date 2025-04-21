@@ -4,13 +4,14 @@ import {
   TextInput,
   View,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Navigation & State
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import navigationPush from '@/services/navigation/push';
-import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
+import { useAppDispatch, useAppSelector } from '@/stateManagement/redux/hooks';
 
 // Layouts
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
@@ -21,7 +22,7 @@ import NotLogged from '@/components/auth/NotLogged';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import CircularUserAvatar from '@/components/ui/avatars/CircularUserAvatar';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
-import {handleLogout} from '@/components/ui/buttons/TicDriveAuthButton';
+import { handleLogout } from '@/components/ui/buttons/TicDriveAuthButton';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import IconTextPair from '@/components/ui/IconTextPair';
 
@@ -43,6 +44,7 @@ import Translate from '@/assets/svg/translate.svg';
 import VehicleIcon from '@/assets/svg/vehicles/car2.svg';
 import EditIcon from '@/assets/svg/writing/change.svg';
 import SaveIcon from '@/assets/svg/operations/save.svg';
+import TicDriveModal from 'ticdrive-mobile/components/ui/modals/TicDriveModal';
 
 interface SectionProps {
   title: string;
@@ -62,7 +64,7 @@ export default function UserAccount() {
   const [language, setLanguage] = useState<'en' | 'it'>('en');
   const [faqVisible, setFaqVisible] = useState(false);
   const [languageOptionsVisible, setLanguageOptionsVisible] = useState(false);
-
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.auth.user);
   const token = useJwtToken();
@@ -75,6 +77,14 @@ export default function UserAccount() {
   }, [isEditing]);
 
   const handleSaveProfile = async () => {
+    if (JSON.stringify(editedUser) !== JSON.stringify(user)) {
+      try {
+        console.log('Profile updated:', editedUser);
+      } catch (error) {
+        console.error('Failed to save profile:', error);
+        alert('Could not save profile changes.');
+      }
+    }
     setIsEditing(false);
   };
 
@@ -91,6 +101,23 @@ export default function UserAccount() {
 
   const handleFAQ = () => {
     navigationPush(navigation, 'FAQScreen');
+  };
+  const handleDeleteAccount = () => {
+    Alert.alert(
+      'Delete Account',
+      'Are you sure you want to delete your account? This action is irreversible.',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: () => {
+            // TODO: will do later the actual delete logic
+            alert('Account deleted (mock)');
+          },
+        },
+      ],
+    );
   };
 
   if (!token)
@@ -114,15 +141,23 @@ export default function UserAccount() {
                 uri={user?.imageurl}
                 styles={{width: 70, height: 70, marginRight: 10}}
               />
-              <View>
-                {user?.name ? (
-                  <Text className="font-semibold text-xl">{user?.name}</Text>
+                           <View>
+                {isEditing ? (
+                  <TextInput
+                    className="font-semibold text-xl ml-2"
+                    value={editedUser.name || ''}
+                    onChangeText={text =>
+                      setEditedUser({ ...editedUser, name: text })
+                    }
+                    placeholder="Enter your name"
+                  />
                 ) : (
-                  <Text className="font-base text-xl">
-                    {'Edit to add your name'}
+                  <Text className="font-semibold text-xl">
+                    {user?.name || 'Edit to add your name'}
                   </Text>
                 )}
               </View>
+
             </View>
 
             <View className="flex-row items-center self-start mt-4">
@@ -308,10 +343,7 @@ export default function UserAccount() {
 
               <HorizontalLine />
 
-              <CrossPlatformButtonLayout
-                removeAllStyles
-                onPress={() => handleLogout(dispatch, navigation)}
-              >
+              <CrossPlatformButtonLayout removeAllStyles onPress={() => setShowLogoutModal(true)}>
                 <IconTextPair
                   text="Logout"
                   icon={<Logout />}
@@ -319,12 +351,10 @@ export default function UserAccount() {
                   containerTailwindCss="py-2 my-0 pt-1"
                 />
               </CrossPlatformButtonLayout>
+
               <HorizontalLine />
 
-              <CrossPlatformButtonLayout
-                removeAllStyles
-                onPress={() => alert('Eliminate account')}
-              >
+              <CrossPlatformButtonLayout removeAllStyles onPress={handleDeleteAccount}>
                 <IconTextPair
                   text="Delete account"
                   icon={<Remove />}
@@ -332,10 +362,26 @@ export default function UserAccount() {
                   containerTailwindCss="py-2 my-0 pt-1"
                 />
               </CrossPlatformButtonLayout>
+
             </Section>
           </ScrollView>
         </View>
+        <TicDriveModal
+  visible={showLogoutModal}
+  onClose={() => setShowLogoutModal(false)}
+  onConfirm={() => {
+    setShowLogoutModal(false);
+    handleLogout(dispatch, navigation);
+  }}
+  title="Logout"
+  content="Are you sure you want to log out?"
+  confirmText="Comfirm"
+  cancelText="Cancel"
+  confirmButtonStyle={{ backgroundColor: '#E53935' }}
+/>
+
       </SafeAreaViewLayout>
     </LinearGradientViewLayout>
   );
 }
+
