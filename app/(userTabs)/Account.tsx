@@ -7,7 +7,6 @@ import {
   Alert,
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
-
 // Navigation & State
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import navigationPush from '@/services/navigation/push';
