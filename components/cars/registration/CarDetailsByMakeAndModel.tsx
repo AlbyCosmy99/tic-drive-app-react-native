@@ -1,23 +1,28 @@
+import React, {useContext, useEffect, useState} from 'react';
 import TicDriveDropdown from '@/components/ui/dropdowns/TicDriveDropdown';
 import TicDriveTextOrInput from '@/components/ui/inputs/TicDriveTextOrInput';
+import getCarModelVersionsByModelId from '@/services/http/requests/cars/getCarModelVersionsByModelId';
 import CarContext from '@/stateManagement/contexts/car/CarContext';
 import Car, {fuels, FuelType, transmissionType} from '@/types/Car';
 import TicDriveDropdownData from '@/types/ui/dropdown/TicDriveDropdownData';
-import React, {useContext, useEffect} from 'react';
 
 interface CarDetailsByMakeAndModelProps {
   carSelected: Car;
   errorYear: boolean;
   setErrorYear: (errorYear: boolean) => void;
+  modelId: number | undefined;
 }
 
 const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
   carSelected,
   errorYear,
   setErrorYear,
+  modelId,
 }) => {
   const {carSelectedByMakeAndModel, setCarSelectedByMakeAndModel} =
     useContext(CarContext);
+
+  const [yearOptions, setYearOptions] = useState<TicDriveDropdownData[]>([]);
 
   const fuelOptions: TicDriveDropdownData[] = fuels.map((fuel, index) => ({
     id: index,
@@ -25,65 +30,88 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
   }));
 
   const transmissionsOptions: TicDriveDropdownData[] = [
-    {
-      id: 1,
-      value: 'manual',
-    },
+    {id: 1, value: 'manual'},
     {id: 2, value: 'automatic'},
   ];
 
+  // Only update context on mount (or when `carSelected.model` changes)
   useEffect(() => {
     if (setCarSelectedByMakeAndModel) {
-      setCarSelectedByMakeAndModel({
-        ...carSelectedByMakeAndModel,
+      setCarSelectedByMakeAndModel(prev => ({
+        ...prev,
         ...carSelected,
-      });
+      }));
     }
-  }, []);
+  }, [carSelected.model]);
+
+  useEffect(() => {
+    const fetchYears = async () => {
+      try {
+        const response = await getCarModelVersionsByModelId(modelId ?? 0);
+        if (response) {
+          setYearOptions(
+            response.map(data => ({id: data.id, value: data.year})),
+          );
+        }
+      } catch (err) {
+        console.error('Error fetching model versions:', err);
+      }
+    };
+
+    if (modelId) {
+      fetchYears();
+    }
+  }, [modelId]);
 
   const updateCarField = (field: Partial<Car>) => {
-    if (setCarSelectedByMakeAndModel) {
-      setCarSelectedByMakeAndModel({
-        ...carSelectedByMakeAndModel,
-        ...field,
-      });
-    }
+    setCarSelectedByMakeAndModel?.({
+      ...carSelectedByMakeAndModel,
+      ...field,
+    });
   };
 
-  const setCarYear = (year: number) => {
-    updateCarField({year});
+  const setCarYear = (year: TicDriveDropdownData) => {
+    updateCarField({year: parseInt(year.value)});
+    setErrorYear(false);
   };
 
-  const setCarEngineDisplacement = (engineDisplacement: string) => {
+  const setCarEngineDisplacement = (engineDisplacement: string) =>
     updateCarField({engineDisplacement});
-  };
-
-  const setCarFuelType = (fuel: TicDriveDropdownData) => {
+  const setCarFuelType = (fuel: TicDriveDropdownData) =>
     updateCarField({fuel: fuel.value as FuelType});
-  };
-
-  const setSelectedTransmission = (transmission: TicDriveDropdownData) => {
+  const setSelectedTransmission = (transmission: TicDriveDropdownData) =>
     updateCarField({transmission: transmission.value as transmissionType});
-  };
-
-  const setCarMileage = (mileage: number) => {
-    updateCarField({mileage});
-  };
-
-  const setPlateNumber = (plate: string) => {
+  const setCarMileage = (mileage: number) => updateCarField({mileage});
+  const setPlateNumber = (plate: string) =>
     updateCarField({plateNumber: plate.toUpperCase()});
-  };
 
   const selectedFuel = fuelOptions.find(
     item => item.value === carSelectedByMakeAndModel?.fuel,
   ) || {id: -1, value: ''};
-
   const selectedTransmission = transmissionsOptions.find(
     item => item.value === carSelectedByMakeAndModel?.transmission,
-  ) || {id: -1, value: ''};
+  ) || {
+    id: -1,
+    value: '',
+  };
+  const selectedYear = yearOptions.find(
+    item => item.value === carSelectedByMakeAndModel?.year?.toString(),
+  ) || {
+    id: -1,
+    value: '',
+  };
 
   return (
     <>
+      <TicDriveDropdown
+        placeholder="Choose the car year"
+        searchPlaceholder="Search car year"
+        title="Year"
+        data={yearOptions}
+        value={selectedYear}
+        setValue={setCarYear}
+        error={errorYear}
+      />
       <TicDriveDropdown
         placeholder="Choose the car fuel type"
         searchPlaceholder="Search fuel type"
@@ -93,28 +121,13 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
         setValue={setCarFuelType}
       />
       <TicDriveDropdown
-        placeholder="Choose the car fuel transmission"
-        searchPlaceholder="Search fuel transmission"
+        placeholder="Choose the car transmission"
+        searchPlaceholder="Search transmission"
         title="Transmission"
         data={transmissionsOptions}
         value={selectedTransmission}
         setValue={setSelectedTransmission}
       />
-      <TicDriveTextOrInput
-        title="Year"
-        placeholder="Insert car year"
-        value={carSelected?.year}
-        setValue={setCarYear}
-        keyboardType="numeric"
-        isErrorMessage={errorYear}
-        setIsErrorMessage={setErrorYear}
-        errorMessage={`Year must be between 1886 and ${new Date().getFullYear()}`}
-        onCheckError={() => {
-          const year = carSelectedByMakeAndModel?.year;
-          return year && (year < 1886 || year > new Date().getFullYear());
-        }}
-      />
-
       <TicDriveTextOrInput
         title="Engine size"
         placeholder="Es. 2,0"
@@ -122,7 +135,6 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
         setValue={setCarEngineDisplacement}
         keyboardType="numeric"
       />
-
       <TicDriveTextOrInput
         title="Mileage"
         placeholder="Es. 10000km"
