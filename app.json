@@ -48,7 +48,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.android.ticdrive",
+      "package": "com.ticdrive.app",
       "intentFilters": [
         {
           "action": "VIEW",
