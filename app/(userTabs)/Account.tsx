@@ -289,7 +289,7 @@ export default function UserAccount() {
                 }
               >
                 <IconTextPair
-                  text="Change language"
+                  text={t('language.changeLanguage')}
                   icon={<Translate />}
                   textTailwindCss="text-base font-medium pl-1"
                   containerTailwindCss={`my-0 pt-1 ${languageOptionsVisible && 'pb-0'}`}
@@ -299,21 +299,7 @@ export default function UserAccount() {
               {languageOptionsVisible && (
                 <View className="ml-8">
                   <TouchableOpacity
-                    className="py-2 pb-1"
-                    onPress={() => {
-                      handleChangeLanguage('en');
-                      setLanguageOptionsVisible(false);
-                    }}
-                  >
-                    <Text
-                      className={`text-base ${languageCode === 'en' ? 'font-bold text-blue-600' : 'text-black'}`}
-                    >
-                      🇬🇧 English
-                    </Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    className="py-2"
+                    className="py-2 pb-1 pt-3"
                     onPress={() => {
                       handleChangeLanguage('it');
                       setLanguageOptionsVisible(false);
@@ -322,7 +308,20 @@ export default function UserAccount() {
                     <Text
                       className={`text-base ${languageCode === 'it' ? 'font-bold text-blue-600' : 'text-black'}`}
                     >
-                      🇮🇹 Italian
+                      🇮🇹 {t('language.italian')}
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    className="py-2"
+                    onPress={() => {
+                      handleChangeLanguage('en');
+                      setLanguageOptionsVisible(false);
+                    }}
+                  >
+                    <Text
+                      className={`text-base ${languageCode === 'en' ? 'font-bold text-blue-600' : 'text-black'}`}
+                    >
+                      🇬🇧 {t('language.english')}
                     </Text>
                   </TouchableOpacity>
                 </View>

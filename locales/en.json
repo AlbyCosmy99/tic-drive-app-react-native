@@ -49,6 +49,7 @@
   "language": {
     "languageChanged": "Language changed",
     "yourNewLanguageIs": "Your new language is",
+    "changeLanguage": "Change language",
     "english": "English",
     "italian": "Italian"
   }
