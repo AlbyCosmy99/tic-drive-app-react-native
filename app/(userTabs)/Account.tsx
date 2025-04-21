@@ -44,7 +44,8 @@ import Translate from '@/assets/svg/translate.svg';
 import VehicleIcon from '@/assets/svg/vehicles/car2.svg';
 import EditIcon from '@/assets/svg/writing/change.svg';
 import SaveIcon from '@/assets/svg/operations/save.svg';
-import LogoutModal from '@/components/modal/LogoutModal';
+// Importing the TicDriveModal from the path you provided
+import TicDriveModal from 'ticdrive-mobile/components/ui/modals/TicDriveModal';
 
 interface SectionProps {
   title: string;
@@ -79,7 +80,6 @@ export default function UserAccount() {
   const handleSaveProfile = async () => {
     if (JSON.stringify(editedUser) !== JSON.stringify(user)) {
       try {
-       
         console.log('Profile updated:', editedUser);
       } catch (error) {
         console.error('Failed to save profile:', error);
@@ -141,7 +141,7 @@ export default function UserAccount() {
         <View className="mx-3 mt-4">
           {/* Profile Header */}
           <View className="flex-row justify-between items-center mt-1 mb-4">
-          <View className="flex-row items-center">
+            <View className="flex-row items-center">
               <CircularUserAvatar
                 uri={user?.imageurl}
                 styles={{ width: 70, height: 70, marginRight: 12 }}
@@ -360,15 +360,21 @@ export default function UserAccount() {
           </ScrollView>
         </View>
 
-        {/* Logout Confirmation Modal */}
-        <LogoutModal
-          visible={showLogoutModal}
-          onConfirm={() => {
-            setShowLogoutModal(false);
-            handleLogout(dispatch, navigation);
-          }}
-          onCancel={() => setShowLogoutModal(false)}
-        />
+        {/* TicDriveModal for Logout Confirmation */}
+        <TicDriveModal
+  visible={showLogoutModal}
+  onClose={() => setShowLogoutModal(false)} // <- closes modal on cancel
+  onConfirm={() => {
+    setShowLogoutModal(false);
+    handleLogout(dispatch, navigation);
+  }}
+  title="Logout"
+  content="Are you sure you want to log out?"
+  confirmText="Comfirm"
+  cancelText="Cancel"
+  confirmButtonStyle={{ backgroundColor: '#E53935' }}
+/>
+
       </SafeAreaViewLayout>
     </LinearGradientViewLayout>
   );

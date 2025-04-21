@@ -26,6 +26,7 @@ const TicDriveModal: React.FC<TicDriveModalProps> = ({
   onConfirm,
   confirmText = 'Conferma',
   cancelText = 'Annulla',
+  confirmButtonStyle,
 }) => {
   return (
     <Modal
@@ -48,8 +49,8 @@ const TicDriveModal: React.FC<TicDriveModalProps> = ({
 
             <TouchableOpacity
               onPress={onConfirm || onClose}
-              style={styles.confirmButton}
-              className="bg-drive"
+              style={[styles.confirmButton, confirmButtonStyle]}  
+                          className="bg-drive"
             >
               <Text style={styles.confirmText}>{confirmText}</Text>
             </TouchableOpacity>
