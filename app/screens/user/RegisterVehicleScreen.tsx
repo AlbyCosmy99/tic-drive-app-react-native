@@ -23,8 +23,6 @@ import isPlateNumber from '@/utils/car/isPlateNumber';
 import CarDetailsByPlate from '@/components/cars/registration/CarDetailsByPlate';
 import CarConfirmationDetails from '@/components/cars/registration/CarConfirmationDetails';
 import {setSelectedCar} from '@/stateManagement/redux/slices/carsSlice';
-import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
-import ErrorModal from '@/components/ui/modals/ErrorModal';
 import navigationPush from '@/services/navigation/push';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import useCustomerCars from '@/hooks/api/cars/useCustomerCars';
