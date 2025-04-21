@@ -1,26 +1,55 @@
 {
-    "reminder": "Reminder",
-    "bookNow": "Book Now",
-    "RemindMeLater": "Remind me later",
-    "services": "Services",
-    "bookings": "Bookings",
-    "account": "Profile",
-    "seeAll": {
-      "workshops": "See all workshops",
-      "services": "See all services"
+  "reminder": "Reminder",
+  "bookNow": "Book now",
+  "discoverNow": "Discover now",
+  "payNow": "Pay now",
+  "RemindMeLater": "Remind me later",
+  "services": "Services",
+  "bookings": "Bookings",
+  "account": "Account",
+  "location": "Location",
+  "notAvailable": "Not available",
+  "service": {
+    "bookAService": "Book a service",
+    "bookTheService": "Book the service",
+    "chooseService": "Choose service",
+    "searchService": "Search service"
+  },
+  "continue": "Continue",
+  "date": {
+    "selectADate": "Select a date"
+  },
+  "seeAll": {
+    "workshops": "See all workshops",
+    "services": "See all services",
+    "reviews": "See all reviews"
+  },
+  "vehicles": {
+    "registerVehicle": "Register vehicle",
+    "handleVehicles": "Manage vehicles"
+  },
+  "home": {
+    "notifications": {
+      "first": "Last service: 12 months ago.\nPlan now!",
+      "second": "It's time to switch to winter tires, check out the offers for you!",
+      "third": "Your car tax expires on 01/01/2025!"
     },
-    "vehicles": {
-      "registerVehicle": "Register vehicle"
+    "findRightWorkshop": "Find the right workshop for you",
+    "discoverServicesAndBook": "Discover services and book"
+  },
+  "workshops": {
+    "servicesOffered": "Services offered",
+    "reviews": {
+      "whatPeopleSay": "What people say",
+      "title": "reviews",
+      "review": "review"
     },
-    "home": {
-      "notifications": {
-        "first": "Last service: 12 months ago.\nSchedule now!",
-        "second": "And it's time to change your tires for the winter season, discover the offers dedicated to you!",
-        "third": "Your vehicle tax expires on 01/01/2025!"
-      },
-      "findRightWorkshop": "Find the workshop that's right for you",
-      "searchInput": "Search for a workshop or service",
-      "discoverServicesAndBook": "Discover services and book"
-    }
+    "searchWorkshop": "Search workshop"
+  },
+  "language": {
+    "languageChanged": "Language changed",
+    "yourNewLanguageIs": "Your new language is",
+    "english": "English",
+    "italian": "Italian"
   }
-  
+}

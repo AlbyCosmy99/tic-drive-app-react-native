@@ -8,6 +8,7 @@
   "bookings": "Prenotazioni",
   "account": "Profilo",
   "location": "Posizione",
+  "notAvailable": "Non disponibile",
   "service": {
     "bookAService": "Prenota un servizio",
     "bookTheService": "Prenota il servizio",
@@ -44,5 +45,11 @@
       "review": "recensione"
     },
     "searchWorkshop": "Cerca officina"
+  },
+  "language": {
+    "languageChanged": "Lingua cambiata",
+    "yourNewLanguageIs": "La tua nuova lingua è",
+    "english": "Inglese",
+    "italian": "Italiano"
   }
 }

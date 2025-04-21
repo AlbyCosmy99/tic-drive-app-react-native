@@ -6,11 +6,11 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 // Navigation & State
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import navigationPush from '@/services/navigation/push';
-import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
+import { useAppDispatch, useAppSelector } from '@/stateManagement/redux/hooks';
 
 // Layouts
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
@@ -21,7 +21,7 @@ import NotLogged from '@/components/auth/NotLogged';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import CircularUserAvatar from '@/components/ui/avatars/CircularUserAvatar';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
-import {handleLogout} from '@/components/ui/buttons/TicDriveAuthButton';
+import { handleLogout } from '@/components/ui/buttons/TicDriveAuthButton';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import IconTextPair from '@/components/ui/IconTextPair';
 
@@ -44,13 +44,17 @@ import VehicleIcon from '@/assets/svg/vehicles/car2.svg';
 import EditIcon from '@/assets/svg/writing/change.svg';
 import SaveIcon from '@/assets/svg/operations/save.svg';
 import TicDriveModal from 'ticdrive-mobile/components/ui/modals/TicDriveModal';
+import { setLanguageCode } from '@/stateManagement/redux/slices/languageSlice';
+import i18n from '@/i18n';
+import navigationReset from '@/services/navigation/reset';
+import { t } from 'i18next';
 
 interface SectionProps {
   title: string;
   children: React.ReactNode;
 }
 
-const Section: React.FC<SectionProps> = ({title, children}) => (
+const Section: React.FC<SectionProps> = ({ title, children }) => (
   <View className="my-2">
     <Text className="font-medium text-2xl">{title}</Text>
     {children}
@@ -60,12 +64,17 @@ const Section: React.FC<SectionProps> = ({title, children}) => (
 export default function UserAccount() {
   const [isEditing, setIsEditing] = useState(false);
   const [editedUser, setEditedUser] = useState<any>({});
-  const [language, setLanguage] = useState<'en' | 'it'>('en');
-  const [faqVisible, setFaqVisible] = useState(false);
   const [languageOptionsVisible, setLanguageOptionsVisible] = useState(false);
+
+  //modals
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [showLanguageChangedModal, setShowLanguageChangedModal] =
+    useState(false);
+
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.auth.user);
+  const languageCode = useAppSelector(state => state.language.languageCode);
+
   const token = useJwtToken();
   const navigation = useTicDriveNavigation();
 
@@ -88,14 +97,13 @@ export default function UserAccount() {
   };
 
   const onFavoriteWorkshops = () => {
-    navigationPush(navigation, 'WorkshopsListScreen', {favorite: true});
+    navigationPush(navigation, 'WorkshopsListScreen', { favorite: true });
   };
 
   const handleChangeLanguage = (newLanguage: 'en' | 'it') => {
-    setLanguage(newLanguage);
-    alert(
-      `Language changed to ${newLanguage === 'en' ? 'English' : 'Italian'}`,
-    );
+    i18n.changeLanguage(newLanguage);
+    dispatch(setLanguageCode(newLanguage));
+    setShowLanguageChangedModal(true);
   };
 
   const handleFAQ = () => {
@@ -106,7 +114,7 @@ export default function UserAccount() {
       'Delete Account',
       'Are you sure you want to delete your account? This action is irreversible.',
       [
-        {text: 'Cancel', style: 'cancel'},
+        { text: 'Cancel', style: 'cancel' },
         {
           text: 'Delete',
           style: 'destructive',
@@ -134,11 +142,11 @@ export default function UserAccount() {
       <SafeAreaViewLayout disabled={!isAndroidPlatform()}>
         <TicDriveNavbar />
         <View className="mx-2.5">
-          <View className="flex-row justify-between items-center mt-1 mb-4">
+          <View className="flex-row justify-between items-center mt-1 mb-2">
             <View className="flex-row items-center space-x-4 p-2">
               <CircularUserAvatar
                 uri={user?.imageurl}
-                styles={{width: 70, height: 70}}
+                styles={{ width: 70, height: 70 }}
               />
               <View className="w-40">
                 {isEditing ? (
@@ -146,7 +154,7 @@ export default function UserAccount() {
                     className="font-semibold text-lg border-b border-gray-300 pb-1"
                     value={editedUser.name || ''}
                     onChangeText={text =>
-                      setEditedUser({...editedUser, name: text})
+                      setEditedUser({ ...editedUser, name: text })
                     }
                     placeholder="Enter your name"
                     placeholderTextColor="#888"
@@ -184,7 +192,7 @@ export default function UserAccount() {
 
           <ScrollView
             className="px-1"
-            contentContainerStyle={{paddingBottom: 140}}
+            contentContainerStyle={{ paddingBottom: 140 }}
           >
             <Section title="Account">
               <View className="flex-row items-center py-2">
@@ -194,13 +202,13 @@ export default function UserAccount() {
                     className="ml-2 flex-1 border-b border-gray-300 pb-2"
                     value={editedUser.phoneNumber}
                     onChangeText={text =>
-                      setEditedUser({...editedUser, phoneNumber: text})
+                      setEditedUser({ ...editedUser, phoneNumber: text })
                     }
                     placeholder="Insert phone number"
                   />
                 ) : (
                   <Text className="text-base font-medium pl-1">
-                    {user?.phoneNumber || 'Not available'}
+                    {user?.phoneNumber || t('notAvailable')}
                   </Text>
                 )}
               </View>
@@ -214,13 +222,13 @@ export default function UserAccount() {
                     className="ml-2 flex-1 border-b border-gray-300 pb-2"
                     value={editedUser.email}
                     onChangeText={text =>
-                      setEditedUser({...editedUser, email: text})
+                      setEditedUser({ ...editedUser, email: text })
                     }
                     placeholder="Insert email"
                   />
                 ) : (
                   <Text className="text-base font-medium pl-1">
-                    {user?.email || 'Not available'}
+                    {user?.email || t('notAvailable')}
                   </Text>
                 )}
               </View>
@@ -234,13 +242,13 @@ export default function UserAccount() {
                     className="ml-2 flex-1 border-b border-gray-300 pb-2"
                     value={editedUser.address}
                     onChangeText={text =>
-                      setEditedUser({...editedUser, address: text})
+                      setEditedUser({ ...editedUser, address: text })
                     }
                     placeholder="Insert address"
                   />
                 ) : (
                   <Text className="text-base font-medium pl-1">
-                    {user?.address || 'Not available'}
+                    {user?.address || t('notAvailable')}
                   </Text>
                 )}
               </View>
@@ -284,21 +292,21 @@ export default function UserAccount() {
                   text="Change language"
                   icon={<Translate />}
                   textTailwindCss="text-base font-medium pl-1"
-                  containerTailwindCss="py-2 my-0 pt-1"
+                  containerTailwindCss={`my-0 pt-1 ${languageOptionsVisible && 'pb-0'}`}
                 />
               </CrossPlatformButtonLayout>
 
               {languageOptionsVisible && (
-                <View className="ml-8 mt-2">
+                <View className="ml-8">
                   <TouchableOpacity
-                    className="py-2"
+                    className="py-2 pb-1"
                     onPress={() => {
                       handleChangeLanguage('en');
                       setLanguageOptionsVisible(false);
                     }}
                   >
                     <Text
-                      className={`text-base ${language === 'en' ? 'font-bold text-blue-600' : 'text-black'}`}
+                      className={`text-base ${languageCode === 'en' ? 'font-bold text-blue-600' : 'text-black'}`}
                     >
                       🇬🇧 English
                     </Text>
@@ -312,7 +320,7 @@ export default function UserAccount() {
                     }}
                   >
                     <Text
-                      className={`text-base ${language === 'it' ? 'font-bold text-blue-600' : 'text-black'}`}
+                      className={`text-base ${languageCode === 'it' ? 'font-bold text-blue-600' : 'text-black'}`}
                     >
                       🇮🇹 Italian
                     </Text>
@@ -372,6 +380,8 @@ export default function UserAccount() {
             </Section>
           </ScrollView>
         </View>
+
+        {/* modals */}
         <TicDriveModal
           visible={showLogoutModal}
           onClose={() => setShowLogoutModal(false)}
@@ -383,7 +393,19 @@ export default function UserAccount() {
           content="Are you sure you want to log out?"
           confirmText="Confirm"
           cancelText="Cancel"
-          confirmButtonStyle={{backgroundColor: '#E53935'}}
+          confirmButtonStyle={{ backgroundColor: '#E53935' }}
+        />
+        <TicDriveModal
+          visible={showLanguageChangedModal}
+          onClose={() => setShowLanguageChangedModal(false)}
+          title={t('language.languageChanged') + '!'}
+          content={
+            t('language.yourNewLanguageIs') + ': ' +
+            (languageCode === 'en' ? t('language.english') : t('language.italian')) +
+            '.'
+          }
+          cancelText="Ok!"
+          confirmButtonStyle={{ backgroundColor: '#E53935' }}
         />
       </SafeAreaViewLayout>
     </LinearGradientViewLayout>
