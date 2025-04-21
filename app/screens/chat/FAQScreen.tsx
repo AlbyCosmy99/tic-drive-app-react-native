@@ -1,14 +1,13 @@
 import {useState} from 'react';
-import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
-import {Feather, AntDesign} from '@expo/vector-icons';
-import {useNavigation} from '@react-navigation/native';
+import {ScrollView, Text, View} from 'react-native';
 
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import LinearGradientViewLayout from '@/app/layouts/LinearGradientViewLayout';
-import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
+import PlusIcon from '@/assets/svg/plus.svg';
+import MinusIcon from '@/assets/svg/minus.svg';
 
 const faqData = [
   {
@@ -51,30 +50,34 @@ export default function FAQScreen() {
     <LinearGradientViewLayout>
       <SafeAreaViewLayout>
         <TicDriveNavbar />
-        <View className="items-center mt-4">
-          <Text className="text-2xl font-bold text-black">
-            Frequently Asked Questions
+        <View className="items-center mt-6 px-4">
+          <Text className="text-2xl leading-6 font-semibold text-center font-poppins">
+            Frequently Asked Questions{'\n'}
+            <Text className="text-lg leading-[24px] font-semibold font-poppins">
+              How can we help you?
+            </Text>
           </Text>
-          <Text className="text-base text-gray-500">How can we help you?</Text>
         </View>
 
-        <View className="mx-4">
+        <View className="mx-2 mt-1">
           <TicDriveInput
-            isLeftIcon={true}
+            isLeftIcon
+            isRightIcon
             placeholder="Search by keyword"
             customValue={searchText}
             onChange={setSearchText}
-            isRightIcon
             containerViewStyleTailwind="w-full"
-            inputContainerStyle={{marginBottom: 12, height: 48}}
+            inputContainerStyle={{marginBottom: 1, height: 48}}
           />
         </View>
 
-        <View className="flex-row justify-between items-center px-4 mt-4 mb-2">
-          <Text className="text-lg font-semibold text-black">
+        <View className="flex-row justify-between items-center px-4  mb-2">
+          <Text className="text-base font-semibold text-black font-poppins">
             Most frequently asked
           </Text>
-          <Text className="text-sm font-semibold text-green-600">See all</Text>
+          <Text className="text-sm font-semibold text-green-600 font-poppins">
+            See all
+          </Text>
         </View>
 
         <ScrollView className="px-4">
@@ -91,25 +94,30 @@ export default function FAQScreen() {
                   removeAllStyles
                   buttonTailwindCss="flex-row justify-between items-center"
                 >
-                  <Text className="text-base font-medium text-black flex-1 pr-2">
+                  <Text className="text-base leading-[20px] font-medium text-black flex-1 pr-2 font-poppins">
                     {item.question}
                   </Text>
-                  <AntDesign
-                    name={isExpanded ? 'minus' : 'plus'}
-                    size={20}
-                    color="red"
-                  />
+
+                  <View>
+                    {isExpanded ? (
+                      <MinusIcon width={25.26} height={24} />
+                    ) : (
+                      <PlusIcon width={25.26} height={24} />
+                    )}
+                  </View>
                 </CrossPlatformButtonLayout>
+
                 {isExpanded && (
-                  <Text className="mt-3 text-gray-700 text-sm leading-relaxed">
+                  <Text className="mt-3 text-[12px] leading-[20px] text-[#737373] font-poppins">
                     {item.answer}
                   </Text>
                 )}
               </View>
             );
           })}
+
           {filteredFAQs.length === 0 && (
-            <Text className="text-center text-gray-500 mt-6">
+            <Text className="text-center text-gray-500 mt-6 font-poppins">
               No results found.
             </Text>
           )}
