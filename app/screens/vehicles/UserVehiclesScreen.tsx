@@ -96,6 +96,7 @@ const UserVehiclesScreen = () => {
                       year={car.year ?? undefined}
                       fuel={car.fuel}
                       CV={car.powerCV}
+                      plateNumber={car.plateNumber}
                     />
                   </CrossPlatformButtonLayout>
                 ))}

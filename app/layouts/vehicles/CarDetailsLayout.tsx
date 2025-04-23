@@ -13,6 +13,8 @@ const CarDetailsLayout: React.FC<CarDetailsGeneralProps> = ({
   carSelected,
   children,
 }) => {
+  console.log(carSelected);
+
   return carSelected ? (
     <View className="mx-3 p-4 border-2 border-grey-light rounded-xl mt-6">
       <View className="mb-2">
@@ -35,7 +37,11 @@ const CarDetailsLayout: React.FC<CarDetailsGeneralProps> = ({
           title="Mileage"
           value={carSelected.mileage?.toString() ?? ''}
         />
-        <RegistrationCarDetailCard title="Name" value={carSelected.name} />
+        <RegistrationCarDetailCard
+  title="Name"
+  value={carSelected.name?.trim() || 'My car'}
+/>
+
         <RegistrationCarDetailCard
           title="CV"
           value={carSelected.powerCV?.toString() ?? ''}
