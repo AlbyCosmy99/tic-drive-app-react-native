@@ -13,6 +13,7 @@ import navigationPush from '@/services/navigation/push';
 import {Colors} from '@/constants/Colors';
 import getUserData from '@/utils/auth/getUserData';
 import i18n from '@/i18n';
+import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 
 const Hub = () => {
   const dispatch = useAppDispatch();
@@ -71,12 +72,7 @@ const Hub = () => {
 
   return (
     <View className="justify-center items-center w-full h-full bg-white">
-      <View className="flex-1 justify-center items-center">
-        <ActivityIndicator
-          size="large"
-          color={Colors.light.bookingsOptionsText}
-        />
-      </View>
+      <TicDriveSpinner />
     </View>
   );
 };
