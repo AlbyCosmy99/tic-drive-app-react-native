@@ -1,6 +1,6 @@
-import { Text, View } from 'react-native';
+import {Text, View} from 'react-native';
 import NissanLogo from '@/assets/svg/carLogos/nissan.svg';
-import { FuelType } from '@/types/Car';
+import {FuelType} from '@/types/Car';
 
 interface CarDetailsMiniCardProps {
   make: string;
@@ -8,7 +8,7 @@ interface CarDetailsMiniCardProps {
   year?: number;
   fuel: FuelType;
   CV?: number;
-  plateNumber?: string; 
+  plateNumber?: string;
 }
 
 const CarDetailsMiniCard: React.FC<CarDetailsMiniCardProps> = ({
@@ -26,10 +26,9 @@ const CarDetailsMiniCard: React.FC<CarDetailsMiniCardProps> = ({
           {make} {model}
         </Text>
         {plateNumber && (
-          <Text className="text-sm font-medium">{plateNumber}</Text> 
+          <Text className="text-sm font-medium">{plateNumber}</Text>
         )}
         {year && <Text className="text-sm font-medium">{year}</Text>}
-        
       </View>
       <NissanLogo />
     </View>

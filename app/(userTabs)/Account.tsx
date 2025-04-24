@@ -6,11 +6,11 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 // Navigation & State
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import navigationPush from '@/services/navigation/push';
-import { useAppDispatch, useAppSelector } from '@/stateManagement/redux/hooks';
+import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 
 // Layouts
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
@@ -21,7 +21,7 @@ import NotLogged from '@/components/auth/NotLogged';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import CircularUserAvatar from '@/components/ui/avatars/CircularUserAvatar';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
-import { handleLogout } from '@/components/ui/buttons/TicDriveAuthButton';
+import {handleLogout} from '@/components/ui/buttons/TicDriveAuthButton';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import IconTextPair from '@/components/ui/IconTextPair';
 
@@ -44,17 +44,17 @@ import VehicleIcon from '@/assets/svg/vehicles/car2.svg';
 import EditIcon from '@/assets/svg/writing/change.svg';
 import SaveIcon from '@/assets/svg/operations/save.svg';
 import TicDriveModal from 'ticdrive-mobile/components/ui/modals/TicDriveModal';
-import { setLanguageCode } from '@/stateManagement/redux/slices/languageSlice';
+import {setLanguageCode} from '@/stateManagement/redux/slices/languageSlice';
 import i18n from '@/i18n';
 import navigationReset from '@/services/navigation/reset';
-import { t } from 'i18next';
+import {t} from 'i18next';
 
 interface SectionProps {
   title: string;
   children: React.ReactNode;
 }
 
-const Section: React.FC<SectionProps> = ({ title, children }) => (
+const Section: React.FC<SectionProps> = ({title, children}) => (
   <View className="my-2">
     <Text className="font-medium text-2xl">{title}</Text>
     {children}
@@ -97,7 +97,7 @@ export default function UserAccount() {
   };
 
   const onFavoriteWorkshops = () => {
-    navigationPush(navigation, 'WorkshopsListScreen', { favorite: true });
+    navigationPush(navigation, 'WorkshopsListScreen', {favorite: true});
   };
 
   const handleChangeLanguage = (newLanguage: 'en' | 'it') => {
@@ -114,7 +114,7 @@ export default function UserAccount() {
       'Delete Account',
       'Are you sure you want to delete your account? This action is irreversible.',
       [
-        { text: 'Cancel', style: 'cancel' },
+        {text: 'Cancel', style: 'cancel'},
         {
           text: 'Delete',
           style: 'destructive',
@@ -146,7 +146,7 @@ export default function UserAccount() {
             <View className="flex-row items-center space-x-4 p-2">
               <CircularUserAvatar
                 uri={user?.imageurl}
-                styles={{ width: 70, height: 70 }}
+                styles={{width: 70, height: 70}}
               />
               <View className="w-40">
                 {isEditing ? (
@@ -154,7 +154,7 @@ export default function UserAccount() {
                     className="font-semibold text-lg border-b border-gray-300 pb-1"
                     value={editedUser.name || ''}
                     onChangeText={text =>
-                      setEditedUser({ ...editedUser, name: text })
+                      setEditedUser({...editedUser, name: text})
                     }
                     placeholder="Enter your name"
                     placeholderTextColor="#888"
@@ -192,7 +192,7 @@ export default function UserAccount() {
 
           <ScrollView
             className="px-1"
-            contentContainerStyle={{ paddingBottom: 140 }}
+            contentContainerStyle={{paddingBottom: 140}}
           >
             <Section title="Account">
               <View className="flex-row items-center py-2">
@@ -202,7 +202,7 @@ export default function UserAccount() {
                     className="ml-2 flex-1 border-b border-gray-300 pb-2"
                     value={editedUser.phoneNumber}
                     onChangeText={text =>
-                      setEditedUser({ ...editedUser, phoneNumber: text })
+                      setEditedUser({...editedUser, phoneNumber: text})
                     }
                     placeholder="Insert phone number"
                   />
@@ -222,7 +222,7 @@ export default function UserAccount() {
                     className="ml-2 flex-1 border-b border-gray-300 pb-2"
                     value={editedUser.email}
                     onChangeText={text =>
-                      setEditedUser({ ...editedUser, email: text })
+                      setEditedUser({...editedUser, email: text})
                     }
                     placeholder="Insert email"
                   />
@@ -242,7 +242,7 @@ export default function UserAccount() {
                     className="ml-2 flex-1 border-b border-gray-300 pb-2"
                     value={editedUser.address}
                     onChangeText={text =>
-                      setEditedUser({ ...editedUser, address: text })
+                      setEditedUser({...editedUser, address: text})
                     }
                     placeholder="Insert address"
                   />
@@ -392,19 +392,22 @@ export default function UserAccount() {
           content="Are you sure you want to log out?"
           confirmText="Confirm"
           cancelText="Cancel"
-          confirmButtonStyle={{ backgroundColor: '#E53935' }}
+          confirmButtonStyle={{backgroundColor: '#E53935'}}
         />
         <TicDriveModal
           visible={showLanguageChangedModal}
           onClose={() => setShowLanguageChangedModal(false)}
           title={t('language.languageChanged') + '!'}
           content={
-            t('language.yourNewLanguageIs') + ': ' +
-            (languageCode === 'en' ? t('language.english') : t('language.italian')) +
+            t('language.yourNewLanguageIs') +
+            ': ' +
+            (languageCode === 'en'
+              ? t('language.english')
+              : t('language.italian')) +
             '.'
           }
           cancelText="Ok!"
-          confirmButtonStyle={{ backgroundColor: '#E53935' }}
+          confirmButtonStyle={{backgroundColor: '#E53935'}}
         />
       </SafeAreaViewLayout>
     </LinearGradientViewLayout>
