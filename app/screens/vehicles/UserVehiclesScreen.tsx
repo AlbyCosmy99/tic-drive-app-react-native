@@ -10,27 +10,30 @@ import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
 import useCustomerCars from '@/hooks/api/cars/useCustomerCars';
 import {useEffect, useState} from 'react';
-import ErrorModal from '@/components/ui/modals/ErrorModal';
 import {Colors} from '@/constants/Colors';
 import CarDetailsMiniCard from '@/components/ui/cards/cars/CarDetailsMiniCard';
 import {ScrollView} from 'react-native-gesture-handler';
 import CarDetailsCard from '@/components/ui/cards/cars/CarDetailsCard';
 import useOnRegisterVehicle from '@/hooks/cars/useOnRegisterVehicle';
+import {useIsFocused} from '@react-navigation/native';
 
 const UserVehiclesScreen = () => {
   const [cars, setCars] = useState<Car[]>([]);
   const navigation = useTicDriveNavigation();
   const {getCustomerCars, loadingCustomerCars} = useCustomerCars();
   const onRegisterVehicle = useOnRegisterVehicle();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     const getCars = async () => {
       const customerCars = await getCustomerCars();
-      setCars(customerCars);
+      setCars(customerCars ?? []);
     };
 
-    getCars();
-  }, []);
+    if (isFocused) {
+      getCars();
+    }
+  }, [isFocused]);
 
   const handleOnMiniCarCardPress = (car: Car) => {
     navigationPush(navigation, 'UserVehicleDetailsScreen', {car});
@@ -56,6 +59,7 @@ const UserVehiclesScreen = () => {
           </CrossPlatformButtonLayout>
           <HorizontalLine />
         </View>
+
         {loadingCustomerCars ? (
           <View className="flex-1 justify-center items-center">
             <ActivityIndicator
@@ -81,7 +85,9 @@ const UserVehiclesScreen = () => {
                 </Text>
               </View>
             )}
+
             {cars.length === 1 && <CarDetailsCard car={cars[0]} />}
+
             {cars.length > 1 && (
               <ScrollView className="mt-2">
                 {cars.map(car => (

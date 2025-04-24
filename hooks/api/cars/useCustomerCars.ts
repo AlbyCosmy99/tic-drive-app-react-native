@@ -1,14 +1,15 @@
 import axiosClient from '@/services/http/axiosClient';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
-import {useAppSelector} from '@/stateManagement/redux/hooks';
+import { useAppSelector } from '@/stateManagement/redux/hooks';
 import Car from '@/types/Car';
-import {useContext, useState} from 'react';
+import { useContext, useState } from 'react';
 
 const useCustomerCars = () => {
   const [loadingCustomerCars, setLoadingCustomerCars] = useState(false);
-  const {setErrorMessage} = useContext(GlobalContext);
+  const { setErrorMessage } = useContext(GlobalContext);
   const token = useAppSelector(state => state.auth.token);
 
+  // Fetch the customer's cars
   const getCustomerCars = async () => {
     setLoadingCustomerCars(true);
     try {
@@ -35,6 +36,7 @@ const useCustomerCars = () => {
     }
   };
 
+  // Register a new customer car
   const registerCustomerCar = async (car: Car) => {
     try {
       setLoadingCustomerCars(true);
@@ -68,7 +70,42 @@ const useCustomerCars = () => {
     }
   };
 
-  return {getCustomerCars, registerCustomerCar, loadingCustomerCars};
+  // Delete a customer car
+  const deleteCustomerCar = async (carId: string): Promise<boolean> => {
+    if (!token) {
+      setErrorMessage('Authentication token is missing.');
+      return false;
+    }
+
+    try {
+      setLoadingCustomerCars(true);
+      await axiosClient.delete(`cars/customer-cars/${carId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log('Car deleted successfully');
+      return true;
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error('Error deleting car:', err.message);
+        setErrorMessage(err.message);
+      } else {
+        console.error('Unknown error occurred:', err);
+        setErrorMessage('An unknown error occurred while deleting the car.');
+      }
+      return false;
+    } finally {
+      setLoadingCustomerCars(false);
+    }
+  };
+
+  return {
+    getCustomerCars,
+    registerCustomerCar,
+    deleteCustomerCar, 
+    loadingCustomerCars,
+  };
 };
 
 export default useCustomerCars;
