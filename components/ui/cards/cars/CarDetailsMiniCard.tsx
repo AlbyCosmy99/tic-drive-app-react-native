@@ -20,7 +20,7 @@ const CarDetailsMiniCard: React.FC<CarDetailsMiniCardProps> = ({
   plateNumber,
 }) => {
   return (
-    <View className="mx-2.5 my-4 px-6 py-2 bg-white rounded-2xl shadow-md flex-row justify-between items-center">
+    <View className="mx-2.5 my-3 px-6 py-2 bg-white rounded-2xl shadow-md flex-row justify-between items-center">
       <View>
         <Text className="text-sm font-medium">
           {make} {model}
