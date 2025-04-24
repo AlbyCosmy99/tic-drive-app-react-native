@@ -28,6 +28,7 @@ const Hub = () => {
     const checkAuth = async () => {
       try {
         const token = await getToken();
+        alert('ciao')
         //@ts-ignore
         if (token) {
           dispatch(setToken(token));
@@ -59,7 +60,6 @@ const Hub = () => {
         SplashScreen.hideAsync();
       } catch (error) {
         console.error('Error checking auth status: ', error);
-        alert(error.message)
       }
     };
     checkAuth();
