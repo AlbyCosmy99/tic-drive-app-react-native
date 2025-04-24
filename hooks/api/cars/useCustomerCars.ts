@@ -1,12 +1,12 @@
 import axiosClient from '@/services/http/axiosClient';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
-import {useAppSelector} from '@/stateManagement/redux/hooks';
+import { useAppSelector } from '@/stateManagement/redux/hooks';
 import Car from '@/types/Car';
-import {useContext, useState} from 'react';
+import { useContext, useState } from 'react';
 
 const useCustomerCars = () => {
   const [loadingCustomerCars, setLoadingCustomerCars] = useState(false);
-  const {setErrorMessage} = useContext(GlobalContext);
+  const { setErrorMessage } = useContext(GlobalContext);
   const token = useAppSelector(state => state.auth.token);
 
   const getCustomerCars = async () => {
@@ -17,7 +17,13 @@ const useCustomerCars = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      return response.data;
+
+      const mappedCars = response.data.map((car: any) => ({
+        ...car, 
+        name: car.carName, // Map `carName` to `name` for the frontend
+      }));
+
+      return mappedCars; 
     } catch (err: unknown) {
       if (err instanceof Error) {
         setErrorMessage(err.message);
@@ -62,7 +68,7 @@ const useCustomerCars = () => {
     }
   };
 
-  return {getCustomerCars, registerCustomerCar, loadingCustomerCars};
+  return { getCustomerCars, registerCustomerCar, loadingCustomerCars };
 };
 
 export default useCustomerCars;
