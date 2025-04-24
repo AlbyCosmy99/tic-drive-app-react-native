@@ -18,7 +18,7 @@ const useReviews = (
         );
         setReviews(res.data);
       } catch (err) {
-        alert('Al momento il servizio non è disponibile. Riprova più tardi.');
+        alert('AAAA.');
         console.error(err);
       } finally {
         setLoadingReviews(false);

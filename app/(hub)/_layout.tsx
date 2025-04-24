@@ -28,7 +28,6 @@ const Hub = () => {
     const checkAuth = async () => {
       try {
         const token = await getToken();
-        alert('ciao')
         //@ts-ignore
         if (token) {
           dispatch(setToken(token));
