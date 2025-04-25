@@ -1,29 +1,24 @@
 import CarDetailsLayout from '@/app/layouts/vehicles/CarDetailsLayout';
 import Car from '@/types/Car';
-import {Text, View} from 'react-native';
+import { Text, View } from 'react-native';
 import CrossPlatformButtonLayout from '../../buttons/CrossPlatformButtonLayout';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import TicDriveModal from '@/components/ui/modals/TicDriveModal';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 import useCustomerCars from '@/hooks/api/cars/useCustomerCars';
-import {useState} from 'react';
+import { useState } from 'react';
 
 interface CarDetailsCardProps {
   car: Car;
 }
 
-const CarDetailsCard: React.FC<CarDetailsCardProps> = ({car}) => {
-  const navigation = useTicDriveNavigation();
-  const {deleteCustomerCar, loadingCustomerCars} = useCustomerCars();
+const CarDetailsCard: React.FC<CarDetailsCardProps> = ({ car }) => {
+  const { deleteCustomerCar, loadingCustomerCars } = useCustomerCars();
 
   const [showModal, setShowModal] = useState(false);
 
   const handleDelete = async () => {
-    const success = await deleteCustomerCar(car.id);
-    if (success) {
-      navigation.goBack(); //triggers parent to re-fetch
-    }
-    setShowModal(false);
+    await deleteCustomerCar(car.id);
   };
 
   return (
@@ -32,7 +27,7 @@ const CarDetailsCard: React.FC<CarDetailsCardProps> = ({car}) => {
         <CrossPlatformButtonLayout
           removeAllStyles
           onPress={() => console.log('change')}
-          styleContainer={{marginRight: 24}}
+          styleContainer={{ marginRight: 24 }}
         >
           <Text className="text-base font-medium mt-2 text-drive">Change</Text>
         </CrossPlatformButtonLayout>
