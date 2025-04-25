@@ -7,8 +7,9 @@ import {
 } from '@/stateManagement/redux/slices/authSlice';
 import User from '@/types/User';
 import {login as authLogin} from '@/services/auth/login';
-import getUserData from '@/utils/auth/getUserData';
+import getUserData from '@/utils/auth/formatUserData';
 import useGlobalErrors from '../errors/useGlobalErrors';
+import formatUserData from '@/utils/auth/formatUserData';
 
 const useLogin = () => {
   const dispatch = useAppDispatch();
@@ -19,10 +20,10 @@ const useLogin = () => {
       const res = await authLogin(user);
       setSecureToken(res.token);
       dispatch(setToken(res.token));
-      const payload = await getPayload(res.token);
-      dispatch(stateLogin(getUserData(payload)));
+      const data = await getUserData(res.token);
+      dispatch(stateLogin(formatUserData(data)));
       return res;
-    } catch (e) {
+    } catch (e: any) {
       setErrorMessage(e.message);
     }
   };

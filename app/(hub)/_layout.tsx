@@ -11,7 +11,7 @@ import {getPayload} from '@/services/auth/getPayload';
 import {removeSecureToken} from '@/services/auth/secureStore/setToken';
 import navigationPush from '@/services/navigation/push';
 import {Colors} from '@/constants/Colors';
-import getUserData from '@/utils/auth/getUserData';
+import getUserData from '@/utils/auth/formatUserData';
 import i18n from '@/i18n';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 

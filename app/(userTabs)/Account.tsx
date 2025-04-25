@@ -6,11 +6,11 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 // Navigation & State
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import navigationPush from '@/services/navigation/push';
-import { useAppDispatch, useAppSelector } from '@/stateManagement/redux/hooks';
+import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 
 // Layouts
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
@@ -21,7 +21,7 @@ import NotLogged from '@/components/auth/NotLogged';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import CircularUserAvatar from '@/components/ui/avatars/CircularUserAvatar';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
-import { handleLogout } from '@/components/ui/buttons/TicDriveAuthButton';
+import {handleLogout} from '@/components/ui/buttons/TicDriveAuthButton';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import IconTextPair from '@/components/ui/IconTextPair';
 
@@ -44,14 +44,14 @@ import VehicleIcon from '@/assets/svg/vehicles/car2.svg';
 import EditIcon from '@/assets/svg/writing/change.svg';
 import SaveIcon from '@/assets/svg/operations/save.svg';
 import TicDriveModal from 'ticdrive-mobile/components/ui/modals/TicDriveModal';
-import { setLanguageCode } from '@/stateManagement/redux/slices/languageSlice';
+import {setLanguageCode} from '@/stateManagement/redux/slices/languageSlice';
 import i18n from '@/i18n';
 import navigationReset from '@/services/navigation/reset';
-import { t } from 'i18next';
+import {t} from 'i18next';
 import User from '@/types/User';
 import updateUser from '@/services/http/requests/account/updateUser';
 import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
-import { login } from '@/stateManagement/redux/slices/authSlice';
+import {login} from '@/stateManagement/redux/slices/authSlice';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 
 interface SectionProps {
@@ -59,7 +59,7 @@ interface SectionProps {
   children: React.ReactNode;
 }
 
-const Section: React.FC<SectionProps> = ({ title, children }) => (
+const Section: React.FC<SectionProps> = ({title, children}) => (
   <View className="my-2">
     <Text className="font-medium text-2xl">{title}</Text>
     {children}
@@ -68,10 +68,10 @@ const Section: React.FC<SectionProps> = ({ title, children }) => (
 
 export default function UserAccount() {
   const [isEditing, setIsEditing] = useState(false);
-  const [loadingEditingUser, setLoadingEditingUser] = useState(false)
+  const [loadingEditingUser, setLoadingEditingUser] = useState(false);
 
   const user = useAppSelector(state => state.auth.user);
-  const [editedUser, setEditedUser] = useState<User>({ name: user?.name });
+  const [editedUser, setEditedUser] = useState<User>({name: user?.name});
 
   const [languageOptionsVisible, setLanguageOptionsVisible] = useState(false);
 
@@ -87,7 +87,7 @@ export default function UserAccount() {
   const token = useJwtToken();
   const navigation = useTicDriveNavigation();
 
-  const { setErrorMessage } = useGlobalErrors()
+  const {setErrorMessage} = useGlobalErrors();
 
   const handleSaveProfile = async () => {
     if (JSON.stringify(editedUser) !== JSON.stringify(user)) {
@@ -102,7 +102,7 @@ export default function UserAccount() {
   };
 
   const onFavoriteWorkshops = () => {
-    navigationPush(navigation, 'WorkshopsListScreen', { favorite: true });
+    navigationPush(navigation, 'WorkshopsListScreen', {favorite: true});
   };
 
   const handleChangeLanguage = (newLanguage: 'en' | 'it') => {
@@ -116,26 +116,25 @@ export default function UserAccount() {
   };
 
   const handleOnEdit = async () => {
-    setIsEditing(!isEditing)
-    if (isEditing) {
+    setIsEditing(!isEditing);
+    if (isEditing && editedUser.name !== user?.name) {
       try {
-        setLoadingEditingUser(true)
-        await updateUser(editedUser, token ?? '')
-        dispatch(login({ ...user, ...editedUser }))
+        setLoadingEditingUser(true);
+        await updateUser(editedUser, token ?? '');
       } catch (e: any) {
-        setErrorMessage(e.message)
+        setErrorMessage(e.message);
       } finally {
-        setLoadingEditingUser(false)
+        setLoadingEditingUser(false);
       }
     }
-  }
+  };
 
   const handleDeleteAccount = () => {
     Alert.alert(
       'Delete Account',
       'Are you sure you want to delete your account? This action is irreversible.',
       [
-        { text: 'Cancel', style: 'cancel' },
+        {text: 'Cancel', style: 'cancel'},
         {
           text: 'Delete',
           style: 'destructive',
@@ -163,65 +162,64 @@ export default function UserAccount() {
       <SafeAreaViewLayout disabled={!isAndroidPlatform()}>
         <TicDriveNavbar />
         <View className="mx-2.5">
-          {
-            loadingEditingUser ? (
-              <View className='h-[88px]'>
-                <TicDriveSpinner />
-              </View>
-            ) : (
-              <View className="flex-row justify-between items-center h-[88px]">
-                <View className="flex-row items-center space-x-4 p-2">
-                  <CircularUserAvatar
-                    uri={user?.imageurl}
-                    styles={{ width: 70, height: 70 }}
-                  />
-                  <View className="w-40">
-                    {isEditing ? (
-                      <TextInput
-                        className="font-semibold text-lg border-b border-gray-300 pb-1"
-                        value={editedUser.name || ''}
-                        onChangeText={text =>
-                          setEditedUser({ ...editedUser, name: text })
-                        }
-                        placeholder="Enter your name"
-                        placeholderTextColor="#888"
-                        autoFocus
-                        accessibilityLabel="Name Input"
-                      />
-                    ) : (
-                      <Text className="font-semibold text-xl text-gray-800">
-                        {user?.name || 'Tap edit to add your name'}
-                      </Text>
-                    )}
-                  </View>
+          {loadingEditingUser ? (
+            <View className="h-[88px]">
+              <TicDriveSpinner />
+            </View>
+          ) : (
+            <View className="flex-row justify-between items-center h-[88px]">
+              <View className="flex-row items-center space-x-4 p-2">
+                <CircularUserAvatar
+                  uri={user?.imageurl}
+                  styles={{width: 70, height: 70}}
+                />
+                <View className="w-40">
+                  {isEditing ? (
+                    <TextInput
+                      className="font-semibold text-lg border-b border-gray-300"
+                      style={{lineHeight: 20}}
+                      value={editedUser.name || ''}
+                      onChangeText={text =>
+                        setEditedUser({...editedUser, name: text})
+                      }
+                      placeholder="Enter your name"
+                      placeholderTextColor="#888"
+                      autoFocus
+                      accessibilityLabel="Name Input"
+                    />
+                  ) : (
+                    <Text className="font-semibold text-xl text-gray-800">
+                      {user?.name || 'Tap edit to add your name'}
+                    </Text>
+                  )}
                 </View>
+              </View>
 
-                <View className="flex-row items-center">
-                  <CrossPlatformButtonLayout
-                    removeAllStyles
-                    onPress={handleOnEdit}
-                  >
-                    <View className="flex-row items-center">
-                      {isEditing ? (
-                        <SaveIcon width={20} height={20} />
-                      ) : (
-                        <EditIcon width={20} height={20} />
-                      )}
-                      <Text className="text-green-600 font-medium ml-1">
-                        {isEditing ? 'Save' : 'Edit'}
-                      </Text>
-                    </View>
-                  </CrossPlatformButtonLayout>
-                </View>
+              <View className="flex-row items-center">
+                <CrossPlatformButtonLayout
+                  removeAllStyles
+                  onPress={handleOnEdit}
+                >
+                  <View className="flex-row items-center">
+                    {isEditing ? (
+                      <SaveIcon width={20} height={20} />
+                    ) : (
+                      <EditIcon width={20} height={20} />
+                    )}
+                    <Text className="text-green-600 font-medium ml-1">
+                      {isEditing ? 'Save' : 'Edit'}
+                    </Text>
+                  </View>
+                </CrossPlatformButtonLayout>
               </View>
-            )
-          }
+            </View>
+          )}
 
           <HorizontalLine />
 
           <ScrollView
             className="px-1"
-            contentContainerStyle={{ paddingBottom: 140 }}
+            contentContainerStyle={{paddingBottom: 140}}
           >
             <Section title="Account">
               <View className="flex-row items-center py-2">
@@ -379,7 +377,7 @@ export default function UserAccount() {
           content="Are you sure you want to log out?"
           confirmText="Confirm"
           cancelText="Cancel"
-          confirmButtonStyle={{ backgroundColor: '#E53935' }}
+          confirmButtonStyle={{backgroundColor: '#E53935'}}
         />
         <TicDriveModal
           visible={showLanguageChangedModal}
@@ -394,7 +392,7 @@ export default function UserAccount() {
             '.'
           }
           cancelText="Ok!"
-          confirmButtonStyle={{ backgroundColor: '#E53935' }}
+          confirmButtonStyle={{backgroundColor: '#E53935'}}
         />
       </SafeAreaViewLayout>
     </LinearGradientViewLayout>
