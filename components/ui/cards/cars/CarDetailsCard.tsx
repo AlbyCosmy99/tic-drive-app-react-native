@@ -19,14 +19,10 @@ const CarDetailsCard: React.FC<CarDetailsCardProps> = ({ car }) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleDelete = async () => {
-    const success = await deleteCustomerCar(car.id);
-    if (success) {
-      navigation.goBack(); // Triggers parent refresh
-    }
+    await deleteCustomerCar(car.id);
     setShowModal(false);
   };
 
-  //Replace entire card with spinner while deleting
   if (loadingCustomerCars) {
     return <TicDriveSpinner />;
   }
