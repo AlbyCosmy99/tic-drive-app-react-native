@@ -13,13 +13,23 @@ interface CarDetailsCardProps {
 }
 
 const CarDetailsCard: React.FC<CarDetailsCardProps> = ({ car }) => {
+  const navigation = useTicDriveNavigation();
   const { deleteCustomerCar, loadingCustomerCars } = useCustomerCars();
 
   const [showModal, setShowModal] = useState(false);
 
   const handleDelete = async () => {
-    await deleteCustomerCar(car.id);
+    const success = await deleteCustomerCar(car.id);
+    if (success) {
+      navigation.goBack(); // Triggers parent refresh
+    }
+    setShowModal(false);
   };
+
+  //Replace entire card with spinner while deleting
+  if (loadingCustomerCars) {
+    return <TicDriveSpinner />;
+  }
 
   return (
     <CarDetailsLayout carSelected={car}>
@@ -31,6 +41,7 @@ const CarDetailsCard: React.FC<CarDetailsCardProps> = ({ car }) => {
         >
           <Text className="text-base font-medium mt-2 text-drive">Change</Text>
         </CrossPlatformButtonLayout>
+
         <CrossPlatformButtonLayout
           removeAllStyles
           onPress={() => setShowModal(true)}
@@ -49,8 +60,6 @@ const CarDetailsCard: React.FC<CarDetailsCardProps> = ({ car }) => {
         cancelText="Cancel"
         confirmButtonStyle={{ backgroundColor: '#E53935' }}
       />
-
-      {loadingCustomerCars && <TicDriveSpinner />}
     </CarDetailsLayout>
   );
 };
