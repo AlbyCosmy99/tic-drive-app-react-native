@@ -1,3 +1,4 @@
+import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import axiosClient from '@/services/http/axiosClient';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import { useAppSelector } from '@/stateManagement/redux/hooks';
@@ -8,6 +9,7 @@ const useCustomerCars = () => {
   const [loadingCustomerCars, setLoadingCustomerCars] = useState(false);
   const { setErrorMessage } = useContext(GlobalContext);
   const token = useAppSelector(state => state.auth.token);
+  const navigation = useTicDriveNavigation()
 
   // Fetch the customer's cars
   const getCustomerCars = async () => {
@@ -71,21 +73,16 @@ const useCustomerCars = () => {
   };
 
   // Delete a customer car
-  const deleteCustomerCar = async (carId: string): Promise<boolean> => {
-    if (!token) {
-      setErrorMessage('Authentication token is missing.');
-      return false;
-    }
-
+  const deleteCustomerCar = async (carId: number): Promise<void> => {
     try {
       setLoadingCustomerCars(true);
+
       await axiosClient.delete(`cars/customer-cars/${carId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log('Car deleted successfully');
-      return true;
+      navigation?.goBack()
     } catch (err) {
       if (err instanceof Error) {
         console.error('Error deleting car:', err.message);
@@ -94,7 +91,6 @@ const useCustomerCars = () => {
         console.error('Unknown error occurred:', err);
         setErrorMessage('An unknown error occurred while deleting the car.');
       }
-      return false;
     } finally {
       setLoadingCustomerCars(false);
     }
@@ -103,7 +99,7 @@ const useCustomerCars = () => {
   return {
     getCustomerCars,
     registerCustomerCar,
-    deleteCustomerCar, 
+    deleteCustomerCar,
     loadingCustomerCars,
   };
 };
