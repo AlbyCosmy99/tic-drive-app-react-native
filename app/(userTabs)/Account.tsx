@@ -48,6 +48,11 @@ import {setLanguageCode} from '@/stateManagement/redux/slices/languageSlice';
 import i18n from '@/i18n';
 import navigationReset from '@/services/navigation/reset';
 import {t} from 'i18next';
+import User from '@/types/User';
+import updateUser from '@/services/http/requests/account/updateUser';
+import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
+import {login} from '@/stateManagement/redux/slices/authSlice';
+import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 
 interface SectionProps {
   title: string;
@@ -63,7 +68,11 @@ const Section: React.FC<SectionProps> = ({title, children}) => (
 
 export default function UserAccount() {
   const [isEditing, setIsEditing] = useState(false);
-  const [editedUser, setEditedUser] = useState<any>({});
+  const [loadingEditingUser, setLoadingEditingUser] = useState(false);
+
+  const user = useAppSelector(state => state.auth.user);
+  const [editedUser, setEditedUser] = useState<User>({name: user?.name});
+
   const [languageOptionsVisible, setLanguageOptionsVisible] = useState(false);
 
   //modals
@@ -72,17 +81,13 @@ export default function UserAccount() {
     useState(false);
 
   const dispatch = useAppDispatch();
-  const user = useAppSelector(state => state.auth.user);
+
   const languageCode = useAppSelector(state => state.language.languageCode);
 
   const token = useJwtToken();
   const navigation = useTicDriveNavigation();
 
-  useEffect(() => {
-    if (isEditing) {
-      setEditedUser(user);
-    }
-  }, [isEditing]);
+  const {setErrorMessage} = useGlobalErrors();
 
   const handleSaveProfile = async () => {
     if (JSON.stringify(editedUser) !== JSON.stringify(user)) {
@@ -109,6 +114,21 @@ export default function UserAccount() {
   const handleFAQ = () => {
     navigationPush(navigation, 'FAQScreen');
   };
+
+  const handleOnEdit = async () => {
+    setIsEditing(!isEditing);
+    if (isEditing && editedUser.name !== user?.name) {
+      try {
+        setLoadingEditingUser(true);
+        await updateUser(editedUser, token ?? '');
+      } catch (e: any) {
+        setErrorMessage(e.message);
+      } finally {
+        setLoadingEditingUser(false);
+      }
+    }
+  };
+
   const handleDeleteAccount = () => {
     Alert.alert(
       'Delete Account',
@@ -142,51 +162,58 @@ export default function UserAccount() {
       <SafeAreaViewLayout disabled={!isAndroidPlatform()}>
         <TicDriveNavbar />
         <View className="mx-2.5">
-          <View className="flex-row justify-between items-center mt-1 mb-2">
-            <View className="flex-row items-center space-x-4 p-2">
-              <CircularUserAvatar
-                uri={user?.imageurl}
-                styles={{width: 70, height: 70}}
-              />
-              <View className="w-40">
-                {isEditing ? (
-                  <TextInput
-                    className="font-semibold text-lg border-b border-gray-300 pb-1"
-                    value={editedUser.name || ''}
-                    onChangeText={text =>
-                      setEditedUser({...editedUser, name: text})
-                    }
-                    placeholder="Enter your name"
-                    placeholderTextColor="#888"
-                    autoFocus
-                    accessibilityLabel="Name Input"
-                  />
-                ) : (
-                  <Text className="font-semibold text-xl text-gray-800">
-                    {user?.name || 'Tap edit to add your name'}
-                  </Text>
-                )}
+          {loadingEditingUser ? (
+            <View className="h-[88px]">
+              <TicDriveSpinner />
+            </View>
+          ) : (
+            <View className="flex-row justify-between items-center h-[88px]">
+              <View className="flex-row items-center space-x-4 p-2">
+                <CircularUserAvatar
+                  uri={user?.imageurl}
+                  styles={{width: 70, height: 70}}
+                />
+                <View className="w-40">
+                  {isEditing ? (
+                    <TextInput
+                      className="font-semibold text-lg border-b border-gray-300"
+                      style={{lineHeight: 20}}
+                      value={editedUser.name || ''}
+                      onChangeText={text =>
+                        setEditedUser({...editedUser, name: text})
+                      }
+                      placeholder="Enter your name"
+                      placeholderTextColor="#888"
+                      autoFocus
+                      accessibilityLabel="Name Input"
+                    />
+                  ) : (
+                    <Text className="font-semibold text-xl text-gray-800">
+                      {user?.name || 'Tap edit to add your name'}
+                    </Text>
+                  )}
+                </View>
+              </View>
+
+              <View className="flex-row items-center">
+                <CrossPlatformButtonLayout
+                  removeAllStyles
+                  onPress={handleOnEdit}
+                >
+                  <View className="flex-row items-center">
+                    {isEditing ? (
+                      <SaveIcon width={20} height={20} />
+                    ) : (
+                      <EditIcon width={20} height={20} />
+                    )}
+                    <Text className="text-green-600 font-medium ml-1">
+                      {isEditing ? 'Save' : 'Edit'}
+                    </Text>
+                  </View>
+                </CrossPlatformButtonLayout>
               </View>
             </View>
-
-            <View className="flex-row items-center">
-              <CrossPlatformButtonLayout
-                removeAllStyles
-                onPress={() => setIsEditing(!isEditing)}
-              >
-                <View className="flex-row items-center">
-                  {isEditing ? (
-                    <SaveIcon width={20} height={20} />
-                  ) : (
-                    <EditIcon width={20} height={20} />
-                  )}
-                  <Text className="text-green-600 font-medium ml-1">
-                    {isEditing ? 'Save' : 'Edit'}
-                  </Text>
-                </View>
-              </CrossPlatformButtonLayout>
-            </View>
-          </View>
+          )}
 
           <HorizontalLine />
 
@@ -196,61 +223,19 @@ export default function UserAccount() {
           >
             <Section title="Account">
               <View className="flex-row items-center py-2">
-                <PhoneIcon />
-                {isEditing ? (
-                  <TextInput
-                    className="ml-2 flex-1 border-b border-gray-300 pb-2"
-                    value={editedUser.phoneNumber}
-                    onChangeText={text =>
-                      setEditedUser({...editedUser, phoneNumber: text})
-                    }
-                    placeholder="Insert phone number"
-                  />
-                ) : (
-                  <Text className="text-base font-medium pl-1">
-                    {user?.phoneNumber || t('notAvailable')}
-                  </Text>
-                )}
-              </View>
-
-              <HorizontalLine />
-
-              <View className="flex-row items-center py-2">
                 <MailIcon />
-                {isEditing ? (
-                  <TextInput
-                    className="ml-2 flex-1 border-b border-gray-300 pb-2"
-                    value={editedUser.email}
-                    onChangeText={text =>
-                      setEditedUser({...editedUser, email: text})
-                    }
-                    placeholder="Insert email"
-                  />
-                ) : (
-                  <Text className="text-base font-medium pl-1">
-                    {user?.email || t('notAvailable')}
-                  </Text>
-                )}
+                <Text className="text-base font-medium pl-1">
+                  {user?.email || t('notAvailable')}
+                </Text>
               </View>
 
               <HorizontalLine />
 
               <View className="flex-row items-center py-2">
                 <AddressIcon />
-                {isEditing ? (
-                  <TextInput
-                    className="ml-2 flex-1 border-b border-gray-300 pb-2"
-                    value={editedUser.address}
-                    onChangeText={text =>
-                      setEditedUser({...editedUser, address: text})
-                    }
-                    placeholder="Insert address"
-                  />
-                ) : (
-                  <Text className="text-base font-medium pl-1">
-                    {user?.address || t('notAvailable')}
-                  </Text>
-                )}
+                <Text className="text-base font-medium pl-1">
+                  {user?.address || t('notAvailable')}
+                </Text>
               </View>
 
               <HorizontalLine />

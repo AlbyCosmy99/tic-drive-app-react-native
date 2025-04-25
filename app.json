@@ -2,7 +2,10 @@
   "expo": {
     "name": "TicDrive",
     "slug": "tic-drive",
-    "platforms": ["ios", "android"],
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "sdkVersion": "52.0.0",
     "version": "1.0.4",
     "orientation": "portrait",
@@ -18,7 +21,9 @@
       "buildNumber": "1",
       "supportsTablet": true,
       "bundleIdentifier": "com.ticdrive.ios",
-      "associatedDomains": ["applinks:ticdrive.com"],
+      "associatedDomains": [
+        "applinks:ticdrive.com"
+      ],
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSLocationWhenInUseUsageDescription": "This app requires access to your location to show nearby workshops.",
@@ -49,11 +54,18 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.ticdrive.app",
+      "versionCode": 2,
       "intentFilters": [
         {
           "action": "VIEW",
-          "data": {"scheme": "ticdrive", "host": "*"},
-          "category": ["BROWSABLE", "DEFAULT"]
+          "data": {
+            "scheme": "ticdrive",
+            "host": "*"
+          },
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
         }
       ],
       "config": {
