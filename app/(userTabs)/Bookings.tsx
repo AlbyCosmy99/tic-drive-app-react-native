@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { setServicesChoosenByUsers } from '@/stateManagement/redux/slices/servicesSlice';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import CarDetailsMiniCard from '@/components/ui/cards/cars/CarDetailsMiniCard';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default function UserBookings() {
   const token = useJwtToken();
@@ -35,7 +36,7 @@ export default function UserBookings() {
       address: 'Via Giulio Zanon, 8, 35133 Pontevigodarzere PD',
       longitude: 9.19,
       latitude: 45.4642,
-      profileImageUrl: 'https://www.officinadanilo.it/wp-content/uploads/sites/133/2022/04/OfficinaDanilo_04_2022_Lavorazioni_17.jpg',
+      profileImageUrl: 'https://img.freepik.com/free-photo/car-being-taking-care-workshop_23-2149580532.jpg',
       meanStars: 4.5,
       numberOfReviews: 87,
       servicePrice: 157,
@@ -53,7 +54,7 @@ export default function UserBookings() {
       address: 'Via Milano, 10, 35100 Padova PD',
       longitude: 9.19,
       latitude: 45.4642,
-      profileImageUrl: 'https://www.officinadanilo.it/wp-content/uploads/sites/133/2022/04/OfficinaDanilo_04_2022_Lavorazioni_17.jpg',
+      profileImageUrl: 'https://img.freepik.com/free-photo/car-being-taking-care-workshop_23-2149580532.jpg',
       meanStars: 4.0,
       numberOfReviews: 100,
       servicePrice: 120,
@@ -71,7 +72,7 @@ export default function UserBookings() {
       address: 'Via Cancellata, 5, Venezia VE',
       longitude: 9.19,
       latitude: 45.4642,
-      profileImageUrl: 'https://www.officinadanilo.it/wp-content/uploads/sites/133/2022/04/OfficinaDanilo_04_2022_Lavorazioni_17.jpg',
+      profileImageUrl: 'https://img.freepik.com/free-photo/car-being-taking-care-workshop_23-2149580532.jpg',
       meanStars: 3.5,
       numberOfReviews: 50,
       servicePrice: 100,
@@ -98,7 +99,6 @@ export default function UserBookings() {
           <View className="mx-2.5">
             <Text className="font-medium text-2xl text-center">Interventi</Text>
 
-            {/* Tabs */}
             <View className="flex-row bg-gray-100 rounded-full p-1 mt-4 mx-4">
               {['active', 'past', 'cancelled'].map((tab) => (
                 <TouchableOpacity
@@ -113,7 +113,6 @@ export default function UserBookings() {
               ))}
             </View>
 
-            {/* Car Details */}
             <View className="mt-6">
               <Text className="text-xl font-semibold text-center mb-2">
                 Auto di Jhonny
@@ -122,30 +121,30 @@ export default function UserBookings() {
                 make="Nissan"
                 model="Micra IV"
                 year={2015}
-                fuel="Benzina"
+                fuel="Petrol"
                 CV={80}
               />
 
-              {/* Appointments List */}
-              <FlatList
-                data={appointments}
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => (
-                  <View className="mt-4">
-                    <PaymentConfirmationCard
-                      showDirectionsButton={false}
-                      showReminderBell={activeTab === 'active'}
-                      workshop={item}
-                      timeDate={'Martedì, 24 gennaio ore 10:00'}
-                      type={
-                        activeTab === 'active' ? 'Confirmed' :
-                        activeTab === 'past' ? 'Completed' :
-                        'Cancelled'
-                      }
-                    />
-                  </View>
-                )}
-              />
+              <ScrollView>
+                {
+                  appointments.map(appointment => {
+                    return (
+                      <PaymentConfirmationCard
+                        key={appointment.id}
+                        showDirectionsButton={false}
+                        showReminderBell={activeTab === 'active'}
+                        workshop={appointment}
+                        timeDate={'Martedì, 24 gennaio ore 10:00'}
+                        type={
+                          activeTab === 'active' ? 'Confirmed' :
+                            activeTab === 'past' ? 'Completed' :
+                              'Cancelled'
+                        }
+                      />
+                    )
+                  })
+                }
+              </ScrollView>
             </View>
           </View>
         ) : (
