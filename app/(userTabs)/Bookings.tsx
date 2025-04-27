@@ -12,11 +12,11 @@ import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import CarDetailsMiniCard from '@/components/ui/cards/cars/CarDetailsMiniCard';
 import useCustomerCars from '@/hooks/api/cars/useCustomerCars';
 import Car from '@/types/Car';
+import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 
 export default function UserBookings() {
   const token = useJwtToken();
-  const dispatch = useAppDispatch();
-  const {getCustomerCars} = useCustomerCars();
+  const {getCustomerCars, loadingCustomerCars} = useCustomerCars();
   const [cars, setCars] = useState<Car[]>([]);
   const [activeTab, setActiveTab] = useState<'active' | 'past' | 'cancelled'>(
     'active',
@@ -27,7 +27,7 @@ export default function UserBookings() {
       const customerCars = await getCustomerCars();
       setCars(customerCars ?? []);
     };
-    if(token) {
+    if (token) {
       fetchCars();
     }
   }, []);
@@ -128,7 +128,9 @@ export default function UserBookings() {
               ))}
             </View>
 
-            {cars.length === 0 ? (
+            {loadingCustomerCars ? (
+              <TicDriveSpinner />
+            ) : cars.length === 0 ? (
               <Text className="text-center text-lg font-semibold">
                 No vehicles registered yet.
               </Text>
