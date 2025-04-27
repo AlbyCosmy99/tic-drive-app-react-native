@@ -296,7 +296,7 @@ function RegisterVehicleScreen() {
                       data={makes.map(make => ({
                         id: make.id,
                         value: make.name,
-                        icon: make.logoUrl
+                        icon: make.logoUrl,
                       }))}
                       value={carMakeDropdownData}
                       setValue={setCarMakeDropdownData}

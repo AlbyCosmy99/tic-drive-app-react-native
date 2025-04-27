@@ -1,10 +1,9 @@
-import { Colors } from '@/constants/Colors';
-import React, { useMemo, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Dropdown } from 'react-native-element-dropdown';
+import {Colors} from '@/constants/Colors';
+import React, {useMemo, useState, useCallback} from 'react';
+import {StyleSheet, View, Text} from 'react-native';
+import {Dropdown} from 'react-native-element-dropdown';
 import TicDriveInput from '../inputs/TicDriveInput';
 import TicDriveDropdownData from '@/types/ui/dropdown/TicDriveDropdownData';
-import { Text } from 'react-native';
 import SvgFromUrl from '../svg/SvgFromUrl';
 
 interface TicDriveDropdownProps {
@@ -17,6 +16,24 @@ interface TicDriveDropdownProps {
   titleIsVisible?: boolean;
   title?: string;
 }
+
+const DropdownItem = React.memo(
+  ({item, selected}: {item: TicDriveDropdownData; selected: boolean}) => (
+    <View
+      style={[
+        styles.itemContainer,
+        {backgroundColor: selected ? Colors.light.lightGrey : 'white'},
+      ]}
+      className="flex flex-row justify-between items-center h-14"
+    >
+      <Text style={[styles.itemText, {fontWeight: selected ? '600' : '400'}]}>
+        {item.value}
+      </Text>
+
+      <View>{item.icon && <SvgFromUrl url={item.icon} size={32} />}</View>
+    </View>
+  ),
+);
 
 const TicDriveDropdown: React.FC<TicDriveDropdownProps> = ({
   value,
@@ -38,6 +55,17 @@ const TicDriveDropdown: React.FC<TicDriveDropdownProps> = ({
     [search, data],
   );
 
+  const renderDropdownItem = useCallback(
+    (item: TicDriveDropdownData) => (
+      <DropdownItem
+        key={item.value}
+        item={item}
+        selected={item.value === value?.value}
+      />
+    ),
+    [value],
+  );
+
   return (
     <View className="flex justify-center px-3">
       {titleIsVisible && (
@@ -55,7 +83,7 @@ const TicDriveDropdown: React.FC<TicDriveDropdownProps> = ({
         placeholderStyle={{
           color: disabled ? Colors.light.lightGrey : Colors.light.ticText,
         }}
-        containerStyle={{ maxHeight: 230 }}
+        containerStyle={{maxHeight: 230}}
         data={filteredData}
         search
         disable={disabled}
@@ -84,37 +112,7 @@ const TicDriveDropdown: React.FC<TicDriveDropdownProps> = ({
             onChange={text => setSearch(text)}
           />
         )}
-        renderItem={item => (
-          <View
-            style={{
-              paddingVertical: 12,
-              paddingHorizontal: 16,
-              backgroundColor: item.value === value?.value ? 'Colors.light.lightGrey' : 'white',
-              borderBottomWidth: 1,
-              borderBottomColor: '#f0f0f0',
-            }}
-            className='flex flex-row justify-between items-center h-14'
-          >
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: item.value === value?.value ? '600' : '400',
-                color: Colors.light.ticText,
-              }}
-            >
-              {item.value}
-            </Text>
-
-            <View>
-            {item.icon && (
-              <SvgFromUrl
-                url={item.icon}
-                size={32}
-              />
-            )}
-            </View>
-          </View>
-        )}
+        renderItem={renderDropdownItem}
       />
     </View>
   );
@@ -127,6 +125,20 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 10,
+  },
+  itemContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
+    height: 56,
+  },
+  itemText: {
+    fontSize: 16,
+    color: Colors.light.ticText,
   },
 });
 
