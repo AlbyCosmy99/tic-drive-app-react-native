@@ -1,6 +1,6 @@
 import NotLogged from '@/components/auth/NotLogged';
 import useJwtToken from '@/hooks/auth/useJwtToken';
-import { View, Text, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
@@ -11,11 +11,13 @@ import { useEffect, useState } from 'react';
 import { setServicesChoosenByUsers } from '@/stateManagement/redux/slices/servicesSlice';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import CarDetailsMiniCard from '@/components/ui/cards/cars/CarDetailsMiniCard';
-import { ScrollView } from 'react-native-gesture-handler';
+import useCustomerCars from '@/hooks/api/cars/useCustomerCars';
 
 export default function UserBookings() {
   const token = useJwtToken();
   const dispatch = useAppDispatch();
+  const { getCustomerCars } = useCustomerCars();
+  const [cars, setCars] = useState([]);
   const [activeTab, setActiveTab] = useState<'active' | 'past' | 'cancelled'>('active');
 
   useEffect(() => {
@@ -25,9 +27,15 @@ export default function UserBookings() {
         title: 'Cambio olio',
         description: 'Cambio olio',
         icon: 'https://img.icons8.com/dotty/80/car-service.png',
-      }),
+      })
     );
-  }, []);
+    
+    const fetchCars = async () => {
+      const customerCars = await getCustomerCars();
+      setCars(customerCars ?? []);
+    };
+    fetchCars();
+  }, [dispatch]);
 
   const activeAppointments: Workshop[] = [
     {
@@ -99,6 +107,7 @@ export default function UserBookings() {
           <View className="mx-2.5">
             <Text className="font-medium text-2xl text-center">Interventi</Text>
 
+            {/* Tabs */}
             <View className="flex-row bg-gray-100 rounded-full p-1 mt-4 mx-4">
               {['active', 'past', 'cancelled'].map((tab) => (
                 <TouchableOpacity
@@ -113,38 +122,47 @@ export default function UserBookings() {
               ))}
             </View>
 
+            {/* Customer Cars */}
             <View className="mt-6">
-              <Text className="text-xl font-semibold text-center mb-2">
-                Auto di Jhonny
-              </Text>
-              <CarDetailsMiniCard
-                make="Nissan"
-                model="Micra IV"
-                year={2015}
-                fuel="Petrol"
-                CV={80}
-              />
-
-              <ScrollView>
-                {
-                  appointments.map(appointment => {
-                    return (
-                      <PaymentConfirmationCard
-                        key={appointment.id}
-                        showDirectionsButton={false}
-                        showReminderBell={activeTab === 'active'}
-                        workshop={appointment}
-                        timeDate={'Martedì, 24 gennaio ore 10:00'}
-                        type={
-                          activeTab === 'active' ? 'Confirmed' :
-                            activeTab === 'past' ? 'Completed' :
-                              'Cancelled'
-                        }
+              {cars.length === 0 ? (
+                <Text className="text-center text-lg font-semibold">No vehicles registered yet.</Text>
+              ) : (
+                <ScrollView contentContainerStyle={{ paddingBottom: 300 }}>
+                  {cars.map((car) => (
+                    <View key={car.id} className="mt-6">
+                      <Text className="text-xl font-semibold text-center mb-2">
+                        {car.make} {car.model} ({car.plateNumber})
+                      </Text>
+                      <CarDetailsMiniCard
+                        make={car.make}
+                        model={car.model}
+                        year={car.year}
+                        fuel={car.fuel}
+                        CV={car.powerCV}
+                        plateNumber={car.plateNumber}
                       />
-                    )
-                  })
-                }
-              </ScrollView>
+
+                      {/* Appointments List for the current car */}
+                        {appointments.map((appointment) => (
+                          <PaymentConfirmationCard
+                            key={appointment.id}
+                            showDirectionsButton={false}
+                            showReminderBell={activeTab === 'active'}
+                            workshop={appointment}
+                            timeDate={'Martedì, 24 gennaio ore 10:00'}
+                            type={
+                              activeTab === 'active'
+                                ? 'Confirmed'
+                                : activeTab === 'past'
+                                ? 'Completed'
+                                : 'Cancelled'
+                            }
+                          />
+                        ))}
+                    </View>
+                  ))}
+                </ScrollView>
+              )}
             </View>
           </View>
         ) : (
