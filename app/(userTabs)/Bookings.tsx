@@ -27,7 +27,9 @@ export default function UserBookings() {
       const customerCars = await getCustomerCars();
       setCars(customerCars ?? []);
     };
-    fetchCars();
+    if(token) {
+      fetchCars();
+    }
   }, []);
 
   const activeAppointments: Workshop[] = [
