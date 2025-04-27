@@ -1,13 +1,13 @@
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
-import { Colors } from '@/constants/Colors';
-import { StyleSheet, Text, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import {Colors} from '@/constants/Colors';
+import {StyleSheet, Text, View} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
-import { useContext, useEffect, useMemo, useState } from 'react';
+import {useContext, useEffect, useMemo, useState} from 'react';
 import options from '../../../constants/VehicleRegistrationOptions';
 import ToPreviousPage from '@/components/navigation/ToPreviousPage';
 import SegmentedControlSelection from '@/types/SegmentedControlSelection';
-import Car, { FuelType } from '@/types/Car';
+import Car, {FuelType} from '@/types/Car';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import TicDriveDropdown from '@/components/ui/dropdowns/TicDriveDropdown';
 import TicDriveDropdownData from '@/types/ui/dropdown/TicDriveDropdownData';
@@ -16,13 +16,13 @@ import CarDetailsByMakeAndModel from '@/components/cars/registration/CarDetailsB
 import CarContext from '@/stateManagement/contexts/car/CarContext';
 import BoldTitle1 from '@/components/ui/text/BoldTitle1';
 import useCarsMakes from '@/hooks/api/cars/useCarsMakes';
-import { useFocusEffect, useRoute } from '@react-navigation/native';
-import { useAppDispatch, useAppSelector } from '@/stateManagement/redux/hooks';
-import { setAreServicesOn } from '@/stateManagement/redux/slices/servicesSlice';
+import {useFocusEffect, useRoute} from '@react-navigation/native';
+import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
+import {setAreServicesOn} from '@/stateManagement/redux/slices/servicesSlice';
 import isPlateNumber from '@/utils/car/isPlateNumber';
 import CarDetailsByPlate from '@/components/cars/registration/CarDetailsByPlate';
 import CarConfirmationDetails from '@/components/cars/registration/CarConfirmationDetails';
-import { setSelectedCar } from '@/stateManagement/redux/slices/carsSlice';
+import {setSelectedCar} from '@/stateManagement/redux/slices/carsSlice';
 import navigationPush from '@/services/navigation/push';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import useCustomerCars from '@/hooks/api/cars/useCustomerCars';
@@ -56,7 +56,7 @@ function RegisterVehicleScreen() {
     setCarSelectedByPlate: setCarSelectedByPlateCtx,
   } = useContext(CarContext);
 
-  const { carsMakes: makes, loadingCarsMakes } = useCarsMakes();
+  const {carsMakes: makes, loadingCarsMakes} = useCarsMakes();
   const dispatch = useAppDispatch();
 
   const selectedWorkshop = useAppSelector(
@@ -66,14 +66,14 @@ function RegisterVehicleScreen() {
   const token = useAppSelector(state => state.auth.token);
 
   const route = useRoute();
-  const { goToVehicles } = route.params as {
+  const {goToVehicles} = route.params as {
     carSelected?: Car;
     goToVehicles: boolean;
   };
 
   const navigation = useTicDriveNavigation();
 
-  const { registerCustomerCar, loadingCustomerCars } = useCustomerCars();
+  const {registerCustomerCar, loadingCustomerCars} = useCustomerCars();
 
   const routeName = useMemo(() => {
     if (
@@ -104,9 +104,9 @@ function RegisterVehicleScreen() {
 
   useEffect(() => {
     if (setCarSelectedByMakeAndModel) {
-      setCarSelectedByMakeAndModel(undefined)
+      setCarSelectedByMakeAndModel(undefined);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     setErrorYear(false);
@@ -307,9 +307,9 @@ function RegisterVehicleScreen() {
                       data={
                         models
                           ? models.map(model => ({
-                            id: model.id,
-                            value: model.name,
-                          }))
+                              id: model.id,
+                              value: model.name,
+                            }))
                           : []
                       }
                       value={carModelDropdownData}
@@ -355,7 +355,7 @@ function RegisterVehicleScreen() {
                       isTextUppercase={true}
                       onRightIcon={handleOnRightIcon}
                       onSubmit={value => fetchByPlate(value)}
-                      containerStyle={{ height: 85 }}
+                      containerStyle={{height: 85}}
                     />
                     {isPlateError && (
                       <Text className="font-medium text-md text-red-500 text-center">

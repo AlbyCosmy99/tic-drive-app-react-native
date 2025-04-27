@@ -16,7 +16,7 @@ interface Car {
   id: number;
   make: string;
   name: string;
-  year: number | null;
+  year?: number;
   plateNumber: string;
   model: string;
   engineDisplacement?: string;
