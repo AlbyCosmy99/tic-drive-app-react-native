@@ -89,7 +89,7 @@ const TicDriveDropdown: React.FC<TicDriveDropdownProps> = ({
             style={{
               paddingVertical: 12,
               paddingHorizontal: 16,
-              // backgroundColor: item.value === value?.value ? Colors.light.lightGrey : 'white',
+              backgroundColor: item.value === value?.value ? 'Colors.light.lightGrey' : 'white',
               borderBottomWidth: 1,
               borderBottomColor: '#f0f0f0',
             }}
