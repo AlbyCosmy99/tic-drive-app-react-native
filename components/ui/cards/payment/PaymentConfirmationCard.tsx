@@ -51,9 +51,9 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
 
           return {
             ...prev,
-            currency: serviceOffered?.currency || 'USD', // default to USD if missing
-            servicePrice: serviceOffered?.price || 0, // ensure price defaults to 0 if missing
-            discount: serviceOffered?.discount || 0, // ensure discount defaults to 0 if missing
+            currency: serviceOffered?.currency || 'USD', 
+            servicePrice: serviceOffered?.price || 0, 
+            discount: serviceOffered?.discount || 0, 
           };
         });
       } catch (e) {
