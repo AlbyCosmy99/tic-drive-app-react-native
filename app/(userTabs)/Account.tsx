@@ -187,10 +187,19 @@ export default function UserAccount() {
                       autoFocus
                       accessibilityLabel="Name Input"
                     />
-                  ) : (
+                  ) : user?.name ? (
                     <Text className="font-semibold text-xl text-gray-800">
-                      {user?.name || 'Tap edit to add your name'}
+                      {user?.name}
                     </Text>
+                  ) : (
+                    <CrossPlatformButtonLayout
+                      removeAllStyles
+                      onPress={handleOnEdit}
+                    >
+                      <Text className="font-normal text-lg text-gray-800">
+                        Edit your name
+                      </Text>
+                    </CrossPlatformButtonLayout>
                   )}
                 </View>
               </View>

@@ -16,6 +16,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import CarDetailsCard from '@/components/ui/cards/cars/CarDetailsCard';
 import useOnRegisterVehicle from '@/hooks/cars/useOnRegisterVehicle';
 import {useIsFocused} from '@react-navigation/native';
+import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 
 const UserVehiclesScreen = () => {
   const [cars, setCars] = useState<Car[]>([]);
@@ -61,12 +62,7 @@ const UserVehiclesScreen = () => {
         </View>
 
         {loadingCustomerCars ? (
-          <View className="flex-1 justify-center items-center">
-            <ActivityIndicator
-              size="large"
-              color={Colors.light.bookingsOptionsText}
-            />
-          </View>
+          <TicDriveSpinner />
         ) : (
           <>
             {cars.length === 0 && (

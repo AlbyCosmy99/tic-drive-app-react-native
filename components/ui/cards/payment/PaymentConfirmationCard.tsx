@@ -1,13 +1,20 @@
 import {Colors} from '@/constants/Colors';
 import {useServicesChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
 import {Image} from '@rneui/themed';
-import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import HorizontalLine from '../../HorizontalLine';
 import IconTextPair from '../../IconTextPair';
 import CalendarIcon from '../../../../assets/svg/calendar/event_available.svg';
 import CreditCardIcon from '../../../../assets/svg/payment/credit_card.svg';
 import PinIcon from '../../../../assets/svg/location_on.svg';
 import DirectionIcon from '../../../../assets/svg/assistant_direction.svg';
+import BellIcon from '@/assets/svg/notifications/Bell1.svg';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 import TicDriveOptionButton from '../../buttons/TicDriveOptionButton';
 import Workshop from '@/types/workshops/Workshop';
@@ -15,11 +22,15 @@ import openGoogleMaps from '@/services/map/openGoogleMaps';
 import {useEffect, useState} from 'react';
 import axiosClient from '@/services/http/axiosClient';
 import clsx from 'clsx';
+import Service from '@/types/Service';
+
 interface PaymentConfirmationCardProps {
   workshop: Workshop | null | undefined;
   timeDate: string;
   showDirectionsButton?: boolean;
   type: 'Confirmed' | 'Pending confirmation';
+  showReminderBell?: boolean;
+  service: string;
 }
 
 const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
@@ -27,6 +38,8 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
   timeDate,
   showDirectionsButton = true,
   type,
+  showReminderBell = false,
+  service,
 }) => {
   const servicesChoosen = useServicesChoosenByUsers();
   const [loadingServiceOfferedDetails, setLoadingServiceOfferedDetails] =
@@ -50,12 +63,11 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
 
           return {
             ...prev,
-            currency: serviceOffered?.currency,
-            servicePrice: serviceOffered?.price,
-            discount: serviceOffered?.discount,
+            currency: serviceOffered?.currency || 'USD',
+            servicePrice: serviceOffered?.price || 0,
+            discount: serviceOffered?.discount || 0,
           };
         });
-        console.log(serviceOffered);
       } catch (e) {
         console.error('Error fetching service offered details:', e);
       } finally {
@@ -70,37 +82,54 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
 
   return (
     <View className="rounded-lg border p-4 pt-0 border-grey-light w-full">
-      <View className="flex flex-row my-4">
-        <Image
-          source={{uri: workshopDetailed?.profileImageUrl}}
-          containerStyle={styles.image}
-          PlaceholderContent={
-            <ActivityIndicator
-              size="large"
-              color={Colors.light.bookingsOptionsText}
-            />
-          }
-        />
-        <View>
-          <Text
-            className={clsx(
-              'text-xs font-medium',
-              type === 'Confirmed' ? 'text-drive' : 'text-[#D28B30]',
+      <View className="flex flex-row my-4 justify-between items-start">
+        <View className="flex-row">
+          <Image
+            source={{uri: workshopDetailed?.profileImageUrl}}
+            containerStyle={styles.image}
+            PlaceholderContent={
+              <ActivityIndicator
+                size="large"
+                color={Colors.light.bookingsOptionsText}
+              />
+            }
+          />
+          <View>
+            <Text
+              className={clsx(
+                'text-xs font-medium',
+                type === 'Confirmed' ? 'text-drive' : 'text-[#D28B30]',
+              )}
+            >
+              {type}
+            </Text>
+            <Text className="font-medium text-xl">
+              {workshopDetailed?.name}
+            </Text>
+            {(service || servicesChoosen.length > 0) && (
+              <View className="bg-green-light p-1.5 rounded self-start mt-1">
+                <Text className="text-green-dark font-semibold">
+                  {service || servicesChoosen[0].title}
+                </Text>
+              </View>
             )}
-          >
-            {type}
-          </Text>
-          <Text className="font-medium text-xl">{workshopDetailed?.name}</Text>
-          {servicesChoosen.length > 0 && (
-            <View className="bg-green-light p-1.5 rounded self-start mt-1">
-              <Text className="text-green-dark font-semibold">
-                {servicesChoosen[0].title}
-              </Text>
-            </View>
-          )}
+          </View>
         </View>
+
+        {showReminderBell && (
+          <TouchableOpacity
+            className="ml-2 mt-1"
+            onPress={() => console.log('Bell pressed')}
+          >
+            <View className="mt-4">
+              <BellIcon width={16} height={15} fill="#6B7280" />
+            </View>
+          </TouchableOpacity>
+        )}
       </View>
+
       <HorizontalLine />
+
       <View className="h-32">
         {loadingServiceOfferedDetails ? (
           <View className="justify-center items-center w-full h-full">
@@ -114,7 +143,10 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
             <IconTextPair icon={<CalendarIcon />} text={timeDate} />
             <IconTextPair
               icon={<CreditCardIcon />}
-              text={`${workshopDetailed?.currency}${calculateWorkshopDiscount(workshopDetailed?.servicePrice ?? 0, workshop?.discount ?? 0)} total to pay`}
+              text={`${workshopDetailed?.currency}${calculateWorkshopDiscount(
+                workshopDetailed?.servicePrice ?? 0,
+                workshopDetailed?.discount ?? 0,
+              )} total to pay`}
             />
             {workshopDetailed?.address && (
               <IconTextPair
@@ -125,6 +157,7 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
           </View>
         )}
       </View>
+
       {showDirectionsButton && (
         <TicDriveOptionButton
           icon={<DirectionIcon />}

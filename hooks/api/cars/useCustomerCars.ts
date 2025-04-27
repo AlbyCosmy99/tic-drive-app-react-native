@@ -1,15 +1,15 @@
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import axiosClient from '@/services/http/axiosClient';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
-import { useAppSelector } from '@/stateManagement/redux/hooks';
+import {useAppSelector} from '@/stateManagement/redux/hooks';
 import Car from '@/types/Car';
-import { useContext, useState } from 'react';
+import {useContext, useState} from 'react';
 
 const useCustomerCars = () => {
   const [loadingCustomerCars, setLoadingCustomerCars] = useState(false);
-  const { setErrorMessage } = useContext(GlobalContext);
+  const {setErrorMessage} = useContext(GlobalContext);
   const token = useAppSelector(state => state.auth.token);
-  const navigation = useTicDriveNavigation()
+  const navigation = useTicDriveNavigation();
 
   // Fetch the customer's cars
   const getCustomerCars = async () => {
@@ -82,7 +82,7 @@ const useCustomerCars = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      navigation?.goBack()
+      navigation?.goBack();
     } catch (err) {
       if (err instanceof Error) {
         console.error('Error deleting car:', err.message);
