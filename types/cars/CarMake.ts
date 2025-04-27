@@ -1,7 +1,7 @@
 interface CarMake {
   id: number;
   name: string;
-  logoUrl?: string
+  logoUrl?: string;
 }
 
 export default CarMake;
