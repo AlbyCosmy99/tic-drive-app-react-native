@@ -1,13 +1,15 @@
-import {Colors} from '@/constants/Colors';
-import React, {useMemo, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {Dropdown} from 'react-native-element-dropdown';
+import { Colors } from '@/constants/Colors';
+import React, { useMemo, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Dropdown } from 'react-native-element-dropdown';
 import TicDriveInput from '../inputs/TicDriveInput';
 import TicDriveDropdownData from '@/types/ui/dropdown/TicDriveDropdownData';
-import {Text} from 'react-native';
+import { Text } from 'react-native';
+import SvgFromUrl from '../svg/SvgFromUrl';
+
 interface TicDriveDropdownProps {
-  value?: TicDriveDropdownData; //variable where to save the choosen value
-  setValue: (value: any) => void; //function to update the choosen value
+  value?: TicDriveDropdownData;
+  setValue: (value: any) => void;
   data: Array<TicDriveDropdownData>;
   placeholder: string;
   searchPlaceholder?: string;
@@ -53,7 +55,7 @@ const TicDriveDropdown: React.FC<TicDriveDropdownProps> = ({
         placeholderStyle={{
           color: disabled ? Colors.light.lightGrey : Colors.light.ticText,
         }}
-        containerStyle={{maxHeight: 230}}
+        containerStyle={{ maxHeight: 230 }}
         data={filteredData}
         search
         disable={disabled}
@@ -77,11 +79,41 @@ const TicDriveDropdown: React.FC<TicDriveDropdownProps> = ({
             containerStyle={{
               paddingHorizontal: 0,
               height: 50,
-              backgroundColor: 'red',
             }}
             customValue={search}
             onChange={text => setSearch(text)}
           />
+        )}
+        renderItem={item => (
+          <View
+            style={{
+              paddingVertical: 12,
+              paddingHorizontal: 16,
+              // backgroundColor: item.value === value?.value ? Colors.light.lightGrey : 'white',
+              borderBottomWidth: 1,
+              borderBottomColor: '#f0f0f0',
+            }}
+            className='flex flex-row justify-between items-center h-14'
+          >
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: item.value === value?.value ? '600' : '400',
+                color: Colors.light.ticText,
+              }}
+            >
+              {item.value}
+            </Text>
+
+            <View>
+            {item.icon && (
+              <SvgFromUrl
+                url={item.icon}
+                size={32}
+              />
+            )}
+            </View>
+          </View>
         )}
       />
     </View>
@@ -95,26 +127,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 10,
-  },
-  textInput: {
-    height: 50,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 10,
-  },
-  label: {
-    marginBottom: 10,
-    fontSize: 16,
-  },
-  searchInput: {
-    height: 50,
-    paddingHorizontal: 16,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    backgroundColor: '#f9f9f9',
-    color: '#333',
-    textAlignVertical: 'center',
   },
 });
 
