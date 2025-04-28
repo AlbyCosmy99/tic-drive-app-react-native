@@ -192,10 +192,7 @@ export default function UserAccount() {
                       {user?.name}
                     </Text>
                   ) : (
-                    <CrossPlatformButtonLayout
-                      removeAllStyles
-                      onPress={handleOnEdit}
-                    >
+                    <CrossPlatformButtonLayout onPress={handleOnEdit}>
                       <Text className="font-normal text-lg text-gray-800">
                         Edit your name
                       </Text>
@@ -205,10 +202,7 @@ export default function UserAccount() {
               </View>
 
               <View className="flex-row items-center">
-                <CrossPlatformButtonLayout
-                  removeAllStyles
-                  onPress={handleOnEdit}
-                >
+                <CrossPlatformButtonLayout onPress={handleOnEdit}>
                   <View className="flex-row items-center">
                     {isEditing ? (
                       <SaveIcon width={20} height={20} />
@@ -250,7 +244,6 @@ export default function UserAccount() {
               <HorizontalLine />
 
               <CrossPlatformButtonLayout
-                removeAllStyles
                 onPress={() => navigationPush(navigation, 'UserVehiclesScreen')}
               >
                 <IconTextPair
@@ -262,10 +255,7 @@ export default function UserAccount() {
               </CrossPlatformButtonLayout>
               <HorizontalLine />
 
-              <CrossPlatformButtonLayout
-                removeAllStyles
-                onPress={onFavoriteWorkshops}
-              >
+              <CrossPlatformButtonLayout onPress={onFavoriteWorkshops}>
                 <IconTextPair
                   text="Favorite workshops"
                   icon={<HeartIcon />}
@@ -277,7 +267,6 @@ export default function UserAccount() {
             </Section>
             <Section title="Help and support">
               <CrossPlatformButtonLayout
-                removeAllStyles
                 onPress={() =>
                   setLanguageOptionsVisible(!languageOptionsVisible)
                 }
@@ -321,7 +310,7 @@ export default function UserAccount() {
                 </View>
               )}
               <HorizontalLine />
-              <CrossPlatformButtonLayout removeAllStyles onPress={handleFAQ}>
+              <CrossPlatformButtonLayout onPress={handleFAQ}>
                 <IconTextPair
                   text="FAQ"
                   icon={<FAQ />}
@@ -332,7 +321,6 @@ export default function UserAccount() {
 
               <HorizontalLine />
               <CrossPlatformButtonLayout
-                removeAllStyles
                 onPress={() => alert('Customer support')}
               >
                 <IconTextPair
@@ -346,7 +334,6 @@ export default function UserAccount() {
               <HorizontalLine />
 
               <CrossPlatformButtonLayout
-                removeAllStyles
                 onPress={() => setShowLogoutModal(true)}
               >
                 <IconTextPair
@@ -359,10 +346,7 @@ export default function UserAccount() {
 
               <HorizontalLine />
 
-              <CrossPlatformButtonLayout
-                removeAllStyles
-                onPress={handleDeleteAccount}
-              >
+              <CrossPlatformButtonLayout onPress={handleDeleteAccount}>
                 <IconTextPair
                   text="Delete account"
                   icon={<Remove />}

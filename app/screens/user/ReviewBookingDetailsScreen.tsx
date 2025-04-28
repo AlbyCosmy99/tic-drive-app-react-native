@@ -127,7 +127,6 @@ export default function ReviewBookingDetailsScreen() {
                 icon={<CalendarIcon width={16} fill={Colors.light.ticText} />}
               />
               <CrossPlatformButtonLayout
-                removeAllStyles
                 onPress={() =>
                   openGoogleMaps(
                     workshop?.address ?? '',

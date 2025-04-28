@@ -319,7 +319,6 @@ export default function WorkshopsListScreen() {
     >
       {options.map(option => (
         <CrossPlatformButtonLayout
-          removeAllStyles
           styleContainer={{
             padding: 10,
             borderBottomWidth: 1,
@@ -360,7 +359,6 @@ export default function WorkshopsListScreen() {
             <View className="flex-1 relative">
               <CrossPlatformButtonLayout
                 containerTailwindCss="flex-1"
-                removeAllStyles
                 onPress={() => {
                   setOrderDropdownVisible(!orderDropdownVisible);
                   setFilterDropdownVisible(false);
@@ -385,7 +383,6 @@ export default function WorkshopsListScreen() {
             <View className="flex-1 relative">
               <CrossPlatformButtonLayout
                 containerTailwindCss="flex-1"
-                removeAllStyles
                 onPress={() => {
                   setFilterDropdownVisible(!filterDropdownVisible);
                   setOrderDropdownVisible(false);
@@ -405,7 +402,6 @@ export default function WorkshopsListScreen() {
             <View className="flex-1">
               <CrossPlatformButtonLayout
                 containerTailwindCss="flex-1"
-                removeAllStyles
                 onPress={onOpenMap}
               >
                 <IconTextPair

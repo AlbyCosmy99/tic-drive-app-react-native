@@ -186,6 +186,7 @@ export default function UserHome() {
                       </View>
                       {workshops.length > 0 ? (
                         <CrossPlatformButtonLayout
+                          removeAllStyles={false}
                           onPress={handleOnSeeAllWorkshops}
                           containerTailwindCss="border-2 border-grey-light items-center justify-center p-1 my-2.5 rounded-xl"
                         >
@@ -242,6 +243,7 @@ export default function UserHome() {
                 />
               </View>
               <CrossPlatformButtonLayout
+                removeAllStyles={false}
                 containerTailwindCss="border-2 border-grey-light items-center justify-center p-1 m-2.5 rounded-xl bg-white"
                 onPress={() => handleVehicles()}
               >

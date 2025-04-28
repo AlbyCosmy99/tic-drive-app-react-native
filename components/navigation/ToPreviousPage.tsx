@@ -19,7 +19,6 @@ const ToPreviousPage: React.FC<ToPreviousPageProps> = ({
 
   return (
     <CrossPlatformButtonLayout
-      removeAllStyles
       onPress={() => navigation?.goBack()}
       containerTailwindCss={containerClassName}
       //todo: add accessibility to CrossPlatformButtonLayout

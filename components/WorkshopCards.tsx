@@ -98,10 +98,7 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
       }
     >
       {(workshop: Workshop) => (
-        <CrossPlatformButtonLayout
-          removeAllStyles
-          onPress={() => handleCardPress(workshop)}
-        >
+        <CrossPlatformButtonLayout onPress={() => handleCardPress(workshop)}>
           <WorkshopCard workshop={workshop} />
         </CrossPlatformButtonLayout>
       )}

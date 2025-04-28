@@ -22,14 +22,12 @@ const TicDriveReminderCard: React.FC<TicDriveReminderCardProps> = ({
       </View>
       <View className="flex flex-row items-center">
         <CrossPlatformButtonLayout
-          removeAllStyles
           containerTailwindCss="rounded-3xl flex-1 border p-1.5 mx-1 bg-drive border-drive"
           buttonTailwindCss="items-center"
         >
           <Text className="text-xs text-white font-bold">{leftButtonText}</Text>
         </CrossPlatformButtonLayout>
         <CrossPlatformButtonLayout
-          removeAllStyles
           containerTailwindCss="rounded-3xl flex-1 border p-1.5 mx-0 border-tic"
           buttonTailwindCss="flex-row items-center gap-x-1 justify-center"
         >

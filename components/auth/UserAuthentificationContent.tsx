@@ -71,7 +71,6 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
           setLoading={setLoading}
         />
         <CrossPlatformButtonLayout
-          removeAllStyles
           onPress={() => navigationPush(navigation, 'ForgotPasswordScreen')}
           containerTailwindCss="mx-8"
         >

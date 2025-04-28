@@ -93,7 +93,6 @@ export default function FAQScreen() {
               >
                 <CrossPlatformButtonLayout
                   onPress={() => toggleExpand(index)}
-                  removeAllStyles
                   buttonTailwindCss="flex-row justify-between items-center"
                 >
                   <Text className="text-base font-medium text-black flex-1 pr-2">

@@ -95,7 +95,7 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
             />
           ))
         ) : (
-          <CrossPlatformButtonLayout removeAllStyles onPress={onRightContent}>
+          <CrossPlatformButtonLayout onPress={onRightContent}>
             {rightContent}
           </CrossPlatformButtonLayout>
         )}

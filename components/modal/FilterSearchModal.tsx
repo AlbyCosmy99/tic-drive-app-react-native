@@ -32,7 +32,6 @@ const FilterSearchModal: React.FC<FilterSearchModalProps> = ({
             {elements.map(elem => (
               <CrossPlatformButtonLayout
                 key={elem.id}
-                removeAllStyles
                 onPress={() => onElementPress(elem)}
               >
                 <View className="flex flex-row justify-between items-center mx-2.5">

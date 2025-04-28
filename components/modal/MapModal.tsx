@@ -14,7 +14,7 @@ import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice';
 import useUserLocation from '@/hooks/location/useUserLocation';
-import { POIMarker } from '@/types/nav/map/POIMarker';
+import {POIMarker} from '@/types/nav/map/POIMarker';
 
 interface MapModalProps {
   isMapVisible: boolean;

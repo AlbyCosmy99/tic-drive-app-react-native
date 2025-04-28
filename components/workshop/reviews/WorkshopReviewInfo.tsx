@@ -1,8 +1,8 @@
 import Star from '../../../assets/svg/star.svg';
 import IconTextPair from '@/components/ui/IconTextPair';
 import Workshop from '@/types/workshops/Workshop';
-import { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import {useMemo} from 'react';
+import {useTranslation} from 'react-i18next';
 
 interface WorkshopReviewinfoProps {
   meanStars?: Workshop['meanStars'];
@@ -17,7 +17,7 @@ const WorkshopReviewinfo: React.FC<WorkshopReviewinfoProps> = ({
   textTailwindCss,
 }) => {
   const maxGrade = 5;
-  const { t } = useTranslation();
+  const {t} = useTranslation();
 
   const text = useMemo(() => {
     if (numberOfReviews && numberOfReviews > 0) {
@@ -26,7 +26,6 @@ const WorkshopReviewinfo: React.FC<WorkshopReviewinfoProps> = ({
     }
     return `${numberOfReviews} ${numberOfReviews !== 1 ? t('workshops.reviews.title') : t('workshops.reviews.review')}`;
   }, [numberOfReviews, meanStars]);
-
 
   return (
     (numberOfReviews || numberOfReviews === 0) && (

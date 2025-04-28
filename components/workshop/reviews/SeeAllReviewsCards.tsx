@@ -24,7 +24,6 @@ const SeeAllReviewsCards = ({workshopId}: {workshopId: number}) => {
       <ClientReviewCard review={reviews[0]} key={reviews[0].id} />
       {reviews.length > 1 && (
         <CrossPlatformButtonLayout
-          removeAllStyles
           containerTailwindCss="mt-4 border-grey-light"
           styleContainer={styles.button}
           onPress={handleOnSeeAllReviews}

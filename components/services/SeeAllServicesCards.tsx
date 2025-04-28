@@ -77,6 +77,7 @@ const SeeAllServicesCards = forwardRef(
           {services.slice(0, 4).map(service => (
             <View key={service.id} className="w-[48%] mb-2">
               <CrossPlatformButtonLayout
+                removeAllStyles={false}
                 onPress={() => handleOnSelectService(service)}
                 styleContainer={{height: 40}}
                 containerTailwindCss="border border-gray-300 flex-row items-center justify-start p-2 rounded-xl"
@@ -94,6 +95,7 @@ const SeeAllServicesCards = forwardRef(
           {services.length > 4 && (
             <View className="mb-2 w-full">
               <CrossPlatformButtonLayout
+                removeAllStyles={false}
                 onPress={handleOnSeeAllServices}
                 containerTailwindCss="border-2 border-grey-light items-center justify-center p-2 rounded-xl"
               >

@@ -73,10 +73,7 @@ const ConfirmEmailScreen = () => {
             {loadingSendConfirmationEmail ? (
               <TicDriveSpinner />
             ) : (
-              <CrossPlatformButtonLayout
-                removeAllStyles
-                onPress={handleResendEmail}
-              >
+              <CrossPlatformButtonLayout onPress={handleResendEmail}>
                 <Text className="underline text-md">
                   Resend Confirmation Email
                 </Text>

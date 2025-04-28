@@ -47,7 +47,6 @@ const UserVehiclesScreen = () => {
         <View className="mx-2.5">
           <Text className="font-medium text-2xl mb-2">My Vehicles</Text>
           <CrossPlatformButtonLayout
-            removeAllStyles
             containerTailwindCss="flex-row justify-between items-center"
             onPress={onRegisterVehicle}
           >
@@ -69,10 +68,7 @@ const UserVehiclesScreen = () => {
               <View>
                 <Text className="text-center text-base text-gray-500 mt-6">
                   You haven't registered any vehicles yet. Tap on{' '}
-                  <CrossPlatformButtonLayout
-                    removeAllStyles
-                    onPress={onRegisterVehicle}
-                  >
+                  <CrossPlatformButtonLayout onPress={onRegisterVehicle}>
                     <Text className="text-drive font-semibold">
                       "Register vehicle"
                     </Text>
@@ -89,7 +85,6 @@ const UserVehiclesScreen = () => {
                 {cars.map(car => (
                   <CrossPlatformButtonLayout
                     key={car.id}
-                    removeAllStyles
                     onPress={() => handleOnMiniCarCardPress(car)}
                   >
                     <CarDetailsMiniCard

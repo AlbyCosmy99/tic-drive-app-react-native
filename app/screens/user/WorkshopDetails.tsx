@@ -92,10 +92,7 @@ export default function WorkshopDetails() {
         rightContent={
           <View className="flex flex-row gap-x-4 justify-center items-center">
             {workshop && token && (
-              <CrossPlatformButtonLayout
-                removeAllStyles
-                onPress={handleOnFavoritePress}
-              >
+              <CrossPlatformButtonLayout onPress={handleOnFavoritePress}>
                 <View
                   className={`${!token && 'opacity-0'} w-6 h-6 p-6 pr-4 justify-center items-center`}
                 >
@@ -152,7 +149,6 @@ export default function WorkshopDetails() {
                 <Text className="text-xl font-semibold">{t('location')}</Text>
                 <View className="flex-1 flex-row items-center gap-0.5">
                   <CrossPlatformButtonLayout
-                    removeAllStyles
                     onPress={() =>
                       openGoogleMaps(
                         workshop?.address,
@@ -187,7 +183,6 @@ export default function WorkshopDetails() {
                           }}
                         >
                           <CrossPlatformButtonLayout
-                            removeAllStyles
                             onPress={() =>
                               openGoogleMaps(
                                 workshop?.address,

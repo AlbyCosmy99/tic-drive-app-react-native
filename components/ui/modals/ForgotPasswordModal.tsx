@@ -91,7 +91,6 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
           />
           <View style={[styles.buttonRow, {marginTop: 6}]}>
             <CrossPlatformButtonLayout
-              removeAllStyles
               onPress={handleSubmit(onSendEmail)}
               containerTailwindCss="flex-1 bg-drive p-2 px-4 rounded-lg"
               disabled={loading}
@@ -101,7 +100,6 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
               </Text>
             </CrossPlatformButtonLayout>
             <CrossPlatformButtonLayout
-              removeAllStyles
               onPress={onDismiss}
               containerTailwindCss="bg-red-500 ml-4 p-2 px-4 rounded-lg"
               disabled={loading}

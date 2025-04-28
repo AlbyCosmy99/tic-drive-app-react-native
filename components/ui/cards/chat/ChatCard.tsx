@@ -28,7 +28,6 @@ const ChatCard: React.FC<ChatCardProps> = ({
       onPress={() =>
         navigationPush(navigation, 'ChatScreen', {image, receiver, lastAccess})
       }
-      removeAllStyles
     >
       <HorizontalLine />
       <View className="flex-row px-3 py-2">

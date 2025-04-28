@@ -82,7 +82,6 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
             rightIcon ? (
               <CrossPlatformButtonLayout
                 containerTailwindCss="justify-center items-center"
-                removeAllStyles
                 onPress={handleOnPress}
               >
                 {rightIcon}

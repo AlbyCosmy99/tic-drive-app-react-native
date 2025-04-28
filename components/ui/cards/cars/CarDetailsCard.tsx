@@ -31,17 +31,13 @@ const CarDetailsCard: React.FC<CarDetailsCardProps> = ({car}) => {
     <CarDetailsLayout carSelected={car}>
       <View className="flex-row">
         <CrossPlatformButtonLayout
-          removeAllStyles
           onPress={() => console.log('change')}
           styleContainer={{marginRight: 24}}
         >
           <Text className="text-base font-medium mt-2 text-drive">Change</Text>
         </CrossPlatformButtonLayout>
 
-        <CrossPlatformButtonLayout
-          removeAllStyles
-          onPress={() => setShowModal(true)}
-        >
+        <CrossPlatformButtonLayout onPress={() => setShowModal(true)}>
           <Text className="text-base font-medium mt-2 text-tic">Delete</Text>
         </CrossPlatformButtonLayout>
       </View>
