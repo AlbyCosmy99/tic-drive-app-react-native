@@ -1,7 +1,7 @@
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import IconTextPair from '@/components/ui/IconTextPair';
-import {ActivityIndicator, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import AddIcon from '@/assets/svg/add.svg';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import Car from '@/types/Car';
@@ -10,12 +10,10 @@ import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
 import useCustomerCars from '@/hooks/api/cars/useCustomerCars';
 import {useEffect, useState} from 'react';
-import {Colors} from '@/constants/Colors';
 import CarDetailsMiniCard from '@/components/ui/cards/cars/CarDetailsMiniCard';
 import {ScrollView} from 'react-native-gesture-handler';
 import CarDetailsCard from '@/components/ui/cards/cars/CarDetailsCard';
 import useOnRegisterVehicle from '@/hooks/cars/useOnRegisterVehicle';
-import {useIsFocused} from '@react-navigation/native';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 
 const UserVehiclesScreen = () => {
@@ -23,7 +21,6 @@ const UserVehiclesScreen = () => {
   const navigation = useTicDriveNavigation();
   const {getCustomerCars, loadingCustomerCars} = useCustomerCars();
   const onRegisterVehicle = useOnRegisterVehicle();
-  const isFocused = useIsFocused();
 
   useEffect(() => {
     const getCars = async () => {
