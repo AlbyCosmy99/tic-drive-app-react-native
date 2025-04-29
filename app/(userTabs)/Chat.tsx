@@ -35,7 +35,7 @@ export default function UserChat() {
   return (
     <LinearGradientViewLayout>
       <SafeAreaViewLayout disabled={!isAndroidPlatform()}>
-        <TicDriveNavbar />
+        <TicDriveNavbar canGoBack={false} />
         {token ? (
           <ScrollView className="w-full h-full">
             {chats.map(chat => (

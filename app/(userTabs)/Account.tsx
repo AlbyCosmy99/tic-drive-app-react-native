@@ -160,7 +160,7 @@ export default function UserAccount() {
   return (
     <LinearGradientViewLayout>
       <SafeAreaViewLayout disabled={!isAndroidPlatform()}>
-        <TicDriveNavbar />
+        <TicDriveNavbar canGoBack={false} />
         <View className="mx-2.5">
           {loadingEditingUser ? (
             <View className="h-[88px]">

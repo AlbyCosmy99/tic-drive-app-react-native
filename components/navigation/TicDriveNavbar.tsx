@@ -6,7 +6,7 @@ right content is given, this will override the default node
 
 import {View, Text, StyleSheet, useColorScheme} from 'react-native';
 import {Colors} from '@/constants/Colors';
-import {StackActions} from '@react-navigation/native';
+import {StackActions, useFocusEffect} from '@react-navigation/native';
 import ToPreviousPage from './ToPreviousPage';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
@@ -43,6 +43,10 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
   const backgroundStyle = {
     backgroundColor: Colors.light.background,
   };
+
+  useFocusEffect(() => {
+    console.log(navigation?.canGoBack());
+  });
 
   return (
     <View

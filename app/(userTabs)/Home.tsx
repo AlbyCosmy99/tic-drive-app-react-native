@@ -118,6 +118,7 @@ export default function UserHome() {
     <LinearGradientViewLayout>
       <SafeAreaViewLayout disabled={!isAndroidPlatform()}>
         <TicDriveNavbar
+          canGoBack={false}
           rightContent={
             !token && (
               <Entypo name="login" size={32} color={Colors.light.ticText} />
