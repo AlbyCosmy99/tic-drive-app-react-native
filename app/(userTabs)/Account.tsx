@@ -168,7 +168,7 @@ export default function UserAccount() {
                       style={{lineHeight: 20}}
                       value={editedUser.name || ''}
                       onChangeText={text =>
-                        setEditedUser({...editedUser, name: text})
+                        setEditedUser({...editedUser, name: text.trim()})
                       }
                       placeholder="Enter your name"
                       placeholderTextColor="#888"
