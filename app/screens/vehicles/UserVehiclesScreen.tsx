@@ -31,10 +31,8 @@ const UserVehiclesScreen = () => {
       setCars(customerCars ?? []);
     };
 
-    if (isFocused) {
-      getCars();
-    }
-  }, [isFocused]);
+    getCars();
+  }, []);
 
   const handleOnMiniCarCardPress = (car: Car) => {
     navigationPush(navigation, 'UserVehicleDetailsScreen', {car});
