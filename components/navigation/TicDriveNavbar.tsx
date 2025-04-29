@@ -44,10 +44,6 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
     backgroundColor: Colors.light.background,
   };
 
-  useFocusEffect(() => {
-    console.log(navigation?.canGoBack());
-  });
-
   return (
     <View
       className={`flex-row items-center ${!isLoginAvailable ? 'justify-center' : 'justify-between'} px-2.5 h-14 ${containerTailwindCss}`}

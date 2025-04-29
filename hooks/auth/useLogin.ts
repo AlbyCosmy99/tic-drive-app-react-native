@@ -1,4 +1,3 @@
-import {getPayload} from '@/services/auth/getPayload';
 import {setSecureToken} from '@/services/auth/secureStore/setToken';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import {

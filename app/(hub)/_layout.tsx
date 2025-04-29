@@ -7,13 +7,12 @@ import {useNavigation} from '@react-navigation/native';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import navigationReset from '@/services/navigation/reset';
 import {getToken} from '@/services/auth/secureStore/getToken';
-import {getPayload} from '@/services/auth/getPayload';
 import {removeSecureToken} from '@/services/auth/secureStore/setToken';
 import navigationPush from '@/services/navigation/push';
-import {Colors} from '@/constants/Colors';
-import getUserData from '@/utils/auth/formatUserData';
 import i18n from '@/i18n';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
+import getUserData from '@/services/http/requests/auth/getUserData';
+import formatUserData from '@/utils/auth/formatUserData';
 
 const Hub = () => {
   const dispatch = useAppDispatch();
@@ -32,9 +31,9 @@ const Hub = () => {
         if (token) {
           dispatch(setToken(token));
           try {
-            const payload = await getPayload(token);
-            dispatch(login(getUserData(payload)));
-            if (payload.emailConfirmed) {
+            const userData = await getUserData(token);
+            dispatch(login(formatUserData(userData)));
+            if (userData.emailConfirmed) {
               navigationReset(
                 navigation,
                 0,
@@ -51,7 +50,7 @@ const Hub = () => {
             //if here, probably token is in secureStore but user is not registered in db - to solve, we make the user remove token from secureStore and retry
             console.error('error while getting user data.');
             await removeSecureToken();
-            navigationPush(navigation, '/');
+            navigationPush(navigation, '/Hub');
           }
         } else {
           navigationReset(navigation, 0, 'userTabs', {animation: 'fade'});

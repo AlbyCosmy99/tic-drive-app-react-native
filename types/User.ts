@@ -6,7 +6,7 @@ export default interface User {
   emailConfirmed?: boolean;
   password?: string;
   repeatedPassword?: string;
-  imageurl?: string;
+  imageUrl?: string;
   phoneNumber?: string;
   address?: string;
 }

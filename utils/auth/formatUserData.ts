@@ -7,7 +7,7 @@ const formatUserData = (payload: any): User => {
     email: payload.email,
     category: 'user', //to-do: integrate also workshop user type,
     emailConfirmed: payload.emailConfirmed,
-    imageurl: payload.imageUrl,
+    imageUrl: payload.profileImageUrl,
     phoneNumber: payload.phoneNumber,
     address: payload.address,
   };

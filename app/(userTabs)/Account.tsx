@@ -46,13 +46,12 @@ import SaveIcon from '@/assets/svg/operations/save.svg';
 import TicDriveModal from 'ticdrive-mobile/components/ui/modals/TicDriveModal';
 import {setLanguageCode} from '@/stateManagement/redux/slices/languageSlice';
 import i18n from '@/i18n';
-import navigationReset from '@/services/navigation/reset';
 import {t} from 'i18next';
 import User from '@/types/User';
 import updateUser from '@/services/http/requests/account/updateUser';
 import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
-import {login} from '@/stateManagement/redux/slices/authSlice';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
+import {login} from '@/stateManagement/redux/slices/authSlice';
 
 interface SectionProps {
   title: string;
@@ -89,18 +88,6 @@ export default function UserAccount() {
 
   const {setErrorMessage} = useGlobalErrors();
 
-  const handleSaveProfile = async () => {
-    if (JSON.stringify(editedUser) !== JSON.stringify(user)) {
-      try {
-        console.log('Profile updated:', editedUser);
-      } catch (error) {
-        console.error('Failed to save profile:', error);
-        alert('Could not save profile changes.');
-      }
-    }
-    setIsEditing(false);
-  };
-
   const onFavoriteWorkshops = () => {
     navigationPush(navigation, 'WorkshopsListScreen', {favorite: true});
   };
@@ -121,6 +108,7 @@ export default function UserAccount() {
       try {
         setLoadingEditingUser(true);
         await updateUser(editedUser, token ?? '');
+        dispatch(login({...user, name: editedUser.name}));
       } catch (e: any) {
         setErrorMessage(e.message);
       } finally {
@@ -170,7 +158,7 @@ export default function UserAccount() {
             <View className="flex-row justify-between items-center h-[88px]">
               <View className="flex-row items-center space-x-4 p-2">
                 <CircularUserAvatar
-                  uri={user?.imageurl}
+                  uri={user?.imageUrl}
                   styles={{width: 70, height: 70}}
                 />
                 <View className="w-40">
