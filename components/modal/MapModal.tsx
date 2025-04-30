@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -11,11 +11,10 @@ import MapView, { Marker, Region, LatLng } from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
 import navigationPush from '@/services/navigation/push';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
-import { useAppDispatch, useAppSelector } from '@/stateManagement/redux/hooks';
+import { useAppDispatch } from '@/stateManagement/redux/hooks';
 import { setSelectedWorkshop } from '@/stateManagement/redux/slices/workshopsSlice';
-import useUserLocation from '@/hooks/location/useUserLocation';
+import useNearbyWorkshops from '@/hooks/location/useNearbyWorkshops';
 import { POIMarker } from '@/types/nav/map/POIMarker';
-import axiosClient from '@/services/http/axiosClient'; 
 
 interface MapModalProps {
   isMapVisible: boolean;
@@ -44,44 +43,24 @@ export default function MapModal({
 }: MapModalProps) {
   const navigation = useTicDriveNavigation();
   const dispatch = useAppDispatch();
-  const { userLocation, loading } = useUserLocation();
 
-  const token = useAppSelector(state => state.auth.token); 
-
-  const [workshops, setWorkshops] = useState<POIMarker[]>([]);
+  const { workshops, loading, userLocation } = useNearbyWorkshops();
 
   useEffect(() => {
-    const fetchNearbyWorkshops = async () => {
-      if (!userLocation || !token) return;
-
+    console.log("Workshops in MapModal:", workshops);  
+    if (userLocation) {
       setInitialRegion({
         latitude: userLocation.latitude,
         longitude: userLocation.longitude,
         latitudeDelta: 0.05,
         longitudeDelta: 0.025,
       });
+    }
+  }, [userLocation]);
 
-      try {
-        const response = await axiosClient.get('/Workshops/nearby', {
-          headers: {
-            Authorization: `Bearer ${token}`, 
-          },
-          params: {
-            latitude: userLocation.latitude,
-            longitude: userLocation.longitude,
-          },
-        });
-
-        const workshopData = response.data;
-        setWorkshops(workshopData);
-        setPoiMarkers(workshopData);
-      } catch (error) {
-        console.error('Error fetching nearby workshops:', error);
-      }
-    };
-
-    fetchNearbyWorkshops();
-  }, [userLocation, token]);
+  useEffect(() => {
+    setPoiMarkers(workshops);
+  }, [workshops]);
 
   const handlePOISelect = (poi: POIMarker) => {
     dispatch(setSelectedWorkshop(poi.workshop));
@@ -100,7 +79,7 @@ export default function MapModal({
             initialRegion={initialRegion}
             showsUserLocation
           >
-            {workshops.map(poi => (
+            {poiMarkers.map((poi) => (
               <Marker
                 key={poi.id}
                 coordinate={poi.coordinate}
