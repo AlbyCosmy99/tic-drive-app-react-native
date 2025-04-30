@@ -27,6 +27,7 @@ import navigationPush from '@/services/navigation/push';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import useCustomerCars from '@/hooks/api/cars/useCustomerCars';
 import navigationReset from '@/services/navigation/reset';
+import { t } from 'i18next';
 
 function RegisterVehicleScreen() {
   const [segmentedControlSelection, setSegmentedControlSelection] =
@@ -270,7 +271,7 @@ function RegisterVehicleScreen() {
     <SafeAreaViewLayout styles={[backgroundStyle]}>
       <ToPreviousPage containerClassName="m-2 mb-7" />
       <View className="flex-1 justify-between">
-        <BoldTitle1 title="Register your vehicle for service bookings" />
+        <BoldTitle1 title={t('vehicles.registerVehicleForBookings')}/>
         {/* todo: to add it when plate option on car registration is added back
         <View className="m-3.5">
           <SegmentedControl
@@ -292,7 +293,7 @@ function RegisterVehicleScreen() {
                 {!makeAndModelConfirmation && (
                   <View>
                     <TicDriveDropdown
-                      title="Make"
+                      title={t('vehicles.make')}
                       data={makes.map(make => ({
                         id: make.id,
                         value: make.name,
@@ -304,7 +305,7 @@ function RegisterVehicleScreen() {
                       searchPlaceholder="Search make"
                     />
                     <TicDriveDropdown
-                      title="Model"
+                      title={t('vehicles.model')}
                       data={
                         models
                           ? models.map(model => ({
@@ -388,7 +389,7 @@ function RegisterVehicleScreen() {
         </View>
       </View>
       <TicDriveButton
-        text="Confirm"
+        text={t('confirm')}
         onClick={() => {
           if (makeAndModelConfirmation || plateConfirmation) {
             confirmCarSelected();

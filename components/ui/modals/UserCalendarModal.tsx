@@ -236,7 +236,7 @@ const UserCalendarModal = forwardRef<
                 {selectedDate && (
                   <View className="mb-4">
                     <Text className="text-sm text-tic mt-4">
-                      CHOOSE FROM AVAILABLE SLOTS
+                      {t('date.chooseSlot').toUpperCase()}
                     </Text>
                     <View className="flex flex-row flex-wrap gap-x-2 gap-y-2 justify-center items-center mt-4">
                       {UserTimeSlot.map((time, index) => (

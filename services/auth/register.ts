@@ -8,7 +8,7 @@ const register = async (user: User): Promise<any> => {
       email: user.email,
       password: user.password,
       confirmPassword: user.repeatedPassword,
-      userType: user.category === 'user' ? 1 : 2,
+      userType: 1,
     });
     return response.data;
   } catch (err) {

@@ -1,11 +1,12 @@
 import VehicleRegistrationOption from '@/types/VehicleRegistrationOption';
+import { t } from 'i18next';
 
 const vehicleRegistrationOptions: VehicleRegistrationOption[] = [
   {
     index: 0,
-    name: 'Make and model',
+    name: t('vehicles.makeAndModel'),
     placeholder: 'E.g. FIAT PANDA 1.2',
-    inputLabel: 'Make and model',
+    inputLabel: t('vehicles.makeAndModel'),
     keyString: 'make and model',
   },
   {

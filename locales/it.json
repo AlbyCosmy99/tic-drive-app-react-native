@@ -4,8 +4,13 @@
   "discoverNow": "Scopri ora",
   "payNow": "Paga ora",
   "RemindMeLater": "Ricordamelo piú tardi",
+  "confirm": "Conferma",
   "services": "Servizi",
-  "bookings": "Prenotazioni",
+  "bookings": {
+    "title": "Prenotazioni",
+    "confirmed": "Prenotazione confermata"
+  },
+  "reviews": "Recensioni",
   "account": "Profilo",
   "location": "Posizione",
   "notAvailable": "Non disponibile",
@@ -17,7 +22,8 @@
   },
   "continue": "Continua",
   "date": {
-    "selectADate": "Seleziona una data"
+    "selectADate": "Seleziona una data",
+    "chooseSlot": "Scegli tra gli slot disponibili"
   },
   "seeAll": {
     "workshops": "Vedi tutte le officine",
@@ -26,7 +32,11 @@
   },
   "vehicles": {
     "registerVehicle": "Registra veicolo",
-    "handleVehicles": "Gestisci veicoli"
+    "handleVehicles": "Gestisci veicoli",
+    "registerVehicleForBookings": "Registra il tuo veicolo per effettuare una prenotazione",
+    "make": "Marca",
+    "model": "Modello",
+    "makeAndModel": "Marca e modello"
   },
   "home": {
     "notifications": {

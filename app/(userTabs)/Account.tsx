@@ -356,7 +356,7 @@ export default function UserAccount() {
           }}
           title="Logout"
           content="Are you sure you want to log out?"
-          confirmText="Confirm"
+          confirmText={t('confirm')}
           cancelText="Cancel"
           confirmButtonStyle={{backgroundColor: '#E53935'}}
         />

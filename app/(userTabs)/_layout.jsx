@@ -71,7 +71,7 @@ export default function UserTabLayout() {
           name="Bookings"
           component={UserBookings}
           options={{
-            title: t('bookings'),
+            title: t('bookings.title'),
             headerShown: false,
             tabBarIcon: ({color}) => (
               <BookingsIcon width={28} fill={color} name="Home" />

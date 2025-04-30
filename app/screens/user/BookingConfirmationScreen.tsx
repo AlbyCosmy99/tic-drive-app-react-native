@@ -18,6 +18,7 @@ import CarContext from '@/stateManagement/contexts/car/CarContext';
 import ErrorModal from '@/components/ui/modals/ErrorModal';
 import axiosClient from '@/services/http/axiosClient';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
+import { t } from 'i18next';
 
 export default function BookingConfirmationScreen() {
   const dispatch = useAppDispatch();
@@ -118,7 +119,7 @@ export default function BookingConfirmationScreen() {
         ) : (
           <View className="flex-1 justify-center items-center mx-2.5">
             <CheckIcon height={60} width={60} />
-            <Text className="font-bold text-2xl mt-2">Booking confirmed!</Text>
+            <Text className="font-bold text-2xl mt-2">{t('bookings.confirmed')}!</Text>
             <Text className="text-tic text-base text-center">
               Your service needs confirmation from the workshop.
             </Text>

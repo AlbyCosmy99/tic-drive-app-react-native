@@ -22,7 +22,7 @@ const WorkshopReviewinfo: React.FC<WorkshopReviewinfoProps> = ({
   const text = useMemo(() => {
     if (numberOfReviews && numberOfReviews > 0) {
       const roundedMeanStars = meanStars ? meanStars.toFixed(1) : '0.0';
-      return `${roundedMeanStars}/${maxGrade} (${numberOfReviews} ${numberOfReviews !== 1 ? t('workshops.reviews.title') : t('workshops.reviews.review')})`;
+      return `${roundedMeanStars}/${maxGrade}.0 (${numberOfReviews} ${numberOfReviews !== 1 ? t('workshops.reviews.title') : t('workshops.reviews.review')})`;
     }
     return `${numberOfReviews} ${numberOfReviews !== 1 ? t('workshops.reviews.title') : t('workshops.reviews.review')}`;
   }, [numberOfReviews, meanStars]);
