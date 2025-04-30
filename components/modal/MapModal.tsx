@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -7,14 +7,15 @@ import {
   Platform,
   TouchableOpacity,
 } from 'react-native';
-import MapView, {Marker, Region, LatLng} from 'react-native-maps';
-import {Ionicons} from '@expo/vector-icons';
+import MapView, { Marker, Region, LatLng } from 'react-native-maps';
+import { Ionicons } from '@expo/vector-icons';
 import navigationPush from '@/services/navigation/push';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
-import {useAppDispatch} from '@/stateManagement/redux/hooks';
-import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice';
+import { useAppDispatch, useAppSelector } from '@/stateManagement/redux/hooks';
+import { setSelectedWorkshop } from '@/stateManagement/redux/slices/workshopsSlice';
 import useUserLocation from '@/hooks/location/useUserLocation';
-import {POIMarker} from '@/types/nav/map/POIMarker';
+import { POIMarker } from '@/types/nav/map/POIMarker';
+import axiosClient from '@/services/http/axiosClient'; 
 
 interface MapModalProps {
   isMapVisible: boolean;
@@ -43,22 +44,46 @@ export default function MapModal({
 }: MapModalProps) {
   const navigation = useTicDriveNavigation();
   const dispatch = useAppDispatch();
+  const { userLocation, loading } = useUserLocation();
 
-  const {userLocation, loading} = useUserLocation();
+  const token = useAppSelector(state => state.auth.token); 
+
+  const [workshops, setWorkshops] = useState<POIMarker[]>([]);
 
   useEffect(() => {
-    if (userLocation) {
+    const fetchNearbyWorkshops = async () => {
+      if (!userLocation || !token) return;
+
       setInitialRegion({
         latitude: userLocation.latitude,
         longitude: userLocation.longitude,
         latitudeDelta: 0.05,
         longitudeDelta: 0.025,
       });
-    }
-  }, [userLocation]);
+
+      try {
+        const response = await axiosClient.get('/Workshops/nearby', {
+          headers: {
+            Authorization: `Bearer ${token}`, 
+          },
+          params: {
+            latitude: userLocation.latitude,
+            longitude: userLocation.longitude,
+          },
+        });
+
+        const workshopData = response.data;
+        setWorkshops(workshopData);
+        setPoiMarkers(workshopData);
+      } catch (error) {
+        console.error('Error fetching nearby workshops:', error);
+      }
+    };
+
+    fetchNearbyWorkshops();
+  }, [userLocation, token]);
 
   const handlePOISelect = (poi: POIMarker) => {
-    console.log(poi);
     dispatch(setSelectedWorkshop(poi.workshop));
     setIsMapVisible(false);
     navigationPush(navigation, 'WorkshopDetails');
@@ -68,14 +93,14 @@ export default function MapModal({
     <Modal visible={isMapVisible} animationType="slide">
       <View style={styles.container}>
         {loading || !initialRegion ? (
-          <Text>loading map...</Text>
+          <Text>Loading map...</Text>
         ) : (
           <MapView
             style={StyleSheet.absoluteFillObject}
             initialRegion={initialRegion}
             showsUserLocation
           >
-            {poiMarkers.map(poi => (
+            {workshops.map(poi => (
               <Marker
                 key={poi.id}
                 coordinate={poi.coordinate}
@@ -104,32 +129,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  searchContainer: {
-    position: 'absolute',
-    top: Platform.OS === 'ios' ? 60 : 40,
-    left: 16,
-    right: 16,
-    zIndex: 20,
-  },
-  textInputContainer: {
-    backgroundColor: 'transparent',
-    borderTopWidth: 0,
-    borderBottomWidth: 0,
-  },
-  textInput: {
-    height: 44,
-    paddingHorizontal: 15,
-    borderRadius: 12,
-    backgroundColor: '#f5f5f5',
-    fontSize: 16,
-    borderColor: '#ccc',
-    borderWidth: 1,
-  },
-  listView: {
-    backgroundColor: 'white',
-    borderRadius: 12,
-    marginTop: 5,
-  },
   priceBubble: {
     backgroundColor: '#4CAF50',
     borderRadius: 30,
@@ -138,7 +137,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 1},
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.3,
     shadowRadius: 2,
     elevation: 5,
@@ -148,30 +147,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 14,
   },
-  filterButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    position: 'absolute',
-    top: Platform.OS === 'ios' ? 120 : 100,
-    right: 20,
-    backgroundColor: '#fff',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 18,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 1},
-    shadowOpacity: 0.15,
-    shadowRadius: 2,
-    elevation: 3,
-    zIndex: 20,
-  },
-  filterText: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: '#333',
-  },
   closeButton: {
     position: 'absolute',
     top: Platform.OS === 'ios' ? 60 : 40,
@@ -180,7 +155,7 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 24,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 1},
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
     elevation: 4,
