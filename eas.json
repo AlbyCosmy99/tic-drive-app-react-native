@@ -1,4 +1,3 @@
-// eas.json
 {
   "cli": {
     "version": ">= 10.2.4",
@@ -9,14 +8,11 @@
       "developmentClient": true,
       "distribution": "internal",
       "channel": "development",
-      "ios": {
-        "simulator": true
-      },
       "android": {
         "buildType": "apk"
       },
-      "env": {
-        "EXPO_USE_NEW_PODS": "1"
+      "ios": {
+        "simulator": true
       }
     },
     "preview": {
@@ -25,10 +21,7 @@
       "android": {
         "buildType": "app-bundle"
       },
-      "ios": {},
-      "env": {
-        "EXPO_USE_NEW_PODS": "1"
-      }
+      "ios": {}
     },
     "production": {
       "distribution": "store",
@@ -36,10 +29,7 @@
       "android": {
         "buildType": "app-bundle"
       },
-      "ios": {},
-      "env": {
-        "EXPO_USE_NEW_PODS": "1"
-      }
+      "ios": {}
     }
   },
   "submit": {
