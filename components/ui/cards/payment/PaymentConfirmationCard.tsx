@@ -10,11 +10,11 @@ import {
 } from 'react-native';
 import HorizontalLine from '../../HorizontalLine';
 import IconTextPair from '../../IconTextPair';
-import CalendarIcon from '../../../../assets/svg/calendar/event_available.svg';
-import CreditCardIcon from '../../../../assets/svg/payment/credit_card.svg';
-import PinIcon from '../../../../assets/svg/location_on.svg';
-import DirectionIcon from '../../../../assets/svg/assistant_direction.svg';
-import BellIcon from '@/assets/svg/notifications/Bell1.svg';
+import CalendarIcon from '@/components/svgs/calendar/EventAvailable';
+import CreditCardIcon from '@/components/svgs/payment/CreditCard';
+import PinIcon from '@/components/svgs/LocationOn';
+import DirectionIcon from '@/components/svgs/AssistantDirection';
+import BellIcon from '@/components/svgs/notifications/Bell1';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 import TicDriveOptionButton from '../../buttons/TicDriveOptionButton';
 import Workshop from '@/types/workshops/Workshop';
@@ -22,7 +22,6 @@ import openGoogleMaps from '@/services/map/openGoogleMaps';
 import {useEffect, useState} from 'react';
 import axiosClient from '@/services/http/axiosClient';
 import clsx from 'clsx';
-import Service from '@/types/Service';
 
 interface PaymentConfirmationCardProps {
   workshop: Workshop | null | undefined;

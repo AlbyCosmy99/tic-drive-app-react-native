@@ -1,3 +1,4 @@
+// eas.json
 {
   "cli": {
     "version": ">= 10.2.4",
@@ -8,8 +9,14 @@
       "developmentClient": true,
       "distribution": "internal",
       "channel": "development",
+      "ios": {
+        "simulator": true
+      },
       "android": {
         "buildType": "apk"
+      },
+      "env": {
+        "EXPO_USE_NEW_PODS": "1"
       }
     },
     "preview": {
@@ -17,6 +24,10 @@
       "channel": "preview",
       "android": {
         "buildType": "app-bundle"
+      },
+      "ios": {},
+      "env": {
+        "EXPO_USE_NEW_PODS": "1"
       }
     },
     "production": {
@@ -24,6 +35,10 @@
       "channel": "production",
       "android": {
         "buildType": "app-bundle"
+      },
+      "ios": {},
+      "env": {
+        "EXPO_USE_NEW_PODS": "1"
       }
     }
   },
@@ -32,6 +47,9 @@
       "android": {
         "serviceAccountKeyPath": "./google-service-account.json",
         "track": "internal"
+      },
+      "ios": {
+        "appleId": "dinamo1999@icloud.com"
       }
     }
   }

@@ -1,6 +1,5 @@
 import {Text, View} from 'react-native';
 import CrossPlatformButtonLayout from '../../buttons/CrossPlatformButtonLayout';
-import BellIcon from '@/assets/svg/notifications/bell.svg';
 interface TicDriveReminderCardProps {
   text: string;
   leftButtonText?: string;

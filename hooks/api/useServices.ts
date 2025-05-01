@@ -14,7 +14,6 @@ const useServices = (workshopId?: number) => {
         );
         setServices(res.data);
       } catch (err) {
-        alert('BBBB.');
         console.error(err);
       } finally {
         setLoadingServices(false);
