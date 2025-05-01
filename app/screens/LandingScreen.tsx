@@ -6,7 +6,7 @@ import TicDriveLogo from '../../assets/images/TicDriveLogo.jpeg';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import ServicesCard from '@/components/ServicesCard';
 import Feather from '@expo/vector-icons/Feather';
-import CarRepairService from '../../assets/svg/carRepairService.svg';
+import CarRepairService from '@/components/svgs/CarRepairService';
 import {MotiView} from 'moti';
 import {useContext, useState} from 'react';
 import {Dimensions} from 'react-native';

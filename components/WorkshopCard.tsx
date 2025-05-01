@@ -10,11 +10,10 @@ import {
   ViewStyle,
 } from 'react-native';
 import {Image} from 'react-native-elements';
-import PinLocationIcon from '@/assets/svg/location/PinLocation.svg';
-import GreenCheckIcon from '@/assets/svg/check_green.svg';
+import PinLocationIcon from '@/components/svgs/location/PinLocation';
+import GreenCheckIcon from '@/components/svgs/CheckGreen';
 import IconTextPair from './ui/IconTextPair';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
-import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';

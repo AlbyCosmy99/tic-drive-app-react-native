@@ -10,8 +10,8 @@ import {
   ViewStyle,
 } from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native';
-import CheckCircle from '../assets/svg/check_circle.svg';
-import CarRepair from '../assets/svg/servicesIcons/car_repair.svg'; //default icon
+import CheckCircle from '@/components/svgs/CheckCircle';
+import CarRepair from '@/components/svgs/servicesIcons/CarRepair'; //default icon
 import smallDevicebreakpointHeight from '@/constants/smallDevicebreakpointHeight';
 import {Dimensions} from 'react-native';
 import LottieView from 'lottie-react-native';

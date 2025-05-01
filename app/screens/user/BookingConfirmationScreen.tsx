@@ -3,7 +3,7 @@ import {Colors} from '@/constants/Colors';
 import {LinearGradient} from 'expo-linear-gradient';
 import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
 import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
-import CheckIcon from '@/assets/svg/check_circle.svg';
+import CheckIcon from '@/components/svgs/CheckCircle';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import {
   reset,
@@ -18,7 +18,7 @@ import CarContext from '@/stateManagement/contexts/car/CarContext';
 import ErrorModal from '@/components/ui/modals/ErrorModal';
 import axiosClient from '@/services/http/axiosClient';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
-import { t } from 'i18next';
+import {t} from 'i18next';
 
 export default function BookingConfirmationScreen() {
   const dispatch = useAppDispatch();
@@ -119,7 +119,9 @@ export default function BookingConfirmationScreen() {
         ) : (
           <View className="flex-1 justify-center items-center mx-2.5">
             <CheckIcon height={60} width={60} />
-            <Text className="font-bold text-2xl mt-2">{t('bookings.confirmed')}!</Text>
+            <Text className="font-bold text-2xl mt-2">
+              {t('bookings.confirmed')}!
+            </Text>
             <Text className="text-tic text-base text-center">
               Your service needs confirmation from the workshop.
             </Text>

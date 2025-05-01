@@ -4,12 +4,12 @@ import CircularUserAvatar from '@/components/ui/avatars/CircularUserAvatar';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import {Colors} from '@/constants/Colors';
 import {Text, View} from 'react-native';
-import AccountIcon from '../../../assets/svg/accountIcon.svg';
+import AccountIcon from '@/components/svgs/AccountIcon';
 import IconTextPair from '@/components/ui/IconTextPair';
-import LockIcon from '../../../assets/svg/access/lock.svg';
-import NotificationsIcon from '../../../assets/svg/notifications/notifications.svg';
-import SupportIcon from '../../../assets/svg/support/support.svg';
-import FeedbackIcon from '../../../assets/svg/writing/feedback.svg';
+import LockIcon from '@/components/svgs/access/Lock';
+import NotificationsIcon from '@/components/svgs/notifications/Notifications';
+import SupportIcon from '@/components/svgs/support/Support';
+import FeedbackIcon from '@/components/svgs/writing/Feedback';
 import TicDriveAuthButton from '@/components/ui/buttons/TicDriveAuthButton';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import LinearGradientViewLayout from '@/app/layouts/LinearGradientViewLayout';
@@ -43,17 +43,15 @@ const UserAccountDetailsScreen = () => {
             <Text className="text-tic mb-2">GENERAL SETTINGS</Text>
             <IconTextPair
               text="Profile"
-              icon={<AccountIcon width={24} fill={Colors.light.ticText} />}
+              icon={<AccountIcon fill={Colors.light.ticText} />}
             />
             <IconTextPair
               text="Password"
-              icon={<LockIcon width={24} fill={Colors.light.ticText} />}
+              icon={<LockIcon fill={Colors.light.ticText} />}
             />
             <IconTextPair
               text="Notifications"
-              icon={
-                <NotificationsIcon width={24} fill={Colors.light.ticText} />
-              }
+              icon={<NotificationsIcon fill={Colors.light.ticText} />}
               containerTailwindCss="pb-1"
             />
           </View>
@@ -62,11 +60,11 @@ const UserAccountDetailsScreen = () => {
             <Text className="text-tic mb-2">OTHER</Text>
             <IconTextPair
               text="Support"
-              icon={<SupportIcon width={24} fill={Colors.light.ticText} />}
+              icon={<SupportIcon fill={Colors.light.ticText} />}
             />
             <IconTextPair
               text="Feedback"
-              icon={<FeedbackIcon width={24} fill={Colors.light.ticText} />}
+              icon={<FeedbackIcon fill={Colors.light.ticText} />}
               containerTailwindCss="pb-1"
             />
           </View>

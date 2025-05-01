@@ -6,7 +6,7 @@ export const login = async (user: User): Promise<any> => {
     const response = await axiosClient.post('auth/login', {
       email: user.email,
       password: user.password,
-      userType: 1
+      userType: 1,
     });
 
     return response.data;

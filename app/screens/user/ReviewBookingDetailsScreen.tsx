@@ -16,10 +16,9 @@ import {useRoute} from '@react-navigation/native';
 import {Image} from '@rneui/themed';
 import {ActivityIndicator} from 'react-native';
 import HorizontalLine from '@/components/ui/HorizontalLine';
-import Verified from '../../../assets/svg/verified.svg';
-import CarRepair from '../../../assets/svg/servicesIcons/car_repair.svg';
-import LocationPin from '../../../assets/svg/location_on.svg';
-import CalendarIcon from '../../../assets/svg/free_cancellation.svg';
+import Verified from '@/components/svgs/Verified';
+import CarRepair from '@/components/svgs/servicesIcons/CarRepair';
+import CalendarIcon from '@/components/svgs/FreeCancellation';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 import IconTextPair from '@/components/ui/IconTextPair';
 import PaymentCard from '@/components/ui/payment/PaymentCard';
@@ -32,9 +31,10 @@ import navigationReset from '@/services/navigation/reset';
 import {useServicesChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import WorkshopReviewinfo from '@/components/workshop/reviews/WorkshopReviewInfo';
-import CashIcon from '@/assets/svg/payment/cash.svg';
+import CashIcon from '@/components/svgs/payment/Cash';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
 import openGoogleMaps from '@/services/map/openGoogleMaps';
+import LocationPin from '@/components/svgs/location/PinLocation';
 
 export default function ReviewBookingDetailsScreen() {
   const route = useRoute();
@@ -120,11 +120,11 @@ export default function ReviewBookingDetailsScreen() {
             <View>
               <IconTextPair
                 text={servicesChoosen[0].title}
-                icon={<CarRepair width={16} fill={Colors.light.ticText} />}
+                icon={<CarRepair fill={Colors.light.ticText} />}
               />
               <IconTextPair
                 text={timeDate}
-                icon={<CalendarIcon width={16} fill={Colors.light.ticText} />}
+                icon={<CalendarIcon fill={Colors.light.ticText} />}
               />
               <CrossPlatformButtonLayout
                 onPress={() =>
@@ -138,7 +138,7 @@ export default function ReviewBookingDetailsScreen() {
                 <IconTextPair
                   text={workshop?.address}
                   textTailwindCss="underline text-tic"
-                  icon={<LocationPin width={16} fill={Colors.light.ticText} />}
+                  icon={<LocationPin fill={Colors.light.ticText} />}
                 />
               </CrossPlatformButtonLayout>
             </View>

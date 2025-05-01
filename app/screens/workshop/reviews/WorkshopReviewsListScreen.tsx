@@ -7,7 +7,7 @@ import WorkshopReviewinfo from '@/components/workshop/reviews/WorkshopReviewInfo
 import useReviews from '@/hooks/api/workshops/useReviews';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import Review from '@/types/workshops/Review';
-import { t } from 'i18next';
+import {t} from 'i18next';
 import {useEffect, useMemo, useState} from 'react';
 import {Text, View} from 'react-native';
 
@@ -50,7 +50,9 @@ const WorkshopReviewsListScreen = () => {
   return (
     <SafeAreaViewLayout>
       <TicDriveNavbar
-        topContent={<Text className="text-lg font-semibold">{t('reviews')}</Text>}
+        topContent={
+          <Text className="text-lg font-semibold">{t('reviews')}</Text>
+        }
         containerTailwindCss="h-10 items-end"
       />
       <View className="ml-5 mr-3">
