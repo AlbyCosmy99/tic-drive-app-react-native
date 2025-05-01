@@ -1,6 +1,6 @@
 import {View} from 'react-native';
-import GradeIcon from '@/assets/svg/grades/Star.svg';
-import EmptyGradeIcon from '@/assets/svg/grades/emptyStar.svg';
+import GradeIcon from '@/components/svgs/grades/Star';
+import EmptyGradeIcon from '@/components/svgs/grades/EmptyStar';
 
 const FiveStarsGrade = ({stars}: {stars: number}) => {
   const MAX_STARS = 5;

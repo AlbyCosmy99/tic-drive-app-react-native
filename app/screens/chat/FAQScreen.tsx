@@ -1,15 +1,13 @@
 import {useState} from 'react';
-import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
-import {Feather, AntDesign} from '@expo/vector-icons';
-import {useNavigation} from '@react-navigation/native';
+import {ScrollView, Text, View} from 'react-native';
 
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import LinearGradientViewLayout from '@/app/layouts/LinearGradientViewLayout';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
-import PlusIcon from '@/assets/svg/plus.svg';
-import MinusIcon from '@/assets/svg/minus.svg';
+import PlusIcon from '@/components/svgs/Plus';
+import MinusIcon from '@/components/svgs/Minus';
 
 const faqData = [
   {
