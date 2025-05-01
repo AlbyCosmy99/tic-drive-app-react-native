@@ -3,7 +3,7 @@ const isDev = process.env.APP_VARIANT === "development";
 export default {
   expo: {
     name: isDev ? "TicDrive Dev" : "TicDrive",
-    slug: isDev ? "tic-drive-dev" : "tic-drive",
+    slug: "tic-drive",
     version: "1.0.7",
     orientation: "portrait",
     icon: "./assets/images/png/ticDriveLogo.png",
