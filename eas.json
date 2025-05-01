@@ -10,9 +10,6 @@
       "channel": "development",
       "android": {
         "buildType": "apk"
-      },
-      "ios": {
-        "simulator": true
       }
     },
     "preview": {
@@ -20,16 +17,14 @@
       "channel": "preview",
       "android": {
         "buildType": "app-bundle"
-      },
-      "ios": {}
+      }
     },
     "production": {
       "distribution": "store",
       "channel": "production",
       "android": {
         "buildType": "app-bundle"
-      },
-      "ios": {}
+      }
     }
   },
   "submit": {
@@ -37,9 +32,6 @@
       "android": {
         "serviceAccountKeyPath": "./google-service-account.json",
         "track": "internal"
-      },
-      "ios": {
-        "appleId": "dinamo1999@icloud.com"
       }
     }
   }
