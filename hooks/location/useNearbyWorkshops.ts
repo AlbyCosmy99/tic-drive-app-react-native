@@ -3,6 +3,7 @@ import axiosClient from '@/services/http/axiosClient';
 import { POIMarker } from '@/types/nav/map/POIMarker';
 import useUserLocation from '@/hooks/location/useUserLocation';
 import { useAppSelector } from '@/stateManagement/redux/hooks';
+import Workshop from '@/types/workshops/Workshop';
 
 export default function useNearbyWorkshops() {
   const { userLocation, loading: locationLoading } = useUserLocation();
@@ -21,7 +22,7 @@ export default function useNearbyWorkshops() {
 
       setLoading(true);
       try {
-        const response = await axiosClient.get('/Workshops/nearby', {
+        const response = await axiosClient.get('/workshops/nearby', {
           headers: { Authorization: `Bearer ${token}` },
           params: {
             latitude: userLocation.latitude,
@@ -31,19 +32,17 @@ export default function useNearbyWorkshops() {
         });
 
         const rawWorkshops = response.data?.workshops ?? [];
-        console.log("Fetched Workshops:", rawWorkshops);  // Log fetched workshops data
 
-        const mapped: POIMarker[] = rawWorkshops.map((ws: any) => ({
+        const mapped: POIMarker[] = rawWorkshops.map((ws: Workshop) => ({
           id: ws.id,
           coordinate: {
             latitude: ws.latitude,
             longitude: ws.longitude,
           },
-          price: ws.servicePrice ?? 0,  // Fallback for null prices
+          price: ws.servicePrice ?? 0,
           workshop: ws,
         }));
 
-        console.log("Mapped POI Markers:", mapped); 
         setWorkshops(mapped);
         setError(null);
       } catch (err) {

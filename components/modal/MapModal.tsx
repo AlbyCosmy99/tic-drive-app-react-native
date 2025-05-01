@@ -58,10 +58,6 @@ export default function MapModal({
     }
   }, [userLocation]);
 
-  useEffect(() => {
-    setPoiMarkers(workshops);
-  }, [workshops]);
-
   const handlePOISelect = (poi: POIMarker) => {
     dispatch(setSelectedWorkshop(poi.workshop));
     setIsMapVisible(false);
