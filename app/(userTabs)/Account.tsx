@@ -117,22 +117,9 @@ export default function UserAccount() {
   };
 
   const handleDeleteAccount = () => {
-    Alert.alert(
-      'Delete Account',
-      'Are you sure you want to delete your account? This action is irreversible.',
-      [
-        {text: 'Cancel', style: 'cancel'},
-        {
-          text: 'Delete',
-          style: 'destructive',
-          onPress: () => {
-            // TODO: will do later the actual delete logic
-            alert('Account deleted (mock)');
-          },
-        },
-      ],
-    );
+    navigationPush(navigation, 'DeleteAccountScreen');
   };
+  
 
   if (!token)
     return (
@@ -334,7 +321,7 @@ export default function UserAccount() {
               <HorizontalLine />
 
               <CrossPlatformButtonLayout onPress={handleDeleteAccount}>
-                <IconTextPair
+              <IconTextPair
                   text="Delete account"
                   icon={<Remove />}
                   textTailwindCss="text-base font-medium pl-1"

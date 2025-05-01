@@ -41,6 +41,7 @@ import SuccessfullyPasswordChangedScreen from './screens/user/SuccessfullyPasswo
 import UserVehiclesScreen from './screens/vehicles/UserVehiclesScreen';
 import UserVehicleDetailsScreen from './screens/vehicles/UserVehicleDetailsScreen';
 import CarRegistrationSuccessScreen from './screens/success/CarRegistrationSuccessScreen';
+import DeleteAccountScreen from './screens/user/DeleteAccountScreen';
 SplashScreen.preventAutoHideAsync();
 
 const Stack = createNativeStackNavigator();
@@ -300,6 +301,17 @@ export default function RootLayout() {
                           animation: getAnimation(route),
                         })}
                       />
+                      <Stack.Screen
+                        name="DeleteAccountScreen"
+                        component={DeleteAccountScreen}
+                        options={({ route }) => ({
+                        title: 'DeleteAccountScreen',
+                        headerShown: false,
+                        animation: getAnimation(route),
+                      })}
+                      />
+
+
                       <Stack.Screen
                         name="notFound"
                         component={NotFoundScreen}
