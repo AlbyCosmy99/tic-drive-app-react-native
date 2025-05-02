@@ -3,8 +3,6 @@ import {Text, View} from 'react-native';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import navigationPush from '@/services/navigation/push';
 import {useServicesChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
-import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
-import useWorkshops from '@/hooks/api/workshops/useWorkshops';
 import TicDriveButton from './ui/buttons/TicDriveButton';
 import navigationReset from '@/services/navigation/reset';
 import {reset} from '@/stateManagement/redux/slices/servicesSlice';
@@ -17,6 +15,8 @@ import {useState} from 'react';
 import Workshop from '@/types/workshops/Workshop';
 import WorkshopCard from './WorkshopCard';
 import CrossPlatformButtonLayout from './ui/buttons/CrossPlatformButtonLayout';
+import useNearbyWorkshops from '@/hooks/location/useNearbyWorkshops';
+import useWorkshops from '@/hooks/api/workshops/useWorkshops';
 
 interface WorkshopCardsProps {
   setAreNoWorkshop?: (areNoWorkshops: boolean) => void;
@@ -36,14 +36,21 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
   const workshopsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
 
-  const {workshops, loadingWorkshops, setLoadingWorkshops, count} =
-    useWorkshops(
-      (currentPage - 1) * workshopsPerPage,
-      workshopsPerPage,
-      servicesChoosen.length > 0 ? servicesChoosen[0]?.id : 0,
-      favorite,
-      {order, filter: workshopFilter},
-    );
+  const commonOffset = (currentPage - 1) * workshopsPerPage;
+
+  const {workshops, loadingWorkshops, setLoadingWorkshops, count} = favorite
+    ? useWorkshops(
+        commonOffset,
+        workshopsPerPage,
+        servicesChoosen.length > 0 ? servicesChoosen[0]?.id : 0,
+        favorite,
+        {order, filter: workshopFilter},
+      )
+    : useNearbyWorkshops(commonOffset, workshopsPerPage, {
+        order,
+        filter: workshopFilter,
+      });
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {

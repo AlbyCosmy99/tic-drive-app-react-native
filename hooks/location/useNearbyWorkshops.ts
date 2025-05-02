@@ -1,65 +1,89 @@
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import axiosClient from '@/services/http/axiosClient';
-import { POIMarker } from '@/types/nav/map/POIMarker';
-import useUserLocation from '@/hooks/location/useUserLocation';
-import { useAppSelector } from '@/stateManagement/redux/hooks';
+import {useAppSelector} from '@/stateManagement/redux/hooks';
 import Workshop from '@/types/workshops/Workshop';
+import useGlobalErrors from '../errors/useGlobalErrors';
+import {Params} from '@/types/config/Params';
 
-export default function useNearbyWorkshops() {
-  const { userLocation, loading: locationLoading } = useUserLocation();
+export default function useNearbyWorkshops(
+  skip: number = 0,
+  take: number = 10,
+  params?: Params,
+) {
   const token = useAppSelector(state => state.auth.token);
+  const user = useAppSelector(state => state.auth.user);
+  const service = useAppSelector(
+    state => state.services.servicesChoosenByUsers[0],
+  );
 
-  const [workshops, setWorkshops] = useState<POIMarker[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [count, setCount] = useState(0);
+  const [nearbyWorkshops, setNearbyWorkshops] = useState<Workshop[]>([]);
+  const [loadingNearbyWorkshops, setLoadingNearbyWorkshops] = useState(false);
+  const {setErrorMessage} = useGlobalErrors();
+
+  const [debouncedFilter, setDebouncedFilter] = useState<string>(
+    params?.filter ?? '',
+  );
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedFilter(params?.filter ?? '');
+    }, 500);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [params?.filter]);
+
+  useEffect(() => {
+    setLoadingNearbyWorkshops(true);
+  }, [params?.order, debouncedFilter]);
 
   useEffect(() => {
     const fetchWorkshops = async () => {
-      if (!userLocation || !token) {
-        console.log("User location or token not found");
+      if (!user?.coordinates || !token) {
         return;
       }
 
-      setLoading(true);
       try {
-        const response = await axiosClient.get('/workshops/nearby', {
-          headers: { Authorization: `Bearer ${token}` },
-          params: {
-            latitude: userLocation.latitude,
-            longitude: userLocation.longitude,
-            KmRange: 200,
+        setLoadingNearbyWorkshops(true);
+        const response = await axiosClient.get(
+          `/workshops/nearby?skip=${skip}&take=${take}&filter=${debouncedFilter}&order=${params?.order ?? 'asc'}${service?.id && `&serviceId=${service?.id}`}`,
+          {
+            headers: {Authorization: `Bearer ${token}`},
+            params: {
+              latitude: user.coordinates.latitude,
+              longitude: user.coordinates.longitude,
+            },
           },
-        });
+        );
 
-        const rawWorkshops = response.data?.workshops ?? [];
-
-        const mapped: POIMarker[] = rawWorkshops.map((ws: Workshop) => ({
-          id: ws.id,
-          coordinate: {
-            latitude: ws.latitude,
-            longitude: ws.longitude,
-          },
-          price: ws.servicePrice ?? 0,
-          workshop: ws,
-        }));
-
-        setWorkshops(mapped);
-        setError(null);
+        setNearbyWorkshops(response.data?.nearbyWorkshops ?? []);
+        setCount(response.data.count);
       } catch (err) {
-        console.error('Failed to fetch nearby workshops:', err);
-        setError('Failed to load nearby workshops');
+        setErrorMessage('Failed to load nearby workshops');
       } finally {
-        setLoading(false);
+        setLoadingNearbyWorkshops(false);
       }
     };
 
-    fetchWorkshops();
-  }, [userLocation, token]);
+    if (loadingNearbyWorkshops) {
+      fetchWorkshops();
+    }
+  }, [
+    token,
+    loadingNearbyWorkshops,
+    params?.order,
+    debouncedFilter,
+    skip,
+    take,
+    user,
+  ]);
 
   return {
-    workshops,
-    loading: loading || locationLoading,
-    error,
-    userLocation,
+    workshops: nearbyWorkshops,
+    loadingWorkshops: loadingNearbyWorkshops,
+    setLoadingWorkshops: setLoadingNearbyWorkshops,
+    count,
   };
 }

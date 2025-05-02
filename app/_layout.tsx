@@ -10,7 +10,7 @@ import GlobalProvider from '@/stateManagement/contexts/global/GlobalProvider';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
 import store from '@/stateManagement/redux/store/store';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Hub from './(hub)/_layout';
+import Hub from './hub/_layout';
 import ChooseServicesScreen from './screens/ChooseServicesScreen';
 import UserAuthenticationScreen from './screens/UserAuthenticationScreen';
 import RegisterVehicleScreen from './screens/user/RegisterVehicleScreen';

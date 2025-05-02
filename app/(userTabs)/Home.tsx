@@ -10,7 +10,6 @@ import HorizontalLine from '@/components/ui/HorizontalLine';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
 import WorkshopCardMini from '@/components/workshop/WorkshopCardMini';
 import {Colors} from '@/constants/Colors';
-import useWorkshops from '@/hooks/api/workshops/useWorkshops';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import useUserLocation from '@/hooks/location/useUserLocation';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
@@ -39,6 +38,9 @@ import {RefreshControl, ScrollView} from 'react-native-gesture-handler';
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
+import useNearbyWorkshops from '@/hooks/location/useNearbyWorkshops';
+import MapModal from '@/components/modal/MapModal';
+import {useServicesChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
 
 export default function UserHome() {
   const [filter, setFilter] = useState('');
@@ -48,13 +50,18 @@ export default function UserHome() {
   const {t} = useTranslation();
   const [filteredWorkshops, setFilteredWorkshops] = useState<Workshop[]>([]);
 
-  const {workshops, loadingWorkshops, setLoadingWorkshops} = useWorkshops(0, 2);
+  const {workshops, loadingWorkshops, setLoadingWorkshops} = useNearbyWorkshops(
+    0,
+    2,
+  );
 
   const {setCarSelectedByMakeAndModel, setCarSelectedByPlate} =
     useContext(CarContext);
 
   const dispatch = useAppDispatch();
   const token = useJwtToken();
+
+  const [isMapVisible, setIsMapVisible] = useState(false);
 
   useUserLocation();
 
@@ -70,7 +77,6 @@ export default function UserHome() {
         });
     //to-do: once the vehicle is registered instead of going to workshops, go to vehicles and register it on account
   };
-  const userAddress = useAppSelector(state => state.auth.user?.address) ?? '';
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -130,7 +136,9 @@ export default function UserHome() {
             });
           }}
         />
-        <LocationPin />
+        <CrossPlatformButtonLayout onPress={() => setIsMapVisible(true)}>
+          <LocationPin />
+        </CrossPlatformButtonLayout>
 
         <View className="flex-row items-center relative">
           <TicDriveInput
@@ -254,6 +262,7 @@ export default function UserHome() {
                 </Text>
               </CrossPlatformButtonLayout>
             </View>
+            {isMapVisible && <MapModal setIsMapVisible={setIsMapVisible} />}
           </ScrollView>
         )}
       </SafeAreaViewLayout>
