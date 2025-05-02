@@ -13,14 +13,14 @@ import CarDetailsMiniCard from '@/components/ui/cards/cars/CarDetailsMiniCard';
 import useCustomerCars from '@/hooks/api/cars/useCustomerCars';
 import Car from '@/types/Car';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
+import {useTranslation} from 'react-i18next';
 
 export default function UserBookings() {
+  const {t} = useTranslation();
   const token = useJwtToken();
   const {getCustomerCars, loadingCustomerCars} = useCustomerCars();
   const [cars, setCars] = useState<Car[]>([]);
-  const [activeTab, setActiveTab] = useState<'active' | 'past' | 'cancelled'>(
-    'active',
-  );
+  const [activeTab, setActiveTab] = useState<'active' | 'past' | 'cancelled'>('active');
 
   useEffect(() => {
     const fetchCars = async () => {
@@ -106,7 +106,9 @@ export default function UserBookings() {
       <SafeAreaViewLayout disabled={!isAndroidPlatform()}>
         {token ? (
           <View className="mx-2.5 flex-1 mb-4">
-            <Text className="font-medium text-2xl text-center">Interventi</Text>
+            <Text className="font-medium text-2xl text-center">
+              {t('bookings.title')}
+            </Text>
 
             <View className="flex-row bg-gray-100 rounded-full p-1 mt-4 mx-4">
               {['active', 'past', 'cancelled'].map(tab => (
@@ -119,10 +121,10 @@ export default function UserBookings() {
                 >
                   <Text className="font-medium capitalize">
                     {tab === 'active'
-                      ? 'Attivi'
+                      ? t('bookingsTabs.active', 'Attiv')
                       : tab === 'past'
-                        ? 'Passati'
-                        : 'Cancellati'}
+                      ? t('bookingsTabs.past', 'Passati')
+                      : t('bookingsTabs.cancelled', 'Cancellati')}
                   </Text>
                 </TouchableOpacity>
               ))}
@@ -132,7 +134,7 @@ export default function UserBookings() {
               <TicDriveSpinner />
             ) : cars.length === 0 ? (
               <Text className="text-center text-lg font-semibold">
-                No vehicles registered yet.
+                {t('vehicles.registerVehicleForBookings')}
               </Text>
             ) : (
               <ScrollView showsVerticalScrollIndicator={false}>
@@ -160,10 +162,10 @@ export default function UserBookings() {
                         timeDate={'Martedì, 24 gennaio ore 10:00'}
                         type={
                           activeTab === 'active'
-                            ? 'Confirmed'
+                            ? t('bookings.confirmed')
                             : activeTab === 'past'
-                              ? 'Completed'
-                              : 'Cancelled'
+                            ? t('status.completed', 'Completato')
+                            : t('status.cancelled', 'Cancellato')
                         }
                       />
                     ))}

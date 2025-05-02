@@ -8,33 +8,35 @@ import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
 import PlusIcon from '@/components/svgs/Plus';
 import MinusIcon from '@/components/svgs/Minus';
+import {useTranslation} from 'react-i18next';
+import { useMemo } from 'react';
 
-const faqData = [
-  {
-    question: 'How do I book a service on TicDrive?',
-    answer:
-      'Open the TicDrive app or website, enter your vehicle details and location, then select the service type and time. Booking is easy and fast.',
-  },
-  {
-    question: 'How can I add or update a payment method?',
-    answer:
-      'Go to your profile and tap on "Payment Methods" to add or update your preferred option.',
-  },
-  {
-    question: 'Can I book a service on the weekend?',
-    answer:
-      'Yes, you can schedule services any day of the week, including weekends.',
-  },
-  {
-    question: 'Can I cancel or modify a booking?',
-    answer:
-      'Yes, bookings can be cancelled or changed at least 24 hours before the scheduled time.',
-  },
-];
 
 export default function FAQScreen() {
+  const { t } = useTranslation();
   const [searchText, setSearchText] = useState('');
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+
+const faqData = useMemo(() => [
+  {
+    question: t('faq.question_1'),
+    answer: t('faq.answer_1'),
+  },
+  {
+    question: t('faq.question_2'),
+    answer: t('faq.answer_2'),
+  },
+  {
+    question: t('faq.question_3'),
+    answer: t('faq.answer_3'),
+  },
+  {
+    question: t('faq.question_4'),
+    answer: t('faq.answer_4'),
+  },
+],  [t]);
+
+
 
   const toggleExpand = (index: number) => {
     setExpandedIndex(expandedIndex === index ? null : index);
@@ -51,19 +53,20 @@ export default function FAQScreen() {
       <SafeAreaViewLayout>
         <TicDriveNavbar />
         <View className="items-center mt-6 px-4">
-          <Text className="text-2xl leading-6 font-semibold text-center font-poppins">
-            Frequently Asked Questions{'\n'}
-            <Text className="text-lg leading-[24px] font-semibold font-poppins">
-              How can we help you?
-            </Text>
-          </Text>
-        </View>
+  <Text className="text-2xl leading-6 font-semibold text-center font-poppins">
+    {t('faq.title')}
+  </Text>
+  <Text className="text-lg leading-[24px] font-semibold font-poppins text-center">
+    {t('faq.subtitle')}
+  </Text>
+</View>
+
 
         <View className="mx-4">
           <TicDriveInput
             isLeftIcon
             isRightIcon
-            placeholder="Search by keyword"
+            placeholder={t('faq.search_placeholder')}
             customValue={searchText}
             onChange={setSearchText}
             containerViewStyleTailwind="w-full"
@@ -73,10 +76,10 @@ export default function FAQScreen() {
 
         <View className="flex-row justify-between items-center px-4  mb-2">
           <Text className="text-base font-semibold text-black font-poppins">
-            Most frequently asked
+          {t('faq.most_frequent')}
           </Text>
           <Text className="text-sm font-semibold text-green-600 font-poppins">
-            See all
+          {t('faq.see_all')}
           </Text>
         </View>
 
@@ -117,7 +120,7 @@ export default function FAQScreen() {
 
           {filteredFAQs.length === 0 && (
             <Text className="text-center text-gray-500 mt-6 font-poppins">
-              No results found.
+              {t('faq.no_results')}
             </Text>
           )}
         </ScrollView>
