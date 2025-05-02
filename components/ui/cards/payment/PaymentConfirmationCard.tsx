@@ -121,7 +121,7 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
             onPress={() => console.log('Bell pressed')}
           >
             <View className="mt-4">
-              <BellIcon width={16} height={15} fill="#6B7280" />
+              <BellIcon fill="#6B7280" />
             </View>
           </TouchableOpacity>
         )}
