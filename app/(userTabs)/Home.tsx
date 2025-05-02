@@ -39,6 +39,7 @@ import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 import useNearbyWorkshops from '@/hooks/location/useNearbyWorkshops';
+import MapModal from '@/components/modal/MapModal';
 
 export default function UserHome() {
   const [filter, setFilter] = useState('');
@@ -47,6 +48,7 @@ export default function UserHome() {
   const servicesRef = useRef();
   const {t} = useTranslation();
   const [filteredWorkshops, setFilteredWorkshops] = useState<Workshop[]>([]);
+
 
   const {workshops, loadingWorkshops, setLoadingWorkshops} = useNearbyWorkshops(
     0,
@@ -58,6 +60,8 @@ export default function UserHome() {
 
   const dispatch = useAppDispatch();
   const token = useJwtToken();
+
+  const [isMapVisible, setIsMapVisible] = useState(false);
 
   useUserLocation();
 
@@ -132,7 +136,9 @@ export default function UserHome() {
             });
           }}
         />
-        <LocationPin />
+        <CrossPlatformButtonLayout onPress={() => setIsMapVisible(true)}>
+          <LocationPin />
+        </CrossPlatformButtonLayout>
 
         <View className="flex-row items-center relative">
           <TicDriveInput
@@ -255,6 +261,7 @@ export default function UserHome() {
                 </Text>
               </CrossPlatformButtonLayout>
             </View>
+            {isMapVisible && <MapModal setIsMapVisible={setIsMapVisible} />}
           </ScrollView>
         )}
       </SafeAreaViewLayout>
