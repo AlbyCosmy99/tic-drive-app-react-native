@@ -81,7 +81,7 @@ export default function BookingConfirmationScreen() {
         },
       );
     } catch (e: any) {
-      setErrorMessage('A problem occured during the car registration.');
+      setErrorMessage(t('bookingConfirmation.errorCarRegistration'));
     } finally {
       setLoadingCarRegistrationConfirmation(false);
     }
@@ -91,8 +91,8 @@ export default function BookingConfirmationScreen() {
     dispatch(
       setServicesChoosenByUsers({
         id: 1,
-        title: 'Oil Change',
-        description: 'Oil change',
+        title: t('service.oilChange'),
+        description: t('service.oilChange'),
         icon: 'https://img.icons8.com/dotty/80/car-service.png',
       }),
     );
@@ -123,23 +123,25 @@ export default function BookingConfirmationScreen() {
               {t('bookings.confirmed')}!
             </Text>
             <Text className="text-tic text-base text-center">
-              Your service needs confirmation from the workshop.
+              {t('bookingConfirmation.awaitingWorkshopConfirmation')}
             </Text>
             <View className="flex flex-col items-center justify-center mt-4 mb-6">
-              <Text className="text-sm text-tic">Booking# 00806835</Text>
+              <Text className="text-sm text-tic">
+                {t('bookingConfirmation.bookingNumber', {number: '00806835'})}
+              </Text>
               <Text className="text-sm text-tic">{formatCurrentDate()}</Text>
             </View>
             <PaymentConfirmationCard
               workshop={workshop}
               timeDate={timeDate}
-              type="Pending confirmation"
+              type={t('bookingConfirmation.statusPending')}
             />
           </View>
         )}
         <TicDriveButton
           replace={true}
           toTop={true}
-          text="Home"
+          text={t('common.home')}
           routeName="userTabs"
           routeParams={{animation: 'fade'}}
           stateRouteName="Home"

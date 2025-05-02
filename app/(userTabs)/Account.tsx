@@ -6,17 +6,12 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
-// Navigation & State
+import React, {useState} from 'react';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import navigationPush from '@/services/navigation/push';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
-
-// Layouts
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
-
-// UI Components
 import NotLogged from '@/components/auth/NotLogged';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import CircularUserAvatar from '@/components/ui/avatars/CircularUserAvatar';
@@ -25,11 +20,9 @@ import {handleLogout} from '@/components/ui/buttons/TicDriveAuthButton';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import IconTextPair from '@/components/ui/IconTextPair';
 
-// Utils & Hooks
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
 
-// Icons
 import HeartIcon from '@/components/svgs/emotions/EmptyHeart';
 import CustomerServiceIcon from '@/components/svgs/Headphone';
 import Logout from '@/components/svgs/Logout';
@@ -72,19 +65,14 @@ export default function UserAccount() {
   const [editedUser, setEditedUser] = useState<User>({name: user?.name});
 
   const [languageOptionsVisible, setLanguageOptionsVisible] = useState(false);
-
-  //modals
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [showLanguageChangedModal, setShowLanguageChangedModal] =
     useState(false);
 
   const dispatch = useAppDispatch();
-
   const languageCode = useAppSelector(state => state.language.languageCode);
-
   const token = useJwtToken();
   const navigation = useTicDriveNavigation();
-
   const {setErrorMessage} = useGlobalErrors();
 
   const onFavoriteWorkshops = () => {
@@ -118,16 +106,15 @@ export default function UserAccount() {
 
   const handleDeleteAccount = () => {
     Alert.alert(
-      'Delete Account',
-      'Are you sure you want to delete your account? This action is irreversible.',
+      t('userAccount.deleteAccountTitle'),
+      t('userAccount.deleteAccountConfirm'),
       [
         {text: 'Cancel', style: 'cancel'},
         {
-          text: 'Delete',
+          text: t('userAccount.delete'),
           style: 'destructive',
           onPress: () => {
-            // TODO: will do later the actual delete logic
-            alert('Account deleted (mock)');
+            alert(t('userAccount.deletedMock'));
           },
         },
       ],
@@ -160,7 +147,7 @@ export default function UserAccount() {
                   uri={user?.imageUrl}
                   styles={{width: 70, height: 70}}
                 />
-                <View className="w-40">
+                <View className="w-44">
                   {isEditing ? (
                     <TextInput
                       className="font-semibold text-lg border-b border-gray-300"
@@ -169,7 +156,7 @@ export default function UserAccount() {
                       onChangeText={text =>
                         setEditedUser({...editedUser, name: text.trim()})
                       }
-                      placeholder="Enter your name"
+                      placeholder={t('userAccount.enterYourName')}
                       placeholderTextColor="#888"
                       autoFocus
                       accessibilityLabel="Name Input"
@@ -181,7 +168,7 @@ export default function UserAccount() {
                   ) : (
                     <CrossPlatformButtonLayout onPress={handleOnEdit}>
                       <Text className="font-normal text-lg text-gray-800">
-                        Edit your name
+                        {t('useraccount.editYourName')}
                       </Text>
                     </CrossPlatformButtonLayout>
                   )}
@@ -197,7 +184,7 @@ export default function UserAccount() {
                       <EditIcon width={20} height={20} />
                     )}
                     <Text className="text-green-600 font-medium ml-1">
-                      {isEditing ? 'Save' : 'Edit'}
+                      {isEditing ? t('common.save') : t('common.edit')}
                     </Text>
                   </View>
                 </CrossPlatformButtonLayout>
@@ -211,7 +198,7 @@ export default function UserAccount() {
             className="px-1"
             contentContainerStyle={{paddingBottom: 140}}
           >
-            <Section title="Account">
+            <Section title={t('userAccount.sectionTitle')}>
               <View className="flex-row items-center py-2">
                 <MailIcon />
                 <Text className="text-base font-medium pl-1">
@@ -234,25 +221,28 @@ export default function UserAccount() {
                 onPress={() => navigationPush(navigation, 'UserVehiclesScreen')}
               >
                 <IconTextPair
-                  text="Registered vehicles"
+                  text={t('userAccount.registeredVehicles')}
                   icon={<VehicleIcon />}
                   textTailwindCss="text-base font-medium pl-1"
                   containerTailwindCss="py-2 my-0 pt-1"
                 />
               </CrossPlatformButtonLayout>
+
               <HorizontalLine />
 
               <CrossPlatformButtonLayout onPress={onFavoriteWorkshops}>
                 <IconTextPair
-                  text="Favorite workshops"
+                  text={t('userAccount.favoriteWorkshops')}
                   icon={<HeartIcon />}
                   textTailwindCss="text-base font-medium pl-1"
                   containerTailwindCss="py-2 my-0 pt-1"
                 />
               </CrossPlatformButtonLayout>
+
               <HorizontalLine />
             </Section>
-            <Section title="Help and support">
+
+            <Section title={t('userAccount.helpAndSupport')}>
               <CrossPlatformButtonLayout
                 onPress={() =>
                   setLanguageOptionsVisible(!languageOptionsVisible)
@@ -296,10 +286,12 @@ export default function UserAccount() {
                   </TouchableOpacity>
                 </View>
               )}
+
               <HorizontalLine />
+
               <CrossPlatformButtonLayout onPress={handleFAQ}>
                 <IconTextPair
-                  text="FAQ"
+                  text={t('userAccount.faq')}
                   icon={<FAQ />}
                   textTailwindCss="text-base font-medium pl-1"
                   containerTailwindCss="py-2 my-0 pt-1"
@@ -307,11 +299,12 @@ export default function UserAccount() {
               </CrossPlatformButtonLayout>
 
               <HorizontalLine />
+
               <CrossPlatformButtonLayout
-                onPress={() => alert('Customer support')}
+                onPress={() => alert(t('userAccount.customerSupport'))}
               >
                 <IconTextPair
-                  text="Customer support"
+                  text={t('userAccount.customerSupport')}
                   icon={<CustomerServiceIcon />}
                   textTailwindCss="text-base font-medium pl-1"
                   containerTailwindCss="py-2 my-0 pt-1"
@@ -324,7 +317,7 @@ export default function UserAccount() {
                 onPress={() => setShowLogoutModal(true)}
               >
                 <IconTextPair
-                  text="Logout"
+                  text={t('userAccount.logout')}
                   icon={<Logout />}
                   textTailwindCss="text-base font-medium pl-1"
                   containerTailwindCss="py-2 my-0 pt-1"
@@ -335,7 +328,7 @@ export default function UserAccount() {
 
               <CrossPlatformButtonLayout onPress={handleDeleteAccount}>
                 <IconTextPair
-                  text="Delete account"
+                  text={t('userAccount.deleteAccount')}
                   icon={<Remove />}
                   textTailwindCss="text-base font-medium pl-1"
                   containerTailwindCss="py-2 my-0 pt-1"
@@ -345,7 +338,6 @@ export default function UserAccount() {
           </ScrollView>
         </View>
 
-        {/* modals */}
         <TicDriveModal
           visible={showLogoutModal}
           onClose={() => setShowLogoutModal(false)}
@@ -353,10 +345,10 @@ export default function UserAccount() {
             setShowLogoutModal(false);
             handleLogout(dispatch, navigation);
           }}
-          title="Logout"
-          content="Are you sure you want to log out?"
+          title={t('userAccount.logout')}
+          content={t('userAccount.logoutConfirm')}
           confirmText={t('confirm')}
-          cancelText="Cancel"
+          cancelText={t('common.cancel')}
           confirmButtonStyle={{backgroundColor: '#E53935'}}
         />
         <TicDriveModal

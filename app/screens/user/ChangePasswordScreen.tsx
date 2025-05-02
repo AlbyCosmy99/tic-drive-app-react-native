@@ -15,8 +15,11 @@ import isAcceptablePassword from '@/utils/auth/isAcceptablePassword';
 import navigationReset from '@/services/navigation/reset';
 import useLogin from '@/hooks/auth/useLogin';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
+import {useTranslation} from 'react-i18next';
 
 const ChangePasswordScreen = () => {
+  const {t} = useTranslation();
+
   type RootStackParamList = {
     ChangePasswordScreen: {email: string};
   };
@@ -60,17 +63,23 @@ const ChangePasswordScreen = () => {
     } catch (e: any) {
       if (axios.isAxiosError(e)) {
         if (e.response?.status === 400) {
-          setErrorMessage('Bad request: ' + e.response?.data?.message);
+          setErrorMessage(
+            t('changePassword.error.badRequest', {
+              message: e.response?.data?.message,
+            }),
+          );
         } else if (e.response?.status === 401) {
-          setErrorMessage('Unauthorized: Please check your credentials.');
+          setErrorMessage(t('changePassword.error.unauthorized'));
         } else if (e.response?.status === 500) {
-          setErrorMessage('Server error. Please try again later.');
+          setErrorMessage(t('changePassword.error.serverError'));
         } else {
-          setErrorMessage('Unexpected error: ' + e.response?.status);
+          setErrorMessage(
+            t('changePassword.error.unexpected', {status: e.response?.status}),
+          );
         }
       } else {
         console.error('error:', e);
-        setErrorMessage('Qualcosa è andato storto. Riprova.');
+        setErrorMessage(t('changePassword.error.generic'));
         navigationReset(navigation, 0, 'ForgotPasswordScreen');
       }
     }
@@ -84,17 +93,18 @@ const ChangePasswordScreen = () => {
       ) : (
         <>
           <View className="mx-6 mt-10">
-            <Text className="text-xl font-medium">Set a new password</Text>
+            <Text className="text-xl font-medium">
+              {t('changePassword.setNewPassword')}
+            </Text>
             <Text className="text-base font-medium text-tic mr-4 mb-4 mt-1">
-              Create a new password. Ensure it differs from previous ones for
-              security.
+              {t('changePassword.description')}
             </Text>
           </View>
 
           <View className="mx-6 mt-4">
             <TicDriveInput
               containerViewStyleTailwind="mt-4"
-              placeholder="Password"
+              placeholder={t('changePassword.password')}
               isRightIcon={true}
               customValue={password}
               onChange={e => setPassword(e)}
@@ -117,7 +127,7 @@ const ChangePasswordScreen = () => {
             />
             <TicDriveInput
               containerViewStyleTailwind="mt-4"
-              placeholder="Repeat Password"
+              placeholder={t('changePassword.repeatPassword')}
               isRightIcon={true}
               customValue={confirmPassword}
               onChange={e => setConfirmPassword(e)}
@@ -142,7 +152,7 @@ const ChangePasswordScreen = () => {
 
           <TicDriveButton
             disabled={buttonDisabled}
-            text="Update password"
+            text={t('changePassword.updatePassword')}
             customDisabledStyle={{backgroundColor: '#B0E0C3'}}
             customButtonStyle={{height: 56, borderRadius: 12, marginTop: 24}}
             customTitleStyle={{fontWeight: 700}}

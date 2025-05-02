@@ -153,7 +153,7 @@ export default function UserHome() {
             <FilterSearchModal
               elements={filteredWorkshops}
               idToCompareForClock={lastWorkshopSelectedFromFilter?.id}
-              emptyElementsMessage="No workshops with this filter."
+              emptyElementsMessage={t('workshops.noWorkshopsWithFilter')}
               onElementPress={(elem: any) => {
                 navigationPush(navigation, 'WorkshopDetails');
                 dispatch(setSelectedWorkshop(elem));
@@ -205,7 +205,7 @@ export default function UserHome() {
                         </CrossPlatformButtonLayout>
                       ) : (
                         <Text className="font-medium mb-2">
-                          No workshops available yet.
+                          {t('workshops.noWorkshopsAvailable')}
                         </Text>
                       )}
                     </View>

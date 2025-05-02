@@ -11,11 +11,13 @@ import {RouteProp, useRoute} from '@react-navigation/native';
 import axios from 'axios';
 import {useMemo, useState} from 'react';
 import {Text, View} from 'react-native';
+import {useTranslation} from 'react-i18next';
 
 const ResetPasswordWithCodeScreen = () => {
   type RootStackParamList = {
     ResetPasswordWithCodeScreen: {email: string};
   };
+  const {t} = useTranslation();
 
   const route =
     useRoute<RouteProp<RootStackParamList, 'ResetPasswordWithCodeScreen'>>();
@@ -41,13 +43,15 @@ const ResetPasswordWithCodeScreen = () => {
     } catch (e: any) {
       if (axios.isAxiosError(e)) {
         if (e.response?.status === 400) {
-          setErrorMessage('Bad request: ' + e.response?.data?.message);
+          setErrorMessage(
+            t('errors.badRequest', {message: e.response?.data?.message}),
+          );
         } else if (e.response?.status === 401) {
-          setErrorMessage('Unauthorized: Please check your credentials.');
+          setErrorMessage(t('errors.unauthorized'));
         } else if (e.response?.status === 500) {
-          setErrorMessage('Server error. Please try again later.');
+          setErrorMessage(t('errors.serverError'));
         } else {
-          setErrorMessage('Unexpected error: ' + e.response?.status);
+          setErrorMessage(t('errors.unexpected', {code: e.response?.status}));
         }
       } else {
         console.error('Unknown error:', e.message);
@@ -60,10 +64,11 @@ const ResetPasswordWithCodeScreen = () => {
     <SafeAreaViewLayout>
       <TicDriveNavbar />
       <View className="mx-6 mt-10">
-        <Text className="text-xl font-medium">Check your email</Text>
+        <Text className="text-xl font-medium">
+          {t('resetPassword.checkYourEmail')}
+        </Text>
         <Text className="text-base font-medium text-tic mr-4 mb-4 mt-1">
-          Abbiamo inviato un link di reimpostazione a {email.toLowerCase()}.
-          Inserisci il codice a 6 cifre menzionato nell'email.
+          {t('resetPassword.sentResetLink', {email: email.toLowerCase()})}
         </Text>
       </View>
 
@@ -71,7 +76,7 @@ const ResetPasswordWithCodeScreen = () => {
         <TicDriveInput
           customValue={code}
           onChange={setCode}
-          placeholder="Inserisci codice"
+          placeholder={t('resetPassword.enterCode')}
           keyboardType="number-pad"
           maxLength={6}
           textContentType="oneTimeCode"
@@ -81,7 +86,7 @@ const ResetPasswordWithCodeScreen = () => {
 
       <TicDriveButton
         disabled={buttonDisabled}
-        text="Verifica codice"
+        text={t('resetPassword.verifyCode')}
         customDisabledStyle={{backgroundColor: '#B0E0C3'}}
         customButtonStyle={{height: 56, borderRadius: 12, marginTop: 24}}
         customTitleStyle={{fontWeight: 700}}

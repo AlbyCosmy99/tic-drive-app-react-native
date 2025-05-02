@@ -1,4 +1,14 @@
 {
+  "menu": "Menu",
+  "generalSettings": "IMPOSTAZIONI GENERALI",
+  "profile": "Profilo",
+  "password": "Password",
+  "notifications": "Notifiche",
+  "other": "ALTRO",
+  "support": "Supporto",
+  "feedback": "Feedback",
+  "deleteAccount": "Elimina account",
+  "termsAndPrivacy": "Termini di servizio e Privacy Policy",
   "reminder": "Promemoria",
   "bookNow": "Prenota ora",
   "discoverNow": "Scopri ora",
@@ -10,6 +20,16 @@
     "title": "Prenotazioni",
     "confirmed": "Prenotazione confermata"
   },
+
+  "bookingsTabs": {
+    "active": "Attivi",
+    "past": "Passati",
+    "cancelled": "Cancellati"
+  },
+  "status": {
+    "completed": "Completato",
+    "cancelled": "Cancellato"
+  },
   "reviews": "Recensioni",
   "account": "Profilo",
   "location": "Posizione",
@@ -18,7 +38,8 @@
     "bookAService": "Prenota un servizio",
     "bookTheService": "Prenota il servizio",
     "chooseService": "Scegli servizio",
-    "searchService": "Cerca servizio"
+    "searchService": "Cerca servizio",
+    "oilChange": "Cambio olio"
   },
   "continue": "Continua",
   "date": {
@@ -36,7 +57,15 @@
     "registerVehicleForBookings": "Registra il tuo veicolo per effettuare una prenotazione",
     "make": "Marca",
     "model": "Modello",
-    "makeAndModel": "Marca e modello"
+    "makeAndModel": "Marca e modello",
+    "selectCarMake": "Seleziona marca auto",
+    "searchMake": "Cerca marca",
+    "selectCarModel": "Seleziona modello auto",
+    "searchModel": "Cerca modello",
+    "invalidPlateFormat": "Inserisci un numero di targa valido. Formato: AA123BB",
+    "myVehicles": "I miei veicoli",
+    "noVehiclesMessage": "Non hai ancora registrato veicoli. Clicca su",
+    "addFirstCar": "per aggiungere la tua prima auto e iniziare!"
   },
   "home": {
     "notifications": {
@@ -47,6 +76,7 @@
     "findRightWorkshop": "Trova l’officina che fa per te",
     "discoverServicesAndBook": "Scopri i servizi e prenota"
   },
+
   "workshops": {
     "servicesOffered": "Servizi offerti",
     "reviews": {
@@ -54,7 +84,15 @@
       "title": "recensioni",
       "review": "recensione"
     },
-    "searchWorkshop": "Cerca officina"
+    "searchWorkshop": "Cerca officina",
+    "noWorkshopsWithFilter": "Nessuna officina trovata con questo filtro.",
+    "noWorkshopsAvailable": "Nessuna officina disponibile al momento."
+  },
+  "bookingConfirmation": {
+    "awaitingWorkshopConfirmation": "Il servizio necessita la conferma da parte dell'officina.",
+    "bookingNumber": "Prenotazione n. {{number}}",
+    "statusPending": "In attesa di conferma",
+    "errorCarRegistration": "Si è verificato un problema durante la registrazione dell'auto."
   },
   "language": {
     "languageChanged": "Lingua cambiata",
@@ -62,5 +100,113 @@
     "changeLanguage": "Cambia lingua",
     "english": "Inglese",
     "italian": "Italiano"
+  },
+  "faq": {
+    "title": "Domande Frequenti",
+    "subtitle": "Come possiamo aiutarti?",
+    "search_placeholder": "Cerca per parola chiave",
+    "most_frequent": "Le più richieste",
+    "see_all": "Vedi tutte",
+    "no_results": "Nessun risultato trovato.",
+    "question_1": "Come posso prenotare un servizio su TicDrive?",
+    "answer_1": "Apri l'app o il sito di TicDrive, inserisci i dettagli del veicolo e la posizione, quindi seleziona il tipo di servizio e l’orario. La prenotazione è semplice e veloce.",
+    "question_2": "Come posso aggiungere o aggiornare un metodo di pagamento?",
+    "answer_2": "Vai al tuo profilo e tocca \"Metodi di pagamento\" per aggiungere o aggiornare l’opzione preferita.",
+    "question_3": "Posso prenotare un servizio durante il fine settimana?",
+    "answer_3": "Sì, puoi programmare servizi qualsiasi giorno della settimana, compresi i fine settimana.",
+    "question_4": "Posso cancellare o modificare una prenotazione?",
+    "answer_4": "Sì, le prenotazioni possono essere cancellate o modificate almeno 24 ore prima dell’orario previsto."
+  },
+
+  "confirmEmail": {
+    "welcome": "Benvenuto {{name}}!",
+    "pleaseConfirm": "Per favore conferma il tuo indirizzo email.",
+    "instructions": "Abbiamo inviato un'email di conferma al tuo indirizzo registrato. Controlla la tua casella di posta (anche la cartella spam) e clicca sul link di conferma per attivare il tuo account.",
+    "resendButton": "Reinvia email di conferma",
+    "confirmedButton": "Ho confermato l'email",
+    "modal1Title": "Email di conferma inviata",
+    "modal1Content": "Controlla la tua email",
+    "modal1Confirm": "Perfetto",
+    "modal2Title": "Controlla la tua email",
+    "modal2Content": "La tua email non è ancora confermata. Controlla la tua casella di posta o reinviala premendo il pulsante 'Reinvia email di conferma'.",
+    "modal2Confirm": "Ok"
+  },
+  "payment": {
+    "enter_details": "Inserisci i dettagli di pagamento",
+    "cardholder_name": "Nome del titolare *",
+    "cardholder_placeholder": "es. Mario Rossi",
+    "card_number": "Numero della carta",
+    "expiration_date": "Data di scadenza",
+    "expiration_date_placeholder": "MM/AA",
+    "security_code": "Codice di sicurezza (CVV)",
+    "security_code_placeholder": "es. 123",
+    "security_code_hint": "Il numero di 3 cifre sul retro della tua carta.",
+    "add_card": "Aggiungi carta"
+  },
+  "common": {
+    "save": "Salva",
+    "edit": "Modifica",
+    "cancel": "Annulla",
+    "ok": "Ok",
+    "home": "Home"
+  },
+  "userAccount": {
+    "enterYourName": "Inserisci il tuo nome",
+    "sectionTitle": "Sezione Account",
+    "registeredVehicles": "Veicoli registrati",
+    "favoriteWorkshops": "Officine preferite",
+    "helpAndSupport": "Aiuto e supporto",
+    "faq": "Domande frequenti",
+    "customerSupport": "Supporto clienti",
+    "logout": "Esci",
+    "deleteAccount": "Elimina account",
+    "logoutConfirm": "Sei sicuro di voler uscire?",
+    "deleteAccountTitle": "Eliminazione account",
+    "deleteAccountConfirm": "Sei sicuro di voler eliminare il tuo account? Questa azione è irreversibile.",
+    "deletedMock": "Account eliminato (mock)",
+    "delete": "Elimina"
+  },
+
+  "changePassword": {
+    "setNewPassword": "Imposta una nuova password",
+    "description": "Crea una nuova password. Assicurati che sia diversa da quelle precedenti per maggiore sicurezza.",
+    "password": "Password",
+    "repeatPassword": "Ripeti password",
+    "updatePassword": "Aggiorna password"
+  },
+  "forgotPassword": {
+    "title": "Password dimenticata?",
+    "description": "Inserisci la tua email per reimpostare la password",
+    "emailLabel": "La tua email",
+    "emailPlaceholder": "Inserisci la tua email",
+    "resetPasswordButton": "Reimposta password"
+  },
+  "resetPassword": {
+    "checkYourEmail": "Controlla la tua email",
+    "sentResetLink": "Abbiamo inviato un link di reimpostazione a {{email}}. Inserisci il codice a 6 cifre menzionato nell'email.",
+    "enterCode": "Inserisci codice",
+    "verifyCode": "Verifica codice"
+  },
+  "successPasswordChange": {
+    "success": "Successo",
+    "subtitle": "Congratulazioni! La tua password è stata cambiata. Continua alla Home."
+  },
+  "errors": {
+    "badRequest": "Richiesta non valida: {{message}}",
+    "unauthorized": "Non autorizzato: controlla le credenziali.",
+    "serverError": "Errore del server. Riprova più tardi.",
+    "unexpected": "Errore imprevisto: {{code}}",
+    "general": "Qualcosa è andato storto. Riprova."
+  },
+  "reviewBooking": {
+    "reviewDetails": "Dettagli della prenotazione",
+    "subtotal": "SUBTOTALE",
+    "serviceWithName": "Servizio ({{name}})",
+    "promoCode": "Codice promozionale",
+    "apply": "Applica",
+    "total": "Totale",
+    "paymentMethod": "METODO DI PAGAMENTO",
+    "payInWorkshop": "Paga in officina",
+    "bookNow": "Prenota ora"
   }
 }
