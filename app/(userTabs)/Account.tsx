@@ -105,20 +105,7 @@ export default function UserAccount() {
   };
 
   const handleDeleteAccount = () => {
-    Alert.alert(
-      t('userAccount.deleteAccountTitle'),
-      t('userAccount.deleteAccountConfirm'),
-      [
-        {text: 'Cancel', style: 'cancel'},
-        {
-          text: t('userAccount.delete'),
-          style: 'destructive',
-          onPress: () => {
-            alert(t('userAccount.deletedMock'));
-          },
-        },
-      ],
-    );
+    navigationPush(navigation, 'DeleteAccountScreen');
   };
 
   if (!token)
@@ -328,7 +315,7 @@ export default function UserAccount() {
 
               <CrossPlatformButtonLayout onPress={handleDeleteAccount}>
                 <IconTextPair
-                  text={t('userAccount.deleteAccount')}
+                  text="Delete account"
                   icon={<Remove />}
                   textTailwindCss="text-base font-medium pl-1"
                   containerTailwindCss="py-2 my-0 pt-1"
