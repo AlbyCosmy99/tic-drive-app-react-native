@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -7,14 +7,14 @@ import {
   Platform,
   TouchableOpacity,
 } from 'react-native';
-import MapView, { Marker, Region, LatLng } from 'react-native-maps';
-import { Ionicons } from '@expo/vector-icons';
+import MapView, {Marker, Region, LatLng} from 'react-native-maps';
+import {Ionicons} from '@expo/vector-icons';
 import navigationPush from '@/services/navigation/push';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
-import { useAppDispatch } from '@/stateManagement/redux/hooks';
-import { setSelectedWorkshop } from '@/stateManagement/redux/slices/workshopsSlice';
+import {useAppDispatch} from '@/stateManagement/redux/hooks';
+import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice';
 import useNearbyWorkshops from '@/hooks/location/useNearbyWorkshops';
-import { POIMarker } from '@/types/nav/map/POIMarker';
+import {POIMarker} from '@/types/nav/map/POIMarker';
 
 interface MapModalProps {
   isMapVisible: boolean;
@@ -44,10 +44,10 @@ export default function MapModal({
   const navigation = useTicDriveNavigation();
   const dispatch = useAppDispatch();
 
-  const { workshops, loading, userLocation } = useNearbyWorkshops();
+  const {workshops, loading, userLocation} = useNearbyWorkshops();
 
   useEffect(() => {
-    console.log("Workshops in MapModal:", workshops);  
+    console.log('Workshops in MapModal:', workshops);
     if (userLocation) {
       setInitialRegion({
         latitude: userLocation.latitude,
@@ -75,7 +75,7 @@ export default function MapModal({
             initialRegion={initialRegion}
             showsUserLocation
           >
-            {poiMarkers.map((poi) => (
+            {poiMarkers.map(poi => (
               <Marker
                 key={poi.id}
                 coordinate={poi.coordinate}
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
+    shadowOffset: {width: 0, height: 1},
     shadowOpacity: 0.3,
     shadowRadius: 2,
     elevation: 5,
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 24,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
+    shadowOffset: {width: 0, height: 1},
     shadowOpacity: 0.2,
     shadowRadius: 2,
     elevation: 4,

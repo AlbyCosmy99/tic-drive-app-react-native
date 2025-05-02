@@ -421,19 +421,20 @@ export default function WorkshopsListScreen() {
           <WorkshopCards favorite={favorite} order={selectedOrder.value} />
         </View>
 
-        {/* ✅ MAP MODAL */}
-        <MapModal
-          isMapVisible={isMapVisible}
-          setIsMapVisible={setIsMapVisible}
-          selectedLocation={selectedLocation}
-          setSelectedLocation={setSelectedLocation}
-          locationName={locationName}
-          setLocationName={setLocationName}
-          poiMarkers={poiMarkers}
-          setPoiMarkers={setPoiMarkers}
-          initialRegion={initialRegion}
-          setInitialRegion={setInitialRegion}
-        />
+        {isMapVisible && (
+          <MapModal
+            isMapVisible={isMapVisible}
+            setIsMapVisible={setIsMapVisible}
+            selectedLocation={selectedLocation}
+            setSelectedLocation={setSelectedLocation}
+            locationName={locationName}
+            setLocationName={setLocationName}
+            poiMarkers={poiMarkers}
+            setPoiMarkers={setPoiMarkers}
+            initialRegion={initialRegion}
+            setInitialRegion={setInitialRegion}
+          />
+        )}
       </SafeAreaViewLayout>
     </LinearGradientViewLayout>
   );

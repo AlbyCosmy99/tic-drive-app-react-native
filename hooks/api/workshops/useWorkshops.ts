@@ -3,11 +3,7 @@ import apiClient from '@/services/http/axiosClient';
 import Workshop from '@/types/workshops/Workshop';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
-
-interface Params {
-  order: 'asc' | 'desc';
-  filter: string;
-}
+import {Params} from '@/types/config/Params';
 
 const useWorkshops = (
   skip: number = 0,
@@ -65,7 +61,7 @@ const useWorkshops = (
         }
         setWorkshops(res?.data.workshops);
         setCount(res?.data.count);
-      } catch (err) {
+      } catch (err: any) {
         setErrorMessage(err.message);
       } finally {
         setLoadingWorkshops(false);
