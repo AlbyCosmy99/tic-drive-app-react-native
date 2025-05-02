@@ -38,7 +38,7 @@ export default function UserTabLayout() {
             ),
           }}
         />
-        <Tab.Screen
+        {/* <Tab.Screen
           name="Chat"
           component={UserChat}
           options={{
@@ -48,7 +48,7 @@ export default function UserTabLayout() {
               <ChatIcon width={28} fill={color} name="Home" />
             ),
           }}
-        />
+        /> */}
         <Tab.Screen
           name="Services"
           component={ChooseServicesScreen}
