@@ -1,23 +1,49 @@
 {
+  "menu": "Menu",
+  "generalSettings": "GENERAL SETTINGS",
+  "profile": "Profile",
+  "password": "Password",
+  "notifications": "Notifications",
+  "other": "OTHER",
+  "support": "Support",
+  "feedback": "Feedback",
+  "deleteAccount": "Delete account",
+  "termsAndPrivacy": "Terms of Service and Privacy Policy",
   "reminder": "Reminder",
   "bookNow": "Book now",
   "discoverNow": "Discover now",
   "payNow": "Pay now",
   "RemindMeLater": "Remind me later",
+  "confirm": "Confirm",
   "services": "Services",
-  "bookings": "Bookings",
-  "account": "Account",
+  "bookings": {
+    "title": "Bookings",
+    "confirmed": "Booking confirmed"
+  },
+  "bookingsTabs": {
+    "active": "Active",
+    "past": "Past",
+    "cancelled": "Cancelled"
+  },
+  "status": {
+    "completed": "Completed",
+    "cancelled": "Cancelled"
+  },
+  "reviews": "Reviews",
+  "account": "Profile",
   "location": "Location",
   "notAvailable": "Not available",
   "service": {
     "bookAService": "Book a service",
     "bookTheService": "Book the service",
     "chooseService": "Choose service",
-    "searchService": "Search service"
+    "searchService": "Search service",
+    "oilChange": "Oil change"
   },
   "continue": "Continue",
   "date": {
-    "selectADate": "Select a date"
+    "selectADate": "Select a date",
+    "chooseSlot": "Choose from available slots"
   },
   "seeAll": {
     "workshops": "See all workshops",
@@ -26,12 +52,24 @@
   },
   "vehicles": {
     "registerVehicle": "Register vehicle",
-    "handleVehicles": "Manage vehicles"
+    "handleVehicles": "Manage vehicles",
+    "registerVehicleForBookings": "Register your vehicle to make a booking",
+    "make": "Make",
+    "model": "Model",
+    "makeAndModel": "Make and model",
+    "selectCarMake": "Select car make",
+    "searchMake": "Search make",
+    "selectCarModel": "Select car model",
+    "searchModel": "Search model",
+    "invalidPlateFormat": "Enter a valid license plate. Format: AA123BB",
+    "myVehicles": "My vehicles",
+    "noVehiclesMessage": "You haven't registered any vehicles yet. Click on",
+    "addFirstCar": "to add your first car and get started!"
   },
   "home": {
     "notifications": {
-      "first": "Last service: 12 months ago.\nPlan now!",
-      "second": "It's time to switch to winter tires, check out the offers for you!",
+      "first": "Last service: 12 months ago.\nSchedule now!",
+      "second": "Time to change tires for the winter season. Check out our offers!",
       "third": "Your car tax expires on 01/01/2025!"
     },
     "findRightWorkshop": "Find the right workshop for you",
@@ -40,11 +78,19 @@
   "workshops": {
     "servicesOffered": "Services offered",
     "reviews": {
-      "whatPeopleSay": "What people say",
+      "whatPeopleSay": "What others are saying",
       "title": "reviews",
       "review": "review"
     },
-    "searchWorkshop": "Search workshop"
+    "searchWorkshop": "Search workshop",
+    "noWorkshopsWithFilter": "No workshops found with this filter.",
+    "noWorkshopsAvailable": "No workshops available at the moment."
+  },
+  "bookingConfirmation": {
+    "awaitingWorkshopConfirmation": "The service requires confirmation from the workshop.",
+    "bookingNumber": "Booking no. {{number}}",
+    "statusPending": "Awaiting confirmation",
+    "errorCarRegistration": "There was a problem registering the car."
   },
   "language": {
     "languageChanged": "Language changed",
@@ -52,5 +98,112 @@
     "changeLanguage": "Change language",
     "english": "English",
     "italian": "Italian"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "How can we help you?",
+    "search_placeholder": "Search by keyword",
+    "most_frequent": "Most requested",
+    "see_all": "See all",
+    "no_results": "No results found.",
+    "question_1": "How can I book a service on TicDrive?",
+    "answer_1": "Open the TicDrive app or website, enter your vehicle details and location, then select the type of service and time slot. Booking is quick and easy.",
+    "question_2": "How can I add or update a payment method?",
+    "answer_2": "Go to your profile and tap 'Payment methods' to add or update your preferred option.",
+    "question_3": "Can I book a service during the weekend?",
+    "answer_3": "Yes, you can schedule services any day of the week, including weekends.",
+    "question_4": "Can I cancel or modify a booking?",
+    "answer_4": "Yes, bookings can be canceled or modified at least 24 hours before the scheduled time."
+  },
+  "confirmEmail": {
+    "welcome": "Welcome {{name}}!",
+    "pleaseConfirm": "Please confirm your email address.",
+    "instructions": "We have sent a confirmation email to your registered address. Check your inbox (including spam) and click the confirmation link to activate your account.",
+    "resendButton": "Resend confirmation email",
+    "confirmedButton": "I confirmed the email",
+    "modal1Title": "Confirmation email sent",
+    "modal1Content": "Check your email",
+    "modal1Confirm": "Perfect",
+    "modal2Title": "Check your email",
+    "modal2Content": "Your email is not confirmed yet. Check your inbox or resend it by pressing the 'Resend confirmation email' button.",
+    "modal2Confirm": "Ok"
+  },
+  "payment": {
+    "enter_details": "Enter payment details",
+    "cardholder_name": "Cardholder name *",
+    "cardholder_placeholder": "e.g., Mario Rossi",
+    "card_number": "Card number",
+    "expiration_date": "Expiration date",
+    "expiration_date_placeholder": "MM/YY",
+    "security_code": "Security code (CVV)",
+    "security_code_placeholder": "e.g., 123",
+    "security_code_hint": "The 3-digit number on the back of your card.",
+    "add_card": "Add card"
+  },
+  "common": {
+    "save": "Save",
+    "edit": "Edit",
+    "cancel": "Cancel",
+    "ok": "Ok",
+    "home": "Home"
+  },
+  "useraccount": {
+    "enterYourName": "Enter your name",
+    "editYourName": "Edit your name",
+    "sectionTitle": "Account Section",
+    "registeredVehicles": "Registered vehicles",
+    "favoriteWorkshops": "Favorite workshops",
+    "helpAndSupport": "Help and support",
+    "faq": "Frequently asked questions",
+    "customerSupport": "Customer support",
+    "logout": "Logout",
+    "deleteAccount": "Delete account",
+    "logoutConfirm": "Are you sure you want to log out?",
+    "deleteAccountTitle": "Delete account",
+    "deleteAccountConfirm": "Are you sure you want to delete your account? This action is irreversible.",
+    "deletedMock": "Account deleted (mock)",
+    "delete": "Delete"
+  },
+  "changePassword": {
+    "setNewPassword": "Set a new password",
+    "description": "Create a new password. Make sure it's different from previous ones for better security.",
+    "password": "Password",
+    "repeatPassword": "Repeat password",
+    "updatePassword": "Update password"
+  },
+  "forgotPassword": {
+    "title": "Forgot password?",
+    "description": "Enter your email to reset your password",
+    "emailLabel": "Your email",
+    "emailPlaceholder": "Enter your email",
+    "resetPasswordButton": "Reset password"
+  },
+  "resetPassword": {
+    "checkYourEmail": "Check your email",
+    "sentResetLink": "We’ve sent a reset link to {{email}}. Enter the 6-digit code mentioned in the email.",
+    "enterCode": "Enter code",
+    "verifyCode": "Verify code"
+  },
+  "successPasswordChange": {
+    "success": "Success",
+    "subtitle": "Congratulations! Your password has been changed. Continue to Home."
+  },
+  "errors": {
+    "badRequest": "Bad request: {{message}}",
+    "unauthorized": "Unauthorized: check your credentials.",
+    "serverError": "Server error. Please try again later.",
+    "unexpected": "Unexpected error: {{code}}",
+    "general": "Something went wrong. Please try again."
+  },
+  "reviewBooking": {
+    "reviewDetails": "Booking details",
+    "subtotal": "SUBTOTAL",
+    "serviceWithName": "Service ({{name}})",
+    "promoCode": "Promotional code",
+    "apply": "Apply",
+    "total": "Total",
+    "paymentMethod": "PAYMENT METHOD",
+    "payInWorkshop": "Pay at workshop",
+    "bookNow": "Book now"
   }
 }
