@@ -12,6 +12,9 @@ export default function useNearbyWorkshops(
 ) {
   const token = useAppSelector(state => state.auth.token);
   const user = useAppSelector(state => state.auth.user);
+  const service = useAppSelector(
+    state => state.services.servicesChoosenByUsers[0],
+  );
 
   const [count, setCount] = useState(0);
   const [nearbyWorkshops, setNearbyWorkshops] = useState<Workshop[]>([]);
@@ -45,7 +48,7 @@ export default function useNearbyWorkshops(
       try {
         setLoadingNearbyWorkshops(true);
         const response = await axiosClient.get(
-          `/workshops/nearby?skip=${skip}&take=${take}&filter=${debouncedFilter}&order=${params?.order ?? 'asc'}`,
+          `/workshops/nearby?skip=${skip}&take=${take}&filter=${debouncedFilter}&order=${params?.order ?? 'asc'}${service?.id && `&serviceId=${service?.id}`}`,
           {
             headers: {Authorization: `Bearer ${token}`},
             params: {

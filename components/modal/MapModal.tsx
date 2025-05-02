@@ -37,7 +37,7 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
   useEffect(() => {
     if (user?.coordinates) {
       const lat = user.coordinates.latitude;
-      const radiusInKm = 5;
+      const radiusInKm = 10;
 
       const latitudeDelta = (radiusInKm * 2) / 111;
       const longitudeDelta =
