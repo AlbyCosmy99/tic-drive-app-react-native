@@ -10,6 +10,9 @@
       "channel": "development",
       "android": {
         "buildType": "apk"
+      },
+      "env": {
+        "APP_VARIANT": "development"
       }
     },
     "preview": {
@@ -17,6 +20,9 @@
       "channel": "preview",
       "android": {
         "buildType": "app-bundle"
+      },
+      "env": {
+        "APP_VARIANT": "preview"
       }
     },
     "production": {
@@ -24,6 +30,9 @@
       "channel": "production",
       "android": {
         "buildType": "app-bundle"
+      },
+      "env": {
+        "APP_VARIANT": "production"
       }
     }
   },
