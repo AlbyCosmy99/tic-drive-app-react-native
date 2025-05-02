@@ -105,21 +105,7 @@ export default function UserAccount() {
   };
 
   const handleDeleteAccount = () => {
-    Alert.alert(
-      'Delete Account',
-      'Are you sure you want to delete your account? This action is irreversible.',
-      [
-        {text: 'Cancel', style: 'cancel'},
-        {
-          text: 'Delete',
-          style: 'destructive',
-          onPress: () => {
-            // TODO: will do later the actual delete logic
-            alert('Account deleted (mock)');
-          },
-        },
-      ],
-    );
+    navigationPush(navigation, 'DeleteAccountScreen');
   };
 
   if (!token)

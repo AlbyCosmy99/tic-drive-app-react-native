@@ -304,13 +304,12 @@ export default function RootLayout() {
                       <Stack.Screen
                         name="DeleteAccountScreen"
                         component={DeleteAccountScreen}
-                        options={({ route }) => ({
-                        title: 'DeleteAccountScreen',
-                        headerShown: false,
-                        animation: getAnimation(route),
-                      })}
+                        options={({route}) => ({
+                          title: 'DeleteAccountScreen',
+                          headerShown: false,
+                          animation: getAnimation(route),
+                        })}
                       />
-
 
                       <Stack.Screen
                         name="notFound"
