@@ -301,8 +301,8 @@ function RegisterVehicleScreen() {
                       }))}
                       value={carMakeDropdownData}
                       setValue={setCarMakeDropdownData}
-                      placeholder="Select car make"
-                      searchPlaceholder="Search make"
+                      placeholder={t('vehicles.selectCarMake')}
+                      searchPlaceholder={t('vehicles.searchMake')}
                     />
                     <TicDriveDropdown
                       title={t('vehicles.model')}
@@ -316,8 +316,8 @@ function RegisterVehicleScreen() {
                       }
                       value={carModelDropdownData}
                       setValue={setCarModelDropdownData}
-                      placeholder="Select car model"
-                      searchPlaceholder="Search model"
+                      placeholder={t('vehicles.selectCarModel')}
+                      searchPlaceholder={t('vehicles.searchModel')}
                       disabled={!carMakeDropdownData || loadingCarModels}
                     />
                     {carSelectedByMakeAndModel && carModelDropdownData && (
@@ -361,7 +361,7 @@ function RegisterVehicleScreen() {
                     />
                     {isPlateError && (
                       <Text className="font-medium text-md text-red-500 text-center">
-                        Insert a valid plate number. Format: AA123BB
+                        {t('vehicles.invalidPlateFormat')}
                       </Text>
                     )}
                     {!isPlateError && carSelectedByPlate && (

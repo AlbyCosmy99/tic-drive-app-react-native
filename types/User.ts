@@ -1,3 +1,5 @@
+import {LatLng} from 'react-native-maps';
+
 export default interface User {
   userId?: string;
   name?: string | undefined;
@@ -9,6 +11,7 @@ export default interface User {
   imageUrl?: string;
   phoneNumber?: string;
   address?: string;
+  coordinates?: LatLng;
 }
 
 export type UserCategory = 'user' | 'workshop';

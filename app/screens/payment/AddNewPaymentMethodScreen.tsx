@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
@@ -12,6 +13,8 @@ import VisaIcon from '@/components/svgs/payment/Visa';
 import LinearGradientViewLayout from '@/app/layouts/LinearGradientViewLayout';
 
 const AddNewPaymentMethodScreen = () => {
+  const {t} = useTranslation();
+
   const {navigation} = useContext(NavigationContext);
   const {userPaymentInfo, setUserPaymentInfo} = useContext(GlobalContext);
   const [cardHolder, setCardHolder] = useState('');
@@ -44,37 +47,42 @@ const AddNewPaymentMethodScreen = () => {
       <SafeAreaViewLayout>
         <TicDriveNavbar
           topContent={
-            <Text className="font-semibold text-lg">Enter payment details</Text>
+            <Text className="font-semibold text-lg">
+              {t('payment.enter_details')}
+            </Text>
           }
         />
         <View className="my-4 flex-1">
           <TicDriveInputLabel
             value={cardHolder}
             onChange={e => setCardHolder(e)}
-            label="Cardholder name *"
-            placeholder="e.g. John A. Doe"
+            label={t('payment.cardholder_name')}
+            placeholder={t('payment.cardholder_placeholder')}
           />
           <TicDriveInputLabel
             value={cardNumber}
             onChange={e => setCardNumber(e)}
-            label="Card number"
-            placeholder="Card number"
+            label={t('payment.card_number')}
+            placeholder={t('payment.card_number')}
           />
-          <TicDriveInputLabel label="Expiration Date" placeholder="MM/YY" />
+          <TicDriveInputLabel
+            label={t('payment.expiration_date')}
+            placeholder={t('payment.expiration_date_placeholder')}
+          />
           <View className="relative">
             <TicDriveInputLabel
-              label="Security Code (CVV)"
-              placeholder="e.g. 123"
+              label={t('payment.security_code')}
+              placeholder={t('payment.security_code_placeholder')}
             />
             <Text className="absolute bottom-0 mx-2.5 text-tic text-sm">
-              The 3-digit number on the back of your card.
+              {t('payment.security_code_hint')}
             </Text>
           </View>
         </View>
         <HorizontalLine />
         <TicDriveButton
           disabled={!cardHolder}
-          text="Add card"
+          text={t('payment.add_card')}
           onClick={onConfirm}
         />
       </SafeAreaViewLayout>

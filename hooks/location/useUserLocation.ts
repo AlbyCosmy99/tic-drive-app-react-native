@@ -4,7 +4,10 @@ import {LatLng} from 'react-native-maps';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import getAddressFromCoords from '@/services/location/getAddressFromCoords';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
-import {setAddress} from '@/stateManagement/redux/slices/authSlice';
+import {
+  setAddress,
+  setCoordinates,
+} from '@/stateManagement/redux/slices/authSlice';
 
 const useUserLocation = () => {
   const [userLocation, setUserLocation] = useState<LatLng | null>(null);
@@ -69,6 +72,7 @@ const useUserLocation = () => {
           userLocation.longitude,
         );
         dispatch(setAddress(address));
+        dispatch(setCoordinates(userLocation));
       }
     };
 
