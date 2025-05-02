@@ -20,7 +20,9 @@ export default function UserBookings() {
   const token = useJwtToken();
   const {getCustomerCars, loadingCustomerCars} = useCustomerCars();
   const [cars, setCars] = useState<Car[]>([]);
-  const [activeTab, setActiveTab] = useState<'active' | 'past' | 'cancelled'>('active');
+  const [activeTab, setActiveTab] = useState<'active' | 'past' | 'cancelled'>(
+    'active',
+  );
 
   useEffect(() => {
     const fetchCars = async () => {
@@ -123,8 +125,8 @@ export default function UserBookings() {
                     {tab === 'active'
                       ? t('bookingsTabs.active', 'Attiv')
                       : tab === 'past'
-                      ? t('bookingsTabs.past', 'Passati')
-                      : t('bookingsTabs.cancelled', 'Cancellati')}
+                        ? t('bookingsTabs.past', 'Passati')
+                        : t('bookingsTabs.cancelled', 'Cancellati')}
                   </Text>
                 </TouchableOpacity>
               ))}
@@ -164,8 +166,8 @@ export default function UserBookings() {
                           activeTab === 'active'
                             ? t('bookings.confirmed')
                             : activeTab === 'past'
-                            ? t('status.completed', 'Completato')
-                            : t('status.cancelled', 'Cancellato')
+                              ? t('status.completed', 'Completato')
+                              : t('status.cancelled', 'Cancellato')
                         }
                       />
                     ))}

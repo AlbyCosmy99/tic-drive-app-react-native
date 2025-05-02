@@ -13,9 +13,8 @@ import {useMemo, useState} from 'react';
 import {Text, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
-
 const ForgotPasswordScreen = () => {
-  const { t } = useTranslation();
+  const {t} = useTranslation();
 
   const [email, setEmail] = useState('');
   const {setErrorMessage} = useGlobalErrors();
@@ -37,13 +36,15 @@ const ForgotPasswordScreen = () => {
     } catch (e: any) {
       if (axios.isAxiosError(e)) {
         if (e.response?.status === 400) {
-          setErrorMessage(t('errors.badRequest', { message: e.response?.data?.message }));
+          setErrorMessage(
+            t('errors.badRequest', {message: e.response?.data?.message}),
+          );
         } else if (e.response?.status === 401) {
           setErrorMessage(t('errors.unauthorized'));
         } else if (e.response?.status === 500) {
           setErrorMessage(t('errors.serverError'));
         } else {
-          setErrorMessage(t('errors.unexpected', { code: e.response?.status }));
+          setErrorMessage(t('errors.unexpected', {code: e.response?.status}));
         }
       } else {
         console.error('Unknown error:', e.message);
@@ -60,11 +61,15 @@ const ForgotPasswordScreen = () => {
       ) : (
         <>
           <View className="mx-6 mt-10">
-            <Text className="text-xl font-medium">{t('forgotPassword.title')}</Text>
+            <Text className="text-xl font-medium">
+              {t('forgotPassword.title')}
+            </Text>
             <Text className="text-base font-medium text-tic mr-4 mb-4 mt-1">
               {t('forgotPassword.description')}
             </Text>
-            <Text className="font-base font-semibold my-0.5">{t('forgotPassword.emailLabel')}</Text>
+            <Text className="font-base font-semibold my-0.5">
+              {t('forgotPassword.emailLabel')}
+            </Text>
           </View>
           <View className="mx-3">
             <TicDriveInput

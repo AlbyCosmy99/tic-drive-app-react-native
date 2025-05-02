@@ -92,7 +92,7 @@ export default function BookingConfirmationScreen() {
       setServicesChoosenByUsers({
         id: 1,
         title: t('service.oilChange'),
-       description: t('service.oilChange'),
+        description: t('service.oilChange'),
         icon: 'https://img.icons8.com/dotty/80/car-service.png',
       }),
     );
@@ -123,17 +123,18 @@ export default function BookingConfirmationScreen() {
               {t('bookings.confirmed')}!
             </Text>
             <Text className="text-tic text-base text-center">
-            {t('bookingConfirmation.awaitingWorkshopConfirmation')}
+              {t('bookingConfirmation.awaitingWorkshopConfirmation')}
             </Text>
             <View className="flex flex-col items-center justify-center mt-4 mb-6">
-              <Text className="text-sm text-tic">{t('bookingConfirmation.bookingNumber', { number: '00806835' })}</Text>
+              <Text className="text-sm text-tic">
+                {t('bookingConfirmation.bookingNumber', {number: '00806835'})}
+              </Text>
               <Text className="text-sm text-tic">{formatCurrentDate()}</Text>
             </View>
             <PaymentConfirmationCard
               workshop={workshop}
               timeDate={timeDate}
-              type= {t('bookingConfirmation.statusPending')}
-
+              type={t('bookingConfirmation.statusPending')}
             />
           </View>
         )}

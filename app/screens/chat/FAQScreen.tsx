@@ -9,34 +9,34 @@ import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButt
 import PlusIcon from '@/components/svgs/Plus';
 import MinusIcon from '@/components/svgs/Minus';
 import {useTranslation} from 'react-i18next';
-import { useMemo } from 'react';
-
+import {useMemo} from 'react';
 
 export default function FAQScreen() {
-  const { t } = useTranslation();
+  const {t} = useTranslation();
   const [searchText, setSearchText] = useState('');
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
-const faqData = useMemo(() => [
-  {
-    question: t('faq.question_1'),
-    answer: t('faq.answer_1'),
-  },
-  {
-    question: t('faq.question_2'),
-    answer: t('faq.answer_2'),
-  },
-  {
-    question: t('faq.question_3'),
-    answer: t('faq.answer_3'),
-  },
-  {
-    question: t('faq.question_4'),
-    answer: t('faq.answer_4'),
-  },
-],  [t]);
-
-
+  const faqData = useMemo(
+    () => [
+      {
+        question: t('faq.question_1'),
+        answer: t('faq.answer_1'),
+      },
+      {
+        question: t('faq.question_2'),
+        answer: t('faq.answer_2'),
+      },
+      {
+        question: t('faq.question_3'),
+        answer: t('faq.answer_3'),
+      },
+      {
+        question: t('faq.question_4'),
+        answer: t('faq.answer_4'),
+      },
+    ],
+    [t],
+  );
 
   const toggleExpand = (index: number) => {
     setExpandedIndex(expandedIndex === index ? null : index);
@@ -53,14 +53,13 @@ const faqData = useMemo(() => [
       <SafeAreaViewLayout>
         <TicDriveNavbar />
         <View className="items-center mt-6 px-4">
-  <Text className="text-2xl leading-6 font-semibold text-center font-poppins">
-    {t('faq.title')}
-  </Text>
-  <Text className="text-lg leading-[24px] font-semibold font-poppins text-center">
-    {t('faq.subtitle')}
-  </Text>
-</View>
-
+          <Text className="text-2xl leading-6 font-semibold text-center font-poppins">
+            {t('faq.title')}
+          </Text>
+          <Text className="text-lg leading-[24px] font-semibold font-poppins text-center">
+            {t('faq.subtitle')}
+          </Text>
+        </View>
 
         <View className="mx-4">
           <TicDriveInput
@@ -76,10 +75,10 @@ const faqData = useMemo(() => [
 
         <View className="flex-row justify-between items-center px-4  mb-2">
           <Text className="text-base font-semibold text-black font-poppins">
-          {t('faq.most_frequent')}
+            {t('faq.most_frequent')}
           </Text>
           <Text className="text-sm font-semibold text-green-600 font-poppins">
-          {t('faq.see_all')}
+            {t('faq.see_all')}
           </Text>
         </View>
 

@@ -37,9 +37,8 @@ import openGoogleMaps from '@/services/map/openGoogleMaps';
 import LocationPin from '@/components/svgs/location/PinLocation';
 import {useTranslation} from 'react-i18next';
 
-
 export default function ReviewBookingDetailsScreen() {
-  const { t } = useTranslation();
+  const {t} = useTranslation();
 
   const route = useRoute();
   const {date, time} = route?.params as {
@@ -85,8 +84,9 @@ export default function ReviewBookingDetailsScreen() {
       <SafeAreaViewLayout styles={[styles.container]}>
         <TicDriveNavbar
           topContent={
-            <Text className="font-semibold text-lg">{t('reviewBooking.reviewDetails')}
-</Text>
+            <Text className="font-semibold text-lg">
+              {t('reviewBooking.reviewDetails')}
+            </Text>
           }
         />
         <ScrollView
@@ -149,12 +149,16 @@ export default function ReviewBookingDetailsScreen() {
             </View>
           </View>
           <View className="my-3">
-            <Text className="text-tic text-sm font-medium mb-3">  {t('reviewBooking.subtotal')}
+            <Text className="text-tic text-sm font-medium mb-3">
+              {' '}
+              {t('reviewBooking.subtotal')}
             </Text>
             <View className="border rounded-xl border-slate-200 p-4">
               <View className="flex flex-row justify-between items-center">
                 <Text className="text-sm text-tic">
-                {t('reviewBooking.serviceWithName', { name: servicesChoosen[0].title })}
+                  {t('reviewBooking.serviceWithName', {
+                    name: servicesChoosen[0].title,
+                  })}
                 </Text>
                 <Text>
                   $
@@ -168,17 +172,21 @@ export default function ReviewBookingDetailsScreen() {
                 style={styles.promoCodeContainer}
                 className="mt-3 mb-3 flex flex-row justify-between items-center p-4 rounded-xl border-tic"
               >
-                <TextInput placeholder={t('reviewBooking.promoCode')} style={{flex: 1}} />
+                <TextInput
+                  placeholder={t('reviewBooking.promoCode')}
+                  style={{flex: 1}}
+                />
 
                 <Pressable>
-                <Text className="text-drive">{t('reviewBooking.apply')}</Text>
-
+                  <Text className="text-drive">{t('reviewBooking.apply')}</Text>
                 </Pressable>
               </View>
               <HorizontalLine />
               <View className="flex flex-row justify-between items-center mt-2">
-              <Text className="text-base text-tic">{t('reviewBooking.total')}</Text>
-              <Text className="text-lg font-medium">
+                <Text className="text-base text-tic">
+                  {t('reviewBooking.total')}
+                </Text>
+                <Text className="text-lg font-medium">
                   $
                   {calculateWorkshopDiscount(
                     workshop?.servicePrice ?? 0,
@@ -191,7 +199,7 @@ export default function ReviewBookingDetailsScreen() {
           <View>
             <View className="flex flex-row justify-between items-center mb-3">
               <Text className="text-tic text-sm font-medium">
-              {t('reviewBooking.paymentMethod')}
+                {t('reviewBooking.paymentMethod')}
               </Text>
               {/* todo: da rimettere appena si abilita la possibilita di pagare in app */}
               {/* <Pressable onPress={handlePaymentTypeChange}>
@@ -201,7 +209,6 @@ export default function ReviewBookingDetailsScreen() {
             <PaymentCard
               userName={userPaymentInfo?.choosenCard?.cardHolder ?? ''}
               paymentType={t('reviewBooking.payInWorkshop')}
-
               icon={<CashIcon width={24} fill={Colors.light.ticText} />}
               //todo: da rimettere appena si abilita la possibilita di pagare in app
               // icon={userPaymentInfo?.choosenCard?.icon}
@@ -225,8 +232,10 @@ export default function ReviewBookingDetailsScreen() {
         <HorizontalLine />
         <View>
           <View className="flex flex-row justify-between items-center mt-2 px-4">
-          <Text className="text-base text-tic">{t('reviewBooking.total')}</Text>
-          <Text className="text-xl font-medium">
+            <Text className="text-base text-tic">
+              {t('reviewBooking.total')}
+            </Text>
+            <Text className="text-xl font-medium">
               $
               {calculateWorkshopDiscount(
                 workshop?.servicePrice ?? 0,

@@ -17,7 +17,6 @@ import useLogin from '@/hooks/auth/useLogin';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 import {useTranslation} from 'react-i18next';
 
-
 const ChangePasswordScreen = () => {
   const {t} = useTranslation();
 
@@ -64,13 +63,19 @@ const ChangePasswordScreen = () => {
     } catch (e: any) {
       if (axios.isAxiosError(e)) {
         if (e.response?.status === 400) {
-          setErrorMessage(t('changePassword.error.badRequest', { message: e.response?.data?.message }));
+          setErrorMessage(
+            t('changePassword.error.badRequest', {
+              message: e.response?.data?.message,
+            }),
+          );
         } else if (e.response?.status === 401) {
           setErrorMessage(t('changePassword.error.unauthorized'));
         } else if (e.response?.status === 500) {
           setErrorMessage(t('changePassword.error.serverError'));
         } else {
-          setErrorMessage(t('changePassword.error.unexpected', { status: e.response?.status }));
+          setErrorMessage(
+            t('changePassword.error.unexpected', {status: e.response?.status}),
+          );
         }
       } else {
         console.error('error:', e);
@@ -88,10 +93,11 @@ const ChangePasswordScreen = () => {
       ) : (
         <>
           <View className="mx-6 mt-10">
-            <Text className="text-xl font-medium">{ t ('changePassword.setNewPassword')}</Text>
+            <Text className="text-xl font-medium">
+              {t('changePassword.setNewPassword')}
+            </Text>
             <Text className="text-base font-medium text-tic mr-4 mb-4 mt-1">
-            {t('changePassword.description')}
-
+              {t('changePassword.description')}
             </Text>
           </View>
 
@@ -99,7 +105,6 @@ const ChangePasswordScreen = () => {
             <TicDriveInput
               containerViewStyleTailwind="mt-4"
               placeholder={t('changePassword.password')}
-
               isRightIcon={true}
               customValue={password}
               onChange={e => setPassword(e)}
@@ -122,7 +127,7 @@ const ChangePasswordScreen = () => {
             />
             <TicDriveInput
               containerViewStyleTailwind="mt-4"
-              placeholder= { t('changePassword.repeatPassword')}
+              placeholder={t('changePassword.repeatPassword')}
               isRightIcon={true}
               customValue={confirmPassword}
               onChange={e => setConfirmPassword(e)}

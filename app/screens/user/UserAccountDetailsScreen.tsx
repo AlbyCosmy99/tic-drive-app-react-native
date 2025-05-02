@@ -13,11 +13,11 @@ import FeedbackIcon from '@/components/svgs/writing/Feedback';
 import TicDriveAuthButton from '@/components/ui/buttons/TicDriveAuthButton';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import LinearGradientViewLayout from '@/app/layouts/LinearGradientViewLayout';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
 const UserAccountDetailsScreen = () => {
   const user = useAppSelector(state => state.auth.user);
-  const { t } = useTranslation();
+  const {t} = useTranslation();
 
   return (
     <LinearGradientViewLayout>
@@ -26,7 +26,7 @@ const UserAccountDetailsScreen = () => {
           <TicDriveNavbar canGoBack={true} />
           <View className="flex flex-row justify-center items-center mb-4">
             <Text className="font-bold text-2xl text-center mb-2 mt-1">
-            {t('menu')}
+              {t('menu')}
             </Text>
           </View>
           <View className="flex flex-row items-center mb-4">
@@ -48,7 +48,7 @@ const UserAccountDetailsScreen = () => {
               icon={<AccountIcon fill={Colors.light.ticText} />}
             />
             <IconTextPair
-              text={t('password')} 
+              text={t('password')}
               icon={<LockIcon fill={Colors.light.ticText} />}
             />
             <IconTextPair
@@ -72,13 +72,11 @@ const UserAccountDetailsScreen = () => {
           </View>
           <HorizontalLine color={Colors.light.lightGrey} />
           <Text className="text-tic text-sm my-2.5 font-semibold">
-          {t('deleteAccount')}
+            {t('deleteAccount')}
           </Text>
         </View>
         <View className="mb-2.5">
-          <Text className="text-center my-3.5">
-          {t('termsAndPrivacy')}
-          </Text>
+          <Text className="text-center my-3.5">{t('termsAndPrivacy')}</Text>
           <TicDriveAuthButton action="logout" />
         </View>
       </SafeAreaViewLayout>

@@ -15,14 +15,14 @@ import {ScrollView} from 'react-native-gesture-handler';
 import CarDetailsCard from '@/components/ui/cards/cars/CarDetailsCard';
 import useOnRegisterVehicle from '@/hooks/cars/useOnRegisterVehicle';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
 const UserVehiclesScreen = () => {
   const [cars, setCars] = useState<Car[]>([]);
   const navigation = useTicDriveNavigation();
   const {getCustomerCars, loadingCustomerCars} = useCustomerCars();
   const onRegisterVehicle = useOnRegisterVehicle();
-  const { t } = useTranslation();
+  const {t} = useTranslation();
 
   useEffect(() => {
     const getCars = async () => {
@@ -42,7 +42,9 @@ const UserVehiclesScreen = () => {
       <TicDriveNavbar />
       <View className="mx-2.5 flex-1">
         <View className="mx-2.5">
-          <Text className="font-medium text-2xl mb-2">{t('vehicles.myVehicles')}</Text>
+          <Text className="font-medium text-2xl mb-2">
+            {t('vehicles.myVehicles')}
+          </Text>
           <CrossPlatformButtonLayout
             containerTailwindCss="flex-row justify-between items-center"
             onPress={onRegisterVehicle}
@@ -64,10 +66,10 @@ const UserVehiclesScreen = () => {
             {cars.length === 0 && (
               <View>
                 <Text className="text-center text-base text-gray-500 mt-6">
-                {t('vehicles.noVehiclesMessage')}{' '}
+                  {t('vehicles.noVehiclesMessage')}{' '}
                   <CrossPlatformButtonLayout onPress={onRegisterVehicle}>
                     <Text className="text-drive font-semibold">
-                    {t('vehicles.registerVehicle')} 
+                      {t('vehicles.registerVehicle')}
                     </Text>
                   </CrossPlatformButtonLayout>{' '}
                   {t('vehicles.addFirstCar')}

@@ -14,7 +14,7 @@ import navigationReset from '@/services/navigation/reset';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import {useEffect, useState} from 'react';
 import {Text, View} from 'react-native';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
 const ConfirmEmailScreen = () => {
   const [loadingSendConfirmationEmail, setLoadingConfirmationEmail] =
@@ -37,7 +37,7 @@ const ConfirmEmailScreen = () => {
       setConfirmModalOpened(true);
     }
   };
-  const { t } = useTranslation();
+  const {t} = useTranslation();
 
   const handleCheckConfirmation = async () => {
     try {
@@ -61,14 +61,13 @@ const ConfirmEmailScreen = () => {
         <TicDriveNavbar />
         <View className="flex-1 justify-center items-center">
           <Text className="text-center text-3xl font-medium m-1.5 mb-3">
-          {t('confirmEmail.welcome', { name: user?.name })}
+            {t('confirmEmail.welcome', {name: user?.name})}
           </Text>
           <Text className="text-lg font-bold text-center mb-4">
-          {t('confirmEmail.pleaseConfirm')}
+            {t('confirmEmail.pleaseConfirm')}
           </Text>
           <Text className="text-sm text-center text-gray-600 mb-4">
-          {t('confirmEmail.instructions')}
-
+            {t('confirmEmail.instructions')}
           </Text>
           <View className="h-6">
             {loadingSendConfirmationEmail ? (
@@ -76,7 +75,7 @@ const ConfirmEmailScreen = () => {
             ) : (
               <CrossPlatformButtonLayout onPress={handleResendEmail}>
                 <Text className="underline text-md">
-                {t('confirmEmail.resendButton')}
+                  {t('confirmEmail.resendButton')}
                 </Text>
               </CrossPlatformButtonLayout>
             )}
@@ -86,8 +85,8 @@ const ConfirmEmailScreen = () => {
               <TicDriveSpinner />
             ) : (
               <TicDriveButton
-              text={t('confirmEmail.confirmedButton')}
-              onClick={handleCheckConfirmation}
+                text={t('confirmEmail.confirmedButton')}
+                onClick={handleCheckConfirmation}
                 customContainerStyle={{margin: 0}}
               />
             )}
@@ -97,8 +96,8 @@ const ConfirmEmailScreen = () => {
 
         {/* confirmation email sent modal */}
         <TicDriveModal
-            title={t('confirmEmail.modal1Title')}
-            content={t('confirmEmail.modal1Content')}
+          title={t('confirmEmail.modal1Title')}
+          content={t('confirmEmail.modal1Content')}
           visible={confirmModalOpened}
           cancelText=""
           confirmText={t('confirmEmail.modal1Confirm')}
@@ -107,9 +106,8 @@ const ConfirmEmailScreen = () => {
 
         {/* check is email confirmed modal */}
         <TicDriveModal
-            title={t('confirmEmail.modal2Title')}
-
-            content={t('confirmEmail.modal2Content')}
+          title={t('confirmEmail.modal2Title')}
+          content={t('confirmEmail.modal2Content')}
           visible={emailCheckedModalOpened}
           cancelText=""
           confirmText={t('confirmEmail.modal2Confirm')}

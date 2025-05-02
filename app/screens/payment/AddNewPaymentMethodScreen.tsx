@@ -1,4 +1,3 @@
-
 import {useTranslation} from 'react-i18next';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
@@ -14,7 +13,7 @@ import VisaIcon from '@/components/svgs/payment/Visa';
 import LinearGradientViewLayout from '@/app/layouts/LinearGradientViewLayout';
 
 const AddNewPaymentMethodScreen = () => {
-  const { t } = useTranslation();
+  const {t} = useTranslation();
 
   const {navigation} = useContext(NavigationContext);
   const {userPaymentInfo, setUserPaymentInfo} = useContext(GlobalContext);
@@ -50,7 +49,7 @@ const AddNewPaymentMethodScreen = () => {
           topContent={
             <Text className="font-semibold text-lg">
               {t('payment.enter_details')}
-              </Text>
+            </Text>
           }
         />
         <View className="my-4 flex-1">
@@ -66,15 +65,17 @@ const AddNewPaymentMethodScreen = () => {
             label={t('payment.card_number')}
             placeholder={t('payment.card_number')}
           />
-          <TicDriveInputLabel  label={t('payment.expiration_date')}
-  placeholder={t('payment.expiration_date_placeholder')} />
+          <TicDriveInputLabel
+            label={t('payment.expiration_date')}
+            placeholder={t('payment.expiration_date_placeholder')}
+          />
           <View className="relative">
             <TicDriveInputLabel
               label={t('payment.security_code')}
               placeholder={t('payment.security_code_placeholder')}
             />
             <Text className="absolute bottom-0 mx-2.5 text-tic text-sm">
-            {t('payment.security_code_hint')}
+              {t('payment.security_code_hint')}
             </Text>
           </View>
         </View>

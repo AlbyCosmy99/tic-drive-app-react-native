@@ -4,24 +4,23 @@ import {Colors} from '@/constants/Colors';
 import {StyleSheet, Text} from 'react-native';
 import {View} from 'react-native';
 import TicDriveSuccessCard from '@/components/ui/cards/notifications/TicDriveSuccessCard';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
 const SuccessfullyPasswordChangedScreen = () => {
-  const { t } = useTranslation();
+  const {t} = useTranslation();
 
   return (
     <SafeAreaViewLayout styles={[styles.container]}>
       <View className="flex-1 justify-center items-center mx-2.5">
         <TicDriveSuccessCard
-            title={t('successPasswordChange.success')}
-            subtitle={t('successPasswordChange.subtitle')}
+          title={t('successPasswordChange.success')}
+          subtitle={t('successPasswordChange.subtitle')}
         />
       </View>
       <TicDriveButton
         replace={true}
         toTop={true}
         text={t('common.home')}
-
         routeName="userTabs"
         routeParams={{animation: 'fade'}}
         stateRouteName="Home"

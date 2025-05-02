@@ -106,15 +106,15 @@ export default function UserAccount() {
 
   const handleDeleteAccount = () => {
     Alert.alert(
-      t('useraccount.deleteAccountTitle'),
-      t('useraccount.deleteAccountConfirm'),
+      t('userAccount.deleteAccountTitle'),
+      t('userAccount.deleteAccountConfirm'),
       [
         {text: 'Cancel', style: 'cancel'},
         {
-          text: t('useraccount.delete'),
+          text: t('userAccount.delete'),
           style: 'destructive',
           onPress: () => {
-            alert(t('useraccount.deletedMock'));
+            alert(t('userAccount.deletedMock'));
           },
         },
       ],
@@ -147,7 +147,7 @@ export default function UserAccount() {
                   uri={user?.imageUrl}
                   styles={{width: 70, height: 70}}
                 />
-                <View className="w-40">
+                <View className="w-44">
                   {isEditing ? (
                     <TextInput
                       className="font-semibold text-lg border-b border-gray-300"
@@ -156,7 +156,7 @@ export default function UserAccount() {
                       onChangeText={text =>
                         setEditedUser({...editedUser, name: text.trim()})
                       }
-                      placeholder={t('useraccount.enterYourName')}
+                      placeholder={t('userAccount.enterYourName')}
                       placeholderTextColor="#888"
                       autoFocus
                       accessibilityLabel="Name Input"
@@ -184,7 +184,7 @@ export default function UserAccount() {
                       <EditIcon width={20} height={20} />
                     )}
                     <Text className="text-green-600 font-medium ml-1">
-                      {isEditing ? t('common.save') : t('useraccount.editYourName')}
+                      {isEditing ? t('common.save') : t('common.edit')}
                     </Text>
                   </View>
                 </CrossPlatformButtonLayout>
@@ -198,7 +198,7 @@ export default function UserAccount() {
             className="px-1"
             contentContainerStyle={{paddingBottom: 140}}
           >
-            <Section title={t('useraccount.sectionTitle')}>
+            <Section title={t('userAccount.sectionTitle')}>
               <View className="flex-row items-center py-2">
                 <MailIcon />
                 <Text className="text-base font-medium pl-1">
@@ -221,7 +221,7 @@ export default function UserAccount() {
                 onPress={() => navigationPush(navigation, 'UserVehiclesScreen')}
               >
                 <IconTextPair
-                  text={t('useraccount.registeredVehicles')}
+                  text={t('userAccount.registeredVehicles')}
                   icon={<VehicleIcon />}
                   textTailwindCss="text-base font-medium pl-1"
                   containerTailwindCss="py-2 my-0 pt-1"
@@ -232,7 +232,7 @@ export default function UserAccount() {
 
               <CrossPlatformButtonLayout onPress={onFavoriteWorkshops}>
                 <IconTextPair
-                  text={t('useraccount.favoriteWorkshops')}
+                  text={t('userAccount.favoriteWorkshops')}
                   icon={<HeartIcon />}
                   textTailwindCss="text-base font-medium pl-1"
                   containerTailwindCss="py-2 my-0 pt-1"
@@ -242,7 +242,7 @@ export default function UserAccount() {
               <HorizontalLine />
             </Section>
 
-            <Section title={t('useraccount.helpAndSupport')}>
+            <Section title={t('userAccount.helpAndSupport')}>
               <CrossPlatformButtonLayout
                 onPress={() =>
                   setLanguageOptionsVisible(!languageOptionsVisible)
@@ -291,7 +291,7 @@ export default function UserAccount() {
 
               <CrossPlatformButtonLayout onPress={handleFAQ}>
                 <IconTextPair
-                  text={t('useraccount.faq')}
+                  text={t('userAccount.faq')}
                   icon={<FAQ />}
                   textTailwindCss="text-base font-medium pl-1"
                   containerTailwindCss="py-2 my-0 pt-1"
@@ -301,10 +301,10 @@ export default function UserAccount() {
               <HorizontalLine />
 
               <CrossPlatformButtonLayout
-                onPress={() => alert(t('useraccount.customerSupport'))}
+                onPress={() => alert(t('userAccount.customerSupport'))}
               >
                 <IconTextPair
-                  text={t('useraccount.customerSupport')}
+                  text={t('userAccount.customerSupport')}
                   icon={<CustomerServiceIcon />}
                   textTailwindCss="text-base font-medium pl-1"
                   containerTailwindCss="py-2 my-0 pt-1"
@@ -317,7 +317,7 @@ export default function UserAccount() {
                 onPress={() => setShowLogoutModal(true)}
               >
                 <IconTextPair
-                  text={t('useraccount.logout')}
+                  text={t('userAccount.logout')}
                   icon={<Logout />}
                   textTailwindCss="text-base font-medium pl-1"
                   containerTailwindCss="py-2 my-0 pt-1"
@@ -328,7 +328,7 @@ export default function UserAccount() {
 
               <CrossPlatformButtonLayout onPress={handleDeleteAccount}>
                 <IconTextPair
-                  text={t('useraccount.deleteAccount')}
+                  text={t('userAccount.deleteAccount')}
                   icon={<Remove />}
                   textTailwindCss="text-base font-medium pl-1"
                   containerTailwindCss="py-2 my-0 pt-1"
@@ -345,8 +345,8 @@ export default function UserAccount() {
             setShowLogoutModal(false);
             handleLogout(dispatch, navigation);
           }}
-          title={t('useraccount.logout')}
-          content={t('useraccount.logoutConfirm')}
+          title={t('userAccount.logout')}
+          content={t('userAccount.logoutConfirm')}
           confirmText={t('confirm')}
           cancelText={t('common.cancel')}
           confirmButtonStyle={{backgroundColor: '#E53935'}}

@@ -303,7 +303,6 @@ function RegisterVehicleScreen() {
                       setValue={setCarMakeDropdownData}
                       placeholder={t('vehicles.selectCarMake')}
                       searchPlaceholder={t('vehicles.searchMake')}
-
                     />
                     <TicDriveDropdown
                       title={t('vehicles.model')}
@@ -319,7 +318,6 @@ function RegisterVehicleScreen() {
                       setValue={setCarModelDropdownData}
                       placeholder={t('vehicles.selectCarModel')}
                       searchPlaceholder={t('vehicles.searchModel')}
-
                       disabled={!carMakeDropdownData || loadingCarModels}
                     />
                     {carSelectedByMakeAndModel && carModelDropdownData && (
@@ -363,8 +361,7 @@ function RegisterVehicleScreen() {
                     />
                     {isPlateError && (
                       <Text className="font-medium text-md text-red-500 text-center">
-                            {t('vehicles.invalidPlateFormat')}
-
+                        {t('vehicles.invalidPlateFormat')}
                       </Text>
                     )}
                     {!isPlateError && carSelectedByPlate && (

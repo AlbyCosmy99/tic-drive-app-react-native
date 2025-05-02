@@ -205,8 +205,7 @@ export default function UserHome() {
                         </CrossPlatformButtonLayout>
                       ) : (
                         <Text className="font-medium mb-2">
-                            {t('workshops.noWorkshopsAvailable')}
-
+                          {t('workshops.noWorkshopsAvailable')}
                         </Text>
                       )}
                     </View>
