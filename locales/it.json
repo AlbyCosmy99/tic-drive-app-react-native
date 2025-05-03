@@ -31,7 +31,10 @@
     "cancelled": "Cancellato"
   },
   "reviews": "Recensioni",
-  "sendrtitle": "CIAO",
+  "reviewScreen.leaveReview": "Lascia una recensione",
+  "reviewScreen.rateService": "Valuta il servizio",
+  "reviewScreen.placeholder": "Ogni tua opinione ci aiuta a migliorare",
+  "sendrtitle": "Ciao",
   "sendrsubtitle": "com'è andata la tua esperienza?",
   "leaveAReview": "Lascia una recensione",
   "account": "Profilo",

@@ -133,7 +133,7 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
 
       <HorizontalLine />
 
-      <View className="h-32">
+      <View>
         {loadingServiceOfferedDetails ? (
           <View className="justify-center items-center w-full h-full">
             <ActivityIndicator
@@ -145,7 +145,6 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
           <View className="mb-2">
             <IconTextPair icon={<CalendarIcon />} text={timeDate} />
 
-            {/* Show payment info only if showPayment is true */}
             {showPayment && workshopDetailed?.servicePrice && (
               <IconTextPair
                 icon={<CreditCardIcon />}
@@ -156,7 +155,6 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
               />
             )}
 
-            {/* Show location info only if showLocation is true */}
             {showLocation && workshopDetailed?.address && (
               <IconTextPair
                 icon={<PinIcon fill={Colors.light.ticText} />}

@@ -28,12 +28,12 @@ export default function SendAReviewScreen() {
   const [reviewText, setReviewText] = useState('');
 
   const handleStarPress = (value: number) => {
-    setRating(value); 
+    setRating(value);
   };
 
   const handleSubmit = () => {
     console.log('Review Submitted:', { workshop, car, rating, reviewText });
-    navigation.navigate('HomeScreen' as never);
+    navigation.navigate('Bookings');
   };
 
   const renderStars = () => (
@@ -43,7 +43,7 @@ export default function SendAReviewScreen() {
           <Ionicons
             name={i <= rating ? 'star' : 'star-outline'}
             size={35}
-            color={i <= rating ? '#FFD029' : '#D3D3D3'} 
+            color={i <= rating ? '#FFD029' : '#D3D3D3'}
             className={`w-9 h-9 border-2 border-solid 
                         ${i <= rating ? 'bg-[#FFD029] border-white' : 'bg-transparent border-[#D3D3D3]'}`}
           />
@@ -58,9 +58,9 @@ export default function SendAReviewScreen() {
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <TicDriveNavbar />
 
-          <View className="px-5 pt-6 pb-10 flex-1">
+          <View className="px-5 pt-6 pb-8 flex-1">
             {/* Title */}
-            <View className="items-center mb-6">
+            <View className="items-center mb-4 mt-[-20px]">
               <Text className="text-center text-[#170F49] font-poppins font-bold text-2xl leading-none">
                 {t('sendrtitle')}
               </Text>
@@ -76,54 +76,56 @@ export default function SendAReviewScreen() {
                 showReminderBell={false}
                 workshop={workshop}
                 service={workshop.service}
-                timeDate="Martedì, 24 gennaio ore 10:00"
+                timeDate={t('workshop.dateTime', 'Martedì, 24 gennaio ore 10:00')}
                 type={t('status.completed', 'Completato')}
                 showLocation={false}
                 showPayment={false}
               />
             </View>
 
+            {/* Review Form */}
             <View className="mt-6 mb-6">
-              <Text className="text-base font-bold leading-[20px] text-[#170F49]">
-                {t('reviewScreen.rateService', 'Valuta il servizio')}
+              <Text className="text-base font-bold font-poppins leading-[20px] text-[#170F49]">
+                {t('reviewScreen.rateService')}
               </Text>
 
               {renderStars()}
             </View>
 
             <View className="mb-2 shadow-lg">
-              <Text className="text-base font-bold leading-[20px] text-[#170F49] mb-2">
-                {t('reviewScreen.leaveReview', 'Lascia una recensione')}
+              <Text className="text-base font-bold font-poppins leading-[20px] text-[#170F49] mb-2">
+                {t('reviewScreen.leaveReview')}
               </Text>
-              <TextInput
-                placeholder={t('reviewScreen.placeholder', 'Ogni tua opinione ci aiuta a migliorare')}
-                multiline
-                numberOfLines={4}
-                value={reviewText}
-                onChangeText={setReviewText}
-                textAlignVertical="top"
-                placeholderTextColor="gray"
-                className="bg-white rounded-xl p-4 text-base text-gray-800 min-h-[120px]"
-              />
+              <View className="w-[360px] h-[168px] bg-white font-poppins rounded-[20px] border border-[#EFF0F6] shadow-md self-center p-4">
+                <TextInput
+                  placeholder={t('reviewScreen.placeholder')}
+                  multiline
+                  numberOfLines={4}
+                  value={reviewText}
+                  onChangeText={setReviewText}
+                  textAlignVertical="top"
+                  placeholderTextColor="gray"
+                  className="text-base text-gray-800 flex-1"
+                />
+              </View>
 
-              <View className="items-end mt-2 mb-8">
+              <View className="items-end">
                 <TicDriveButton
                   text={t('common.submit')}
                   onPress={handleSubmit}
-                  customButtonStyle="bg-[#39B269] px-4 py-2 "
-                  customTitleStyle="text-white text-sm font-bold"
-                  customContainerStyle="w-[170px] h-[40px]" 
+                  customButtonStyle={{ backgroundColor: 'transparent', paddingVertical: 0, paddingHorizontal: 0 }}
+                  customTitleStyle={{ color: '#FF0000', fontWeight: 'bold', fontSize: 14 }}
                 />
               </View>
             </View>
 
-            {/* Home Button */}
+            {/* Navigate to Bookings Button  i will fix this */}
             <TicDriveButton
               text={t('common.home')}
-              onPress={() => navigation.navigate('Home')}
+              onPress={() => navigation.navigate('Bookings')}
               customButtonStyle="bg-[#39B269] py-2"
               customTitleStyle="text-white font-bold text-lg"
-              customContainerStyle="w-full"
+              customContainerStyle="w-full mt-4"
             />
           </View>
         </ScrollView>
