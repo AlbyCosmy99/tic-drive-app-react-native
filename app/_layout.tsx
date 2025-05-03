@@ -30,6 +30,8 @@ import CarProvider from '@/stateManagement/contexts/car/CarProvider';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import WorkshopsListScreen from './screens/workshop/WorkshopsListScreen';
 import WorkshopReviewsListScreen from './screens/workshop/reviews/WorkshopReviewsListScreen';
+import SendAreviewScreen from './screens/workshop/reviews/SendAreviewScreen';
+
 import ChatScreen from './screens/chat/ChatScreen';
 import FAQScreen from './screens/chat/FAQScreen';
 
@@ -172,6 +174,15 @@ export default function RootLayout() {
                           presentation: 'modal',
                           animation: getAnimation(route),
                         })}
+                      />
+                      <Stack.Screen
+                         name="SendAReview"
+                          component={SendAreviewScreen}
+                          options={({route}) => ({
+                            title: 'SendAReview',
+                            headerShown: false,
+                            animation: getAnimation(route),
+                          })}
                       />
                       <Stack.Screen
                         name="BookingConfirmationScreen"

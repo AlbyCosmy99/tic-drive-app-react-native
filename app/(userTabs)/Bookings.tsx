@@ -14,9 +14,14 @@ import useCustomerCars from '@/hooks/api/cars/useCustomerCars';
 import Car from '@/types/Car';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 import {useTranslation} from 'react-i18next';
+import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
+import { Colors } from '@/constants/Colors';
+import { useNavigation } from '@react-navigation/native';
 
 export default function UserBookings() {
   const {t} = useTranslation();
+  const navigation = useNavigation();
+
   const token = useJwtToken();
   const {getCustomerCars, loadingCustomerCars} = useCustomerCars();
   const [cars, setCars] = useState<Car[]>([]);
@@ -154,23 +159,47 @@ export default function UserBookings() {
                       plateNumber={car.plateNumber}
                     />
 
-                    {appointments.map(appointment => (
-                      <PaymentConfirmationCard
-                        key={appointment.id}
-                        showDirectionsButton={false}
-                        showReminderBell={activeTab === 'active'}
-                        workshop={appointment}
-                        service={appointment.service}
-                        timeDate={'Martedì, 24 gennaio ore 10:00'}
-                        type={
-                          activeTab === 'active'
-                            ? t('bookings.confirmed')
-                            : activeTab === 'past'
-                              ? t('status.completed', 'Completato')
-                              : t('status.cancelled', 'Cancellato')
-                        }
-                      />
-                    ))}
+{appointments.map(appointment => (
+  <View key={appointment.id} className="mb-4">
+    <PaymentConfirmationCard
+      showDirectionsButton={false}
+      showReminderBell={activeTab === 'active'}
+      workshop={appointment}
+      service={appointment.service}
+      timeDate={'Martedì, 24 gennaio ore 10:00'}
+      type={
+        activeTab === 'active'
+          ? t('bookings.confirmed')
+          : activeTab === 'past'
+            ? t('status.completed', 'Completato')
+            : t('status.cancelled', 'Cancellato')
+      }
+    />
+
+    {activeTab === 'past' && (
+      <TicDriveButton
+        text={t('leaveAReview')}
+        routeName="SendAReview" 
+        routeParams={{
+          workshop: appointment,
+          car, 
+        }}
+        customButtonStyle={{
+          backgroundColor: '#FFD029',
+        }}
+        customTitleStyle={{
+          color: 'black',
+          fontWeight: 'bold',
+        }}
+        customContainerStyle={{
+          marginTop: 10,
+          marginHorizontal: 20,
+        }}
+      />
+    )}
+  </View>
+))}
+
                   </View>
                 ))}
               </ScrollView>

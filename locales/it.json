@@ -31,6 +31,9 @@
     "cancelled": "Cancellato"
   },
   "reviews": "Recensioni",
+  "sendrtitle": "CIAO",
+  "sendrsubtitle": "com'è andata la tua esperienza?",
+  "leaveAReview": "Lascia una recensione",
   "account": "Profilo",
   "location": "Posizione",
   "notAvailable": "Non disponibile",
@@ -148,7 +151,9 @@
     "edit": "Modifica",
     "cancel": "Annulla",
     "ok": "Ok",
-    "home": "Home"
+    "home": "Home",
+    "submit": "Invia"
+
   },
   "userAccount": {
     "enterYourName": "Inserisci il tuo nome",

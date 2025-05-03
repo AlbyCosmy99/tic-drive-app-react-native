@@ -1,6 +1,6 @@
-import {Colors} from '@/constants/Colors';
-import {useServicesChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
-import {Image} from '@rneui/themed';
+import { Colors } from '@/constants/Colors';
+import { useServicesChoosenByUsers } from '@/hooks/user/useServiceChoosenByUsers';
+import { Image } from '@rneui/themed';
 import {
   ActivityIndicator,
   StyleSheet,
@@ -19,7 +19,7 @@ import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscou
 import TicDriveOptionButton from '../../buttons/TicDriveOptionButton';
 import Workshop from '@/types/workshops/Workshop';
 import openGoogleMaps from '@/services/map/openGoogleMaps';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import axiosClient from '@/services/http/axiosClient';
 import clsx from 'clsx';
 
@@ -30,6 +30,8 @@ interface PaymentConfirmationCardProps {
   type: 'Confirmed' | 'Pending confirmation';
   showReminderBell?: boolean;
   service: string;
+  showLocation?: boolean;  
+  showPayment?: boolean;   
 }
 
 const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
@@ -39,6 +41,8 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
   type,
   showReminderBell = false,
   service,
+  showLocation = true,  
+  showPayment = true,   
 }) => {
   const servicesChoosen = useServicesChoosenByUsers();
   const [loadingServiceOfferedDetails, setLoadingServiceOfferedDetails] =
@@ -84,7 +88,7 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
       <View className="flex flex-row my-4 justify-between items-start">
         <View className="flex-row">
           <Image
-            source={{uri: workshopDetailed?.profileImageUrl}}
+            source={{ uri: workshopDetailed?.profileImageUrl }}
             containerStyle={styles.image}
             PlaceholderContent={
               <ActivityIndicator
@@ -140,14 +144,20 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
         ) : (
           <View className="mb-2">
             <IconTextPair icon={<CalendarIcon />} text={timeDate} />
-            <IconTextPair
-              icon={<CreditCardIcon />}
-              text={`${workshopDetailed?.currency}${calculateWorkshopDiscount(
-                workshopDetailed?.servicePrice ?? 0,
-                workshopDetailed?.discount ?? 0,
-              )} total to pay`}
-            />
-            {workshopDetailed?.address && (
+
+            {/* Show payment info only if showPayment is true */}
+            {showPayment && workshopDetailed?.servicePrice && (
+              <IconTextPair
+                icon={<CreditCardIcon />}
+                text={`${workshopDetailed?.currency}${calculateWorkshopDiscount(
+                  workshopDetailed?.servicePrice ?? 0,
+                  workshopDetailed?.discount ?? 0,
+                )} total to pay`}
+              />
+            )}
+
+            {/* Show location info only if showLocation is true */}
+            {showLocation && workshopDetailed?.address && (
               <IconTextPair
                 icon={<PinIcon fill={Colors.light.ticText} />}
                 text={workshopDetailed.address}
