@@ -3,7 +3,7 @@ import * as Location from 'expo-location';
 import {LatLng} from 'react-native-maps';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import getAddressFromCoords from '@/services/location/getAddressFromCoords';
-import {useAppDispatch} from '@/stateManagement/redux/hooks';
+import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import {
   setAddress,
   setCoordinates,

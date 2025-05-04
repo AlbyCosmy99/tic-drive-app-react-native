@@ -9,9 +9,6 @@ type ClientReviewCardProps = {
 };
 
 function ClientReviewCard({review}: ClientReviewCardProps) {
-  useEffect(() => {
-    console.log('review', review);
-  }, []);
   function timeAgo(propDate: Date) {
     const date = new Date(propDate);
     const now = new Date();

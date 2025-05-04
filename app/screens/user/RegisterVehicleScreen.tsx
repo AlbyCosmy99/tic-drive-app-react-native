@@ -264,7 +264,6 @@ function RegisterVehicleScreen() {
   //todo: to remove it when plate option on car registration is added back
   useEffect(() => {
     setSegmentedControlSelection(options[0]); //make and model
-    console.log(selectedCar);
   }, []);
 
   return (
