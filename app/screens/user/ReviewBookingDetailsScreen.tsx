@@ -54,7 +54,6 @@ export default function ReviewBookingDetailsScreen() {
   const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
 
   useEffect(() => {
-    console.log(workshop);
     if (!userPaymentInfo?.choosenCard) {
       setUserPaymentInfo({
         ...userPaymentInfo,
