@@ -7,7 +7,7 @@ import {
   Platform,
   TouchableOpacity,
 } from 'react-native';
-import MapView, {Marker, Region, LatLng} from 'react-native-maps';
+import MapView, {Marker, Region} from 'react-native-maps';
 import {Ionicons} from '@expo/vector-icons';
 import navigationPush from '@/services/navigation/push';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
