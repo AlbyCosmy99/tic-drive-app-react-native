@@ -89,21 +89,18 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
           </Text>
           <View style={styles.hr} />
         </View>
-        <View className="flex-row mx-3.5">
-          <OAuth2Button text="Google" icon={<GoogleIcon />} />
-          <OAuth2Button text="Apple ID" icon={<AppleIcon />} />
-        </View>
+       
         <View className="flex-row justify-center gap-1 flex-wrap text-center mx-3.5 my-3 mb-8">
           <Text style={styles.footerText}>
             By clicking {action}, you agree to our
           </Text>
-          <TouchableOpacity>
-            <Text style={styles.link}>Terms of Service</Text>
-          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('TermAndConditionScreen')}>
+  <Text style={styles.link}>Term of use</Text>
+</TouchableOpacity>
           <Text style={styles.footerText}>and</Text>
-          <TouchableOpacity>
-            <Text style={styles.link}>Privacy Policy</Text>
-          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('PrivacyPolicyScreen')}>
+  <Text style={styles.link}>Privacy Policy</Text>
+</TouchableOpacity>
         </View>
       </View>
     </>
