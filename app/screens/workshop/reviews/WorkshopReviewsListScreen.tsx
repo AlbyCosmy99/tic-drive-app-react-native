@@ -23,10 +23,6 @@ const WorkshopReviewsListScreen = () => {
     take,
   );
 
-  useEffect(() => {
-    console.log(reviews);
-  }, [reviews]);
-
   const fiveStarsReviews = useMemo(() => {
     return reviews.filter(review => review.stars === 5).length;
   }, [reviews]);

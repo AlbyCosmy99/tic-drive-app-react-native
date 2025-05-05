@@ -41,7 +41,7 @@ export default function useNearbyWorkshops(
 
   useEffect(() => {
     const fetchWorkshops = async () => {
-      if (!user?.coordinates || !token) {
+      if (!user?.coordinates) {
         return;
       }
 
