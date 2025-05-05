@@ -99,15 +99,15 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
         </View>
         <View className="flex-row justify-center gap-1 flex-wrap text-center mx-3.5 my-3 mb-8">
         <Text style={styles.footerText}>
-  {t('login.by_clicking', { action: t(`login.${action}`) })}
-</Text>
-<TouchableOpacity onPress={() => navigationPush(navigation, 'TermAndConditionScreen')}>
-  <Text style={styles.link}>{t('login.terms_of_use')}</Text>
-</TouchableOpacity>
-<Text style={styles.footerText}>{t('login.and')}</Text>
-<TouchableOpacity onPress={() => navigationPush(navigation, 'PrivacyPolicyScreen')}>
-  <Text style={styles.link}>{t('login.privacy_policy')}</Text>
-</TouchableOpacity>
+           {t('login.by_clicking', { action: t(`login.${action}`) })}
+           </Text>
+          <TouchableOpacity onPress={() => navigationPush(navigation, 'TermAndConditionScreen')}>
+        <Text style={styles.link}>{t('login.terms_of_use')}</Text>
+         </TouchableOpacity>
+         <Text style={styles.footerText}>{t('login.and')}</Text>
+        <TouchableOpacity onPress={() => navigationPush(navigation, 'PrivacyPolicyScreen')}>
+       <Text style={styles.link}>{t('login.privacy_policy')}</Text>
+      </TouchableOpacity>
 
         </View>
       </View>
