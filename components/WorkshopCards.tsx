@@ -55,7 +55,6 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
 
   useEffect(() => {
     setCurrentPage(1);
-    console.log(servicesChoosen);
   }, [workshopFilter, order]);
 
   useEffect(() => {

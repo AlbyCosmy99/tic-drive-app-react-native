@@ -74,7 +74,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
         dispatch(login(user));
         dispatch(setToken(res.token));
         navigationReset(navigation, 0, 'ConfirmEmailScreen');
-      } catch (err) {
+      } catch (err: any) {
         setErrorMessage(
           err.message?.length > 0 ? err.message[0].description : err.message,
         );
@@ -102,7 +102,8 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
             navigationReset(navigation, 0, 'ConfirmEmailScreen');
           }
         }
-      } catch (err) {
+      } catch (err: any) {
+        alert('errore')
         setErrorMessage(
           err.message?.length > 0 ? err.message[0].description : err.message,
         );
