@@ -207,6 +207,8 @@
     "total": "Totale",
     "paymentMethod": "METODO DI PAGAMENTO",
     "payInWorkshop": "Paga in officina",
-    "bookNow": "Prenota ora"
+    "bookNow": "Prenota ora",
+    "noReviewsYet": "Nessuna recensione ancora. Sii il primo a recensire!"
+
   }
 }
