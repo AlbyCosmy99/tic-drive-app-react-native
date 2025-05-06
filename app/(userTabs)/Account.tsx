@@ -91,11 +91,17 @@ export default function UserAccount() {
 
   const handleOnEdit = async () => {
     setIsEditing(!isEditing);
+  
     if (isEditing && editedUser.name !== user?.name) {
+      const rawName = editedUser.name || '';
+  
+      // Always trim and normalize spaces
+      const trimmedName = rawName.trim().replace(/\s+/g, ' ');
+  
       try {
         setLoadingEditingUser(true);
-        await updateUser(editedUser, token ?? '');
-        dispatch(login({...user, name: editedUser.name}));
+        await updateUser({...editedUser, name: trimmedName}, token ?? '');
+        dispatch(login({...user, name: trimmedName}));
       } catch (e: any) {
         setErrorMessage(e.message);
       } finally {
@@ -103,6 +109,7 @@ export default function UserAccount() {
       }
     }
   };
+  
 
   const handleDeleteAccount = () => {
     navigationPush(navigation, 'DeleteAccountScreen');
@@ -141,8 +148,8 @@ export default function UserAccount() {
                       style={{lineHeight: 20}}
                       value={editedUser.name || ''}
                       onChangeText={text =>
-                        setEditedUser({...editedUser, name: text.trim()})
-                      }
+                        setEditedUser({...editedUser, name: text})
+                      }                      
                       placeholder={t('userAccount.enterYourName')}
                       placeholderTextColor="#888"
                       autoFocus
