@@ -129,7 +129,7 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
 
       <HorizontalLine />
 
-      <View className="h-32">
+      <View className="mb-4">
         {loadingServiceOfferedDetails ? (
           <View className="justify-center items-center w-full h-full">
             <ActivityIndicator
@@ -158,6 +158,8 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
       </View>
 
       {showDirectionsButton && (
+          <View className="mt-5">
+
         <TicDriveOptionButton
           icon={<DirectionIcon />}
           text="Directions"
@@ -170,6 +172,7 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
             )
           }
         />
+        </View>
       )}
     </View>
   );

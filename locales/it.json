@@ -210,66 +210,66 @@
     "bookNow": "Prenota ora"
   },
 
-"privacyPolicy": {
-  "title": "Informativa sulla Privacy",
-  "intro": "Grazie per l'interesse verso questa Informativa sulla Privacy e benvenuto su TicDrive, la nostra applicazione mobile per iOS e Android (la nostra “App”). Questa informativa ha lo scopo di informare gli utenti della nostra App sulla natura, la portata e le finalità della raccolta e dell'utilizzo dei dati personali da parte nostra.",
-  "whoIsController": {
-    "title": "CHI È IL TITOLARE DEL TRATTAMENTO?",
-    "description": "Un 'titolare del trattamento' determina le finalità e i mezzi del trattamento dei dati personali. TicDrive, Via Leonardo da Vinci, 12b, 35133 Padova PD, Italia, è il titolare del trattamento. Contattaci a mariancompany07@gmail.com."
+  "privacyPolicy": {
+    "title": "Informativa sulla Privacy",
+    "intro": "Grazie per l'interesse verso questa Informativa sulla Privacy e benvenuto su TicDrive, la nostra applicazione mobile per iOS e Android (la nostra “App”). Questa informativa ha lo scopo di informare gli utenti della nostra App sulla natura, la portata e le finalità della raccolta e dell'utilizzo dei dati personali da parte nostra.",
+    "whoIsController": {
+      "title": "CHI È IL TITOLARE DEL TRATTAMENTO?",
+      "description": "Un 'titolare del trattamento' determina le finalità e i mezzi del trattamento dei dati personali. TicDrive, Via Leonardo da Vinci, 12b, 35133 Padova PD, Italia, è il titolare del trattamento. Contattaci a mariancompany07@gmail.com."
+    },
+    "whatIsPersonalData": {
+      "title": "CHE COSA SONO I DATI PERSONALI?",
+      "description": "I Dati Personali sono informazioni che identificano una persona, tra cui nome, data di nascita, indirizzo, email, numero di telefono e indirizzo IP. I dati anonimi non sono identificabili."
+    },
+    "whatIsProcessing": {
+      "title": "CHE COSA SIGNIFICA TRATTAMENTO?",
+      "description": "Per 'trattamento' si intende qualsiasi operazione effettuata con i dati, dalla raccolta alla conservazione, all’utilizzo e alla cancellazione."
+    },
+    "applicableLaw": {
+      "title": "QUALI LEGGI SI APPLICANO?",
+      "description": "Rispettiamo il Codice in materia di protezione dei dati personali italiano, il GDPR dell'UE e questa Informativa sulla Privacy."
+    },
+    "legalBases": {
+      "title": "BASI LEGALI PER IL TRATTAMENTO",
+      "description": "Trattiamo i tuoi dati in base a: a) consenso, b) necessità contrattuale, c) obblighi legali, oppure d) interessi legittimi."
+    },
+    "collectedData": {
+      "title": "QUALI DATI PERSONALI RACCOGLIAMO?",
+      "description": "Raccogliamo nome, email, telefono, password, dettagli del veicolo, posizione, attività nell'app, messaggi e contenuti caricati. Raccogliamo anche dati tecnici e usiamo servizi come Firebase, Stripe, Sentry e altri. I tuoi dati ci aiutano a far funzionare e migliorare l'App."
+    },
+    "locationAndDevice": {
+      "title": "DATI DI POSIZIONE E DISPOSITIVO",
+      "description": "Potremmo trattare la tua posizione (GPS, IP) e informazioni sul dispositivo (sistema operativo, modello, sensori). Puoi gestire i permessi nelle impostazioni del dispositivo."
+    },
+    "thirdParties": {
+      "title": "SERVIZI DI TERZE PARTI",
+      "description": "Usiamo servizi come Stripe, Google Maps, Railway, Azure, Firebase e Sentry. Questi fornitori possono trattare i dati in modo indipendente e in paesi terzi."
+    },
+    "otherUses": {
+      "title": "ALTRI USI",
+      "description": "I tuoi dati vengono utilizzati per far funzionare l'App, fornire assistenza, migliorare i servizi e condurre attività di marketing (se consentito)."
+    },
+    "storageRetention": {
+      "title": "CONSERVAZIONE E DURATA",
+      "description": "I dati sono conservati in modo sicuro in un database PostgreSQL su Railway. Vengono cancellati quando non sono più necessari, salvo obblighi legali."
+    },
+    "yourRights": {
+      "title": "I TUOI DIRITTI",
+      "description": "Hai diritto ad accedere, correggere, cancellare, opporti, limitare il trattamento e alla portabilità dei dati. Contattaci per esercitare i tuoi diritti."
+    },
+    "dataBreaches": {
+      "title": "VIOLAZIONI DEI DATI",
+      "description": "In caso di violazione dei dati, gli utenti interessati verranno informati tempestivamente, con le misure correttive adottate."
+    },
+    "supervisoryAuthority": {
+      "title": "AUTORITÀ DI CONTROLLO",
+      "description": "L’autorità competente è il Garante per la protezione dei dati personali (Roma, Italia). Preferiamo risolvere eventuali problemi direttamente: contattaci prima."
+    },
+    "policyChanges": {
+      "title": "MODIFICHE ALL'INFORMATIVA",
+      "description": "Questa versione è in vigore dal 30 aprile 2025. Ti informeremo di eventuali modifiche aggiornando questa data."
+    }
   },
-  "whatIsPersonalData": {
-    "title": "CHE COSA SONO I DATI PERSONALI?",
-    "description": "I Dati Personali sono informazioni che identificano una persona, tra cui nome, data di nascita, indirizzo, email, numero di telefono e indirizzo IP. I dati anonimi non sono identificabili."
-  },
-  "whatIsProcessing": {
-    "title": "CHE COSA SIGNIFICA TRATTAMENTO?",
-    "description": "Per 'trattamento' si intende qualsiasi operazione effettuata con i dati, dalla raccolta alla conservazione, all’utilizzo e alla cancellazione."
-  },
-  "applicableLaw": {
-    "title": "QUALI LEGGI SI APPLICANO?",
-    "description": "Rispettiamo il Codice in materia di protezione dei dati personali italiano, il GDPR dell'UE e questa Informativa sulla Privacy."
-  },
-  "legalBases": {
-    "title": "BASI LEGALI PER IL TRATTAMENTO",
-    "description": "Trattiamo i tuoi dati in base a: a) consenso, b) necessità contrattuale, c) obblighi legali, oppure d) interessi legittimi."
-  },
-  "collectedData": {
-    "title": "QUALI DATI PERSONALI RACCOGLIAMO?",
-    "description": "Raccogliamo nome, email, telefono, password, dettagli del veicolo, posizione, attività nell'app, messaggi e contenuti caricati. Raccogliamo anche dati tecnici e usiamo servizi come Firebase, Stripe, Sentry e altri. I tuoi dati ci aiutano a far funzionare e migliorare l'App."
-  },
-  "locationAndDevice": {
-    "title": "DATI DI POSIZIONE E DISPOSITIVO",
-    "description": "Potremmo trattare la tua posizione (GPS, IP) e informazioni sul dispositivo (sistema operativo, modello, sensori). Puoi gestire i permessi nelle impostazioni del dispositivo."
-  },
-  "thirdParties": {
-    "title": "SERVIZI DI TERZE PARTI",
-    "description": "Usiamo servizi come Stripe, Google Maps, Railway, Azure, Firebase e Sentry. Questi fornitori possono trattare i dati in modo indipendente e in paesi terzi."
-  },
-  "otherUses": {
-    "title": "ALTRI USI",
-    "description": "I tuoi dati vengono utilizzati per far funzionare l'App, fornire assistenza, migliorare i servizi e condurre attività di marketing (se consentito)."
-  },
-  "storageRetention": {
-    "title": "CONSERVAZIONE E DURATA",
-    "description": "I dati sono conservati in modo sicuro in un database PostgreSQL su Railway. Vengono cancellati quando non sono più necessari, salvo obblighi legali."
-  },
-  "yourRights": {
-    "title": "I TUOI DIRITTI",
-    "description": "Hai diritto ad accedere, correggere, cancellare, opporti, limitare il trattamento e alla portabilità dei dati. Contattaci per esercitare i tuoi diritti."
-  },
-  "dataBreaches": {
-    "title": "VIOLAZIONI DEI DATI",
-    "description": "In caso di violazione dei dati, gli utenti interessati verranno informati tempestivamente, con le misure correttive adottate."
-  },
-  "supervisoryAuthority": {
-    "title": "AUTORITÀ DI CONTROLLO",
-    "description": "L’autorità competente è il Garante per la protezione dei dati personali (Roma, Italia). Preferiamo risolvere eventuali problemi direttamente: contattaci prima."
-  },
-  "policyChanges": {
-    "title": "MODIFICHE ALL'INFORMATIVA",
-    "description": "Questa versione è in vigore dal 30 aprile 2025. Ti informeremo di eventuali modifiche aggiornando questa data."
-  }
-},
 
   "terms_of_use": {
     "title": "Termini di Utilizzo",
@@ -343,10 +343,7 @@
         "title": "ALTRI TERMINI IMPORTANTI",
         "content": "Possiamo trasferire i nostri diritti. La mancata applicazione di un diritto non implica rinuncia. Se una clausola è invalida, le altre rimarranno valide. I Termini sono regolati dalla legge italiana. I tribunali italiani avranno giurisdizione non esclusiva."
       }
-    }
+    },
+    "noReviewsYet": "Ancora nessuna recensione. Prenota un servizio per essere il primo a recensire."
   }
 }
-
-
-
-
