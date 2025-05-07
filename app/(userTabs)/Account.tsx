@@ -90,19 +90,34 @@ export default function UserAccount() {
   };
 
   const handleOnEdit = async () => {
-    setIsEditing(!isEditing);
-    if (isEditing && editedUser.name !== user?.name) {
-      try {
-        setLoadingEditingUser(true);
-        await updateUser(editedUser, token ?? '');
-        dispatch(login({...user, name: editedUser.name}));
-      } catch (e: any) {
-        setErrorMessage(e.message);
-      } finally {
-        setLoadingEditingUser(false);
+    if (!isEditing) {
+      // About to enter editing mode — reset the editedUser.name to clean user.name
+      setEditedUser({ name: user?.name?.trim() || '' });
+      setIsEditing(true);
+    } else {
+      // About to save
+      if (editedUser.name !== user?.name) {
+        const rawName = editedUser.name || '';
+        const trimmedName = rawName.trim().replace(/\s+/g, ' ');
+  
+        try {
+          setLoadingEditingUser(true);
+          await updateUser({ ...editedUser, name: trimmedName }, token ?? '');
+          dispatch(login({ ...user, name: trimmedName }));
+        } catch (e: any) {
+          setErrorMessage(e.message);
+        } finally {
+          setLoadingEditingUser(false);
+          setIsEditing(false); // exit edit mode after saving
+        }
+      } else {
+        // If no change, just exit edit mode
+        setIsEditing(false);
       }
     }
   };
+  
+  
 
   const handleDeleteAccount = () => {
     navigationPush(navigation, 'DeleteAccountScreen');
@@ -141,8 +156,8 @@ export default function UserAccount() {
                       style={{lineHeight: 20}}
                       value={editedUser.name || ''}
                       onChangeText={text =>
-                        setEditedUser({...editedUser, name: text.trim()})
-                      }
+                        setEditedUser({...editedUser, name: text})
+                      }                      
                       placeholder={t('userAccount.enterYourName')}
                       placeholderTextColor="#888"
                       autoFocus
