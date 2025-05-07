@@ -20,6 +20,7 @@ import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext'
 import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice';
 import WorkshopReviewinfo from './workshop/reviews/WorkshopReviewInfo';
 import Workshop from '@/types/workshops/Workshop';
+import getUserMainImage from '@/utils/files/getUserMainImage';
 
 interface WorkshopCardProps {
   workshop: Workshop;
@@ -63,16 +64,18 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
         className="border-2 rounded-2xl"
         style={[styles.cardContainer, viewContainerStyle]}
       >
-        <Image
-          source={{uri: workshop.profileImageUrl}}
-          containerStyle={[styles.image, imageContainerStyle]}
-          PlaceholderContent={
-            <ActivityIndicator
-              size="large"
-              color={Colors.light.bookingsOptionsText}
-            />
-          }
-        />
+        {workshop.images?.length && (
+          <Image
+            source={{uri: getUserMainImage(workshop.images)?.url}}
+            containerStyle={[styles.image, imageContainerStyle]}
+            PlaceholderContent={
+              <ActivityIndicator
+                size="large"
+                color={Colors.light.bookingsOptionsText}
+              />
+            }
+          />
+        )}
         <View
           className={`mb-1.5 px-3 pb-1 pt-2 ${iconTextPairsContainerTailwindCss}`}
         >

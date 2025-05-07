@@ -36,6 +36,7 @@ import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButt
 import openGoogleMaps from '@/services/map/openGoogleMaps';
 import LocationPin from '@/components/svgs/location/PinLocation';
 import {useTranslation} from 'react-i18next';
+import getUserMainImage from '@/utils/files/getUserMainImage';
 
 export default function ReviewBookingDetailsScreen() {
   const {t} = useTranslation();
@@ -95,16 +96,18 @@ export default function ReviewBookingDetailsScreen() {
           <View className="border rounded-xl border-slate-200 px-4">
             <View className="flex flex-row my-4">
               {/* to do- spostare le immagini in un componente */}
-              <Image
-                source={{uri: workshop?.profileImageUrl}}
-                containerStyle={styles.image}
-                PlaceholderContent={
-                  <ActivityIndicator
-                    size="large"
-                    color={Colors.light.bookingsOptionsText}
-                  />
-                }
-              />
+              {workshop?.images.length && (
+                <Image
+                  source={{uri: getUserMainImage(workshop.images)?.url}}
+                  containerStyle={styles.image}
+                  PlaceholderContent={
+                    <ActivityIndicator
+                      size="large"
+                      color={Colors.light.bookingsOptionsText}
+                    />
+                  }
+                />
+              )}
               <View>
                 <View className="flex flex-row items-center gap-1">
                   <Text className="text-xl font-medium">{workshop?.name}</Text>

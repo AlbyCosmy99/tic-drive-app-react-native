@@ -16,8 +16,8 @@ import CarDetailsCard from '@/components/ui/cards/cars/CarDetailsCard';
 import useOnRegisterVehicle from '@/hooks/cars/useOnRegisterVehicle';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 import {useTranslation} from 'react-i18next';
-import { useFocusEffect } from '@react-navigation/native';
-import { useCallback } from 'react';
+import {useFocusEffect} from '@react-navigation/native';
+import {useCallback} from 'react';
 
 const UserVehiclesScreen = () => {
   const [cars, setCars] = useState<Car[]>([]);
@@ -32,9 +32,9 @@ const UserVehiclesScreen = () => {
         const customerCars = await getCustomerCars();
         setCars(customerCars ?? []);
       };
-  
+
       fetchCars();
-    }, [])
+    }, []),
   );
 
   const handleOnMiniCarCardPress = (car: Car) => {

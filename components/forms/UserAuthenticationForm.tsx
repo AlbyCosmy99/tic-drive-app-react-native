@@ -103,7 +103,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
           }
         }
       } catch (err: any) {
-        alert('errore')
+        alert('errore');
         setErrorMessage(
           err.message?.length > 0 ? err.message[0].description : err.message,
         );

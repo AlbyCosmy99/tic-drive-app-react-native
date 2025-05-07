@@ -20,7 +20,7 @@
     "title": "Prenotazioni",
     "confirmed": "Prenotazione confermata"
   },
-
+  "noReviewsYet": "Ancora nessuna recensione. Prenota un servizio per essere il primo a recensire.",
   "bookingsTabs": {
     "active": "Attivi",
     "past": "Passati",
@@ -358,7 +358,6 @@
         "title": "ALTRI TERMINI IMPORTANTI",
         "content": "Possiamo trasferire i nostri diritti. La mancata applicazione di un diritto non implica rinuncia. Se una clausola è invalida, le altre rimarranno valide. I Termini sono regolati dalla legge italiana. I tribunali italiani avranno giurisdizione non esclusiva."
       }
-    },
-    "noReviewsYet": "Ancora nessuna recensione. Prenota un servizio per essere il primo a recensire."
+    }
   }
 }

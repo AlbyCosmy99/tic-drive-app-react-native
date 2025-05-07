@@ -1,3 +1,5 @@
+import {TicDriveImage} from '../files/TicDriveImage';
+
 interface Workshop {
   id: number;
   name: string;
@@ -12,6 +14,7 @@ interface Workshop {
   discount?: number;
   isFavorite?: boolean;
   isVerified?: boolean;
+  images: TicDriveImage[];
 }
 
 export default Workshop;

@@ -22,6 +22,7 @@ import openGoogleMaps from '@/services/map/openGoogleMaps';
 import {useEffect, useState} from 'react';
 import axiosClient from '@/services/http/axiosClient';
 import clsx from 'clsx';
+import getUserMainImage from '@/utils/files/getUserMainImage';
 
 interface PaymentConfirmationCardProps {
   workshop: Workshop | null | undefined;
@@ -83,16 +84,18 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
     <View className="rounded-lg border p-4 pt-0 border-grey-light w-full">
       <View className="flex flex-row my-4 justify-between items-start">
         <View className="flex-row">
-          <Image
-            source={{uri: workshopDetailed?.profileImageUrl}}
-            containerStyle={styles.image}
-            PlaceholderContent={
-              <ActivityIndicator
-                size="large"
-                color={Colors.light.bookingsOptionsText}
-              />
-            }
-          />
+          {workshopDetailed?.images?.length && (
+            <Image
+              source={{uri: getUserMainImage(workshopDetailed.images)?.url}}
+              containerStyle={styles.image}
+              PlaceholderContent={
+                <ActivityIndicator
+                  size="large"
+                  color={Colors.light.bookingsOptionsText}
+                />
+              }
+            />
+          )}
           <View>
             <Text
               className={clsx(
@@ -158,20 +161,19 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
       </View>
 
       {showDirectionsButton && (
-          <View className="mt-5">
-
-        <TicDriveOptionButton
-          icon={<DirectionIcon />}
-          text="Directions"
-          textTailwindCss="font-medium text-base"
-          onPress={() =>
-            openGoogleMaps(
-              workshopDetailed?.address,
-              workshopDetailed?.latitude,
-              workshopDetailed?.longitude,
-            )
-          }
-        />
+        <View className="mt-5">
+          <TicDriveOptionButton
+            icon={<DirectionIcon />}
+            text="Directions"
+            textTailwindCss="font-medium text-base"
+            onPress={() =>
+              openGoogleMaps(
+                workshopDetailed?.address,
+                workshopDetailed?.latitude,
+                workshopDetailed?.longitude,
+              )
+            }
+          />
         </View>
       )}
     </View>

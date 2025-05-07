@@ -21,7 +21,7 @@ const SeeAllReviewsCards = ({workshopId}: {workshopId: number}) => {
     return (
       <View>
         <Text className="text-base text-gray-500 mt-2">
-          {t('reviewBooking.noReviewsYet')} 
+          {t('noReviewsYet')}
         </Text>
       </View>
     );

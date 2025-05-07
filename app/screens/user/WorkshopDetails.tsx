@@ -35,6 +35,7 @@ import CarPinIcon from '@/components/svgs/vehicles/Car3';
 import {useTranslation} from 'react-i18next';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import openGoogleMaps from '@/services/map/openGoogleMaps';
+import getUserMainImage from '@/utils/files/getUserMainImage';
 
 export default function WorkshopDetails() {
   const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
@@ -118,16 +119,18 @@ export default function WorkshopDetails() {
                 className="w-full relative mb-2"
                 style={styles.cardContainer}
               >
-                <Image
-                  source={{uri: workshop?.profileImageUrl}}
-                  containerStyle={styles.image}
-                  PlaceholderContent={
-                    <ActivityIndicator
-                      size="large"
-                      color={Colors.light.bookingsOptionsText}
-                    />
-                  }
-                />
+                {workshop?.images?.length && (
+                  <Image
+                    source={{uri: getUserMainImage(workshop.images)?.url}}
+                    containerStyle={styles.image}
+                    PlaceholderContent={
+                      <ActivityIndicator
+                        size="large"
+                        color={Colors.light.bookingsOptionsText}
+                      />
+                    }
+                  />
+                )}
                 <View className="flex-1 flex-row items-center gap-x-1.5 mt-2">
                   <Text className="text-2xl font-semibold">
                     {workshop.name}

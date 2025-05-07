@@ -1,10 +1,10 @@
-import { ScrollView, Text, View } from 'react-native';
+import {ScrollView, Text, View} from 'react-native';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import ToPreviousPage from '@/components/navigation/ToPreviousPage';
 
 const TermsAndConditionsScreen = () => {
-  const { t } = useTranslation();
+  const {t} = useTranslation();
 
   const sections = [
     'general_terms',
@@ -29,7 +29,7 @@ const TermsAndConditionsScreen = () => {
   return (
     <View className="flex-1 bg-white">
       <ToPreviousPage containerClassName="m-2 mb-4" />
-      <ScrollView contentContainerStyle={{ padding: 20 }}>
+      <ScrollView contentContainerStyle={{padding: 20}}>
         <Text className="text-xl font-bold mb-4 font-[Poppins] ">
           {t('terms_of_use.title')}
         </Text>
@@ -38,7 +38,7 @@ const TermsAndConditionsScreen = () => {
           {t('terms_of_use.introduction')}
         </Text>
 
-        {sections.map((sectionKey) => (
+        {sections.map(sectionKey => (
           <React.Fragment key={sectionKey}>
             <Text className="text-base font-semibold mt-4 mb-2 font-[Poppins]">
               {t(`terms_of_use.sections.${sectionKey}.title`)}
