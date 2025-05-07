@@ -17,7 +17,15 @@ const SeeAllReviewsCards = ({workshopId}: {workshopId: number}) => {
   const {t} = useTranslation();
 
   if (loadingReviews) return <TicDriveSpinner />;
-  if (!reviews?.length) return null;
+  if (!reviews?.length) {
+    return (
+      <View>
+        <Text className="text-base text-gray-500 mt-2">
+          {t('reviewBooking.noReviewsYet')} 
+        </Text>
+      </View>
+    );
+  }
 
   return (
     <View>
