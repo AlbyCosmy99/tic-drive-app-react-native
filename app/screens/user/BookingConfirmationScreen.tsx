@@ -3,7 +3,7 @@ import {Colors} from '@/constants/Colors';
 import {LinearGradient} from 'expo-linear-gradient';
 import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
 import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
-import CheckIcon from '@/components/svgs/CheckCircle';
+import CheckIcon from '@/assets/svg/check_circle.svg';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import {
   reset,
@@ -15,7 +15,6 @@ import PaymentConfirmationCard from '@/components/ui/cards/payment/PaymentConfir
 import {useRoute} from '@react-navigation/native';
 import {useContext, useEffect, useMemo, useState} from 'react';
 import CarContext from '@/stateManagement/contexts/car/CarContext';
-import ErrorModal from '@/components/ui/modals/ErrorModal';
 import axiosClient from '@/services/http/axiosClient';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import {t} from 'i18next';

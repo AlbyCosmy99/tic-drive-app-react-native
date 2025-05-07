@@ -1,8 +1,8 @@
 import LinearGradientViewLayout from '@/app/layouts/LinearGradientViewLayout';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
-import MapIcon from '@/components/svgs/location/Map';
-import FilterIcon from '@/components/svgs/operations/Filter';
-import OrderIcon from '@/components/svgs/operations/Order';
+import MapIcon from '@/assets/svg/location/map.svg'
+import FilterIcon from '@/assets/svg/operations/filter.svg'
+import OrderIcon from '@/assets/svg/operations/order.svg'
 import LocationPin from '@/components/modal/LocationPin';
 import MapModal from '@/components/modal/MapModal';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
@@ -14,10 +14,10 @@ import WorkshopCards from '@/components/WorkshopCards';
 import {Colors} from '@/constants/Colors';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import {RouteProp, useRoute} from '@react-navigation/native';
-import {useContext, useEffect, useState} from 'react';
+import {useContext, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Text, View} from 'react-native';
-import {LatLng, Region} from 'react-native-maps';
+import {LatLng} from 'react-native-maps';
 
 interface OrderOption {
   label: string;

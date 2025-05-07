@@ -1,6 +1,6 @@
 import {Text, View} from 'react-native';
 import CrossPlatformButtonLayout from '../ui/buttons/CrossPlatformButtonLayout';
-import ClockIcon from '@/components/svgs/time/Clock';
+import ClockIcon from '@/assets/svg/time/clock.svg'
 
 interface FilterSearchModalProps {
   elements: any[];

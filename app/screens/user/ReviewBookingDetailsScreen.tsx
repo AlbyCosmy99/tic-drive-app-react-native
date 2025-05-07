@@ -16,9 +16,9 @@ import {useRoute} from '@react-navigation/native';
 import {Image} from '@rneui/themed';
 import {ActivityIndicator} from 'react-native';
 import HorizontalLine from '@/components/ui/HorizontalLine';
-import Verified from '@/components/svgs/Verified';
-import CarRepair from '@/components/svgs/servicesIcons/CarRepair';
-import CalendarIcon from '@/components/svgs/FreeCancellation';
+import Verified from '@/assets/svg/verified.svg'
+import CarRepair from '@/assets/svg/servicesIcons/car_repair.svg'
+import CalendarIcon from '@/assets/svg/free_cancellation.svg'
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 import IconTextPair from '@/components/ui/IconTextPair';
 import PaymentCard from '@/components/ui/payment/PaymentCard';
@@ -31,10 +31,10 @@ import navigationReset from '@/services/navigation/reset';
 import {useServicesChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import WorkshopReviewinfo from '@/components/workshop/reviews/WorkshopReviewInfo';
-import CashIcon from '@/components/svgs/payment/Cash';
+import CashIcon from '@/assets/svg/payment/cash.svg'
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
 import openGoogleMaps from '@/services/map/openGoogleMaps';
-import LocationPin from '@/components/svgs/location/PinLocation';
+import LocationPin from '@/assets/svg/location/PinLocation.svg'
 import {useTranslation} from 'react-i18next';
 import getUserMainImage from '@/utils/files/getUserMainImage';
 

@@ -2,7 +2,6 @@ import {Colors} from '@/constants/Colors';
 import {Image} from '@rneui/themed';
 import {
   ActivityIndicator,
-  Linking,
   Share,
   StyleSheet,
   Text,
@@ -11,7 +10,6 @@ import {
 import {
   Pressable,
   ScrollView,
-  TouchableOpacity,
 } from 'react-native-gesture-handler';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
@@ -20,8 +18,8 @@ import useJwtToken from '@/hooks/auth/useJwtToken';
 import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import WorkshopReviewinfo from '@/components/workshop/reviews/WorkshopReviewInfo';
-import GreenCheckIcon from '@/components/svgs/CheckGreen';
-import ShareIcon from '@/components/svgs/share/ShareIcon';
+import GreenCheckIcon from '@/assets/svg/check_green.svg'
+import ShareIcon from '@/assets/svg/share/shareIcon.svg'
 import SeeAllServicesCards from '@/components/services/SeeAllServicesCards';
 import SeeAllReviewsCards from '@/components/workshop/reviews/SeeAllReviewsCards';
 import Constants from 'expo-constants';
@@ -29,9 +27,9 @@ import MapView, {Marker} from 'react-native-maps';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
 import axiosClient from '@/services/http/axiosClient';
 import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice';
-import EmptyHeartIcon from '@/components/svgs/emotions/EmptyHeart';
-import RedHeartIcon from '@/components/svgs/emotions/RedHeart';
-import CarPinIcon from '@/components/svgs/vehicles/Car3';
+import EmptyHeartIcon from '@/assets/svg/emotions/EmptyHeart.svg'
+import RedHeartIcon from '@/assets/svg/emotions/RedHeart.svg'
+import CarPinIcon from '@/assets/svg/vehicles/car3.svg'
 import {useTranslation} from 'react-i18next';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import openGoogleMaps from '@/services/map/openGoogleMaps';

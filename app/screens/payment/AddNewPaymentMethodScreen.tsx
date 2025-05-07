@@ -9,7 +9,7 @@ import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import {useContext, useState} from 'react';
 import {Text, View} from 'react-native';
-import VisaIcon from '@/components/svgs/payment/Visa';
+import VisaIcon from '@/assets/svg/payment/visa.svg'
 import LinearGradientViewLayout from '@/app/layouts/LinearGradientViewLayout';
 
 const AddNewPaymentMethodScreen = () => {
