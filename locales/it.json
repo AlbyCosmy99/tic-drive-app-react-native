@@ -148,7 +148,8 @@
     "edit": "Modifica",
     "cancel": "Annulla",
     "ok": "Ok",
-    "home": "Home"
+    "home": "Home",
+    "welcome": "Benvenuto"
   },
   "userAccount": {
     "enterYourName": "Inserisci il tuo nome",
@@ -270,80 +271,19 @@
       "description": "Questa versione è in vigore dal 30 aprile 2025. Ti informeremo di eventuali modifiche aggiornando questa data."
     }
   },
-
-  "terms_of_use": {
-    "title": "Termini di Utilizzo",
-    "introduction": "Questi Termini di Utilizzo (i “Termini”) si applicano tra te (“tu”) e TicDrive di Via Leonardo da Vinci, 12b. 35133 Padova PD, Italia (“TicDrive”, “noi”) per la nostra applicazione mobile iOS e Android (la nostra “App”) e costituiscono un accordo legale tra te e noi che regola il tuo accesso alla nostra App e ai Servizi.",
-    "sections": {
-      "general_terms": {
-        "title": "TERMINI GENERALI",
-        "content": "Possiamo modificare questi Termini di tanto in tanto e te ne daremo comunicazione. Se non accetti tali termini, non devi usare la nostra App. Ci riserviamo il diritto di modificare, sospendere o interrompere qualsiasi parte della nostra App o contenuti associati in qualsiasi momento. L’accesso alla nostra App può essere interrotto o incontrare difficoltà tecniche."
-      },
-      "license_grant": {
-        "title": "CONCESSIONE DI LICENZA",
-        "content": "Fintanto che rispetti questi Termini, l’EULA e la nostra Informativa sulla Privacy, ti concediamo una licenza non trasferibile e non esclusiva per utilizzare l’App. Ci riserviamo tutti i diritti non espressamente concessi."
-      },
-      "account_and_password": {
-        "title": "ACCOUNT E PASSWORD",
-        "content": "I servizi sono forniti tramite un account personale. Sei responsabile della riservatezza del tuo account. Devi avere almeno 18 anni. Sei responsabile di qualsiasi utilizzo del tuo account e devi notificarci immediatamente in caso di uso non autorizzato."
-      },
-      "account_suspension_termination": {
-        "title": "SOSPENSIONE E TERMINAZIONE ACCOUNT",
-        "content": "Ci riserviamo il diritto di sospendere o eliminare qualsiasi account per violazioni dei Termini senza preavviso. Le azioni includono revoca di accesso, rimozione dei servizi, avvisi, procedimenti legali, e segnalazioni alle autorità."
-      },
-      "end_of_life": {
-        "title": "FINE DEL CICLO DI VITA",
-        "content": "Ci riserviamo il diritto di terminare l’App con un preavviso di 3 mesi. Cercheremo di fornire un servizio simile o, con accordo scritto, garantire l’accesso continuato all’App."
-      },
-      "service_levels_and_support": {
-        "title": "LIVELLI DI SERVIZIO E SUPPORTO",
-        "content": "Forniremo supporto tecnico secondo il principio di uso equo. Non siamo obbligati a fornire supporto in alcuni casi come modifiche da parte tua o uso improprio. Il tempo di risposta non supererà le 72 ore."
-      },
-      "data_charges_and_mobile_devices": {
-        "title": "COSTI DATI E DISPOSITIVI MOBILI",
-        "content": "Sei responsabile dei costi relativi all’uso dell’App, inclusi dati mobili e SMS."
-      },
-      "technical_error": {
-        "title": "ERRORE TECNICO",
-        "content": "In caso di errore tecnico, contattaci con dettagli e immagini per determinare l’eventuale rimborso."
-      },
-      "technical_requirements": {
-        "title": "REQUISITI TECNICI",
-        "content": "L’App è aggiornata per essere compatibile con le versioni nuove dei dispositivi. È tua responsabilità garantire che il dispositivo soddisfi le specifiche tecniche."
-      },
-      "uploading_content": {
-        "title": "CARICAMENTO CONTENUTI",
-        "content": "Sei responsabile del contenuto caricato nell’App e garantisci la conformità con la nostra Privacy Policy. Possiamo usare tali contenuti per miglioramenti tramite analisi o AI. Possiamo rimuovere contenuti non conformi."
-      },
-      "warranties": {
-        "title": "GARANZIE",
-        "content": "Forniamo l’App e i contenuti ‘così come sono’. Non garantiamo l’assenza di errori, virus o altri elementi dannosi e decliniamo ogni responsabilità per contenuti imprecisi o errori."
-      },
-      "submissions": {
-        "title": "INVII",
-        "content": "Ogni suggerimento, idea o feedback inviato diventa nostra proprietà esclusiva. Rinunci a ogni diritto morale sui tuoi invii."
-      },
-      "limitation_of_liability": {
-        "title": "LIMITAZIONE DI RESPONSABILITÀ",
-        "content": "Non siamo responsabili per perdite indirette o conseguenti derivanti dall’uso dell’App. Nulla esclude la responsabilità per morte, lesioni personali o frode."
-      },
-      "termination": {
-        "title": "TERMINAZIONE",
-        "content": "Possiamo sospendere o terminare l’accesso all’App in caso di violazioni. Puoi terminare disinstallando l’App. Nessun rimborso sarà dovuto."
-      },
-      "communication": {
-        "title": "COMUNICAZIONI",
-        "content": "La comunicazione sarà effettuata tramite e-mail all’indirizzo da te fornito."
-      },
-      "events_outside_our_control": {
-        "title": "EVENTI FUORI DAL NOSTRO CONTROLLO",
-        "content": "Non siamo responsabili per eventi fuori dal nostro controllo. Le nostre obbligazioni saranno sospese durante tali eventi."
-      },
-      "other_important_terms": {
-        "title": "ALTRI TERMINI IMPORTANTI",
-        "content": "Possiamo trasferire i nostri diritti. La mancata applicazione di un diritto non implica rinuncia. Se una clausola è invalida, le altre rimarranno valide. I Termini sono regolati dalla legge italiana. I tribunali italiani avranno giurisdizione non esclusiva."
-      }
-    },
-    "noReviewsYet": "Ancora nessuna recensione. Prenota un servizio per essere il primo a recensire."
+  "login": {
+    "welcome": "Benvenuto",
+    "dont_have_account": "Non hai un account?",
+    "already_have_account": "Hai già un account?",
+    "register_here": "Registrati qui",
+    "login_here": "Accedi qui",
+    "forgot_password": "Password dimenticata?",
+    "or_continue_with": "Oppure continua con",
+    "by_clicking": "Facendo clic su {{action}}, accetti i nostri",
+    "terms_of_use": "Termini di utilizzo",
+    "and": "e",
+    "privacy_policy": "Informativa sulla privacy",
+    "login": "Accedi",
+    "register": "Registrati"
   }
 }
