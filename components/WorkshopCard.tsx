@@ -82,7 +82,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
           <IconTextPair
             containerTailwindCss={`py-1.5 ${iconTextPairContainerTailwindCss}`}
             textTailwindCss={`text-xl font-semibold ${iconTextPairTextTailwindCss}`}
-            text={workshop.name}
+            text={workshop.workshopName}
             icon={<GreenCheckIcon />}
           />
           <IconTextPair
