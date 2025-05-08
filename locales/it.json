@@ -6,6 +6,14 @@
   "notifications": "Notifiche",
   "other": "ALTRO",
   "support": "Supporto",
+  "supports":{
+    "title": "Hai bisogno di aiuto o hai una domanda?",
+    "subtitle": "Il nostro team di supporto è qui per aiutarti. Scegli un'opzione di contatto qui sotto.",
+    "email_us": "Scrivici un'email",
+    "call_support": "Chiama il supporto",
+    "footer_message": "Siamo sempre qui per te! 🤗"
+
+  },
   "feedback": "Feedback",
   "deleteAccount": "Elimina account",
   "termsAndPrivacy": "Termini di servizio e Privacy Policy",

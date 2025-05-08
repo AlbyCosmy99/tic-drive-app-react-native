@@ -32,6 +32,8 @@ import WorkshopsListScreen from './screens/workshop/WorkshopsListScreen';
 import WorkshopReviewsListScreen from './screens/workshop/reviews/WorkshopReviewsListScreen';
 import ChatScreen from './screens/chat/ChatScreen';
 import FAQScreen from './screens/chat/FAQScreen';
+import SupportSectionScreen from './screens/chat/SupportSectionScreen';
+
 
 import '@/i18n';
 import ForgotPasswordScreen from './screens/user/ForgotPasswordScreen';
@@ -254,6 +256,15 @@ export default function RootLayout() {
                         component={FAQScreen}
                         options={({route}) => ({
                           title: 'FAQScreen',
+                          headerShown: false,
+                          animation: getAnimation(route),
+                        })}
+                      />
+                      <Stack.Screen
+                        name="SupportSectionScreen"
+                        component={SupportSectionScreen}
+                        options={({route}) => ({
+                          title: 'SupportSectionScreen',
                           headerShown: false,
                           animation: getAnimation(route),
                         })}

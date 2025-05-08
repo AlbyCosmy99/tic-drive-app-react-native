@@ -88,7 +88,9 @@ export default function UserAccount() {
   const handleFAQ = () => {
     navigationPush(navigation, 'FAQScreen');
   };
-
+  const handleSupport = () => {
+    navigationPush(navigation, 'SupportSectionScreen');
+  };
   const handleOnEdit = async () => {
     if (!isEditing) {
       // About to enter editing mode — reset the editedUser.name to clean user.name
@@ -301,7 +303,7 @@ export default function UserAccount() {
               <HorizontalLine />
 
               <CrossPlatformButtonLayout
-                onPress={() => alert(t('userAccount.customerSupport'))}
+                onPress={handleSupport}
               >
                 <IconTextPair
                   text={t('userAccount.customerSupport')}
