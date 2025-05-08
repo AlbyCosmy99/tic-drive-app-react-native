@@ -6,6 +6,6 @@ export interface POIMarker {
   price: number;
   currency: string;
   id: number;
-  name: string;
+  workshopName: string;
   workshop: Workshop;
 }

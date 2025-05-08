@@ -63,7 +63,7 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
           price: workshop.servicePrice ?? 0,
           currency: workshop.currency ?? '€',
           id: workshop.id,
-          name: workshop.name,
+          workshopName: workshop.workshopName,
           workshop: workshop,
         })),
       );
@@ -96,7 +96,7 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
                 >
                   <View style={styles.priceBubble}>
                     <Text style={styles.priceText}>
-                      {poi?.price ? poi?.price + poi.currency : poi.name}
+                      {poi?.price ? poi?.price + poi.currency : poi.workshopName}
                     </Text>
                   </View>
                 </Marker>
