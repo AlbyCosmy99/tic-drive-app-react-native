@@ -131,7 +131,7 @@ export default function WorkshopDetails() {
                 )}
                 <View className="flex-1 flex-row items-center gap-x-1.5 mt-2">
                   <Text className="text-2xl font-semibold">
-                    {workshop.name}
+                    {workshop.workshopName}
                   </Text>
                   {workshop.isVerified && (
                     <GreenCheckIcon width={24} height={24} />
