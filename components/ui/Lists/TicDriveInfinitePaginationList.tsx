@@ -75,7 +75,7 @@ const TicDriveInfinitePaginationList: React.FC<
     };
   }, [setFilter]);
 
-  return filteredData.length === 0 && !loading ? (
+  return filter.length > 0 && filteredData.length === 0 && !loading ? (
     noDataContent
   ) : (
     <View className={`${!token ? 'mb-2' : ''} ${tailwindContainerCss}`}>

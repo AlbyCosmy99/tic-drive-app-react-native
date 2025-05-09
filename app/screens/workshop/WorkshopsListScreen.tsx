@@ -169,7 +169,6 @@ export default function WorkshopsListScreen() {
                   iconContainerTailwindCss="mr-1"
                 />
               </CrossPlatformButtonLayout>
-              {/* Future filter dropdown here */}
             </View>
 
             <View className="flex-1">
