@@ -9,15 +9,13 @@ import navigationPush from '@/services/navigation/push';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
 import useCustomerCars from '@/hooks/api/cars/useCustomerCars';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import CarDetailsMiniCard from '@/components/ui/cards/cars/CarDetailsMiniCard';
 import {ScrollView} from 'react-native-gesture-handler';
 import CarDetailsCard from '@/components/ui/cards/cars/CarDetailsCard';
 import useOnRegisterVehicle from '@/hooks/cars/useOnRegisterVehicle';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 import {useTranslation} from 'react-i18next';
-import {useFocusEffect} from '@react-navigation/native';
-import {useCallback} from 'react';
 
 const UserVehiclesScreen = () => {
   const [cars, setCars] = useState<Car[]>([]);
@@ -26,16 +24,13 @@ const UserVehiclesScreen = () => {
   const onRegisterVehicle = useOnRegisterVehicle();
   const {t} = useTranslation();
 
-  useFocusEffect(
-    useCallback(() => {
-      const fetchCars = async () => {
-        const customerCars = await getCustomerCars();
-        setCars(customerCars ?? []);
-      };
-
-      fetchCars();
-    }, []),
-  );
+  useEffect(() => {
+    const fetchCars = async () => {
+      const customerCars = await getCustomerCars();
+      setCars(customerCars ?? []);
+    };
+    fetchCars();
+  }, []);
 
   const handleOnMiniCarCardPress = (car: Car) => {
     navigationPush(navigation, 'UserVehicleDetailsScreen', {car});
