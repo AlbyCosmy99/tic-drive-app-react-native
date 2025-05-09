@@ -67,6 +67,7 @@
     "react-native-get-random-values": "1.11.0",
     "react-native-google-places-autocomplete": "2.5.6",
     "react-native-keyboard-aware-scroll-view": "0.9.5",
+    "react-native-map-clustering": "^3.4.2",
     "react-native-maps": "1.18.0",
     "react-native-progress": "^5.0.1",
     "react-native-reanimated": "~3.16.1",

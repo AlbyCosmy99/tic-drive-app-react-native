@@ -34,7 +34,6 @@ import ChatScreen from './screens/chat/ChatScreen';
 import FAQScreen from './screens/chat/FAQScreen';
 import SupportSectionScreen from './screens/chat/SupportSectionScreen';
 
-
 import '@/i18n';
 import ForgotPasswordScreen from './screens/user/ForgotPasswordScreen';
 import ResetPasswordWithCodeScreen from './screens/user/ResetPasswordWithCodeScreen';

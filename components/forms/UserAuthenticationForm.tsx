@@ -12,7 +12,7 @@ import navigationReset from '@/services/navigation/reset';
 import navigationReplace from '@/services/navigation/replace';
 import register from '@/services/auth/register';
 import {setSecureToken} from '@/services/auth/secureStore/setToken';
-import VisibilityOffIcon from '@/assets/svg/access/visibility_off.svg'
+import VisibilityOffIcon from '@/assets/svg/access/visibility_off.svg';
 import VisibilityOnIcon from '@/assets/svg/access/visibility_on.svg';
 import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
 import useLogin from '@/hooks/auth/useLogin';

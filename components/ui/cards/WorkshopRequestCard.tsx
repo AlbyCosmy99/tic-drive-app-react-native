@@ -2,13 +2,13 @@ import {StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
 import {FC} from 'react';
 import WorkshopRequestStatus from '@/types/WorkshopRequestStatus';
 import CircularUserAvatar from '../avatars/CircularUserAvatar';
-import PendingIcon from '@/assets/svg/requestStatus/pending.svg'
-import AcceptedIcon from '@/assets/svg/requestStatus/check.svg'
+import PendingIcon from '@/assets/svg/requestStatus/pending.svg';
+import AcceptedIcon from '@/assets/svg/requestStatus/check.svg';
 import {Colors} from '@/constants/Colors';
-import CalendarIcon from '@/assets/svg/event_available.svg'
-import CarRepairIcon from '@/assets/svg/servicesIcons/car_repair.svg'
-import CreditCardIcon from '@/assets/svg/payment/credit_score.svg'
-import CarIcon from '@/assets/svg/vehicles/car1.svg'
+import CalendarIcon from '@/assets/svg/event_available.svg';
+import CarRepairIcon from '@/assets/svg/servicesIcons/car_repair.svg';
+import CreditCardIcon from '@/assets/svg/payment/credit_score.svg';
+import CarIcon from '@/assets/svg/vehicles/car1.svg';
 import HorizontalLine from '../HorizontalLine';
 interface WorkshopRequestCardProps {
   status: WorkshopRequestStatus;

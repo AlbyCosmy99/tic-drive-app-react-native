@@ -1,11 +1,7 @@
 import {useState} from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
-import RemoveIcon from '@/assets/svg/remove.svg'
+import RemoveIcon from '@/assets/svg/remove.svg';
 import LinearGradientViewLayout from '@/app/layouts/LinearGradientViewLayout';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';

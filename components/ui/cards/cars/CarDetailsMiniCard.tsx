@@ -1,5 +1,5 @@
 import {Text, View} from 'react-native';
-import NissanLogo from '@/assets/svg/carLogos/nissan.svg'
+import NissanLogo from '@/assets/svg/carLogos/nissan.svg';
 import {FuelType} from '@/types/Car';
 
 interface CarDetailsMiniCardProps {

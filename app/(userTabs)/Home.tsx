@@ -1,5 +1,5 @@
-import NissanIcon from '@/assets/svg/vehicles/makes/nissan.svg'
-import PeugeotIcon from '@/assets/svg/vehicles/makes/peugeot.svg'
+import NissanIcon from '@/assets/svg/vehicles/makes/nissan.svg';
+import PeugeotIcon from '@/assets/svg/vehicles/makes/peugeot.svg';
 import FilterSearchModal from '@/components/modal/FilterSearchModal';
 import LocationPin from '@/components/modal/LocationPin';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';

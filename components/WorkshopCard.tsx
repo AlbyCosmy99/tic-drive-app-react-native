@@ -10,8 +10,8 @@ import {
   ViewStyle,
 } from 'react-native';
 import {Image} from 'react-native-elements';
-import PinLocationIcon from '@/assets/svg/location/PinLocation.svg'
-import GreenCheckIcon from '@/assets/svg/check_green.svg'
+import PinLocationIcon from '@/assets/svg/location/PinLocation.svg';
+import GreenCheckIcon from '@/assets/svg/check_green.svg';
 import IconTextPair from './ui/IconTextPair';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';

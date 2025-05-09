@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Linking, TouchableOpacity } from 'react-native';
+import {Text, View, Linking, TouchableOpacity} from 'react-native';
 
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import LinearGradientViewLayout from '@/app/layouts/LinearGradientViewLayout';
@@ -8,12 +8,12 @@ import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import PhoneIcon from '@/assets/svg/notifications/phone.svg';
 import MailIcon from '@/assets/svg/notifications/mail.svg';
 
-import { useNavigation } from '@react-navigation/native';
-import { useTranslation } from 'react-i18next';
+import {useNavigation} from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 
 export default function SupportScreen() {
   const navigation = useNavigation();
-  const { t } = useTranslation();
+  const {t} = useTranslation();
 
   const options = [
     {
@@ -50,7 +50,9 @@ export default function SupportScreen() {
               className="flex-row items-center bg-white rounded-xl shadow-sm px-4 py-4 border border-gray-100"
             >
               <View className="mr-4">{option.icon}</View>
-              <Text className="text-base text-black font-poppins">{option.label}</Text>
+              <Text className="text-base text-black font-poppins">
+                {option.label}
+              </Text>
             </TouchableOpacity>
           ))}
         </View>

@@ -10,11 +10,11 @@ import {
 } from 'react-native';
 import HorizontalLine from '../../HorizontalLine';
 import IconTextPair from '../../IconTextPair';
-import CalendarIcon from '@/assets/svg/calendar/event_available.svg'
-import CreditCardIcon from '@/assets/svg/payment/creditCard.svg'
-import PinIcon from '@/assets/svg/location_on.svg'
-import DirectionIcon from '@/assets/svg/assistant_direction.svg'
-import BellIcon from '@/assets/svg/notifications/Bell1.svg'
+import CalendarIcon from '@/assets/svg/calendar/event_available.svg';
+import CreditCardIcon from '@/assets/svg/payment/creditCard.svg';
+import PinIcon from '@/assets/svg/location_on.svg';
+import DirectionIcon from '@/assets/svg/assistant_direction.svg';
+import BellIcon from '@/assets/svg/notifications/Bell1.svg';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 import TicDriveOptionButton from '../../buttons/TicDriveOptionButton';
 import Workshop from '@/types/workshops/Workshop';

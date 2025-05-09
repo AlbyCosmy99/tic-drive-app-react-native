@@ -6,8 +6,8 @@ import LinearGradientViewLayout from '@/app/layouts/LinearGradientViewLayout';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
-import PlusIcon from '@/assets/svg/plus.svg'
-import MinusIcon from '@/assets/svg/minus.svg'
+import PlusIcon from '@/assets/svg/plus.svg';
+import MinusIcon from '@/assets/svg/minus.svg';
 import {useTranslation} from 'react-i18next';
 import {useMemo} from 'react';
 

@@ -2,7 +2,7 @@ import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import IconTextPair from '@/components/ui/IconTextPair';
 import {Text, View} from 'react-native';
-import AddIcon from '@/assets/svg/add.svg'
+import AddIcon from '@/assets/svg/add.svg';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import Car from '@/types/Car';
 import navigationPush from '@/services/navigation/push';

@@ -23,18 +23,18 @@ import IconTextPair from '@/components/ui/IconTextPair';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
 
-import HeartIcon from '@/assets/svg/emotions/EmptyHeart.svg'
-import CustomerServiceIcon from '@/assets/svg/headphone.svg'
-import Logout from '@/assets/svg/logout.svg'
-import AddressIcon from '@/assets/svg/map.svg'
-import MailIcon from '@/assets/svg/notifications/mail.svg'
-import Remove from '@/assets/svg/remove.svg'
-import FAQ from '@/assets/svg/faq.svg'
-import Translate from '@/assets/svg/translate.svg'
+import HeartIcon from '@/assets/svg/emotions/EmptyHeart.svg';
+import CustomerServiceIcon from '@/assets/svg/headphone.svg';
+import Logout from '@/assets/svg/logout.svg';
+import AddressIcon from '@/assets/svg/map.svg';
+import MailIcon from '@/assets/svg/notifications/mail.svg';
+import Remove from '@/assets/svg/remove.svg';
+import FAQ from '@/assets/svg/faq.svg';
+import Translate from '@/assets/svg/translate.svg';
 
-import VehicleIcon from '@/assets/svg/vehicles/car2.svg'
-import EditIcon from '@/assets/svg/writing/change.svg'
-import SaveIcon from '@/assets/svg/operations/save.svg'
+import VehicleIcon from '@/assets/svg/vehicles/car2.svg';
+import EditIcon from '@/assets/svg/writing/change.svg';
+import SaveIcon from '@/assets/svg/operations/save.svg';
 import TicDriveModal from 'ticdrive-mobile/components/ui/modals/TicDriveModal';
 import {setLanguageCode} from '@/stateManagement/redux/slices/languageSlice';
 import i18n from '@/i18n';
@@ -302,9 +302,7 @@ export default function UserAccount() {
 
               <HorizontalLine />
 
-              <CrossPlatformButtonLayout
-                onPress={handleSupport}
-              >
+              <CrossPlatformButtonLayout onPress={handleSupport}>
                 <IconTextPair
                   text={t('userAccount.customerSupport')}
                   icon={<CustomerServiceIcon />}

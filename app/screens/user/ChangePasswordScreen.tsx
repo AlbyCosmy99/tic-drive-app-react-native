@@ -9,7 +9,7 @@ import {RouteProp, useRoute} from '@react-navigation/native';
 import axios from 'axios';
 import {useMemo, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import VisibilityOffIcon from '@/assets/svg/access/visibility_off.svg'
+import VisibilityOffIcon from '@/assets/svg/access/visibility_off.svg';
 import VisibilityOnIcon from '@/assets/svg/access/visibility_on.svg';
 import isAcceptablePassword from '@/utils/auth/isAcceptablePassword';
 import navigationReset from '@/services/navigation/reset';

@@ -4,12 +4,12 @@ import CircularUserAvatar from '@/components/ui/avatars/CircularUserAvatar';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import {Colors} from '@/constants/Colors';
 import {Text, View} from 'react-native';
-import AccountIcon from '@/assets/svg/accountIcon.svg'
+import AccountIcon from '@/assets/svg/accountIcon.svg';
 import IconTextPair from '@/components/ui/IconTextPair';
-import LockIcon from '@/assets/svg/access/lock.svg'
-import NotificationsIcon from '@/assets/svg/notifications/notifications.svg'
-import SupportIcon from '@/assets/svg/support/support.svg'
-import FeedbackIcon from '@/assets/svg/writing/feedback.svg'
+import LockIcon from '@/assets/svg/access/lock.svg';
+import NotificationsIcon from '@/assets/svg/notifications/notifications.svg';
+import SupportIcon from '@/assets/svg/support/support.svg';
+import FeedbackIcon from '@/assets/svg/writing/feedback.svg';
 import TicDriveAuthButton from '@/components/ui/buttons/TicDriveAuthButton';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import LinearGradientViewLayout from '@/app/layouts/LinearGradientViewLayout';
