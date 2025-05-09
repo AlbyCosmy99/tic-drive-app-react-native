@@ -1,5 +1,5 @@
 import {LatLng} from 'react-native-maps';
-import { TicDriveImage } from './files/TicDriveImage';
+import {TicDriveImage} from './files/TicDriveImage';
 
 export default interface User {
   userId?: string;
