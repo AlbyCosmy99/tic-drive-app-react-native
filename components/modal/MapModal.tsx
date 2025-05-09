@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -7,31 +7,28 @@ import {
   Platform,
   TouchableOpacity,
 } from 'react-native';
-import MapView, {Marker, Region} from 'react-native-maps';
-import {Ionicons} from '@expo/vector-icons';
+import MapView, { Marker, Region } from 'react-native-maps';
+import { Ionicons } from '@expo/vector-icons';
 import navigationPush from '@/services/navigation/push';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
-import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
-import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice';
+import { useAppDispatch, useAppSelector } from '@/stateManagement/redux/hooks';
+import { setSelectedWorkshop } from '@/stateManagement/redux/slices/workshopsSlice';
 import useNearbyWorkshops from '@/hooks/location/useNearbyWorkshops';
-import {POIMarker} from '@/types/nav/map/POIMarker';
+import { POIMarker } from '@/types/nav/map/POIMarker';
 import TicDriveSpinner from '../ui/spinners/TicDriveSpinner';
 
 interface MapModalProps {
   setIsMapVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function MapModal({setIsMapVisible}: MapModalProps) {
+export default function MapModal({ setIsMapVisible }: MapModalProps) {
   const navigation = useTicDriveNavigation();
   const dispatch = useAppDispatch();
 
-  const [initialRegion, setInitialRegion] = useState<Region | undefined>(
-    undefined,
-  );
+  const [initialRegion, setInitialRegion] = useState<Region | undefined>(undefined);
   const [poiMarkers, setPoiMarkers] = useState<POIMarker[]>([]);
 
-  const {workshops, loadingWorkshops} = useNearbyWorkshops(0, 30);
-
+  const { workshops, loadingWorkshops } = useNearbyWorkshops(0, 30);
   const user = useAppSelector(state => state.auth.user);
 
   useEffect(() => {
@@ -53,7 +50,7 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
   }, [user]);
 
   useEffect(() => {
-    if (!loadingWorkshops && workshops.length > 0) {
+    if (!loadingWorkshops) {
       setPoiMarkers(
         workshops.map(workshop => ({
           coordinate: {
@@ -65,7 +62,7 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
           id: workshop.id,
           workshopName: workshop.workshopName,
           workshop: workshop,
-        })),
+        }))
       );
     }
   }, [workshops, loadingWorkshops]);
@@ -79,30 +76,34 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
   return (
     <Modal animationType="slide">
       <View style={styles.container}>
-        {loadingWorkshops && !poiMarkers ? (
+        {loadingWorkshops ? (
           <TicDriveSpinner />
+        ) : poiMarkers.length === 0 ? (
+          <View style={styles.noResultsContainer}>
+            <Text style={styles.noResultsText}>
+              Nessun meccanico trovato nella zona selezionata.
+            </Text>
+          </View>
         ) : (
-          poiMarkers.length > 0 && (
-            <MapView
-              style={StyleSheet.absoluteFillObject}
-              initialRegion={initialRegion}
-              showsUserLocation
-            >
-              {poiMarkers.map(poi => (
-                <Marker
-                  key={poi.id}
-                  coordinate={poi.coordinate}
-                  onPress={() => handlePOISelect(poi)}
-                >
-                  <View style={styles.priceBubble}>
-                    <Text style={styles.priceText}>
-                      {poi?.price ? poi?.price + poi.currency : poi.workshopName}
-                    </Text>
-                  </View>
-                </Marker>
-              ))}
-            </MapView>
-          )
+          <MapView
+            style={StyleSheet.absoluteFillObject}
+            initialRegion={initialRegion}
+            showsUserLocation
+          >
+            {poiMarkers.map(poi => (
+              <Marker
+                key={poi.id}
+                coordinate={poi.coordinate}
+                onPress={() => handlePOISelect(poi)}
+              >
+                <View style={styles.priceBubble}>
+                  <Text style={styles.priceText}>
+                    {poi?.price ? poi?.price + poi.currency : poi.workshopName}
+                  </Text>
+                </View>
+              </Marker>
+            ))}
+          </MapView>
         )}
         <TouchableOpacity
           style={styles.closeButton}
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 1},
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.3,
     shadowRadius: 2,
     elevation: 5,
@@ -146,10 +147,21 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 24,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 1},
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
     elevation: 4,
     zIndex: 30,
+  },
+  noResultsContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+  },
+  noResultsText: {
+    fontSize: 16,
+    color: '#666',
+    textAlign: 'center',
   },
 });
