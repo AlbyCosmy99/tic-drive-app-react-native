@@ -81,15 +81,7 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
   return (
     <Modal animationType="slide">
       <View style={styles.container}>
-        {loadingWorkshops ? (
-          <TicDriveSpinner />
-        ) : poiMarkers.length === 0 ? (
-          <View style={styles.noResultsContainer}>
-            <Text style={styles.noResultsText}>
-              Nessun meccanico trovato nella zona selezionata.
-            </Text>
-          </View>
-        ) : (
+        {initialRegion ? (
           <MapView
             style={StyleSheet.absoluteFillObject}
             provider={PROVIDER_DEFAULT}
@@ -127,6 +119,14 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
               </Marker>
             ))}
           </MapView>
+        ) : (
+          <TicDriveSpinner />
+        )}
+
+        {loadingWorkshops && (
+          <View style={styles.loadingOverlay}>
+            <TicDriveSpinner />
+          </View>
         )}
 
         <TouchableOpacity
@@ -228,6 +228,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     maxWidth: 100,
     textAlign: 'center',
+    backgroundColor: 'white',
   },
   closeButton: {
     position: 'absolute',
@@ -253,6 +254,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#666',
     textAlign: 'center',
+  },
+  loadingOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 10,
   },
   previewBackdrop: {
     flex: 1,
