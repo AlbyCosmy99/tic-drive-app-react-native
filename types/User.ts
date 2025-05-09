@@ -9,7 +9,7 @@ export default interface User {
   emailConfirmed?: boolean;
   password?: string;
   repeatedPassword?: string;
-  image?: TicDriveImage;
+  images?: TicDriveImage[];
   phoneNumber?: string;
   address?: string;
   coordinates?: LatLng;

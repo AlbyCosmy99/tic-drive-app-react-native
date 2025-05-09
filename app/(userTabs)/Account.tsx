@@ -4,7 +4,6 @@ import {
   TextInput,
   View,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
 import React, {useState} from 'react';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
@@ -31,7 +30,6 @@ import MailIcon from '@/assets/svg/notifications/mail.svg';
 import Remove from '@/assets/svg/remove.svg';
 import FAQ from '@/assets/svg/faq.svg';
 import Translate from '@/assets/svg/translate.svg';
-
 import VehicleIcon from '@/assets/svg/vehicles/car2.svg';
 import EditIcon from '@/assets/svg/writing/change.svg';
 import SaveIcon from '@/assets/svg/operations/save.svg';
@@ -58,6 +56,7 @@ const Section: React.FC<SectionProps> = ({title, children}) => (
 );
 
 export default function UserAccount() {
+  const DEFAULT_AVATAR = 'https://ticdrive.blob.core.windows.net/internal/defaultAvatar.png'
   const [isEditing, setIsEditing] = useState(false);
   const [loadingEditingUser, setLoadingEditingUser] = useState(false);
 
@@ -93,11 +92,9 @@ export default function UserAccount() {
   };
   const handleOnEdit = async () => {
     if (!isEditing) {
-      // About to enter editing mode — reset the editedUser.name to clean user.name
       setEditedUser({name: user?.name?.trim() || ''});
       setIsEditing(true);
     } else {
-      // About to save
       if (editedUser.name !== user?.name) {
         const rawName = editedUser.name || '';
         const trimmedName = rawName.trim().replace(/\s+/g, ' ');
@@ -110,10 +107,9 @@ export default function UserAccount() {
           setErrorMessage(e.message);
         } finally {
           setLoadingEditingUser(false);
-          setIsEditing(false); // exit edit mode after saving
+          setIsEditing(false);
         }
       } else {
-        // If no change, just exit edit mode
         setIsEditing(false);
       }
     }
@@ -146,7 +142,7 @@ export default function UserAccount() {
             <View className="flex-row justify-between items-center h-[88px]">
               <View className="flex-row items-center space-x-4 p-2">
                 <CircularUserAvatar
-                  uri={user?.imageUrl}
+                  uri={user?.images?.[0]?.url || DEFAULT_AVATAR}
                   styles={{width: 70, height: 70}}
                 />
                 <View className="w-44">
