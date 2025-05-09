@@ -279,6 +279,9 @@
       "description": "Questa versione è in vigore dal 30 aprile 2025. Ti informeremo di eventuali modifiche aggiornando questa data."
     }
   },
+  "map": {
+    "noWorkshopsNearby": "Nessuna officina nelle vicinanze."
+  },
   "login": {
     "welcome": "Benvenuto",
     "dont_have_account": "Non hai un account?",

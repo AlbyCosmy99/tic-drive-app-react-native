@@ -16,6 +16,7 @@ import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice
 import useNearbyWorkshops from '@/hooks/location/useNearbyWorkshops';
 import {POIMarker} from '@/types/nav/map/POIMarker';
 import TicDriveSpinner from '../ui/spinners/TicDriveSpinner';
+import { useTranslation } from 'react-i18next';
 
 interface MapModalProps {
   setIsMapVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,6 +25,7 @@ interface MapModalProps {
 export default function MapModal({setIsMapVisible}: MapModalProps) {
   const navigation = useTicDriveNavigation();
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const [initialRegion, setInitialRegion] = useState<Region | undefined>(
     undefined,
@@ -79,10 +81,8 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
   return (
     <Modal animationType="slide">
       <View style={styles.container}>
-        {loadingWorkshops && !poiMarkers ? (
-          <TicDriveSpinner />
-        ) : (
-          poiMarkers.length > 0 && (
+        {initialRegion ? (
+          <>
             <MapView
               style={StyleSheet.absoluteFillObject}
               initialRegion={initialRegion}
@@ -102,8 +102,18 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
                 </Marker>
               ))}
             </MapView>
-          )
+  
+            {poiMarkers.length === 0 && !loadingWorkshops && (
+              <View style={styles.noWorkshopsOverlay}>
+                <Text style={styles.noWorkshopsText}>  {t('map.noWorkshopsNearby')}
+                </Text>
+              </View>
+            )}
+          </>
+        ) : (
+          <TicDriveSpinner />
         )}
+  
         <TouchableOpacity
           style={styles.closeButton}
           onPress={() => setIsMapVisible(false)}
@@ -113,6 +123,7 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
       </View>
     </Modal>
   );
+  
 }
 
 const styles = StyleSheet.create({
@@ -152,4 +163,27 @@ const styles = StyleSheet.create({
     elevation: 4,
     zIndex: 30,
   },
+  noWorkshopsOverlay: {
+    position: 'absolute',
+    top: '50%',
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    transform: [{ translateY: -20 }],
+    zIndex: 10,
+  },
+  noWorkshopsText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#666',
+    backgroundColor: 'white',
+    padding: 12,
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  
 });
