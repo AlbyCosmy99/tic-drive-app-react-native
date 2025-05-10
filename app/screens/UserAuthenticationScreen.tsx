@@ -9,7 +9,6 @@ import UserAuthenticationContent from '@/components/auth/UserAuthentificationCon
 import smallDevicebreakpointHeight from '@/constants/smallDevicebreakpointHeight';
 import {Dimensions} from 'react-native';
 import AuthAction from '@/types/auth/Action';
-import isIOSPlatform from '@/utils/devices/IsIOSPlatform';
 import {useRoute} from '@react-navigation/native';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 const {height} = Dimensions.get('window');
