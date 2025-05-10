@@ -48,6 +48,13 @@ const UserCalendarModal = forwardRef<
   const slideAnim = useRef(new Animated.Value(height)).current;
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [expandedSections, setExpandedSections] = useState<
+    Record<string, boolean>
+  >({
+    Morning: true,
+    Afternoon: true,
+  });
+
   const token = useJwtToken();
   const {setLoginRouteName, setLoginRouteParams} = useContext(AuthContext);
   const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
@@ -80,29 +87,21 @@ const UserCalendarModal = forwardRef<
     '2025-05-20',
   ];
 
-  const workingHours = {
-    1: ['8:30', '12:30', '14:30', '18:30'],
-    2: ['8:30', '12:30', '14:30', '18:30'],
-    3: ['8:30', '12:30', '14:30', '18:30'],
-    4: ['8:30', '12:30', '14:30', '18:30'],
-    5: ['8:30', '12:30', '14:30', '18:30'],
+  const range = {
+    Morning: ['8:30', '12:30'],
+    Afternoon: ['14:30', '18:30'],
   };
 
-  const range = {
-    morning: ['8:30', '12:30'],
-    afternoon: ['14:30', '18:30'],
-  }; //workingHours[2]
-
   const userTimeSlot = useMemo(() => {
-    const slots: string[] = [];
-
-    for (const period of Object.values(range)) {
-      const [start, end] = period;
-      slots.push(...generateTimeSlots(start, end));
-    }
-
-    return slots;
+    return Object.entries(range).map(([label, [start, end]]) => ({
+      label,
+      slots: generateTimeSlots(start, end),
+    }));
   }, [range]);
+
+  const toggleSection = (label: string) => {
+    setExpandedSections(prev => ({...prev, [label]: !prev[label]}));
+  };
 
   const openModal = (): void => {
     setModalVisible(true);
@@ -242,8 +241,8 @@ const UserCalendarModal = forwardRef<
               {...panResponder.panHandlers}
             >
               <View style={styles.dragHandle} />
-              <View className="mb-2" style={styles.scrollContent}>
-                <Text className="text-sm mt-2 mb-1 text-tic">
+              <View style={styles.scrollContent}>
+                <Text style={styles.sectionTitle}>
                   {t('date.selectADate').toUpperCase()}
                 </Text>
 
@@ -295,32 +294,42 @@ const UserCalendarModal = forwardRef<
                 )}
 
                 {selectedDate && (
-                  <View className="mb-4">
-                    <Text className="text-sm text-tic mt-4">
+                  <View style={{marginBottom: 20}}>
+                    <Text style={styles.sectionTitle}>
                       {t('date.chooseSlot').toUpperCase()}
                     </Text>
-                    <View className="flex flex-row flex-wrap gap-x-2 gap-y-2 justify-center items-center mt-4">
-                      {userTimeSlot.map((time, index) => (
-                        <Pressable
-                          onPress={() =>
-                            setSelectedTime(selectedTime === time ? null : time)
-                          }
-                          key={index}
-                          className={`border border-tic rounded-2xl p-1 px-2 ${
-                            selectedTime === time && 'bg-drive border-drive'
-                          }`}
-                          style={styles.timeSlotContainer}
-                        >
-                          <Text
-                            className={`text-tic text-base text-center ${
-                              selectedTime === time && 'text-black'
-                            }`}
-                          >
-                            {time}
-                          </Text>
-                        </Pressable>
-                      ))}
-                    </View>
+
+                    {userTimeSlot.map(({label, slots}) => (
+                      <View key={label} style={styles.timeSlotSection}>
+                        <Text style={styles.timeSlotLabel}>{label}</Text>
+                        <View style={styles.timeSlotGroup}>
+                          {slots.map(time => (
+                            <Pressable
+                              key={time}
+                              onPress={() =>
+                                setSelectedTime(
+                                  selectedTime === time ? null : time,
+                                )
+                              }
+                              style={[
+                                styles.timeSlotButton,
+                                selectedTime === time && styles.selectedSlot,
+                              ]}
+                            >
+                              <Text
+                                style={[
+                                  styles.timeSlotText,
+                                  selectedTime === time &&
+                                    styles.selectedSlotText,
+                                ]}
+                              >
+                                {time}
+                              </Text>
+                            </Pressable>
+                          ))}
+                        </View>
+                      </View>
+                    ))}
                   </View>
                 )}
 
@@ -380,9 +389,6 @@ const styles = StyleSheet.create({
     height: 50,
     paddingHorizontal: 15,
   },
-  timeSlotContainer: {
-    width: '30%',
-  },
   fixedCalendarContainer: {
     height: 370,
     overflow: 'hidden',
@@ -398,6 +404,51 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#666',
     fontSize: 13,
+  },
+  sectionTitle: {
+    fontSize: 14,
+    fontWeight: '600',
+    marginTop: 16,
+    marginBottom: 8,
+    textAlign: 'center',
+    color: Colors.light.green.drive,
+  },
+  timeSlotSection: {
+    marginBottom: 8,
+  },
+  timeSlotLabel: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: Colors.light.green.drive,
+    marginBottom: 4,
+    marginTop: 12,
+    textAlign: 'center',
+  },
+  timeSlotGroup: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: 8,
+    paddingHorizontal: 8,
+  },
+  timeSlotButton: {
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: Colors.light.green.drive,
+    margin: 4,
+  },
+  selectedSlot: {
+    backgroundColor: Colors.light.green.drive,
+    borderColor: Colors.light.green.drive,
+  },
+  timeSlotText: {
+    fontSize: 16,
+    color: Colors.light.green.drive,
+  },
+  selectedSlotText: {
+    color: '#fff',
   },
 });
 
