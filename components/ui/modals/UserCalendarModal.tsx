@@ -28,6 +28,8 @@ import useJwtToken from '@/hooks/auth/useJwtToken';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import {useTranslation} from 'react-i18next';
 import generateTimeSlots from '@/utils/datetime/generateTimeSlots';
+import {ScrollView} from 'react-native-gesture-handler';
+import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 
 const {height} = Dimensions.get('window');
 
@@ -241,111 +243,113 @@ const UserCalendarModal = forwardRef<
               {...panResponder.panHandlers}
             >
               <View style={styles.dragHandle} />
-              <View style={styles.scrollContent}>
-                <Text style={styles.sectionTitle}>
-                  {t('date.selectADate').toUpperCase()}
-                </Text>
+              <SafeAreaViewLayout>
+                <View className="justify-between flex-1">
+                  <Text style={styles.sectionTitle}>
+                    {t('date.selectADate').toUpperCase()}
+                  </Text>
 
-                <View style={styles.fixedCalendarContainer}>
-                  <Calendar
-                    onDayPress={(day: Day) => {
-                      const dayOfWeek = new Date(day.dateString)
-                        .toLocaleDateString('en-US', {weekday: 'long'})
-                        .toLowerCase();
+                  <View style={styles.fixedCalendarContainer}>
+                    <Calendar
+                      onDayPress={(day: Day) => {
+                        const dayOfWeek = new Date(day.dateString)
+                          .toLocaleDateString('en-US', {weekday: 'long'})
+                          .toLowerCase();
 
-                      if (
-                        disabledDates[day.dateString] ||
-                        !workingDays.includes(dayOfWeek)
-                      )
-                        return;
+                        if (
+                          disabledDates[day.dateString] ||
+                          !workingDays.includes(dayOfWeek)
+                        )
+                          return;
 
-                      if (selectedDate === day.dateString) {
-                        setSelectedDate(null);
-                        setSelectedTime(null);
-                      } else {
-                        setSelectedDate(day.dateString);
-                      }
-                    }}
-                    markedDates={{
-                      [selectedDate ?? '']: {
-                        selected: true,
-                        marked: false,
-                        selectedColor: Colors.light.green.drive,
-                      },
-                      ...disabledDates,
-                    }}
-                    maxDate={maxBookingDate.toISOString().split('T')[0]}
-                    theme={{
-                      selectedDayTextColor: 'white',
-                      todayTextColor: Colors.light.green.drive,
-                      dayTextColor: 'black',
-                      textDisabledColor: '#b3b3b3',
-                    }}
-                  />
-                </View>
-
-                {isDateAfterMaxRange(selectedDate) && (
-                  <View style={styles.noticeWrapper}>
-                    <Text style={styles.noticeText}>
-                      You can book appointments up to 6 months in advance. For
-                      later dates, please contact the workshop directly.
-                    </Text>
+                        if (selectedDate === day.dateString) {
+                          setSelectedDate(null);
+                          setSelectedTime(null);
+                        } else {
+                          setSelectedDate(day.dateString);
+                        }
+                      }}
+                      markedDates={{
+                        [selectedDate ?? '']: {
+                          selected: true,
+                          marked: false,
+                          selectedColor: Colors.light.green.drive,
+                        },
+                        ...disabledDates,
+                      }}
+                      maxDate={maxBookingDate.toISOString().split('T')[0]}
+                      theme={{
+                        selectedDayTextColor: 'white',
+                        todayTextColor: Colors.light.green.drive,
+                        dayTextColor: 'black',
+                        textDisabledColor: '#b3b3b3',
+                      }}
+                    />
                   </View>
-                )}
 
-                {selectedDate && (
-                  <View style={{marginBottom: 20}}>
-                    <Text style={styles.sectionTitle}>
-                      {t('date.chooseSlot').toUpperCase()}
-                    </Text>
+                  {isDateAfterMaxRange(selectedDate) && (
+                    <View style={styles.noticeWrapper}>
+                      <Text style={styles.noticeText}>
+                        You can book appointments up to 6 months in advance. For
+                        later dates, please contact the workshop directly.
+                      </Text>
+                    </View>
+                  )}
 
-                    {userTimeSlot.map(({label, slots}) => (
-                      <View key={label} style={styles.timeSlotSection}>
-                        <Text style={styles.timeSlotLabel}>{label}</Text>
-                        <View style={styles.timeSlotGroup}>
-                          {slots.map(time => (
-                            <Pressable
-                              key={time}
-                              onPress={() =>
-                                setSelectedTime(
-                                  selectedTime === time ? null : time,
-                                )
-                              }
-                              style={[
-                                styles.timeSlotButton,
-                                selectedTime === time && styles.selectedSlot,
-                              ]}
-                            >
-                              <Text
+                  {selectedDate && (
+                    <ScrollView style={{marginBottom: 20}}>
+                      <Text style={styles.sectionTitle}>
+                        {t('date.chooseSlot').toUpperCase()}
+                      </Text>
+
+                      {userTimeSlot.map(({label, slots}) => (
+                        <View key={label} style={styles.timeSlotSection}>
+                          <Text style={styles.timeSlotLabel}>{label}</Text>
+                          <View style={styles.timeSlotGroup}>
+                            {slots.map(time => (
+                              <Pressable
+                                key={time}
+                                onPress={() =>
+                                  setSelectedTime(
+                                    selectedTime === time ? null : time,
+                                  )
+                                }
                                 style={[
-                                  styles.timeSlotText,
-                                  selectedTime === time &&
-                                    styles.selectedSlotText,
+                                  styles.timeSlotButton,
+                                  selectedTime === time && styles.selectedSlot,
                                 ]}
                               >
-                                {time}
-                              </Text>
-                            </Pressable>
-                          ))}
+                                <Text
+                                  style={[
+                                    styles.timeSlotText,
+                                    selectedTime === time &&
+                                      styles.selectedSlotText,
+                                  ]}
+                                >
+                                  {time}
+                                </Text>
+                              </Pressable>
+                            ))}
+                          </View>
                         </View>
-                      </View>
-                    ))}
-                  </View>
-                )}
+                      ))}
+                    </ScrollView>
+                  )}
 
-                <TicDriveButton
-                  text={buttonText}
-                  disabled={!selectedDate || !selectedTime}
-                  routeName={routeName}
-                  routeParams={
-                    token
-                      ? {workshop, date: selectedDate, time: selectedTime}
-                      : {isUser: true}
-                  }
-                  replace={false}
-                  onClick={onClick}
-                />
-              </View>
+                  <TicDriveButton
+                    text={buttonText}
+                    disabled={!selectedDate || !selectedTime}
+                    routeName={routeName}
+                    routeParams={
+                      token
+                        ? {workshop, date: selectedDate, time: selectedTime}
+                        : {isUser: true}
+                    }
+                    replace={false}
+                    onClick={onClick}
+                  />
+                </View>
+              </SafeAreaViewLayout>
             </Animated.View>
           </View>
         </Modal>
@@ -381,9 +385,6 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     alignSelf: 'center',
     marginVertical: 10,
-  },
-  scrollContent: {
-    flexGrow: 1,
   },
   customButtonStyle: {
     height: 50,
