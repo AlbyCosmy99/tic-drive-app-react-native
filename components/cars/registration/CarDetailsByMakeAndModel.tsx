@@ -5,6 +5,7 @@ import getCarModelVersionsByModelId from '@/services/http/requests/cars/getCarMo
 import CarContext from '@/stateManagement/contexts/car/CarContext';
 import Car, {fuels, FuelType, transmissionType} from '@/types/Car';
 import TicDriveDropdownData from '@/types/ui/dropdown/TicDriveDropdownData';
+import {useTranslation} from 'react-i18next';
 
 interface CarDetailsByMakeAndModelProps {
   carSelected: Car;
@@ -23,6 +24,7 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
     useContext(CarContext);
 
   const [yearOptions, setYearOptions] = useState<TicDriveDropdownData[]>([]);
+  const {t} = useTranslation();
 
   const fuelOptions: TicDriveDropdownData[] = fuels.map((fuel, index) => ({
     id: index,
@@ -104,45 +106,45 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
   return (
     <>
       <TicDriveDropdown
-        placeholder="Choose the car year"
-        searchPlaceholder="Search car year"
-        title="Year"
+        placeholder={t('vehicles.choose_car_year')}  
+        searchPlaceholder={t('vehicles.search_car_year')}
+        title={t('vehicles.choose_car_year')}
         data={yearOptions}
         value={selectedYear}
         setValue={setCarYear}
       />
       <TicDriveDropdown
-        placeholder="Choose the car fuel type"
-        searchPlaceholder="Search fuel type"
-        title="Fuel"
+        placeholder={t('vehicles.search_fuel_type')} 
+        searchPlaceholder={t('vehicles.search_fuel_type')}
+        title={t('vehicles.fuel')}
         data={fuelOptions}
         value={selectedFuel}
         setValue={setCarFuelType}
       />
       <TicDriveDropdown
-        placeholder="Choose the car transmission"
-        searchPlaceholder="Search transmission"
-        title="Transmission"
+        placeholder={t('vehicles.search_transmission')}
+        searchPlaceholder={t('vehicles.search_transmission')}
+        title={t('vehicles.transmission')}
         data={transmissionsOptions}
         value={selectedTransmission}
         setValue={setSelectedTransmission}
       />
       <TicDriveTextOrInput
-        title="Engine size"
+        title={t('vehicles.engine_size')}  // Translate engine size
         placeholder="Es. 2,0"
         value={carSelected?.engineDisplacement}
         setValue={setCarEngineDisplacement}
         keyboardType="numeric"
       />
       <TicDriveTextOrInput
-        title="Mileage"
+        title={t('vehicles.mileage')}  // Translate mileage
         placeholder="Es. 10000km"
         value={carSelected?.mileage}
         setValue={setCarMileage}
         keyboardType="numeric"
       />
       <TicDriveTextOrInput
-        title="Plate"
+        title={t('vehicles.plate')}  // Translate plate
         placeholder="Es. AB123CD"
         value={carSelected?.plateNumber?.toUpperCase()}
         setValue={setPlateNumber}

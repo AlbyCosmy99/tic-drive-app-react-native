@@ -73,7 +73,17 @@
     "invalidPlateFormat": "Inserisci un numero di targa valido. Formato: AA123BB",
     "myVehicles": "I miei veicoli",
     "noVehiclesMessage": "Non hai ancora registrato veicoli. Clicca su",
-    "addFirstCar": "per aggiungere la tua prima auto e iniziare!"
+    "addFirstCar": "per aggiungere la tua prima auto e iniziare!",
+     "choose_car_year": "Scegli l'anno dell'auto",
+    "search_car_year": "Cerca anno auto",
+    "fuel": "Carburante",
+    "search_fuel_type": "Cerca tipo di carburante",
+    "transmission": "Trasmissione",
+    "search_transmission": "Cerca trasmissione",
+    "engine_size": "Cilindrata",
+    "mileage": "Chilometraggio",
+    "plate": "Targa",
+    "year": "Anno"
   },
   "home": {
     "notifications": {
