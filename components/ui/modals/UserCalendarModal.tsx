@@ -23,11 +23,11 @@ import {Calendar} from 'react-native-calendars';
 import TicDriveButton from '../buttons/TicDriveButton';
 import {Colors} from '@/constants/Colors';
 import Day from '@/types/calendar/Day';
-import UserTimeSlot from '@/constants/temp/UserTimeSlots';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import {useTranslation} from 'react-i18next';
+import generateTimeSlots from '@/utils/datetime/generateTimeSlots';
 
 const {height} = Dimensions.get('window');
 
@@ -71,6 +71,38 @@ const UserCalendarModal = forwardRef<
         : 'RegisterVehicleScreen'
       : 'UserAuthenticationScreen';
   }, [token, service]);
+
+  const workingDays = ['monday', 'tuesday', 'friday'];
+  const customDisabledDays = [
+    '2024-12-08',
+    '2024-12-10',
+    '2024-12-15',
+    '2025-05-20',
+  ];
+
+  const workingHours = {
+    1: ['8:30', '12:30', '14:30', '18:30'],
+    2: ['8:30', '12:30', '14:30', '18:30'],
+    3: ['8:30', '12:30', '14:30', '18:30'],
+    4: ['8:30', '12:30', '14:30', '18:30'],
+    5: ['8:30', '12:30', '14:30', '18:30'],
+  };
+
+  const range = {
+    morning: ['8:30', '12:30'],
+    afternoon: ['14:30', '18:30'],
+  }; //workingHours[2]
+
+  const userTimeSlot = useMemo(() => {
+    const slots: string[] = [];
+
+    for (const period of Object.values(range)) {
+      const [start, end] = period;
+      slots.push(...generateTimeSlots(start, end));
+    }
+
+    return slots;
+  }, [range]);
 
   const openModal = (): void => {
     setModalVisible(true);
@@ -132,24 +164,6 @@ const UserCalendarModal = forwardRef<
       },
     }),
   ).current;
-
-  const workingDays = ['monday', 'tuesday', 'friday'];
-  const customDisabledDays = [
-    '2024-12-08',
-    '2024-12-10',
-    '2024-12-15',
-    '2025-05-20',
-  ];
-
-  const workingHours = {
-    1: ['8:30', '12:30', '14:30', '18:30'],
-    2: ['8:30', '12:30', '14:30', '18:30'],
-    3: ['8:30', '12:30', '14:30', '18:30'],
-    4: ['8:30', '12:30', '14:30', '18:30'],
-    5: ['8:30', '12:30', '14:30', '18:30'],
-  }
-
-  const range = ['8:30', '12:30', '14:30', '18:30'] //workingHours[2]
 
   const daysToCheck = 180;
   const maxBookingDate = new Date(Date.now() + daysToCheck * 86400000);
@@ -286,12 +300,10 @@ const UserCalendarModal = forwardRef<
                       {t('date.chooseSlot').toUpperCase()}
                     </Text>
                     <View className="flex flex-row flex-wrap gap-x-2 gap-y-2 justify-center items-center mt-4">
-                      {UserTimeSlot.map((time, index) => (
+                      {userTimeSlot.map((time, index) => (
                         <Pressable
                           onPress={() =>
-                            setSelectedTime(
-                              selectedTime === time ? null : time,
-                            )
+                            setSelectedTime(selectedTime === time ? null : time)
                           }
                           key={index}
                           className={`border border-tic rounded-2xl p-1 px-2 ${
