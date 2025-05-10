@@ -1,4 +1,4 @@
-import React, {
+import {
   useState,
   useRef,
   useContext,
@@ -58,18 +58,13 @@ const UserCalendarModal = forwardRef<
   const {t} = useTranslation();
 
   const buttonText = useMemo(() => {
-    if (!service) {
-      return t('service.chooseService');
-    } else if (!carSelected) {
-      return 'Register car';
-    }
+    if (!service) return t('service.chooseService');
+    if (!carSelected) return 'Register car';
     return 'Confirm ' + (!token ? 'and login' : '');
   }, [token, service, carSelected]);
 
   const routeName = useMemo(() => {
-    if (!service) {
-      return 'ChooseServicesScreen';
-    }
+    if (!service) return 'ChooseServicesScreen';
     return token
       ? carSelected
         ? 'ReviewBookingDetailsScreen'
@@ -80,7 +75,7 @@ const UserCalendarModal = forwardRef<
   const openModal = (): void => {
     setModalVisible(true);
     Animated.timing(slideAnim, {
-      toValue: 0, // Bring to the top of the screen
+      toValue: 0,
       duration: 300,
       useNativeDriver: true,
     }).start();
@@ -88,13 +83,12 @@ const UserCalendarModal = forwardRef<
 
   const closeModal = (): void => {
     Animated.timing(slideAnim, {
-      toValue: height, // Slide it off the screen
+      toValue: height,
       duration: 300,
       useNativeDriver: true,
     }).start(() => setModalVisible(false));
   };
 
-  // Expose methods to parent components using the ref.
   useImperativeHandle(ref, () => ({
     openModal,
     closeModal,
@@ -130,7 +124,7 @@ const UserCalendarModal = forwardRef<
           closeModal();
         } else {
           Animated.timing(slideAnim, {
-            toValue: 0, // Reset to its original position
+            toValue: 0,
             duration: 200,
             useNativeDriver: true,
           }).start();
@@ -139,22 +133,52 @@ const UserCalendarModal = forwardRef<
     }),
   ).current;
 
-  // Array of custom days to disable
+  const workingDays = ['monday', 'tuesday', 'friday'];
   const customDisabledDays = [
     '2024-12-08',
     '2024-12-10',
     '2024-12-15',
-    '2025-04-16',
+    '2025-05-20',
   ];
 
-  // Generate disabled dates object
-  const generateDisabledDates = () => {
-    const today = new Date();
-    const disabledDates: Record<string, {disabled: boolean}> = {};
+  const workingHours = {
+    1: ['8:30', '12:30', '14:30', '18:30'],
+    2: ['8:30', '12:30', '14:30', '18:30'],
+    3: ['8:30', '12:30', '14:30', '18:30'],
+    4: ['8:30', '12:30', '14:30', '18:30'],
+    5: ['8:30', '12:30', '14:30', '18:30'],
+  }
 
-    // Disable all past dates
+  const range = ['8:30', '12:30', '14:30', '18:30'] //workingHours[2]
+
+  const daysToCheck = 180;
+  const maxBookingDate = new Date(Date.now() + daysToCheck * 86400000);
+
+  const generateDisabledDates = () => {
+    const disabledDates: Record<string, {disabled: boolean}> = {};
+    const today = new Date();
+
+    for (let i = 0; i <= daysToCheck; i++) {
+      const date = new Date(today);
+      date.setDate(today.getDate() + i);
+      const dateStr = date.toISOString().split('T')[0];
+      const dayOfWeek = date
+        .toLocaleDateString('en-US', {weekday: 'long'})
+        .toLowerCase();
+
+      if (!workingDays.includes(dayOfWeek)) {
+        disabledDates[dateStr] = {disabled: true};
+      }
+    }
+
+    customDisabledDays.forEach(day => {
+      disabledDates[day] = {disabled: true};
+    });
+
+    const pastLimit = new Date(today);
+    pastLimit.setDate(today.getDate() - 1);
     for (
-      let d = new Date(today.setDate(today.getDate() - 1));
+      let d = new Date(pastLimit);
       d >= new Date(2000, 0, 1);
       d.setDate(d.getDate() - 1)
     ) {
@@ -162,15 +186,15 @@ const UserCalendarModal = forwardRef<
       disabledDates[dateStr] = {disabled: true};
     }
 
-    // Add custom disabled days
-    customDisabledDays.forEach(day => {
-      disabledDates[day] = {disabled: true};
-    });
-
     return disabledDates;
   };
 
   const disabledDates = generateDisabledDates();
+
+  const isDateAfterMaxRange = (dateString: string | null): boolean => {
+    if (!dateString) return false;
+    return new Date(dateString) > maxBookingDate;
+  };
 
   return (
     <>
@@ -189,7 +213,7 @@ const UserCalendarModal = forwardRef<
 
       {modalVisible && (
         <Modal
-          transparent={true}
+          transparent
           animationType="none"
           visible={modalVisible}
           onRequestClose={closeModal}
@@ -208,31 +232,54 @@ const UserCalendarModal = forwardRef<
                 <Text className="text-sm mt-2 mb-1 text-tic">
                   {t('date.selectADate').toUpperCase()}
                 </Text>
-                <Calendar
-                  onDayPress={(day: Day) => {
-                    if (disabledDates[day.dateString]) return;
-                    if (selectedDate === day.dateString) {
-                      setSelectedDate(null);
-                      setSelectedTime(null);
-                    } else {
-                      setSelectedDate(day.dateString);
-                    }
-                  }}
-                  markedDates={{
-                    [selectedDate ?? '']: {
-                      selected: true,
-                      marked: false,
-                      selectedColor: Colors.light.green.drive,
-                    },
-                    ...disabledDates,
-                  }}
-                  theme={{
-                    selectedDayTextColor: 'white', // Text color for the selected day
-                    todayTextColor: Colors.light.green.drive, // Text color for today's date
-                    dayTextColor: 'black', // Default text color for all days
-                    textDisabledColor: '#b3b3b3', // Text color for disabled dates
-                  }}
-                />
+
+                <View style={styles.fixedCalendarContainer}>
+                  <Calendar
+                    onDayPress={(day: Day) => {
+                      const dayOfWeek = new Date(day.dateString)
+                        .toLocaleDateString('en-US', {weekday: 'long'})
+                        .toLowerCase();
+
+                      if (
+                        disabledDates[day.dateString] ||
+                        !workingDays.includes(dayOfWeek)
+                      )
+                        return;
+
+                      if (selectedDate === day.dateString) {
+                        setSelectedDate(null);
+                        setSelectedTime(null);
+                      } else {
+                        setSelectedDate(day.dateString);
+                      }
+                    }}
+                    markedDates={{
+                      [selectedDate ?? '']: {
+                        selected: true,
+                        marked: false,
+                        selectedColor: Colors.light.green.drive,
+                      },
+                      ...disabledDates,
+                    }}
+                    maxDate={maxBookingDate.toISOString().split('T')[0]}
+                    theme={{
+                      selectedDayTextColor: 'white',
+                      todayTextColor: Colors.light.green.drive,
+                      dayTextColor: 'black',
+                      textDisabledColor: '#b3b3b3',
+                    }}
+                  />
+                </View>
+
+                {isDateAfterMaxRange(selectedDate) && (
+                  <View style={styles.noticeWrapper}>
+                    <Text style={styles.noticeText}>
+                      You can book appointments up to 6 months in advance. For
+                      later dates, please contact the workshop directly.
+                    </Text>
+                  </View>
+                )}
+
                 {selectedDate && (
                   <View className="mb-4">
                     <Text className="text-sm text-tic mt-4">
@@ -242,7 +289,9 @@ const UserCalendarModal = forwardRef<
                       {UserTimeSlot.map((time, index) => (
                         <Pressable
                           onPress={() =>
-                            setSelectedTime(selectedTime === time ? null : time)
+                            setSelectedTime(
+                              selectedTime === time ? null : time,
+                            )
                           }
                           key={index}
                           className={`border border-tic rounded-2xl p-1 px-2 ${
@@ -262,6 +311,7 @@ const UserCalendarModal = forwardRef<
                     </View>
                   </View>
                 )}
+
                 <TicDriveButton
                   text={buttonText}
                   disabled={!selectedDate || !selectedTime}
@@ -271,7 +321,7 @@ const UserCalendarModal = forwardRef<
                       ? {workshop, date: selectedDate, time: selectedTime}
                       : {isUser: true}
                   }
-                  replace={token ? false : false}
+                  replace={false}
                   onClick={onClick}
                 />
               </View>
@@ -284,18 +334,6 @@ const UserCalendarModal = forwardRef<
 });
 
 const styles = StyleSheet.create({
-  button: {
-    backgroundColor: '#007BFF',
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-    margin: 20,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -313,7 +351,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     padding: 20,
     paddingTop: 0,
-    maxHeight: height * 0.9, // Allow up to 90% of screen height
+    maxHeight: height * 0.9,
   },
   dragHandle: {
     width: 60,
@@ -326,19 +364,28 @@ const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
   },
-  selectedDateText: {
-    marginTop: 10,
-    textAlign: 'center',
-    fontSize: 16,
-    color: '#007BFF',
-  },
   customButtonStyle: {
     height: 50,
     paddingHorizontal: 15,
   },
   timeSlotContainer: {
     width: '30%',
-    borderColor: '',
+  },
+  fixedCalendarContainer: {
+    height: 370,
+    overflow: 'hidden',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#ddd',
+  },
+  noticeWrapper: {
+    marginTop: 12,
+    paddingHorizontal: 10,
+  },
+  noticeText: {
+    textAlign: 'center',
+    color: '#666',
+    fontSize: 13,
   },
 });
 
