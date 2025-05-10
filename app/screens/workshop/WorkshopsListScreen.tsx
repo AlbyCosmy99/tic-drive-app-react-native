@@ -37,15 +37,6 @@ interface POIMarker {
   id: number;
 }
 
-const orderOptions: OrderOption[] = [
-  {label: 'Ascending', value: 'asc'},
-  {label: 'Descending', value: 'desc'},
-];
-
-const filterOptions: FilterOption[] = [
-  {label: 'Price', value: 'price'},
-  {label: 'Rating', value: 'rating'},
-];
 
 type RootStackParamList = {
   WorkshopsListScreen: {favorite: boolean};
@@ -58,6 +49,15 @@ export default function WorkshopsListScreen() {
   const {t} = useTranslation();
   const {favorite} = route.params;
 
+const orderOptions: OrderOption[] = [
+  { label: t('workshops.ascending'), value: 'asc' },
+  { label: t('workshops.descending'), value: 'desc' },
+];
+
+const filterOptions: FilterOption[] = [
+  { label: t('workshops.price'), value: 'price' },
+  { label: t('workshops.rating'), value: 'rating' },
+];
   const [orderDropdownVisible, setOrderDropdownVisible] = useState(false);
   const [filterDropdownVisible, setFilterDropdownVisible] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<OrderOption>({
@@ -138,7 +138,7 @@ export default function WorkshopsListScreen() {
                 }}
               >
                 <IconTextPair
-                  text="Order"
+                  text={t('workshops.order')}
                   icon={<OrderIcon />}
                   textTailwindCss="text-base font-medium text-tic"
                   containerTailwindCss="border border-tic justify-center items-center gap-0 p-1 rounded-2xl mx-1"
@@ -162,7 +162,7 @@ export default function WorkshopsListScreen() {
                 }}
               >
                 <IconTextPair
-                  text="Filter"
+                 text={t('workshops.filter')}
                   icon={<FilterIcon />}
                   textTailwindCss="text-base font-medium text-tic"
                   containerTailwindCss="flex-1 border border-tic justify-center items-center gap-0 p-1 rounded-2xl mx-1"
@@ -177,7 +177,7 @@ export default function WorkshopsListScreen() {
                 onPress={onOpenMap}
               >
                 <IconTextPair
-                  text="Map"
+                  text={t('workshops.map')}
                   icon={<MapIcon />}
                   textTailwindCss="text-base font-medium text-tic"
                   containerTailwindCss="flex-1 border border-tic justify-center items-center gap-0 p-1 rounded-2xl mx-1"

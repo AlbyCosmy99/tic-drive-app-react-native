@@ -100,8 +100,16 @@
     "reviews": {
       "whatPeopleSay": "Cosa dicono gli altri",
       "title": "recensioni",
-      "review": "recensione"
+      "review": "recensione",
+      "searchWorkshop": "Cerca officina"
     },
+    "order": "Ordina",
+      "filter": "Filtra",
+      "map": "Mappa",
+      "ascending": "Crescente",
+    "descending": "Decrescente",
+    "price": "Prezzo",
+    "rating": "Valutazione",
     "searchWorkshop": "Cerca officina",
     "noWorkshopsWithFilter": "Nessuna officina trovata con questo filtro.",
     "noWorkshopsAvailable": "Nessuna officina disponibile al momento."
