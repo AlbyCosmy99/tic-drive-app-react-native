@@ -100,7 +100,7 @@ export default function RootLayout() {
                         options={({route}) => ({
                           title: 'UserAuthenticationScreen',
                           headerShown: false,
-                          presentation: 'modal',
+                          presentation: 'containedModal',
                           animation: getAnimation(route),
                         })}
                       />

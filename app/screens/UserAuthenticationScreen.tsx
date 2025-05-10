@@ -11,6 +11,7 @@ import {Dimensions} from 'react-native';
 import AuthAction from '@/types/auth/Action';
 import isIOSPlatform from '@/utils/devices/IsIOSPlatform';
 import {useRoute} from '@react-navigation/native';
+import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 const {height} = Dimensions.get('window');
 
 export default function UserAuthenticationScreen() {
@@ -33,9 +34,8 @@ export default function UserAuthenticationScreen() {
   }, [isUserRegistering]);
 
   return (
-    <View
-      className="flex-1 bg-white pt-2"
-      behavior={isIOSPlatform() ? 'padding' : 'height'}
+    <SafeAreaViewLayout
+      tailwindCss="flex-1 bg-white pt-2"
     >
       <View className="flex-1 justify-between">
         <View>
@@ -55,7 +55,7 @@ export default function UserAuthenticationScreen() {
           />
         </ScrollView>
       </View>
-    </View>
+    </SafeAreaViewLayout>
   );
 }
 
