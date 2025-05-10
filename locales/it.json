@@ -13,6 +13,7 @@
     "call_support": "Chiama il supporto",
     "footer_message": "Siamo sempre qui per te! 🤗"
 
+
   },
   "feedback": "Feedback",
   "deleteAccount": "Elimina account",
@@ -165,7 +166,7 @@
     "save": "Salva",
     "edit": "Modifica",
     "cancel": "Annulla",
-    "ok": "Ok",
+    "ok": "OK!",
     "home": "Home",
     "welcome": "Benvenuto"
   },
