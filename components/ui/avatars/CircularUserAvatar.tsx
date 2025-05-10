@@ -1,28 +1,20 @@
-import {Image} from '@rneui/themed';
-import {ImageStyle, StyleProp} from 'react-native';
+import React from 'react';
+import { Image, ImageStyle } from 'react-native';
+import defaultAvatar from '@/assets/images/default-avatar.png'; // or relative path
 
-interface CircularUserAvatarProps {
-  uri: string;
-  styles?: StyleProp<ImageStyle>;
+interface Props {
+  uri?: string;
+  styles?: ImageStyle;
 }
 
-const CircularUserAvatar: React.FC<CircularUserAvatarProps> = ({
-  uri,
-  styles,
-}) => {
+export default function CircularUserAvatar({ uri, styles }: Props) {
+  const imageSource = uri ? { uri } : defaultAvatar;
+
   return (
     <Image
-      source={{uri}}
-      style={[
-        {
-          width: 45,
-          height: 45,
-          borderRadius: 50,
-        },
-        styles,
-      ]}
+      source={imageSource}
+      style={[{ width: 70, height: 70, borderRadius: 35 }, styles]}
+      resizeMode="cover"
     />
   );
-};
-
-export default CircularUserAvatar;
+}

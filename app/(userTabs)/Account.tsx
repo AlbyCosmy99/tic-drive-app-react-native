@@ -60,6 +60,7 @@ const Section: React.FC<SectionProps> = ({title, children}) => (
 export default function UserAccount() {
   const [isEditing, setIsEditing] = useState(false);
   const [loadingEditingUser, setLoadingEditingUser] = useState(false);
+const mainImage = user?.images?.find(img => img.isMainImage)?.url;
 
   const user = useAppSelector(state => state.auth.user);
   const [editedUser, setEditedUser] = useState<User>({name: user?.name});
@@ -88,9 +89,7 @@ export default function UserAccount() {
   const handleFAQ = () => {
     navigationPush(navigation, 'FAQScreen');
   };
-  const handleSupport = () => {
-    navigationPush(navigation, 'SupportSectionScreen');
-  };
+
   const handleOnEdit = async () => {
     if (!isEditing) {
       // About to enter editing mode — reset the editedUser.name to clean user.name
@@ -146,7 +145,7 @@ export default function UserAccount() {
             <View className="flex-row justify-between items-center h-[88px]">
               <View className="flex-row items-center space-x-4 p-2">
                 <CircularUserAvatar
-                  uri={user?.imageUrl}
+                 uri={mainImage}
                   styles={{width: 70, height: 70}}
                 />
                 <View className="w-44">
@@ -303,7 +302,7 @@ export default function UserAccount() {
               <HorizontalLine />
 
               <CrossPlatformButtonLayout
-                onPress={handleSupport}
+                onPress={() => alert(t('userAccount.customerSupport'))}
               >
                 <IconTextPair
                   text={t('userAccount.customerSupport')}
