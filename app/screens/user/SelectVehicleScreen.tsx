@@ -26,7 +26,7 @@ export default function SelectVehicleScreen() {
   const navigation = useTicDriveNavigation();
 
   const {getCustomerCars, loadingCustomerCars} = useCustomerCars();
-  const [registeredCars, setRegisteredCars] = useState<Car[]>([]);
+  const [registeredCars, setRegisteredCars] = useState<Car[] | null>(null);
 
   //@ts-ignore
   const {category, buttonContainerTailwindCss, withSafeAreaView} =
@@ -74,12 +74,12 @@ export default function SelectVehicleScreen() {
           <ScrollView className="flex-1">
             {loadingCustomerCars ? (
               <TicDriveSpinner />
-            ) : registeredCars.length === 0 ? (
+            ) : registeredCars?.length === 0 ? (
               <Text className="text-center text-base text-gray-500">
                 {t('vehicles.noVehiclesMessage')}
               </Text>
             ) : (
-              registeredCars.map(car => (
+              registeredCars?.map(car => (
                 <CrossPlatformButtonLayout
                   key={car.id}
                   onPress={() => handleCarSelect(car)}
@@ -100,7 +100,7 @@ export default function SelectVehicleScreen() {
           <Text className="text-center text-gray-600 text-base mt-6 mb-2">
             {t('logic.or')}
           </Text>
-          {registeredCars.length === 0 && (
+          {registeredCars && registeredCars.length === 0 && (
             <View className="absolute top-0 left-0 right-0 bottom-0 justify-center items-center">
               <Image
                 source={require('@/assets/images/png/checklist.png')}
