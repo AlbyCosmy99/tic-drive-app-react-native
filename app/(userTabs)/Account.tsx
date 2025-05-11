@@ -326,9 +326,9 @@ export default function UserAccount() {
               <HorizontalLine />
               <CrossPlatformButtonLayout onPress={handleDangerZone}>
                 <IconTextPair
-                  text="Azioni pericolose"
+                  text={t('userAccount.dangerZone')}
                   icon={<DangerIcon />}
-                  textTailwindCss="text-base font-medium pl-1"
+                  textTailwindCss="text-base font-medium pl-1 text-[#fc0600]"
                   containerTailwindCss="py-2 my-0 pt-1"
                 />
               </CrossPlatformButtonLayout>
