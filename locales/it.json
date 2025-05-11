@@ -155,9 +155,9 @@
     "resendButton": "Reinvia email di conferma",
     "confirmedButton": "Ho confermato l'email",
     "modal1Title": "Email di conferma inviata",
-    "modal1Content": "Controlla la tua email",
+    "modal1Content": "Controlla la tua email.",
     "modal1Confirm": "Perfetto",
-    "modal2Title": "Controlla la tua email",
+    "modal2Title": "Controlla la tua email.",
     "modal2Content": "La tua email non è ancora confermata. Controlla la tua casella di posta o reinviala premendo il pulsante 'Reinvia email di conferma'.",
     "modal2Confirm": "Ok"
   },
@@ -228,13 +228,6 @@
     "serverError": "Errore del server. Riprova più tardi.",
     "unexpected": "Errore imprevisto: {{code}}",
     "general": "Qualcosa è andato storto. Riprova."
-  },
-  "dangerZone": {
-    "title": "Zona Pericolosa",
-    "warningMessage": "⚠️ Questa è una zona sensibile. Le azioni qui sono irreversibili e potrebbero influire sui tuoi dati o sull'accesso. Procedi con cautela.",
-    "clearPersonalData": "Elimina dati personali",
-    "revokeDevices": "Revoca tutti i dispositivi",
-    "deleteAccount": "Elimina account"
   },
   "reviewBooking": {
     "reviewDetails": "Dettagli della prenotazione",

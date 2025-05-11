@@ -91,8 +91,8 @@ export default function UserAccount() {
     navigationPush(navigation, 'FAQScreen');
   };
   const handleDangerZone = () => {
-  navigationPush(navigation, 'DangerZoneScreen');
-};
+    navigationPush(navigation, 'DangerZoneScreen');
+  };
 
   const handleSupport = () => {
     navigationPush(navigation, 'SupportSectionScreen');
@@ -120,10 +120,6 @@ export default function UserAccount() {
         setIsEditing(false);
       }
     }
-  };
-
-  const handleDeleteAccount = () => {
-    navigationPush(navigation, 'DeleteAccountScreen');
   };
 
   if (!token)
@@ -329,24 +325,14 @@ export default function UserAccount() {
 
               <HorizontalLine />
               <CrossPlatformButtonLayout onPress={handleDangerZone}>
-
-            <IconTextPair
-            text="Azioni pericolose"
-              icon={<DangerIcon />}
-             textTailwindCss="text-base font-medium pl-1"
-              containerTailwindCss="py-2 my-0 pt-1"
-              />
- </CrossPlatformButtonLayout>
-              <HorizontalLine />
-
-              <CrossPlatformButtonLayout onPress={handleDeleteAccount}>
                 <IconTextPair
-                  text="Delete account"
-                  icon={<Remove />}
+                  text="Azioni pericolose"
+                  icon={<DangerIcon />}
                   textTailwindCss="text-base font-medium pl-1"
                   containerTailwindCss="py-2 my-0 pt-1"
                 />
               </CrossPlatformButtonLayout>
+              <HorizontalLine />
             </Section>
           </ScrollView>
         </View>

@@ -107,16 +107,6 @@ export default function RootLayout() {
                         })}
                       />
                       <Stack.Screen
-                         name="DangerZoneScreen"
-                         component={DangerZoneScreen}
-                          options={({route}) => ({
-                          title: 'DangerZoneScreen',
-                          headerShown: false,
-                          presentation: 'containedModal',
-                          animation: getAnimation(route),
-                        })}
-                       />
-                      <Stack.Screen
                         component={ChooseServicesScreen}
                         name="ChooseServicesScreen"
                         options={({route}) => ({
@@ -340,6 +330,15 @@ export default function RootLayout() {
                         component={CarRegistrationSuccessScreen}
                         options={({route}) => ({
                           title: 'CarRegistrationSuccessScreen',
+                          headerShown: false,
+                          animation: getAnimation(route),
+                        })}
+                      />
+                      <Stack.Screen
+                        name="DangerZoneScreen"
+                        component={DangerZoneScreen}
+                        options={({route}) => ({
+                          title: 'DangerZoneScreen',
                           headerShown: false,
                           animation: getAnimation(route),
                         })}
