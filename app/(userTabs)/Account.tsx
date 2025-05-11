@@ -350,33 +350,31 @@ export default function UserAccount() {
           cancelText={t('common.cancel')}
           confirmButtonStyle={{backgroundColor: '#E53935'}}
         />
-      <TicDriveModal
-           visible={showLanguageChangedModal}
-           onClose={() => setShowLanguageChangedModal(false)}
-            title={t('language.languageChanged') + '!'}
-            content={
-           t('language.yourNewLanguageIs') +
-           ': ' +
-          (languageCode === 'en'
-           ? t('language.english')
-         : t('language.italian')) +
-         '.'
-    }
-         confirmText={t('common.ok')}
-         confirmButtonStyle={{
-         backgroundColor: '#4CAF50', 
-          borderRadius: 12,
-          paddingVertical: 12,
-          paddingHorizontal: 24,
-          elevation: 5, 
-          shadowColor: '#000', 
-         shadowOffset: { width: 0, height: 2 },
-         shadowOpacity: 0.2,
-        shadowRadius: 3.5,  
-  }}
-  
-/>
-
+        <TicDriveModal
+          visible={showLanguageChangedModal}
+          onClose={() => setShowLanguageChangedModal(false)}
+          title={t('language.languageChanged') + '!'}
+          content={
+            t('language.yourNewLanguageIs') +
+            ': ' +
+            (languageCode === 'en'
+              ? t('language.english')
+              : t('language.italian')) +
+            '.'
+          }
+          confirmText={t('common.ok')}
+          confirmButtonStyle={{
+            backgroundColor: '#4CAF50',
+            borderRadius: 12,
+            paddingVertical: 12,
+            paddingHorizontal: 24,
+            elevation: 5,
+            shadowColor: '#000',
+            shadowOffset: {width: 0, height: 2},
+            shadowOpacity: 0.2,
+            shadowRadius: 3.5,
+          }}
+        />
       </SafeAreaViewLayout>
     </LinearGradientViewLayout>
   );
