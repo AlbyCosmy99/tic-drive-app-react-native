@@ -142,13 +142,10 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
           </View>
         ) : (
           <View className="mb-2">
-            <IconTextPair icon={<CalendarIcon />} text={timeDate} />
+            <IconTextPair icon={<CalendarIcon />} text={"Lunedì 12 Maggio - 10:30"} />
             <IconTextPair
               icon={<CreditCardIcon />}
-              text={`${workshopDetailed?.currency}${calculateWorkshopDiscount(
-                workshopDetailed?.servicePrice ?? 0,
-                workshopDetailed?.discount ?? 0,
-              )} total to pay`}
+              text='€120 da pagare'
             />
             {workshopDetailed?.address && (
               <IconTextPair

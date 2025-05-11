@@ -85,7 +85,7 @@ export default function ReviewBookingDetailsScreen() {
         <TicDriveNavbar
           topContent={
             <Text className="font-semibold text-lg">
-              {t('reviewBooking.reviewDetails')}
+              {t('reviewBooking.details')}
             </Text>
           }
         />
@@ -112,7 +112,7 @@ export default function ReviewBookingDetailsScreen() {
                 <View className="flex flex-row items-center gap-1">
                   <Text className="text-xl font-medium">{workshop?.name}</Text>
                   {workshop?.isVerified && (
-                    <Verified width={24} name="verified" />
+                    <Verified width={24} />
                   )}
                 </View>
                 <WorkshopReviewinfo
@@ -130,7 +130,7 @@ export default function ReviewBookingDetailsScreen() {
                 icon={<CarRepair fill={Colors.light.ticText} />}
               />
               <IconTextPair
-                text={timeDate}
+                text={'Lunedì 12 Maggio 2025 - 10:30'}
                 icon={<CalendarIcon fill={Colors.light.ticText} />}
               />
               <CrossPlatformButtonLayout

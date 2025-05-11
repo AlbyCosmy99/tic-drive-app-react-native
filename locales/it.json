@@ -242,7 +242,7 @@
     "general": "Qualcosa è andato storto. Riprova."
   },
   "reviewBooking": {
-    "reviewDetails": "Dettagli della prenotazione",
+    "details": "Dettagli della prenotazione",
     "subtotal": "SUBTOTALE",
     "serviceWithName": "Servizio ({{name}})",
     "promoCode": "Codice promozionale",
