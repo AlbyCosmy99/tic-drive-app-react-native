@@ -276,13 +276,13 @@
     "forgot_password": "Forgot password?",
     "or_continue_with": "Or continue with",
     "by_clicking": "By clicking {{action}}, you agree to our",
-    "terms_of_use": "Terms of Use",
+    "termsOfUse": "Terms of Use",
     "and": "and",
     "privacy_policy": "Privacy Policy",
     "login": "Login",
     "register": "Register"
   },
-  "terms_of_use": {
+  "termsOfUse": {
     "title": "Terms of Use",
     "introduction": "These Terms of Use (the “Terms”) apply between you (“you”) and TicDrive, Via Leonardo da Vinci, 12b, 35133 Padova PD, Italy (“TicDrive”, “we”) for our iOS and Android mobile app (our “App”) and constitute a legal agreement governing your access to our App and Services.",
     "sections": {
