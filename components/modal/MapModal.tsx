@@ -16,7 +16,7 @@ import navigationPush from '@/services/navigation/push';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice';
-import useNearbyWorkshops from '@/hooks/location/useNearbyWorkshops';
+import useNearbyWorkshops from '@/hooks/api/workshops/useNearbyWorkshops';
 import {POIMarker} from '@/types/nav/map/POIMarker';
 import TicDriveSpinner from '../ui/spinners/TicDriveSpinner';
 

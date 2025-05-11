@@ -15,7 +15,7 @@ import {useState} from 'react';
 import Workshop from '@/types/workshops/Workshop';
 import WorkshopCard from './WorkshopCard';
 import CrossPlatformButtonLayout from './ui/buttons/CrossPlatformButtonLayout';
-import useNearbyWorkshops from '@/hooks/location/useNearbyWorkshops';
+import useNearbyWorkshops from '@/hooks/api/workshops/useNearbyWorkshops';
 import useWorkshops from '@/hooks/api/workshops/useWorkshops';
 
 interface WorkshopCardsProps {
