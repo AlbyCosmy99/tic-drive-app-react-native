@@ -27,8 +27,7 @@ export default function DangerZoneScreen() {
           </Text>
 
           <Text className="text-base text-400 mb-6 text-[#fc0600]">
-                        {t('dangerZone.warningMessage')}
-
+            {t('dangerZone.warningMessage')}
           </Text>
 
           <CrossPlatformButtonLayout onPress={handleDeleteAccount}>
