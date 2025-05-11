@@ -20,6 +20,7 @@ import UserCalendarModal, {
   UserCalendarModalRef,
 } from '../ui/modals/UserCalendarModal';
 import TicDriveSpinner from '../ui/spinners/TicDriveSpinner';
+import useJwtToken from '@/hooks/auth/useJwtToken';
 
 interface SeeAllServicesCardsProps {
   workshopId?: number;
@@ -46,6 +47,7 @@ const SeeAllServicesCards = forwardRef(
       useServices(workshopId);
     const {t} = useTranslation();
     const modalRef = useRef<UserCalendarModalRef>(null);
+    const token = useJwtToken()
 
     useImperativeHandle(ref, () => ({
       loadingServices,
@@ -60,7 +62,7 @@ const SeeAllServicesCards = forwardRef(
       if (showCalendarModal) {
         modalRef.current?.openModal();
       } else {
-        navigationPush(navigation, 'SelectVehicleScreen');
+        navigationPush(navigation, token ? 'SelectVehicleScreen' : 'RegisterVehicleScreen');
       }
       dispatch(setServicesChoosenByUsers(service));
     };
