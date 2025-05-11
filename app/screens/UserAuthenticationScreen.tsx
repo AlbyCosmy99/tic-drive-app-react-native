@@ -33,9 +33,7 @@ export default function UserAuthenticationScreen() {
   }, [isUserRegistering]);
 
   return (
-    <SafeAreaViewLayout
-      tailwindCss="flex-1 bg-white pt-2"
-    >
+    <SafeAreaViewLayout tailwindCss="flex-1 bg-white pt-2">
       <View className="flex-1 justify-between">
         <View>
           <View style={{height: 60}}>

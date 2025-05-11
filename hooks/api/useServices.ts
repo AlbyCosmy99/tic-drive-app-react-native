@@ -15,7 +15,8 @@ const useServices = (workshopId?: number) => {
           'services?workshopId=' +
             (workshopId ? workshopId : '') +
             '&languageCode=' +
-            languageCode + '&take=1000',
+            languageCode +
+            '&take=1000',
         );
         setServices(res.data);
       } catch (err) {

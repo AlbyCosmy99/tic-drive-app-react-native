@@ -58,7 +58,8 @@ const Section: React.FC<SectionProps> = ({title, children}) => (
 );
 
 export default function UserAccount() {
-  const DEFAULT_AVATAR = 'https://ticdrive.blob.core.windows.net/internal/defaultAvatar.png'
+  const DEFAULT_AVATAR =
+    'https://ticdrive.blob.core.windows.net/internal/defaultAvatar.png';
   const [isEditing, setIsEditing] = useState(false);
   const [loadingEditingUser, setLoadingEditingUser] = useState(false);
 

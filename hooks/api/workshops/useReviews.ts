@@ -3,7 +3,7 @@ import apiClient from '@/services/http/axiosClient';
 import Review from '@/types/workshops/Review';
 
 const useReviews = (
-  workshopId: number,
+  workshopId: string,
   skip: number = 0,
   take: number = 10,
 ) => {
