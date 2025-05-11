@@ -129,7 +129,7 @@ export default function ChooseServicesScreen() {
               }
               routeName={
                 isUserLookingForServices()
-                  ? 'RegisterVehicleScreen'
+                  ? 'SelectVehicleScreen'
                   : 'UserAuthenticationScreen'
               }
               routeParams={

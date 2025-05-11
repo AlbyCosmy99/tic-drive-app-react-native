@@ -48,7 +48,9 @@
     "bookTheService": "Prenota il servizio",
     "chooseService": "Scegli servizio",
     "searchService": "Cerca servizio",
-    "oilChange": "Cambio olio"
+    "oilChange": "Cambio olio",
+    "chooseVehicle": "Scegli il veicolo"
+
   },
   "continue": "Continua",
   "date": {
@@ -88,7 +90,8 @@
     "engine_size": "Cilindrata",
     "mileage": "Chilometraggio",
     "plate": "Targa",
-    "year": "Anno"
+    "year": "Anno",
+    "orRegisterNewCar": "oppure registra un nuovo veicolo",
   },
   "home": {
     "notifications": {

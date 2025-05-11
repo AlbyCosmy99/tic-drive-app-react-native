@@ -14,6 +14,8 @@ import Hub from './hub/_layout';
 import ChooseServicesScreen from './screens/ChooseServicesScreen';
 import UserAuthenticationScreen from './screens/UserAuthenticationScreen';
 import RegisterVehicleScreen from './screens/user/RegisterVehicleScreen';
+import SelectVehicleScreen from './screens/user/SelectVehicleScreen';
+
 import WorkshopTabLayout from './(workshopTabs)/_layout';
 import userTabLayout from './(userTabs)//_layout';
 import WorkshopDetails from './screens/user/WorkshopDetails';
@@ -330,6 +332,15 @@ export default function RootLayout() {
                         component={CarRegistrationSuccessScreen}
                         options={({route}) => ({
                           title: 'CarRegistrationSuccessScreen',
+                          headerShown: false,
+                          animation: getAnimation(route),
+                        })}
+                      />
+                      <Stack.Screen
+                        name="SelectVehicleScreen"
+                        component={SelectVehicleScreen}
+                        options={({route}) => ({
+                          title: 'SelectVehicleScreen',
                           headerShown: false,
                           animation: getAnimation(route),
                         })}
