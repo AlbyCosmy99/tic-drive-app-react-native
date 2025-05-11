@@ -12,7 +12,6 @@ import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
 export default function DeleteAccountScreen() {
   const [reason, setReason] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordError, setPasswordError] = useState(false);
   const {setErrorMessage} = useGlobalErrors()
 
   const handleDelete = () => {
@@ -58,7 +57,6 @@ export default function DeleteAccountScreen() {
               customValue={password}
               onChange={text => {
                 setPassword(text);
-                setPasswordError(false);
               }}
             />
 
