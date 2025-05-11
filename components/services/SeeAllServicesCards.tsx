@@ -60,7 +60,7 @@ const SeeAllServicesCards = forwardRef(
       if (showCalendarModal) {
         modalRef.current?.openModal();
       } else {
-        navigationPush(navigation, 'RegisterVehicleScreen');
+        navigationPush(navigation, 'SelectVehicleScreen');
       }
       dispatch(setServicesChoosenByUsers(service));
     };
