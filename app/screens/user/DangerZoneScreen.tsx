@@ -28,7 +28,7 @@ export default function DangerZoneScreen() {
             {t('dangerZone.title', 'Danger Zone')}
           </Text>
 
-          <Text className="text-base text-red-600 mb-6">
+          <Text className="text-base text-400 mb-6">
             {t(
               'dangerZone.warningMessage',
               '⚠️ This is a sensitive area. Actions here are irreversible and may affect your data or access. Proceed with caution.',
