@@ -1,7 +1,7 @@
 import {TicDriveImage} from '../files/TicDriveImage';
 
 interface Workshop {
-  id: number;
+  id: string;
   name: string;
   surname?: string;
   workshopName: string;

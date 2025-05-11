@@ -21,4 +21,4 @@ function generateTimeSlots(start: string, end: string): string[] {
   return result;
 }
 
-export default generateTimeSlots
+export default generateTimeSlots;

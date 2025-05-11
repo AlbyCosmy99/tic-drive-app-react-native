@@ -53,7 +53,11 @@
   "continue": "Continua",
   "date": {
     "selectADate": "Seleziona una data",
-    "chooseSlot": "Scegli tra gli slot disponibili"
+    "chooseSlot": "Scegli tra gli slot disponibili",
+    "days": {
+      "morning": "Mattina",
+      "afternoon": "Pomeriggio"
+    }
   },
   "seeAll": {
     "workshops": "Vedi tutte le officine",
@@ -101,8 +105,16 @@
     "reviews": {
       "whatPeopleSay": "Cosa dicono gli altri",
       "title": "recensioni",
-      "review": "recensione"
+      "review": "recensione",
+      "searchWorkshop": "Cerca officina"
     },
+    "order": "Ordina",
+      "filter": "Filtra",
+      "map": "Mappa",
+      "ascending": "Crescente",
+    "descending": "Decrescente",
+    "price": "Prezzo",
+    "rating": "Valutazione",
     "searchWorkshop": "Cerca officina",
     "noWorkshopsWithFilter": "Nessuna officina trovata con questo filtro.",
     "noWorkshopsAvailable": "Nessuna officina disponibile al momento."
@@ -144,9 +156,9 @@
     "resendButton": "Reinvia email di conferma",
     "confirmedButton": "Ho confermato l'email",
     "modal1Title": "Email di conferma inviata",
-    "modal1Content": "Controlla la tua email",
+    "modal1Content": "Controlla la tua email.",
     "modal1Confirm": "Perfetto",
-    "modal2Title": "Controlla la tua email",
+    "modal2Title": "Controlla la tua email.",
     "modal2Content": "La tua email non è ancora confermata. Controlla la tua casella di posta o reinviala premendo il pulsante 'Reinvia email di conferma'.",
     "modal2Confirm": "Ok"
   },

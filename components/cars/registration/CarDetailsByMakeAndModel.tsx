@@ -106,7 +106,7 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
   return (
     <>
       <TicDriveDropdown
-        placeholder={t('vehicles.choose_car_year')}  
+        placeholder={t('vehicles.choose_car_year')}
         searchPlaceholder={t('vehicles.search_car_year')}
         title={t('vehicles.choose_car_year')}
         data={yearOptions}
@@ -114,7 +114,7 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
         setValue={setCarYear}
       />
       <TicDriveDropdown
-        placeholder={t('vehicles.search_fuel_type')} 
+        placeholder={t('vehicles.search_fuel_type')}
         searchPlaceholder={t('vehicles.search_fuel_type')}
         title={t('vehicles.fuel')}
         data={fuelOptions}
@@ -130,21 +130,21 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
         setValue={setSelectedTransmission}
       />
       <TicDriveTextOrInput
-        title={t('vehicles.engine_size')}  // Translate engine size
+        title={t('vehicles.engine_size')} // Translate engine size
         placeholder="Es. 2,0"
         value={carSelected?.engineDisplacement}
         setValue={setCarEngineDisplacement}
         keyboardType="numeric"
       />
       <TicDriveTextOrInput
-        title={t('vehicles.mileage')}  // Translate mileage
+        title={t('vehicles.mileage')} // Translate mileage
         placeholder="Es. 10000km"
         value={carSelected?.mileage}
         setValue={setCarMileage}
         keyboardType="numeric"
       />
       <TicDriveTextOrInput
-        title={t('vehicles.plate')}  // Translate plate
+        title={t('vehicles.plate')} // Translate plate
         placeholder="Es. AB123CD"
         value={carSelected?.plateNumber?.toUpperCase()}
         setValue={setPlateNumber}
