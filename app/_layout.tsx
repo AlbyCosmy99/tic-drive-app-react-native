@@ -46,6 +46,8 @@ import UserVehiclesScreen from './screens/vehicles/UserVehiclesScreen';
 import UserVehicleDetailsScreen from './screens/vehicles/UserVehicleDetailsScreen';
 import CarRegistrationSuccessScreen from './screens/success/CarRegistrationSuccessScreen';
 import DeleteAccountScreen from './screens/user/DeleteAccountScreen';
+import DangerZoneScreen from './screens/user/DangerZoneScreen';
+
 SplashScreen.preventAutoHideAsync();
 
 const Stack = createNativeStackNavigator();
@@ -104,6 +106,16 @@ export default function RootLayout() {
                           animation: getAnimation(route),
                         })}
                       />
+                      <Stack.Screen
+                         name="DangerZoneScreen"
+                         component={DangerZoneScreen}
+                          options={({route}) => ({
+                          title: 'DangerZoneScreen',
+                          headerShown: false,
+                          presentation: 'containedModal',
+                          animation: getAnimation(route),
+                        })}
+                       />
                       <Stack.Screen
                         component={ChooseServicesScreen}
                         name="ChooseServicesScreen"

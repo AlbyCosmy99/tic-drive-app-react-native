@@ -225,6 +225,13 @@
     "unexpected": "Errore imprevisto: {{code}}",
     "general": "Qualcosa è andato storto. Riprova."
   },
+  "dangerZone": {
+    "title": "Zona Pericolosa",
+    "warningMessage": "⚠️ Questa è una zona sensibile. Le azioni qui sono irreversibili e potrebbero influire sui tuoi dati o sull'accesso. Procedi con cautela.",
+    "clearPersonalData": "Elimina dati personali",
+    "revokeDevices": "Revoca tutti i dispositivi",
+    "deleteAccount": "Elimina account"
+  },
   "reviewBooking": {
     "reviewDetails": "Dettagli della prenotazione",
     "subtotal": "SUBTOTALE",
