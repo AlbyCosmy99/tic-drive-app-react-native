@@ -59,12 +59,6 @@ export default function DeleteAccountScreen() {
               }}
             />
 
-            {passwordError && (
-              <Text className="text-[#FF0000] font-normal text-right font-poppins mx-2.5">
-                Password non valida
-              </Text>
-            )}
-
             <TouchableOpacity
               className="bg-[#FF0000] mt-16 py-4 rounded-2xl shadow-md active:opacity-80"
               onPress={handleDelete}
