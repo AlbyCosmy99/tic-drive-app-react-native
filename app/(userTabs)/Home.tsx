@@ -214,7 +214,7 @@ export default function UserHome() {
               </View>
             </View>
             <View className="mt-1 mb-3">
-              <Text className="font-semi text-xl m-2.5 mt-0">
+              <Text className="font-semibold text-xl m-2.5 mt-1">
                 {t('home.discoverServicesAndBook')}
               </Text>
               <SeeAllServicesCards
