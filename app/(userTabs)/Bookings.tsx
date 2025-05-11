@@ -6,7 +6,6 @@ import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
 import PaymentConfirmationCard from '@/components/ui/cards/payment/PaymentConfirmationCard';
 import Workshop from '@/types/workshops/Workshop';
-import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import {useEffect, useState} from 'react';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import CarDetailsMiniCard from '@/components/ui/cards/cars/CarDetailsMiniCard';
@@ -14,6 +13,8 @@ import useCustomerCars from '@/hooks/api/cars/useCustomerCars';
 import Car from '@/types/Car';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 import {useTranslation} from 'react-i18next';
+import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
+import useOnRegisterVehicle from '@/hooks/cars/useOnRegisterVehicle';
 
 export default function UserBookings() {
   const {t} = useTranslation();
@@ -23,6 +24,7 @@ export default function UserBookings() {
   const [activeTab, setActiveTab] = useState<'active' | 'past' | 'cancelled'>(
     'active',
   );
+  const onRegisterVehicle = useOnRegisterVehicle();
 
   useEffect(() => {
     const fetchCars = async () => {
@@ -135,9 +137,11 @@ export default function UserBookings() {
             {loadingCustomerCars ? (
               <TicDriveSpinner />
             ) : cars.length === 0 ? (
-              <Text className="text-center text-lg font-semibold">
-                {t('vehicles.registerVehicleForBookings')}
-              </Text>
+              <CrossPlatformButtonLayout onPress={onRegisterVehicle}>
+                <Text className="text-center text-lg font-semibold mt-6 underline">
+                  {t('vehicles.registerVehicleForBookings')}
+                </Text>
+              </CrossPlatformButtonLayout>
             ) : (
               <ScrollView showsVerticalScrollIndicator={false}>
                 {cars.map(car => (
