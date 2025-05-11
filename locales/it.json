@@ -52,7 +52,11 @@
   "continue": "Continua",
   "date": {
     "selectADate": "Seleziona una data",
-    "chooseSlot": "Scegli tra gli slot disponibili"
+    "chooseSlot": "Scegli tra gli slot disponibili",
+    "days": {
+      "morning": "Mattina",
+      "afternoon": "Pomeriggio"
+    }
   },
   "seeAll": {
     "workshops": "Vedi tutte le officine",

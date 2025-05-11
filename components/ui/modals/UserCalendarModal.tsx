@@ -34,6 +34,7 @@ import getWorkshopNotAvailableDates from '@/services/http/requests/datetime/getW
 import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
 import ExtendedDay from '@/types/calendar/ExtendedDay';
 import {Day} from '@/types/calendar/Day';
+import CrossPlatformButtonLayout from '../buttons/CrossPlatformButtonLayout';
 
 const {height} = Dimensions.get('window');
 
@@ -272,7 +273,7 @@ const UserCalendarModal = forwardRef<
 
                         if (
                           disabledDates[day.dateString] ||
-                          !workingDays.includes(dayOfWeek)
+                          workingDays.includes(dayOfWeek) // fix here
                         )
                           return;
 
@@ -318,17 +319,17 @@ const UserCalendarModal = forwardRef<
 
                       {userTimeSlot.map(({label, slots}) => (
                         <View key={label} style={styles.timeSlotSection}>
-                          <Text style={styles.timeSlotLabel}>{label}</Text>
+                          <Text style={styles.timeSlotLabel}>{label === 'Morning' ? t('date.days.morning') : t('date.days.afternoon')}</Text>
                           <View style={styles.timeSlotGroup}>
                             {slots.map(time => (
-                              <Pressable
+                              <CrossPlatformButtonLayout
                                 key={time}
                                 onPress={() =>
                                   setSelectedTime(
                                     selectedTime === time ? null : time,
                                   )
                                 }
-                                style={[
+                                styleContainer={[
                                   styles.timeSlotButton,
                                   selectedTime === time && styles.selectedSlot,
                                 ]}
@@ -342,7 +343,7 @@ const UserCalendarModal = forwardRef<
                                 >
                                   {time}
                                 </Text>
-                              </Pressable>
+                              </CrossPlatformButtonLayout>
                             ))}
                           </View>
                         </View>
