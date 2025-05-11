@@ -319,7 +319,11 @@ const UserCalendarModal = forwardRef<
 
                       {userTimeSlot.map(({label, slots}) => (
                         <View key={label} style={styles.timeSlotSection}>
-                          <Text style={styles.timeSlotLabel}>{label === 'Morning' ? t('date.days.morning') : t('date.days.afternoon')}</Text>
+                          <Text style={styles.timeSlotLabel}>
+                            {label === 'Morning'
+                              ? t('date.days.morning')
+                              : t('date.days.afternoon')}
+                          </Text>
                           <View style={styles.timeSlotGroup}>
                             {slots.map(time => (
                               <CrossPlatformButtonLayout

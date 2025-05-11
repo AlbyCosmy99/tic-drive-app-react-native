@@ -155,9 +155,9 @@
     "resendButton": "Reinvia email di conferma",
     "confirmedButton": "Ho confermato l'email",
     "modal1Title": "Email di conferma inviata",
-    "modal1Content": "Controlla la tua email",
+    "modal1Content": "Controlla la tua email.",
     "modal1Confirm": "Perfetto",
-    "modal2Title": "Controlla la tua email",
+    "modal2Title": "Controlla la tua email.",
     "modal2Content": "La tua email non è ancora confermata. Controlla la tua casella di posta o reinviala premendo il pulsante 'Reinvia email di conferma'.",
     "modal2Confirm": "Ok"
   },

@@ -33,6 +33,8 @@ import Translate from '@/assets/svg/translate.svg';
 import VehicleIcon from '@/assets/svg/vehicles/car2.svg';
 import EditIcon from '@/assets/svg/writing/change.svg';
 import SaveIcon from '@/assets/svg/operations/save.svg';
+import DangerIcon from '@/assets/svg/danger.svg';
+
 import TicDriveModal from 'ticdrive-mobile/components/ui/modals/TicDriveModal';
 import {setLanguageCode} from '@/stateManagement/redux/slices/languageSlice';
 import i18n from '@/i18n';
@@ -88,6 +90,10 @@ export default function UserAccount() {
   const handleFAQ = () => {
     navigationPush(navigation, 'FAQScreen');
   };
+  const handleDangerZone = () => {
+    navigationPush(navigation, 'DangerZoneScreen');
+  };
+
   const handleSupport = () => {
     navigationPush(navigation, 'SupportSectionScreen');
   };
@@ -114,10 +120,6 @@ export default function UserAccount() {
         setIsEditing(false);
       }
     }
-  };
-
-  const handleDeleteAccount = () => {
-    navigationPush(navigation, 'DeleteAccountScreen');
   };
 
   if (!token)
@@ -322,15 +324,15 @@ export default function UserAccount() {
               </CrossPlatformButtonLayout>
 
               <HorizontalLine />
-
-              <CrossPlatformButtonLayout onPress={handleDeleteAccount}>
+              <CrossPlatformButtonLayout onPress={handleDangerZone}>
                 <IconTextPair
-                  text="Delete account"
-                  icon={<Remove />}
+                  text="Azioni pericolose"
+                  icon={<DangerIcon />}
                   textTailwindCss="text-base font-medium pl-1"
                   containerTailwindCss="py-2 my-0 pt-1"
                 />
               </CrossPlatformButtonLayout>
+              <HorizontalLine />
             </Section>
           </ScrollView>
         </View>

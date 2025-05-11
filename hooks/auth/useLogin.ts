@@ -6,9 +6,9 @@ import {
 } from '@/stateManagement/redux/slices/authSlice';
 import User from '@/types/User';
 import {login as authLogin} from '@/services/auth/login';
-import getUserData from '@/utils/auth/formatUserData';
 import useGlobalErrors from '../errors/useGlobalErrors';
 import formatUserData from '@/utils/auth/formatUserData';
+import getUserData from '@/services/http/requests/auth/getUserData';
 
 const useLogin = () => {
   const dispatch = useAppDispatch();
