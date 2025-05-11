@@ -135,7 +135,7 @@ export default function UserBookings() {
             {loadingCustomerCars ? (
               <TicDriveSpinner />
             ) : cars.length === 0 ? (
-              <Text className="text-center text-lg font-semibold">
+              <Text className="text-center text-lg font-semibold mt-6">
                 {t('vehicles.registerVehicleForBookings')}
               </Text>
             ) : (
