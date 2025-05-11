@@ -38,9 +38,8 @@ import {RefreshControl, ScrollView} from 'react-native-gesture-handler';
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
-import useNearbyWorkshops from '@/hooks/location/useNearbyWorkshops';
+import useNearbyWorkshops from '@/hooks/api/workshops/useNearbyWorkshops';
 import MapModal from '@/components/modal/MapModal';
-import {useServicesChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
 
 export default function UserHome() {
   const [filter, setFilter] = useState('');

@@ -31,6 +31,10 @@ const useServices = (workshopId?: number) => {
     }
   }, [loadingServices]);
 
+  useEffect(() => {
+    setLoadingServices(true);
+  }, [languageCode]);
+
   return {services, loadingServices, setLoadingServices};
 };
 
