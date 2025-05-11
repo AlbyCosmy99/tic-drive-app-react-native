@@ -206,6 +206,10 @@
     "title": "Zona pericolosa",
     "warningMessage": "⚠️ Questa è un'area sensibile. Le azioni qui sono irreversibili e possono influire sui tuoi dati o sull'accesso. Procedi con cautela."
   },
+  "auth": {
+    "not_logged_in": "Non hai effettuato l'accesso.",
+    "login_or_register": "Accedi o registrati usando il pulsante qui sotto."
+  },
   "changePassword": {
     "setNewPassword": "Imposta una nuova password",
     "description": "Crea una nuova password. Assicurati che sia diversa da quelle precedenti per maggiore sicurezza.",
