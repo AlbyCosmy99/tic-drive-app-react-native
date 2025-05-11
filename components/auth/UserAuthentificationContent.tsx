@@ -106,7 +106,11 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
 
           {/* termsOfUse */}
           <TouchableOpacity
-            onPress={() => navigationPush(navigation, 'LegalDocumentScreen', {type: 'termsOfUse'})}
+            onPress={() =>
+              navigationPush(navigation, 'LegalDocumentScreen', {
+                type: 'termsOfUse',
+              })
+            }
           >
             <Text style={styles.link}>{t('login.termsOfUse')}</Text>
           </TouchableOpacity>
@@ -114,7 +118,11 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
           {/* privacyPolicy */}
           <Text style={styles.footerText}>{t('login.and')}</Text>
           <TouchableOpacity
-            onPress={() => navigationPush(navigation, 'LegalDocumentScreen', {type: 'privacyPolicy'})}
+            onPress={() =>
+              navigationPush(navigation, 'LegalDocumentScreen', {
+                type: 'privacyPolicy',
+              })
+            }
           >
             <Text style={styles.link}>{t('login.privacy_policy')}</Text>
           </TouchableOpacity>

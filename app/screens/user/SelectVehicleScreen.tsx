@@ -18,7 +18,7 @@ import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 import {useEffect, useState} from 'react';
 import Car from '@/types/Car';
 import {Image} from 'react-native-elements';
-import { setSelectedCar } from '@/stateManagement/redux/slices/carsSlice';
+import {setSelectedCar} from '@/stateManagement/redux/slices/carsSlice';
 
 export default function SelectVehicleScreen() {
   const route = useRoute();
