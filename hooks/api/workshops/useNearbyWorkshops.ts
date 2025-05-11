@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import axiosClient from '@/services/http/axiosClient';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import Workshop from '@/types/workshops/Workshop';
-import useGlobalErrors from '../errors/useGlobalErrors';
+import useGlobalErrors from '../../errors/useGlobalErrors';
 import {Params} from '@/types/config/Params';
 
 export default function useNearbyWorkshops(
