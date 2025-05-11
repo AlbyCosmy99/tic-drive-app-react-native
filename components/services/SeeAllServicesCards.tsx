@@ -3,20 +3,13 @@ import navigationPush from '@/services/navigation/push';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import Service from '@/types/Service';
 import {setServicesChoosenByUsers} from '@/stateManagement/redux/slices/servicesSlice';
-import {
-  forwardRef,
-  useContext,
-  useImperativeHandle,
-  useRef,
-} from 'react';
+import {forwardRef, useContext, useImperativeHandle, useRef} from 'react';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import useServices from '@/hooks/api/useServices';
 import CrossPlatformButtonLayout from '../ui/buttons/CrossPlatformButtonLayout';
 import HorizontalLine from '../ui/HorizontalLine';
 import {useTranslation} from 'react-i18next';
-import {
-  UserCalendarModalRef,
-} from '../ui/modals/UserCalendarModal';
+import {UserCalendarModalRef} from '../ui/modals/UserCalendarModal';
 import TicDriveSpinner from '../ui/spinners/TicDriveSpinner';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 
@@ -45,7 +38,7 @@ const SeeAllServicesCards = forwardRef(
       useServices(workshopId);
     const {t} = useTranslation();
     const modalRef = useRef<UserCalendarModalRef>(null);
-    const token = useJwtToken()
+    const token = useJwtToken();
 
     useImperativeHandle(ref, () => ({
       loadingServices,
@@ -60,7 +53,10 @@ const SeeAllServicesCards = forwardRef(
       if (showCalendarModal) {
         modalRef.current?.openModal();
       } else {
-        navigationPush(navigation, token ? 'SelectVehicleScreen' : 'RegisterVehicleScreen');
+        navigationPush(
+          navigation,
+          token ? 'SelectVehicleScreen' : 'RegisterVehicleScreen',
+        );
       }
       dispatch(setServicesChoosenByUsers(service));
     };

@@ -6,14 +6,12 @@
   "notifications": "Notifiche",
   "other": "ALTRO",
   "support": "Supporto",
-  "supports":{
+  "supports": {
     "title": "Hai bisogno di aiuto o hai una domanda?",
     "subtitle": "Il nostro team di supporto è qui per aiutarti. Scegli un'opzione di contatto qui sotto.",
     "email_us": "Scrivici un'email",
     "call_support": "Chiama il supporto",
-    "footer_message": "Siamo sempre qui per te! 🤗",
-
-
+    "footer_message": "Siamo sempre qui per te! 🤗"
   },
   "logic": {
     "or": "oppure"
@@ -53,7 +51,6 @@
     "searchService": "Cerca servizio",
     "oilChange": "Cambio olio",
     "chooseVehicle": "Scegli il veicolo"
-
   },
   "continue": "Continua",
   "date": {
@@ -84,7 +81,7 @@
     "myVehicles": "I miei veicoli",
     "noVehiclesMessage": "Non hai ancora registrato veicoli.",
     "addFirstCar": "per aggiungere la tua prima auto e iniziare!",
-     "choose_car_year": "Scegli l'anno dell'auto",
+    "choose_car_year": "Scegli l'anno dell'auto",
     "search_car_year": "Cerca anno auto",
     "fuel": "Carburante",
     "search_fuel_type": "Cerca tipo di carburante",
@@ -94,7 +91,7 @@
     "mileage": "Chilometraggio",
     "plate": "Targa",
     "year": "Anno",
-    "orRegisterNewCar": "oppure registra un nuovo veicolo",
+    "orRegisterNewCar": "oppure registra un nuovo veicolo"
   },
   "home": {
     "notifications": {
@@ -115,9 +112,9 @@
       "searchWorkshop": "Cerca officina"
     },
     "order": "Ordina",
-      "filter": "Filtra",
-      "map": "Mappa",
-      "ascending": "Crescente",
+    "filter": "Filtra",
+    "map": "Mappa",
+    "ascending": "Crescente",
     "descending": "Decrescente",
     "price": "Prezzo",
     "rating": "Valutazione",
@@ -203,12 +200,11 @@
     "deleteAccountConfirm": "Sei sicuro di voler eliminare il tuo account? Questa azione è irreversibile.",
     "deletedMock": "Account eliminato (mock)",
     "delete": "Elimina",
-   "dangerZone": "Azioni pericolose"
-
+    "dangerZone": "Azioni pericolose"
   },
-"dangerZone": {
+  "dangerZone": {
     "title": "Zona pericolosa",
-    "warningMessage": "⚠️ Questa è un'area sensibile. Le azioni qui sono irreversibili e possono influire sui tuoi dati o sull'accesso. Procedi con cautela.",
+    "warningMessage": "⚠️ Questa è un'area sensibile. Le azioni qui sono irreversibili e possono influire sui tuoi dati o sull'accesso. Procedi con cautela."
   },
   "auth": {
     "not_logged_in": "Non hai effettuato l'accesso.",
@@ -262,59 +258,59 @@
     "intro": "Grazie per l'interesse verso questa Informativa sulla Privacy e benvenuto su TicDrive, la nostra applicazione mobile per iOS e Android (la nostra “App”). Questa informativa ha lo scopo di informare gli utenti della nostra App sulla natura, la portata e le finalità della raccolta e dell'utilizzo dei dati personali da parte nostra.",
     "whoIsController": {
       "title": "CHI È IL TITOLARE DEL TRATTAMENTO?",
-      "description": "Un 'titolare del trattamento' determina le finalità e i mezzi del trattamento dei dati personali. TicDrive, Via Leonardo da Vinci, 12b, 35133 Padova PD, Italia, è il titolare del trattamento. Contattaci a mariancompany07@gmail.com."
+      "content": "Un 'titolare del trattamento' determina le finalità e i mezzi del trattamento dei dati personali. TicDrive, Via Leonardo da Vinci, 12b, 35133 Padova PD, Italia, è il titolare del trattamento. Contattaci a mariancompany07@gmail.com."
     },
     "whatIsPersonalData": {
       "title": "CHE COSA SONO I DATI PERSONALI?",
-      "description": "I Dati Personali sono informazioni che identificano una persona, tra cui nome, data di nascita, indirizzo, email, numero di telefono e indirizzo IP. I dati anonimi non sono identificabili."
+      "content": "I Dati Personali sono informazioni che identificano una persona, tra cui nome, data di nascita, indirizzo, email, numero di telefono e indirizzo IP. I dati anonimi non sono identificabili."
     },
     "whatIsProcessing": {
       "title": "CHE COSA SIGNIFICA TRATTAMENTO?",
-      "description": "Per 'trattamento' si intende qualsiasi operazione effettuata con i dati, dalla raccolta alla conservazione, all’utilizzo e alla cancellazione."
+      "content": "Per 'trattamento' si intende qualsiasi operazione effettuata con i dati, dalla raccolta alla conservazione, all’utilizzo e alla cancellazione."
     },
     "applicableLaw": {
       "title": "QUALI LEGGI SI APPLICANO?",
-      "description": "Rispettiamo il Codice in materia di protezione dei dati personali italiano, il GDPR dell'UE e questa Informativa sulla Privacy."
+      "content": "Rispettiamo il Codice in materia di protezione dei dati personali italiano, il GDPR dell'UE e questa Informativa sulla Privacy."
     },
     "legalBases": {
       "title": "BASI LEGALI PER IL TRATTAMENTO",
-      "description": "Trattiamo i tuoi dati in base a: a) consenso, b) necessità contrattuale, c) obblighi legali, oppure d) interessi legittimi."
+      "content": "Trattiamo i tuoi dati in base a: a) consenso, b) necessità contrattuale, c) obblighi legali, oppure d) interessi legittimi."
     },
     "collectedData": {
       "title": "QUALI DATI PERSONALI RACCOGLIAMO?",
-      "description": "Raccogliamo nome, email, telefono, password, dettagli del veicolo, posizione, attività nell'app, messaggi e contenuti caricati. Raccogliamo anche dati tecnici e usiamo servizi come Firebase, Stripe, Sentry e altri. I tuoi dati ci aiutano a far funzionare e migliorare l'App."
+      "content": "Raccogliamo nome, email, telefono, password, dettagli del veicolo, posizione, attività nell'app, messaggi e contenuti caricati. Raccogliamo anche dati tecnici e usiamo servizi come Firebase, Stripe, Sentry e altri. I tuoi dati ci aiutano a far funzionare e migliorare l'App."
     },
     "locationAndDevice": {
       "title": "DATI DI POSIZIONE E DISPOSITIVO",
-      "description": "Potremmo trattare la tua posizione (GPS, IP) e informazioni sul dispositivo (sistema operativo, modello, sensori). Puoi gestire i permessi nelle impostazioni del dispositivo."
+      "content": "Potremmo trattare la tua posizione (GPS, IP) e informazioni sul dispositivo (sistema operativo, modello, sensori). Puoi gestire i permessi nelle impostazioni del dispositivo."
     },
     "thirdParties": {
       "title": "SERVIZI DI TERZE PARTI",
-      "description": "Usiamo servizi come Stripe, Google Maps, Railway, Azure, Firebase e Sentry. Questi fornitori possono trattare i dati in modo indipendente e in paesi terzi."
+      "content": "Usiamo servizi come Stripe, Google Maps, Railway, Azure, Firebase e Sentry. Questi fornitori possono trattare i dati in modo indipendente e in paesi terzi."
     },
     "otherUses": {
       "title": "ALTRI USI",
-      "description": "I tuoi dati vengono utilizzati per far funzionare l'App, fornire assistenza, migliorare i servizi e condurre attività di marketing (se consentito)."
+      "content": "I tuoi dati vengono utilizzati per far funzionare l'App, fornire assistenza, migliorare i servizi e condurre attività di marketing (se consentito)."
     },
     "storageRetention": {
       "title": "CONSERVAZIONE E DURATA",
-      "description": "I dati sono conservati in modo sicuro in un database PostgreSQL su Railway. Vengono cancellati quando non sono più necessari, salvo obblighi legali."
+      "content": "I dati sono conservati in modo sicuro in un database PostgreSQL su Railway. Vengono cancellati quando non sono più necessari, salvo obblighi legali."
     },
     "yourRights": {
       "title": "I TUOI DIRITTI",
-      "description": "Hai diritto ad accedere, correggere, cancellare, opporti, limitare il trattamento e alla portabilità dei dati. Contattaci per esercitare i tuoi diritti."
+      "content": "Hai diritto ad accedere, correggere, cancellare, opporti, limitare il trattamento e alla portabilità dei dati. Contattaci per esercitare i tuoi diritti."
     },
     "dataBreaches": {
       "title": "VIOLAZIONI DEI DATI",
-      "description": "In caso di violazione dei dati, gli utenti interessati verranno informati tempestivamente, con le misure correttive adottate."
+      "content": "In caso di violazione dei dati, gli utenti interessati verranno informati tempestivamente, con le misure correttive adottate."
     },
     "supervisoryAuthority": {
       "title": "AUTORITÀ DI CONTROLLO",
-      "description": "L’autorità competente è il Garante per la protezione dei dati personali (Roma, Italia). Preferiamo risolvere eventuali problemi direttamente: contattaci prima."
+      "content": "L’autorità competente è il Garante per la protezione dei dati personali (Roma, Italia). Preferiamo risolvere eventuali problemi direttamente: contattaci prima."
     },
     "policyChanges": {
       "title": "MODIFICHE ALL'INFORMATIVA",
-      "description": "Questa versione è in vigore dal 30 aprile 2025. Ti informeremo di eventuali modifiche aggiornando questa data."
+      "content": "Questa versione è in vigore dal 30 aprile 2025. Ti informeremo di eventuali modifiche aggiornando questa data."
     }
   },
   "login": {
@@ -326,84 +322,82 @@
     "forgot_password": "Password dimenticata?",
     "or_continue_with": "Oppure continua con",
     "by_clicking": "Facendo clic su {{action}}, accetti i nostri",
-    "terms_of_use": "Termini di utilizzo",
+    "termsOfUse": "Termini di utilizzo",
     "and": "e",
     "privacy_policy": "Informativa sulla privacy",
     "login": "Accedi",
     "register": "Registrati"
   },
-  "terms_of_use": {
+  "termsOfUse": {
     "title": "Termini di Utilizzo",
-    "introduction": "Questi Termini di Utilizzo (i “Termini”) si applicano tra te (“tu”) e TicDrive di Via Leonardo da Vinci, 12b. 35133 Padova PD, Italia (“TicDrive”, “noi”) per la nostra applicazione mobile iOS e Android (la nostra “App”) e costituiscono un accordo legale tra te e noi che regola il tuo accesso alla nostra App e ai Servizi.",
-    "sections": {
-      "general_terms": {
-        "title": "TERMINI GENERALI",
-        "content": "Possiamo modificare questi Termini di tanto in tanto e te ne daremo comunicazione. Se non accetti tali termini, non devi usare la nostra App. Ci riserviamo il diritto di modificare, sospendere o interrompere qualsiasi parte della nostra App o contenuti associati in qualsiasi momento. L’accesso alla nostra App può essere interrotto o incontrare difficoltà tecniche."
-      },
-      "license_grant": {
-        "title": "CONCESSIONE DI LICENZA",
-        "content": "Fintanto che rispetti questi Termini, l’EULA e la nostra Informativa sulla Privacy, ti concediamo una licenza non trasferibile e non esclusiva per utilizzare l’App. Ci riserviamo tutti i diritti non espressamente concessi."
-      },
-      "account_and_password": {
-        "title": "ACCOUNT E PASSWORD",
-        "content": "I servizi sono forniti tramite un account personale. Sei responsabile della riservatezza del tuo account. Devi avere almeno 18 anni. Sei responsabile di qualsiasi utilizzo del tuo account e devi notificarci immediatamente in caso di uso non autorizzato."
-      },
-      "account_suspension_termination": {
-        "title": "SOSPENSIONE E TERMINAZIONE ACCOUNT",
-        "content": "Ci riserviamo il diritto di sospendere o eliminare qualsiasi account per violazioni dei Termini senza preavviso. Le azioni includono revoca di accesso, rimozione dei servizi, avvisi, procedimenti legali, e segnalazioni alle autorità."
-      },
-      "end_of_life": {
-        "title": "FINE DEL CICLO DI VITA",
-        "content": "Ci riserviamo il diritto di terminare l’App con un preavviso di 3 mesi. Cercheremo di fornire un servizio simile o, con accordo scritto, garantire l’accesso continuato all’App."
-      },
-      "service_levels_and_support": {
-        "title": "LIVELLI DI SERVIZIO E SUPPORTO",
-        "content": "Forniremo supporto tecnico secondo il principio di uso equo. Non siamo obbligati a fornire supporto in alcuni casi come modifiche da parte tua o uso improprio. Il tempo di risposta non supererà le 72 ore."
-      },
-      "data_charges_and_mobile_devices": {
-        "title": "COSTI DATI E DISPOSITIVI MOBILI",
-        "content": "Sei responsabile dei costi relativi all’uso dell’App, inclusi dati mobili e SMS."
-      },
-      "technical_error": {
-        "title": "ERRORE TECNICO",
-        "content": "In caso di errore tecnico, contattaci con dettagli e immagini per determinare l’eventuale rimborso."
-      },
-      "technical_requirements": {
-        "title": "REQUISITI TECNICI",
-        "content": "L’App è aggiornata per essere compatibile con le versioni nuove dei dispositivi. È tua responsabilità garantire che il dispositivo soddisfi le specifiche tecniche."
-      },
-      "uploading_content": {
-        "title": "CARICAMENTO CONTENUTI",
-        "content": "Sei responsabile del contenuto caricato nell’App e garantisci la conformità con la nostra Privacy Policy. Possiamo usare tali contenuti per miglioramenti tramite analisi o AI. Possiamo rimuovere contenuti non conformi."
-      },
-      "warranties": {
-        "title": "GARANZIE",
-        "content": "Forniamo l’App e i contenuti ‘così come sono’. Non garantiamo l’assenza di errori, virus o altri elementi dannosi e decliniamo ogni responsabilità per contenuti imprecisi o errori."
-      },
-      "submissions": {
-        "title": "INVII",
-        "content": "Ogni suggerimento, idea o feedback inviato diventa nostra proprietà esclusiva. Rinunci a ogni diritto morale sui tuoi invii."
-      },
-      "limitation_of_liability": {
-        "title": "LIMITAZIONE DI RESPONSABILITÀ",
-        "content": "Non siamo responsabili per perdite indirette o conseguenti derivanti dall’uso dell’App. Nulla esclude la responsabilità per morte, lesioni personali o frode."
-      },
-      "termination": {
-        "title": "TERMINAZIONE",
-        "content": "Possiamo sospendere o terminare l’accesso all’App in caso di violazioni. Puoi terminare disinstallando l’App. Nessun rimborso sarà dovuto."
-      },
-      "communication": {
-        "title": "COMUNICAZIONI",
-        "content": "La comunicazione sarà effettuata tramite e-mail all’indirizzo da te fornito."
-      },
-      "events_outside_our_control": {
-        "title": "EVENTI FUORI DAL NOSTRO CONTROLLO",
-        "content": "Non siamo responsabili per eventi fuori dal nostro controllo. Le nostre obbligazioni saranno sospese durante tali eventi."
-      },
-      "other_important_terms": {
-        "title": "ALTRI TERMINI IMPORTANTI",
-        "content": "Possiamo trasferire i nostri diritti. La mancata applicazione di un diritto non implica rinuncia. Se una clausola è invalida, le altre rimarranno valide. I Termini sono regolati dalla legge italiana. I tribunali italiani avranno giurisdizione non esclusiva."
-      }
+    "intro": "Questi Termini di Utilizzo (i “Termini”) si applicano tra te (“tu”) e TicDrive di Via Leonardo da Vinci, 12b. 35133 Padova PD, Italia (“TicDrive”, “noi”) per la nostra applicazione mobile iOS e Android (la nostra “App”) e costituiscono un accordo legale tra te e noi che regola il tuo accesso alla nostra App e ai Servizi.",
+    "general_terms": {
+      "title": "TERMINI GENERALI",
+      "content": "Possiamo modificare questi Termini di tanto in tanto e te ne daremo comunicazione. Se non accetti tali termini, non devi usare la nostra App. Ci riserviamo il diritto di modificare, sospendere o interrompere qualsiasi parte della nostra App o contenuti associati in qualsiasi momento. L’accesso alla nostra App può essere interrotto o incontrare difficoltà tecniche."
+    },
+    "license_grant": {
+      "title": "CONCESSIONE DI LICENZA",
+      "content": "Fintanto che rispetti questi Termini, l’EULA e la nostra Informativa sulla Privacy, ti concediamo una licenza non trasferibile e non esclusiva per utilizzare l’App. Ci riserviamo tutti i diritti non espressamente concessi."
+    },
+    "account_and_password": {
+      "title": "ACCOUNT E PASSWORD",
+      "content": "I servizi sono forniti tramite un account personale. Sei responsabile della riservatezza del tuo account. Devi avere almeno 18 anni. Sei responsabile di qualsiasi utilizzo del tuo account e devi notificarci immediatamente in caso di uso non autorizzato."
+    },
+    "account_suspension_termination": {
+      "title": "SOSPENSIONE E TERMINAZIONE ACCOUNT",
+      "content": "Ci riserviamo il diritto di sospendere o eliminare qualsiasi account per violazioni dei Termini senza preavviso. Le azioni includono revoca di accesso, rimozione dei servizi, avvisi, procedimenti legali, e segnalazioni alle autorità."
+    },
+    "end_of_life": {
+      "title": "FINE DEL CICLO DI VITA",
+      "content": "Ci riserviamo il diritto di terminare l’App con un preavviso di 3 mesi. Cercheremo di fornire un servizio simile o, con accordo scritto, garantire l’accesso continuato all’App."
+    },
+    "service_levels_and_support": {
+      "title": "LIVELLI DI SERVIZIO E SUPPORTO",
+      "content": "Forniremo supporto tecnico secondo il principio di uso equo. Non siamo obbligati a fornire supporto in alcuni casi come modifiche da parte tua o uso improprio. Il tempo di risposta non supererà le 72 ore."
+    },
+    "data_charges_and_mobile_devices": {
+      "title": "COSTI DATI E DISPOSITIVI MOBILI",
+      "content": "Sei responsabile dei costi relativi all’uso dell’App, inclusi dati mobili e SMS."
+    },
+    "technical_error": {
+      "title": "ERRORE TECNICO",
+      "content": "In caso di errore tecnico, contattaci con dettagli e immagini per determinare l’eventuale rimborso."
+    },
+    "technical_requirements": {
+      "title": "REQUISITI TECNICI",
+      "content": "L’App è aggiornata per essere compatibile con le versioni nuove dei dispositivi. È tua responsabilità garantire che il dispositivo soddisfi le specifiche tecniche."
+    },
+    "uploading_content": {
+      "title": "CARICAMENTO CONTENUTI",
+      "content": "Sei responsabile del contenuto caricato nell’App e garantisci la conformità con la nostra Privacy Policy. Possiamo usare tali contenuti per miglioramenti tramite analisi o AI. Possiamo rimuovere contenuti non conformi."
+    },
+    "warranties": {
+      "title": "GARANZIE",
+      "content": "Forniamo l’App e i contenuti ‘così come sono’. Non garantiamo l’assenza di errori, virus o altri elementi dannosi e decliniamo ogni responsabilità per contenuti imprecisi o errori."
+    },
+    "submissions": {
+      "title": "INVII",
+      "content": "Ogni suggerimento, idea o feedback inviato diventa nostra proprietà esclusiva. Rinunci a ogni diritto morale sui tuoi invii."
+    },
+    "limitation_of_liability": {
+      "title": "LIMITAZIONE DI RESPONSABILITÀ",
+      "content": "Non siamo responsabili per perdite indirette o conseguenti derivanti dall’uso dell’App. Nulla esclude la responsabilità per morte, lesioni personali o frode."
+    },
+    "termination": {
+      "title": "TERMINAZIONE",
+      "content": "Possiamo sospendere o terminare l’accesso all’App in caso di violazioni. Puoi terminare disinstallando l’App. Nessun rimborso sarà dovuto."
+    },
+    "communication": {
+      "title": "COMUNICAZIONI",
+      "content": "La comunicazione sarà effettuata tramite e-mail all’indirizzo da te fornito."
+    },
+    "events_outside_our_control": {
+      "title": "EVENTI FUORI DAL NOSTRO CONTROLLO",
+      "content": "Non siamo responsabili per eventi fuori dal nostro controllo. Le nostre obbligazioni saranno sospese durante tali eventi."
+    },
+    "other_important_terms": {
+      "title": "ALTRI TERMINI IMPORTANTI",
+      "content": "Possiamo trasferire i nostri diritti. La mancata applicazione di un diritto non implica rinuncia. Se una clausola è invalida, le altre rimarranno valide. I Termini sono regolati dalla legge italiana. I tribunali italiani avranno giurisdizione non esclusiva."
     }
   }
 }
