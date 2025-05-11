@@ -111,9 +111,7 @@ export default function ReviewBookingDetailsScreen() {
               <View>
                 <View className="flex flex-row items-center gap-1">
                   <Text className="text-xl font-medium">{workshop?.name}</Text>
-                  {workshop?.isVerified && (
-                    <Verified width={24} />
-                  )}
+                  {workshop?.isVerified && <Verified width={24} />}
                 </View>
                 <WorkshopReviewinfo
                   meanStars={workshop?.meanStars}

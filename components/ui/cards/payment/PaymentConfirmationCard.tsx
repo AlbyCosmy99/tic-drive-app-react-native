@@ -142,11 +142,11 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
           </View>
         ) : (
           <View className="mb-2">
-            <IconTextPair icon={<CalendarIcon />} text={"Lunedì 12 Maggio - 10:30"} />
             <IconTextPair
-              icon={<CreditCardIcon />}
-              text='€120 da pagare'
+              icon={<CalendarIcon />}
+              text={'Lunedì 12 Maggio - 10:30'}
             />
+            <IconTextPair icon={<CreditCardIcon />} text="€120 da pagare" />
             {workshopDetailed?.address && (
               <IconTextPair
                 icon={<PinIcon fill={Colors.light.ticText} />}

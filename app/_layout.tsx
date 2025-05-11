@@ -43,12 +43,12 @@ import ChangePasswordScreen from './screens/user/ChangePasswordScreen';
 import SuccessfullyPasswordChangedScreen from './screens/user/SuccessfullyPasswordChangedScreen';
 import PrivacyPolicyScreen from './screens/user/PrivacyPolicyScreen';
 import TermAndConditionScreen from './screens/user/TermAndConditionScreen';
-
 import UserVehiclesScreen from './screens/vehicles/UserVehiclesScreen';
 import UserVehicleDetailsScreen from './screens/vehicles/UserVehicleDetailsScreen';
 import CarRegistrationSuccessScreen from './screens/success/CarRegistrationSuccessScreen';
 import DeleteAccountScreen from './screens/user/DeleteAccountScreen';
 import DangerZoneScreen from './screens/user/DangerZoneScreen';
+import LegalDocumentScreen from './screens/legal/LegalDocumentScreen';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -104,7 +104,6 @@ export default function RootLayout() {
                         options={({route}) => ({
                           title: 'UserAuthenticationScreen',
                           headerShown: false,
-                          presentation: 'containedModal',
                           animation: getAnimation(route),
                         })}
                       />
@@ -177,7 +176,7 @@ export default function RootLayout() {
                         options={({route}) => ({
                           title: 'WorkshopReviewsListScreen',
                           headerShown: false,
-                          presentation: 'modal',
+                          presentation: 'containedModal',
                           animation: getAnimation(route),
                         })}
                       />
@@ -214,7 +213,7 @@ export default function RootLayout() {
                         options={({route}) => ({
                           title: 'AddNewPaymentMethodScreen',
                           headerShown: false,
-                          presentation: 'modal',
+                          presentation: 'containedModal',
                           animation: getAnimation(route),
                         })}
                       />
@@ -228,19 +227,10 @@ export default function RootLayout() {
                         })}
                       />
                       <Stack.Screen
-                        name="PrivacyPolicyScreen"
-                        component={PrivacyPolicyScreen}
+                        name="LegalDocumentScreen"
+                        component={LegalDocumentScreen}
                         options={({route}) => ({
-                          title: 'PrivacyPolicyScreen',
-                          headerShown: false,
-                          animation: getAnimation(route),
-                        })}
-                      />
-                      <Stack.Screen
-                        name="TermAndConditionScreen"
-                        component={TermAndConditionScreen}
-                        options={({route}) => ({
-                          title: 'TermAndConditionScreen',
+                          title: 'LegalDocumentScreen',
                           headerShown: false,
                           animation: getAnimation(route),
                         })}
