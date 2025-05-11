@@ -97,7 +97,7 @@ const SeeAllServicesCards = forwardRef(
               <CrossPlatformButtonLayout
                 removeAllStyles={false}
                 onPress={handleOnSeeAllServices}
-                containerTailwindCss="border-2 border-grey-light items-center justify-center p-2 rounded-xl bg-white shadow-sm shadow-black/20"
+                containerTailwindCss="border-2 border-grey-light items-center justify-center p-1.5 rounded-xl bg-white shadow-sm shadow-black/20"
               >
                 <Text className="text-base font-medium">
                   {t('seeAll.services')}

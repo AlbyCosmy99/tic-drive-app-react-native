@@ -184,7 +184,7 @@ export default function UserHome() {
                     <TicDriveSpinner />
                   ) : (
                     <View className="flex-column w-full">
-                      <View className="flex-row  justify-start items-start">
+                      <View className="flex-row  justify-start items-start mb-2.5">
                         {workshops.map(workshop => (
                           <WorkshopCardMini
                             key={workshop.id}
@@ -192,27 +192,27 @@ export default function UserHome() {
                           />
                         ))}
                       </View>
-                      {workshops.length > 0 ? (
+                      {workshops.length === 0 && (
+                        <Text className="font-medium mb-2">
+                          {t('workshops.noWorkshopsAvailable')}
+                        </Text>
+                      )}
+                      {workshops.length > 0 && (
                         <CrossPlatformButtonLayout
                           removeAllStyles={false}
                           onPress={handleOnSeeAllWorkshops}
-                          containerTailwindCss="border-2 border-grey-light items-center justify-center p-1 my-2.5 rounded-xl"
+                          containerTailwindCss="border-2 border-grey-light items-center justify-center p-1.5 rounded-xl bg-white shadow-sm shadow-black/20"
                         >
                           <Text className="text-base font-medium">
                             {t('seeAll.workshops')}
                           </Text>
                         </CrossPlatformButtonLayout>
-                      ) : (
-                        <Text className="font-medium mb-2">
-                          {t('workshops.noWorkshopsAvailable')}
-                        </Text>
                       )}
                     </View>
                   )}
                 </View>
               </View>
             </View>
-            {!loadingWorkshops && <HorizontalLine />}
             <View className="mt-1 mb-3">
               <Text className="font-semi text-xl m-2.5 mt-0">
                 {t('home.discoverServicesAndBook')}
