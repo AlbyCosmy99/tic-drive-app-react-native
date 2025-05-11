@@ -23,7 +23,7 @@ const useCustomerCars = () => {
 
       const mappedCars = response.data.map((car: any) => ({
         ...car,
-        name: car.carName, // Map `carName` to `name` for the frontend
+        name: car.carName,
       }));
 
       return mappedCars;

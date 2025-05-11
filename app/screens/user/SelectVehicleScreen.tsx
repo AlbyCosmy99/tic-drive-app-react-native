@@ -16,15 +16,17 @@ import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButt
 import useCustomerCars from '@/hooks/api/cars/useCustomerCars';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 import {useEffect, useState} from 'react';
+import Car from '@/types/Car';
+import {Image} from 'react-native-elements';
 
-export default function ChooseServicesScreen() {
+export default function SelectVehicleScreen() {
   const route = useRoute();
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
   const navigation = useTicDriveNavigation();
 
   const {getCustomerCars, loadingCustomerCars} = useCustomerCars();
-  const [registeredCars, setRegisteredCars] = useState([]);
+  const [registeredCars, setRegisteredCars] = useState<Car[]>([]);
 
   //@ts-ignore
   const {category, buttonContainerTailwindCss, withSafeAreaView} =
@@ -33,8 +35,6 @@ export default function ChooseServicesScreen() {
       buttonContainerTailwindCss: '',
       withSafeAreaView: true,
     };
-
-  const isUserLookingForServices = () => !(category === 'workshop');
 
   useFocusEffect(() => {
     dispatch(setAreServicesOn(false));
@@ -51,10 +51,6 @@ export default function ChooseServicesScreen() {
 
   const handleCarSelect = (car: any) => {
     navigationPush(navigation, 'WorkshopsListScreen', {car});
-  };
-
-  const handleRegisterNewCar = () => {
-    navigationPush(navigation, 'RegisterVehicleScreen');
   };
 
   return (
@@ -75,7 +71,6 @@ export default function ChooseServicesScreen() {
             {t('service.chooseVehicle')}
           </Text>
 
-          {/* Scrollable car list */}
           <ScrollView className="flex-1">
             {loadingCustomerCars ? (
               <TicDriveSpinner />
@@ -100,20 +95,29 @@ export default function ChooseServicesScreen() {
                 </CrossPlatformButtonLayout>
               ))
             )}
+          </ScrollView>
 
-            <Text className="text-center text-gray-600 text-base mt-6 mb-2">
-              {t('vehicles.orRegisterNewCar')}
-            </Text>
-
-            <View className={`mb-6 ${buttonContainerTailwindCss}`}>
-              <TicDriveButton
-                text={t('vehicles.registerVehicle')}
-                routeName="RegisterVehicleScreen"
-                routeParams={{}}
-                disabled={false}
+          <Text className="text-center text-gray-600 text-base mt-6 mb-2">
+            {t('logic.or')}
+          </Text>
+          {registeredCars.length === 0 && (
+            <View className="absolute top-0 left-0 right-0 bottom-0 justify-center items-center">
+              <Image
+                source={require('@/assets/images/png/checklist.png')}
+                className="w-32 h-32"
+                resizeMode="contain"
               />
             </View>
-          </ScrollView>
+          )}
+
+          <View className={`mb-6 ${buttonContainerTailwindCss}`}>
+            <TicDriveButton
+              text={t('vehicles.registerVehicle')}
+              routeName="RegisterVehicleScreen"
+              routeParams={{}}
+              disabled={false}
+            />
+          </View>
         </View>
       </SafeAreaViewLayout>
     </View>

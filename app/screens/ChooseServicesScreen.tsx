@@ -16,13 +16,15 @@ import {
 } from '@/stateManagement/redux/slices/servicesSlice';
 import {useTranslation} from 'react-i18next';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
-import {useCallback, useState} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import debounce from 'lodash.debounce';
 import Service from '@/types/Service';
 import axiosClient from '@/services/http/axiosClient';
 import FilterSearchModal from '@/components/modal/FilterSearchModal';
 import navigationPush from '@/services/navigation/push';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
+import useJwtToken from '@/hooks/auth/useJwtToken';
+import useCustomerCars from '@/hooks/api/cars/useCustomerCars';
 
 export default function ChooseServicesScreen() {
   const route = useRoute();
@@ -31,6 +33,8 @@ export default function ChooseServicesScreen() {
   const [filter, setFilter] = useState('');
   const [filteredServices, setFilteredServices] = useState<Service[]>([]);
   const navigation = useTicDriveNavigation();
+  const token = useJwtToken();
+  const {getCustomerCars, loadingCustomerCars} = useCustomerCars();
 
   //@ts-ignore
   const {category, buttonContainerTailwindCss, withSafeAreaView} =
@@ -40,9 +44,9 @@ export default function ChooseServicesScreen() {
       withSafeAreaView: true,
     };
 
-  const isUserLookingForServices = () => {
-    return !(category === 'workshop');
-  };
+  const isUserLookingForServices = useMemo(() => {
+    return category !== 'workshop';
+  }, [category]);
 
   const lastServiceSelectedFromFilter = useAppSelector(
     state => state.services.lastServiceSelectedFromFilter,
@@ -114,8 +118,8 @@ export default function ChooseServicesScreen() {
           </View>
           {!filter && (
             <ServicesCards
-              isSingleChoice={isUserLookingForServices() ? true : false}
-              type={isUserLookingForServices() ? 'user' : 'workshop'}
+              isSingleChoice={isUserLookingForServices ? true : false}
+              type={isUserLookingForServices ? 'user' : 'workshop'}
             />
           )}
         </View>
@@ -123,19 +127,19 @@ export default function ChooseServicesScreen() {
           <View className={`mb-2 ${buttonContainerTailwindCss}`}>
             <TicDriveButton
               text={
-                isUserLookingForServices()
+                isUserLookingForServices
                   ? t('service.bookAService')
                   : t('continue')
               }
               routeName={
-                isUserLookingForServices()
-                  ? 'SelectVehicleScreen'
+                isUserLookingForServices
+                  ? token
+                    ? 'SelectVehicleScreen'
+                    : 'RegisterVehicleScreen'
                   : 'UserAuthenticationScreen'
               }
               routeParams={
-                isUserLookingForServices()
-                  ? {}
-                  : {register: true, isUser: false}
+                isUserLookingForServices ? {} : {register: true, isUser: false}
               }
               disabled={isButtonDisabled}
             />
