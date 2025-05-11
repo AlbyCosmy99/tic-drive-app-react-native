@@ -18,7 +18,6 @@ import {
   Dimensions,
   GestureResponderEvent,
   PanResponderGestureState,
-  Pressable,
 } from 'react-native';
 import {Calendar} from 'react-native-calendars';
 import TicDriveButton from '../buttons/TicDriveButton';
