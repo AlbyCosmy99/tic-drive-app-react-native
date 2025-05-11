@@ -215,7 +215,7 @@ export default function UserHome() {
             </View>
             {!loadingWorkshops && <HorizontalLine />}
             <View className="mt-1 mb-3">
-              <Text className="font-semibold text-xl m-2.5 mt-0">
+              <Text className="font-semi text-xl m-2.5 mt-0">
                 {t('home.discoverServicesAndBook')}
               </Text>
               <SeeAllServicesCards
@@ -253,7 +253,7 @@ export default function UserHome() {
               </View>
               <CrossPlatformButtonLayout
                 removeAllStyles={false}
-                containerTailwindCss="border-2 border-grey-light items-center justify-center p-1 m-2.5 rounded-xl bg-white"
+                containerTailwindCss="border-2 border-grey-light items-center justify-center p-1 m-2.5 rounded-xl bg-white shadow-sm shadow-black/20"
                 onPress={() => handleVehicles()}
               >
                 <Text className="text-base font-semibold">

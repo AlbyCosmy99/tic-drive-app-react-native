@@ -3,7 +3,14 @@ import navigationPush from '@/services/navigation/push';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import Service from '@/types/Service';
 import {setServicesChoosenByUsers} from '@/stateManagement/redux/slices/servicesSlice';
-import {forwardRef, useContext, useImperativeHandle, useRef} from 'react';
+import {
+  forwardRef,
+  useContext,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import useServices from '@/hooks/api/useServices';
 import CrossPlatformButtonLayout from '../ui/buttons/CrossPlatformButtonLayout';
@@ -63,6 +70,9 @@ const SeeAllServicesCards = forwardRef(
     ) : services.length > 0 ? (
       <View>
         {topHorizontalLine && <HorizontalLine />}
+        <View className="flex justify-center items-center flex-1 mt-2">
+          <UserCalendarModal showButton={false} ref={modalRef} />
+        </View>
         <View className="flex flex-wrap flex-row justify-between px-2">
           {services.slice(0, 4).map(service => (
             <View key={service.id} className="w-[48%] mb-2">
@@ -87,7 +97,7 @@ const SeeAllServicesCards = forwardRef(
               <CrossPlatformButtonLayout
                 removeAllStyles={false}
                 onPress={handleOnSeeAllServices}
-                containerTailwindCss="border-2 border-grey-light items-center justify-center p-2 rounded-xl"
+                containerTailwindCss="border-2 border-grey-light items-center justify-center p-2 rounded-xl bg-white shadow-sm shadow-black/20"
               >
                 <Text className="text-base font-medium">
                   {t('seeAll.services')}
