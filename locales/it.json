@@ -15,6 +15,9 @@
 
 
   },
+  "logic": {
+    "or": "oppure"
+  },
   "feedback": "Feedback",
   "deleteAccount": "Elimina account",
   "termsAndPrivacy": "Termini di servizio e Privacy Policy",
@@ -48,7 +51,9 @@
     "bookTheService": "Prenota il servizio",
     "chooseService": "Scegli servizio",
     "searchService": "Cerca servizio",
-    "oilChange": "Cambio olio"
+    "oilChange": "Cambio olio",
+    "chooseVehicle": "Scegli il veicolo"
+
   },
   "continue": "Continua",
   "date": {
@@ -77,7 +82,7 @@
     "searchModel": "Cerca modello",
     "invalidPlateFormat": "Inserisci un numero di targa valido. Formato: AA123BB",
     "myVehicles": "I miei veicoli",
-    "noVehiclesMessage": "Non hai ancora registrato veicoli. Clicca su",
+    "noVehiclesMessage": "Non hai ancora registrato veicoli.",
     "addFirstCar": "per aggiungere la tua prima auto e iniziare!",
      "choose_car_year": "Scegli l'anno dell'auto",
     "search_car_year": "Cerca anno auto",
@@ -88,7 +93,8 @@
     "engine_size": "Cilindrata",
     "mileage": "Chilometraggio",
     "plate": "Targa",
-    "year": "Anno"
+    "year": "Anno",
+    "orRegisterNewCar": "oppure registra un nuovo veicolo",
   },
   "home": {
     "notifications": {
