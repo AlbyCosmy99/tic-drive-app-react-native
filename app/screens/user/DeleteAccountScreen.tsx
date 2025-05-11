@@ -6,17 +6,20 @@ import LinearGradientViewLayout from '@/app/layouts/LinearGradientViewLayout';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
+import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
+import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
 
 export default function DeleteAccountScreen() {
   const [reason, setReason] = useState('');
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState(false);
+  const {setErrorMessage} = useGlobalErrors()
 
   const handleDelete = () => {
     if (password !== 'correctPassword') {
-      setPasswordError(true);
+      setErrorMessage("Wrong password.")
     } else {
-      // Trigger deletion
+      
     }
   };
 
@@ -59,14 +62,15 @@ export default function DeleteAccountScreen() {
               }}
             />
 
-            <TouchableOpacity
-              className="bg-[#FF0000] mt-16 py-4 rounded-2xl shadow-md active:opacity-80"
+            <CrossPlatformButtonLayout
+              containerTailwindCss="bg-[#FF0000] mt-16 py-4 rounded-2xl shadow-md active:opacity-80"
               onPress={handleDelete}
+              disabled={!reason || !password}
             >
               <Text className="text-xl leading-[20px] text-white text-center font-bold font-poppins">
                 Elimina account
               </Text>
-            </TouchableOpacity>
+            </CrossPlatformButtonLayout>
           </View>
 
           <Text className="text-xs text-[#FF0000] font-normal">
