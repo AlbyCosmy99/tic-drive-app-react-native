@@ -241,7 +241,7 @@ export default function WorkshopDetails() {
               </View>
             )}
             <View className="flex justify-center items-center flex-1">
-              <UserCalendarModal />
+              <UserCalendarModal workshopId={workshop.id} />
             </View>
           </View>
         </>

@@ -37,7 +37,6 @@ interface POIMarker {
   id: number;
 }
 
-
 type RootStackParamList = {
   WorkshopsListScreen: {favorite: boolean};
 };
@@ -49,15 +48,15 @@ export default function WorkshopsListScreen() {
   const {t} = useTranslation();
   const {favorite} = route.params;
 
-const orderOptions: OrderOption[] = [
-  { label: t('workshops.ascending'), value: 'asc' },
-  { label: t('workshops.descending'), value: 'desc' },
-];
+  const orderOptions: OrderOption[] = [
+    {label: t('workshops.ascending'), value: 'asc'},
+    {label: t('workshops.descending'), value: 'desc'},
+  ];
 
-const filterOptions: FilterOption[] = [
-  { label: t('workshops.price'), value: 'price' },
-  { label: t('workshops.rating'), value: 'rating' },
-];
+  const filterOptions: FilterOption[] = [
+    {label: t('workshops.price'), value: 'price'},
+    {label: t('workshops.rating'), value: 'rating'},
+  ];
   const [orderDropdownVisible, setOrderDropdownVisible] = useState(false);
   const [filterDropdownVisible, setFilterDropdownVisible] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<OrderOption>({
@@ -162,7 +161,7 @@ const filterOptions: FilterOption[] = [
                 }}
               >
                 <IconTextPair
-                 text={t('workshops.filter')}
+                  text={t('workshops.filter')}
                   icon={<FilterIcon />}
                   textTailwindCss="text-base font-medium text-tic"
                   containerTailwindCss="flex-1 border border-tic justify-center items-center gap-0 p-1 rounded-2xl mx-1"

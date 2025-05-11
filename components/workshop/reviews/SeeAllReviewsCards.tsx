@@ -8,7 +8,7 @@ import {useContext} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Text, View, StyleSheet} from 'react-native';
 
-const SeeAllReviewsCards = ({workshopId}: {workshopId: number}) => {
+const SeeAllReviewsCards = ({workshopId}: {workshopId: string}) => {
   const {reviews, loadingReviews} = useReviews(workshopId, 0, 10);
   const {navigation} = useContext(NavigationContext);
   const handleOnSeeAllReviews = () => {
