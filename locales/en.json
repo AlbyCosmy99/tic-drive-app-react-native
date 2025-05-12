@@ -83,6 +83,14 @@
       "title": "reviews",
       "review": "review"
     },
+    "order": "Order",
+    "filter": "Filter",
+    "map": "Map",
+    "ascending": "Ascending",
+    "descending": "Descending",
+    "price": "Price",
+    "rating": "Rating",
+
     "searchWorkshop": "Search Workshop",
     "noWorkshopsWithFilter": "No workshops found with this filter.",
     "noWorkshopsAvailable": "No workshops available at the moment."

@@ -60,7 +60,7 @@ export default function WorkshopsListScreen() {
   const [orderDropdownVisible, setOrderDropdownVisible] = useState(false);
   const [filterDropdownVisible, setFilterDropdownVisible] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<OrderOption>({
-    label: 'Ascending',
+    label: t('workshops.ascending'),
     value: 'asc',
   });
 
