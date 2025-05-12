@@ -9,6 +9,7 @@
   "feedback": "Feedback",
   "deleteAccount": "Delete Account",
   "termsAndPrivacy": "Terms of Service and Privacy Policy",
+  "change": "Change",
   "reminder": "Reminder",
   "bookNow": "Book Now",
   "discoverNow": "Discover Now",
@@ -70,7 +71,22 @@
     "invalidPlateFormat": "Enter a valid license plate. Format: AA123BB",
     "myVehicles": "My Vehicles",
     "noVehiclesMessage": "You haven’t registered any vehicles yet.",
-    "addFirstCar": "to add your first car and get started!"
+    "addFirstCar": "to add your first car and get started!",
+    "choose_car_year": "Choose car year",
+    "search_car_year": "Search car year",
+    "fuel": "Fuel",
+     "search_fuel_type": "Search fuel type",
+     "transmission": "Transmission",
+     "search_transmission": "Search transmission",
+     "engine_size": "Engine displacement",
+     "mileage": "Mileage",
+     "plate": "Plate number",
+      "year": "Year",
+       "orRegisterNewCar": "or register a new vehicle",
+      "name": "Name",
+   "cv": "Horsepower (HP)"
+
+
   },
   "home": {
     "notifications": {
