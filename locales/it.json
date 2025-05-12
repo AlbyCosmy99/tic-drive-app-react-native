@@ -11,7 +11,8 @@
     "subtitle": "Il nostro team di supporto è qui per aiutarti. Scegli un'opzione di contatto qui sotto.",
     "email_us": "Scrivici un'email",
     "call_support": "Chiama il supporto",
-    "footer_message": "Siamo sempre qui per te! 🤗"
+    "footer_message": "Siamo sempre qui per te! 🤗",
+    "change": "Cambio"
   },
   "logic": {
     "or": "oppure"
@@ -91,7 +92,9 @@
     "mileage": "Chilometraggio",
     "plate": "Targa",
     "year": "Anno",
-    "orRegisterNewCar": "oppure registra un nuovo veicolo"
+    "orRegisterNewCar": "oppure registra un nuovo veicolo",
+    "name": "Nome",
+    "cv": "CV"
   },
   "home": {
     "notifications": {
@@ -400,4 +403,5 @@
       "content": "Possiamo trasferire i nostri diritti. La mancata applicazione di un diritto non implica rinuncia. Se una clausola è invalida, le altre rimarranno valide. I Termini sono regolati dalla legge italiana. I tribunali italiani avranno giurisdizione non esclusiva."
     }
   }
+  
 }
