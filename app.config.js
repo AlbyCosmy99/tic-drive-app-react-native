@@ -10,7 +10,7 @@ export default {
     scheme: 'ticdrive',
     userInterfaceStyle: 'automatic',
     splash: {
-      image: './assets/images/png/ticDriveLogo.png',
+      image: './assets/images/png/ticDriveSplash.png',
       resizeMode: 'contain',
       backgroundColor: '#ffffff',
     },
@@ -71,7 +71,7 @@ export default {
     web: {
       bundler: 'metro',
       output: 'static',
-      favicon: './assets/images/favicon.png',
+      favicon: './assets/images/ticDriveLogo.png',
     },
     plugins: [
       'expo-router',
