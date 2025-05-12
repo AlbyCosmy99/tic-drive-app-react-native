@@ -15,7 +15,6 @@ import getCarModelsByCarMakeId from '@/services/http/requests/cars/getCarModelsB
 import CarDetailsByMakeAndModel from '@/components/cars/registration/CarDetailsByMakeAndModel';
 import CarContext from '@/stateManagement/contexts/car/CarContext';
 import BoldTitle1 from '@/components/ui/text/BoldTitle1';
-import useCarsMakes from '@/hooks/api/cars/useCarsMakes';
 import {useFocusEffect, useRoute} from '@react-navigation/native';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import {setAreServicesOn} from '@/stateManagement/redux/slices/servicesSlice';
@@ -28,6 +27,9 @@ import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import useCustomerCars from '@/hooks/api/cars/useCustomerCars';
 import navigationReset from '@/services/navigation/reset';
 import {t} from 'i18next';
+import CarMake from '@/types/cars/CarMake';
+import getCarsMakes from '@/services/http/requests/cars/getCarsMakes';
+import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
 
 function RegisterVehicleScreen() {
   const [segmentedControlSelection, setSegmentedControlSelection] =
@@ -57,7 +59,6 @@ function RegisterVehicleScreen() {
     setCarSelectedByPlate: setCarSelectedByPlateCtx,
   } = useContext(CarContext);
 
-  const {carsMakes: makes, loadingCarsMakes} = useCarsMakes();
   const dispatch = useAppDispatch();
 
   const selectedWorkshop = useAppSelector(
@@ -65,6 +66,7 @@ function RegisterVehicleScreen() {
   );
 
   const token = useAppSelector(state => state.auth.token);
+  const {setErrorMessage} = useGlobalErrors();
 
   const route = useRoute();
   const {goToVehicles} = route.params as {
@@ -75,6 +77,23 @@ function RegisterVehicleScreen() {
   const navigation = useTicDriveNavigation();
 
   const {registerCustomerCar, loadingCustomerCars} = useCustomerCars();
+  const [makes, setMakes] = useState<CarMake[]>([]);
+  const [loadingCarsMakes, setLoadingCarsMakes] = useState(true);
+
+  useEffect(() => {
+    const fetchCarsMakes = async () => {
+      try {
+        setLoadingCarsMakes(true);
+        const data = await getCarsMakes();
+        setMakes(data);
+      } catch (e) {
+        setErrorMessage('Errore durante il caricamento delle marche.');
+      } finally {
+        setLoadingCarsMakes(false);
+      }
+    };
+    fetchCarsMakes();
+  }, []);
 
   const routeName = useMemo(() => {
     if (
