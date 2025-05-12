@@ -10,6 +10,7 @@ import {useAppSelector} from '@/stateManagement/redux/hooks';
 import TicDriveSpinner from './ui/spinners/TicDriveSpinner';
 import getServices from '@/services/http/requests/get/getServices';
 import Service from '@/types/Service';
+import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
 
 interface ServicesCardsProps {
   isSingleChoice?: boolean;
@@ -23,6 +24,7 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const languageCode = useAppSelector(state => state.language.languageCode);
+  const {setErrorMessage} = useGlobalErrors();
 
   const selectedWorkshop = useAppSelector(
     state => state.workshops.selectedWorkshop,
@@ -50,6 +52,7 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
         const data = await getServices(selectedWorkshop?.id, languageCode);
         setServices(data);
       } catch (e) {
+        setErrorMessage('Errore durante il caricamento dei servizi.');
       } finally {
         setLoadingServices(false);
       }
