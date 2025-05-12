@@ -1,5 +1,5 @@
-import {ActivityIndicator, View} from 'react-native';
-import {useContext, useEffect} from 'react';
+import {View} from 'react-native';
+import {useContext, useEffect, useRef} from 'react';
 import {login, setToken} from '@/stateManagement/redux/slices/authSlice';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import * as SplashScreen from 'expo-splash-screen';
@@ -55,7 +55,10 @@ const Hub = () => {
         } else {
           navigationReset(navigation, 0, 'userTabs', {animation: 'fade'});
         }
-        SplashScreen.hideAsync();
+
+        setTimeout(() => {
+          SplashScreen.hideAsync();
+        }, 200);
       } catch (error) {
         console.error('Error checking auth status: ', error);
       }
