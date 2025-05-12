@@ -6,9 +6,10 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {UserCategory} from '@/types/User';
 import {reset} from '@/stateManagement/redux/slices/servicesSlice';
-import useServices from '@/hooks/api/useServices';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import TicDriveSpinner from './ui/spinners/TicDriveSpinner';
+import getServices from '@/services/http/requests/get/getServices';
+import Service from '@/types/Service';
 
 interface ServicesCardsProps {
   isSingleChoice?: boolean;
@@ -21,6 +22,7 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
 }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const languageCode = useAppSelector(state => state.language.languageCode);
 
   const selectedWorkshop = useAppSelector(
     state => state.workshops.selectedWorkshop,
@@ -28,9 +30,8 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
 
   const servicesPerPage = 20;
   const [currentPage, setCurrentPage] = useState(1);
-  const {services, loadingServices, setLoadingServices} = useServices(
-    selectedWorkshop?.id,
-  );
+  const [services, setServices] = useState<Service[]>([]);
+  const [loadingServices, setLoadingServices] = useState(true);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', e => {
@@ -41,6 +42,23 @@ const ServicesCards: React.FC<ServicesCardsProps> = ({
 
     return unsubscribe;
   }, [navigation, dispatch]);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        setLoadingServices(true);
+        const data = await getServices(selectedWorkshop?.id, languageCode);
+        setServices(data);
+      } catch (e) {
+      } finally {
+        setLoadingServices(false);
+      }
+    };
+
+    if (loadingServices) {
+      fetchServices();
+    }
+  }, [selectedWorkshop, languageCode, loadingServices]);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

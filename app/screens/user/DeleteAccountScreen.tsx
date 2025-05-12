@@ -12,13 +12,12 @@ import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
 export default function DeleteAccountScreen() {
   const [reason, setReason] = useState('');
   const [password, setPassword] = useState('');
-  const {setErrorMessage} = useGlobalErrors()
+  const {setErrorMessage} = useGlobalErrors();
 
   const handleDelete = () => {
     if (password !== 'correctPassword') {
-      setErrorMessage("Wrong password.")
+      setErrorMessage('Wrong password.');
     } else {
-      
     }
   };
 

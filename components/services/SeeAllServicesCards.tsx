@@ -1,17 +1,24 @@
 import {Image, Text, View} from 'react-native';
 import navigationPush from '@/services/navigation/push';
-import {useAppDispatch} from '@/stateManagement/redux/hooks';
+import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import Service from '@/types/Service';
 import {setServicesChoosenByUsers} from '@/stateManagement/redux/slices/servicesSlice';
-import {forwardRef, useContext, useImperativeHandle, useRef} from 'react';
+import {
+  forwardRef,
+  useContext,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
-import useServices from '@/hooks/api/useServices';
 import CrossPlatformButtonLayout from '../ui/buttons/CrossPlatformButtonLayout';
 import HorizontalLine from '../ui/HorizontalLine';
 import {useTranslation} from 'react-i18next';
 import {UserCalendarModalRef} from '../ui/modals/UserCalendarModal';
 import TicDriveSpinner from '../ui/spinners/TicDriveSpinner';
 import useJwtToken from '@/hooks/auth/useJwtToken';
+import getServices from '@/services/http/requests/get/getServices';
 
 interface SeeAllServicesCardsProps {
   workshopId?: number;
@@ -34,16 +41,34 @@ const SeeAllServicesCards = forwardRef(
   ) => {
     const dispatch = useAppDispatch();
     const {navigation} = useContext(NavigationContext);
-    const {services, loadingServices, setLoadingServices} =
-      useServices(workshopId);
+    const [services, setServices] = useState<Service[]>([]);
+    const [loadingServices, setLoadingServices] = useState(true);
     const {t} = useTranslation();
     const modalRef = useRef<UserCalendarModalRef>(null);
     const token = useJwtToken();
+    const languageCode = useAppSelector(state => state.language.languageCode);
 
     useImperativeHandle(ref, () => ({
       loadingServices,
       setLoadingServices,
     }));
+
+    useEffect(() => {
+      const fetchServices = async () => {
+        try {
+          setLoadingServices(true);
+          const data = await getServices(workshopId, languageCode);
+          setServices(data);
+        } catch (e) {
+        } finally {
+          setLoadingServices(false);
+        }
+      };
+
+      if (loadingServices) {
+        fetchServices();
+      }
+    }, [workshopId, languageCode, loadingServices]);
 
     const handleOnSeeAllServices = () => {
       navigationPush(navigation, 'ChooseServicesScreen');
