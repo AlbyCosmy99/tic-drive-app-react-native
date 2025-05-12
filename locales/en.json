@@ -163,7 +163,9 @@
     "deleteAccountTitle": "Delete Account",
     "deleteAccountConfirm": "Are you sure you want to delete your account? This action is irreversible.",
     "deletedMock": "Account deleted (mock)",
-    "delete": "Delete"
+    "delete": "Delete",
+    "dangerZone": "Danger zone"
+
   },
   "changePassword": {
     "setNewPassword": "Set a new password",
