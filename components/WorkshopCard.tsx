@@ -21,6 +21,7 @@ import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice
 import WorkshopReviewinfo from './workshop/reviews/WorkshopReviewInfo';
 import Workshop from '@/types/workshops/Workshop';
 import getUserMainImage from '@/utils/files/getUserMainImage';
+import {useTranslation} from 'react-i18next';
 
 interface WorkshopCardProps {
   workshop: Workshop;
@@ -48,6 +49,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
   );
   const {navigation} = useContext(NavigationContext);
   const dispatch = useAppDispatch();
+  const {t} = useTranslation();
 
   const handleCardPress = (workshop: Workshop) => {
     navigationPush(navigation, 'WorkshopDetails');
@@ -109,7 +111,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
             </Text>
             <View>
               <View className="flex flex-row justify-between items-center">
-                <Text className="text-base font-medium">Total</Text>
+                <Text className="text-base font-medium">{t('reviewBooking.total')}</Text>
                 <Text className="text-base font-medium">
                   {workshop.currency + ' '}
                   {calculateWorkshopDiscount(
@@ -119,7 +121,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
                 </Text>
               </View>
               <Text className="font-medium text-xs text-tic">
-                Includes taxes and fees
+                {t('reviewBooking.includesTaxesAndFees')}
               </Text>
             </View>
           </Pressable>
