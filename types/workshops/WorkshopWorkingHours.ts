@@ -1,4 +1,4 @@
 export interface WorkshopWorkingHours {
-    morning: string[],
-    afternoon: string[]
+  morning: string[];
+  afternoon: string[];
 }

@@ -69,7 +69,7 @@ const UserCalendarModal = forwardRef<
   )[0];
   const carSelected = useAppSelector(state => state.cars.selectedCar);
   const {t} = useTranslation();
-  const languageCode = useAppSelector(state => state.language.languageCode)
+  const languageCode = useAppSelector(state => state.language.languageCode);
 
   const buttonText = useMemo(() => {
     if (!service) return t('service.chooseService');
@@ -323,6 +323,7 @@ const UserCalendarModal = forwardRef<
                           setSelectedTime(null);
                         } else {
                           setSelectedDate(day.dateString);
+                          setSelectedTime(null);
                         }
                       }}
                       markedDates={{
@@ -352,12 +353,12 @@ const UserCalendarModal = forwardRef<
                     </View>
                   )}
                   {loadinghours ? (
-                    <View className="m-6">
+                    <View style={{marginBottom: 20}} className="h-44">
                       <TicDriveSpinner />
                     </View>
                   ) : (
                     selectedDate && (
-                      <ScrollView style={{marginBottom: 20}}>
+                      <ScrollView style={{marginBottom: 20}} className="h-44">
                         <Text style={styles.sectionTitle}>
                           {t('date.chooseSlot').toUpperCase()}
                         </Text>

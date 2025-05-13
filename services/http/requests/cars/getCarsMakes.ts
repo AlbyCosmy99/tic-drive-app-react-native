@@ -5,4 +5,4 @@ const getCarsMakes = async () => {
   return res.data;
 };
 
-export default getCarsMakes
+export default getCarsMakes;

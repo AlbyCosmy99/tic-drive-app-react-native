@@ -19,7 +19,6 @@ const CarConfirmationDetails: React.FC<CarConfirmationDetailsProps> = ({
   });
 
   const {t} = useTranslation();
-  
 
   return (
     <CarDetailsLayout carSelected={carSelected}>
