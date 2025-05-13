@@ -21,6 +21,9 @@
     "title": "Bookings",
     "confirmed": "Booking Confirmed"
   },
+    "logic": {
+    "or": "Or"
+  },
   "noReviewsYet": "No reviews yet. Book a service to be the first to review.",
   "bookingsTabs": {
     "active": "Active",
@@ -40,7 +43,9 @@
     "bookTheService": "Book the Service",
     "chooseService": "Choose Service",
     "searchService": "Search Service",
-    "oilChange": "Oil Change"
+    "oilChange": "Oil Change",
+   "chooseVehicle": "Choose the vehicle"
+
   },
   "continue": "Continue",
   "date": {
@@ -179,7 +184,9 @@
     "deleteAccountTitle": "Delete Account",
     "deleteAccountConfirm": "Are you sure you want to delete your account? This action is irreversible.",
     "deletedMock": "Account deleted (mock)",
-    "delete": "Delete"
+    "delete": "Delete",
+    "dangerZone": "Danger zone"
+
   },
   "changePassword": {
     "setNewPassword": "Set a new password",
