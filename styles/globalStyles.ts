@@ -1,12 +1,8 @@
-import {StatusBar, StyleSheet, Platform} from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import { StyleSheet, Platform} from 'react-native';
 
 export const globalStyles = () => {
-  const insets = useSafeAreaInsets();
-
   return StyleSheet.create({
     safeAreaView: {
-      paddingTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
       ...(Platform.OS !== 'ios' && {backgroundColor: 'white'}),
     },
   });
