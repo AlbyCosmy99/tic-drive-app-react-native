@@ -6,13 +6,14 @@
   "notifications": "Notifiche",
   "other": "ALTRO",
   "support": "Supporto",
+      "change": "Cambio",
+
   "supports": {
     "title": "Hai bisogno di aiuto o hai una domanda?",
     "subtitle": "Il nostro team di supporto è qui per aiutarti. Scegli un'opzione di contatto qui sotto.",
     "email_us": "Scrivici un'email",
     "call_support": "Chiama il supporto",
-    "footer_message": "Siamo sempre qui per te! 🤗",
-    "change": "Cambio"
+    "footer_message": "Siamo sempre qui per te! 🤗"
   },
   "logic": {
     "or": "oppure"
