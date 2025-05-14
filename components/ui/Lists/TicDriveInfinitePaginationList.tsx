@@ -39,8 +39,6 @@ const TicDriveInfinitePaginationList: React.FC<
   setCurrentPage,
 }) => {
   const token = useJwtToken();
-  const navigation = useTicDriveNavigation();
-  const dispatch = useAppDispatch();
 
   const [accData, setAccData] = useState<Workshop[]>([]);
   const onEndReachedCalledDuringMomentum = useRef(false);
@@ -75,7 +73,9 @@ const TicDriveInfinitePaginationList: React.FC<
     };
   }, [setFilter]);
 
-  return filter.length > 0 && filteredData.length === 0 && !loading ? (
+  return ((filter.length > 0 && filteredData.length === 0) ||
+    data?.length === 0) &&
+    !loading ? (
     noDataContent
   ) : (
     <View className={`${!token ? 'mb-2' : ''} ${tailwindContainerCss}`}>

@@ -30,15 +30,16 @@ import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
 import {Entypo} from '@expo/vector-icons';
 import {useFocusEffect} from '@react-navigation/native';
 import debounce from 'lodash.debounce';
-import {useCallback, useContext, useRef, useState} from 'react';
+import {useCallback, useContext, useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Platform, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import {RefreshControl, ScrollView} from 'react-native-gesture-handler';
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
-import useNearbyWorkshops from '@/hooks/api/workshops/useNearbyWorkshops';
 import MapModal from '@/components/modal/MapModal';
+import getAllWorkshops from '@/services/http/requests/get/workshops/getAllWorkshops';
+import getNearbyWorkshops from '@/services/http/requests/get/workshops/getNearbyWorkshops';
 
 export default function UserHome() {
   const [filter, setFilter] = useState('');
@@ -47,17 +48,47 @@ export default function UserHome() {
   const servicesRef = useRef();
   const {t} = useTranslation();
   const [filteredWorkshops, setFilteredWorkshops] = useState<Workshop[]>([]);
-
-  const {workshops, loadingWorkshops, setLoadingWorkshops} = useNearbyWorkshops(
-    0,
-    2,
-  );
-
-  const {setCarSelectedByMakeAndModel, setCarSelectedByPlate} =
-    useContext(CarContext);
+  const [workshops, setWorkshops] = useState<Workshop[]>([]);
+  const [loadingWorkshops, setLoadingWorkshops] = useState(true);
+  const [count, setCount] = useState(0);
 
   const dispatch = useAppDispatch();
   const token = useJwtToken();
+  const user = useAppSelector(state => state.auth.user);
+
+  const fetchAllWorkshops = async () => {
+    setLoadingWorkshops(true);
+    const response = await getAllWorkshops(token ?? '', 0, 2, '');
+    setWorkshops(response.data.workshops);
+    setCount(response.data.count);
+    setLoadingWorkshops(false);
+  };
+  const fetchNearbyWorkshops = async () => {
+    setLoadingWorkshops(true);
+    const response = await getNearbyWorkshops(
+      token ?? '',
+      0,
+      2,
+      '',
+      user ?? undefined,
+    );
+    if (response.data.count > 0) {
+      setWorkshops(response.data.nearbyWorkshops);
+      setCount(response.data.count);
+      setLoadingWorkshops(false);
+    } else {
+      fetchAllWorkshops();
+    }
+  };
+
+  useEffect(() => {
+    if (user?.coordinates) {
+      fetchNearbyWorkshops();
+    }
+  }, [user?.coordinates]);
+
+  const {setCarSelectedByMakeAndModel, setCarSelectedByPlate} =
+    useContext(CarContext);
 
   const [isMapVisible, setIsMapVisible] = useState(false);
 
@@ -79,7 +110,7 @@ export default function UserHome() {
   const onRefresh = () => {
     setRefreshing(true);
     servicesRef.current?.setLoadingServices(true);
-    setLoadingWorkshops(true);
+    fetchNearbyWorkshops();
     setTimeout(() => {
       setRefreshing(false);
     }, 1000);
