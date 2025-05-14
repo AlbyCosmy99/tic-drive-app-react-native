@@ -20,14 +20,14 @@ const SafeAreaViewLayout: React.FC<SafeAreaViewLayoutProps> = ({
 }) => {
   return disabled ? (
     <View
-      className={`flex-1 bg-white ${tailwindCss} ${necessaryDeviceBottomInset()}`}
+      className={`flex-1 bg-white ${necessaryDeviceBottomInset()} ${tailwindCss}`}
       style={[{}, ...styles, globalStyles().safeAreaView]}
     >
       {children}
     </View>
   ) : (
     <SafeAreaView
-      className={`flex-1 bg-white ${tailwindCss} ${necessaryDeviceBottomInset()}`}
+      className={`flex-1 bg-white ${necessaryDeviceBottomInset()}  ${tailwindCss}`}
       style={[{}, ...styles, globalStyles().safeAreaView]}
     >
       {children}

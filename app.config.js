@@ -51,7 +51,7 @@ export default {
         backgroundColor: '#ffffff',
       },
       package: isDev ? 'com.ticdrive.app.dev' : 'com.ticdrive.app',
-      versionCode: 2,
+      versionCode: 4,
       intentFilters: [
         {
           action: 'VIEW',

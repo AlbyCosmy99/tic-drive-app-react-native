@@ -286,63 +286,163 @@ const UserCalendarModal = forwardRef<
               {...panResponder.panHandlers}
             >
               <View style={styles.dragHandle} />
-              <SafeAreaViewLayout>
-                <View className="justify-between flex-1">
-                  <Text style={styles.sectionTitle}>
-                    {t('date.selectADate').toUpperCase()}
-                  </Text>
+              <SafeAreaViewLayout tailwindCss="mb-0">
+                <View className="justify-between flex-1 pb-1">
+                  {!selectedDate ? (
+                    <View className="h-[420px]">
+                      <View className="mb-1">
+                        <Text style={styles.sectionTitle}>
+                          {t('date.selectADate').toUpperCase()}
+                        </Text>
+                      </View>
+                      <View style={styles.fixedCalendarContainer}>
+                        <Calendar
+                          onDayPress={async (day: ExtendedDay) => {
+                            const date = new Date(day.dateString);
 
-                  <View style={styles.fixedCalendarContainer}>
-                    <Calendar
-                      onDayPress={async (day: ExtendedDay) => {
-                        const date = new Date(day.dateString);
+                            const dayName = date.toLocaleDateString(
+                              languageCode,
+                              {
+                                weekday: 'long',
+                              },
+                            );
+                            setaLoadingHours(true);
+                            const workingHoursData =
+                              await getWorkshopWorkingHours(
+                                workshopId,
+                                dayName,
+                              );
+                            setaLoadingHours(false);
+                            setWorkingHours(workingHoursData.data);
 
-                        const dayName = date.toLocaleDateString(languageCode, {
-                          weekday: 'long',
-                        });
-                        setaLoadingHours(true);
-                        const workingHoursData = await getWorkshopWorkingHours(
-                          workshopId,
-                          dayName,
-                        );
-                        setaLoadingHours(false);
-                        setWorkingHours(workingHoursData.data);
+                            const dayOfWeek = new Date(day.dateString)
+                              .toLocaleDateString(languageCode, {
+                                weekday: 'long',
+                              })
+                              .toLowerCase();
 
-                        const dayOfWeek = new Date(day.dateString)
-                          .toLocaleDateString(languageCode, {weekday: 'long'})
-                          .toLowerCase();
+                            if (
+                              disabledDates[day.dateString] ||
+                              workingDays.includes(dayOfWeek)
+                            )
+                              return;
 
-                        if (
-                          disabledDates[day.dateString] ||
-                          workingDays.includes(dayOfWeek)
+                            if (selectedDate === day.dateString) {
+                              setSelectedDate(null);
+                              setSelectedTime(null);
+                            } else {
+                              setSelectedDate(day.dateString);
+                              setSelectedTime(null);
+                            }
+                          }}
+                          markedDates={{
+                            [selectedDate ?? '']: {
+                              selected: true,
+                              marked: false,
+                              selectedColor: Colors.light.green.drive,
+                            },
+                            ...disabledDates,
+                          }}
+                          maxDate={maxBookingDate.toISOString().split('T')[0]}
+                          theme={{
+                            selectedDayTextColor: 'white',
+                            todayTextColor: Colors.light.green.drive,
+                            dayTextColor: 'black',
+                            textDisabledColor: '#b3b3b3',
+                          }}
+                        />
+                      </View>
+                    </View>
+                  ) : (
+                    <View style={{alignItems: 'center'}} className="h-[420px]">
+                      <Text
+                        style={{
+                          fontWeight: '600',
+                          color: Colors.light.green.drive,
+                        }}
+                        className="text-xl"
+                      >
+                        {new Date(selectedDate)
+                          .toLocaleDateString(languageCode, {
+                            weekday: 'long',
+                            month: 'long',
+                            day: 'numeric',
+                          })
+                          .toUpperCase()}
+                      </Text>
+                      <TouchableOpacity
+                        onPress={() => setSelectedDate(null)}
+                        style={{marginTop: 4}}
+                      >
+                        <Text
+                          style={{
+                            fontSize: 14,
+                            color: '#999',
+                            textDecorationLine: 'underline',
+                          }}
+                        >
+                          {t('date.changeDay')}
+                        </Text>
+                      </TouchableOpacity>
+                      {loadinghours ? (
+                        <View style={{marginBottom: 20}} className="h-44">
+                          <TicDriveSpinner />
+                        </View>
+                      ) : (
+                        selectedDate && (
+                          <>
+                            <Text style={styles.sectionTitle}>
+                              {t('date.chooseSlot').toUpperCase()}
+                            </Text>
+                            <ScrollView
+                              style={{marginBottom: 20}}
+                              className="h-44"
+                            >
+                              {userTimeSlot.map(({label, slots}) => (
+                                <View
+                                  key={label}
+                                  style={styles.timeSlotSection}
+                                >
+                                  <Text style={styles.timeSlotLabel}>
+                                    {label === 'morning'
+                                      ? t('date.days.morning')
+                                      : t('date.days.afternoon')}
+                                  </Text>
+                                  <View style={styles.timeSlotGroup}>
+                                    {slots.map(time => (
+                                      <CrossPlatformButtonLayout
+                                        key={time}
+                                        onPress={() =>
+                                          setSelectedTime(
+                                            selectedTime === time ? null : time,
+                                          )
+                                        }
+                                        styleContainer={[
+                                          styles.timeSlotButton,
+                                          selectedTime === time &&
+                                            styles.selectedSlot,
+                                        ]}
+                                      >
+                                        <Text
+                                          style={[
+                                            styles.timeSlotText,
+                                            selectedTime === time &&
+                                              styles.selectedSlotText,
+                                          ]}
+                                        >
+                                          {time}
+                                        </Text>
+                                      </CrossPlatformButtonLayout>
+                                    ))}
+                                  </View>
+                                </View>
+                              ))}
+                            </ScrollView>
+                          </>
                         )
-                          return;
-
-                        if (selectedDate === day.dateString) {
-                          setSelectedDate(null);
-                          setSelectedTime(null);
-                        } else {
-                          setSelectedDate(day.dateString);
-                          setSelectedTime(null);
-                        }
-                      }}
-                      markedDates={{
-                        [selectedDate ?? '']: {
-                          selected: true,
-                          marked: false,
-                          selectedColor: Colors.light.green.drive,
-                        },
-                        ...disabledDates,
-                      }}
-                      maxDate={maxBookingDate.toISOString().split('T')[0]}
-                      theme={{
-                        selectedDayTextColor: 'white',
-                        todayTextColor: Colors.light.green.drive,
-                        dayTextColor: 'black',
-                        textDisabledColor: '#b3b3b3',
-                      }}
-                    />
-                  </View>
+                      )}
+                    </View>
+                  )}
 
                   {isDateAfterMaxRange(selectedDate) && (
                     <View style={styles.noticeWrapper}>
@@ -352,56 +452,7 @@ const UserCalendarModal = forwardRef<
                       </Text>
                     </View>
                   )}
-                  {loadinghours ? (
-                    <View style={{marginBottom: 20}} className="h-44">
-                      <TicDriveSpinner />
-                    </View>
-                  ) : (
-                    selectedDate && (
-                      <ScrollView style={{marginBottom: 20}} className="h-44">
-                        <Text style={styles.sectionTitle}>
-                          {t('date.chooseSlot').toUpperCase()}
-                        </Text>
 
-                        {userTimeSlot.map(({label, slots}) => (
-                          <View key={label} style={styles.timeSlotSection}>
-                            <Text style={styles.timeSlotLabel}>
-                              {label === 'morning'
-                                ? t('date.days.morning')
-                                : t('date.days.afternoon')}
-                            </Text>
-                            <View style={styles.timeSlotGroup}>
-                              {slots.map(time => (
-                                <CrossPlatformButtonLayout
-                                  key={time}
-                                  onPress={() =>
-                                    setSelectedTime(
-                                      selectedTime === time ? null : time,
-                                    )
-                                  }
-                                  styleContainer={[
-                                    styles.timeSlotButton,
-                                    selectedTime === time &&
-                                      styles.selectedSlot,
-                                  ]}
-                                >
-                                  <Text
-                                    style={[
-                                      styles.timeSlotText,
-                                      selectedTime === time &&
-                                        styles.selectedSlotText,
-                                    ]}
-                                  >
-                                    {time}
-                                  </Text>
-                                </CrossPlatformButtonLayout>
-                              ))}
-                            </View>
-                          </View>
-                        ))}
-                      </ScrollView>
-                    )
-                  )}
                   <TicDriveButton
                     text={buttonText}
                     disabled={!selectedDate || !selectedTime}
