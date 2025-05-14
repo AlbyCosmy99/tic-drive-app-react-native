@@ -143,12 +143,12 @@ export default function UserAccount() {
             </View>
           ) : (
             <View className="flex-row justify-between items-center h-[88px]">
-              <View className="flex-row items-center space-x-4 p-2">
+              <View className="flex-1 flex-row items-center space-x-4 p-2">
                 <CircularUserAvatar
                   uri={user?.images?.[0]?.url || DEFAULT_AVATAR}
                   styles={{width: 70, height: 70}}
                 />
-                <View className="w-44">
+                <View className="flex-1">
                   {isEditing ? (
                     <TextInput
                       className="font-semibold text-lg border-b border-gray-300"
@@ -176,7 +176,7 @@ export default function UserAccount() {
                 </View>
               </View>
 
-              <View className="flex-row items-center">
+              <View className="flex-shrink-0 pr-2">
                 <CrossPlatformButtonLayout onPress={handleOnEdit}>
                   <View className="flex-row items-center">
                     {isEditing ? (
