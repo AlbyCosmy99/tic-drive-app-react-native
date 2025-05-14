@@ -56,6 +56,8 @@
   "continue": "Continua",
   "date": {
     "selectADate": "Seleziona una data",
+    "selectedDayLabel": "Giorno selezionato",
+    "changeDay": "Seleziona un altro giorno",
     "chooseSlot": "Scegli tra gli slot disponibili",
     "days": {
       "morning": "Mattina",
