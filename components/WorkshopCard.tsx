@@ -63,17 +63,17 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
       <View
         className="border-2 rounded-2xl"
         style={[
-    styles.cardContainer,
-    viewContainerStyle,
-    {
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 5},
-      shadowOpacity: 0.17,
-      shadowRadius: 5,
-      elevation: 8, // for Android
-      backgroundColor: 'white', 
-    },
-  ]}
+          styles.cardContainer,
+          viewContainerStyle,
+          {
+            shadowColor: '#000',
+            shadowOffset: {width: 0, height: 5},
+            shadowOpacity: 0.17,
+            shadowRadius: 5,
+            elevation: 8, // for Android
+            backgroundColor: 'white',
+          },
+        ]}
       >
         {workshop.images?.length && (
           <Image
