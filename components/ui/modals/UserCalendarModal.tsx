@@ -287,7 +287,7 @@ const UserCalendarModal = forwardRef<
             >
               <View style={styles.dragHandle} />
               <SafeAreaViewLayout tailwindCss="mb-0">
-                <View className="justify-between flex-1">
+                <View className="justify-between flex-1 pb-1">
                   {!selectedDate ? (
                     <View className="h-[420px]">
                       <View className="mb-1">
