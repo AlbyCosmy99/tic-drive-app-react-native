@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -19,6 +19,11 @@ import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice
 import useNearbyWorkshops from '@/hooks/api/workshops/useNearbyWorkshops';
 import {POIMarker} from '@/types/nav/map/POIMarker';
 import TicDriveSpinner from '../ui/spinners/TicDriveSpinner';
+import useUserLocation from '@/hooks/location/useUserLocation';
+import Workshop from '@/types/workshops/Workshop';
+import getNearbyWorkshops from '@/services/http/requests/get/workshops/getNearbyWorkshops';
+import useJwtToken from '@/hooks/auth/useJwtToken';
+import getAllWorkshops from '@/services/http/requests/get/workshops/getAllWorkshops';
 
 interface MapModalProps {
   setIsMapVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -33,9 +38,51 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
   );
   const [poiMarkers, setPoiMarkers] = useState<POIMarker[]>([]);
   const [selectedPOI, setSelectedPOI] = useState<POIMarker | null>(null);
+  const [workshops, setWorkshops] = useState<Workshop[]>([]);
+  const [loadingWorkshops, setLoadingWorkshops] = useState(false);
+  const [count, setCount] = useState(0);
 
-  const {workshops, loadingWorkshops} = useNearbyWorkshops(0, 30);
   const user = useAppSelector(state => state.auth.user);
+  const token = useJwtToken();
+
+  const {loading: loadingLocation, userLocation} = useUserLocation();
+  const hasFetchedNearby = useRef(false);
+
+  const fetchAllWorkshops = async () => {
+    setLoadingWorkshops(true);
+    const response = await getAllWorkshops(token ?? '', 0, 2, '');
+    setWorkshops(response.data.workshops);
+    setCount(response.data.count);
+    setLoadingWorkshops(false);
+  };
+
+  const fetchNearbyWorkshops = async () => {
+    if (!userLocation) {
+      setLoadingWorkshops(false);
+      return;
+    }
+
+    setLoadingWorkshops(true);
+
+    try {
+      const response = await getNearbyWorkshops(token ?? '', 0, 2, '', {
+        latitude: userLocation.latitude,
+        longitude: userLocation.longitude,
+      });
+
+      if (response.data.count > 0) {
+        setWorkshops(response.data.nearbyWorkshops);
+        setCount(response.data.count);
+      } else {
+        await fetchAllWorkshops();
+      }
+    } catch (err) {
+      console.error('Error fetching nearby workshops:', err);
+      await fetchAllWorkshops();
+    } finally {
+      setLoadingWorkshops(false);
+    }
+  };
 
   useEffect(() => {
     if (user?.coordinates) {
@@ -53,6 +100,13 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
       });
     }
   }, [user]);
+
+  useEffect(() => {
+    if (!loadingLocation && userLocation && !hasFetchedNearby.current) {
+      hasFetchedNearby.current = true;
+      fetchNearbyWorkshops();
+    }
+  }, [loadingLocation, userLocation]);
 
   useEffect(() => {
     if (!loadingWorkshops) {

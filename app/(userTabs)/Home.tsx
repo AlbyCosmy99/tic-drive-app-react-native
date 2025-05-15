@@ -54,7 +54,9 @@ export default function UserHome() {
 
   const dispatch = useAppDispatch();
   const token = useJwtToken();
-  const user = useAppSelector(state => state.auth.user);
+
+  const {loading: loadingLocation, userLocation} = useUserLocation();
+  const hasFetchedNearby = useRef(false);
 
   const fetchAllWorkshops = async () => {
     setLoadingWorkshops(true);
@@ -63,36 +65,46 @@ export default function UserHome() {
     setCount(response.data.count);
     setLoadingWorkshops(false);
   };
+
   const fetchNearbyWorkshops = async () => {
-    setLoadingWorkshops(true);
-    const response = await getNearbyWorkshops(
-      token ?? '',
-      0,
-      2,
-      '',
-      user ?? undefined,
-    );
-    if (response.data.count > 0) {
-      setWorkshops(response.data.nearbyWorkshops);
-      setCount(response.data.count);
+    if (!userLocation) {
       setLoadingWorkshops(false);
-    } else {
-      fetchAllWorkshops();
+      return;
+    }
+
+    setLoadingWorkshops(true);
+
+    try {
+      const response = await getNearbyWorkshops(token ?? '', 0, 2, '', {
+        latitude: userLocation.latitude,
+        longitude: userLocation.longitude,
+      });
+
+      if (response.data.count > 0) {
+        setWorkshops(response.data.nearbyWorkshops);
+        setCount(response.data.count);
+      } else {
+        await fetchAllWorkshops();
+      }
+    } catch (err) {
+      console.error('Error fetching nearby workshops:', err);
+      await fetchAllWorkshops();
+    } finally {
+      setLoadingWorkshops(false);
     }
   };
 
   useEffect(() => {
-    if (user?.coordinates) {
+    if (!loadingLocation && userLocation && !hasFetchedNearby.current) {
+      hasFetchedNearby.current = true;
       fetchNearbyWorkshops();
     }
-  }, [user?.coordinates]);
+  }, [loadingLocation, userLocation]);
 
   const {setCarSelectedByMakeAndModel, setCarSelectedByPlate} =
     useContext(CarContext);
 
   const [isMapVisible, setIsMapVisible] = useState(false);
-
-  useUserLocation();
 
   const handleOnSeeAllWorkshops = () => {
     navigationPush(navigation, 'WorkshopsListScreen');
@@ -104,7 +116,6 @@ export default function UserHome() {
       : navigationPush(navigation, 'UserAuthenticationScreen', {
           isUser: true,
         });
-    //to-do: once the vehicle is registered instead of going to workshops, go to vehicles and register it on account
   };
 
   const onRefresh = () => {
@@ -214,7 +225,7 @@ export default function UserHome() {
                     <TicDriveSpinner />
                   ) : (
                     <View className="flex-column w-full">
-                      <View className="flex-row  justify-start items-start mb-2.5">
+                      <View className="flex-row justify-start items-start mb-2.5">
                         {workshops.map(workshop => (
                           <WorkshopCardMini
                             key={workshop.id}

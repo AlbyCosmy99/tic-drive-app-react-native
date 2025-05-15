@@ -1,13 +1,13 @@
 import axiosClient from '@/services/http/axiosClient';
 import {Params} from '@/types/config/Params';
-import User from '@/types/User';
+import {LatLng} from 'react-native-maps';
 
 const getNearbyWorkshops = async (
   token: string,
   skip: number,
   take: number,
   debouncedFilter: string,
-  user?: User,
+  coordinates?: LatLng,
   serviceId?: number,
   params?: Params,
 ) => {
@@ -16,8 +16,8 @@ const getNearbyWorkshops = async (
     {
       headers: {Authorization: `Bearer ${token}`},
       params: {
-        latitude: user?.coordinates?.latitude,
-        longitude: user?.coordinates?.longitude,
+        latitude: coordinates?.latitude,
+        longitude: coordinates?.longitude,
       },
     },
   );
