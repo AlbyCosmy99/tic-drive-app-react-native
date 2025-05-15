@@ -51,7 +51,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
   const dispatch = useAppDispatch();
 
   const handleCardPress = (workshop: Workshop) => {
-    navigationPush(navigation, 'WorkshopDetails');
+    navigationPush(navigation, 'WorkshopDetailsScreen');
     dispatch(setSelectedWorkshop(workshop));
   };
 

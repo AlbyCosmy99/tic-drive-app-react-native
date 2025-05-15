@@ -129,7 +129,7 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
   const handlePOISelect = (poi: POIMarker) => {
     dispatch(setSelectedWorkshop(poi.workshop));
     setIsMapVisible(false);
-    navigationPush(navigation, 'WorkshopDetails');
+    navigationPush(navigation, 'WorkshopDetailsScreen');
   };
 
   return (

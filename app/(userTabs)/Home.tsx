@@ -195,7 +195,7 @@ export default function UserHome() {
               idToCompareForClock={lastWorkshopSelectedFromFilter?.id}
               emptyElementsMessage={t('workshops.noWorkshopsWithFilter')}
               onElementPress={(elem: any) => {
-                navigationPush(navigation, 'WorkshopDetails');
+                navigationPush(navigation, 'WorkshopDetailsScreen');
                 dispatch(setSelectedWorkshop(elem));
                 dispatch(setLastWorkshopSelectedFromFilter(elem));
               }}

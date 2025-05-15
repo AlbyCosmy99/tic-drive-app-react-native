@@ -18,7 +18,7 @@ import SelectVehicleScreen from './screens/user/SelectVehicleScreen';
 
 import WorkshopTabLayout from './(workshopTabs)/_layout';
 import userTabLayout from './(userTabs)//_layout';
-import WorkshopDetails from './screens/user/WorkshopDetails';
+import WorkshopDetailsScreen from './screens/user/WorkshopDetailsScreen';
 import BookingConfirmationScreen from './screens/user/BookingConfirmationScreen';
 import NotFoundScreen from './+not-found';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
@@ -151,10 +151,10 @@ export default function RootLayout() {
                         })}
                       />
                       <Stack.Screen
-                        name="WorkshopDetails"
-                        component={WorkshopDetails}
+                        name="WorkshopDetailsScreen"
+                        component={WorkshopDetailsScreen}
                         options={({route}) => ({
-                          title: 'WorkshopDetails',
+                          title: 'WorkshopDetailsScreen',
                           headerShown: false,
                           animation: getAnimation(route),
                         })}

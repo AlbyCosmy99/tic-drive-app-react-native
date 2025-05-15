@@ -126,11 +126,7 @@ export default function ChooseServicesScreen() {
         {!filter && (
           <View className={`mb-2 ${buttonContainerTailwindCss}`}>
             <TicDriveButton
-              text={
-                isUserLookingForServices
-                  ? t('bookNow')
-                  : t('continue')
-              }
+              text={isUserLookingForServices ? t('bookNow') : t('continue')}
               routeName={
                 isUserLookingForServices
                   ? token

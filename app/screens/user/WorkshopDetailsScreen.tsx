@@ -26,7 +26,7 @@ import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import openGoogleMaps from '@/services/map/openGoogleMaps';
 import getUserMainImage from '@/utils/files/getUserMainImage';
 
-export default function WorkshopDetails() {
+export default function WorkshopDetailsScreen() {
   const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
   const {areServicesAvailable} = useAreServicesAvailable();
   const token = useJwtToken();

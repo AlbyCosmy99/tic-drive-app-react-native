@@ -34,7 +34,7 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
 }) => {
   const {workshopFilter, setWorkshopFilter} = useContext(GlobalContext);
   const navigation = useTicDriveNavigation();
-const {t} = useTranslation();
+  const {t} = useTranslation();
 
   const servicesChoosen = useServicesChoosenByUsers();
   const workshopsPerPage = 10;
@@ -146,7 +146,7 @@ const {t} = useTranslation();
 
   const handleCardPress = (workshop: Workshop) => {
     dispatch(setSelectedWorkshop(workshop));
-    navigationPush(navigation, 'WorkshopDetails');
+    navigationPush(navigation, 'WorkshopDetailsScreen');
   };
 
   return (

@@ -21,7 +21,7 @@ import useJwtToken from '@/hooks/auth/useJwtToken';
 import getServices from '@/services/http/requests/get/getServices';
 
 interface SeeAllServicesCardsProps {
-  workshopId?: number;
+  workshopId?: string;
   topHorizontalLine?: boolean;
   bottomHorizontalLine?: boolean;
   showSubtitle?: boolean;
@@ -57,7 +57,7 @@ const SeeAllServicesCards = forwardRef(
       const fetchServices = async () => {
         try {
           setLoadingServices(true);
-          const data = await getServices(workshopId, languageCode);
+          const data = await getServices(workshopId ?? '', languageCode);
           setServices(data);
         } catch (e) {
         } finally {
@@ -97,16 +97,18 @@ const SeeAllServicesCards = forwardRef(
               <CrossPlatformButtonLayout
                 removeAllStyles={false}
                 onPress={() => handleOnSelectService(service)}
-                styleContainer={{height: 40}}
+                styleContainer={{minHeight: 40}}
                 containerTailwindCss="border border-gray-300 flex-row items-center justify-start p-2 rounded-xl"
                 buttonTailwindCss="justify-start"
               >
                 {service?.icon && (
                   <Image source={{uri: service.icon}} width={24} height={24} />
                 )}
-                <Text className="text-sm font-medium ml-2">
-                  {service.title}
-                </Text>
+                <View className="h-10 items-center justify-center w-full">
+                  <Text className="text-sm font-medium text-center">
+                    {service.title}
+                  </Text>
+                </View>
               </CrossPlatformButtonLayout>
             </View>
           ))}
