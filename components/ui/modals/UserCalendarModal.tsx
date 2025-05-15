@@ -108,7 +108,9 @@ const UserCalendarModal = forwardRef<
         );
         setCustomeDisabledDays(mappedDisabledDays);
       } catch (error) {
-        setErrorMessage('Errore nel recupero delle date in cui l officina non è disponibile.');
+        setErrorMessage(
+          'Errore nel recupero delle date in cui l officina non è disponibile.',
+        );
       }
     };
 
@@ -288,7 +290,7 @@ const UserCalendarModal = forwardRef<
               <View style={styles.dragHandle} />
               <SafeAreaViewLayout tailwindCss="mb-0">
                 <View className="justify-between flex-1 pb-1">
-                  {!selectedDate ? (
+                  {!selectedDate && !loadinghours ? (
                     <View className="h-[420px]">
                       <View className="mb-1">
                         <Text style={styles.sectionTitle}>
@@ -355,42 +357,45 @@ const UserCalendarModal = forwardRef<
                     </View>
                   ) : (
                     <View style={{alignItems: 'center'}} className="h-[420px]">
-                      <Text
-                        style={{
-                          fontWeight: '600',
-                          color: Colors.light.green.drive,
-                        }}
-                        className="text-xl"
-                      >
-                        {new Date(selectedDate)
-                          .toLocaleDateString(languageCode, {
-                            weekday: 'long',
-                            month: 'long',
-                            day: 'numeric',
-                          })
-                          .toUpperCase()}
-                      </Text>
-                      <TouchableOpacity
-                        onPress={() => setSelectedDate(null)}
-                        style={{marginTop: 4}}
-                      >
-                        <Text
-                          style={{
-                            fontSize: 14,
-                            color: '#999',
-                            textDecorationLine: 'underline',
-                          }}
-                        >
-                          {t('date.changeDay')}
-                        </Text>
-                      </TouchableOpacity>
                       {loadinghours ? (
-                        <View style={{marginBottom: 20}} className="h-44">
+                        <View
+                          style={{marginBottom: 20}}
+                          className="h-44 flex-1"
+                        >
                           <TicDriveSpinner />
                         </View>
                       ) : (
                         selectedDate && (
                           <>
+                            <Text
+                              style={{
+                                fontWeight: '600',
+                                color: Colors.light.green.drive,
+                              }}
+                              className="text-xl"
+                            >
+                              {new Date(selectedDate)
+                                .toLocaleDateString(languageCode, {
+                                  weekday: 'long',
+                                  month: 'long',
+                                  day: 'numeric',
+                                })
+                                .toUpperCase()}
+                            </Text>
+                            <TouchableOpacity
+                              onPress={() => setSelectedDate(null)}
+                              style={{marginTop: 4}}
+                            >
+                              <Text
+                                style={{
+                                  fontSize: 14,
+                                  color: '#999',
+                                  textDecorationLine: 'underline',
+                                }}
+                              >
+                                {t('date.changeDay')}
+                              </Text>
+                            </TouchableOpacity>
                             <Text style={styles.sectionTitle}>
                               {t('date.chooseSlot').toUpperCase()}
                             </Text>
@@ -444,14 +449,14 @@ const UserCalendarModal = forwardRef<
                     </View>
                   )}
 
-                  {isDateAfterMaxRange(selectedDate) && (
+                  {/* {isDateAfterMaxRange(selectedDate) && (
                     <View style={styles.noticeWrapper}>
                       <Text style={styles.noticeText}>
                         You can book appointments up to 6 months in advance. For
                         later dates, please contact the workshop directly.
                       </Text>
                     </View>
-                  )}
+                  )} */}
 
                   <TicDriveButton
                     text={buttonText}
