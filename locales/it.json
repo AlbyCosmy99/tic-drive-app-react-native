@@ -126,7 +126,10 @@
     "rating": "Valutazione",
     "searchWorkshop": "Cerca officina",
     "noWorkshopsWithFilter": "Nessuna officina trovata con questo filtro.",
-    "noWorkshopsAvailable": "Nessuna officina disponibile al momento."
+    "noWorkshopsAvailable": "Nessuna officina disponibile al momento.",
+    "noFound": "Nessuna officina trovata. Prova con un servizio diverso o vai alla dashboard.",
+    "lookDifferentService": "Cerca un servizio diverso",
+    "goBackDashboard": "Torna alla dashboard"
   },
   "bookingConfirmation": {
     "awaitingWorkshopConfirmation": "Il servizio necessita la conferma da parte dell'officina.",
