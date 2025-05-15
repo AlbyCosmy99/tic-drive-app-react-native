@@ -128,7 +128,7 @@ export default function ChooseServicesScreen() {
             <TicDriveButton
               text={
                 isUserLookingForServices
-                  ? t('service.bookAService')
+                  ? t('bookNow')
                   : t('continue')
               }
               routeName={
