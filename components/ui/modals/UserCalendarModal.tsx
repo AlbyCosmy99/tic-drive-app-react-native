@@ -261,13 +261,14 @@ const UserCalendarModal = forwardRef<
           text={
             service?.title
               ? t('bookNow')
-              : t('bookNow')
+              : t('service.bookAService')
           }
           onClick={openModal}
           customButtonStyle={styles.customButtonStyle}
           customContainerStyle={{width: '100%'}}
         />
       )}
+      
 
       {modalVisible && (
         <Modal
