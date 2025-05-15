@@ -6,7 +6,7 @@
   "notifications": "Notifiche",
   "other": "ALTRO",
   "support": "Supporto",
-      "change": "Cambio",
+  "change": "Cambia",
 
   "supports": {
     "title": "Hai bisogno di aiuto o hai una domanda?",
@@ -126,7 +126,10 @@
     "rating": "Valutazione",
     "searchWorkshop": "Cerca officina",
     "noWorkshopsWithFilter": "Nessuna officina trovata con questo filtro.",
-    "noWorkshopsAvailable": "Nessuna officina disponibile al momento."
+    "noWorkshopsAvailable": "Nessuna officina disponibile al momento.",
+    "notFound": "Nessuna officina trovata. Prova con un servizio diverso o vai alla dashboard.",
+    "lookDifferentService": "Cerca un servizio diverso",
+    "goBackDashboard": "Torna alla dashboard"
   },
   "bookingConfirmation": {
     "awaitingWorkshopConfirmation": "Il servizio necessita la conferma da parte dell'officina.",
@@ -406,5 +409,4 @@
       "content": "Possiamo trasferire i nostri diritti. La mancata applicazione di un diritto non implica rinuncia. Se una clausola è invalida, le altre rimarranno valide. I Termini sono regolati dalla legge italiana. I tribunali italiani avranno giurisdizione non esclusiva."
     }
   }
-  
 }
