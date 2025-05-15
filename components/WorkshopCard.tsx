@@ -21,6 +21,7 @@ import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice
 import WorkshopReviewinfo from './workshop/reviews/WorkshopReviewInfo';
 import Workshop from '@/types/workshops/Workshop';
 import getUserMainImage from '@/utils/files/getUserMainImage';
+import CrossPlatformButtonLayout from './ui/buttons/CrossPlatformButtonLayout';
 
 interface WorkshopCardProps {
   workshop: Workshop;
@@ -97,7 +98,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
             icon={<GreenCheckIcon />}
           />
           <IconTextPair
-            containerTailwindCss={`py-1.5 ${iconTextPairContainerTailwindCss}`}
+            containerTailwindCss={`py-1.5 pr-[15px] ${iconTextPairContainerTailwindCss}`}
             textTailwindCss={`text-sm font-medium underline ${iconTextPairTextTailwindCss}`}
             text={workshop.address}
             icon={<PinLocationIcon />}
@@ -110,16 +111,18 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
           />
         </View>
         {servicesChoosenByUsers.length > 0 && isServiceDetailsEnabled && (
-          // to-do: quando pressed vai a disponibilita
-          <Pressable
-            className="flex flex-row justify-between items-center border-2 border-grey-light m-2 p-3 mt-0 rounded-lg"
+          <CrossPlatformButtonLayout
+            buttonTailwindCss="flex-row justify-between items-center border-2 border-grey-light m-2 p-3 mt-0 rounded-lg"
             onPress={() => alert('pressed')}
           >
-            <Text className="text-base font-medium">
-              {servicesChoosenByUsers[0].title}
-            </Text>
-            <View>
-              <View className="flex flex-row justify-between items-center">
+            <View className="flex-1 pr-4">
+              <Text className="text-base font-medium flex-shrink">
+                {servicesChoosenByUsers[0].title}
+              </Text>
+            </View>
+
+            <View className="items-end justify-center">
+              <View className="flex-row justify-between items-center space-x-2">
                 <Text className="text-base font-medium">Total</Text>
                 <Text className="text-base font-medium">
                   {workshop.currency + ' '}
@@ -133,7 +136,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
                 Includes taxes and fees
               </Text>
             </View>
-          </Pressable>
+          </CrossPlatformButtonLayout>
         )}
       </View>
     </Pressable>
