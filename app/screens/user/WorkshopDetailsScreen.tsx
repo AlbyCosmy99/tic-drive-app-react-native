@@ -155,43 +155,64 @@ export default function WorkshopDetailsScreen() {
                   </CrossPlatformButtonLayout>
                 </View>
                 {lat && lng && (
-                  <View className="mt-2" style={{height: 140}}>
+                  <View className="mt-2">
                     {workshop.latitude && workshop.longitude && (
-                      <MapView
-                        style={StyleSheet.absoluteFillObject}
-                        initialRegion={{
-                          latitude: workshop.latitude,
-                          longitude: workshop.longitude,
-                          latitudeDelta: 0.0922,
-                          longitudeDelta: 0.0421,
+                      <View
+                        style={{
+                          shadowColor: '#000',
+                          shadowOffset: {width: 0, height: 4},
+                          shadowOpacity: 0.35,
+                          shadowRadius: 3,
+                          elevation: 6,
+                          backgroundColor: 'white',
+                          borderRadius: 8,
+                          overflow: 'visible',
                         }}
-                        scrollEnabled={false}
-                        zoomEnabled={false}
                       >
-                        <Marker
-                          coordinate={{
-                            latitude: workshop.latitude,
-                            longitude: workshop.longitude,
+                        <View
+                          style={{
+                            borderRadius: 8,
+                            overflow: 'hidden',
+                            height: 140,
                           }}
                         >
-                          <CrossPlatformButtonLayout
-                            onPress={() =>
-                              openGoogleMaps(
-                                workshop?.address,
-                                workshop?.latitude,
-                                workshop?.longitude,
-                              )
-                            }
+                          <MapView
+                            style={StyleSheet.absoluteFillObject}
+                            initialRegion={{
+                              latitude: workshop.latitude,
+                              longitude: workshop.longitude,
+                              latitudeDelta: 0.0922,
+                              longitudeDelta: 0.0421,
+                            }}
+                            scrollEnabled={false}
+                            zoomEnabled={false}
                           >
-                            <CarPinIcon />
-                          </CrossPlatformButtonLayout>
-                        </Marker>
-                      </MapView>
+                            <Marker
+                              coordinate={{
+                                latitude: workshop.latitude,
+                                longitude: workshop.longitude,
+                              }}
+                            >
+                              <CrossPlatformButtonLayout
+                                onPress={() =>
+                                  openGoogleMaps(
+                                    workshop?.address,
+                                    workshop?.latitude,
+                                    workshop?.longitude,
+                                  )
+                                }
+                              >
+                                <CarPinIcon />
+                              </CrossPlatformButtonLayout>
+                            </Marker>
+                          </MapView>
+                        </View>
+                      </View>
                     )}
                   </View>
                 )}
               </View>
-              <View className="mt-2.5">
+              <View className="mt-3.5">
                 <Text className="text-xl font-semibold">
                   {t('workshops.reviews.whatPeopleSay')}
                 </Text>
