@@ -95,19 +95,10 @@ export default function UserHome() {
   };
 
   useEffect(() => {
-    // const fallbackTimeout = setTimeout(() => {
-    //   if (!userLocation && !hasFetchedNearby.current) {
-    //     hasFetchedNearby.current = true;
-    //     fetchAllWorkshops();
-    //   }
-    // }, 4000);
-
     if (!loadingLocation && userLocation && !hasFetchedNearby.current) {
       hasFetchedNearby.current = true;
       fetchNearbyWorkshops();
     }
-
-    // return () => clearTimeout(fallbackTimeout);
   }, [loadingLocation, userLocation]);
 
   const {setCarSelectedByMakeAndModel, setCarSelectedByPlate} =
