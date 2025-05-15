@@ -262,7 +262,7 @@ const UserCalendarModal = forwardRef<
         <TicDriveButton
           text={
             service?.title
-              ? t('service.bookTheService')
+              ? t('bookNow')
               : t('service.bookAService')
           }
           onClick={openModal}
@@ -270,6 +270,7 @@ const UserCalendarModal = forwardRef<
           customContainerStyle={{width: '100%'}}
         />
       )}
+      
 
       {modalVisible && (
         <Modal
