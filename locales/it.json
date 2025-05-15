@@ -6,7 +6,7 @@
   "notifications": "Notifiche",
   "other": "ALTRO",
   "support": "Supporto",
-      "change": "Cambio",
+  "change": "Cambia",
 
   "supports": {
     "title": "Hai bisogno di aiuto o hai una domanda?",
@@ -406,5 +406,4 @@
       "content": "Possiamo trasferire i nostri diritti. La mancata applicazione di un diritto non implica rinuncia. Se una clausola è invalida, le altre rimarranno valide. I Termini sono regolati dalla legge italiana. I tribunali italiani avranno giurisdizione non esclusiva."
     }
   }
-  
 }
