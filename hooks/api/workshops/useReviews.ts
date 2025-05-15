@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import apiClient from '@/services/http/axiosClient';
 import Review from '@/types/workshops/Review';
+import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
 
 const useReviews = (
   workshopId: string,
@@ -9,6 +10,7 @@ const useReviews = (
 ) => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loadingReviews, setLoadingReviews] = useState(true);
+  const {setErrorMessage} = useGlobalErrors();
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -18,7 +20,7 @@ const useReviews = (
         );
         setReviews(res.data);
       } catch (err) {
-        alert('AAAA.');
+        setErrorMessage('Errore durante il caricamento delle recensioni.');
         console.error(err);
       } finally {
         setLoadingReviews(false);
