@@ -73,7 +73,7 @@ const UserCalendarModal = forwardRef<
 
   const buttonText = useMemo(() => {
     if (!service) return t('service.chooseService');
-    if (!carSelected) return 'Register car';
+    if (!carSelected) return t('vehicles.registerVehicle');
     return 'Confirm ' + (!token ? 'and login' : '');
   }, [token, service, carSelected]);
 
