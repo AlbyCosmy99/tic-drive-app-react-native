@@ -19,6 +19,7 @@ import useJwtToken from '@/hooks/auth/useJwtToken';
 import getAllWorkshops from '@/services/http/requests/get/workshops/getAllWorkshops';
 import getFavoriteWorkshops from '@/services/http/requests/get/workshops/getFavoriteWorkshops';
 import getNearbyWorkshops from '@/services/http/requests/get/workshops/getNearbyWorkshops';
+import {useTranslation} from 'react-i18next';
 
 interface WorkshopCardsProps {
   setAreNoWorkshop?: (areNoWorkshops: boolean) => void;
@@ -33,6 +34,7 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
 }) => {
   const {workshopFilter, setWorkshopFilter} = useContext(GlobalContext);
   const navigation = useTicDriveNavigation();
+const {t} = useTranslation();
 
   const servicesChoosen = useServicesChoosenByUsers();
   const workshopsPerPage = 10;
@@ -161,15 +163,14 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
       noDataContent={
         <View className="flex-1 justify-center items-center mx-2.5">
           <Text className="text-lg text-gray-600 text-center">
-            No workshop found. Try with a different service, or go to the
-            dashboard.
+            {t('workshops.notFound')}
           </Text>
           <TicDriveButton
-            text="Look for a different service"
+            text={t('workshops.lookDifferentService')}
             onClick={handleChooseDifferentService}
           />
           <TicDriveButton
-            text="Go back to dashboard"
+            text={t('workshops.goBackDashboard')}
             onClick={() => navigationReset(navigation, 0, 'Hub', 'Home')}
           />
         </View>

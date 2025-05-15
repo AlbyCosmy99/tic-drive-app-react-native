@@ -106,7 +106,10 @@
     },
     "searchWorkshop": "Search Workshop",
     "noWorkshopsWithFilter": "No workshops found with this filter.",
-    "noWorkshopsAvailable": "No workshops available at the moment."
+    "noWorkshopsAvailable": "No workshops available at the moment.",
+    "notFound": "No workshop found. Try with a different service, or go to the dashboard.",
+    "lookDifferentService": "Look for a different service",
+    "goBackDashboard": "Go back to dashboard"
   },
   "bookingConfirmation": {
     "awaitingWorkshopConfirmation": "The service requires confirmation from the workshop.",
