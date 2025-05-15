@@ -107,7 +107,7 @@
     "searchWorkshop": "Search Workshop",
     "noWorkshopsWithFilter": "No workshops found with this filter.",
     "noWorkshopsAvailable": "No workshops available at the moment.",
-    "noFound": "No workshop found. Try with a different service, or go to the dashboard.",
+    "notFound": "No workshop found. Try with a different service, or go to the dashboard.",
     "lookDifferentService": "Look for a different service",
     "goBackDashboard": "Go back to dashboard"
   },

@@ -163,7 +163,7 @@ const {t} = useTranslation();
       noDataContent={
         <View className="flex-1 justify-center items-center mx-2.5">
           <Text className="text-lg text-gray-600 text-center">
-            {t('workshops.noFound')}
+            {t('workshops.notFound')}
           </Text>
           <TicDriveButton
             text={t('workshops.lookDifferentService')}
