@@ -73,7 +73,7 @@ const UserCalendarModal = forwardRef<
 
   const buttonText = useMemo(() => {
     if (!service) return t('service.chooseService');
-    if (!carSelected) return t('vehicles.registerVehicle');
+    if (!carSelected) return 'Register car';
     return 'Confirm ' + (!token ? 'and login' : '');
   }, [token, service, carSelected]);
 
@@ -302,25 +302,32 @@ const UserCalendarModal = forwardRef<
                           onDayPress={async (day: ExtendedDay) => {
                             const date = new Date(day.dateString);
 
-                  <View style={styles.fixedCalendarContainer}>
-                    <Calendar
-                      onDayPress={async (day: ExtendedDay) => {
-                        const date = new Date(day.dateString);
+                            const dayName = date.toLocaleDateString(
+                              languageCode,
+                              {
+                                weekday: 'long',
+                              },
+                            );
+                            setaLoadingHours(true);
+                            const workingHoursData =
+                              await getWorkshopWorkingHours(
+                                workshopId,
+                                dayName,
+                              );
+                            setaLoadingHours(false);
+                            setWorkingHours(workingHoursData.data);
 
-                        const dayName = date.toLocaleDateString(languageCode, {
-                          weekday: 'long',
-                        });
-                        setaLoadingHours(true);
-                        const workingHoursData = await getWorkshopWorkingHours(
-                          workshopId,
-                          dayName,
-                        );
-                        setaLoadingHours(false);
-                        setWorkingHours(workingHoursData.data);
+                            const dayOfWeek = new Date(day.dateString)
+                              .toLocaleDateString(languageCode, {
+                                weekday: 'long',
+                              })
+                              .toLowerCase();
 
-                        const dayOfWeek = new Date(day.dateString)
-                          .toLocaleDateString(languageCode, {weekday: 'long'})
-                          .toLowerCase();
+                            if (
+                              disabledDates[day.dateString] ||
+                              workingDays.includes(dayOfWeek)
+                            )
+                              return;
 
                             if (selectedDate === day.dateString) {
                               setSelectedDate(null);
@@ -438,33 +445,9 @@ const UserCalendarModal = forwardRef<
                             </ScrollView>
                           </>
                         )
-                          return;
-
-                        if (selectedDate === day.dateString) {
-                          setSelectedDate(null);
-                          setSelectedTime(null);
-                        } else {
-                          setSelectedDate(day.dateString);
-                          setSelectedTime(null);
-                        }
-                      }}
-                      markedDates={{
-                        [selectedDate ?? '']: {
-                          selected: true,
-                          marked: false,
-                          selectedColor: Colors.light.green.drive,
-                        },
-                        ...disabledDates,
-                      }}
-                      maxDate={maxBookingDate.toISOString().split('T')[0]}
-                      theme={{
-                        selectedDayTextColor: 'white',
-                        todayTextColor: Colors.light.green.drive,
-                        dayTextColor: 'black',
-                        textDisabledColor: '#b3b3b3',
-                      }}
-                    />
-                  </View>
+                      )}
+                    </View>
+                  )}
 
                   {/* {isDateAfterMaxRange(selectedDate) && (
                     <View style={styles.noticeWrapper}>
@@ -473,61 +456,8 @@ const UserCalendarModal = forwardRef<
                         later dates, please contact the workshop directly.
                       </Text>
                     </View>
-<<<<<<< HEAD
-                  )}
-                  {loadinghours ? (
-                    <View style={{marginBottom: 20}} className="h-44">
-                      <TicDriveSpinner />
-                    </View>
-                  ) : (
-                    selectedDate && (
-                      <ScrollView style={{marginBottom: 20}} className="h-44">
-                        <Text style={styles.sectionTitle}>
-                          {t('date.chooseSlot').toUpperCase()}
-                        </Text>
-=======
                   )} */}
->>>>>>> eaba6b09134e34d2e22a8ff2d9a3f1a19871cd1c
 
-                        {userTimeSlot.map(({label, slots}) => (
-                          <View key={label} style={styles.timeSlotSection}>
-                            <Text style={styles.timeSlotLabel}>
-                              {label === 'morning'
-                                ? t('date.days.morning')
-                                : t('date.days.afternoon')}
-                            </Text>
-                            <View style={styles.timeSlotGroup}>
-                              {slots.map(time => (
-                                <CrossPlatformButtonLayout
-                                  key={time}
-                                  onPress={() =>
-                                    setSelectedTime(
-                                      selectedTime === time ? null : time,
-                                    )
-                                  }
-                                  styleContainer={[
-                                    styles.timeSlotButton,
-                                    selectedTime === time &&
-                                      styles.selectedSlot,
-                                  ]}
-                                >
-                                  <Text
-                                    style={[
-                                      styles.timeSlotText,
-                                      selectedTime === time &&
-                                        styles.selectedSlotText,
-                                    ]}
-                                  >
-                                    {time}
-                                  </Text>
-                                </CrossPlatformButtonLayout>
-                              ))}
-                            </View>
-                          </View>
-                        ))}
-                      </ScrollView>
-                    )
-                  )}
                   <TicDriveButton
                     text={buttonText}
                     disabled={!selectedDate || !selectedTime}
