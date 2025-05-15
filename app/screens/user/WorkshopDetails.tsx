@@ -25,6 +25,9 @@ import {useTranslation} from 'react-i18next';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import openGoogleMaps from '@/services/map/openGoogleMaps';
 import getUserMainImage from '@/utils/files/getUserMainImage';
+import getWorkshopWorkingHours from '@/services/http/requests/datetime/getWorkshopWorkingHours';
+import React, { useState, useEffect } from 'react';
+
 
 export default function WorkshopDetails() {
   const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
@@ -32,7 +35,13 @@ export default function WorkshopDetails() {
   const token = useJwtToken();
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
+const daysOfWeek = [
+  'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
+];
 
+const [workingHours, setWorkingHours] = useState<Record<string, WorkshopWorkingHours | null>>({});
+const [loadingHours, setLoadingHours] = useState(false);
+const [errorHours, setErrorHours] = useState(null);
   const lat = workshop?.latitude || null;
   const lng = workshop?.longitude || null;
 
@@ -75,6 +84,49 @@ export default function WorkshopDetails() {
       console.error('error while adding/removing a workshop to/from favorite');
     }
   };
+  useEffect(() => {
+  if (!workshop?.id) return;
+
+  const fetchWorkingHoursForAllDays = async () => {
+    setLoadingHours(true);
+    try {
+      const hoursData: Record<string, WorkshopWorkingHours | null> = {};
+
+  if (!workshop?.id) {
+  console.warn('Workshop ID is undefined. Skipping working hours fetch.');
+  return;
+}
+
+const results = await Promise.allSettled(
+  daysOfWeek.map(day =>
+    getWorkshopWorkingHours(workshop.id, day).then(res => ({
+      day,
+      data: res.data,
+    }))
+  )
+);
+
+
+for (const result of results) {
+  if (result.status === 'fulfilled') {
+    hoursData[result.value.day] = result.value.data;
+  } else {
+    hoursData[result.reason?.config?.params?.day || 'Unknown'] = null;
+    console.error(`Failed to load hours for ${result.reason?.config?.params?.day}:`, result.reason?.message);
+  }
+}
+
+
+      setWorkingHours(hoursData);
+    } catch (e) {
+      setErrorHours('Failed to load working hours');
+    } finally {
+      setLoadingHours(false);
+    }
+  };
+
+  fetchWorkingHoursForAllDays();
+}, [workshop?.id]);
 
   return (
     <SafeAreaViewLayout styles={[styles.container]}>
@@ -128,6 +180,68 @@ export default function WorkshopDetails() {
                     <GreenCheckIcon width={24} height={24} />
                   )}
                 </View>
+                <View className="mt-1">
+  {loadingHours ? (
+    <ActivityIndicator size="small" color={Colors.light.bookingsOptionsText} />
+  ) : errorHours ? (
+    <Text className="text-red-500 text-sm">{errorHours}</Text>
+  ) : (
+    <View className="flex-row justify-between">
+      {/* Left Column: Monday - Friday */}
+      <View className="flex-1 pr-2">
+        <Text className="font-semibold text-base mb-1">Monday - Friday</Text>
+        {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].map(day => {
+          const hours = workingHours[day];
+          if (!hours) return null;
+          const formatTime = (time: string) => time.slice(0, 5);
+          const morning = hours.morning?.length === 2
+           ? `${formatTime(hours.morning[0])} - ${formatTime(hours.morning[1])}`
+        : null;       
+        const afternoon = hours.afternoon?.length === 2
+           ? `${formatTime(hours.afternoon[0])} - ${formatTime(hours.afternoon[1])}`
+          : null;
+          const time = morning && afternoon
+            ? `${morning}, ${afternoon}`
+            : morning || afternoon || 'Closed';
+
+          return (
+  <View key={day}>
+    {morning && (
+      <Text className="text-sm text-gray-700">{morning}</Text>
+    )}
+    {afternoon && (
+      <Text className="text-sm text-gray-700">{afternoon}</Text>
+    )}
+    {!morning && !afternoon && (
+      <Text className="text-sm text-gray-700">Closed</Text>
+    )}
+  </View>
+);
+        })}
+      </View>
+
+      {/* Right Column: Saturday */}
+      <View className="w-[48%]">
+        <Text className="font-semibold text-base mb-1">Saturday</Text>
+        {(() => {
+          const hours = workingHours['Saturday'];
+          if (!hours) return <Text className="text-sm text-gray-700">Closed</Text>;
+
+          const morning = hours.morning?.length === 2 ? `${hours.morning[0]} - ${hours.morning[1]}` : null;
+          const afternoon = hours.afternoon?.length === 2 ? `${hours.afternoon[0]} - ${hours.afternoon[1]}` : null;
+
+          const time = morning && afternoon
+            ? `${morning}, ${afternoon}`
+            : morning || afternoon || 'Closed';
+
+          return <Text className="text-sm text-gray-700">{time}</Text>;
+        })()}
+      </View>
+    </View>
+  )}
+</View>
+
+
               </View>
 
               <View className="mt-2">
@@ -155,41 +269,48 @@ export default function WorkshopDetails() {
                   </CrossPlatformButtonLayout>
                 </View>
                 {lat && lng && (
-                  <View className="mt-2" style={{height: 140}}>
-                    {workshop.latitude && workshop.longitude && (
-                      <MapView
-                        style={StyleSheet.absoluteFillObject}
-                        initialRegion={{
-                          latitude: workshop.latitude,
-                          longitude: workshop.longitude,
-                          latitudeDelta: 0.0922,
-                          longitudeDelta: 0.0421,
-                        }}
-                        scrollEnabled={false}
-                        zoomEnabled={false}
-                      >
-                        <Marker
-                          coordinate={{
-                            latitude: workshop.latitude,
-                            longitude: workshop.longitude,
-                          }}
-                        >
-                          <CrossPlatformButtonLayout
-                            onPress={() =>
-                              openGoogleMaps(
-                                workshop?.address,
-                                workshop?.latitude,
-                                workshop?.longitude,
-                              )
-                            }
-                          >
-                            <CarPinIcon />
-                          </CrossPlatformButtonLayout>
-                        </Marker>
-                      </MapView>
-                    )}
-                  </View>
-                )}
+  <View className="mt-2">
+    {workshop.latitude && workshop.longitude && (
+     <View
+  style={{
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.35,
+    shadowRadius: 3,
+    elevation: 8,
+    backgroundColor: 'white',
+    borderRadius: 17,
+    overflow: 'visible',
+  }}
+ 
+>
+  <View style={{ borderRadius: 16, overflow: 'hidden', height: 140 }}>
+    <MapView
+      style={StyleSheet.absoluteFillObject}
+      initialRegion={{
+        latitude: workshop.latitude,
+        longitude: workshop.longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      }}
+      scrollEnabled={false}
+      zoomEnabled={false}
+    >
+      <Marker coordinate={{ latitude: workshop.latitude, longitude: workshop.longitude }}>
+        <CrossPlatformButtonLayout onPress={() =>
+          openGoogleMaps(workshop?.address, workshop?.latitude, workshop?.longitude)
+        }>
+          <CarPinIcon />
+        </CrossPlatformButtonLayout>
+      </Marker>
+    </MapView>
+  </View>
+</View>
+
+    )}
+  </View>
+)}
+
               </View>
               <View className="mt-2.5">
                 <Text className="text-xl font-semibold">
