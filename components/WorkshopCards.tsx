@@ -101,7 +101,10 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
       commonOffset,
       workshopsPerPage,
       debouncedFilter,
-      user ?? undefined,
+      {
+        latitude: user?.coordinates?.latitude ?? 0,
+        longitude: user?.coordinates?.longitude ?? 0,
+      },
       0,
       {order, filter: workshopFilter},
     );
