@@ -30,7 +30,6 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
 }) => {
   const [loading, setLoading] = useState(false);
   const [onFormSubmit, setOnFormSubmit] = useState<(() => void) | null>(null);
-  const [forgotPasswordVisible, setForgotPasswordVisible] = useState(false);
   const navigation = useTicDriveNavigation();
   const {t} = useTranslation();
 
@@ -79,7 +78,7 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
           onPress={() => navigationPush(navigation, 'ForgotPasswordScreen')}
           containerTailwindCss="mx-8"
         >
-          <Text className={`font-medium ${isScreenSmall() && 'text-[13px]'} self-end`}>
+          <Text className={`font-medium ${isScreenSmall() && 'text-[13px]'} self-end underline`}>
             {t('login.forgot_password')}
           </Text>
         </CrossPlatformButtonLayout>
