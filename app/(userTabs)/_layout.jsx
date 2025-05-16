@@ -35,7 +35,11 @@ export default function UserTabLayout() {
             title: 'Home',
             headerShown: false,
             tabBarIcon: ({color}) => (
-              <HomeIcon width={isScreenSmall() ? smallSize : bigSize} fill={color} name="Home" />
+              <HomeIcon
+                width={isScreenSmall() ? smallSize : bigSize}
+                fill={color}
+                name="Home"
+              />
             ),
           }}
         />
@@ -58,9 +62,17 @@ export default function UserTabLayout() {
             headerShown: false,
             tabBarIcon: ({color}) =>
               color === PRESSED_COLOR ? (
-                <ServicesPressedIcon width={isScreenSmall() ? smallSize : bigSize} fill={color} name="Services" />
+                <ServicesPressedIcon
+                  width={isScreenSmall() ? smallSize : bigSize}
+                  fill={color}
+                  name="Services"
+                />
               ) : (
-                <ServicesIcon width={isScreenSmall() ? smallSize : bigSize} fill={color} name="Services" />
+                <ServicesIcon
+                  width={isScreenSmall() ? smallSize : bigSize}
+                  fill={color}
+                  name="Services"
+                />
               ),
           }}
           initialParams={{
@@ -75,7 +87,11 @@ export default function UserTabLayout() {
             title: t('bookings.title'),
             headerShown: false,
             tabBarIcon: ({color}) => (
-              <BookingsIcon width={isScreenSmall() ? smallSize : bigSize} fill={color} name="Home" />
+              <BookingsIcon
+                width={isScreenSmall() ? smallSize : bigSize}
+                fill={color}
+                name="Home"
+              />
             ),
           }}
         />
@@ -86,7 +102,11 @@ export default function UserTabLayout() {
             title: t('account'),
             headerShown: false,
             tabBarIcon: ({color}) => (
-              <AccountIcon  width={isScreenSmall() ? smallSize : bigSize} fill={color} name="Home" />
+              <AccountIcon
+                width={isScreenSmall() ? smallSize : bigSize}
+                fill={color}
+                name="Home"
+              />
             ),
           }}
         />

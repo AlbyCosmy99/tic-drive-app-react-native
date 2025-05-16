@@ -262,7 +262,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20
+    padding: 20,
   },
   error: {
     color: 'red',

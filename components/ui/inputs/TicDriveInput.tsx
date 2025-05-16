@@ -75,7 +75,11 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
         maxLength={maxLength}
         leftIcon={
           isLeftIcon ? (
-            <Icon name="search" size={isScreenSmall() ? 22 : 24} color={Colors.light.ticText} />
+            <Icon
+              name="search"
+              size={isScreenSmall() ? 22 : 24}
+              color={Colors.light.ticText}
+            />
           ) : undefined
         }
         rightIcon={

@@ -168,7 +168,11 @@ export default function UserHome() {
           canGoBack={false}
           rightContent={
             !token && (
-              <Entypo name="login" size={isScreenSmall() ? 26 : 32} color={Colors.light.ticText} />
+              <Entypo
+                name="login"
+                size={isScreenSmall() ? 26 : 32}
+                color={Colors.light.ticText}
+              />
             )
           }
           onRightContent={() => {
@@ -187,7 +191,10 @@ export default function UserHome() {
             isRightIcon={true}
             placeholder={t('workshops.searchWorkshop')}
             containerViewStyleTailwind={`flex-1 ${isScreenSmall() ? 'h-[50px]' : 'h-[60px]'}`}
-            inputContainerStyle={{marginTop: 4, height: isScreenSmall() ? 44 : 48}}
+            inputContainerStyle={{
+              marginTop: 4,
+              height: isScreenSmall() ? 44 : 48,
+            }}
             onChange={text => debouncedOnHomeSearch(text)}
           />
           {filter && (
@@ -217,7 +224,9 @@ export default function UserHome() {
             }
           >
             <View>
-              <Text className={`font-semibold ${isScreenSmall() ? 'text-lg' : 'text-xl'} m-2.5 mt-1`}>
+              <Text
+                className={`font-semibold ${isScreenSmall() ? 'text-lg' : 'text-xl'} m-2.5 mt-1`}
+              >
                 {t('home.findRightWorkshop')}
               </Text>
               <View>
@@ -256,7 +265,9 @@ export default function UserHome() {
               </View>
             </View>
             <View className="mt-2.5 mb-3">
-              <Text className={`font-semibold ${isScreenSmall() ? 'text-lg' : 'text-xl'} m-2.5 mb-0 mt-1`}>
+              <Text
+                className={`font-semibold ${isScreenSmall() ? 'text-lg' : 'text-xl'} m-2.5 mb-0 mt-1`}
+              >
                 {t('home.discoverServicesAndBook')}
               </Text>
               <SeeAllServicesCards
@@ -265,7 +276,9 @@ export default function UserHome() {
               />
             </View>
             <View className="mx-3 p-1 rounded-xl">
-              <Text className={`font-semibold ${isScreenSmall() ? 'text-lg' : 'text-xl'} m-2.5 mx-0 mt-1`}>
+              <Text
+                className={`font-semibold ${isScreenSmall() ? 'text-lg' : 'text-xl'} m-2.5 mx-0 mt-1`}
+              >
                 {t('reminder')}
               </Text>
 

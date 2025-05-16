@@ -50,17 +50,25 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
     </View>
   ) : (
     <>
-      <Text className={`text-center ${isScreenSmall() ? 'text-2xl': 'text-3xl'} font-medium m-1.5 mb-3`}>
+      <Text
+        className={`text-center ${isScreenSmall() ? 'text-2xl' : 'text-3xl'} font-medium m-1.5 mb-3`}
+      >
         {t('common.welcome')}
       </Text>
       <View className="flex-row justify-center gap-1">
         {action === 'login' ? (
-          <Text className={`${isScreenSmall() && 'text-[13px]'}`}>{t('login.dont_have_account')}</Text>
+          <Text className={`${isScreenSmall() && 'text-[13px]'}`}>
+            {t('login.dont_have_account')}
+          </Text>
         ) : (
-          <Text className={`${isScreenSmall() && 'text-[13px]'}`}>{t('login.already_have_account')}</Text>
+          <Text className={`${isScreenSmall() && 'text-[13px]'}`}>
+            {t('login.already_have_account')}
+          </Text>
         )}
         <TouchableOpacity onPress={handleSwitchLoginRegister}>
-          <Text className={`font-medium underline ${isScreenSmall() && 'text-[13px]'}`}>
+          <Text
+            className={`font-medium underline ${isScreenSmall() && 'text-[13px]'}`}
+          >
             {action === 'login'
               ? t('login.register_here')
               : t('login.login_here')}
@@ -78,7 +86,9 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
           onPress={() => navigationPush(navigation, 'ForgotPasswordScreen')}
           containerTailwindCss="mx-8"
         >
-          <Text className={`font-medium ${isScreenSmall() && 'text-[13px]'} self-end underline`}>
+          <Text
+            className={`font-medium ${isScreenSmall() && 'text-[13px]'} self-end underline`}
+          >
             {t('login.forgot_password')}
           </Text>
         </CrossPlatformButtonLayout>
@@ -96,7 +106,7 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
           <View style={styles.hr} />
         </View>
         <View className="flex-row mx-3.5">
-          <OAuth2Button text="Google" icon={<GoogleIcon/>} />
+          <OAuth2Button text="Google" icon={<GoogleIcon />} />
           <OAuth2Button text="Apple ID" icon={<AppleIcon />} />
         </View>
         <View className="flex-row justify-center gap-1 flex-wrap text-center mx-3.5 my-3 mb-8">
