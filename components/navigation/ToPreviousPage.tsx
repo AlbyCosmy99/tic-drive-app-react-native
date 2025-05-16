@@ -2,10 +2,9 @@ import {Colors} from '@/constants/Colors';
 import {Ionicons} from '@expo/vector-icons';
 import React, {useContext} from 'react';
 import {useColorScheme} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {router} from 'expo-router';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import CrossPlatformButtonLayout from '../ui/buttons/CrossPlatformButtonLayout';
+import isScreenSmall from '@/services/responsive/isScreenSmall';
 
 interface ToPreviousPageProps {
   containerClassName?: string;
@@ -25,7 +24,7 @@ const ToPreviousPage: React.FC<ToPreviousPageProps> = ({
       // accessible={true}
       // accessibilityLabel="Back to previous page"
     >
-      <Ionicons name="arrow-back" size={30} color={Colors.white} />
+      <Ionicons name="arrow-back" size={isScreenSmall() ? 26 : 30} color={Colors.white} />
     </CrossPlatformButtonLayout>
   );
 };

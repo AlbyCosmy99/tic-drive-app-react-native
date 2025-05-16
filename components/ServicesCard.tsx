@@ -12,7 +12,7 @@ import {
 import {TouchableWithoutFeedback} from 'react-native';
 import CheckCircle from '@/assets/svg/check_circle.svg';
 import CarRepair from '@/assets/svg/servicesIcons/car_repair.svg'; //default icon
-import smallDevicebreakpointHeight from '@/constants/smallDevicebreakpointHeight';
+import smallDevicebreakpointHeight from '@/constants/dimensions/smallDevicebreakpointHeight';
 import {Dimensions} from 'react-native';
 import LottieView from 'lottie-react-native';
 import {UserCategory} from '@/types/User';

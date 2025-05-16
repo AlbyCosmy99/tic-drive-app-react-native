@@ -40,6 +40,7 @@ import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 import MapModal from '@/components/modal/MapModal';
 import getAllWorkshops from '@/services/http/requests/get/workshops/getAllWorkshops';
 import getNearbyWorkshops from '@/services/http/requests/get/workshops/getNearbyWorkshops';
+import isScreenSmall from '@/services/responsive/isScreenSmall';
 
 export default function UserHome() {
   const [filter, setFilter] = useState('');
@@ -167,7 +168,7 @@ export default function UserHome() {
           canGoBack={false}
           rightContent={
             !token && (
-              <Entypo name="login" size={32} color={Colors.light.ticText} />
+              <Entypo name="login" size={isScreenSmall() ? 26 : 32} color={Colors.light.ticText} />
             )
           }
           onRightContent={() => {
@@ -216,7 +217,7 @@ export default function UserHome() {
             }
           >
             <View>
-              <Text className="font-semibold text-xl m-2.5 mt-1">
+              <Text className={`font-semibold ${isScreenSmall() ? 'text-lg' : 'text-xl'} m-2.5 mt-1`}>
                 {t('home.findRightWorkshop')}
               </Text>
               <View>
@@ -255,7 +256,7 @@ export default function UserHome() {
               </View>
             </View>
             <View className="mt-1 mb-3">
-              <Text className="font-semibold text-xl m-2.5 mt-1">
+              <Text className={`font-semibold ${isScreenSmall() ? 'text-lg' : 'text-xl'} m-2.5 mt-1`}>
                 {t('home.discoverServicesAndBook')}
               </Text>
               <SeeAllServicesCards
@@ -263,8 +264,8 @@ export default function UserHome() {
                 topHorizontalLine={false}
               />
             </View>
-            <View className="mx-3 mb-1 p-1 pb-2 rounded-xl">
-              <Text className="font-semibold text-xl m-2.5 mt-1">
+            <View className="mx-3 p-1 rounded-xl">
+              <Text className={`font-semibold ${isScreenSmall() ? 'text-lg' : 'text-xl'} m-2.5 mt-1`}>
                 {t('reminder')}
               </Text>
 

@@ -6,7 +6,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {Image} from '@rneui/themed';
 import TicDriveLogo from '../../assets/images/TicDriveLogo.jpeg';
 import UserAuthenticationContent from '@/components/auth/UserAuthentificationContent';
-import smallDevicebreakpointHeight from '@/constants/smallDevicebreakpointHeight';
+import smallDevicebreakpointHeight from '@/constants/dimensions/smallDevicebreakpointHeight';
 import {Dimensions} from 'react-native';
 import AuthAction from '@/types/auth/Action';
 import {useRoute} from '@react-navigation/native';

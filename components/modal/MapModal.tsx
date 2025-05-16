@@ -65,7 +65,7 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
     setLoadingWorkshops(true);
 
     try {
-      const response = await getNearbyWorkshops(token ?? '', 0, 2, '', {
+      const response = await getNearbyWorkshops(token ?? '', 0, 50, '', {
         latitude: userLocation.latitude,
         longitude: userLocation.longitude,
       });

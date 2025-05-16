@@ -6,6 +6,7 @@ import {
   StyleProp,
   StyleSheet,
   Text,
+  useWindowDimensions,
   View,
   ViewStyle,
 } from 'react-native';
@@ -22,6 +23,7 @@ import WorkshopReviewinfo from './workshop/reviews/WorkshopReviewInfo';
 import Workshop from '@/types/workshops/Workshop';
 import getUserMainImage from '@/utils/files/getUserMainImage';
 import CrossPlatformButtonLayout from './ui/buttons/CrossPlatformButtonLayout';
+import isScreenSmall from '@/services/responsive/isScreenSmall';
 
 interface WorkshopCardProps {
   workshop: Workshop;
@@ -54,6 +56,8 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
     navigationPush(navigation, 'WorkshopDetailsScreen');
     dispatch(setSelectedWorkshop(workshop));
   };
+
+  const workshopNameTextSize = isScreenSmall() ? 'text-lg' : 'text-xl';
 
   return (
     <Pressable
@@ -92,13 +96,14 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
           className={`mb-1.5 px-3 pb-1 pt-2 ${iconTextPairsContainerTailwindCss}`}
         >
           <IconTextPair
-            containerTailwindCss={`py-1.5 ${iconTextPairContainerTailwindCss}`}
-            textTailwindCss={`text-xl font-semibold ${iconTextPairTextTailwindCss}`}
+            containerTailwindCss={`${isScreenSmall() ? 'py-1' : 'py-1.5'} pr-1 ${iconTextPairContainerTailwindCss}`}
+            textTailwindCss={`${workshopNameTextSize} font-semibold ${iconTextPairTextTailwindCss}`}
             text={workshop.workshopName}
             icon={<GreenCheckIcon />}
           />
+
           <IconTextPair
-            containerTailwindCss={`py-1.5 pr-[15px] ${iconTextPairContainerTailwindCss}`}
+            containerTailwindCss={`${isScreenSmall() ? 'py-1' : 'py-1.5'} pr-5 ${iconTextPairContainerTailwindCss}`}
             textTailwindCss={`text-sm font-medium underline ${iconTextPairTextTailwindCss}`}
             text={workshop.address}
             icon={<PinLocationIcon />}
@@ -106,7 +111,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
           <WorkshopReviewinfo
             meanStars={workshop?.meanStars}
             numberOfReviews={workshop?.numberOfReviews}
-            containerTailwindCss={`py-1.5 ${iconTextPairContainerTailwindCss}`}
+            containerTailwindCss={`${isScreenSmall() ? 'py-1' : 'py-1.5'} ${iconTextPairContainerTailwindCss}`}
             textTailwindCss={`text-sm font-medium underline ${iconTextPairTextTailwindCss}`}
           />
         </View>
@@ -170,7 +175,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 160,
+    height: isScreenSmall() ? 110 : 150,
     borderRadius: 14,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,

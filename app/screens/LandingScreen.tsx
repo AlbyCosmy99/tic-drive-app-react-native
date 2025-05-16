@@ -10,10 +10,10 @@ import CarRepairService from '@/assets/svg/carRepairService.svg';
 import {MotiView} from 'moti';
 import {useContext, useState} from 'react';
 import {Dimensions} from 'react-native';
-import smallDevicebreakpointHeight from '@/constants/smallDevicebreakpointHeight';
 import {globalStyles} from '@/styles/globalStyles';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import navigationPush from '@/services/navigation/push';
+import smallDevicebreakpointHeight from '@/constants/dimensions/smallDevicebreakpointHeight';
 
 const {width, height} = Dimensions.get('window');
 

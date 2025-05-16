@@ -18,6 +18,7 @@ import TicDriveAuthButton from '../ui/buttons/TicDriveAuthButton';
 import navigationPush from '@/services/navigation/push';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import CrossPlatformButtonLayout from '../ui/buttons/CrossPlatformButtonLayout';
+import isScreenSmall from '@/services/responsive/isScreenSmall';
 
 interface TicDriveNavbarProps {
   isLoginAvailable?: boolean;
@@ -66,13 +67,13 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
           className="flex-row flex-1 justify-center items-center"
         >
           <Text
-            className="font-bold text-3xl"
+            className={`font-bold ${isScreenSmall() ? 'text-2xl' : 'text-3xl'}`}
             style={[styles.title, styles.ticText]}
           >
             Tic
           </Text>
           <Text
-            className="font-bold text-3xl"
+            className={`font-bold ${isScreenSmall() ? 'text-2xl' : 'text-3xl'}`}
             style={[styles.title, styles.driveText]}
           >
             Drive
