@@ -11,11 +11,14 @@ import UserAccount from './Account';
 import ChooseServicesScreen from '../screens/ChooseServicesScreen';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useTranslation} from 'react-i18next';
+import isScreenSmall from '@/services/responsive/isScreenSmall';
 
 const Tab = createBottomTabNavigator();
 
 export default function UserTabLayout() {
   const {t} = useTranslation();
+  const smallSize = 20;
+  const bigSize = 28;
 
   const PRESSED_COLOR = Colors.light.green.drive;
   return (
@@ -32,7 +35,7 @@ export default function UserTabLayout() {
             title: 'Home',
             headerShown: false,
             tabBarIcon: ({color}) => (
-              <HomeIcon width={28} fill={color} name="Home" />
+              <HomeIcon width={isScreenSmall() ? smallSize : bigSize} fill={color} name="Home" />
             ),
           }}
         />
@@ -43,7 +46,7 @@ export default function UserTabLayout() {
             title: 'Chat',
             headerShown: false,
             tabBarIcon: ({color}) => (
-              <ChatIcon width={28} fill={color} name="Home" />
+              <ChatIcon width={isScreenSmall() ? smallSize : bigSize} fill={color} name="Home" />
             ),
           }}
         /> */}
@@ -55,9 +58,9 @@ export default function UserTabLayout() {
             headerShown: false,
             tabBarIcon: ({color}) =>
               color === PRESSED_COLOR ? (
-                <ServicesPressedIcon width={28} fill={color} name="Services" />
+                <ServicesPressedIcon width={isScreenSmall() ? smallSize : bigSize} fill={color} name="Services" />
               ) : (
-                <ServicesIcon width={28} fill={color} name="Services" />
+                <ServicesIcon width={isScreenSmall() ? smallSize : bigSize} fill={color} name="Services" />
               ),
           }}
           initialParams={{
@@ -72,7 +75,7 @@ export default function UserTabLayout() {
             title: t('bookings.title'),
             headerShown: false,
             tabBarIcon: ({color}) => (
-              <BookingsIcon width={28} fill={color} name="Home" />
+              <BookingsIcon width={isScreenSmall() ? smallSize : bigSize} fill={color} name="Home" />
             ),
           }}
         />
@@ -83,7 +86,7 @@ export default function UserTabLayout() {
             title: t('account'),
             headerShown: false,
             tabBarIcon: ({color}) => (
-              <AccountIcon width={28} fill={color} name="Home" />
+              <AccountIcon  width={isScreenSmall() ? smallSize : bigSize} fill={color} name="Home" />
             ),
           }}
         />

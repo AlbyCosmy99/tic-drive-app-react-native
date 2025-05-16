@@ -186,8 +186,8 @@ export default function UserHome() {
             isLeftIcon={true}
             isRightIcon={true}
             placeholder={t('workshops.searchWorkshop')}
-            containerViewStyleTailwind="flex-1 h-[60px]"
-            inputContainerStyle={{marginTop: 4, height: 48}}
+            containerViewStyleTailwind={`flex-1 ${isScreenSmall() ? 'h-[50px]' : 'h-[60px]'}`}
+            inputContainerStyle={{marginTop: 4, height: isScreenSmall() ? 44 : 48}}
             onChange={text => debouncedOnHomeSearch(text)}
           />
           {filter && (
@@ -255,8 +255,8 @@ export default function UserHome() {
                 </View>
               </View>
             </View>
-            <View className="mt-1 mb-3">
-              <Text className={`font-semibold ${isScreenSmall() ? 'text-lg' : 'text-xl'} m-2.5 mt-1`}>
+            <View className="mt-2.5 mb-3">
+              <Text className={`font-semibold ${isScreenSmall() ? 'text-lg' : 'text-xl'} m-2.5 mb-0 mt-1`}>
                 {t('home.discoverServicesAndBook')}
               </Text>
               <SeeAllServicesCards
@@ -265,7 +265,7 @@ export default function UserHome() {
               />
             </View>
             <View className="mx-3 p-1 rounded-xl">
-              <Text className={`font-semibold ${isScreenSmall() ? 'text-lg' : 'text-xl'} m-2.5 mt-1`}>
+              <Text className={`font-semibold ${isScreenSmall() ? 'text-lg' : 'text-xl'} m-2.5 mx-0 mt-1`}>
                 {t('reminder')}
               </Text>
 

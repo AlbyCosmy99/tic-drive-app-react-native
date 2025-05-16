@@ -11,6 +11,7 @@ import {Icon, Input} from '@rneui/themed';
 import {Colors} from '@/constants/Colors';
 import React, {memo, useState} from 'react';
 import CrossPlatformButtonLayout from '../buttons/CrossPlatformButtonLayout';
+import isScreenSmall from '@/services/responsive/isScreenSmall';
 
 interface TicDriveInputProps {
   placeholder?: string;
@@ -74,7 +75,7 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
         maxLength={maxLength}
         leftIcon={
           isLeftIcon ? (
-            <Icon name="search" size={24} color={Colors.light.ticText} />
+            <Icon name="search" size={isScreenSmall() ? 22 : 24} color={Colors.light.ticText} />
           ) : undefined
         }
         rightIcon={
@@ -138,12 +139,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderBottomWidth: 0,
     marginTop: 20,
-    height: 55,
+    height: isScreenSmall() ? 50 : 55,
     width: '100%',
   },
   inputText: {
     color: Colors.light.text,
-    fontSize: 18,
+    fontSize: isScreenSmall() ? 16 : 18,
     marginLeft: 8,
   },
 });

@@ -11,6 +11,7 @@ import {Dimensions} from 'react-native';
 import AuthAction from '@/types/auth/Action';
 import {useRoute} from '@react-navigation/native';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
+import isScreenSmall from '@/services/responsive/isScreenSmall';
 const {height} = Dimensions.get('window');
 
 export default function UserAuthenticationScreen() {
@@ -36,8 +37,8 @@ export default function UserAuthenticationScreen() {
     <SafeAreaViewLayout tailwindCss="flex-1 bg-white pt-2">
       <View className="flex-1 justify-between">
         <View>
-          <View style={{height: 60}}>
-            <ToPreviousPage containerClassName="m-2 mb-7" />
+          <View style={{height: isScreenSmall() ? 40 : 60}}>
+            <ToPreviousPage containerClassName="m-2 " />
           </View>
           <View className="justify-center items-center">
             <Image source={TicDriveLogo} style={styles.logoImage} />
@@ -73,8 +74,8 @@ const styles = StyleSheet.create({
     color: Colors.light.placeholderText,
   },
   logoImage: {
-    width: height > smallDevicebreakpointHeight ? 180 : 150,
-    height: height > smallDevicebreakpointHeight ? 180 : 150,
+    width: isScreenSmall() ? 150 : 180,
+    height: isScreenSmall() ? 150 : 180,
     resizeMode: 'contain',
   },
 });

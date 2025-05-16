@@ -24,7 +24,7 @@ const ToPreviousPage: React.FC<ToPreviousPageProps> = ({
       // accessible={true}
       // accessibilityLabel="Back to previous page"
     >
-      <Ionicons name="arrow-back" size={isScreenSmall() ? 26 : 30} color={Colors.white} />
+      <Ionicons name="arrow-back" size={isScreenSmall() ? 28 : 30} color={Colors.white} />
     </CrossPlatformButtonLayout>
   );
 };
