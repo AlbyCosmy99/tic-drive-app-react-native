@@ -34,6 +34,7 @@ interface WorkshopCardProps {
   iconTextPairContainerTailwindCss?: string;
   iconTextPairTextTailwindCss?: string;
   imageContainerStyle?: StyleProp<ViewStyle>;
+  addressContainerTailwindCss?: string;
 }
 
 const WorkshopCard: React.FC<WorkshopCardProps> = ({
@@ -45,6 +46,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
   iconTextPairTextTailwindCss,
   imageContainerStyle,
   isServiceDetailsEnabled = true,
+  addressContainerTailwindCss
 }) => {
   const servicesChoosenByUsers = useAppSelector(
     state => state.services.servicesChoosenByUsers,
@@ -103,7 +105,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
           />
 
           <IconTextPair
-            containerTailwindCss={`${isScreenSmall() ? 'py-1' : 'py-1.5'} pr-5 ${iconTextPairContainerTailwindCss}`}
+            containerTailwindCss={`${isScreenSmall() ? 'py-1' : 'py-1.5'} pr-5 ${iconTextPairContainerTailwindCss} ${addressContainerTailwindCss}`}
             textTailwindCss={`text-sm font-medium underline ${iconTextPairTextTailwindCss}`}
             text={workshop.address}
             icon={<PinLocationIcon />}

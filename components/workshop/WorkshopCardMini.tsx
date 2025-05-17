@@ -9,8 +9,9 @@ function WorkshopCardMini({workshop}: {workshop: Workshop}) {
       pressableContainerStyle={{padding: 0, paddingHorizontal: 2}}
       iconTextPairsContainerTailwindCss="px-0.5 pb-0 pt-0.5 justify-between h-24 mx-0.5 my-0.5"
       iconTextPairTextTailwindCss="text-[11px] mr-1"
-      iconTextPairContainerTailwindCss="gap-1 py-0.5 min-h-14 pr-0.5"
-      imageContainerStyle={{height: 80}}
+      iconTextPairContainerTailwindCss="gap-1 py-0 min-h-14 pr-0.5"
+      addressContainerTailwindCss='h-[65px]'
+      imageContainerStyle={{height: 70}}
       viewContainerStyle={{height: 190}}
       isServiceDetailsEnabled={false}
     />
