@@ -179,10 +179,9 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
         rules={{
           required: 'Password is required',
           pattern: {
-            value:
-              /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+            value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$/,
             message:
-              'Password must be at least 8 characters long, include letters (at least one uppercase), numbers, and at least one special character',
+              'Password must be at least 8 characters long, include at least one uppercase letter, one lowercase letter, and one number.',
           },
         }}
         render={({field: {onChange, value}}) => (
