@@ -92,6 +92,11 @@
     "name": "Name",
     "cv": "Horsepower (HP)"
   },
+  "car_registration": {
+  "success_title": "Car Registered",
+  "success_subtitle": "Congratulations! Your car has been registered successfully. Continue to the profile, where you can see your vehicles."
+},
+
   "home": {
     "notifications": {
       "first": "Last service: 12 months ago.\nSchedule now!",
