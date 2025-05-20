@@ -33,7 +33,7 @@ const TicDriveTextOrInput: React.FC<TicDriveTextOrInputProps> = ({
         placeholder={placeholder}
         customValue={value}
         onChange={text => setValue(text)}
-        isRightIcon
+        existsRightIcon
         onRightIcon={() => setIsErrorMessage(false)}
         keyboardType={keyboardType}
         returnKeyType="done"

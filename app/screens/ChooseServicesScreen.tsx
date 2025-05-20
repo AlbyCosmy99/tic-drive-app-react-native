@@ -95,8 +95,8 @@ export default function ChooseServicesScreen() {
         <View className="flex-1 justify-between">
           <View className="flex-row items-center relative">
             <TicDriveInput
-              isLeftIcon={true}
-              isRightIcon={true}
+              existsLeftIcon
+              existsRightIcon
               placeholder={t('service.searchService')}
               containerViewStyleTailwind="flex-1 h-[60px]"
               inputContainerStyle={{marginTop: 4, height: 48}}

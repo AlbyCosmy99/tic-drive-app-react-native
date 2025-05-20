@@ -1,18 +1,12 @@
-import React from 'react';
 import {Text, View, Linking, TouchableOpacity} from 'react-native';
-
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import LinearGradientViewLayout from '@/app/layouts/LinearGradientViewLayout';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
-
 import PhoneIcon from '@/assets/svg/notifications/phone.svg';
 import MailIcon from '@/assets/svg/notifications/mail.svg';
-
-import {useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 
 export default function SupportScreen() {
-  const navigation = useNavigation();
   const {t} = useTranslation();
 
   const options = [
