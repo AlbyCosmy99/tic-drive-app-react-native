@@ -71,6 +71,7 @@
     "reviews": "Vedi tutte le recensioni"
   },
   "vehicles": {
+   "confirmCarInformation": "Conferma le informazioni dell’auto",
     "registerVehicle": "Registra veicolo",
     "handleVehicles": "Gestisci veicoli",
     "registerVehicleForBookings": "Registra il tuo veicolo per effettuare una prenotazione",

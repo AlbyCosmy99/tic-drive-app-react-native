@@ -64,6 +64,7 @@
     "reviews": "See All Reviews"
   },
   "vehicles": {
+    "confirmCarInformation": "Confirm car informations",
     "registerVehicle": "Register Vehicle",
     "handleVehicles": "Manage Vehicles",
     "registerVehicleForBookings": "Register your vehicle to make a booking",
