@@ -21,7 +21,14 @@
     "title": "Bookings",
     "confirmed": "Booking Confirmed"
   },
-    "logic": {
+  "supports": {
+    "title": "Need help or have a question?",
+    "subtitle": "Our support team is here to assist you. Choose a contact option below.",
+    "email_us": "Email us",
+    "call_support": "Call support",
+    "footer_message": "We're always here for you! 🤗"
+  },
+  "logic": {
     "or": "Or"
   },
   "noReviewsYet": "No reviews yet. Book a service to be the first to review.",
@@ -44,8 +51,7 @@
     "chooseService": "Choose Service",
     "searchService": "Search Service",
     "oilChange": "Oil Change",
-   "chooseVehicle": "Choose the vehicle"
-
+    "chooseVehicle": "Choose the vehicle"
   },
   "continue": "Continue",
   "date": {
@@ -75,18 +81,16 @@
     "choose_car_year": "Choose car year",
     "search_car_year": "Search car year",
     "fuel": "Fuel",
-     "search_fuel_type": "Search fuel type",
-     "transmission": "Transmission",
-     "search_transmission": "Search transmission",
-     "engine_size": "Engine displacement",
-     "mileage": "Mileage",
-     "plate": "Plate number",
-      "year": "Year",
-       "orRegisterNewCar": "or register a new vehicle",
-      "name": "Name",
-   "cv": "Horsepower (HP)"
-
-
+    "search_fuel_type": "Search fuel type",
+    "transmission": "Transmission",
+    "search_transmission": "Search transmission",
+    "engine_size": "Engine displacement",
+    "mileage": "Mileage",
+    "plate": "Plate number",
+    "year": "Year",
+    "orRegisterNewCar": "or register a new vehicle",
+    "name": "Name",
+    "cv": "Horsepower (HP)"
   },
   "car_registration": {
   "success_title": "Car Registered",
@@ -194,7 +198,6 @@
     "deletedMock": "Account deleted (mock)",
     "delete": "Delete",
     "dangerZone": "Danger zone"
-
   },
   "changePassword": {
     "setNewPassword": "Set a new password",

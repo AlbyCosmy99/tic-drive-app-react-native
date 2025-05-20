@@ -136,7 +136,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
             render={({field: {onChange, value}}) => (
               <TicDriveInput
                 placeholder="Name"
-                isRightIcon={true}
+                existsRightIcon
                 customValue={value}
                 onChange={onChange}
                 inputContainerStyle={styles.inputContainerStyle}
@@ -163,7 +163,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
         render={({field: {onChange, value}}) => (
           <TicDriveInput
             placeholder="Email"
-            isRightIcon={true}
+            existsRightIcon
             customValue={value}
             onChange={onChange}
             inputContainerStyle={styles.inputContainerStyle}
@@ -179,7 +179,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
         rules={{
           required: 'Password is required',
           pattern: {
-            value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+            value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/,
             message:
               'Password must be at least 8 characters long, include at least one uppercase letter, one lowercase letter, and one number.',
           },
@@ -187,7 +187,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
         render={({field: {onChange, value}}) => (
           <TicDriveInput
             placeholder="Password"
-            isRightIcon={true}
+            existsRightIcon
             customValue={value}
             onChange={onChange}
             inputContainerStyle={styles.inputContainerStyle}
@@ -228,7 +228,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
               <TicDriveInput
                 containerViewStyleTailwind="mt-4"
                 placeholder="Repeat Password"
-                isRightIcon={true}
+                existsRightIcon
                 customValue={value}
                 onChange={onChange}
                 inputContainerStyle={styles.inputContainerStyle}

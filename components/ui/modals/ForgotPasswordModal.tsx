@@ -78,7 +78,7 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
               <>
                 <TicDriveInput
                   placeholder="Email"
-                  isRightIcon={true}
+                  existsRightIcon
                   customValue={value}
                   onChange={onChange}
                   inputContainerStyle={styles.inputContainerStyle}
