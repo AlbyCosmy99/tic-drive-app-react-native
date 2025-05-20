@@ -37,9 +37,9 @@ const Hub = () => {
               navigationReset(
                 navigation,
                 0,
-                user?.category === 'workshop' ? 'workshopTabs' : 'userTabs',
+                'userTabs',
                 {animation: 'fade'},
-                user?.category === 'workshop' ? 'Requests' : 'Home',
+                'Home',
               );
             } else {
               navigationReset(navigation, 0, 'ConfirmEmailScreen', {

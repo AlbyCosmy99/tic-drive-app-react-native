@@ -15,8 +15,6 @@ import ChooseServicesScreen from './screens/ChooseServicesScreen';
 import UserAuthenticationScreen from './screens/UserAuthenticationScreen';
 import RegisterVehicleScreen from './screens/user/RegisterVehicleScreen';
 import SelectVehicleScreen from './screens/user/SelectVehicleScreen';
-
-import WorkshopTabLayout from './(workshopTabs)/_layout';
 import userTabLayout from './(userTabs)//_layout';
 import WorkshopDetailsScreen from './screens/user/WorkshopDetailsScreen';
 import BookingConfirmationScreen from './screens/user/BookingConfirmationScreen';
@@ -128,15 +126,6 @@ export default function RootLayout() {
                         component={WorkshopsListScreen}
                         options={({route}) => ({
                           title: 'WorkshopsListScreen',
-                          headerShown: false,
-                          animation: getAnimation(route),
-                        })}
-                      />
-                      <Stack.Screen
-                        name="workshopTabs"
-                        component={WorkshopTabLayout}
-                        options={({route}) => ({
-                          title: 'workshopTabs',
                           headerShown: false,
                           animation: getAnimation(route),
                         })}

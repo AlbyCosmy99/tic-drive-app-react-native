@@ -5,10 +5,6 @@ import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
 import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
 import CheckIcon from '@/assets/svg/check_circle.svg';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
-import {
-  reset,
-  setServicesChoosenByUsers,
-} from '@/stateManagement/redux/slices/servicesSlice';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import formatCurrentDate from '@/utils/dates/FormatCurrentDate';
 import PaymentConfirmationCard from '@/components/ui/cards/payment/PaymentConfirmationCard';
@@ -18,6 +14,7 @@ import CarContext from '@/stateManagement/contexts/car/CarContext';
 import axiosClient from '@/services/http/axiosClient';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import {t} from 'i18next';
+import {setService} from '@/stateManagement/redux/slices/bookingSlice';
 
 export default function BookingConfirmationScreen() {
   const dispatch = useAppDispatch();
@@ -30,7 +27,7 @@ export default function BookingConfirmationScreen() {
     time: string;
   };
 
-  const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
+  const workshop = useAppSelector(state => state.booking.workshop);
   const carSelected = useAppSelector(state => state.cars.selectedCar);
 
   const [
@@ -41,7 +38,7 @@ export default function BookingConfirmationScreen() {
   const timeDate = useMemo(() => time + ', ' + date, [date, time]);
 
   const onConfirmToHome = () => {
-    dispatch(reset());
+    dispatch(setService(undefined));
     if (setCarSelectedByMakeAndModel) {
       setCarSelectedByMakeAndModel(undefined);
     }
@@ -88,7 +85,7 @@ export default function BookingConfirmationScreen() {
 
   useEffect(() => {
     dispatch(
-      setServicesChoosenByUsers({
+      setService({
         id: 1,
         title: t('service.oilChange'),
         description: t('service.oilChange'),

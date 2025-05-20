@@ -4,13 +4,12 @@ this is because the login button is the default right content, and if the prop
 right content is given, this will override the default node
 */
 
-import {View, Text, StyleSheet, useColorScheme} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import {Colors} from '@/constants/Colors';
-import {StackActions, useFocusEffect} from '@react-navigation/native';
+import {StackActions} from '@react-navigation/native';
 import ToPreviousPage from './ToPreviousPage';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
-import {reset} from '@/stateManagement/redux/slices/servicesSlice';
 import {useContext} from 'react';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import navigationReplace from '@/services/navigation/replace';
@@ -19,6 +18,7 @@ import navigationPush from '@/services/navigation/push';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import CrossPlatformButtonLayout from '../ui/buttons/CrossPlatformButtonLayout';
 import isScreenSmall from '@/services/responsive/isScreenSmall';
+import {setService} from '@/stateManagement/redux/slices/bookingSlice';
 
 interface TicDriveNavbarProps {
   isLoginAvailable?: boolean;
@@ -61,7 +61,7 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
             if (navigation?.canGoBack()) {
               navigation.dispatch(StackActions.popToTop());
             }
-            dispatch(reset());
+            dispatch(setService(undefined));
             navigationReplace(navigation, 'Hub');
           }}
           className="flex-row flex-1 justify-center items-center"

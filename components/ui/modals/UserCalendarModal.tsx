@@ -24,7 +24,7 @@ import TicDriveButton from '../buttons/TicDriveButton';
 import {Colors} from '@/constants/Colors';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
 import useJwtToken from '@/hooks/auth/useJwtToken';
-import {useAppSelector} from '@/stateManagement/redux/hooks';
+import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import {useTranslation} from 'react-i18next';
 import generateTimeSlots from '@/utils/datetime/generateTimeSlots';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -37,11 +37,14 @@ import CrossPlatformButtonLayout from '../buttons/CrossPlatformButtonLayout';
 import {WorkshopWorkingHours} from '@/types/workshops/WorkshopWorkingHours';
 import getWorkshopWorkingHours from '@/services/http/requests/datetime/getWorkshopWorkingHours';
 import TicDriveSpinner from '../spinners/TicDriveSpinner';
+import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
+import Service from '@/types/Service';
+import {setService} from '@/stateManagement/redux/slices/bookingSlice';
 
 const {height} = Dimensions.get('window');
 
 export interface UserCalendarModalRef {
-  openModal: () => void;
+  openModal: (service?: Service) => void;
   closeModal: () => void;
 }
 
@@ -63,34 +66,39 @@ const UserCalendarModal = forwardRef<
   const token = useJwtToken();
   const {setErrorMessage} = useGlobalErrors();
   const {setLoginRouteName, setLoginRouteParams} = useContext(AuthContext);
-  const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
-  const service = useAppSelector(
-    state => state.services.servicesChoosenByUsers,
-  )[0];
+  const workshop = useAppSelector(state => state.booking.workshop);
+  const serviceChoosen = useServiceChoosenByCustomer();
   const carSelected = useAppSelector(state => state.cars.selectedCar);
   const {t} = useTranslation();
   const languageCode = useAppSelector(state => state.language.languageCode);
+  const [
+    serviceSelectedFromWorkshopDetails,
+    setServiceSelectedFromWorkshopDetails,
+  ] = useState<Service | undefined>(undefined);
 
-  const buttonText = useMemo(() => {
-    if (!service) return t('service.chooseService');
-    if (!carSelected) return t('vehicles.registerVehicle');
-    return 'Confirm ' + (!token ? 'and login' : '');
-  }, [token, service, carSelected]);
+  const hasService = !!serviceChoosen || !!serviceSelectedFromWorkshopDetails;
 
-  const routeName = useMemo(() => {
-    if (!service) return 'ChooseServicesScreen';
-    return token
+  const buttonText = !hasService
+    ? t('service.chooseService')
+    : !carSelected
+      ? t('vehicles.registerVehicle')
+      : 'Confirm ' + (!token ? 'and login' : '');
+
+  const routeName = !hasService
+    ? 'ChooseServicesScreen'
+    : token
       ? carSelected
         ? 'ReviewBookingDetailsScreen'
         : 'RegisterVehicleScreen'
       : 'UserAuthenticationScreen';
-  }, [token, service]);
 
   const [workingDays, setWorkingDays] = useState<string[]>([]);
   const [customDisabledDays, setCustomeDisabledDays] = useState<string[]>([]);
   const [workingHours, setWorkingHours] = useState<WorkshopWorkingHours | null>(
     null,
   );
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -148,13 +156,17 @@ const UserCalendarModal = forwardRef<
     return range;
   }, [workingHours]);
 
-  const openModal = (): void => {
+  const openModal = (service?: Service): void => {
     setModalVisible(true);
     Animated.timing(slideAnim, {
       toValue: 0,
       duration: 300,
       useNativeDriver: true,
     }).start();
+    if (service) {
+      console.log('eheeee');
+      setServiceSelectedFromWorkshopDetails(service);
+    }
   };
 
   const closeModal = (): void => {
@@ -178,6 +190,9 @@ const UserCalendarModal = forwardRef<
     closeModal();
     setLoginRouteName('ReviewBookingDetailsScreen');
     setLoginRouteParams({workshop, date: selectedDate, time: selectedTime});
+    if (serviceSelectedFromWorkshopDetails) {
+      dispatch(setService(serviceSelectedFromWorkshopDetails));
+    }
   };
 
   const panResponder = useRef(
@@ -258,7 +273,11 @@ const UserCalendarModal = forwardRef<
     <>
       {showButton && (
         <TicDriveButton
-          text={service?.title ? t('bookNow') : t('service.bookAService')}
+          text={
+            serviceChoosen || serviceSelectedFromWorkshopDetails
+              ? t('bookNow')
+              : t('service.bookAService')
+          }
           onClick={openModal}
           customButtonStyle={styles.customButtonStyle}
           customContainerStyle={{width: '100%'}}
@@ -300,7 +319,7 @@ const UserCalendarModal = forwardRef<
                                 weekday: 'long',
                               })
                               .toLowerCase();
-                            console.log(disabledDates);
+
                             if (
                               disabledDates[day.dateString] ||
                               workingDays.includes(dayOfWeek)

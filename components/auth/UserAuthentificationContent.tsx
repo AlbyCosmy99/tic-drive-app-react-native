@@ -7,7 +7,6 @@ import GoogleIcon from '@/assets/svg/OAuth2Icons/GoogleIcon';
 import AppleIcon from '@/assets/svg/OAuth2Icons/AppleIcon';
 import {Colors} from '@/constants/Colors';
 import React, {useState} from 'react';
-import {UserCategory} from '@/types/User';
 import AuthAction from '@/types/auth/Action';
 import CrossPlatformButtonLayout from '../ui/buttons/CrossPlatformButtonLayout';
 import navigationPush from '@/services/navigation/push';
@@ -19,14 +18,12 @@ interface UserAuthenticationContentProps {
   action: AuthAction;
   isUserRegistering: boolean;
   setIsUserRegistering: (isUserRegistering: boolean) => void;
-  clientCategory?: UserCategory;
 }
 
 const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
   action,
   isUserRegistering,
   setIsUserRegistering,
-  clientCategory = 'user',
 }) => {
   const [loading, setLoading] = useState(false);
   const [onFormSubmit, setOnFormSubmit] = useState<(() => void) | null>(null);
@@ -79,7 +76,6 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
         <UserAuthenticationForm
           isUserRegistering={isUserRegistering}
           setOnFormSubmit={setOnFormSubmit}
-          clientCategory={clientCategory}
           setLoading={setLoading}
         />
         <CrossPlatformButtonLayout

@@ -27,14 +27,12 @@ type FormData = {
 interface UserAuthenticationFormProps {
   isUserRegistering: boolean;
   setOnFormSubmit: (onSubmit: () => void) => void;
-  clientCategory: UserCategory;
   setLoading: (loading: boolean) => void;
 }
 
 const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
   isUserRegistering,
   setOnFormSubmit,
-  clientCategory,
   setLoading,
 }) => {
   const {
@@ -61,7 +59,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
     const user: User = {
       name: data.name,
       email: data.email,
-      category: clientCategory === 'user' ? 'user' : 'workshop',
+      category: 'user',
       password: data.password,
       repeatedPassword: data.repeatedPassword,
     };

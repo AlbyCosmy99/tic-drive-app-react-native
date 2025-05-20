@@ -1,5 +1,4 @@
 import {Colors} from '@/constants/Colors';
-import {useServicesChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
 import {Image} from '@rneui/themed';
 import {
   ActivityIndicator,
@@ -15,7 +14,6 @@ import CreditCardIcon from '@/assets/svg/payment/creditCard.svg';
 import PinIcon from '@/assets/svg/location_on.svg';
 import DirectionIcon from '@/assets/svg/assistant_direction.svg';
 import BellIcon from '@/assets/svg/notifications/Bell1.svg';
-import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 import TicDriveOptionButton from '../../buttons/TicDriveOptionButton';
 import Workshop from '@/types/workshops/Workshop';
 import openGoogleMaps from '@/services/map/openGoogleMaps';
@@ -23,6 +21,8 @@ import {useEffect, useState} from 'react';
 import axiosClient from '@/services/http/axiosClient';
 import clsx from 'clsx';
 import getUserMainImage from '@/utils/files/getUserMainImage';
+import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
+import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
 
 interface PaymentConfirmationCardProps {
   workshop: Workshop | null | undefined;
@@ -35,39 +35,44 @@ interface PaymentConfirmationCardProps {
 
 const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
   workshop,
-  timeDate,
   showDirectionsButton = true,
   type,
   showReminderBell = false,
   service,
 }) => {
-  const servicesChoosen = useServicesChoosenByUsers();
+  const serviceChoosen = useServiceChoosenByCustomer();
   const [loadingServiceOfferedDetails, setLoadingServiceOfferedDetails] =
     useState(false);
   const [workshopDetailed, setWorkshopDetailed] = useState(workshop);
-
+  const {setErrorMessage} = useGlobalErrors();
   useEffect(() => {
     const fetchServiceOfferedDetails = async () => {
       try {
-        setLoadingServiceOfferedDetails(true);
-        const response = await axiosClient.get(
-          `OfferedServices?WorkshopId=${workshop?.id}&ServiceId=${servicesChoosen[0].id}`,
-        );
+        if (!serviceChoosen) {
+          setErrorMessage(
+            'Errore: problema nel recuperare il servizio scelto. Riprovare.',
+          );
+        } else {
+          setLoadingServiceOfferedDetails(true);
+          const response = await axiosClient.get(
+            `OfferedServices?WorkshopId=${workshop?.id}&ServiceId=${serviceChoosen.id}`,
+          );
 
-        const serviceOffered = response?.data?.length
-          ? response?.data[0]
-          : null;
+          const serviceOffered = response?.data?.length
+            ? response?.data[0]
+            : null;
 
-        setWorkshopDetailed(prev => {
-          if (!prev) return prev;
+          setWorkshopDetailed(prev => {
+            if (!prev) return prev;
 
-          return {
-            ...prev,
-            currency: serviceOffered?.currency || 'USD',
-            servicePrice: serviceOffered?.price || 0,
-            discount: serviceOffered?.discount || 0,
-          };
-        });
+            return {
+              ...prev,
+              currency: serviceOffered?.currency || 'USD',
+              servicePrice: serviceOffered?.price || 0,
+              discount: serviceOffered?.discount || 0,
+            };
+          });
+        }
       } catch (e) {
         console.error('Error fetching service offered details:', e);
       } finally {
@@ -75,10 +80,10 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
       }
     };
 
-    if (workshop?.id && servicesChoosen.length > 0) {
+    if (workshop?.id && serviceChoosen) {
       fetchServiceOfferedDetails();
     }
-  }, [workshop?.id, servicesChoosen]);
+  }, [workshop?.id, serviceChoosen]);
 
   return (
     <View className="rounded-lg border p-4 pt-0 border-grey-light w-full">
@@ -108,10 +113,10 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
             <Text className="font-medium text-xl">
               {workshopDetailed?.name}
             </Text>
-            {(service || servicesChoosen.length > 0) && (
+            {(service || serviceChoosen) && (
               <View className="bg-green-light p-1.5 rounded self-start mt-1">
                 <Text className="text-green-dark font-semibold">
-                  {service || servicesChoosen[0].title}
+                  {service || serviceChoosen?.title}
                 </Text>
               </View>
             )}

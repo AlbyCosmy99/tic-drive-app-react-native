@@ -15,8 +15,6 @@ import {Ionicons} from '@expo/vector-icons';
 import navigationPush from '@/services/navigation/push';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
-import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice';
-import useNearbyWorkshops from '@/hooks/api/workshops/useNearbyWorkshops';
 import {POIMarker} from '@/types/nav/map/POIMarker';
 import TicDriveSpinner from '../ui/spinners/TicDriveSpinner';
 import useUserLocation from '@/hooks/location/useUserLocation';
@@ -24,6 +22,7 @@ import Workshop from '@/types/workshops/Workshop';
 import getNearbyWorkshops from '@/services/http/requests/get/workshops/getNearbyWorkshops';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import getAllWorkshops from '@/services/http/requests/get/workshops/getAllWorkshops';
+import {setWorkshop} from '@/stateManagement/redux/slices/bookingSlice';
 
 interface MapModalProps {
   setIsMapVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -127,7 +126,7 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
   }, [workshops, loadingWorkshops]);
 
   const handlePOISelect = (poi: POIMarker) => {
-    dispatch(setSelectedWorkshop(poi.workshop));
+    dispatch(setWorkshop(poi.workshop));
     setIsMapVisible(false);
     navigationPush(navigation, 'WorkshopDetailsScreen');
   };

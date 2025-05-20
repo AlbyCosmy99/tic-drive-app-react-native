@@ -28,7 +28,6 @@ import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import navigationReset from '@/services/navigation/reset';
-import {useServicesChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import WorkshopReviewinfo from '@/components/workshop/reviews/WorkshopReviewInfo';
 import CashIcon from '@/assets/svg/payment/cash.svg';
@@ -37,6 +36,7 @@ import openGoogleMaps from '@/services/map/openGoogleMaps';
 import LocationPin from '@/assets/svg/location/PinLocation.svg';
 import {useTranslation} from 'react-i18next';
 import getUserMainImage from '@/utils/files/getUserMainImage';
+import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
 
 export default function ReviewBookingDetailsScreen() {
   const {t} = useTranslation();
@@ -51,8 +51,8 @@ export default function ReviewBookingDetailsScreen() {
 
   const timeDate = useMemo(() => time + ', ' + date, [date, time]);
 
-  const servicesChoosen = useServicesChoosenByUsers();
-  const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
+  const serviceChoosen = useServiceChoosenByCustomer();
+  const workshop = useAppSelector(state => state.booking.workshop);
 
   useEffect(() => {
     if (!userPaymentInfo?.choosenCard) {
@@ -123,10 +123,12 @@ export default function ReviewBookingDetailsScreen() {
             </View>
             <HorizontalLine color={Colors.light.lightGrey} />
             <View>
-              <IconTextPair
-                text={servicesChoosen[0].title}
-                icon={<CarRepair fill={Colors.light.ticText} />}
-              />
+              {serviceChoosen && (
+                <IconTextPair
+                  text={serviceChoosen.title}
+                  icon={<CarRepair fill={Colors.light.ticText} />}
+                />
+              )}
               <IconTextPair
                 text={'Lunedì 12 Maggio 2025 - 10:30'}
                 icon={<CalendarIcon fill={Colors.light.ticText} />}
@@ -157,7 +159,7 @@ export default function ReviewBookingDetailsScreen() {
               <View className="flex flex-row justify-between items-center">
                 <Text className="text-sm text-tic">
                   {t('reviewBooking.serviceWithName', {
-                    name: servicesChoosen[0].title,
+                    name: serviceChoosen?.title,
                   })}
                 </Text>
                 <Text>

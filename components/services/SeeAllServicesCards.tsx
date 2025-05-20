@@ -2,7 +2,6 @@ import {Image, Text, View} from 'react-native';
 import navigationPush from '@/services/navigation/push';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import Service from '@/types/Service';
-import {setServicesChoosenByUsers} from '@/stateManagement/redux/slices/servicesSlice';
 import {
   forwardRef,
   useContext,
@@ -15,10 +14,13 @@ import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext'
 import CrossPlatformButtonLayout from '../ui/buttons/CrossPlatformButtonLayout';
 import HorizontalLine from '../ui/HorizontalLine';
 import {useTranslation} from 'react-i18next';
-import {UserCalendarModalRef} from '../ui/modals/UserCalendarModal';
+import UserCalendarModal, {
+  UserCalendarModalRef,
+} from '../ui/modals/UserCalendarModal';
 import TicDriveSpinner from '../ui/spinners/TicDriveSpinner';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import getServices from '@/services/http/requests/get/getServices';
+import {setService} from '@/stateManagement/redux/slices/bookingSlice';
 
 interface SeeAllServicesCardsProps {
   workshopId?: string;
@@ -76,14 +78,14 @@ const SeeAllServicesCards = forwardRef(
 
     const handleOnSelectService = (service: Service) => {
       if (showCalendarModal) {
-        modalRef.current?.openModal();
+        modalRef.current?.openModal(service);
       } else {
         navigationPush(
           navigation,
           token ? 'SelectVehicleScreen' : 'RegisterVehicleScreen',
         );
+        dispatch(setService(service));
       }
-      dispatch(setServicesChoosenByUsers(service));
     };
 
     return loadingServices ? (
@@ -126,6 +128,13 @@ const SeeAllServicesCards = forwardRef(
             </View>
           )}
         </View>
+        {showCalendarModal && (
+          <UserCalendarModal
+            ref={modalRef}
+            workshopId={workshopId ?? ''}
+            showButton={false}
+          />
+        )}
 
         {bottomHorizontalLine && <HorizontalLine tailwindCssContainer="mt-2" />}
       </View>
