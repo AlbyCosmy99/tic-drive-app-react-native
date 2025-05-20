@@ -295,7 +295,17 @@ const UserCalendarModal = forwardRef<
                         <Calendar
                           onDayPress={async (day: ExtendedDay) => {
                             const date = new Date(day.dateString);
-
+                            const dayOfWeek = new Date(day.dateString)
+                              .toLocaleDateString(languageCode, {
+                                weekday: 'long',
+                              })
+                              .toLowerCase();
+                            console.log(disabledDates);
+                            if (
+                              disabledDates[day.dateString] ||
+                              workingDays.includes(dayOfWeek)
+                            )
+                              return;
                             const dayName = date.toLocaleDateString(
                               languageCode,
                               {
@@ -310,18 +320,6 @@ const UserCalendarModal = forwardRef<
                               );
                             setaLoadingHours(false);
                             setWorkingHours(workingHoursData.data);
-
-                            const dayOfWeek = new Date(day.dateString)
-                              .toLocaleDateString(languageCode, {
-                                weekday: 'long',
-                              })
-                              .toLowerCase();
-
-                            if (
-                              disabledDates[day.dateString] ||
-                              workingDays.includes(dayOfWeek)
-                            )
-                              return;
 
                             if (selectedDate === day.dateString) {
                               setSelectedDate(null);
