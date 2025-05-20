@@ -24,6 +24,7 @@ import Workshop from '@/types/workshops/Workshop';
 import getUserMainImage from '@/utils/files/getUserMainImage';
 import CrossPlatformButtonLayout from './ui/buttons/CrossPlatformButtonLayout';
 import isScreenSmall from '@/services/responsive/isScreenSmall';
+import { useTranslation } from 'react-i18next';
 
 interface WorkshopCardProps {
   workshop: Workshop;
@@ -53,6 +54,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
   );
   const {navigation} = useContext(NavigationContext);
   const dispatch = useAppDispatch();
+const { t } = useTranslation();
 
   const handleCardPress = (workshop: Workshop) => {
     navigationPush(navigation, 'WorkshopDetailsScreen');
@@ -130,7 +132,8 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
 
             <View className="items-end justify-center">
               <View className="flex-row justify-between items-center space-x-2">
-                <Text className="text-base font-medium">Total</Text>
+                <Text className="text-base font-medium">  {t('reviewBooking.total')}
+</Text>
                 <Text className="text-base font-medium">
                   {workshop.currency + ' '}
                   {calculateWorkshopDiscount(
@@ -140,7 +143,8 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
                 </Text>
               </View>
               <Text className="font-medium text-xs text-tic">
-                Includes taxes and fees
+                  {t('reviewBooking.includesTaxesAndFees')}
+
               </Text>
             </View>
           </CrossPlatformButtonLayout>

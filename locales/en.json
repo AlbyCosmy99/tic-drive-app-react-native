@@ -231,7 +231,9 @@
     "total": "Total",
     "paymentMethod": "PAYMENT METHOD",
     "payInWorkshop": "Pay at Workshop",
-    "bookNow": "Book Now"
+    "bookNow": "Book Now",
+   "includesTaxesAndFees": "Includes taxes and fees"
+
   },
   "privacyPolicy": {
     "title": "Privacy Policy",

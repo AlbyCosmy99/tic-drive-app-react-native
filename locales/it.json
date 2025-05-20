@@ -259,7 +259,9 @@
     "total": "Totale",
     "paymentMethod": "METODO DI PAGAMENTO",
     "payInWorkshop": "Paga in officina",
-    "bookNow": "Prenota ora"
+    "bookNow": "Prenota ora",
+    "includesTaxesAndFees": "Include tasse e commissioni"
+
   },
 
   "privacyPolicy": {
