@@ -63,16 +63,16 @@ const UserVehiclesScreen = () => {
         ) : (
           <>
             {cars.length === 0 && (
-              <View>
-                <Text className="text-center text-base text-gray-500 mt-6">
-                  {t('vehicles.noVehiclesMessage')}{' '}
-                  <CrossPlatformButtonLayout onPress={onRegisterVehicle}>
-                    <Text className="text-drive font-semibold">
-                      {t('vehicles.registerVehicle')}
-                    </Text>
-                  </CrossPlatformButtonLayout>{' '}
-                  {t('vehicles.addFirstCar')}
+              <View className='mt-6 flex-row flex-wrap justify-center'>
+                <Text className="text-base text-gray-500">
+                  {t('vehicles.noVehiclesMessage')}
                 </Text>
+                <CrossPlatformButtonLayout onPress={onRegisterVehicle} containerTailwindCss='ml-1 justify-center'>
+                  <Text className="text-drive font-semibold">
+                    {t('vehicles.registerVehicle')}
+                  </Text>
+                </CrossPlatformButtonLayout>
+                <Text className='text-base text-gray-500'> {t('vehicles.addFirstCar')}</Text>
               </View>
             )}
 
