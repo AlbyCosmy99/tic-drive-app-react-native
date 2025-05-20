@@ -117,8 +117,8 @@ export default function WorkshopsListScreen() {
 
         <View className="flex-col items-center h-[102px] relative">
           <TicDriveInput
-            isLeftIcon={true}
-            isRightIcon={true}
+            existsLeftIcon
+            existsRightIcon
             placeholder={t('workshops.searchWorkshop')}
             containerViewStyleTailwind="flex-1 items-center"
             inputContainerStyle={{marginTop: 4, height: 48}}

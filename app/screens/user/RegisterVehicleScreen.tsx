@@ -371,8 +371,8 @@ function RegisterVehicleScreen() {
                   <View>
                     <TicDriveInput
                       placeholder={segmentedControlSelection.placeholder ?? ''}
-                      isRightIcon={true}
-                      isTextUppercase={true}
+                      existsRightIcon
+                      isTextUppercase
                       onRightIcon={handleOnRightIcon}
                       onSubmit={value => fetchByPlate(value)}
                       containerStyle={{height: 85}}

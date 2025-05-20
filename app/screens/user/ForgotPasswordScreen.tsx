@@ -73,7 +73,7 @@ const ForgotPasswordScreen = () => {
           </View>
           <View className="mx-3">
             <TicDriveInput
-              isRightIcon
+              existsRightIcon
               customValue={email}
               onChange={e => setEmail(e)}
               placeholder={t('forgotPassword.emailPlaceholder')}

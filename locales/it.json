@@ -166,7 +166,7 @@
     "pleaseConfirm": "Per favore conferma il tuo indirizzo email.",
     "instructions": "Abbiamo inviato un'email di conferma al tuo indirizzo registrato. Controlla la tua casella di posta (anche la cartella spam) e clicca sul link di conferma per attivare il tuo account.",
     "resendButton": "Reinvia email di conferma",
-    "confirmedButton": "Ho confermato l'email",
+    "confirmedButton": "Ho confermato la mail",
     "modal1Title": "Email di conferma inviata",
     "modal1Content": "Controlla la tua email.",
     "modal1Confirm": "Perfetto",
