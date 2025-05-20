@@ -21,7 +21,14 @@
     "title": "Bookings",
     "confirmed": "Booking Confirmed"
   },
-    "logic": {
+  "supports": {
+    "title": "Need help or have a question?",
+    "subtitle": "Our support team is here to assist you. Choose a contact option below.",
+    "email_us": "Email us",
+    "call_support": "Call support",
+    "footer_message": "We're always here for you! 🤗"
+  },
+  "logic": {
     "or": "Or"
   },
   "noReviewsYet": "No reviews yet. Book a service to be the first to review.",
@@ -44,8 +51,7 @@
     "chooseService": "Choose Service",
     "searchService": "Search Service",
     "oilChange": "Oil Change",
-   "chooseVehicle": "Choose the vehicle"
-
+    "chooseVehicle": "Choose the vehicle"
   },
   "continue": "Continue",
   "date": {
@@ -76,19 +82,22 @@
     "choose_car_year": "Choose car year",
     "search_car_year": "Search car year",
     "fuel": "Fuel",
-     "search_fuel_type": "Search fuel type",
-     "transmission": "Transmission",
-     "search_transmission": "Search transmission",
-     "engine_size": "Engine displacement",
-     "mileage": "Mileage",
-     "plate": "Plate number",
-      "year": "Year",
-       "orRegisterNewCar": "or register a new vehicle",
-      "name": "Name",
-   "cv": "Horsepower (HP)"
-
-
+    "search_fuel_type": "Search fuel type",
+    "transmission": "Transmission",
+    "search_transmission": "Search transmission",
+    "engine_size": "Engine displacement",
+    "mileage": "Mileage",
+    "plate": "Plate number",
+    "year": "Year",
+    "orRegisterNewCar": "or register a new vehicle",
+    "name": "Name",
+    "cv": "Horsepower (HP)"
   },
+  "car_registration": {
+  "success_title": "Car Registered",
+  "success_subtitle": "Congratulations! Your car has been registered successfully. Continue to the profile, where you can see your vehicles."
+},
+
   "home": {
     "notifications": {
       "first": "Last service: 12 months ago.\nSchedule now!",
@@ -190,7 +199,6 @@
     "deletedMock": "Account deleted (mock)",
     "delete": "Delete",
     "dangerZone": "Danger zone"
-
   },
   "changePassword": {
     "setNewPassword": "Set a new password",

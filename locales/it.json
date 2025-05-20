@@ -100,6 +100,11 @@
     "name": "Nome",
     "cv": "CV"
   },
+  "car_registration": {
+  "success_title": "Auto registrata",
+  "success_subtitle": "Congratulazioni! La tua auto è stata registrata con successo. Vai al profilo per vedere i tuoi veicoli."
+},
+
   "home": {
     "notifications": {
       "first": "Ultimo tagliando: 12 mesi fa.\nPianifica ora!",

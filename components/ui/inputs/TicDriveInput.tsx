@@ -15,8 +15,8 @@ import isScreenSmall from '@/services/responsive/isScreenSmall';
 
 interface TicDriveInputProps {
   placeholder?: string;
-  isLeftIcon?: boolean;
-  isRightIcon?: boolean;
+  existsLeftIcon?: boolean;
+  existsRightIcon?: boolean;
   onRightIcon?: () => void;
   onSubmit?: (value: string) => void;
   isTextUppercase?: boolean;
@@ -35,8 +35,8 @@ interface TicDriveInputProps {
 }
 
 const TicDriveInput: React.FC<TicDriveInputProps> = ({
-  isLeftIcon = false,
-  isRightIcon = false,
+  existsLeftIcon = false,
+  existsRightIcon = false,
   onRightIcon,
   placeholder,
   onSubmit,
@@ -74,7 +74,7 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
         textContentType={textContentType}
         maxLength={maxLength}
         leftIcon={
-          isLeftIcon ? (
+          existsLeftIcon ? (
             <Icon
               name="search"
               size={isScreenSmall() ? 22 : 24}
@@ -83,7 +83,7 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
           ) : undefined
         }
         rightIcon={
-          isRightIcon ? (
+          existsRightIcon ? (
             rightIcon ? (
               <CrossPlatformButtonLayout
                 containerTailwindCss="justify-center items-center"

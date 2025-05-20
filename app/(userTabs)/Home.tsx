@@ -187,8 +187,8 @@ export default function UserHome() {
 
         <View className="flex-row items-center relative">
           <TicDriveInput
-            isLeftIcon={true}
-            isRightIcon={true}
+            existsLeftIcon
+            existsRightIcon
             placeholder={t('workshops.searchWorkshop')}
             containerViewStyleTailwind={`flex-1 ${isScreenSmall() ? 'h-[50px]' : 'h-[60px]'}`}
             inputContainerStyle={{
