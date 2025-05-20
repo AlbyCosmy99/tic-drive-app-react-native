@@ -21,6 +21,13 @@
     "title": "Bookings",
     "confirmed": "Booking Confirmed"
   },
+  "supports": {
+  "title": "Need help or have a question?",
+  "subtitle": "Our support team is here to assist you. Choose a contact option below.",
+  "email_us": "Email us",
+  "call_support": "Call support",
+  "footer_message": "We're always here for you! 🤗"
+},
     "logic": {
     "or": "Or"
   },
