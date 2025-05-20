@@ -1,14 +1,15 @@
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import * as React from 'react';
 import {Modal, View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import { t } from 'i18next';
+import {t} from 'i18next';
 
 interface ErroModalProps {
   title?: string; //TODO: move it in the context (not as prop)
 }
 
-const ErrorModal: React.FC<ErroModalProps> = ({ title = t('errors.anErrorOccurred') }) => {
-
+const ErrorModal: React.FC<ErroModalProps> = ({
+  title = t('errors.anErrorOccurred'),
+}) => {
   const globalContext = React.useContext(GlobalContext);
 
   if (!globalContext) {

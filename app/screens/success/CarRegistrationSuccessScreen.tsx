@@ -10,20 +10,20 @@ import {useTranslation} from 'react-i18next';
 
 const CarRegistrationSuccessScreen = () => {
   const navigation = useTicDriveNavigation();
-    const {t} = useTranslation();
-  
+  const {t} = useTranslation();
+
   return (
     <SafeAreaViewLayout styles={[styles.container]}>
       <View className="flex-1 justify-center items-center mx-2.5">
         <TicDriveSuccessCard
-           title={t('car_registration.success_title')}
-  subtitle={t('car_registration.success_subtitle')}
+          title={t('car_registration.success_title')}
+          subtitle={t('car_registration.success_subtitle')}
         />
       </View>
       <TicDriveButton
         replace={true}
         toTop={true}
-       text={t('continue')}
+        text={t('continue')}
         onClick={() => {
           navigationReset(
             navigation,
