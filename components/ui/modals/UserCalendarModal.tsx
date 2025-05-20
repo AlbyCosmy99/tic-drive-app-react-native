@@ -108,9 +108,7 @@ const UserCalendarModal = forwardRef<
         );
         setCustomeDisabledDays(mappedDisabledDays);
       } catch (error) {
-        setErrorMessage(
-          'Errore nel recupero delle date in cui l officina non è disponibile.',
-        );
+        setErrorMessage(t('errors.fetchWorkshopUnavailableDates'));
       }
     };
 

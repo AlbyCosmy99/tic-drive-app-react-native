@@ -254,7 +254,10 @@
     "unauthorized": "Non autorizzato: controlla le credenziali.",
     "serverError": "Errore del server. Riprova più tardi.",
     "unexpected": "Errore imprevisto: {{code}}",
-    "general": "Qualcosa è andato storto. Riprova."
+    "general": "Qualcosa è andato storto. Riprova.",
+      "anErrorOccurred": "Si è verificato un errore",
+    "fetchWorkshopUnavailableDates": "Errore nel recupero delle date in cui l'officina non è disponibile.",
+
   },
   "reviewBooking": {
     "details": "Dettagli della prenotazione",
