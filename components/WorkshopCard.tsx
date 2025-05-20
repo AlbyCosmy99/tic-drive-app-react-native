@@ -34,6 +34,7 @@ interface WorkshopCardProps {
   iconTextPairContainerTailwindCss?: string;
   iconTextPairTextTailwindCss?: string;
   imageContainerStyle?: StyleProp<ViewStyle>;
+  titleTextTailwindCss?: string;
   addressContainerTailwindCss?: string;
 }
 
@@ -46,6 +47,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
   iconTextPairTextTailwindCss,
   imageContainerStyle,
   isServiceDetailsEnabled = true,
+  titleTextTailwindCss,
   addressContainerTailwindCss,
 }) => {
   const serviceChoosen = useServiceChoosenByCustomer();
@@ -97,7 +99,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
         >
           <IconTextPair
             containerTailwindCss={`${isScreenSmall() ? 'py-1' : 'py-1.5'} pr-1 ${iconTextPairContainerTailwindCss}`}
-            textTailwindCss={`${workshopNameTextSize} font-semibold ${iconTextPairTextTailwindCss}`}
+            textTailwindCss={`${workshopNameTextSize} font-semibold ${iconTextPairTextTailwindCss} ${titleTextTailwindCss}`}
             text={workshop.workshopName}
             icon={<GreenCheckIcon />}
           />

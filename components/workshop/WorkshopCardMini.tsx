@@ -7,6 +7,7 @@ function WorkshopCardMini({workshop}: {workshop: Workshop}) {
     <WorkshopCard
       workshop={workshop}
       pressableContainerStyle={{padding: 0, paddingHorizontal: 2}}
+      titleTextTailwindCss='text-[13px]'
       iconTextPairsContainerTailwindCss="px-0.5 pb-0 pt-0.5 justify-between h-24 mx-0.5 my-0.5"
       iconTextPairTextTailwindCss="text-[11px] mr-1"
       iconTextPairContainerTailwindCss="gap-1 py-0 min-h-14 pr-0.5"
