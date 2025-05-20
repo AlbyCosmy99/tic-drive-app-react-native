@@ -220,7 +220,11 @@
     "unauthorized": "Unauthorized: check your credentials.",
     "serverError": "Server error. Please try again later.",
     "unexpected": "Unexpected error: {{code}}",
-    "general": "Something went wrong. Please try again."
+    "general": "Something went wrong. Please try again.",
+      "anErrorOccurred": "An error occurred",
+      "fetchWorkshopUnavailableDates": "Error while fetching workshop unavailable dates."
+
+
   },
   "reviewBooking": {
     "reviewDetails": "Booking Details",
