@@ -413,7 +413,7 @@ const UserCalendarModal = forwardRef<
                                 .toUpperCase()}
                             </Text>
                             <CrossPlatformButtonLayout
-                              onPress={() => alert('cc')}
+                              onPress={() => setSelectedDate(null)}
                               styleContainer={{marginTop: 4}}
                             >
                               <Text
