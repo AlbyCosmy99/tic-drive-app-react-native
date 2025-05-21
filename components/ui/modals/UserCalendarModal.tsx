@@ -91,7 +91,7 @@ const UserCalendarModal = forwardRef<
     : token
       ? car
         ? 'ReviewBookingDetailsScreen'
-        : 'UserVehiclesScreen'
+        : 'SelectVehicleScreen'
       : 'UserAuthenticationScreen';
 
   const [workingDays, setWorkingDays] = useState<string[]>([]);
