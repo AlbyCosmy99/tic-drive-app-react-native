@@ -49,7 +49,7 @@ const Hub = () => {
           } catch (err) {
             //if here, probably token is in secureStore but user is not registered in db - to solve, we make the user remove token from secureStore and retry
             console.error('error while getting user data.');
-            navigationPush(navigation, 'Hub');
+            navigationReset(navigation, 0, 'userTabs', {animation: 'fade'})
             await removeSecureToken();
           }
         } else {
