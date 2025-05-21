@@ -1,5 +1,5 @@
 import axiosClient from '@/services/http/axiosClient';
-import { Params } from '@/types/config/Params';
+import {Params} from '@/types/config/Params';
 
 const getAllWorkshops = async (
   token: string,

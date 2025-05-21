@@ -127,7 +127,7 @@ export default function UserHome() {
   };
 
   useFocusEffect(() => {
-    dispatch(reset())
+    dispatch(reset());
     if (setCarSelectedByMakeAndModel) {
       setCarSelectedByMakeAndModel(undefined);
     }

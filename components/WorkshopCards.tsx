@@ -66,7 +66,7 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
 
   const dispatch = useAppDispatch();
   const token = useJwtToken();
-  const service = useAppSelector(state => state.booking.service)
+  const service = useAppSelector(state => state.booking.service);
 
   const fetchAllWorkshops = async () => {
     setLoadingWorkshops(true);

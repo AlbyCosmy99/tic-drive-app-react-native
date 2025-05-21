@@ -23,6 +23,7 @@ import getNearbyWorkshops from '@/services/http/requests/get/workshops/getNearby
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import getAllWorkshops from '@/services/http/requests/get/workshops/getAllWorkshops';
 import {setWorkshop} from '@/stateManagement/redux/slices/bookingSlice';
+import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 
 interface MapModalProps {
   setIsMapVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -43,14 +44,14 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
 
   const user = useAppSelector(state => state.auth.user);
   const token = useJwtToken();
-  const service = useAppSelector(state => state.booking.service)
+  const service = useAppSelector(state => state.booking.service);
 
   const {loading: loadingLocation, userLocation} = useUserLocation();
   const hasFetchedNearby = useRef(false);
 
   const fetchAllWorkshops = async () => {
     setLoadingWorkshops(true);
-    const response = await getAllWorkshops(token ?? '', 0, 2, '',service?.id);
+    const response = await getAllWorkshops(token ?? '', 0, 2, '', service?.id);
     setWorkshops(response.data.workshops);
     setCount(response.data.count);
     setLoadingWorkshops(false);
@@ -65,10 +66,17 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
     setLoadingWorkshops(true);
 
     try {
-      const response = await getNearbyWorkshops(token ?? '', 0, 50, '', {
-        latitude: userLocation.latitude,
-        longitude: userLocation.longitude,
-      }, service?.id);
+      const response = await getNearbyWorkshops(
+        token ?? '',
+        0,
+        50,
+        '',
+        {
+          latitude: userLocation.latitude,
+          longitude: userLocation.longitude,
+        },
+        service?.id,
+      );
 
       if (response.data.count > 0) {
         setWorkshops(response.data.nearbyWorkshops);
@@ -117,6 +125,7 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
             longitude: workshop.longitude,
           },
           price: workshop.servicePrice ?? 0,
+          discount: workshop.discount,
           currency: workshop.currency ?? '€',
           id: workshop.id,
           workshopName: workshop.workshopName,
@@ -157,7 +166,8 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
                   {poi.price > 0 ? (
                     <View style={styles.priceBubble}>
                       <Text style={styles.priceText}>
-                        {poi.price + poi.currency}
+                        {calculateWorkshopDiscount(poi.price, poi.discount) +
+                          poi.currency}
                       </Text>
                     </View>
                   ) : (
@@ -168,7 +178,6 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
                       style={styles.iconPin}
                     />
                   )}
-                  <Text style={styles.pinLabel}>{poi.workshopName}</Text>
                 </View>
               </Marker>
             ))}

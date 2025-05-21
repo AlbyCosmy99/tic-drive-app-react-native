@@ -42,7 +42,7 @@ export default function WorkshopDetailsScreen() {
         message: `🚗✨ Discover ${workshop?.workshopName} on TicDrive! ✨🚗\n
       📍 *Location:* ${workshop?.address}\n
       ⭐ *Rating:* ${workshop?.meanStars?.toFixed(1)} (${workshop?.numberOfReviews} reviews)\n
-      💰 ${workshop?.servicePrice ? `**Starting from:** ${workshop?.servicePrice} ${workshop?.currency}` : 'Check out our services!'}${workshop?.discount ? ` 🔥 **Limited-time discount:** ${workshop?.discount}% off!` : ''}\n
+      💰 ${workshop?.servicePrice ? `**Starting from:** ${calculateWorkshopDiscount(workshop?.servicePrice, workshop.discount ?? 0)} ${workshop?.currency}` : 'Check out our services!'}${workshop?.discount ? ` 🔥 **Limited-time discount:** ${workshop?.discount}% off!` : ''}\n
       ${workshop?.isVerified ? '✅ *This workshop is verified by TicDrive!* 🔥' : ''}\n
       🔗 *Book now on TicDrive!* ${Constants.expoConfig?.extra?.googleMapsApiKey}`,
       });
@@ -241,7 +241,7 @@ export default function WorkshopDetailsScreen() {
                         'font-semibold text-xl mx-1',
                       ].join(' ')}
                     >
-                      {workshop.servicePrice}
+                      {workshop.currency! + workshop.servicePrice}
                     </Text>
                     {workshop.discount !== 0 && (
                       <View style={styles.strikethroughLine} />
@@ -249,7 +249,7 @@ export default function WorkshopDetailsScreen() {
                   </View>
                   {workshop.discount !== 0 && (
                     <Text className="font-semibold text-xl mx-1">
-                      $
+                      {workshop.currency}
                       {calculateWorkshopDiscount(
                         workshop.servicePrice ?? 0,
                         workshop?.discount ?? 0,
