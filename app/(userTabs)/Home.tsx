@@ -34,6 +34,7 @@ import getAllWorkshops from '@/services/http/requests/get/workshops/getAllWorksh
 import getNearbyWorkshops from '@/services/http/requests/get/workshops/getNearbyWorkshops';
 import isScreenSmall from '@/services/responsive/isScreenSmall';
 import {
+  reset,
   setService,
   setWorkshop,
 } from '@/stateManagement/redux/slices/bookingSlice';
@@ -126,9 +127,7 @@ export default function UserHome() {
   };
 
   useFocusEffect(() => {
-    dispatch(setService(undefined));
-    dispatch(setWorkshop(undefined));
-    dispatch(setSelectedCar(undefined));
+    dispatch(reset())
     if (setCarSelectedByMakeAndModel) {
       setCarSelectedByMakeAndModel(undefined);
     }

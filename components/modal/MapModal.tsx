@@ -43,13 +43,14 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
 
   const user = useAppSelector(state => state.auth.user);
   const token = useJwtToken();
+  const service = useAppSelector(state => state.booking.service)
 
   const {loading: loadingLocation, userLocation} = useUserLocation();
   const hasFetchedNearby = useRef(false);
 
   const fetchAllWorkshops = async () => {
     setLoadingWorkshops(true);
-    const response = await getAllWorkshops(token ?? '', 0, 2, '');
+    const response = await getAllWorkshops(token ?? '', 0, 2, '',service?.id);
     setWorkshops(response.data.workshops);
     setCount(response.data.count);
     setLoadingWorkshops(false);
@@ -67,7 +68,7 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
       const response = await getNearbyWorkshops(token ?? '', 0, 50, '', {
         latitude: userLocation.latitude,
         longitude: userLocation.longitude,
-      });
+      }, service?.id);
 
       if (response.data.count > 0) {
         setWorkshops(response.data.nearbyWorkshops);

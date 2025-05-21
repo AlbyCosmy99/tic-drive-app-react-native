@@ -66,6 +66,7 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
 
   const dispatch = useAppDispatch();
   const token = useJwtToken();
+  const service = useAppSelector(state => state.booking.service)
 
   const fetchAllWorkshops = async () => {
     setLoadingWorkshops(true);
@@ -74,7 +75,7 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
       commonOffset,
       workshopsPerPage,
       debouncedFilter,
-      0,
+      service?.id,
       {order, filter: workshopFilter},
     );
     setWorkshops(response.data.workshops);
@@ -107,7 +108,7 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
         latitude: user?.coordinates?.latitude ?? 0,
         longitude: user?.coordinates?.longitude ?? 0,
       },
-      0,
+      service?.id,
       {order, filter: workshopFilter},
     );
     if (response.data.count > 0) {
