@@ -209,8 +209,8 @@ const UserCalendarModal = forwardRef<
     const capitalizedDate =
       formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
 
-    const formattedTime = `${capitalizedDate} ${selectedTime}`;
-    console.log(formattedTime);
+    const formattedTime = `${capitalizedDate} - ${selectedTime}`;
+
     dispatch(setTime(formattedTime));
   };
 

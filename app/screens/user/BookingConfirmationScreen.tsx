@@ -7,38 +7,28 @@ import CheckIcon from '@/assets/svg/check_circle.svg';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import formatCurrentDate from '@/utils/dates/FormatCurrentDate';
-import PaymentConfirmationCard from '@/components/ui/cards/payment/PaymentConfirmationCard';
-import {useRoute} from '@react-navigation/native';
-import {useContext, useEffect, useMemo, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import CarContext from '@/stateManagement/contexts/car/CarContext';
 import axiosClient from '@/services/http/axiosClient';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import {t} from 'i18next';
-import {setService} from '@/stateManagement/redux/slices/bookingSlice';
+import {reset} from '@/stateManagement/redux/slices/bookingSlice';
+import BookingCard from '@/components/ui/cards/bookings/BookingCard';
 
 export default function BookingConfirmationScreen() {
   const dispatch = useAppDispatch();
 
   const {setCarSelectedByMakeAndModel} = useContext(CarContext);
 
-  const route = useRoute();
-  const {date, time} = route?.params as {
-    date: string;
-    time: string;
-  };
-
-  const workshop = useAppSelector(state => state.booking.workshop);
-  const carSelected = useAppSelector(state => state.cars.selectedCar);
+  const carSelected = useAppSelector(state => state.booking.car);
 
   const [
     loadingCarRegistrationConfirmation,
     setLoadingCarRegistrationConfirmation,
   ] = useState(true);
 
-  const timeDate = useMemo(() => time + ', ' + date, [date, time]);
-
   const onConfirmToHome = () => {
-    dispatch(setService(undefined));
+    dispatch(reset());
     if (setCarSelectedByMakeAndModel) {
       setCarSelectedByMakeAndModel(undefined);
     }
@@ -84,15 +74,6 @@ export default function BookingConfirmationScreen() {
   };
 
   useEffect(() => {
-    dispatch(
-      setService({
-        id: 1,
-        title: t('service.oilChange'),
-        description: t('service.oilChange'),
-        icon: 'https://img.icons8.com/dotty/80/car-service.png',
-      }),
-    );
-
     confirmCarSelected();
   }, []);
 
@@ -127,11 +108,7 @@ export default function BookingConfirmationScreen() {
               </Text>
               <Text className="text-sm text-tic">{formatCurrentDate()}</Text>
             </View>
-            <PaymentConfirmationCard
-              workshop={workshop}
-              timeDate={timeDate}
-              type={t('bookingConfirmation.statusPending')}
-            />
+            <BookingCard type={t('bookingConfirmation.statusPending')} />
           </View>
         )}
         <TicDriveButton

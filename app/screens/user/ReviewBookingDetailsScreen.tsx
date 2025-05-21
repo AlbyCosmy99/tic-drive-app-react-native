@@ -99,7 +99,6 @@ export default function ReviewBookingDetailsScreen() {
         >
           <View className="border rounded-xl border-slate-200 px-4">
             <View className="flex flex-row my-4">
-              {/* to do- spostare le immagini in un componente */}
               {workshop?.images.length && (
                 <Image
                   source={{uri: getUserMainImage(workshop.images)?.url}}

@@ -55,6 +55,12 @@ const bookingSlice = createSlice({
     setTime(state: BookingState, action: PayloadAction<string>) {
       state.time = action.payload;
     },
+    reset(state: BookingState) {
+      state.service = undefined;
+      state.workshop = undefined;
+      state.car = undefined;
+      state.time = '';
+    },
   },
 });
 
@@ -64,6 +70,7 @@ export const {
   setCar,
   setTime,
   setLastServiceSelectedFromFilter,
+  reset,
 } = bookingSlice.actions;
 
 export default bookingSlice.reducer;
