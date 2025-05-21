@@ -39,7 +39,7 @@ import getWorkshopWorkingHours from '@/services/http/requests/datetime/getWorksh
 import TicDriveSpinner from '../spinners/TicDriveSpinner';
 import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
 import Service from '@/types/Service';
-import {setService} from '@/stateManagement/redux/slices/bookingSlice';
+import {setService, setTime} from '@/stateManagement/redux/slices/bookingSlice';
 
 const {height} = Dimensions.get('window');
 
@@ -68,7 +68,7 @@ const UserCalendarModal = forwardRef<
   const {setLoginRouteName, setLoginRouteParams} = useContext(AuthContext);
   const workshop = useAppSelector(state => state.booking.workshop);
   const serviceChoosen = useServiceChoosenByCustomer();
-  const carSelected = useAppSelector(state => state.cars.selectedCar);
+  const car = useAppSelector(state => state.booking.car);
   const {t} = useTranslation();
   const languageCode = useAppSelector(state => state.language.languageCode);
   const [
@@ -80,16 +80,18 @@ const UserCalendarModal = forwardRef<
 
   const buttonText = !hasService
     ? t('service.chooseService')
-    : !carSelected
-      ? t('vehicles.registerVehicle')
+    : token
+      ? car
+        ? 'Conferma prenotazione'
+        : 'Scegli veicolo'
       : 'Confirm ' + (!token ? 'and login' : '');
 
   const routeName = !hasService
     ? 'ChooseServicesScreen'
     : token
-      ? carSelected
+      ? car
         ? 'ReviewBookingDetailsScreen'
-        : 'RegisterVehicleScreen'
+        : 'UserVehiclesScreen'
       : 'UserAuthenticationScreen';
 
   const [workingDays, setWorkingDays] = useState<string[]>([]);
@@ -164,7 +166,6 @@ const UserCalendarModal = forwardRef<
       useNativeDriver: true,
     }).start();
     if (service) {
-      console.log('eheeee');
       setServiceSelectedFromWorkshopDetails(service);
     }
   };
@@ -183,16 +184,34 @@ const UserCalendarModal = forwardRef<
   }));
 
   const onClick = () => {
-    if (token) {
-      closeModal();
-      return {};
+    if (!selectedDate || !selectedTime) {
+      setErrorMessage('Data o ora non selezionata.');
+      return;
     }
+
     closeModal();
     setLoginRouteName('ReviewBookingDetailsScreen');
     setLoginRouteParams({workshop, date: selectedDate, time: selectedTime});
+
     if (serviceSelectedFromWorkshopDetails) {
       dispatch(setService(serviceSelectedFromWorkshopDetails));
     }
+
+    const formattedDate = new Date(selectedDate).toLocaleDateString(
+      languageCode,
+      {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+      },
+    );
+
+    const capitalizedDate =
+      formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+
+    const formattedTime = `${capitalizedDate} ${selectedTime}`;
+    console.log(formattedTime);
+    dispatch(setTime(formattedTime));
   };
 
   const panResponder = useRef(

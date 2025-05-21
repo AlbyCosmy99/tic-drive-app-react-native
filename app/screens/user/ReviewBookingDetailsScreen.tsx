@@ -41,18 +41,22 @@ import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCusto
 export default function ReviewBookingDetailsScreen() {
   const {t} = useTranslation();
 
-  const route = useRoute();
-  const {date, time} = route?.params as {
-    date: string;
-    time: string;
-  };
   const {userPaymentInfo, setUserPaymentInfo} = useContext(GlobalContext);
   const {navigation} = useContext(NavigationContext);
 
-  const timeDate = useMemo(() => time + ', ' + date, [date, time]);
-
   const serviceChoosen = useServiceChoosenByCustomer();
   const workshop = useAppSelector(state => state.booking.workshop);
+  const time = useAppSelector(state => state.booking.time);
+
+  const price = useMemo(() => {
+    return (
+      workshop?.currency! +
+      calculateWorkshopDiscount(
+        workshop?.servicePrice ?? 0,
+        workshop?.discount ?? 0,
+      )
+    );
+  }, []);
 
   useEffect(() => {
     if (!userPaymentInfo?.choosenCard) {
@@ -110,7 +114,9 @@ export default function ReviewBookingDetailsScreen() {
               )}
               <View>
                 <View className="flex flex-row items-center gap-1">
-                  <Text className="text-xl font-medium">{workshop?.name}</Text>
+                  <Text className="text-xl font-medium">
+                    {workshop?.workshopName}
+                  </Text>
                   {workshop?.isVerified && <Verified width={24} />}
                 </View>
                 <WorkshopReviewinfo
@@ -130,7 +136,7 @@ export default function ReviewBookingDetailsScreen() {
                 />
               )}
               <IconTextPair
-                text={'Lunedì 12 Maggio 2025 - 10:30'}
+                text={time}
                 icon={<CalendarIcon fill={Colors.light.ticText} />}
               />
               <CrossPlatformButtonLayout
@@ -144,7 +150,7 @@ export default function ReviewBookingDetailsScreen() {
               >
                 <IconTextPair
                   text={workshop?.address}
-                  textTailwindCss="underline text-tic"
+                  textTailwindCss="underline text-tic pr-4"
                   icon={<LocationPin fill={Colors.light.ticText} />}
                 />
               </CrossPlatformButtonLayout>
@@ -162,13 +168,7 @@ export default function ReviewBookingDetailsScreen() {
                     name: serviceChoosen?.title,
                   })}
                 </Text>
-                <Text>
-                  $
-                  {calculateWorkshopDiscount(
-                    workshop?.servicePrice ?? 0,
-                    workshop?.discount ?? 0,
-                  )}
-                </Text>
+                <Text>{price}</Text>
               </View>
               <View
                 style={styles.promoCodeContainer}
@@ -188,13 +188,7 @@ export default function ReviewBookingDetailsScreen() {
                 <Text className="text-base text-tic">
                   {t('reviewBooking.total')}
                 </Text>
-                <Text className="text-lg font-medium">
-                  $
-                  {calculateWorkshopDiscount(
-                    workshop?.servicePrice ?? 0,
-                    workshop?.discount ?? 0,
-                  ) + 14}
-                </Text>
+                <Text className="text-lg font-medium">{price}</Text>
               </View>
             </View>
           </View>
@@ -237,13 +231,7 @@ export default function ReviewBookingDetailsScreen() {
             <Text className="text-base text-tic">
               {t('reviewBooking.total')}
             </Text>
-            <Text className="text-xl font-medium">
-              $
-              {calculateWorkshopDiscount(
-                workshop?.servicePrice ?? 0,
-                workshop?.discount ?? 0,
-              ) + 14}
-            </Text>
+            <Text className="text-xl font-medium">{price}</Text>
           </View>
           <TicDriveButton
             replace={true}
@@ -255,8 +243,6 @@ export default function ReviewBookingDetailsScreen() {
             onClick={() => {
               navigationReset(navigation, 0, 'BookingConfirmationScreen', {
                 workshop,
-                date,
-                time,
               });
             }}
           />
