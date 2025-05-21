@@ -17,7 +17,7 @@ const CarDetailsLayout: React.FC<CarDetailsGeneralProps> = ({
   const {t} = useTranslation();
 
   return carSelected ? (
-    <View className="mx-3 p-4 border-2 border-grey-light rounded-xl mt-6">
+    <View className="mx-3 p-4 border-2 border-grey-light rounded-xl">
       <View className="mb-2">
         <RegistrationCarDetailCard
           title={t('vehicles.make')}

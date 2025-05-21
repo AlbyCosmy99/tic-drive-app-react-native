@@ -232,19 +232,36 @@ export default function ReviewBookingDetailsScreen() {
             </Text>
             <Text className="text-xl font-medium">{price}</Text>
           </View>
-          <TicDriveButton
-            replace={true}
-            toTop={true}
-            text={t('reviewBooking.bookNow')}
-            routeName="userTabs"
-            routeParams={{animation: 'fade'}}
-            stateRouteName="Home"
-            onClick={() => {
-              navigationReset(navigation, 0, 'BookingConfirmationScreen', {
-                workshop,
-              });
-            }}
-          />
+          <View className="flex flex-row">
+            <View style={{flex: 2}}>
+              <TicDriveButton
+                replace={true}
+                toTop={true}
+                customContainerStyle={{marginRight: 7}}
+                customButtonStyle={{backgroundColor: 'red'}}
+                text={'Annulla tutto'}
+                routeName="userTabs"
+                routeParams={{animation: 'fade'}}
+                stateRouteName="Home"
+              />
+            </View>
+            <View style={{flex: 3}}>
+              <TicDriveButton
+                replace={true}
+                toTop={true}
+                customContainerStyle={{marginLeft: 7}}
+                text={t('reviewBooking.bookNow')}
+                routeName="userTabs"
+                routeParams={{animation: 'fade'}}
+                stateRouteName="Home"
+                onClick={() => {
+                  navigationReset(navigation, 0, 'BookingConfirmationScreen', {
+                    workshop,
+                  });
+                }}
+              />
+            </View>
+          </View>
         </View>
       </SafeAreaViewLayout>
     </LinearGradient>

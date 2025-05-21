@@ -492,11 +492,6 @@ const UserCalendarModal = forwardRef<
                     text={buttonText}
                     disabled={!selectedDate || !selectedTime}
                     routeName={routeName}
-                    routeParams={
-                      token
-                        ? {workshop, date: selectedDate, time: selectedTime}
-                        : {isUser: true}
-                    }
                     replace={false}
                     onClick={onClick}
                   />
