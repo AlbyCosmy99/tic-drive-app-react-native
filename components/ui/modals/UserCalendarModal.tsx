@@ -412,9 +412,9 @@ const UserCalendarModal = forwardRef<
                                 })
                                 .toUpperCase()}
                             </Text>
-                            <TouchableOpacity
-                              onPress={() => setSelectedDate(null)}
-                              style={{marginTop: 4}}
+                            <CrossPlatformButtonLayout
+                              onPress={() => alert('cc')}
+                              styleContainer={{marginTop: 4}}
                             >
                               <Text
                                 style={{
@@ -425,7 +425,7 @@ const UserCalendarModal = forwardRef<
                               >
                                 {t('date.changeDay')}
                               </Text>
-                            </TouchableOpacity>
+                            </CrossPlatformButtonLayout>
                             <Text style={styles.sectionTitle}>
                               {t('date.chooseSlot').toUpperCase()}
                             </Text>
@@ -582,7 +582,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'center',
     gap: 8,
-    paddingHorizontal: 8,
   },
   timeSlotButton: {
     paddingVertical: 6,
