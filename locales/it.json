@@ -71,6 +71,7 @@
     "reviews": "Vedi tutte le recensioni"
   },
   "vehicles": {
+   "confirmCarInformation": "Conferma le informazioni dell’auto",
     "registerVehicle": "Registra veicolo",
     "handleVehicles": "Gestisci veicoli",
     "registerVehicleForBookings": "Registra il tuo veicolo per effettuare una prenotazione",
@@ -99,6 +100,11 @@
     "name": "Nome",
     "cv": "CV"
   },
+  "car_registration": {
+  "success_title": "Auto registrata",
+  "success_subtitle": "Congratulazioni! La tua auto è stata registrata con successo. Vai al profilo per vedere i tuoi veicoli."
+},
+
   "home": {
     "notifications": {
       "first": "Ultimo tagliando: 12 mesi fa.\nPianifica ora!",
@@ -248,7 +254,10 @@
     "unauthorized": "Non autorizzato: controlla le credenziali.",
     "serverError": "Errore del server. Riprova più tardi.",
     "unexpected": "Errore imprevisto: {{code}}",
-    "general": "Qualcosa è andato storto. Riprova."
+    "general": "Qualcosa è andato storto. Riprova.",
+      "anErrorOccurred": "Si è verificato un errore",
+    "fetchWorkshopUnavailableDates": "Errore nel recupero delle date in cui l'officina non è disponibile.",
+
   },
   "reviewBooking": {
     "details": "Dettagli della prenotazione",

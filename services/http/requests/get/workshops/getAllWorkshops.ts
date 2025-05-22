@@ -9,14 +9,15 @@ const getAllWorkshops = async (
   serviceId: number = 0,
   params?: Params,
 ) => {
-  return await axiosClient.get(
-    `workshops?skip=${skip}&take=${take}&serviceId=${serviceId}&filter=${debouncedFilter}&order=${params?.order ?? 'asc'}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+  const query = `workshops?skip=${skip}&take=${take}&filter=${debouncedFilter}&order=${params?.order ?? 'asc'}${
+    serviceId > 0 ? `&serviceId=${serviceId}` : ''
+  }`;
+
+  return await axiosClient.get(query, {
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
-  );
+  });
 };
 
 export default getAllWorkshops;

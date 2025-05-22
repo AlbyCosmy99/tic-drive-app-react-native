@@ -96,7 +96,7 @@ const TicDriveDropdown: React.FC<TicDriveDropdownProps> = ({
         renderInputSearch={props => (
           <TicDriveInput
             placeholder={searchPlaceholder + '...'}
-            isRightIcon
+            existsRightIcon
             inputContainerStyle={{
               borderRadius: 0,
               padding: 0,

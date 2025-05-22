@@ -6,7 +6,6 @@ import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscou
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import UserCalendarModal from '@/components/ui/modals/UserCalendarModal';
 import useJwtToken from '@/hooks/auth/useJwtToken';
-import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import WorkshopReviewinfo from '@/components/workshop/reviews/WorkshopReviewInfo';
 import GreenCheckIcon from '@/assets/svg/check_green.svg';
@@ -17,7 +16,6 @@ import Constants from 'expo-constants';
 import MapView, {Marker} from 'react-native-maps';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
 import axiosClient from '@/services/http/axiosClient';
-import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice';
 import EmptyHeartIcon from '@/assets/svg/emotions/EmptyHeart.svg';
 import RedHeartIcon from '@/assets/svg/emotions/RedHeart.svg';
 import CarPinIcon from '@/assets/svg/vehicles/car3.svg';
@@ -25,10 +23,12 @@ import {useTranslation} from 'react-i18next';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import openGoogleMaps from '@/services/map/openGoogleMaps';
 import getUserMainImage from '@/utils/files/getUserMainImage';
+import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
+import {setWorkshop} from '@/stateManagement/redux/slices/bookingSlice';
 
 export default function WorkshopDetailsScreen() {
-  const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
-  const {areServicesAvailable} = useAreServicesAvailable();
+  const workshop = useAppSelector(state => state.booking.workshop);
+  const serviceChoosen = useServiceChoosenByCustomer();
   const token = useJwtToken();
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
@@ -39,10 +39,10 @@ export default function WorkshopDetailsScreen() {
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message: `🚗✨ Discover ${workshop?.name} on TicDrive! ✨🚗\n
+        message: `🚗✨ Discover ${workshop?.workshopName} on TicDrive! ✨🚗\n
       📍 *Location:* ${workshop?.address}\n
       ⭐ *Rating:* ${workshop?.meanStars?.toFixed(1)} (${workshop?.numberOfReviews} reviews)\n
-      💰 ${workshop?.servicePrice ? `**Starting from:** ${workshop?.servicePrice} ${workshop?.currency}` : 'Check out our services!'}${workshop?.discount ? ` 🔥 **Limited-time discount:** ${workshop?.discount}% off!` : ''}\n
+      💰 ${workshop?.servicePrice ? `**Starting from:** ${calculateWorkshopDiscount(workshop?.servicePrice, workshop.discount ?? 0)} ${workshop?.currency}` : 'Check out our services!'}${workshop?.discount ? ` 🔥 **Limited-time discount:** ${workshop?.discount}% off!` : ''}\n
       ${workshop?.isVerified ? '✅ *This workshop is verified by TicDrive!* 🔥' : ''}\n
       🔗 *Book now on TicDrive!* ${Constants.expoConfig?.extra?.googleMapsApiKey}`,
       });
@@ -68,9 +68,7 @@ export default function WorkshopDetailsScreen() {
           },
         },
       );
-      dispatch(
-        setSelectedWorkshop({...workshop, isFavorite: !workshop?.isFavorite}),
-      );
+      dispatch(setWorkshop({...workshop, isFavorite: !workshop?.isFavorite}));
     } catch (e) {
       console.error('error while adding/removing a workshop to/from favorite');
     }
@@ -230,7 +228,7 @@ export default function WorkshopDetailsScreen() {
             style={styles.bottom}
             className="flex-row justify-between items-center mx-2.5 border-t"
           >
-            {areServicesAvailable && (
+            {serviceChoosen && (
               <View className="flex-1 flex-col mt-2.5">
                 <Text className="text-base" style={styles.startingFrom}>
                   Starting from
@@ -243,7 +241,7 @@ export default function WorkshopDetailsScreen() {
                         'font-semibold text-xl mx-1',
                       ].join(' ')}
                     >
-                      {workshop.servicePrice}
+                      {workshop.currency! + workshop.servicePrice}
                     </Text>
                     {workshop.discount !== 0 && (
                       <View style={styles.strikethroughLine} />
@@ -251,7 +249,7 @@ export default function WorkshopDetailsScreen() {
                   </View>
                   {workshop.discount !== 0 && (
                     <Text className="font-semibold text-xl mx-1">
-                      $
+                      {workshop.currency}
                       {calculateWorkshopDiscount(
                         workshop.servicePrice ?? 0,
                         workshop?.discount ?? 0,

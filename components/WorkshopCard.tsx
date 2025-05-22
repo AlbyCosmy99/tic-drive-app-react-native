@@ -6,7 +6,6 @@ import {
   StyleProp,
   StyleSheet,
   Text,
-  useWindowDimensions,
   View,
   ViewStyle,
 } from 'react-native';
@@ -15,16 +14,17 @@ import PinLocationIcon from '@/assets/svg/location/PinLocation.svg';
 import GreenCheckIcon from '@/assets/svg/check_green.svg';
 import IconTextPair from './ui/IconTextPair';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
-import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
+import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
-import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice';
 import WorkshopReviewinfo from './workshop/reviews/WorkshopReviewInfo';
 import Workshop from '@/types/workshops/Workshop';
 import getUserMainImage from '@/utils/files/getUserMainImage';
 import CrossPlatformButtonLayout from './ui/buttons/CrossPlatformButtonLayout';
 import isScreenSmall from '@/services/responsive/isScreenSmall';
 import { useTranslation } from 'react-i18next';
+import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
+import {setWorkshop} from '@/stateManagement/redux/slices/bookingSlice';
 
 interface WorkshopCardProps {
   workshop: Workshop;
@@ -35,6 +35,7 @@ interface WorkshopCardProps {
   iconTextPairContainerTailwindCss?: string;
   iconTextPairTextTailwindCss?: string;
   imageContainerStyle?: StyleProp<ViewStyle>;
+  titleTextTailwindCss?: string;
   addressContainerTailwindCss?: string;
 }
 
@@ -47,18 +48,17 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
   iconTextPairTextTailwindCss,
   imageContainerStyle,
   isServiceDetailsEnabled = true,
-  addressContainerTailwindCss
+  titleTextTailwindCss,
+  addressContainerTailwindCss,
 }) => {
-  const servicesChoosenByUsers = useAppSelector(
-    state => state.services.servicesChoosenByUsers,
-  );
+  const serviceChoosen = useServiceChoosenByCustomer();
   const {navigation} = useContext(NavigationContext);
   const dispatch = useAppDispatch();
 const { t } = useTranslation();
 
   const handleCardPress = (workshop: Workshop) => {
     navigationPush(navigation, 'WorkshopDetailsScreen');
-    dispatch(setSelectedWorkshop(workshop));
+    dispatch(setWorkshop(workshop));
   };
 
   const workshopNameTextSize = isScreenSmall() ? 'text-lg' : 'text-xl';
@@ -101,7 +101,7 @@ const { t } = useTranslation();
         >
           <IconTextPair
             containerTailwindCss={`${isScreenSmall() ? 'py-1' : 'py-1.5'} pr-1 ${iconTextPairContainerTailwindCss}`}
-            textTailwindCss={`${workshopNameTextSize} font-semibold ${iconTextPairTextTailwindCss}`}
+            textTailwindCss={`${workshopNameTextSize} font-semibold ${iconTextPairTextTailwindCss} ${titleTextTailwindCss}`}
             text={workshop.workshopName}
             icon={<GreenCheckIcon />}
           />
@@ -119,14 +119,14 @@ const { t } = useTranslation();
             textTailwindCss={`text-sm font-medium underline ${iconTextPairTextTailwindCss}`}
           />
         </View>
-        {servicesChoosenByUsers.length > 0 && isServiceDetailsEnabled && (
+        {!!serviceChoosen && isServiceDetailsEnabled && (
           <CrossPlatformButtonLayout
             buttonTailwindCss="flex-row justify-between items-center border-2 border-grey-light m-2 p-3 mt-0 rounded-lg"
             onPress={() => alert('pressed')}
           >
             <View className="flex-1 pr-4">
               <Text className="text-base font-medium flex-shrink">
-                {servicesChoosenByUsers[0].title}
+                {serviceChoosen.title}
               </Text>
             </View>
 

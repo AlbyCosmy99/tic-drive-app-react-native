@@ -6,21 +6,17 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {Image} from '@rneui/themed';
 import TicDriveLogo from '../../assets/images/TicDriveLogo.jpeg';
 import UserAuthenticationContent from '@/components/auth/UserAuthentificationContent';
-import smallDevicebreakpointHeight from '@/constants/dimensions/smallDevicebreakpointHeight';
-import {Dimensions} from 'react-native';
 import AuthAction from '@/types/auth/Action';
 import {useRoute} from '@react-navigation/native';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 import isScreenSmall from '@/services/responsive/isScreenSmall';
-const {height} = Dimensions.get('window');
 
 export default function UserAuthenticationScreen() {
   const [isUserRegistering, setIsUserRegistering] = useState<boolean>(false);
   const route = useRoute();
   //@ts-ignore
-  const {register, isUser} = route.params as {
+  const {register} = route.params as {
     register: boolean;
-    isUser: boolean;
   };
 
   useEffect(() => {
@@ -49,7 +45,6 @@ export default function UserAuthenticationScreen() {
             action={action}
             isUserRegistering={isUserRegistering}
             setIsUserRegistering={setIsUserRegistering}
-            clientCategory={isUser ? 'user' : 'workshop'}
           />
         </ScrollView>
       </View>

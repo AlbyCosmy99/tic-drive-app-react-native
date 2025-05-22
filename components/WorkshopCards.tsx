@@ -2,13 +2,10 @@ import React, {memo, useContext, useEffect, useMemo} from 'react';
 import {Text, View} from 'react-native';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import navigationPush from '@/services/navigation/push';
-import {useServicesChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
 import TicDriveButton from './ui/buttons/TicDriveButton';
 import navigationReset from '@/services/navigation/reset';
-import {reset} from '@/stateManagement/redux/slices/servicesSlice';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import {useFocusEffect} from 'expo-router';
-import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import TicDriveInfinitePaginationList from './ui/Lists/TicDriveInfinitePaginationList';
 import {useState} from 'react';
@@ -20,6 +17,10 @@ import getAllWorkshops from '@/services/http/requests/get/workshops/getAllWorksh
 import getFavoriteWorkshops from '@/services/http/requests/get/workshops/getFavoriteWorkshops';
 import getNearbyWorkshops from '@/services/http/requests/get/workshops/getNearbyWorkshops';
 import {useTranslation} from 'react-i18next';
+import {
+  setService,
+  setWorkshop,
+} from '@/stateManagement/redux/slices/bookingSlice';
 
 interface WorkshopCardsProps {
   setAreNoWorkshop?: (areNoWorkshops: boolean) => void;
@@ -36,7 +37,6 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
   const navigation = useTicDriveNavigation();
   const {t} = useTranslation();
 
-  const servicesChoosen = useServicesChoosenByUsers();
   const workshopsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
   const [workshops, setWorkshops] = useState<Workshop[]>([]);
@@ -66,6 +66,7 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
 
   const dispatch = useAppDispatch();
   const token = useJwtToken();
+  const service = useAppSelector(state => state.booking.service);
 
   const fetchAllWorkshops = async () => {
     setLoadingWorkshops(true);
@@ -74,7 +75,7 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
       commonOffset,
       workshopsPerPage,
       debouncedFilter,
-      0,
+      service?.id,
       {order, filter: workshopFilter},
     );
     setWorkshops(response.data.workshops);
@@ -107,7 +108,7 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
         latitude: user?.coordinates?.latitude ?? 0,
         longitude: user?.coordinates?.longitude ?? 0,
       },
-      0,
+      service?.id,
       {order, filter: workshopFilter},
     );
     if (response.data.count > 0) {
@@ -136,16 +137,16 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
   }, [workshopFilter, setAreNoWorkshop]);
 
   useFocusEffect(() => {
-    dispatch(setSelectedWorkshop(null));
+    dispatch(setWorkshop(undefined));
   });
 
   const handleChooseDifferentService = () => {
-    dispatch(reset());
+    dispatch(setService(undefined));
     navigationPush(navigation, 'ChooseServicesScreen');
   };
 
   const handleCardPress = (workshop: Workshop) => {
-    dispatch(setSelectedWorkshop(workshop));
+    dispatch(setWorkshop(workshop));
     navigationPush(navigation, 'WorkshopDetailsScreen');
   };
 

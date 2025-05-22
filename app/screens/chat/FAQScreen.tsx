@@ -63,8 +63,8 @@ export default function FAQScreen() {
 
         <View className="mx-4">
           <TicDriveInput
-            isLeftIcon
-            isRightIcon
+            existsLeftIcon
+            existsRightIcon
             placeholder={t('faq.search_placeholder')}
             customValue={searchText}
             onChange={setSearchText}

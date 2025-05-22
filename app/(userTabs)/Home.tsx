@@ -17,14 +17,6 @@ import navigationPush from '@/services/navigation/push';
 import CarContext from '@/stateManagement/contexts/car/CarContext';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import {setSelectedCar} from '@/stateManagement/redux/slices/carsSlice';
-import {
-  reset,
-  setAreServicesOn,
-} from '@/stateManagement/redux/slices/servicesSlice';
-import {
-  setLastWorkshopSelectedFromFilter,
-  setSelectedWorkshop,
-} from '@/stateManagement/redux/slices/workshopsSlice';
 import Workshop from '@/types/workshops/Workshop';
 import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
 import {Entypo} from '@expo/vector-icons';
@@ -41,6 +33,12 @@ import MapModal from '@/components/modal/MapModal';
 import getAllWorkshops from '@/services/http/requests/get/workshops/getAllWorkshops';
 import getNearbyWorkshops from '@/services/http/requests/get/workshops/getNearbyWorkshops';
 import isScreenSmall from '@/services/responsive/isScreenSmall';
+import {
+  reset,
+  setService,
+  setWorkshop,
+} from '@/stateManagement/redux/slices/bookingSlice';
+import {setLastWorkshopSelectedFromFilter} from '@/stateManagement/redux/slices/workshopsSlice';
 
 export default function UserHome() {
   const [filter, setFilter] = useState('');
@@ -129,10 +127,7 @@ export default function UserHome() {
   };
 
   useFocusEffect(() => {
-    dispatch(setAreServicesOn(false));
     dispatch(reset());
-    dispatch(setSelectedWorkshop(null));
-    dispatch(setSelectedCar(undefined));
     if (setCarSelectedByMakeAndModel) {
       setCarSelectedByMakeAndModel(undefined);
     }
@@ -187,8 +182,8 @@ export default function UserHome() {
 
         <View className="flex-row items-center relative">
           <TicDriveInput
-            isLeftIcon={true}
-            isRightIcon={true}
+            existsLeftIcon
+            existsRightIcon
             placeholder={t('workshops.searchWorkshop')}
             containerViewStyleTailwind={`flex-1 ${isScreenSmall() ? 'h-[50px]' : 'h-[60px]'}`}
             inputContainerStyle={{
@@ -204,7 +199,7 @@ export default function UserHome() {
               emptyElementsMessage={t('workshops.noWorkshopsWithFilter')}
               onElementPress={(elem: any) => {
                 navigationPush(navigation, 'WorkshopDetailsScreen');
-                dispatch(setSelectedWorkshop(elem));
+                dispatch(setWorkshop(elem));
                 dispatch(setLastWorkshopSelectedFromFilter(elem));
               }}
             />

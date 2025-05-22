@@ -27,14 +27,12 @@ type FormData = {
 interface UserAuthenticationFormProps {
   isUserRegistering: boolean;
   setOnFormSubmit: (onSubmit: () => void) => void;
-  clientCategory: UserCategory;
   setLoading: (loading: boolean) => void;
 }
 
 const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
   isUserRegistering,
   setOnFormSubmit,
-  clientCategory,
   setLoading,
 }) => {
   const {
@@ -61,7 +59,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
     const user: User = {
       name: data.name,
       email: data.email,
-      category: clientCategory === 'user' ? 'user' : 'workshop',
+      category: 'user',
       password: data.password,
       repeatedPassword: data.repeatedPassword,
     };
@@ -136,7 +134,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
             render={({field: {onChange, value}}) => (
               <TicDriveInput
                 placeholder="Name"
-                isRightIcon={true}
+                existsRightIcon
                 customValue={value}
                 onChange={onChange}
                 inputContainerStyle={styles.inputContainerStyle}
@@ -163,7 +161,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
         render={({field: {onChange, value}}) => (
           <TicDriveInput
             placeholder="Email"
-            isRightIcon={true}
+            existsRightIcon
             customValue={value}
             onChange={onChange}
             inputContainerStyle={styles.inputContainerStyle}
@@ -179,7 +177,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
         rules={{
           required: 'Password is required',
           pattern: {
-            value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+            value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/,
             message:
               'Password must be at least 8 characters long, include at least one uppercase letter, one lowercase letter, and one number.',
           },
@@ -187,7 +185,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
         render={({field: {onChange, value}}) => (
           <TicDriveInput
             placeholder="Password"
-            isRightIcon={true}
+            existsRightIcon
             customValue={value}
             onChange={onChange}
             inputContainerStyle={styles.inputContainerStyle}
@@ -228,7 +226,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
               <TicDriveInput
                 containerViewStyleTailwind="mt-4"
                 placeholder="Repeat Password"
-                isRightIcon={true}
+                existsRightIcon
                 customValue={value}
                 onChange={onChange}
                 inputContainerStyle={styles.inputContainerStyle}

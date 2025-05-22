@@ -105,7 +105,7 @@ const ChangePasswordScreen = () => {
             <TicDriveInput
               containerViewStyleTailwind="mt-4"
               placeholder={t('changePassword.password')}
-              isRightIcon={true}
+              existsRightIcon
               customValue={password}
               onChange={e => setPassword(e)}
               inputContainerStyle={styles.inputContainerStyle}
@@ -128,7 +128,7 @@ const ChangePasswordScreen = () => {
             <TicDriveInput
               containerViewStyleTailwind="mt-4"
               placeholder={t('changePassword.repeatPassword')}
-              isRightIcon={true}
+              existsRightIcon
               customValue={confirmPassword}
               onChange={e => setConfirmPassword(e)}
               inputContainerStyle={styles.inputContainerStyle}

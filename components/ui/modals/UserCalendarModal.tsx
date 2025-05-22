@@ -24,7 +24,7 @@ import TicDriveButton from '../buttons/TicDriveButton';
 import {Colors} from '@/constants/Colors';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
 import useJwtToken from '@/hooks/auth/useJwtToken';
-import {useAppSelector} from '@/stateManagement/redux/hooks';
+import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import {useTranslation} from 'react-i18next';
 import generateTimeSlots from '@/utils/datetime/generateTimeSlots';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -37,11 +37,14 @@ import CrossPlatformButtonLayout from '../buttons/CrossPlatformButtonLayout';
 import {WorkshopWorkingHours} from '@/types/workshops/WorkshopWorkingHours';
 import getWorkshopWorkingHours from '@/services/http/requests/datetime/getWorkshopWorkingHours';
 import TicDriveSpinner from '../spinners/TicDriveSpinner';
+import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
+import Service from '@/types/Service';
+import {setService, setTime} from '@/stateManagement/redux/slices/bookingSlice';
 
 const {height} = Dimensions.get('window');
 
 export interface UserCalendarModalRef {
-  openModal: () => void;
+  openModal: (service?: Service) => void;
   closeModal: () => void;
 }
 
@@ -63,34 +66,41 @@ const UserCalendarModal = forwardRef<
   const token = useJwtToken();
   const {setErrorMessage} = useGlobalErrors();
   const {setLoginRouteName, setLoginRouteParams} = useContext(AuthContext);
-  const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
-  const service = useAppSelector(
-    state => state.services.servicesChoosenByUsers,
-  )[0];
-  const carSelected = useAppSelector(state => state.cars.selectedCar);
+  const workshop = useAppSelector(state => state.booking.workshop);
+  const serviceChoosen = useServiceChoosenByCustomer();
+  const car = useAppSelector(state => state.booking.car);
   const {t} = useTranslation();
   const languageCode = useAppSelector(state => state.language.languageCode);
+  const [
+    serviceSelectedFromWorkshopDetails,
+    setServiceSelectedFromWorkshopDetails,
+  ] = useState<Service | undefined>(undefined);
 
-  const buttonText = useMemo(() => {
-    if (!service) return t('service.chooseService');
-    if (!carSelected) return t('vehicles.registerVehicle');
-    return 'Confirm ' + (!token ? 'and login' : '');
-  }, [token, service, carSelected]);
+  const hasService = !!serviceChoosen || !!serviceSelectedFromWorkshopDetails;
 
-  const routeName = useMemo(() => {
-    if (!service) return 'ChooseServicesScreen';
-    return token
-      ? carSelected
+  const buttonText = !hasService
+    ? t('service.chooseService')
+    : token
+      ? car
+        ? 'Conferma prenotazione'
+        : 'Scegli veicolo'
+      : 'Confirm ' + (!token ? 'and login' : '');
+
+  const routeName = !hasService
+    ? 'ChooseServicesScreen'
+    : token
+      ? car
         ? 'ReviewBookingDetailsScreen'
-        : 'RegisterVehicleScreen'
+        : 'SelectVehicleScreen'
       : 'UserAuthenticationScreen';
-  }, [token, service]);
 
   const [workingDays, setWorkingDays] = useState<string[]>([]);
   const [customDisabledDays, setCustomeDisabledDays] = useState<string[]>([]);
   const [workingHours, setWorkingHours] = useState<WorkshopWorkingHours | null>(
     null,
   );
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -108,9 +118,7 @@ const UserCalendarModal = forwardRef<
         );
         setCustomeDisabledDays(mappedDisabledDays);
       } catch (error) {
-        setErrorMessage(
-          'Errore nel recupero delle date in cui l officina non è disponibile.',
-        );
+        setErrorMessage(t('errors.fetchWorkshopUnavailableDates'));
       }
     };
 
@@ -150,13 +158,16 @@ const UserCalendarModal = forwardRef<
     return range;
   }, [workingHours]);
 
-  const openModal = (): void => {
+  const openModal = (service?: Service): void => {
     setModalVisible(true);
     Animated.timing(slideAnim, {
       toValue: 0,
       duration: 300,
       useNativeDriver: true,
     }).start();
+    if (service) {
+      setServiceSelectedFromWorkshopDetails(service);
+    }
   };
 
   const closeModal = (): void => {
@@ -173,13 +184,34 @@ const UserCalendarModal = forwardRef<
   }));
 
   const onClick = () => {
-    if (token) {
-      closeModal();
-      return {};
+    if (!selectedDate || !selectedTime) {
+      setErrorMessage('Data o ora non selezionata.');
+      return;
     }
+
     closeModal();
     setLoginRouteName('ReviewBookingDetailsScreen');
     setLoginRouteParams({workshop, date: selectedDate, time: selectedTime});
+
+    if (serviceSelectedFromWorkshopDetails) {
+      dispatch(setService(serviceSelectedFromWorkshopDetails));
+    }
+
+    const formattedDate = new Date(selectedDate).toLocaleDateString(
+      languageCode,
+      {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+      },
+    );
+
+    const capitalizedDate =
+      formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+
+    const formattedTime = `${capitalizedDate} - ${selectedTime}`;
+
+    dispatch(setTime(formattedTime));
   };
 
   const panResponder = useRef(
@@ -260,7 +292,11 @@ const UserCalendarModal = forwardRef<
     <>
       {showButton && (
         <TicDriveButton
-          text={service?.title ? t('bookNow') : t('service.bookAService')}
+          text={
+            serviceChoosen || serviceSelectedFromWorkshopDetails
+              ? t('bookNow')
+              : t('service.bookAService')
+          }
           onClick={openModal}
           customButtonStyle={styles.customButtonStyle}
           customContainerStyle={{width: '100%'}}
@@ -297,7 +333,17 @@ const UserCalendarModal = forwardRef<
                         <Calendar
                           onDayPress={async (day: ExtendedDay) => {
                             const date = new Date(day.dateString);
+                            const dayOfWeek = new Date(day.dateString)
+                              .toLocaleDateString(languageCode, {
+                                weekday: 'long',
+                              })
+                              .toLowerCase();
 
+                            if (
+                              disabledDates[day.dateString] ||
+                              workingDays.includes(dayOfWeek)
+                            )
+                              return;
                             const dayName = date.toLocaleDateString(
                               languageCode,
                               {
@@ -312,18 +358,6 @@ const UserCalendarModal = forwardRef<
                               );
                             setaLoadingHours(false);
                             setWorkingHours(workingHoursData.data);
-
-                            const dayOfWeek = new Date(day.dateString)
-                              .toLocaleDateString(languageCode, {
-                                weekday: 'long',
-                              })
-                              .toLowerCase();
-
-                            if (
-                              disabledDates[day.dateString] ||
-                              workingDays.includes(dayOfWeek)
-                            )
-                              return;
 
                             if (selectedDate === day.dateString) {
                               setSelectedDate(null);
@@ -378,9 +412,9 @@ const UserCalendarModal = forwardRef<
                                 })
                                 .toUpperCase()}
                             </Text>
-                            <TouchableOpacity
+                            <CrossPlatformButtonLayout
                               onPress={() => setSelectedDate(null)}
-                              style={{marginTop: 4}}
+                              styleContainer={{marginTop: 4}}
                             >
                               <Text
                                 style={{
@@ -391,7 +425,7 @@ const UserCalendarModal = forwardRef<
                               >
                                 {t('date.changeDay')}
                               </Text>
-                            </TouchableOpacity>
+                            </CrossPlatformButtonLayout>
                             <Text style={styles.sectionTitle}>
                               {t('date.chooseSlot').toUpperCase()}
                             </Text>
@@ -458,11 +492,6 @@ const UserCalendarModal = forwardRef<
                     text={buttonText}
                     disabled={!selectedDate || !selectedTime}
                     routeName={routeName}
-                    routeParams={
-                      token
-                        ? {workshop, date: selectedDate, time: selectedTime}
-                        : {isUser: true}
-                    }
                     replace={false}
                     onClick={onClick}
                   />
@@ -548,7 +577,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'center',
     gap: 8,
-    paddingHorizontal: 8,
   },
   timeSlotButton: {
     paddingVertical: 6,
