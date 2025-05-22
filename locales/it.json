@@ -117,6 +117,12 @@
       "review": "recensione",
       "searchWorkshop": "Cerca officina"
     },
+    "workingHours": {
+      "weekdays": "Lunedì - Venerdì",
+      "saturday": "Sabato",
+      "closed": "Chiuso"
+    },
+    "startingFrom": "A partire da",
     "order": "Ordina",
     "filter": "Filtra",
     "map": "Mappa",
@@ -126,7 +132,9 @@
     "rating": "Valutazione",
     "searchWorkshop": "Cerca officina",
     "noWorkshopsWithFilter": "Nessuna officina trovata con questo filtro.",
-    "noWorkshopsAvailable": "Nessuna officina disponibile al momento."
+    "noWorkshopsAvailable": "Nessuna officina disponibile al momento.",
+     "notFound": "Officina non trovata."
+
   },
   "bookingConfirmation": {
     "awaitingWorkshopConfirmation": "Il servizio necessita la conferma da parte dell'officina.",

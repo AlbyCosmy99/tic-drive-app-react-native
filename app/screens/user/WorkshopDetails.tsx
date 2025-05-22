@@ -84,60 +84,45 @@ export default function WorkshopDetails() {
             Authorization: `Bearer ${token}`,
           },
         },
-      );
-      dispatch(
+        );
+        dispatch(
         setSelectedWorkshop({...workshop, isFavorite: !workshop?.isFavorite}),
-      );
-    } catch (e) {
+        );
+       } catch (e) {
       console.error('error while adding/removing a workshop to/from favorite');
     }
   };
   useEffect(() => {
-    if (!workshop?.id) return;
+   if (!workshop?.id) return;
 
-    const fetchWorkingHoursForAllDays = async () => {
-      setLoadingHours(true);
-      try {
-        const hoursData: Record<string, WorkshopWorkingHours | null> = {};
+     const fetchWorkingHours = async () => {
+       setLoadingHours(true);
+        console.log('Fetching working hours for workshop:', workshop.id);
+         try {
+          const res = await getWorkshopWorkingHours(workshop.id);
+          console.log('Working hours API response:', res.data);
 
-        if (!workshop?.id) {
-          console.warn(
-            'Workshop ID is undefined. Skipping working hours fetch.',
-          );
-          return;
+          const hoursByDay: Record<string, WorkshopWorkingHours | null> = {};
+          for (const item of res.data) {
+          if (item.dayId >= 1 && item.dayId <= 7) {
+          const dayName = daysOfWeek[item.dayId - 1];
+          hoursByDay[dayName] = item;
         }
-
-        const results = await Promise.allSettled(
-          daysOfWeek.map(day =>
-            getWorkshopWorkingHours(workshop.id, day).then(res => ({
-              day,
-              data: res.data,
-            })),
-          ),
-        );
-
-        for (const result of results) {
-          if (result.status === 'fulfilled') {
-            hoursData[result.value.day] = result.value.data;
-          } else {
-            hoursData[result.reason?.config?.params?.day || 'Unknown'] = null;
-            console.error(
-              `Failed to load hours for ${result.reason?.config?.params?.day}:`,
-              result.reason?.message,
-            );
-          }
-        }
-
-        setWorkingHours(hoursData);
-      } catch (e) {
-        setErrorHours('Failed to load working hours');
-      } finally {
-        setLoadingHours(false);
       }
-    };
 
-    fetchWorkingHoursForAllDays();
-  }, [workshop?.id]);
+       setWorkingHours(hoursByDay);
+     } catch (e: any) {
+        setErrorHours('Failed to load working hours');
+      console.error('Working hours fetch error:', e?.response?.data || e.message || e);
+    } finally {
+      setLoadingHours(false);
+    }
+  };
+
+  fetchWorkingHours();
+}, [workshop?.id]);
+
+
 
   return (
     <SafeAreaViewLayout styles={[styles.container]}>
@@ -161,7 +146,7 @@ export default function WorkshopDetails() {
       />
       {!workshop ? (
         <View className="flex-1 justify-center items-center">
-          <Text className="text-red-600 text-xl">Workshop not found.</Text>
+          <Text className="text-red-600 text-xl">{t('workshops.errors.notFound')}</Text>
         </View>
       ) : (
         <>
@@ -204,7 +189,7 @@ export default function WorkshopDetails() {
                       {/* Left Column: Monday - Friday */}
                       <View className="flex-1 pr-2">
                         <Text className="font-semibold text-base mb-1">
-                          Monday - Friday
+                          {t('workshops.workingHours.weekdays')}
                         </Text>
                         {[
                           'Monday',
@@ -254,14 +239,14 @@ export default function WorkshopDetails() {
                       {/* Right Column: Saturday */}
                       <View className="w-[48%]">
                         <Text className="font-semibold text-base mb-1">
-                          Saturday
+                          {t('workshops.workingHours.saturday')}
                         </Text>
                         {(() => {
                           const hours = workingHours['Saturday'];
                           if (!hours)
                             return (
                               <Text className="text-sm text-gray-700">
-                                Closed
+                               {t('workshops.workingHours.closed')}
                               </Text>
                             );
 
@@ -394,7 +379,7 @@ export default function WorkshopDetails() {
             {areServicesAvailable && (
               <View className="flex-1 flex-col mt-2.5">
                 <Text className="text-base" style={styles.startingFrom}>
-                  Starting from
+                  {t('workshops.startingFrom')}
                 </Text>
                 <View className="flex-row items-center">
                   <View>
