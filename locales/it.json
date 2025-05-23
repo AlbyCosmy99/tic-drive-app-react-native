@@ -98,7 +98,11 @@
     "year": "Anno",
     "orRegisterNewCar": "oppure registra un nuovo veicolo",
     "name": "Nome",
-    "cv": "CV"
+    "cv": "CV",
+  "plate_format_error": "Formato errato. La targa deve essere nel formato: Es. AB123CD",
+    "plate_placeholder": "(Es. AB123CD)  2 lettere, 3 numeri, 2 lettere)"
+
+
   },
   "car_registration": {
   "success_title": "Auto registrata",
@@ -256,7 +260,7 @@
     "unexpected": "Errore imprevisto: {{code}}",
     "general": "Qualcosa è andato storto. Riprova.",
       "anErrorOccurred": "Si è verificato un errore",
-    "fetchWorkshopUnavailableDates": "Errore nel recupero delle date in cui l'officina non è disponibile.",
+    "fetchWorkshopUnavailableDates": "Errore nel recupero delle date in cui l'officina non è disponibile."
 
   },
   "reviewBooking": {
