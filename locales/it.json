@@ -99,8 +99,8 @@
     "orRegisterNewCar": "oppure registra un nuovo veicolo",
     "name": "Nome",
     "cv": "CV",
-  "plate_format_error": "Formato errato. La targa deve essere nel formato: Es. AB123CD",
-    "plate_placeholder": "(Es. AB123CD)  2 lettere, 3 numeri, 2 lettere)"
+  "plate_format_error": "Formato errato. La targa deve essere nel formato:\nEs. AB123CD",
+    "plate_placeholder": "Es. AB123CD"
 
 
   },
