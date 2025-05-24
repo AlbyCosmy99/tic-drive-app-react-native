@@ -28,6 +28,8 @@ import getUserMainImage from '@/utils/files/getUserMainImage';
 import getWorkshopWorkingHours from '@/services/http/requests/datetime/getWorkshopWorkingHours';
 import {useState, useEffect} from 'react';
 import { WorkshopWorkingHours } from '@/types/workshops/WorkshopWorkingHours';
+import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
+import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 
 export default function WorkshopDetails() {
   const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
@@ -49,9 +51,10 @@ export default function WorkshopDetails() {
     Record<string, WorkshopWorkingHours | null>
   >({});
   const [loadingHours, setLoadingHours] = useState(false);
-  const [errorHours, setErrorHours] = useState(null);
   const lat = workshop?.latitude || null;
   const lng = workshop?.longitude || null;
+
+  const {setErrorMessage} = useGlobalErrors()
 
   const onShare = async () => {
     try {
@@ -112,7 +115,7 @@ export default function WorkshopDetails() {
 
        setWorkingHours(hoursByDay);
      } catch (e: any) {
-        setErrorHours('Failed to load working hours');
+        setErrorMessage('Failed to load working hours');
       console.error('Working hours fetch error:', e?.response?.data || e.message || e);
     } finally {
       setLoadingHours(false);
@@ -178,12 +181,7 @@ export default function WorkshopDetails() {
                 </View>
                 <View className="mt-1">
                   {loadingHours ? (
-                    <ActivityIndicator
-                      size="small"
-                      color={Colors.light.bookingsOptionsText}
-                    />
-                  ) : errorHours ? (
-                    <Text className="text-red-500 text-sm">{errorHours}</Text>
+                    <TicDriveSpinner/>
                   ) : (
                     <View className="flex-row justify-between">
                       {/* Left Column: Monday - Friday */}
