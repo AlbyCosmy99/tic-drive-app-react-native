@@ -4,4 +4,4 @@ const calculateWorkshopDiscount = (price: number, discount: number): string => {
   return discountedPrice.toFixed(2);
 };
 
-export default calculateWorkshopDiscount
+export default calculateWorkshopDiscount;

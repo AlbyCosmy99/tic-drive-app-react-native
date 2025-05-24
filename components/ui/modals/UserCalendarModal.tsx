@@ -27,7 +27,7 @@ import useJwtToken from '@/hooks/auth/useJwtToken';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import {useTranslation} from 'react-i18next';
 import generateTimeSlots from '@/utils/datetime/generateTimeSlots';
-import {ScrollView} from 'react-native-gesture-handler';
+import {Pressable, ScrollView} from 'react-native-gesture-handler';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import getWorkshopNotAvailableDates from '@/services/http/requests/datetime/getWorkshopNotAvailableDates';
 import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
@@ -216,8 +216,13 @@ const UserCalendarModal = forwardRef<
 
   const panResponder = useRef(
     PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-      onMoveShouldSetPanResponder: () => true,
+      onStartShouldSetPanResponder: (e, gestureState) => {
+        // Prevent intercepting touch events inside Calendar
+        const touchY = e.nativeEvent.pageY;
+        if (touchY < height * 0.3) return false;
+        return true;
+      },
+      onMoveShouldSetPanResponder: () => false,
       onPanResponderMove: (
         _: GestureResponderEvent,
         gestureState: PanResponderGestureState,
@@ -412,9 +417,9 @@ const UserCalendarModal = forwardRef<
                                 })
                                 .toUpperCase()}
                             </Text>
-                            <CrossPlatformButtonLayout
+                            <TouchableOpacity
                               onPress={() => setSelectedDate(null)}
-                              styleContainer={{marginTop: 4}}
+                              style={{marginTop: 4}}
                             >
                               <Text
                                 style={{
@@ -425,7 +430,7 @@ const UserCalendarModal = forwardRef<
                               >
                                 {t('date.changeDay')}
                               </Text>
-                            </CrossPlatformButtonLayout>
+                            </TouchableOpacity>
                             <Text style={styles.sectionTitle}>
                               {t('date.chooseSlot').toUpperCase()}
                             </Text>
@@ -445,14 +450,14 @@ const UserCalendarModal = forwardRef<
                                   </Text>
                                   <View style={styles.timeSlotGroup}>
                                     {slots.map(time => (
-                                      <CrossPlatformButtonLayout
+                                      <TouchableOpacity
                                         key={time}
                                         onPress={() =>
                                           setSelectedTime(
                                             selectedTime === time ? null : time,
                                           )
                                         }
-                                        styleContainer={[
+                                        style={[
                                           styles.timeSlotButton,
                                           selectedTime === time &&
                                             styles.selectedSlot,
@@ -467,7 +472,7 @@ const UserCalendarModal = forwardRef<
                                         >
                                           {time}
                                         </Text>
-                                      </CrossPlatformButtonLayout>
+                                      </TouchableOpacity>
                                     ))}
                                   </View>
                                 </View>

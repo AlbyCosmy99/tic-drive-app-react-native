@@ -22,7 +22,7 @@ import Workshop from '@/types/workshops/Workshop';
 import getUserMainImage from '@/utils/files/getUserMainImage';
 import CrossPlatformButtonLayout from './ui/buttons/CrossPlatformButtonLayout';
 import isScreenSmall from '@/services/responsive/isScreenSmall';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
 import {setWorkshop} from '@/stateManagement/redux/slices/bookingSlice';
 
@@ -54,7 +54,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
   const serviceChoosen = useServiceChoosenByCustomer();
   const {navigation} = useContext(NavigationContext);
   const dispatch = useAppDispatch();
-const { t } = useTranslation();
+  const {t} = useTranslation();
 
   const handleCardPress = (workshop: Workshop) => {
     navigationPush(navigation, 'WorkshopDetailsScreen');
@@ -132,8 +132,10 @@ const { t } = useTranslation();
 
             <View className="items-end justify-center">
               <View className="flex-row justify-between items-center space-x-2">
-                <Text className="text-base font-medium">  {t('reviewBooking.total')}
-</Text>
+                <Text className="text-base font-medium">
+                  {' '}
+                  {t('reviewBooking.total')}
+                </Text>
                 <Text className="text-base font-medium">
                   {workshop.currency + ' '}
                   {calculateWorkshopDiscount(
@@ -143,8 +145,7 @@ const { t } = useTranslation();
                 </Text>
               </View>
               <Text className="font-medium text-xs text-tic">
-                  {t('reviewBooking.includesTaxesAndFees')}
-
+                {t('reviewBooking.includesTaxesAndFees')}
               </Text>
             </View>
           </CrossPlatformButtonLayout>

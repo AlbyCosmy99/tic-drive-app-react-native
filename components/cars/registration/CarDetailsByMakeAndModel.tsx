@@ -99,20 +99,17 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
     setPlateError(!plateRegex.test(formattedPlate)); // true if invalid
   };
 
-  const selectedFuel =
-    fuelOptions.find(
-      item => item.value === carSelectedByMakeAndModel?.fuel,
-    ) || {id: -1, value: ''};
+  const selectedFuel = fuelOptions.find(
+    item => item.value === carSelectedByMakeAndModel?.fuel,
+  ) || {id: -1, value: ''};
 
-  const selectedTransmission =
-    transmissionsOptions.find(
-      item => item.value === carSelectedByMakeAndModel?.transmission,
-    ) || {id: -1, value: ''};
+  const selectedTransmission = transmissionsOptions.find(
+    item => item.value === carSelectedByMakeAndModel?.transmission,
+  ) || {id: -1, value: ''};
 
-  const selectedYear =
-    yearOptions.find(
-      item => item.value === carSelectedByMakeAndModel?.year?.toString(),
-    ) || {id: -1, value: ''};
+  const selectedYear = yearOptions.find(
+    item => item.value === carSelectedByMakeAndModel?.year?.toString(),
+  ) || {id: -1, value: ''};
 
   return (
     <>
