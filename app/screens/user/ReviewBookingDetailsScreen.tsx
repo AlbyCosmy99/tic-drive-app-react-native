@@ -12,14 +12,12 @@ import {
 } from 'react-native';
 import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
-import {useRoute} from '@react-navigation/native';
 import {Image} from '@rneui/themed';
 import {ActivityIndicator} from 'react-native';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import Verified from '@/assets/svg/verified.svg';
 import CarRepair from '@/assets/svg/servicesIcons/car_repair.svg';
 import CalendarIcon from '@/assets/svg/free_cancellation.svg';
-import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 import IconTextPair from '@/components/ui/IconTextPair';
 import PaymentCard from '@/components/ui/payment/PaymentCard';
 import {useContext, useEffect, useMemo} from 'react';
@@ -37,6 +35,7 @@ import LocationPin from '@/assets/svg/location/PinLocation.svg';
 import {useTranslation} from 'react-i18next';
 import getUserMainImage from '@/utils/files/getUserMainImage';
 import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
+import formatPrice from '@/utils/currency/formatPrice.';
 
 export default function ReviewBookingDetailsScreen() {
   const {t} = useTranslation();
@@ -51,7 +50,7 @@ export default function ReviewBookingDetailsScreen() {
   const price = useMemo(() => {
     return (
       workshop?.currency! +
-      calculateWorkshopDiscount(
+      formatPrice(
         workshop?.servicePrice ?? 0,
         workshop?.discount ?? 0,
       )

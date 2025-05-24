@@ -23,7 +23,7 @@ import getUserMainImage from '@/utils/files/getUserMainImage';
 import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
 import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
-import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
+import formatPrice from '@/utils/currency/formatPrice.';
 
 interface BookingCardProps {
   showDirectionsButton?: boolean;
@@ -48,7 +48,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
   const price = useMemo(() => {
     return (
       workshop?.currency! +
-      calculateWorkshopDiscount(
+      formatPrice(
         workshop?.servicePrice ?? 0,
         workshop?.discount ?? 0,
       )

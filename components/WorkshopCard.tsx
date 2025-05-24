@@ -13,7 +13,6 @@ import {Image} from 'react-native-elements';
 import PinLocationIcon from '@/assets/svg/location/PinLocation.svg';
 import GreenCheckIcon from '@/assets/svg/check_green.svg';
 import IconTextPair from './ui/IconTextPair';
-import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
@@ -25,6 +24,7 @@ import isScreenSmall from '@/services/responsive/isScreenSmall';
 import {useTranslation} from 'react-i18next';
 import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
 import {setWorkshop} from '@/stateManagement/redux/slices/bookingSlice';
+import formatPrice from '@/utils/currency/formatPrice.';
 
 interface WorkshopCardProps {
   workshop: Workshop;
@@ -138,7 +138,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
                 </Text>
                 <Text className="text-base font-medium">
                   {workshop.currency + ' '}
-                  {calculateWorkshopDiscount(
+                  {formatPrice(
                     workshop.servicePrice ?? 0,
                     workshop.discount ?? 0,
                   )}

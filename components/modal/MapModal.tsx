@@ -23,7 +23,7 @@ import getNearbyWorkshops from '@/services/http/requests/get/workshops/getNearby
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import getAllWorkshops from '@/services/http/requests/get/workshops/getAllWorkshops';
 import {setWorkshop} from '@/stateManagement/redux/slices/bookingSlice';
-import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
+import formatPrice from '@/utils/currency/formatPrice.';
 
 interface MapModalProps {
   setIsMapVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -166,7 +166,7 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
                   {poi.price > 0 ? (
                     <View style={styles.priceBubble}>
                       <Text style={styles.priceText}>
-                        {calculateWorkshopDiscount(poi.price, poi.discount) +
+                        {formatPrice(poi.price, poi.discount) +
                           poi.currency}
                       </Text>
                     </View>
