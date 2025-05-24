@@ -6,7 +6,7 @@
   "notifications": "Notifiche",
   "other": "ALTRO",
   "support": "Supporto",
-      "change": "Cambio",
+  "change": "Cambia",
 
   "supports": {
     "title": "Hai bisogno di aiuto o hai una domanda?",
@@ -71,6 +71,7 @@
     "reviews": "Vedi tutte le recensioni"
   },
   "vehicles": {
+    "confirmCarInformation": "Conferma le informazioni dell’auto",
     "registerVehicle": "Registra veicolo",
     "handleVehicles": "Gestisci veicoli",
     "registerVehicleForBookings": "Registra il tuo veicolo per effettuare una prenotazione",
@@ -97,8 +98,15 @@
     "year": "Anno",
     "orRegisterNewCar": "oppure registra un nuovo veicolo",
     "name": "Nome",
-    "cv": "CV"
+    "cv": "CV",
+    "plate_format_error": "Formato errato. La targa deve essere nel formato: AB123CD",
+    "plate_placeholder": "Es. AB123CD"
   },
+  "car_registration": {
+    "success_title": "Auto registrata",
+    "success_subtitle": "Congratulazioni! La tua auto è stata registrata con successo. Vai al profilo per vedere i tuoi veicoli."
+  },
+
   "home": {
     "notifications": {
       "first": "Ultimo tagliando: 12 mesi fa.\nPianifica ora!",
@@ -133,8 +141,9 @@
     "searchWorkshop": "Cerca officina",
     "noWorkshopsWithFilter": "Nessuna officina trovata con questo filtro.",
     "noWorkshopsAvailable": "Nessuna officina disponibile al momento.",
-     "notFound": "Officina non trovata."
-
+    "notFound": "Nessuna officina trovata. Prova con un servizio diverso o vai alla dashboard.",
+    "lookDifferentService": "Cerca un servizio diverso",
+    "goBackDashboard": "Torna alla dashboard"
   },
   "bookingConfirmation": {
     "awaitingWorkshopConfirmation": "Il servizio necessita la conferma da parte dell'officina.",
@@ -171,7 +180,7 @@
     "pleaseConfirm": "Per favore conferma il tuo indirizzo email.",
     "instructions": "Abbiamo inviato un'email di conferma al tuo indirizzo registrato. Controlla la tua casella di posta (anche la cartella spam) e clicca sul link di conferma per attivare il tuo account.",
     "resendButton": "Reinvia email di conferma",
-    "confirmedButton": "Ho confermato l'email",
+    "confirmedButton": "Ho confermato la mail",
     "modal1Title": "Email di conferma inviata",
     "modal1Content": "Controlla la tua email.",
     "modal1Confirm": "Perfetto",
@@ -253,7 +262,9 @@
     "unauthorized": "Non autorizzato: controlla le credenziali.",
     "serverError": "Errore del server. Riprova più tardi.",
     "unexpected": "Errore imprevisto: {{code}}",
-    "general": "Qualcosa è andato storto. Riprova."
+    "general": "Qualcosa è andato storto. Riprova.",
+    "anErrorOccurred": "Si è verificato un errore",
+    "fetchWorkshopUnavailableDates": "Errore nel recupero delle date in cui l'officina non è disponibile."
   },
   "reviewBooking": {
     "details": "Dettagli della prenotazione",
@@ -264,7 +275,8 @@
     "total": "Totale",
     "paymentMethod": "METODO DI PAGAMENTO",
     "payInWorkshop": "Paga in officina",
-    "bookNow": "Prenota ora"
+    "bookNow": "Prenota ora",
+    "includesTaxesAndFees": "Include tasse e commissioni"
   },
 
   "privacyPolicy": {
@@ -414,5 +426,4 @@
       "content": "Possiamo trasferire i nostri diritti. La mancata applicazione di un diritto non implica rinuncia. Se una clausola è invalida, le altre rimarranno valide. I Termini sono regolati dalla legge italiana. I tribunali italiani avranno giurisdizione non esclusiva."
     }
   }
-  
 }

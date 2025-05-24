@@ -2,13 +2,12 @@ import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import {removeSecureToken} from '@/services/auth/secureStore/setToken';
 import navigationPush from '@/services/navigation/push';
 import navigationReplace from '@/services/navigation/replace';
-import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import {logout} from '@/stateManagement/redux/slices/authSlice';
-import {reset} from '@/stateManagement/redux/slices/servicesSlice';
+import {setService} from '@/stateManagement/redux/slices/bookingSlice';
 import AuthAction from '@/types/auth/Action';
 import {Entypo} from '@expo/vector-icons';
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import {Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
@@ -24,7 +23,7 @@ export const handleLogout = async (
   await removeSecureToken();
   navigationReplace(navigation, 'Hub');
   dispatch(logout());
-  dispatch(reset());
+  dispatch(setService(undefined));
 };
 
 const TicDriveAuthButton: React.FC<TicDriveAuthButtonProps> = ({

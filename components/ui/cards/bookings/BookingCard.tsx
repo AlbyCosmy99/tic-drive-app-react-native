@@ -15,47 +15,58 @@ import PinIcon from '@/assets/svg/location_on.svg';
 import DirectionIcon from '@/assets/svg/assistant_direction.svg';
 import BellIcon from '@/assets/svg/notifications/Bell1.svg';
 import TicDriveOptionButton from '../../buttons/TicDriveOptionButton';
-import Workshop from '@/types/workshops/Workshop';
 import openGoogleMaps from '@/services/map/openGoogleMaps';
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import axiosClient from '@/services/http/axiosClient';
 import clsx from 'clsx';
 import getUserMainImage from '@/utils/files/getUserMainImage';
 import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
 import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
+import {useAppSelector} from '@/stateManagement/redux/hooks';
+import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 
-interface PaymentConfirmationCardProps {
-  workshop: Workshop | null | undefined;
-  timeDate: string;
+interface BookingCardProps {
   showDirectionsButton?: boolean;
   type: string;
   showReminderBell?: boolean;
-  service: string;
 }
 
-const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
-  workshop,
+const BookingCard: React.FC<BookingCardProps> = ({
   showDirectionsButton = true,
   type,
   showReminderBell = false,
-  service,
 }) => {
-  const serviceChoosen = useServiceChoosenByCustomer();
   const [loadingServiceOfferedDetails, setLoadingServiceOfferedDetails] =
     useState(false);
+
+  const workshop = useAppSelector(state => state.booking.workshop);
   const [workshopDetailed, setWorkshopDetailed] = useState(workshop);
+
+  const service = useServiceChoosenByCustomer();
+  const time = useAppSelector(state => state.booking.time);
+
+  const price = useMemo(() => {
+    return (
+      workshop?.currency! +
+      calculateWorkshopDiscount(
+        workshop?.servicePrice ?? 0,
+        workshop?.discount ?? 0,
+      )
+    );
+  }, []);
+
   const {setErrorMessage} = useGlobalErrors();
   useEffect(() => {
     const fetchServiceOfferedDetails = async () => {
       try {
-        if (!serviceChoosen) {
+        if (!service) {
           setErrorMessage(
             'Errore: problema nel recuperare il servizio scelto. Riprovare.',
           );
         } else {
           setLoadingServiceOfferedDetails(true);
           const response = await axiosClient.get(
-            `OfferedServices?WorkshopId=${workshop?.id}&ServiceId=${serviceChoosen.id}`,
+            `OfferedServices?WorkshopId=${workshop?.id}&ServiceId=${service.id}`,
           );
 
           const serviceOffered = response?.data?.length
@@ -80,10 +91,10 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
       }
     };
 
-    if (workshop?.id && serviceChoosen) {
+    if (workshop?.id && service) {
       fetchServiceOfferedDetails();
     }
-  }, [workshop?.id, serviceChoosen]);
+  }, [workshop?.id, service]);
 
   return (
     <View className="rounded-lg border p-4 pt-0 border-grey-light w-full">
@@ -113,10 +124,10 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
             <Text className="font-medium text-xl">
               {workshopDetailed?.workshopName}
             </Text>
-            {(service || serviceChoosen) && (
+            {service && (
               <View className="bg-green-light p-1.5 rounded self-start mt-1">
                 <Text className="text-green-dark font-semibold">
-                  {service || serviceChoosen?.title}
+                  {service?.title}
                 </Text>
               </View>
             )}
@@ -147,11 +158,11 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
           </View>
         ) : (
           <View className="mb-2">
+            <IconTextPair icon={<CalendarIcon />} text={time} />
             <IconTextPair
-              icon={<CalendarIcon />}
-              text={'Lunedì 12 Maggio - 10:30'}
+              icon={<CreditCardIcon />}
+              text={price + ' da pagare'}
             />
-            <IconTextPair icon={<CreditCardIcon />} text="€120 da pagare" />
             {workshopDetailed?.address && (
               <IconTextPair
                 icon={<PinIcon fill={Colors.light.ticText} />}
@@ -163,20 +174,18 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
       </View>
 
       {showDirectionsButton && (
-        <View className="mt-5">
-          <TicDriveOptionButton
-            icon={<DirectionIcon />}
-            text="Directions"
-            textTailwindCss="font-medium text-base"
-            onPress={() =>
-              openGoogleMaps(
-                workshopDetailed?.address,
-                workshopDetailed?.latitude,
-                workshopDetailed?.longitude,
-              )
-            }
-          />
-        </View>
+        <TicDriveOptionButton
+          icon={<DirectionIcon />}
+          text="Directions"
+          textTailwindCss="font-medium text-base"
+          onPress={() =>
+            openGoogleMaps(
+              workshopDetailed?.address,
+              workshopDetailed?.latitude,
+              workshopDetailed?.longitude,
+            )
+          }
+        />
       )}
     </View>
   );
@@ -191,4 +200,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PaymentConfirmationCard;
+export default BookingCard;

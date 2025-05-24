@@ -5,7 +5,7 @@ import {Pressable, Text, View} from 'react-native';
 
 interface PaymentCardProps {
   icon: React.ReactNode;
-  paymentType: PaymentType;
+  paymentType: string;
   userName: string;
   id: number;
   optionsVisible?: boolean;

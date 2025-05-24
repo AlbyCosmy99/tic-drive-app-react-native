@@ -28,7 +28,6 @@ import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import navigationReset from '@/services/navigation/reset';
-import {useServicesChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import WorkshopReviewinfo from '@/components/workshop/reviews/WorkshopReviewInfo';
 import CashIcon from '@/assets/svg/payment/cash.svg';
@@ -37,22 +36,27 @@ import openGoogleMaps from '@/services/map/openGoogleMaps';
 import LocationPin from '@/assets/svg/location/PinLocation.svg';
 import {useTranslation} from 'react-i18next';
 import getUserMainImage from '@/utils/files/getUserMainImage';
+import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
 
 export default function ReviewBookingDetailsScreen() {
   const {t} = useTranslation();
 
-  const route = useRoute();
-  const {date, time} = route?.params as {
-    date: string;
-    time: string;
-  };
   const {userPaymentInfo, setUserPaymentInfo} = useContext(GlobalContext);
   const {navigation} = useContext(NavigationContext);
 
-  const timeDate = useMemo(() => time + ', ' + date, [date, time]);
+  const serviceChoosen = useServiceChoosenByCustomer();
+  const workshop = useAppSelector(state => state.booking.workshop);
+  const time = useAppSelector(state => state.booking.time);
 
-  const servicesChoosen = useServicesChoosenByUsers();
-  const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
+  const price = useMemo(() => {
+    return (
+      workshop?.currency! +
+      calculateWorkshopDiscount(
+        workshop?.servicePrice ?? 0,
+        workshop?.discount ?? 0,
+      )
+    );
+  }, []);
 
   useEffect(() => {
     if (!userPaymentInfo?.choosenCard) {
@@ -95,7 +99,6 @@ export default function ReviewBookingDetailsScreen() {
         >
           <View className="border rounded-xl border-slate-200 px-4">
             <View className="flex flex-row my-4">
-              {/* to do- spostare le immagini in un componente */}
               {workshop?.images.length && (
                 <Image
                   source={{uri: getUserMainImage(workshop.images)?.url}}
@@ -110,7 +113,9 @@ export default function ReviewBookingDetailsScreen() {
               )}
               <View>
                 <View className="flex flex-row items-center gap-1">
-                  <Text className="text-xl font-medium">{workshop?.name}</Text>
+                  <Text className="text-xl font-medium">
+                    {workshop?.workshopName}
+                  </Text>
                   {workshop?.isVerified && <Verified width={24} />}
                 </View>
                 <WorkshopReviewinfo
@@ -123,12 +128,14 @@ export default function ReviewBookingDetailsScreen() {
             </View>
             <HorizontalLine color={Colors.light.lightGrey} />
             <View>
+              {serviceChoosen && (
+                <IconTextPair
+                  text={serviceChoosen.title}
+                  icon={<CarRepair fill={Colors.light.ticText} />}
+                />
+              )}
               <IconTextPair
-                text={servicesChoosen[0].title}
-                icon={<CarRepair fill={Colors.light.ticText} />}
-              />
-              <IconTextPair
-                text={'Lunedì 12 Maggio 2025 - 10:30'}
+                text={time}
                 icon={<CalendarIcon fill={Colors.light.ticText} />}
               />
               <CrossPlatformButtonLayout
@@ -142,7 +149,7 @@ export default function ReviewBookingDetailsScreen() {
               >
                 <IconTextPair
                   text={workshop?.address}
-                  textTailwindCss="underline text-tic"
+                  textTailwindCss="underline text-tic pr-4"
                   icon={<LocationPin fill={Colors.light.ticText} />}
                 />
               </CrossPlatformButtonLayout>
@@ -157,16 +164,10 @@ export default function ReviewBookingDetailsScreen() {
               <View className="flex flex-row justify-between items-center">
                 <Text className="text-sm text-tic">
                   {t('reviewBooking.serviceWithName', {
-                    name: servicesChoosen[0].title,
+                    name: serviceChoosen?.title,
                   })}
                 </Text>
-                <Text>
-                  $
-                  {calculateWorkshopDiscount(
-                    workshop?.servicePrice ?? 0,
-                    workshop?.discount ?? 0,
-                  )}
-                </Text>
+                <Text>{price}</Text>
               </View>
               <View
                 style={styles.promoCodeContainer}
@@ -186,13 +187,7 @@ export default function ReviewBookingDetailsScreen() {
                 <Text className="text-base text-tic">
                   {t('reviewBooking.total')}
                 </Text>
-                <Text className="text-lg font-medium">
-                  $
-                  {calculateWorkshopDiscount(
-                    workshop?.servicePrice ?? 0,
-                    workshop?.discount ?? 0,
-                  ) + 14}
-                </Text>
+                <Text className="text-lg font-medium">{price}</Text>
               </View>
             </View>
           </View>
@@ -235,29 +230,40 @@ export default function ReviewBookingDetailsScreen() {
             <Text className="text-base text-tic">
               {t('reviewBooking.total')}
             </Text>
-            <Text className="text-xl font-medium">
-              $
-              {calculateWorkshopDiscount(
-                workshop?.servicePrice ?? 0,
-                workshop?.discount ?? 0,
-              ) + 14}
-            </Text>
+            <Text className="text-xl font-medium">{price}</Text>
           </View>
-          <TicDriveButton
-            replace={true}
-            toTop={true}
-            text={t('reviewBooking.bookNow')}
-            routeName="userTabs"
-            routeParams={{animation: 'fade'}}
-            stateRouteName="Home"
-            onClick={() => {
-              navigationReset(navigation, 0, 'BookingConfirmationScreen', {
-                workshop,
-                date,
-                time,
-              });
-            }}
-          />
+          <View className="flex flex-row">
+            {!navigation?.canGoBack() && (
+              <View style={{flex: 2}}>
+                <TicDriveButton
+                  replace={true}
+                  toTop={true}
+                  customContainerStyle={{marginRight: 7}}
+                  customButtonStyle={{backgroundColor: 'red'}}
+                  text={'Annulla tutto'}
+                  routeName="userTabs"
+                  routeParams={{animation: 'fade'}}
+                  stateRouteName="Home"
+                />
+              </View>
+            )}
+            <View style={{flex: 3}}>
+              <TicDriveButton
+                replace={true}
+                toTop={true}
+                customContainerStyle={{marginLeft: 7}}
+                text={t('reviewBooking.bookNow')}
+                routeName="userTabs"
+                routeParams={{animation: 'fade'}}
+                stateRouteName="Home"
+                onClick={() => {
+                  navigationReset(navigation, 0, 'BookingConfirmationScreen', {
+                    workshop,
+                  });
+                }}
+              />
+            </View>
+          </View>
         </View>
       </SafeAreaViewLayout>
     </LinearGradient>

@@ -4,10 +4,9 @@ import {LinearGradient} from 'expo-linear-gradient';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {Colors} from '@/constants/Colors';
 import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
-import {useAppDispatch} from '@/stateManagement/redux/hooks';
-import {useFocusEffect, useRoute} from '@react-navigation/native';
+import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
+import {useRoute} from '@react-navigation/native';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
-import {setAreServicesOn} from '@/stateManagement/redux/slices/servicesSlice';
 import {useTranslation} from 'react-i18next';
 import navigationPush from '@/services/navigation/push';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
@@ -18,7 +17,8 @@ import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 import {useEffect, useState} from 'react';
 import Car from '@/types/Car';
 import {Image} from 'react-native-elements';
-import {setSelectedCar} from '@/stateManagement/redux/slices/carsSlice';
+import {setCar} from '@/stateManagement/redux/slices/bookingSlice';
+import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
 
 export default function SelectVehicleScreen() {
   const route = useRoute();
@@ -28,6 +28,8 @@ export default function SelectVehicleScreen() {
 
   const {getCustomerCars, loadingCustomerCars} = useCustomerCars();
   const [registeredCars, setRegisteredCars] = useState<Car[] | null>(null);
+  const service = useServiceChoosenByCustomer();
+  const workshop = useAppSelector(state => state.booking.workshop);
 
   //@ts-ignore
   const {category, buttonContainerTailwindCss, withSafeAreaView} =
@@ -36,10 +38,6 @@ export default function SelectVehicleScreen() {
       buttonContainerTailwindCss: '',
       withSafeAreaView: true,
     };
-
-  useFocusEffect(() => {
-    dispatch(setAreServicesOn(false));
-  });
 
   useEffect(() => {
     const fetchCars = async () => {
@@ -51,8 +49,14 @@ export default function SelectVehicleScreen() {
   }, []);
 
   const handleCarSelect = (car: Car) => {
-    navigationPush(navigation, 'WorkshopsListScreen', {car});
-    dispatch(setSelectedCar(car));
+    if (!service) {
+      navigationPush(navigation, 'ChooseServicesScreen');
+    } else if (!workshop) {
+      navigationPush(navigation, 'WorkshopsListScreen');
+    } else {
+      navigationPush(navigation, 'ReviewBookingDetailsScreen');
+    }
+    dispatch(setCar(car));
   };
 
   return (

@@ -6,17 +6,11 @@ import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import {Colors} from '@/constants/Colors';
 import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
-import {useFocusEffect, useRoute} from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
-import {
-  reset,
-  setAreServicesOn,
-  setLastServiceSelectedFromFilter,
-  setServicesChoosenByUsers,
-} from '@/stateManagement/redux/slices/servicesSlice';
 import {useTranslation} from 'react-i18next';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
-import {useCallback, useMemo, useState} from 'react';
+import {useCallback, useState} from 'react';
 import debounce from 'lodash.debounce';
 import Service from '@/types/Service';
 import axiosClient from '@/services/http/axiosClient';
@@ -24,7 +18,10 @@ import FilterSearchModal from '@/components/modal/FilterSearchModal';
 import navigationPush from '@/services/navigation/push';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import useJwtToken from '@/hooks/auth/useJwtToken';
-import useCustomerCars from '@/hooks/api/cars/useCustomerCars';
+import {
+  setLastServiceSelectedFromFilter,
+  setService,
+} from '@/stateManagement/redux/slices/bookingSlice';
 
 export default function ChooseServicesScreen() {
   const route = useRoute();
@@ -34,22 +31,15 @@ export default function ChooseServicesScreen() {
   const [filteredServices, setFilteredServices] = useState<Service[]>([]);
   const navigation = useTicDriveNavigation();
   const token = useJwtToken();
-  const {getCustomerCars, loadingCustomerCars} = useCustomerCars();
 
   //@ts-ignore
-  const {category, buttonContainerTailwindCss, withSafeAreaView} =
-    route?.params ?? {
-      category: 'user',
-      buttonContainerTailwindCss: '',
-      withSafeAreaView: true,
-    };
-
-  const isUserLookingForServices = useMemo(() => {
-    return category !== 'workshop';
-  }, [category]);
+  const {buttonContainerTailwindCss, withSafeAreaView} = route?.params ?? {
+    buttonContainerTailwindCss: '',
+    withSafeAreaView: true,
+  };
 
   const lastServiceSelectedFromFilter = useAppSelector(
-    state => state.services.lastServiceSelectedFromFilter,
+    state => state.booking.lastServiceSelectedFromFilter,
   );
 
   const onSearch = async (search: string) => {
@@ -66,18 +56,9 @@ export default function ChooseServicesScreen() {
     setFilteredServices(filteredServices.data);
   };
 
-  const isButtonDisabled =
-    category === 'workshop'
-      ? useAppSelector(state => state.services.servicesChoosenByWorkshops)
-          .length === 0
-      : useAppSelector(state => state.services.servicesChoosenByUsers)
-          .length === 0;
+  const isButtonDisabled = !useAppSelector(state => state.booking.service);
 
   const debouncedOnHomeSearch = useCallback(debounce(onSearch, 500), []);
-
-  useFocusEffect(() => {
-    dispatch(setAreServicesOn(false));
-  });
 
   return (
     <View className={`flex-1 ${necessaryDeviceBottomInset()}`}>
@@ -95,13 +76,13 @@ export default function ChooseServicesScreen() {
         <View className="flex-1 justify-between">
           <View className="flex-row items-center relative">
             <TicDriveInput
-              isLeftIcon={true}
-              isRightIcon={true}
+              existsLeftIcon
+              existsRightIcon
               placeholder={t('service.searchService')}
               containerViewStyleTailwind="flex-1 h-[60px]"
               inputContainerStyle={{marginTop: 4, height: 48}}
               onChange={text => debouncedOnHomeSearch(text)}
-              onRightIcon={() => dispatch(reset())}
+              onRightIcon={() => dispatch(setService(undefined))}
             />
             {filter && (
               <FilterSearchModal
@@ -110,36 +91,20 @@ export default function ChooseServicesScreen() {
                 emptyElementsMessage="No services with this filter."
                 onElementPress={(elem: any) => {
                   navigationPush(navigation, 'RegisterVehicleScreen');
-                  dispatch(setServicesChoosenByUsers(elem));
+                  dispatch(setService(elem));
                   dispatch(setLastServiceSelectedFromFilter(elem));
                 }}
               />
             )}
           </View>
-          {!filter && (
-            <ServicesCards
-              isSingleChoice={isUserLookingForServices ? true : false}
-              type={isUserLookingForServices ? 'user' : 'workshop'}
-            />
-          )}
+          {!filter && <ServicesCards />}
         </View>
         {!filter && (
           <View className={`mb-2 ${buttonContainerTailwindCss}`}>
             <TicDriveButton
-              text={
-                isUserLookingForServices
-                  ? t('service.bookAService')
-                  : t('continue')
-              }
+              text={t('bookNow')}
               routeName={
-                isUserLookingForServices
-                  ? token
-                    ? 'SelectVehicleScreen'
-                    : 'RegisterVehicleScreen'
-                  : 'UserAuthenticationScreen'
-              }
-              routeParams={
-                isUserLookingForServices ? {} : {register: true, isUser: false}
+                token ? 'SelectVehicleScreen' : 'RegisterVehicleScreen'
               }
               disabled={isButtonDisabled}
             />

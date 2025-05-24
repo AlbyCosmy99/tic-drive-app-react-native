@@ -4,7 +4,7 @@ export default {
   expo: {
     name: isDev ? 'TicDrive Dev' : 'TicDrive',
     slug: 'tic-drive',
-    version: '1.1.0',
+    version: '1.1.4',
     orientation: 'portrait',
     icon: './assets/images/png/ticDriveLogo.png',
     scheme: 'ticdrive',

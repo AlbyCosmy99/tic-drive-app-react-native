@@ -37,9 +37,9 @@ const Hub = () => {
               navigationReset(
                 navigation,
                 0,
-                user?.category === 'workshop' ? 'workshopTabs' : 'userTabs',
+                'userTabs',
                 {animation: 'fade'},
-                user?.category === 'workshop' ? 'Requests' : 'Home',
+                'Home',
               );
             } else {
               navigationReset(navigation, 0, 'ConfirmEmailScreen', {
@@ -49,8 +49,8 @@ const Hub = () => {
           } catch (err) {
             //if here, probably token is in secureStore but user is not registered in db - to solve, we make the user remove token from secureStore and retry
             console.error('error while getting user data.');
+            navigationReset(navigation, 0, 'userTabs', {animation: 'fade'});
             await removeSecureToken();
-            navigationPush(navigation, 'Hub');
           }
         } else {
           navigationReset(navigation, 0, 'userTabs', {animation: 'fade'});

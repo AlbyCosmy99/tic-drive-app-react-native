@@ -39,7 +39,7 @@ export default function DeleteAccountScreen() {
               Motivo dell'eliminazione
             </Text>
             <TicDriveInput
-              isRightIcon
+              existsRightIcon
               placeholder="Motivo*"
               customValue={reason}
               onChange={setReason}
@@ -50,7 +50,7 @@ export default function DeleteAccountScreen() {
             </Text>
             <TicDriveInput
               isPassword
-              isRightIcon
+              existsRightIcon
               textContentType="password"
               placeholder="Inserisci la tua password*"
               customValue={password}
