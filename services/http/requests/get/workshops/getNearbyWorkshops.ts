@@ -12,7 +12,7 @@ const getNearbyWorkshops = async (
   params?: Params,
 ) => {
   return await axiosClient.get(
-    `/workshops/nearby?skip=${skip}&take=${take}&filter=${debouncedFilter}&order=${params?.order ?? 'asc'}${serviceId && `&serviceId=${serviceId}`}`,
+    `/workshops/nearby?skip=${skip}&take=${take}&filter=${debouncedFilter}&order=${params?.order ?? 'asc'}&serviceId=${serviceId ?? 0}`,
     {
       headers: {Authorization: `Bearer ${token}`},
       params: {
