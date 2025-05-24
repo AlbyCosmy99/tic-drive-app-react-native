@@ -91,7 +91,11 @@
     "year": "Year",
     "orRegisterNewCar": "or register a new vehicle",
     "name": "Name",
-    "cv": "Horsepower (HP)"
+    "cv": "Horsepower (HP)",
+  "plate_format_error": "Incorrect format. Targa must be in the format:\nEs. AB123CD",
+    "plate_placeholder": "E.g., AB123CD"
+
+
   },
   "car_registration": {
   "success_title": "Car Registered",

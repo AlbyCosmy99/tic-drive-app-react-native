@@ -71,7 +71,7 @@
     "reviews": "Vedi tutte le recensioni"
   },
   "vehicles": {
-   "confirmCarInformation": "Conferma le informazioni dell’auto",
+    "confirmCarInformation": "Conferma le informazioni dell’auto",
     "registerVehicle": "Registra veicolo",
     "handleVehicles": "Gestisci veicoli",
     "registerVehicleForBookings": "Registra il tuo veicolo per effettuare una prenotazione",
@@ -98,12 +98,14 @@
     "year": "Anno",
     "orRegisterNewCar": "oppure registra un nuovo veicolo",
     "name": "Nome",
-    "cv": "CV"
+    "cv": "CV",
+    "plate_format_error": "Formato errato. La targa deve essere nel formato: AB123CD",
+    "plate_placeholder": "Es. AB123CD"
   },
   "car_registration": {
-  "success_title": "Auto registrata",
-  "success_subtitle": "Congratulazioni! La tua auto è stata registrata con successo. Vai al profilo per vedere i tuoi veicoli."
-},
+    "success_title": "Auto registrata",
+    "success_subtitle": "Congratulazioni! La tua auto è stata registrata con successo. Vai al profilo per vedere i tuoi veicoli."
+  },
 
   "home": {
     "notifications": {
@@ -255,9 +257,8 @@
     "serverError": "Errore del server. Riprova più tardi.",
     "unexpected": "Errore imprevisto: {{code}}",
     "general": "Qualcosa è andato storto. Riprova.",
-      "anErrorOccurred": "Si è verificato un errore",
-    "fetchWorkshopUnavailableDates": "Errore nel recupero delle date in cui l'officina non è disponibile.",
-
+    "anErrorOccurred": "Si è verificato un errore",
+    "fetchWorkshopUnavailableDates": "Errore nel recupero delle date in cui l'officina non è disponibile."
   },
   "reviewBooking": {
     "details": "Dettagli della prenotazione",
@@ -270,7 +271,6 @@
     "payInWorkshop": "Paga in officina",
     "bookNow": "Prenota ora",
     "includesTaxesAndFees": "Include tasse e commissioni"
-
   },
 
   "privacyPolicy": {
