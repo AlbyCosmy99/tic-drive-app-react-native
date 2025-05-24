@@ -26,6 +26,7 @@ export default function UserTabLayout() {
       <Tab.Navigator
         screenOptions={{
           tabBarActiveTintColor: PRESSED_COLOR,
+          tabBarHideOnKeyboard: true
         }}
       >
         <Tab.Screen
