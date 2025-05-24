@@ -161,7 +161,7 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
         setValue={setPlateNumber}
       />
       {plateError && (
-        <Text className="text-red-600 font-bold text-sm mt-2 mb-2 ml-2">
+        <Text className="text-red-500 text-center font-bold text-sm mx-6 mb-2">
           {t('vehicles.plate_format_error')}
         </Text>
       )}
