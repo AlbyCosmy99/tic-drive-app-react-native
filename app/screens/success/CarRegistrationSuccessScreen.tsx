@@ -6,21 +6,24 @@ import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import navigationReset from '@/services/navigation/reset';
 import {StyleSheet} from 'react-native';
 import {View} from 'react-native';
+import {useTranslation} from 'react-i18next';
 
 const CarRegistrationSuccessScreen = () => {
   const navigation = useTicDriveNavigation();
+  const {t} = useTranslation();
+
   return (
     <SafeAreaViewLayout styles={[styles.container]}>
       <View className="flex-1 justify-center items-center mx-2.5">
         <TicDriveSuccessCard
-          title="Car Registered"
-          subtitle="Congratulations! Your car has been registered successfully. Continue to the profile, where you can see your vehicles."
+          title={t('car_registration.success_title')}
+          subtitle={t('car_registration.success_subtitle')}
         />
       </View>
       <TicDriveButton
         replace={true}
         toTop={true}
-        text="Continue"
+        text={t('continue')}
         onClick={() => {
           navigationReset(
             navigation,

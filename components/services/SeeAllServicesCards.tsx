@@ -2,7 +2,6 @@ import {Image, Text, View} from 'react-native';
 import navigationPush from '@/services/navigation/push';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import Service from '@/types/Service';
-import {setServicesChoosenByUsers} from '@/stateManagement/redux/slices/servicesSlice';
 import {
   forwardRef,
   useContext,
@@ -15,13 +14,16 @@ import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext'
 import CrossPlatformButtonLayout from '../ui/buttons/CrossPlatformButtonLayout';
 import HorizontalLine from '../ui/HorizontalLine';
 import {useTranslation} from 'react-i18next';
-import {UserCalendarModalRef} from '../ui/modals/UserCalendarModal';
+import UserCalendarModal, {
+  UserCalendarModalRef,
+} from '../ui/modals/UserCalendarModal';
 import TicDriveSpinner from '../ui/spinners/TicDriveSpinner';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import getServices from '@/services/http/requests/get/getServices';
+import {setService} from '@/stateManagement/redux/slices/bookingSlice';
 
 interface SeeAllServicesCardsProps {
-  workshopId?: number;
+  workshopId?: string;
   topHorizontalLine?: boolean;
   bottomHorizontalLine?: boolean;
   showSubtitle?: boolean;
@@ -57,7 +59,7 @@ const SeeAllServicesCards = forwardRef(
       const fetchServices = async () => {
         try {
           setLoadingServices(true);
-          const data = await getServices(workshopId, languageCode);
+          const data = await getServices(workshopId ?? '', languageCode);
           setServices(data);
         } catch (e) {
         } finally {
@@ -76,14 +78,14 @@ const SeeAllServicesCards = forwardRef(
 
     const handleOnSelectService = (service: Service) => {
       if (showCalendarModal) {
-        modalRef.current?.openModal();
+        modalRef.current?.openModal(service);
       } else {
         navigationPush(
           navigation,
           token ? 'SelectVehicleScreen' : 'RegisterVehicleScreen',
         );
+        dispatch(setService(service));
       }
-      dispatch(setServicesChoosenByUsers(service));
     };
 
     return loadingServices ? (
@@ -97,16 +99,18 @@ const SeeAllServicesCards = forwardRef(
               <CrossPlatformButtonLayout
                 removeAllStyles={false}
                 onPress={() => handleOnSelectService(service)}
-                styleContainer={{height: 40}}
+                styleContainer={{minHeight: 40}}
                 containerTailwindCss="border border-gray-300 flex-row items-center justify-start p-2 rounded-xl"
                 buttonTailwindCss="justify-start"
               >
                 {service?.icon && (
                   <Image source={{uri: service.icon}} width={24} height={24} />
                 )}
-                <Text className="text-sm font-medium ml-2">
-                  {service.title}
-                </Text>
+                <View className="h-10 items-center justify-center w-full">
+                  <Text className="text-sm font-medium text-center">
+                    {service.title}
+                  </Text>
+                </View>
               </CrossPlatformButtonLayout>
             </View>
           ))}
@@ -124,6 +128,13 @@ const SeeAllServicesCards = forwardRef(
             </View>
           )}
         </View>
+        {showCalendarModal && (
+          <UserCalendarModal
+            ref={modalRef}
+            workshopId={workshopId ?? ''}
+            showButton={false}
+          />
+        )}
 
         {bottomHorizontalLine && <HorizontalLine tailwindCssContainer="mt-2" />}
       </View>

@@ -1,6 +1,7 @@
-const calculateWorkshopDiscount = (price: number, discount: number) => {
+const calculateWorkshopDiscount = (price: number, discount: number): string => {
   const priceValue = parseFloat(price.toFixed(2));
-  return priceValue - (priceValue * discount) / 100;
+  const discountedPrice = priceValue - (priceValue * discount) / 100;
+  return discountedPrice.toFixed(2);
 };
 
 export default calculateWorkshopDiscount;

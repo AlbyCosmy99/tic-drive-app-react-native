@@ -14,13 +14,17 @@ import PinLocationIcon from '@/assets/svg/location/PinLocation.svg';
 import GreenCheckIcon from '@/assets/svg/check_green.svg';
 import IconTextPair from './ui/IconTextPair';
 import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
-import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
+import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
-import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice';
 import WorkshopReviewinfo from './workshop/reviews/WorkshopReviewInfo';
 import Workshop from '@/types/workshops/Workshop';
 import getUserMainImage from '@/utils/files/getUserMainImage';
+import CrossPlatformButtonLayout from './ui/buttons/CrossPlatformButtonLayout';
+import isScreenSmall from '@/services/responsive/isScreenSmall';
+import {useTranslation} from 'react-i18next';
+import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
+import {setWorkshop} from '@/stateManagement/redux/slices/bookingSlice';
 
 interface WorkshopCardProps {
   workshop: Workshop;
@@ -31,6 +35,8 @@ interface WorkshopCardProps {
   iconTextPairContainerTailwindCss?: string;
   iconTextPairTextTailwindCss?: string;
   imageContainerStyle?: StyleProp<ViewStyle>;
+  titleTextTailwindCss?: string;
+  addressContainerTailwindCss?: string;
 }
 
 const WorkshopCard: React.FC<WorkshopCardProps> = ({
@@ -42,17 +48,20 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
   iconTextPairTextTailwindCss,
   imageContainerStyle,
   isServiceDetailsEnabled = true,
+  titleTextTailwindCss,
+  addressContainerTailwindCss,
 }) => {
-  const servicesChoosenByUsers = useAppSelector(
-    state => state.services.servicesChoosenByUsers,
-  );
+  const serviceChoosen = useServiceChoosenByCustomer();
   const {navigation} = useContext(NavigationContext);
   const dispatch = useAppDispatch();
+  const {t} = useTranslation();
 
   const handleCardPress = (workshop: Workshop) => {
-    navigationPush(navigation, 'WorkshopDetails');
-    dispatch(setSelectedWorkshop(workshop));
+    navigationPush(navigation, 'WorkshopDetailsScreen');
+    dispatch(setWorkshop(workshop));
   };
+
+  const workshopNameTextSize = isScreenSmall() ? 'text-lg' : 'text-xl';
 
   return (
     <Pressable
@@ -91,13 +100,14 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
           className={`mb-1.5 px-3 pb-1 pt-2 ${iconTextPairsContainerTailwindCss}`}
         >
           <IconTextPair
-            containerTailwindCss={`py-1.5 ${iconTextPairContainerTailwindCss}`}
-            textTailwindCss={`text-xl font-semibold ${iconTextPairTextTailwindCss}`}
+            containerTailwindCss={`${isScreenSmall() ? 'py-1' : 'py-1.5'} pr-1 ${iconTextPairContainerTailwindCss}`}
+            textTailwindCss={`${workshopNameTextSize} font-semibold ${iconTextPairTextTailwindCss} ${titleTextTailwindCss}`}
             text={workshop.workshopName}
             icon={<GreenCheckIcon />}
           />
+
           <IconTextPair
-            containerTailwindCss={`py-1.5 ${iconTextPairContainerTailwindCss}`}
+            containerTailwindCss={`${isScreenSmall() ? 'py-1' : 'py-1.5'} pr-5 ${iconTextPairContainerTailwindCss} ${addressContainerTailwindCss}`}
             textTailwindCss={`text-sm font-medium underline ${iconTextPairTextTailwindCss}`}
             text={workshop.address}
             icon={<PinLocationIcon />}
@@ -105,22 +115,27 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
           <WorkshopReviewinfo
             meanStars={workshop?.meanStars}
             numberOfReviews={workshop?.numberOfReviews}
-            containerTailwindCss={`py-1.5 ${iconTextPairContainerTailwindCss}`}
+            containerTailwindCss={`${isScreenSmall() ? 'py-1' : 'py-1.5'} ${iconTextPairContainerTailwindCss}`}
             textTailwindCss={`text-sm font-medium underline ${iconTextPairTextTailwindCss}`}
           />
         </View>
-        {servicesChoosenByUsers.length > 0 && isServiceDetailsEnabled && (
-          // to-do: quando pressed vai a disponibilita
-          <Pressable
-            className="flex flex-row justify-between items-center border-2 border-grey-light m-2 p-3 mt-0 rounded-lg"
+        {!!serviceChoosen && isServiceDetailsEnabled && (
+          <CrossPlatformButtonLayout
+            buttonTailwindCss="flex-row justify-between items-center border-2 border-grey-light m-2 p-3 mt-0 rounded-lg"
             onPress={() => alert('pressed')}
           >
-            <Text className="text-base font-medium">
-              {servicesChoosenByUsers[0].title}
-            </Text>
-            <View>
-              <View className="flex flex-row justify-between items-center">
-                <Text className="text-base font-medium">Total</Text>
+            <View className="flex-1 pr-4">
+              <Text className="text-base font-medium flex-shrink">
+                {serviceChoosen.title}
+              </Text>
+            </View>
+
+            <View className="items-end justify-center">
+              <View className="flex-row justify-between items-center space-x-2">
+                <Text className="text-base font-medium">
+                  {' '}
+                  {t('reviewBooking.total')}
+                </Text>
                 <Text className="text-base font-medium">
                   {workshop.currency + ' '}
                   {calculateWorkshopDiscount(
@@ -130,10 +145,10 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
                 </Text>
               </View>
               <Text className="font-medium text-xs text-tic">
-                Includes taxes and fees
+                {t('reviewBooking.includesTaxesAndFees')}
               </Text>
             </View>
-          </Pressable>
+          </CrossPlatformButtonLayout>
         )}
       </View>
     </Pressable>
@@ -167,7 +182,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 160,
+    height: isScreenSmall() ? 110 : 150,
     borderRadius: 14,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,

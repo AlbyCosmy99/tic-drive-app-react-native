@@ -6,7 +6,6 @@ import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscou
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import UserCalendarModal from '@/components/ui/modals/UserCalendarModal';
 import useJwtToken from '@/hooks/auth/useJwtToken';
-import useAreServicesAvailable from '@/hooks/services/useAreServicesAvailable';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import WorkshopReviewinfo from '@/components/workshop/reviews/WorkshopReviewInfo';
 import GreenCheckIcon from '@/assets/svg/check_green.svg';
@@ -17,7 +16,6 @@ import Constants from 'expo-constants';
 import MapView, {Marker} from 'react-native-maps';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
 import axiosClient from '@/services/http/axiosClient';
-import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice';
 import EmptyHeartIcon from '@/assets/svg/emotions/EmptyHeart.svg';
 import RedHeartIcon from '@/assets/svg/emotions/RedHeart.svg';
 import CarPinIcon from '@/assets/svg/vehicles/car3.svg';
@@ -30,10 +28,12 @@ import {useState, useEffect} from 'react';
 import { WorkshopWorkingHours } from '@/types/workshops/WorkshopWorkingHours';
 import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
+import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
+import {setWorkshop} from '@/stateManagement/redux/slices/bookingSlice';
 
-export default function WorkshopDetails() {
-  const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
-  const {areServicesAvailable} = useAreServicesAvailable();
+export default function WorkshopDetailsScreen() {
+  const workshop = useAppSelector(state => state.booking.workshop);
+  const serviceChoosen = useServiceChoosenByCustomer();
   const token = useJwtToken();
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
@@ -59,10 +59,10 @@ export default function WorkshopDetails() {
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message: `🚗✨ Discover ${workshop?.name} on TicDrive! ✨🚗\n
+        message: `🚗✨ Discover ${workshop?.workshopName} on TicDrive! ✨🚗\n
       📍 *Location:* ${workshop?.address}\n
       ⭐ *Rating:* ${workshop?.meanStars?.toFixed(1)} (${workshop?.numberOfReviews} reviews)\n
-      💰 ${workshop?.servicePrice ? `**Starting from:** ${workshop?.servicePrice} ${workshop?.currency}` : 'Check out our services!'}${workshop?.discount ? ` 🔥 **Limited-time discount:** ${workshop?.discount}% off!` : ''}\n
+      💰 ${workshop?.servicePrice ? `**Starting from:** ${calculateWorkshopDiscount(workshop?.servicePrice, workshop.discount ?? 0)} ${workshop?.currency}` : 'Check out our services!'}${workshop?.discount ? ` 🔥 **Limited-time discount:** ${workshop?.discount}% off!` : ''}\n
       ${workshop?.isVerified ? '✅ *This workshop is verified by TicDrive!* 🔥' : ''}\n
       🔗 *Book now on TicDrive!* ${Constants.expoConfig?.extra?.googleMapsApiKey}`,
       });
@@ -304,18 +304,18 @@ export default function WorkshopDetails() {
                       <View
                         style={{
                           shadowColor: '#000',
-                          shadowOffset: {width: 0, height: 6},
+                          shadowOffset: {width: 0, height: 4},
                           shadowOpacity: 0.35,
                           shadowRadius: 3,
-                          elevation: 8,
+                          elevation: 6,
                           backgroundColor: 'white',
-                          borderRadius: 17,
+                          borderRadius: 8,
                           overflow: 'visible',
                         }}
                       >
                         <View
                           style={{
-                            borderRadius: 16,
+                            borderRadius: 8,
                             overflow: 'hidden',
                             height: 140,
                           }}
@@ -356,7 +356,7 @@ export default function WorkshopDetails() {
                   </View>
                 )}
               </View>
-              <View className="mt-2.5">
+              <View className="mt-3.5">
                 <Text className="text-xl font-semibold">
                   {t('workshops.reviews.whatPeopleSay')}
                 </Text>
@@ -374,7 +374,7 @@ export default function WorkshopDetails() {
             style={styles.bottom}
             className="flex-row justify-between items-center mx-2.5 border-t"
           >
-            {areServicesAvailable && (
+            {serviceChoosen && (
               <View className="flex-1 flex-col mt-2.5">
                 <Text className="text-base" style={styles.startingFrom}>
                   {t('workshops.startingFrom')}
@@ -387,7 +387,7 @@ export default function WorkshopDetails() {
                         'font-semibold text-xl mx-1',
                       ].join(' ')}
                     >
-                      {workshop.servicePrice}
+                      {workshop.currency! + workshop.servicePrice}
                     </Text>
                     {workshop.discount !== 0 && (
                       <View style={styles.strikethroughLine} />
@@ -395,7 +395,7 @@ export default function WorkshopDetails() {
                   </View>
                   {workshop.discount !== 0 && (
                     <Text className="font-semibold text-xl mx-1">
-                      $
+                      {workshop.currency}
                       {calculateWorkshopDiscount(
                         workshop.servicePrice ?? 0,
                         workshop?.discount ?? 0,

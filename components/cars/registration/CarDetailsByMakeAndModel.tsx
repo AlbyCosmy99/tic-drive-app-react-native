@@ -1,4 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
+import {Text} from 'react-native';
 import TicDriveDropdown from '@/components/ui/dropdowns/TicDriveDropdown';
 import TicDriveTextOrInput from '@/components/ui/inputs/TicDriveTextOrInput';
 import getCarModelVersionsByModelId from '@/services/http/requests/cars/getCarModelVersionsByModelId';
@@ -24,6 +25,8 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
     useContext(CarContext);
 
   const [yearOptions, setYearOptions] = useState<TicDriveDropdownData[]>([]);
+  const [plateError, setPlateError] = useState(false);
+
   const {t} = useTranslation();
 
   const fuelOptions: TicDriveDropdownData[] = fuels.map((fuel, index) => ({
@@ -36,7 +39,9 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
     {id: 2, value: 'automatic'},
   ];
 
-  // Only update context on mount (or when `carSelected.model` changes)
+  const plateRegex = /^[A-Z]{2}[0-9]{3}[A-Z]{2}$/;
+
+  // Only update context on mount (or when carSelected.model changes)
   useEffect(() => {
     if (setCarSelectedByMakeAndModel) {
       setCarSelectedByMakeAndModel(prev => ({
@@ -79,29 +84,32 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
 
   const setCarEngineDisplacement = (engineDisplacement: string) =>
     updateCarField({engineDisplacement});
+
   const setCarFuelType = (fuel: TicDriveDropdownData) =>
     updateCarField({fuel: fuel.value as FuelType});
+
   const setSelectedTransmission = (transmission: TicDriveDropdownData) =>
     updateCarField({transmission: transmission.value as transmissionType});
+
   const setCarMileage = (mileage: number) => updateCarField({mileage});
-  const setPlateNumber = (plate: string) =>
-    updateCarField({plateNumber: plate.toUpperCase()});
+
+  const setPlateNumber = (plate: string) => {
+    const formattedPlate = plate.toUpperCase();
+    updateCarField({plateNumber: formattedPlate});
+    setPlateError(!plateRegex.test(formattedPlate)); // true if invalid
+  };
 
   const selectedFuel = fuelOptions.find(
     item => item.value === carSelectedByMakeAndModel?.fuel,
   ) || {id: -1, value: ''};
+
   const selectedTransmission = transmissionsOptions.find(
     item => item.value === carSelectedByMakeAndModel?.transmission,
-  ) || {
-    id: -1,
-    value: '',
-  };
+  ) || {id: -1, value: ''};
+
   const selectedYear = yearOptions.find(
     item => item.value === carSelectedByMakeAndModel?.year?.toString(),
-  ) || {
-    id: -1,
-    value: '',
-  };
+  ) || {id: -1, value: ''};
 
   return (
     <>
@@ -130,25 +138,30 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
         setValue={setSelectedTransmission}
       />
       <TicDriveTextOrInput
-        title={t('vehicles.engine_size')} // Translate engine size
+        title={t('vehicles.engine_size')}
         placeholder="Es. 2,0"
         value={carSelected?.engineDisplacement}
         setValue={setCarEngineDisplacement}
         keyboardType="numeric"
       />
       <TicDriveTextOrInput
-        title={t('vehicles.mileage')} // Translate mileage
+        title={t('vehicles.mileage')}
         placeholder="Es. 10000km"
         value={carSelected?.mileage}
         setValue={setCarMileage}
         keyboardType="numeric"
       />
       <TicDriveTextOrInput
-        title={t('vehicles.plate')} // Translate plate
-        placeholder="Es. AB123CD"
+        title={t('vehicles.plate')}
+        placeholder={t('vehicles.plate_placeholder')}
         value={carSelected?.plateNumber?.toUpperCase()}
         setValue={setPlateNumber}
       />
+      {plateError && (
+        <Text className="text-red-500 text-center font-bold text-sm mx-6 mb-2">
+          {t('vehicles.plate_format_error')}
+        </Text>
+      )}
     </>
   );
 };

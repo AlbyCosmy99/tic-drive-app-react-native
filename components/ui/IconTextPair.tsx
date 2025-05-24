@@ -21,7 +21,7 @@ const IconTextPair: React.FC<IconTextPairProps> = ({
   return (
     text && (
       <View
-        className={`flex flex-row items-center gap-2 py-3 ${containerTailwindCss}`}
+        className={`flex flex-row items-center gap-1.5 py-3 ${containerTailwindCss}`}
       >
         {!reverseIcon && (
           <View
