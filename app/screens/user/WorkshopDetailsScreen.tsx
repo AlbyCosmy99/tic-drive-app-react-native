@@ -2,7 +2,6 @@ import {Colors} from '@/constants/Colors';
 import {Image} from '@rneui/themed';
 import {ActivityIndicator, Share, StyleSheet, Text, View} from 'react-native';
 import {Pressable, ScrollView} from 'react-native-gesture-handler';
-import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import UserCalendarModal from '@/components/ui/modals/UserCalendarModal';
 import useJwtToken from '@/hooks/auth/useJwtToken';
@@ -30,6 +29,7 @@ import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
 import { setWorkshop } from '@/stateManagement/redux/slices/bookingSlice';
+import formatPrice from '@/utils/currency/formatPrice.';
 
 export default function WorkshopDetailsScreen() {
   const workshop = useAppSelector(state => state.booking.workshop);
@@ -62,7 +62,7 @@ export default function WorkshopDetailsScreen() {
         message: `🚗✨ Discover ${workshop?.workshopName} on TicDrive! ✨🚗\n
       📍 *Location:* ${workshop?.address}\n
       ⭐ *Rating:* ${workshop?.meanStars?.toFixed(1)} (${workshop?.numberOfReviews} reviews)\n
-      💰 ${workshop?.servicePrice ? `**Starting from:** ${calculateWorkshopDiscount(workshop?.servicePrice, workshop.discount ?? 0)} ${workshop?.currency}` : 'Check out our services!'}${workshop?.discount ? ` 🔥 **Limited-time discount:** ${workshop?.discount}% off!` : ''}\n
+      💰 ${workshop?.servicePrice ? `**Starting from:** ${formatPrice(workshop?.servicePrice, workshop.discount ?? 0)} ${workshop?.currency}` : 'Check out our services!'}${workshop?.discount ? ` 🔥 **Limited-time discount:** ${workshop?.discount}% off!` : ''}\n
       ${workshop?.isVerified ? '✅ *This workshop is verified by TicDrive!* 🔥' : ''}\n
       🔗 *Book now on TicDrive!* ${Constants.expoConfig?.extra?.googleMapsApiKey}`,
       });
@@ -372,7 +372,7 @@ export default function WorkshopDetailsScreen() {
             style={styles.bottom}
             className="flex-row justify-between items-center mx-2.5 border-t"
           >
-            {serviceChoosen && (
+            {serviceChoosen && workshop.servicePrice && (
               <View className="flex-1 flex-col mt-2.5">
                 <Text className="text-base" style={styles.startingFrom}>
                   {t('workshops.startingFrom')}
@@ -385,7 +385,7 @@ export default function WorkshopDetailsScreen() {
                         'font-semibold text-xl mx-1',
                       ].join(' ')}
                     >
-                      {workshop.currency! + workshop.servicePrice}
+                      {workshop.currency! + formatPrice(workshop.servicePrice)}
                     </Text>
                     {workshop.discount !== 0 && (
                       <View style={styles.strikethroughLine} />
@@ -394,7 +394,7 @@ export default function WorkshopDetailsScreen() {
                   {workshop.discount !== 0 && (
                     <Text className="font-semibold text-xl mx-1">
                       {workshop.currency}
-                      {calculateWorkshopDiscount(
+                      {formatPrice(
                         workshop.servicePrice ?? 0,
                         workshop?.discount ?? 0,
                       )}
