@@ -1,35 +1,35 @@
-import {Colors} from '@/constants/Colors';
-import {Image} from '@rneui/themed';
-import {ActivityIndicator, Share, StyleSheet, Text, View} from 'react-native';
-import {Pressable, ScrollView} from 'react-native-gesture-handler';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
-import UserCalendarModal from '@/components/ui/modals/UserCalendarModal';
-import useJwtToken from '@/hooks/auth/useJwtToken';
-import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
-import WorkshopReviewinfo from '@/components/workshop/reviews/WorkshopReviewInfo';
 import GreenCheckIcon from '@/assets/svg/check_green.svg';
-import ShareIcon from '@/assets/svg/share/shareIcon.svg';
-import SeeAllServicesCards from '@/components/services/SeeAllServicesCards';
-import SeeAllReviewsCards from '@/components/workshop/reviews/SeeAllReviewsCards';
-import Constants from 'expo-constants';
-import MapView, {Marker} from 'react-native-maps';
-import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
-import axiosClient from '@/services/http/axiosClient';
 import EmptyHeartIcon from '@/assets/svg/emotions/EmptyHeart.svg';
 import RedHeartIcon from '@/assets/svg/emotions/RedHeart.svg';
+import ShareIcon from '@/assets/svg/share/shareIcon.svg';
 import CarPinIcon from '@/assets/svg/vehicles/car3.svg';
-import {useTranslation} from 'react-i18next';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
-import openGoogleMaps from '@/services/map/openGoogleMaps';
-import getUserMainImage from '@/utils/files/getUserMainImage';
-import getWorkshopWorkingHours from '@/services/http/requests/datetime/getWorkshopWorkingHours';
-import {useState, useEffect} from 'react';
-import { WorkshopWorkingHours } from '@/types/workshops/WorkshopWorkingHours';
-import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
+import SeeAllServicesCards from '@/components/services/SeeAllServicesCards';
+import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
+import UserCalendarModal from '@/components/ui/modals/UserCalendarModal';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
-import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
+import SeeAllReviewsCards from '@/components/workshop/reviews/SeeAllReviewsCards';
+import WorkshopReviewinfo from '@/components/workshop/reviews/WorkshopReviewInfo';
+import { Colors } from '@/constants/Colors';
+import useJwtToken from '@/hooks/auth/useJwtToken';
+import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
+import { useServiceChoosenByCustomer } from '@/hooks/user/useServiceChoosenByCustomer';
+import axiosClient from '@/services/http/axiosClient';
+import getWorkshopWorkingHours from '@/services/http/requests/datetime/getWorkshopWorkingHours';
+import openGoogleMaps from '@/services/map/openGoogleMaps';
+import { useAppDispatch, useAppSelector } from '@/stateManagement/redux/hooks';
 import { setWorkshop } from '@/stateManagement/redux/slices/bookingSlice';
+import { WorkshopWorkingHours } from '@/types/workshops/WorkshopWorkingHours';
 import formatPrice from '@/utils/currency/formatPrice.';
+import getUserMainImage from '@/utils/files/getUserMainImage';
+import { Image } from '@rneui/themed';
+import Constants from 'expo-constants';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { ActivityIndicator, Share, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView } from 'react-native-gesture-handler';
+import MapView, { Marker } from 'react-native-maps';
 
 export default function WorkshopDetailsScreen() {
   const workshop = useAppSelector(state => state.booking.workshop);
@@ -76,6 +76,58 @@ export default function WorkshopDetailsScreen() {
       console.error('Error sharing:', error);
     }
   };
+const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+const formatTime = (time: string) => time?.slice(0, 5);
+
+const getTimeLabel = (hours: WorkshopWorkingHours | null) => {
+  if (!hours) return 'Closed';
+
+  const morning =
+    hours.morning?.length === 2
+      ? `${formatTime(hours.morning[0])} - ${formatTime(hours.morning[1])}`
+      : null;
+  const afternoon =
+    hours.afternoon?.length === 2
+      ? `${formatTime(hours.afternoon[0])} - ${formatTime(hours.afternoon[1])}`
+      : null;
+
+  if (morning && afternoon) return `${morning}, ${afternoon}`;
+  return morning || afternoon || 'Closed';
+};
+
+const groupDaysByTime = (workingHours: Record<string, WorkshopWorkingHours | null>) => {
+  const groups: { days: string[]; label: string }[] = [];
+
+  let currentGroup: string[] = [];
+  let lastLabel: string | null = null;
+
+  for (const day of DAYS) {
+    const label = getTimeLabel(workingHours[day] || null);
+
+    if (label === lastLabel) {
+      currentGroup.push(day);
+    } else {
+      if (currentGroup.length > 0) {
+        groups.push({ days: currentGroup, label: lastLabel! });
+      }
+      currentGroup = [day];
+      lastLabel = label;
+    }
+  }
+
+  if (currentGroup.length > 0) {
+    groups.push({ days: currentGroup, label: lastLabel! });
+  }
+
+  return groups;
+};
+
+const formatDayRange = (days: string[], t: (key: string) => string) => {
+  if (days.length === 1) return t(`days.${days[0]}`);
+  return `${t(`days.${days[0]}`)}–${t(`days.${days[days.length - 1]}`)}`;
+};
+
 
   const handleOnFavoritePress = async () => {
     try {
@@ -161,12 +213,7 @@ export default function WorkshopDetailsScreen() {
                   <Image
                     source={{uri: getUserMainImage(workshop.images)?.url}}
                     containerStyle={styles.image}
-                    PlaceholderContent={
-                      <ActivityIndicator
-                        size="large"
-                        color={Colors.light.bookingsOptionsText}
-                      />
-                    }
+                    PlaceholderContent={<TicDriveSpinner />}
                   />
                 )}
                 <View className="flex-1 flex-row items-center gap-x-1.5 mt-2">
@@ -178,98 +225,58 @@ export default function WorkshopDetailsScreen() {
                   )}
                 </View>
                 <View className="mt-1">
-                  {loadingHours ? (
-                    <TicDriveSpinner/>
-                  ) : (
-                    <View className="flex-row justify-between">
-                      {/* Left Column: Monday - Friday */}
-                      <View className="flex-1 pr-2">
-                        <Text className="font-semibold text-base mb-1">
-                          {t('workshops.workingHours.weekdays')}
-                        </Text>
-                        {[
-                          'Monday',
-                          'Tuesday',
-                          'Wednesday',
-                          'Thursday',
-                          'Friday',
-                        ].map(day => {
-                          const hours = workingHours[day];
-                          if (!hours) return null;
-                          const formatTime = (time: string) => time.slice(0, 5);
-                          const morning =
-                            hours.morning?.length === 2
-                              ? `${formatTime(hours.morning[0])} - ${formatTime(hours.morning[1])}`
-                              : null;
-                          const afternoon =
-                            hours.afternoon?.length === 2
-                              ? `${formatTime(hours.afternoon[0])} - ${formatTime(hours.afternoon[1])}`
-                              : null;
-                          const time =
-                            morning && afternoon
-                              ? `${morning}, ${afternoon}`
-                              : morning || afternoon || 'Closed';
+  {loadingHours ? (
+    <TicDriveSpinner />
+  ) : (
+    <View className="flex-row justify-between">
+      {/* Left Column: Weekdays */}
+      <View className="flex-1 pr-2">
+        
+        {groupDaysByTime(workingHours)
+          .filter(group => {
+            // Filter out Saturday and Sunday for the left column
+            return !group.days.some(day => day === 'Saturday' || day === 'Sunday');
+          })
+          .map((group, index) => (
+            <View key={index} className="mb-1">
+              <Text className="text-sm font-medium text-gray-800">
+      {formatDayRange(group.days, t)} {/* ✅ Pass `t` here */}
+    </Text>
 
-                          return (
-                            <View key={day}>
-                              {morning && (
-                                <Text className="text-sm text-gray-700">
-                                  {morning}
-                                </Text>
-                              )}
-                              {afternoon && (
-                                <Text className="text-sm text-gray-700">
-                                  {afternoon}
-                                </Text>
-                              )}
-                              {!morning && !afternoon && (
-                                <Text className="text-sm text-gray-700">
-                                  Closed
-                                </Text>
-                              )}
-                            </View>
-                          );
-                        })}
-                      </View>
+{group.label.split(', ').map((part, idx) => (
+  <Text key={idx} className="text-sm text-gray-700">
+    {part}
+  </Text>
+))}
+            </View>
+          ))}
+      </View>
 
-                      {/* Right Column: Saturday */}
-                      <View className="w-[48%]">
-                        <Text className="font-semibold text-base mb-1">
-                          {t('workshops.workingHours.saturday')}
-                        </Text>
-                        {(() => {
-                          const hours = workingHours['Saturday'];
-                          if (!hours)
-                            return (
-                              <Text className="text-sm text-gray-700">
-                               {t('workshops.workingHours.closed')}
-                              </Text>
-                            );
+      {/* Right Column: Weekend */}
+      <View className="w-[48%]">
+        
+        {groupDaysByTime(workingHours)
+          .filter(group => {
+            // Filter only Saturday and Sunday for the right column
+            return group.days.some(day => day === 'Saturday' || day === 'Sunday');
+          })
+          .map((group, index) => (
+            <View key={index} className="mb-1">
+              <Text className="text-sm font-medium text-gray-800">
+      {formatDayRange(group.days, t)} 
+    </Text>
+{group.label.split(', ').map((part, idx) => (
+  <Text key={idx} className="text-sm text-gray-700">
+    {part}
+  </Text>
+))}
+            </View>
+          ))}
+      </View>
+    </View>
+  )}
+</View>
 
-                          const morning =
-                            hours.morning?.length === 2
-                              ? `${hours.morning[0]} - ${hours.morning[1]}`
-                              : null;
-                          const afternoon =
-                            hours.afternoon?.length === 2
-                              ? `${hours.afternoon[0]} - ${hours.afternoon[1]}`
-                              : null;
-
-                          const time =
-                            morning && afternoon
-                              ? `${morning}, ${afternoon}`
-                              : morning || afternoon || 'Closed';
-
-                          return (
-                            <Text className="text-sm text-gray-700">
-                              {time}
-                            </Text>
-                          );
-                        })()}
-                      </View>
-                    </View>
-                  )}
-                </View>
               </View>
 
               <View className="mt-2">

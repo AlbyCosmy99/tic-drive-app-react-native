@@ -136,6 +136,16 @@
     "lookDifferentService": "Look for a different service",
     "goBackDashboard": "Go back to dashboard"
   },
+  "days": {
+  "Monday": "Monday",
+  "Tuesday": "Tuesday",
+  "Wednesday": "Wednesday",
+  "Thursday": "Thursday",
+  "Friday": "Friday",
+  "Saturday": "Saturday",
+  "Sunday": "Sunday"
+},
+
   "bookingConfirmation": {
     "awaitingWorkshopConfirmation": "The service requires confirmation from the workshop.",
     "bookingNumber": "Booking No. {{number}}",
