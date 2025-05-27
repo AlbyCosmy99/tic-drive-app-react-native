@@ -50,10 +50,7 @@ export default function ReviewBookingDetailsScreen() {
   const price = useMemo(() => {
     return (
       workshop?.currency! +
-      formatPrice(
-        workshop?.servicePrice ?? 0,
-        workshop?.discount ?? 0,
-      )
+      formatPrice(workshop?.servicePrice ?? 0, workshop?.discount ?? 0)
     );
   }, []);
 

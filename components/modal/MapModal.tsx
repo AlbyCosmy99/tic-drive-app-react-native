@@ -166,8 +166,7 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
                   {poi.price > 0 ? (
                     <View style={styles.priceBubble}>
                       <Text style={styles.priceText}>
-                        {formatPrice(poi.price, poi.discount) +
-                          poi.currency}
+                        {formatPrice(poi.price, poi.discount) + poi.currency}
                       </Text>
                     </View>
                   ) : (

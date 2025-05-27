@@ -44,8 +44,6 @@ export default function WorkshopDetailsScreen() {
   >({});
   const [loadingHours, setLoadingHours] = useState(false);
 
-
-
   const formatTime = (time: string) => time.slice(0, 5);
 
   const getTimeLabel = (
@@ -198,7 +196,7 @@ export default function WorkshopDetailsScreen() {
 
                 <View className="mt-2">
                   {loadingHours ? (
-                    <View className='h-20'>
+                    <View className="h-20">
                       <TicDriveSpinner />
                     </View>
                   ) : (
