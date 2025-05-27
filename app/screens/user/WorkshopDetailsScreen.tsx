@@ -11,25 +11,25 @@ import UserCalendarModal from '@/components/ui/modals/UserCalendarModal';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 import SeeAllReviewsCards from '@/components/workshop/reviews/SeeAllReviewsCards';
 import WorkshopReviewinfo from '@/components/workshop/reviews/WorkshopReviewInfo';
-import { Colors } from '@/constants/Colors';
+import {Colors} from '@/constants/Colors';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
-import { useServiceChoosenByCustomer } from '@/hooks/user/useServiceChoosenByCustomer';
+import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
 import axiosClient from '@/services/http/axiosClient';
 import getWorkshopWorkingHours from '@/services/http/requests/datetime/getWorkshopWorkingHours';
 import openGoogleMaps from '@/services/map/openGoogleMaps';
-import { useAppDispatch, useAppSelector } from '@/stateManagement/redux/hooks';
-import { setWorkshop } from '@/stateManagement/redux/slices/bookingSlice';
-import { WorkshopWorkingHours } from '@/types/workshops/WorkshopWorkingHours';
+import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
+import {setWorkshop} from '@/stateManagement/redux/slices/bookingSlice';
+import {WorkshopWorkingHours} from '@/types/workshops/WorkshopWorkingHours';
 import formatPrice from '@/utils/currency/formatPrice.';
 import getUserMainImage from '@/utils/files/getUserMainImage';
-import { Image } from '@rneui/themed';
+import {Image} from '@rneui/themed';
 import Constants from 'expo-constants';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ActivityIndicator, Share, StyleSheet, Text, View } from 'react-native';
-import { Pressable, ScrollView } from 'react-native-gesture-handler';
-import MapView, { Marker } from 'react-native-maps';
+import {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {ActivityIndicator, Share, StyleSheet, Text, View} from 'react-native';
+import {Pressable, ScrollView} from 'react-native-gesture-handler';
+import MapView, {Marker} from 'react-native-maps';
 
 export default function WorkshopDetailsScreen() {
   const workshop = useAppSelector(state => state.booking.workshop);
@@ -54,7 +54,7 @@ export default function WorkshopDetailsScreen() {
   const lat = workshop?.latitude || null;
   const lng = workshop?.longitude || null;
 
-  const {setErrorMessage} = useGlobalErrors()
+  const {setErrorMessage} = useGlobalErrors();
 
   const onShare = async () => {
     try {
@@ -76,58 +76,67 @@ export default function WorkshopDetailsScreen() {
       console.error('Error sharing:', error);
     }
   };
-const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  const DAYS = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday',
+  ];
 
-const formatTime = (time: string) => time?.slice(0, 5);
+  const formatTime = (time: string) => time?.slice(0, 5);
 
-const getTimeLabel = (hours: WorkshopWorkingHours | null) => {
-  if (!hours) return 'Closed';
+  const getTimeLabel = (hours: WorkshopWorkingHours | null) => {
+    if (!hours) return 'Closed';
 
-  const morning =
-    hours.morning?.length === 2
-      ? `${formatTime(hours.morning[0])} - ${formatTime(hours.morning[1])}`
-      : null;
-  const afternoon =
-    hours.afternoon?.length === 2
-      ? `${formatTime(hours.afternoon[0])} - ${formatTime(hours.afternoon[1])}`
-      : null;
+    const morning =
+      hours.morning?.length === 2
+        ? `${formatTime(hours.morning[0])} - ${formatTime(hours.morning[1])}`
+        : null;
+    const afternoon =
+      hours.afternoon?.length === 2
+        ? `${formatTime(hours.afternoon[0])} - ${formatTime(hours.afternoon[1])}`
+        : null;
 
-  if (morning && afternoon) return `${morning}, ${afternoon}`;
-  return morning || afternoon || 'Closed';
-};
+    if (morning && afternoon) return `${morning}, ${afternoon}`;
+    return morning || afternoon || 'Closed';
+  };
 
-const groupDaysByTime = (workingHours: Record<string, WorkshopWorkingHours | null>) => {
-  const groups: { days: string[]; label: string }[] = [];
+  const groupDaysByTime = (
+    workingHours: Record<string, WorkshopWorkingHours | null>,
+  ) => {
+    const groups: {days: string[]; label: string}[] = [];
 
-  let currentGroup: string[] = [];
-  let lastLabel: string | null = null;
+    let currentGroup: string[] = [];
+    let lastLabel: string | null = null;
 
-  for (const day of DAYS) {
-    const label = getTimeLabel(workingHours[day] || null);
+    for (const day of DAYS) {
+      const label = getTimeLabel(workingHours[day] || null);
 
-    if (label === lastLabel) {
-      currentGroup.push(day);
-    } else {
-      if (currentGroup.length > 0) {
-        groups.push({ days: currentGroup, label: lastLabel! });
+      if (label === lastLabel) {
+        currentGroup.push(day);
+      } else {
+        if (currentGroup.length > 0) {
+          groups.push({days: currentGroup, label: lastLabel!});
+        }
+        currentGroup = [day];
+        lastLabel = label;
       }
-      currentGroup = [day];
-      lastLabel = label;
     }
-  }
 
-  if (currentGroup.length > 0) {
-    groups.push({ days: currentGroup, label: lastLabel! });
-  }
+    if (currentGroup.length > 0) {
+      groups.push({days: currentGroup, label: lastLabel!});
+    }
 
-  return groups;
-};
+    return groups;
+  };
 
-const formatDayRange = (days: string[], t: (key: string) => string) => {
-  if (days.length === 1) return t(`days.${days[0]}`);
-  return `${t(`days.${days[0]}`)}–${t(`days.${days[days.length - 1]}`)}`;
-};
-
+  const formatDayRange = (days: string[], t: (key: string) => string) => {
+    if (days.length === 1) return t(`days.${days[0]}`);
+    return `${t(`days.${days[0]}`)}–${t(`days.${days[days.length - 1]}`)}`;
+  };
 
   const handleOnFavoritePress = async () => {
     try {
@@ -146,36 +155,35 @@ const formatDayRange = (days: string[], t: (key: string) => string) => {
     }
   };
   useEffect(() => {
-   if (!workshop?.id) return;
+    if (!workshop?.id) return;
 
-     const fetchWorkingHours = async () => {
-       setLoadingHours(true);
-        console.log('Fetching working hours for workshop:', workshop.id);
-         try {
-          const res = await getWorkshopWorkingHours(workshop.id);
-          console.log('Working hours API response:', res.data);
+    const fetchWorkingHours = async () => {
+      setLoadingHours(true);
+      try {
+        const res = await getWorkshopWorkingHours(workshop.id);
 
-          const hoursByDay: Record<string, WorkshopWorkingHours | null> = {};
-          for (const item of res.data) {
+        const hoursByDay: Record<string, WorkshopWorkingHours | null> = {};
+        for (const item of res.data) {
           if (item.dayId >= 1 && item.dayId <= 7) {
-          const dayName = daysOfWeek[item.dayId - 1];
-          hoursByDay[dayName] = item;
+            const dayName = daysOfWeek[item.dayId - 1];
+            hoursByDay[dayName] = item;
+          }
         }
-      }
 
-       setWorkingHours(hoursByDay);
-     } catch (e: any) {
+        setWorkingHours(hoursByDay);
+      } catch (e: any) {
         setErrorMessage('Failed to load working hours');
-      console.error('Working hours fetch error:', e?.response?.data || e.message || e);
-    } finally {
-      setLoadingHours(false);
-    }
-  };
+        console.error(
+          'Working hours fetch error:',
+          e?.response?.data || e.message || e,
+        );
+      } finally {
+        setLoadingHours(false);
+      }
+    };
 
-  fetchWorkingHours();
-}, [workshop?.id]);
-
-
+    fetchWorkingHours();
+  }, [workshop?.id]);
 
   return (
     <SafeAreaViewLayout styles={[styles.container]}>
@@ -199,7 +207,9 @@ const formatDayRange = (days: string[], t: (key: string) => string) => {
       />
       {!workshop ? (
         <View className="flex-1 justify-center items-center">
-          <Text className="text-red-600 text-xl">{t('workshops.errors.notFound')}</Text>
+          <Text className="text-red-600 text-xl">
+            {t('workshops.errors.notFound')}
+          </Text>
         </View>
       ) : (
         <>
@@ -225,58 +235,66 @@ const formatDayRange = (days: string[], t: (key: string) => string) => {
                   )}
                 </View>
                 <View className="mt-1">
-  {loadingHours ? (
-    <TicDriveSpinner />
-  ) : (
-    <View className="flex-row justify-between">
-      {/* Left Column: Weekdays */}
-      <View className="flex-1 pr-2">
-        
-        {groupDaysByTime(workingHours)
-          .filter(group => {
-            // Filter out Saturday and Sunday for the left column
-            return !group.days.some(day => day === 'Saturday' || day === 'Sunday');
-          })
-          .map((group, index) => (
-            <View key={index} className="mb-1">
-              <Text className="text-sm font-medium text-gray-800">
-      {formatDayRange(group.days, t)} {/* ✅ Pass `t` here */}
-    </Text>
+                  {loadingHours ? (
+                    <TicDriveSpinner />
+                  ) : (
+                    <View className="flex-row justify-between">
+                      {/* Left Column: Weekdays */}
+                      <View className="flex-1 pr-2">
+                        {groupDaysByTime(workingHours)
+                          .filter(group => {
+                            // Filter out Saturday and Sunday for the left column
+                            return !group.days.some(
+                              day => day === 'Saturday' || day === 'Sunday',
+                            );
+                          })
+                          .map((group, index) => (
+                            <View key={index} className="mb-1">
+                              <Text className="text-sm font-medium text-gray-800">
+                                {formatDayRange(group.days, t)}{' '}
+                                {/* ✅ Pass `t` here */}
+                              </Text>
 
-{group.label.split(', ').map((part, idx) => (
-  <Text key={idx} className="text-sm text-gray-700">
-    {part}
-  </Text>
-))}
-            </View>
-          ))}
-      </View>
+                              {group.label.split(', ').map((part, idx) => (
+                                <Text
+                                  key={idx}
+                                  className="text-sm text-gray-700"
+                                >
+                                  {part}
+                                </Text>
+                              ))}
+                            </View>
+                          ))}
+                      </View>
 
-      {/* Right Column: Weekend */}
-      <View className="w-[48%]">
-        
-        {groupDaysByTime(workingHours)
-          .filter(group => {
-            // Filter only Saturday and Sunday for the right column
-            return group.days.some(day => day === 'Saturday' || day === 'Sunday');
-          })
-          .map((group, index) => (
-            <View key={index} className="mb-1">
-              <Text className="text-sm font-medium text-gray-800">
-      {formatDayRange(group.days, t)} 
-    </Text>
-{group.label.split(', ').map((part, idx) => (
-  <Text key={idx} className="text-sm text-gray-700">
-    {part}
-  </Text>
-))}
-            </View>
-          ))}
-      </View>
-    </View>
-  )}
-</View>
-
+                      {/* Right Column: Weekend */}
+                      <View className="w-[48%]">
+                        {groupDaysByTime(workingHours)
+                          .filter(group => {
+                            // Filter only Saturday and Sunday for the right column
+                            return group.days.some(
+                              day => day === 'Saturday' || day === 'Sunday',
+                            );
+                          })
+                          .map((group, index) => (
+                            <View key={index} className="mb-1">
+                              <Text className="text-sm font-medium text-gray-800">
+                                {formatDayRange(group.days, t)}
+                              </Text>
+                              {group.label.split(', ').map((part, idx) => (
+                                <Text
+                                  key={idx}
+                                  className="text-sm text-gray-700"
+                                >
+                                  {part}
+                                </Text>
+                              ))}
+                            </View>
+                          ))}
+                      </View>
+                    </View>
+                  )}
+                </View>
               </View>
 
               <View className="mt-2">
