@@ -1,9 +1,13 @@
-import axiosClient from '../../axiosClient';
+import axiosClient from '@/services/http/axiosClient';
+import { WorkshopWorkingHours } from '@/types/workshops/WorkshopWorkingHours';
 
-const getWorkshopWorkingHours = async (workshopId: string, day: string) => {
-  return await axiosClient.get(
-    `datetime/workshop/workingHours?workshopId=${workshopId}&day=${day}`,
+export default function getWorkshopWorkingHours(workshopId: string) {
+  return axiosClient.get<WorkshopWorkingHours[]>(
+    '/DateTime/workshop/workingHours',
+    {
+      params: {
+        WorkshopId: workshopId,
+      },
+    },
   );
-};
-
-export default getWorkshopWorkingHours;
+}

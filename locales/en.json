@@ -92,15 +92,13 @@
     "orRegisterNewCar": "or register a new vehicle",
     "name": "Name",
     "cv": "Horsepower (HP)",
-  "plate_format_error": "Incorrect format. Targa must be in the format:\nEs. AB123CD",
+    "plate_format_error": "Incorrect format. Targa must be in the format:\nEs. AB123CD",
     "plate_placeholder": "E.g., AB123CD"
-
-
   },
   "car_registration": {
-  "success_title": "Car Registered",
-  "success_subtitle": "Congratulations! Your car has been registered successfully. Continue to the profile, where you can see your vehicles."
-},
+    "success_title": "Car Registered",
+    "success_subtitle": "Congratulations! Your car has been registered successfully. Continue to the profile, where you can see your vehicles."
+  },
 
   "home": {
     "notifications": {
@@ -118,20 +116,36 @@
       "title": "reviews",
       "review": "review"
     },
-  "order": "Order",
-  "filter": "Filter",
-  "map": "Map",
-  "ascending": "Ascending",
-  "descending": "Descending",
-  "price": "Price",
-  "rating": "Rating",
-  "searchWorkshop": "Search Workshop",
-  "noWorkshopsWithFilter": "No workshops found with this filter.",
-  "noWorkshopsAvailable": "No workshops available at the moment.",
-  "notFound": "No workshop found. Try with a different service, or go to the dashboard.",
-  "lookDifferentService": "Look for a different service",
-  "goBackDashboard": "Go back to dashboard"
+    "workingHours": {
+      "weekdays": "Monday - Friday",
+      "saturday": "Saturday",
+      "closed": "Closed"
+    },
+    "startingFrom": "Starting from",
+    "order": "Order",
+    "filter": "Filter",
+    "map": "Map",
+    "ascending": "Ascending",
+    "descending": "Descending",
+    "price": "Price",
+    "rating": "Rating",
+    "searchWorkshop": "Search Workshop",
+    "noWorkshopsWithFilter": "No workshops found with this filter.",
+    "noWorkshopsAvailable": "No workshops available at the moment.",
+    "notFound": "No workshop found. Try with a different service, or go to the dashboard.",
+    "lookDifferentService": "Look for a different service",
+    "goBackDashboard": "Go back to dashboard"
   },
+  "days": {
+  "Monday": "Monday",
+  "Tuesday": "Tuesday",
+  "Wednesday": "Wednesday",
+  "Thursday": "Thursday",
+  "Friday": "Friday",
+  "Saturday": "Saturday",
+  "Sunday": "Sunday"
+},
+
   "bookingConfirmation": {
     "awaitingWorkshopConfirmation": "The service requires confirmation from the workshop.",
     "bookingNumber": "Booking No. {{number}}",
@@ -241,10 +255,8 @@
     "serverError": "Server error. Please try again later.",
     "unexpected": "Unexpected error: {{code}}",
     "general": "Something went wrong. Please try again.",
-      "anErrorOccurred": "An error occurred",
-      "fetchWorkshopUnavailableDates": "Error while fetching workshop unavailable dates."
-
-
+    "anErrorOccurred": "An error occurred",
+    "fetchWorkshopUnavailableDates": "Error while fetching workshop unavailable dates."
   },
   "reviewBooking": {
     "reviewDetails": "Booking Details",
@@ -256,8 +268,7 @@
     "paymentMethod": "PAYMENT METHOD",
     "payInWorkshop": "Pay at Workshop",
     "bookNow": "Book Now",
-   "includesTaxesAndFees": "Includes taxes and fees"
-
+    "includesTaxesAndFees": "Includes taxes and fees"
   },
   "privacyPolicy": {
     "title": "Privacy Policy",
