@@ -24,6 +24,7 @@ import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCusto
 import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import formatPrice from '@/utils/currency/formatPrice.';
+import getFullServiceName from '@/services/toString/getFullServiceName';
 
 interface BookingCardProps {
   showDirectionsButton?: boolean;
@@ -42,7 +43,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
   const workshop = useAppSelector(state => state.booking.workshop);
   const [workshopDetailed, setWorkshopDetailed] = useState(workshop);
 
-  const service = useServiceChoosenByCustomer();
+  const services = useServiceChoosenByCustomer();
   const time = useAppSelector(state => state.booking.time);
 
   const price = useMemo(() => {
@@ -56,14 +57,14 @@ const BookingCard: React.FC<BookingCardProps> = ({
   useEffect(() => {
     const fetchServiceOfferedDetails = async () => {
       try {
-        if (!service) {
+        if (services.length === 0) {
           setErrorMessage(
             'Errore: problema nel recuperare il servizio scelto. Riprovare.',
           );
         } else {
           setLoadingServiceOfferedDetails(true);
           const response = await axiosClient.get(
-            `OfferedServices?WorkshopId=${workshop?.id}&ServiceId=${service.id}`,
+            `OfferedServices?WorkshopId=${workshop?.id}&ServiceId=${services[services.length - 1].id}`,
           );
 
           const serviceOffered = response?.data?.length
@@ -88,10 +89,10 @@ const BookingCard: React.FC<BookingCardProps> = ({
       }
     };
 
-    if (workshop?.id && service) {
+    if (workshop?.id && services.length > 0) {
       fetchServiceOfferedDetails();
     }
-  }, [workshop?.id, service]);
+  }, [workshop?.id, services]);
 
   return (
     <View className="rounded-lg border p-4 pt-0 border-grey-light w-full">
@@ -121,10 +122,10 @@ const BookingCard: React.FC<BookingCardProps> = ({
             <Text className="font-medium text-xl">
               {workshopDetailed?.workshopName}
             </Text>
-            {service && (
-              <View className="bg-green-light p-1.5 rounded self-start mt-1">
+            {services.length > 0 && (
+              <View className="bg-green-light p-1.5 rounded self-start mt-1 max-w-[260px]">
                 <Text className="text-green-dark font-semibold">
-                  {service?.title}
+                  {getFullServiceName(services)}
                 </Text>
               </View>
             )}

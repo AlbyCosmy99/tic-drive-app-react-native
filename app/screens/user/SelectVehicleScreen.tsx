@@ -28,7 +28,7 @@ export default function SelectVehicleScreen() {
 
   const {getCustomerCars, loadingCustomerCars} = useCustomerCars();
   const [registeredCars, setRegisteredCars] = useState<Car[] | null>(null);
-  const service = useServiceChoosenByCustomer();
+  const services = useServiceChoosenByCustomer();
   const workshop = useAppSelector(state => state.booking.workshop);
 
   //@ts-ignore
@@ -49,7 +49,7 @@ export default function SelectVehicleScreen() {
   }, []);
 
   const handleCarSelect = (car: Car) => {
-    if (!service) {
+    if (services?.length === 0) {
       navigationPush(navigation, 'ChooseServicesScreen');
     } else if (!workshop) {
       navigationPush(navigation, 'WorkshopsListScreen');

@@ -25,6 +25,7 @@ import {useTranslation} from 'react-i18next';
 import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
 import {setWorkshop} from '@/stateManagement/redux/slices/bookingSlice';
 import formatPrice from '@/utils/currency/formatPrice.';
+import getFullServiceName from '@/services/toString/getFullServiceName';
 
 interface WorkshopCardProps {
   workshop: Workshop;
@@ -51,7 +52,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
   titleTextTailwindCss,
   addressContainerTailwindCss,
 }) => {
-  const serviceChoosen = useServiceChoosenByCustomer();
+  const servicesChoosen = useServiceChoosenByCustomer();
   const {navigation} = useContext(NavigationContext);
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
@@ -119,14 +120,14 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
             textTailwindCss={`text-sm font-medium underline ${iconTextPairTextTailwindCss}`}
           />
         </View>
-        {!!serviceChoosen && isServiceDetailsEnabled && (
+        {servicesChoosen?.length === 0 && isServiceDetailsEnabled && (
           <CrossPlatformButtonLayout
             buttonTailwindCss="flex-row justify-between items-center border-2 border-grey-light m-2 p-3 mt-0 rounded-lg"
             onPress={() => alert('pressed')}
           >
             <View className="flex-1 pr-4">
               <Text className="text-base font-medium flex-shrink">
-                {serviceChoosen.title}
+                {getFullServiceName(servicesChoosen)}
               </Text>
             </View>
 

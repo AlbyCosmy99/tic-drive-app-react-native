@@ -8,16 +8,20 @@ import {
   TextStyle,
   View,
   ViewStyle,
+  Dimensions,
 } from 'react-native';
 import CheckCircle from '@/assets/svg/check_circle.svg';
-import CarRepair from '@/assets/svg/servicesIcons/car_repair.svg'; //default icon
+import CarRepair from '@/assets/svg/servicesIcons/car_repair.svg'; // default icon
 import smallDevicebreakpointHeight from '@/constants/dimensions/smallDevicebreakpointHeight';
-import {Dimensions} from 'react-native';
 import LottieView from 'lottie-react-native';
 import {UserCategory} from '@/types/User';
-import {useAppDispatch} from '@/stateManagement/redux/hooks';
+import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import {SvgProps} from 'react-native-svg';
-import {setService} from '@/stateManagement/redux/slices/bookingSlice';
+import {
+  addService,
+  removeService,
+  setServices,
+} from '@/stateManagement/redux/slices/bookingSlice';
 import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
 import CrossPlatformButtonLayout from './ui/buttons/CrossPlatformButtonLayout';
 
@@ -38,6 +42,7 @@ interface ServicesCardProps {
   isCheckIconAvailable?: boolean;
   loading?: boolean;
   type?: UserCategory | null;
+  onPress?: () => void;
 }
 
 const ServicesCard: React.FC<ServicesCardProps> = ({
@@ -53,22 +58,31 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
   isCheckIconAvailable = true,
   isIconVisible = true,
   loading = false,
+  onPress,
 }) => {
   const dispatch = useAppDispatch();
 
-  const serviceChoosen = useServiceChoosenByCustomer();
-  const isPressed = useMemo(() => serviceChoosen?.id === id, [serviceChoosen]);
+  const servicesChoosen = useServiceChoosenByCustomer();
+  const serviceTreeLevel = useAppSelector(
+    state => state.booking.serviceTreeLevel,
+  );
+
+  const isPressed = useMemo(() => {
+    return servicesChoosen[serviceTreeLevel - 1]?.id === id;
+  }, [servicesChoosen, serviceTreeLevel, id]);
 
   const handleOnPressIn = () => {
-    if (serviceChoosen?.id === id) {
-      dispatch(setService(undefined));
+    if (servicesChoosen[serviceTreeLevel - 1]?.id === id) {
+      dispatch(setServices(servicesChoosen.slice(0,serviceTreeLevel-1)));
+      dispatch(removeService());
     } else {
-      dispatch(setService({id, title, description, icon}));
+      const service = {id, title, description, icon};
+      dispatch(addService({service, index: serviceTreeLevel - 1}));
     }
   };
 
   return (
-    <CrossPlatformButtonLayout onPress={handleOnPressIn}>
+    <CrossPlatformButtonLayout onPress={onPress ?? handleOnPressIn}>
       <Card
         containerStyle={[
           styles.card,

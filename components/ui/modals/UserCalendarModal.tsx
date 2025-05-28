@@ -27,19 +27,18 @@ import useJwtToken from '@/hooks/auth/useJwtToken';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import {useTranslation} from 'react-i18next';
 import generateTimeSlots from '@/utils/datetime/generateTimeSlots';
-import {Pressable, ScrollView} from 'react-native-gesture-handler';
+import { ScrollView} from 'react-native-gesture-handler';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import getWorkshopNotAvailableDates from '@/services/http/requests/datetime/getWorkshopNotAvailableDates';
 import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
 import ExtendedDay from '@/types/calendar/ExtendedDay';
 import {Day} from '@/types/calendar/Day';
-import CrossPlatformButtonLayout from '../buttons/CrossPlatformButtonLayout';
 import {WorkshopWorkingHours} from '@/types/workshops/WorkshopWorkingHours';
 import getWorkshopWorkingHours from '@/services/http/requests/datetime/getWorkshopWorkingHours';
 import TicDriveSpinner from '../spinners/TicDriveSpinner';
 import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
 import Service from '@/types/Service';
-import {setService, setTime} from '@/stateManagement/redux/slices/bookingSlice';
+import { setServices, setTime} from '@/stateManagement/redux/slices/bookingSlice';
 
 const {height} = Dimensions.get('window');
 
@@ -67,7 +66,7 @@ const UserCalendarModal = forwardRef<
   const {setErrorMessage} = useGlobalErrors();
   const {setLoginRouteName, setLoginRouteParams} = useContext(AuthContext);
   const workshop = useAppSelector(state => state.booking.workshop);
-  const serviceChoosen = useServiceChoosenByCustomer();
+  const servicesChoosen = useServiceChoosenByCustomer();
   const car = useAppSelector(state => state.booking.car);
   const {t} = useTranslation();
   const languageCode = useAppSelector(state => state.language.languageCode);
@@ -76,7 +75,7 @@ const UserCalendarModal = forwardRef<
     setServiceSelectedFromWorkshopDetails,
   ] = useState<Service | undefined>(undefined);
 
-  const hasService = !!serviceChoosen || !!serviceSelectedFromWorkshopDetails;
+  const hasService = servicesChoosen.length > 0 || !!serviceSelectedFromWorkshopDetails;
 
   const buttonText = !hasService
     ? t('service.chooseService')
@@ -194,7 +193,7 @@ const UserCalendarModal = forwardRef<
     setLoginRouteParams({workshop, date: selectedDate, time: selectedTime});
 
     if (serviceSelectedFromWorkshopDetails) {
-      dispatch(setService(serviceSelectedFromWorkshopDetails));
+      dispatch(setServices([serviceSelectedFromWorkshopDetails]));
     }
 
     const formattedDate = new Date(selectedDate).toLocaleDateString(
@@ -288,17 +287,12 @@ const UserCalendarModal = forwardRef<
 
   const disabledDates = generateDisabledDates();
 
-  const isDateAfterMaxRange = (dateString: string | null): boolean => {
-    if (!dateString) return false;
-    return new Date(dateString) > maxBookingDate;
-  };
-
   return (
     <>
       {showButton && (
         <TicDriveButton
           text={
-            serviceChoosen || serviceSelectedFromWorkshopDetails
+            servicesChoosen.length > 0 || serviceSelectedFromWorkshopDetails
               ? t('bookNow')
               : t('service.bookAService')
           }

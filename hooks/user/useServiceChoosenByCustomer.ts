@@ -1,7 +1,7 @@
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 
 export const useServiceChoosenByCustomer = () => {
-  const serviceChoosen = useAppSelector(state => state.booking.service);
+  const servicesChoosen = useAppSelector(state => state.booking.services);
 
-  return serviceChoosen;
+  return servicesChoosen;
 };
