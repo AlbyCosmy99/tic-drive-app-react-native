@@ -117,7 +117,7 @@ export default function WorkshopDetailsScreen() {
       ${workshop?.isVerified ? `✅ ${t('share.verified')}\n` : ''}
 📲 ${t('share.bookThroughApp')}:
     iOS: https://apps.apple.com/it/app/ticdrive/id6740627366?l=en-GB
-   Android: https://play.google.com/store/apps/details?id=com.yourcompany.ticdrive`;
+   Android: https://play.google.com/store/apps/details?id=com.NOTyetonPlayStore.ticdrive`;
 
     const result = await Share.share({ message });
 
