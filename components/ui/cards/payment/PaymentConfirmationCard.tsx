@@ -23,6 +23,7 @@ import clsx from 'clsx';
 import getUserMainImage from '@/utils/files/getUserMainImage';
 import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
 import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
+import getFullServiceName from '@/services/toString/getFullServiceName';
 
 interface PaymentConfirmationCardProps {
   workshop: Workshop | null | undefined;
@@ -40,7 +41,7 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
   showReminderBell = false,
   service,
 }) => {
-  const serviceChoosen = useServiceChoosenByCustomer();
+  const servicesChoosen = useServiceChoosenByCustomer();
   const [loadingServiceOfferedDetails, setLoadingServiceOfferedDetails] =
     useState(false);
   const [workshopDetailed, setWorkshopDetailed] = useState(workshop);
@@ -48,14 +49,14 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
   useEffect(() => {
     const fetchServiceOfferedDetails = async () => {
       try {
-        if (!serviceChoosen) {
+        if (servicesChoosen.length === 0) {
           setErrorMessage(
             'Errore: problema nel recuperare il servizio scelto. Riprovare.',
           );
         } else {
           setLoadingServiceOfferedDetails(true);
           const response = await axiosClient.get(
-            `OfferedServices?WorkshopId=${workshop?.id}&ServiceId=${serviceChoosen.id}`,
+            `OfferedServices?WorkshopId=${workshop?.id}&ServiceId=${servicesChoosen[servicesChoosen.length -1].id}`,
           );
 
           const serviceOffered = response?.data?.length
@@ -80,10 +81,10 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
       }
     };
 
-    if (workshop?.id && serviceChoosen) {
+    if (workshop?.id && servicesChoosen.length > 0) {
       fetchServiceOfferedDetails();
     }
-  }, [workshop?.id, serviceChoosen]);
+  }, [workshop?.id, servicesChoosen]);
 
   return (
     <View className="rounded-lg border p-4 pt-0 border-grey-light w-full">
@@ -113,10 +114,10 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
             <Text className="font-medium text-xl">
               {workshopDetailed?.workshopName}
             </Text>
-            {(service || serviceChoosen) && (
+            {(service || servicesChoosen.length > 0) && (
               <View className="bg-green-light p-1.5 rounded self-start mt-1">
                 <Text className="text-green-dark font-semibold">
-                  {service || serviceChoosen?.title}
+                  {service || getFullServiceName(servicesChoosen)}
                 </Text>
               </View>
             )}

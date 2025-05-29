@@ -33,7 +33,7 @@ import MapView, {Marker} from 'react-native-maps';
 
 export default function WorkshopDetailsScreen() {
   const workshop = useAppSelector(state => state.booking.workshop);
-  const serviceChoosen = useServiceChoosenByCustomer();
+  const servicesChoosen = useServiceChoosenByCustomer();
   const token = useJwtToken();
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
@@ -315,7 +315,7 @@ export default function WorkshopDetailsScreen() {
             style={styles.bottom}
             className="flex-row justify-between items-center mx-2.5 border-t"
           >
-            {serviceChoosen && workshop.servicePrice && (
+            {servicesChoosen && workshop.servicePrice && (
               <View className="flex-1 flex-col mt-2.5">
                 <Text className="text-base" style={styles.startingFrom}>
                   {t('workshops.startingFrom')}
@@ -369,10 +369,11 @@ const styles = StyleSheet.create({
   },
   strikethroughLine: {
     position: 'absolute',
-    left: 0,
+    left: 1,
     right: 0,
     top: '50%',
     height: 2,
+    width: 75,
     backgroundColor: 'red',
   },
   startingFrom: {
