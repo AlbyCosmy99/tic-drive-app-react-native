@@ -120,7 +120,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
             textTailwindCss={`text-sm font-medium underline ${iconTextPairTextTailwindCss}`}
           />
         </View>
-        {servicesChoosen?.length === 0 && isServiceDetailsEnabled && (
+        {servicesChoosen?.length > 0 && isServiceDetailsEnabled && (
           <CrossPlatformButtonLayout
             buttonTailwindCss="flex-row justify-between items-center border-2 border-grey-light m-2 p-3 mt-0 rounded-lg"
             onPress={() => alert('pressed')}
@@ -138,7 +138,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
                   {t('reviewBooking.total')}
                 </Text>
                 <Text className="text-base font-medium">
-                  {workshop.currency + ' '}
+                  {workshop.currency}
                   {formatPrice(
                     workshop.servicePrice ?? 0,
                     workshop.discount ?? 0,
