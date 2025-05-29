@@ -103,16 +103,31 @@ export default function WorkshopDetailsScreen() {
   };
 
   const onShare = async () => {
-    try {
-      const result = await Share.share({
-        message: `🚗✨ Discover ${workshop?.workshopName} on TicDrive! ✨🚗\n\n📍 Location: ${workshop?.address}\n⭐ Rating: ${workshop?.meanStars?.toFixed(1)} (${workshop?.numberOfReviews} reviews)\n💰 ${workshop?.servicePrice ? `Starting from: ${formatPrice(workshop?.servicePrice, workshop.discount ?? 0)} ${workshop?.currency}` : 'Check out our services!'}${workshop?.discount ? ` 🔥 ${workshop?.discount}% discount!` : ''}\n\n${workshop?.isVerified ? '✅ Verified by TicDrive' : ''}`,
-      });
-      if (result.action === Share.dismissedAction)
-        console.log('Share dismissed');
-    } catch (error) {
-      console.error('Share error:', error);
+  try {
+    const message = `${t('share.intro', { workshopName: workshop?.workshopName })}
+
+📍 ${t('location')}: ${workshop?.address}
+⭐ ${t('workshops.rating')}: ${workshop?.meanStars?.toFixed(1)} (${workshop?.numberOfReviews} ${t('reviews')})
+💰 ${
+        workshop?.servicePrice
+         ? `${t('share.startingFrom')}: ${formatPrice(workshop.servicePrice, workshop.discount ?? 0)} ${workshop.currency}`
+         : t('share.experienceReliable')
+     }
+      ${workshop?.discount ? `🔥 ${workshop.discount}% ${t('share.discount')}\n` : ''}
+      ${workshop?.isVerified ? `✅ ${t('share.verified')}\n` : ''}
+📲 ${t('share.bookThroughApp')}:
+    iOS: https://apps.apple.com/it/app/ticdrive/id6740627366?l=en-GB
+   Android: https://play.google.com/store/apps/details?id=com.NOTyetonPlayStore.ticdrive`;
+
+    const result = await Share.share({ message });
+
+    if (result.action === Share.dismissedAction) {
+      console.log('Share dismissed');
     }
-  };
+   } catch (error) {
+    console.error('Share error:', error);
+  }
+};
 
   useEffect(() => {
     if (!workshop?.id) return;
