@@ -27,7 +27,7 @@ import useJwtToken from '@/hooks/auth/useJwtToken';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import {useTranslation} from 'react-i18next';
 import generateTimeSlots from '@/utils/datetime/generateTimeSlots';
-import { ScrollView} from 'react-native-gesture-handler';
+import {ScrollView} from 'react-native-gesture-handler';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import getWorkshopNotAvailableDates from '@/services/http/requests/datetime/getWorkshopNotAvailableDates';
 import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
@@ -38,7 +38,11 @@ import getWorkshopWorkingHours from '@/services/http/requests/datetime/getWorksh
 import TicDriveSpinner from '../spinners/TicDriveSpinner';
 import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
 import Service from '@/types/Service';
-import { setServices, setTime} from '@/stateManagement/redux/slices/bookingSlice';
+import {
+  addService,
+  setServices,
+  setTime,
+} from '@/stateManagement/redux/slices/bookingSlice';
 
 const {height} = Dimensions.get('window');
 
@@ -75,7 +79,8 @@ const UserCalendarModal = forwardRef<
     setServiceSelectedFromWorkshopDetails,
   ] = useState<Service | undefined>(undefined);
 
-  const hasService = servicesChoosen.length > 0 || !!serviceSelectedFromWorkshopDetails;
+  const hasService =
+    servicesChoosen.length > 0 || !!serviceSelectedFromWorkshopDetails;
 
   const buttonText = !hasService
     ? t('service.chooseService')
@@ -97,6 +102,10 @@ const UserCalendarModal = forwardRef<
   const [customDisabledDays, setCustomeDisabledDays] = useState<string[]>([]);
   const [workingHours, setWorkingHours] = useState<WorkshopWorkingHours | null>(
     null,
+  );
+
+  const serviceTreeLevel = useAppSelector(
+    state => state.booking.serviceTreeLevel,
   );
 
   const dispatch = useAppDispatch();
@@ -193,7 +202,12 @@ const UserCalendarModal = forwardRef<
     setLoginRouteParams({workshop, date: selectedDate, time: selectedTime});
 
     if (serviceSelectedFromWorkshopDetails) {
-      dispatch(setServices([serviceSelectedFromWorkshopDetails]));
+      dispatch(
+        addService({
+          service: serviceSelectedFromWorkshopDetails,
+          index: serviceTreeLevel - 1,
+        }),
+      );
     }
 
     const formattedDate = new Date(selectedDate).toLocaleDateString(

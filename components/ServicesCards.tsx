@@ -11,9 +11,7 @@ import getServices from '@/services/http/requests/get/services/getServices';
 import serviceHasChildren from '@/services/http/requests/get/services/serviceHasChildren';
 
 import {useAppSelector} from '@/stateManagement/redux/hooks';
-import {
-  setServiceTreeLevel,
-} from '@/stateManagement/redux/slices/bookingSlice';
+import {setServiceTreeLevel} from '@/stateManagement/redux/slices/bookingSlice';
 import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
 
 import Service from '@/types/Service';
@@ -46,7 +44,9 @@ const ServicesCards = ({fatherId}: {fatherId?: number}) => {
           selectedWorkshop?.id,
           languageCode,
           fatherId,
+          fatherId ? false : true,
         );
+        console.log('services', data);
         setServices(data);
       } catch (e) {
         setErrorMessage('Errore durante il caricamento dei servizi.');

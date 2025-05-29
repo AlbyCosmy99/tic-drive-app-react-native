@@ -1,6 +1,6 @@
 import {Text, View} from 'react-native';
 import {LinearGradient} from 'expo-linear-gradient';
-import {useCallback, useMemo, useState} from 'react';
+import {useCallback, useMemo, useRef, useState} from 'react';
 import {useRoute, RouteProp} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import debounce from 'lodash.debounce';
@@ -32,12 +32,16 @@ import {
 
 import {Colors} from '@/constants/Colors';
 import Service from '@/types/Service';
+import UserCalendarModal, {
+  UserCalendarModalRef,
+} from '@/components/ui/modals/UserCalendarModal';
 
 type ParamList = {
   ChooseServicesScreen: {
     buttonContainerTailwindCss?: string;
     withSafeAreaView?: boolean;
     fatherId?: number;
+    showCalendarModal?: boolean;
   };
 };
 
@@ -53,11 +57,14 @@ export default function ChooseServicesScreen() {
   const [filter, setFilter] = useState('');
   const [filteredServices, setFilteredServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(false);
+  const modalRef = useRef<UserCalendarModalRef>(null);
+  const workshop = useAppSelector(state => state.booking.workshop);
 
   const {
     buttonContainerTailwindCss = '',
     withSafeAreaView = true,
     fatherId,
+    showCalendarModal = false,
   } = route.params ?? {};
 
   const serviceTreeLevel = useAppSelector(
@@ -84,21 +91,24 @@ export default function ChooseServicesScreen() {
   };
 
   const handleOnService = async (service?: Service) => {
-    if (service) {
-      dispatch(addService({service, index: serviceTreeLevel - 1}));
+    if (showCalendarModal) {
+      modalRef.current?.openModal(service);
+    } else {
+      if (service) {
+        dispatch(addService({service, index: serviceTreeLevel - 1}));
+      }
     }
 
     try {
       setLoading(true);
       const currentService = services[serviceTreeLevel - 1];
       const hasChildren = await serviceHasChildren(currentService?.id);
-
       if (hasChildren) {
         navigation.push('ChooseServicesScreen', {
           fatherId: currentService.id,
         });
         dispatch(setServiceTreeLevel(serviceTreeLevel + 1));
-      } else {
+      } else if (!showCalendarModal) {
         navigationPush(
           navigation,
           token ? 'SelectVehicleScreen' : 'RegisterVehicleScreen',
@@ -175,6 +185,13 @@ export default function ChooseServicesScreen() {
               onClick={() => handleOnService(services[serviceTreeLevel - 1])}
             />
           </View>
+        )}
+        {showCalendarModal && (
+          <UserCalendarModal
+            ref={modalRef}
+            workshopId={workshop?.id ?? ''}
+            showButton={false}
+          />
         )}
       </SafeAreaViewLayout>
     </View>

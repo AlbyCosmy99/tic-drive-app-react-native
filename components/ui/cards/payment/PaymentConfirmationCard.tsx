@@ -56,7 +56,7 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
         } else {
           setLoadingServiceOfferedDetails(true);
           const response = await axiosClient.get(
-            `OfferedServices?WorkshopId=${workshop?.id}&ServiceId=${servicesChoosen[servicesChoosen.length -1].id}`,
+            `OfferedServices?WorkshopId=${workshop?.id}&ServiceId=${servicesChoosen[servicesChoosen.length - 1].id}`,
           );
 
           const serviceOffered = response?.data?.length

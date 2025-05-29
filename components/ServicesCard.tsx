@@ -73,7 +73,7 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
 
   const handleOnPressIn = () => {
     if (servicesChoosen[serviceTreeLevel - 1]?.id === id) {
-      dispatch(setServices(servicesChoosen.slice(0,serviceTreeLevel-1)));
+      dispatch(setServices(servicesChoosen.slice(0, serviceTreeLevel - 1)));
       dispatch(removeService());
     } else {
       const service = {id, title, description, icon};

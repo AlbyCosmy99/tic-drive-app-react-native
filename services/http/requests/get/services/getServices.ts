@@ -3,7 +3,8 @@ import axiosClient from '../../../axiosClient';
 const getServices = async (
   workshopId?: string,
   languageCode?: string,
-  fatherId?: number
+  fatherId?: number,
+  getAncestors?: boolean,
 ) => {
   const queryParams = new URLSearchParams({
     workshopId: workshopId ?? '',
@@ -13,6 +14,10 @@ const getServices = async (
 
   if (fatherId !== undefined) {
     queryParams.append('fatherId', fatherId.toString());
+  }
+
+  if (getAncestors !== undefined) {
+    queryParams.append('getAncestors', getAncestors.toString());
   }
 
   const res = await axiosClient.get(`services?${queryParams.toString()}`);
