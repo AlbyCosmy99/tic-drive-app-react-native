@@ -19,8 +19,14 @@ import UserCalendarModal, {
 } from '../ui/modals/UserCalendarModal';
 import TicDriveSpinner from '../ui/spinners/TicDriveSpinner';
 import useJwtToken from '@/hooks/auth/useJwtToken';
-import getServices from '@/services/http/requests/get/getServices';
-import {setService} from '@/stateManagement/redux/slices/bookingSlice';
+import getServices from '@/services/http/requests/get/services/getServices';
+import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
+import {
+  addService,
+  setServiceTreeLevel,
+} from '@/stateManagement/redux/slices/bookingSlice';
+import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
+import serviceHasChildren from '@/services/http/requests/get/services/serviceHasChildren';
 
 interface SeeAllServicesCardsProps {
   workshopId?: string;
@@ -42,13 +48,18 @@ const SeeAllServicesCards = forwardRef(
     ref,
   ) => {
     const dispatch = useAppDispatch();
-    const {navigation} = useContext(NavigationContext);
+    const navigation = useTicDriveNavigation();
     const [services, setServices] = useState<Service[]>([]);
     const [loadingServices, setLoadingServices] = useState(true);
     const {t} = useTranslation();
     const modalRef = useRef<UserCalendarModalRef>(null);
     const token = useJwtToken();
     const languageCode = useAppSelector(state => state.language.languageCode);
+    const {setErrorMessage} = useGlobalErrors();
+    const serviceTreeLevel = useAppSelector(
+      state => state.booking.serviceTreeLevel,
+    );
+    const [loading, setLoading] = useState(false);
 
     useImperativeHandle(ref, () => ({
       loadingServices,
@@ -76,20 +87,40 @@ const SeeAllServicesCards = forwardRef(
       navigationPush(navigation, 'ChooseServicesScreen');
     };
 
-    const handleOnSelectService = (service: Service) => {
+    const handleOnSelectService = async (service?: Service) => {
       if (showCalendarModal) {
         modalRef.current?.openModal(service);
       } else {
-        navigationPush(
-          navigation,
-          token ? 'SelectVehicleScreen' : 'RegisterVehicleScreen',
-        );
-        dispatch(setService(service));
+        if (service) {
+          dispatch(addService({service, index: serviceTreeLevel - 1}));
+          try {
+            setLoading(true);
+            const hasChildren = await serviceHasChildren(service?.id);
+
+            if (hasChildren) {
+              navigation.push('ChooseServicesScreen', {
+                fatherId: service.id,
+              });
+              dispatch(setServiceTreeLevel(serviceTreeLevel + 1));
+            } else {
+              navigationPush(
+                navigation,
+                token ? 'SelectVehicleScreen' : 'RegisterVehicleScreen',
+              );
+            }
+          } catch (e: any) {
+            setErrorMessage(e.message);
+          } finally {
+            setLoading(false);
+          }
+        }
       }
     };
 
     return loadingServices ? (
-      <TicDriveSpinner />
+      <View className=" h-28">
+        <TicDriveSpinner />
+      </View>
     ) : services.length > 0 ? (
       <View>
         {topHorizontalLine && <HorizontalLine />}

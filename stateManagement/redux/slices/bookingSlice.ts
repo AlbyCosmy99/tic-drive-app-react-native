@@ -4,8 +4,9 @@ import Workshop from '@/types/workshops/Workshop';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 interface BookingState {
-  service: Service | undefined;
+  services: Service[];
   lastServiceSelectedFromFilter: Service | undefined;
+  serviceTreeLevel: number;
   workshop: Workshop | undefined;
   lastWorkshopSelectedFromFilter: Workshop | undefined;
   car: Car | undefined;
@@ -13,8 +14,9 @@ interface BookingState {
 }
 
 const initialState: BookingState = {
-  service: undefined,
+  services: [],
   lastServiceSelectedFromFilter: undefined,
+  serviceTreeLevel: 1,
   workshop: undefined,
   lastWorkshopSelectedFromFilter: undefined,
   car: undefined,
@@ -25,17 +27,30 @@ const bookingSlice = createSlice({
   name: 'booking',
   initialState: initialState,
   reducers: {
-    setService(
-      state: BookingState,
-      action: PayloadAction<Service | undefined>,
-    ) {
-      state.service = action.payload;
-    },
     setLastServiceSelectedFromFilter(
       state: BookingState,
       action: PayloadAction<Service | undefined>,
     ) {
       state.lastServiceSelectedFromFilter = action.payload;
+    },
+    setServices(state: BookingState, action: PayloadAction<Service[]>) {
+      state.services = action.payload;
+    },
+    addService(
+      state: BookingState,
+      action: PayloadAction<{service: Service; index?: number}>,
+    ) {
+      if (typeof action.payload.index === 'number') {
+        state.services[action.payload.index] = action.payload.service;
+      } else {
+        state.services.push(action.payload.service);
+      }
+    },
+    setServiceTreeLevel(state: BookingState, action: PayloadAction<number>) {
+      state.serviceTreeLevel = action.payload;
+    },
+    removeService(state: BookingState) {
+      state.services.pop();
     },
     setWorkshop(
       state: BookingState,
@@ -56,7 +71,7 @@ const bookingSlice = createSlice({
       state.time = action.payload;
     },
     reset(state: BookingState) {
-      state.service = undefined;
+      state.services = [];
       state.workshop = undefined;
       state.car = undefined;
       state.time = '';
@@ -65,11 +80,14 @@ const bookingSlice = createSlice({
 });
 
 export const {
-  setService,
   setWorkshop,
   setCar,
   setTime,
   setLastServiceSelectedFromFilter,
+  addService,
+  setServiceTreeLevel,
+  removeService,
+  setServices,
   reset,
 } = bookingSlice.actions;
 

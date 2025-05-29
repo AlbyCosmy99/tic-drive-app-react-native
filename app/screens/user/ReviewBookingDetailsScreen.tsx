@@ -36,6 +36,7 @@ import {useTranslation} from 'react-i18next';
 import getUserMainImage from '@/utils/files/getUserMainImage';
 import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
 import formatPrice from '@/utils/currency/formatPrice.';
+import getFullServiceName from '@/services/toString/getFullServiceName';
 
 export default function ReviewBookingDetailsScreen() {
   const {t} = useTranslation();
@@ -43,7 +44,7 @@ export default function ReviewBookingDetailsScreen() {
   const {userPaymentInfo, setUserPaymentInfo} = useContext(GlobalContext);
   const {navigation} = useContext(NavigationContext);
 
-  const serviceChoosen = useServiceChoosenByCustomer();
+  const servicesChoosen = useServiceChoosenByCustomer();
   const workshop = useAppSelector(state => state.booking.workshop);
   const time = useAppSelector(state => state.booking.time);
 
@@ -124,9 +125,9 @@ export default function ReviewBookingDetailsScreen() {
             </View>
             <HorizontalLine color={Colors.light.lightGrey} />
             <View>
-              {serviceChoosen && (
+              {servicesChoosen && (
                 <IconTextPair
-                  text={serviceChoosen.title}
+                  text={getFullServiceName(servicesChoosen)}
                   icon={<CarRepair fill={Colors.light.ticText} />}
                 />
               )}
@@ -157,10 +158,10 @@ export default function ReviewBookingDetailsScreen() {
               {t('reviewBooking.subtotal')}
             </Text>
             <View className="border rounded-xl border-slate-200 p-4">
-              <View className="flex flex-row justify-between items-center">
+              <View className="flex flex-column justify-between items-end gap-y-1">
                 <Text className="text-sm text-tic">
                   {t('reviewBooking.serviceWithName', {
-                    name: serviceChoosen?.title,
+                    name: getFullServiceName(servicesChoosen),
                   })}
                 </Text>
                 <Text>{price}</Text>

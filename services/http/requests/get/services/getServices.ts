@@ -1,13 +1,13 @@
-import axiosClient from '../../axiosClient';
+import axiosClient from '../../../axiosClient';
 
 const getServices = async (
-  workshopId: string,
-  languageCode: string,
+  workshopId?: string,
+  languageCode?: string,
   fatherId?: number
 ) => {
   const queryParams = new URLSearchParams({
     workshopId: workshopId ?? '',
-    languageCode,
+    languageCode: languageCode ?? 'it',
     take: '1000',
   });
 
