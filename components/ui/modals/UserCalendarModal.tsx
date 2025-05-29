@@ -39,6 +39,7 @@ import TicDriveSpinner from '../spinners/TicDriveSpinner';
 import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
 import Service from '@/types/Service';
 import {
+  addService,
   setServices,
   setTime,
 } from '@/stateManagement/redux/slices/bookingSlice';
@@ -101,6 +102,10 @@ const UserCalendarModal = forwardRef<
   const [customDisabledDays, setCustomeDisabledDays] = useState<string[]>([]);
   const [workingHours, setWorkingHours] = useState<WorkshopWorkingHours | null>(
     null,
+  );
+
+  const serviceTreeLevel = useAppSelector(
+    state => state.booking.serviceTreeLevel,
   );
 
   const dispatch = useAppDispatch();
@@ -197,7 +202,12 @@ const UserCalendarModal = forwardRef<
     setLoginRouteParams({workshop, date: selectedDate, time: selectedTime});
 
     if (serviceSelectedFromWorkshopDetails) {
-      dispatch(setServices([serviceSelectedFromWorkshopDetails]));
+      dispatch(
+        addService({
+          service: serviceSelectedFromWorkshopDetails,
+          index: serviceTreeLevel - 1,
+        }),
+      );
     }
 
     const formattedDate = new Date(selectedDate).toLocaleDateString(

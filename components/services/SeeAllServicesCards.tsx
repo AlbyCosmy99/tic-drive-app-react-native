@@ -4,13 +4,11 @@ import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import Service from '@/types/Service';
 import {
   forwardRef,
-  useContext,
   useEffect,
   useImperativeHandle,
   useRef,
   useState,
 } from 'react';
-import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
 import CrossPlatformButtonLayout from '../ui/buttons/CrossPlatformButtonLayout';
 import HorizontalLine from '../ui/HorizontalLine';
 import {useTranslation} from 'react-i18next';
@@ -70,7 +68,12 @@ const SeeAllServicesCards = forwardRef(
       const fetchServices = async () => {
         try {
           setLoadingServices(true);
-          const data = await getServices(workshopId ?? '', languageCode);
+          const data = await getServices(
+            workshopId ?? '',
+            languageCode,
+            undefined,
+            true,
+          );
           setServices(data);
         } catch (e) {
         } finally {
@@ -88,31 +91,33 @@ const SeeAllServicesCards = forwardRef(
     };
 
     const handleOnSelectService = async (service?: Service) => {
-      if (showCalendarModal) {
-        modalRef.current?.openModal(service);
-      } else {
-        if (service) {
-          dispatch(addService({service, index: serviceTreeLevel - 1}));
-          try {
-            setLoading(true);
-            const hasChildren = await serviceHasChildren(service?.id);
+      if (service) {
+        try {
+          setLoading(true);
+          const hasChildren = await serviceHasChildren(service?.id);
 
-            if (hasChildren) {
-              navigation.push('ChooseServicesScreen', {
-                fatherId: service.id,
-              });
-              dispatch(setServiceTreeLevel(serviceTreeLevel + 1));
+          if (hasChildren) {
+            navigation.push('ChooseServicesScreen', {
+              fatherId: service.id,
+              showCalendarModal,
+            });
+            dispatch(setServiceTreeLevel(serviceTreeLevel + 1));
+            dispatch(addService({service, index: serviceTreeLevel - 1}));
+          } else {
+            if (showCalendarModal) {
+              modalRef.current?.openModal(service);
             } else {
+              dispatch(addService({service, index: serviceTreeLevel - 1}));
               navigationPush(
                 navigation,
                 token ? 'SelectVehicleScreen' : 'RegisterVehicleScreen',
               );
             }
-          } catch (e: any) {
-            setErrorMessage(e.message);
-          } finally {
-            setLoading(false);
           }
+        } catch (e: any) {
+          setErrorMessage(e.message);
+        } finally {
+          setLoading(false);
         }
       }
     };

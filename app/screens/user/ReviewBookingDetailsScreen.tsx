@@ -124,7 +124,7 @@ export default function ReviewBookingDetailsScreen() {
           }
         />
         {loading ? (
-          <View className='flex-1'>
+          <View className="flex-1">
             <TicDriveSpinner />
           </View>
         ) : (

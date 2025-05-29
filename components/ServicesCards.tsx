@@ -44,7 +44,9 @@ const ServicesCards = ({fatherId}: {fatherId?: number}) => {
           selectedWorkshop?.id,
           languageCode,
           fatherId,
+          fatherId ? false : true,
         );
+        console.log('services', data);
         setServices(data);
       } catch (e) {
         setErrorMessage('Errore durante il caricamento dei servizi.');
