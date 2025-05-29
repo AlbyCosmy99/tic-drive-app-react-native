@@ -1,4 +1,4 @@
-import React, {FC, memo, useEffect, useState} from 'react';
+import React, {FC, memo, useMemo} from 'react';
 import {Colors} from '@/constants/Colors';
 import {Card, Text} from '@rneui/themed';
 import {
@@ -8,26 +8,24 @@ import {
   TextStyle,
   View,
   ViewStyle,
+  Dimensions,
 } from 'react-native';
-import {TouchableWithoutFeedback} from 'react-native';
-import CheckCircle from '@/components/svgs/CheckCircle';
-import CarRepair from '@/components/svgs/servicesIcons/CarRepair'; //default icon
-import smallDevicebreakpointHeight from '@/constants/smallDevicebreakpointHeight';
-import {Dimensions} from 'react-native';
+import CheckCircle from '@/assets/svg/check_circle.svg';
+import CarRepair from '@/assets/svg/servicesIcons/car_repair.svg'; // default icon
+import smallDevicebreakpointHeight from '@/constants/dimensions/smallDevicebreakpointHeight';
 import LottieView from 'lottie-react-native';
 import {UserCategory} from '@/types/User';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
-import {
-  addServiceChoosenByUsers,
-  addServiceChoosenByWorkshops,
-  removeServiceChoosenByUsers,
-  removeServiceChoosenByWorkshops,
-  setServicesChoosenByUsers,
-  setServicesChoosenByWorkshops,
-} from '@/stateManagement/redux/slices/servicesSlice';
 import {SvgProps} from 'react-native-svg';
+import {
+  addService,
+  removeService,
+  setServices,
+} from '@/stateManagement/redux/slices/bookingSlice';
+import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
+import CrossPlatformButtonLayout from './ui/buttons/CrossPlatformButtonLayout';
 
-const {width, height} = Dimensions.get('window');
+const {height} = Dimensions.get('window');
 
 interface ServicesCardProps {
   id: number;
@@ -42,11 +40,9 @@ interface ServicesCardProps {
   iconWidth?: number;
   iconHeight?: number;
   isCheckIconAvailable?: boolean;
-  pressIn?: (id: number) => void;
-  disabledPressIn?: boolean;
   loading?: boolean;
   type?: UserCategory | null;
-  isSingleChoice?: boolean | null;
+  onPress?: () => void;
 }
 
 const ServicesCard: React.FC<ServicesCardProps> = ({
@@ -55,96 +51,38 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
   description = '',
   cardStyle = {},
   titleStyle = {},
-  descriptionStyle = {},
   icon = CarRepair,
   iconStyle = {},
   iconWidth = 30,
   iconHeight = 30,
   isCheckIconAvailable = true,
   isIconVisible = true,
-  pressIn,
-  disabledPressIn = false,
   loading = false,
-  type = null,
-  isSingleChoice = null,
+  onPress,
 }) => {
-  const [isPressed, setIsPressed] = useState(false);
   const dispatch = useAppDispatch();
 
+  const servicesChoosen = useServiceChoosenByCustomer();
+  const serviceTreeLevel = useAppSelector(
+    state => state.booking.serviceTreeLevel,
+  );
+
+  const isPressed = useMemo(() => {
+    return servicesChoosen[serviceTreeLevel - 1]?.id === id;
+  }, [servicesChoosen, serviceTreeLevel, id]);
+
   const handleOnPressIn = () => {
-    if (disabledPressIn) return;
-
-    if (pressIn) {
-      pressIn(id);
-    }
-
-    //if isSingleChoice === null, the card it is not linked to user or workshop services choices
-    if (isSingleChoice === null) return;
-
-    if (isPressed) {
-      type === 'user'
-        ? dispatch(removeServiceChoosenByUsers(id))
-        : dispatch(removeServiceChoosenByWorkshops(id));
+    if (servicesChoosen[serviceTreeLevel - 1]?.id === id) {
+      dispatch(setServices(servicesChoosen.slice(0, serviceTreeLevel - 1)));
+      dispatch(removeService());
     } else {
-      if (isSingleChoice) {
-        type === 'user'
-          ? dispatch(setServicesChoosenByUsers({id, title, description, icon}))
-          : dispatch(
-              setServicesChoosenByWorkshops({
-                id,
-                title,
-                description,
-                icon,
-              }),
-            );
-      } else {
-        type === 'user'
-          ? dispatch(addServiceChoosenByUsers({id, title, description, icon}))
-          : dispatch(
-              addServiceChoosenByWorkshops({
-                id,
-                title,
-                description,
-                icon,
-              }),
-            );
-      }
+      const service = {id, title, description, icon};
+      dispatch(addService({service, index: serviceTreeLevel - 1}));
     }
-    setIsPressed(!isPressed);
   };
 
-  const servicesChoosenByUsers = useAppSelector(
-    state => state.services.servicesChoosenByUsers,
-  );
-  const servicesChoosenByWorkshops = useAppSelector(
-    state => state.services.servicesChoosenByWorkshops,
-  );
-
-  useEffect(() => {
-    if (
-      type === 'user' &&
-      !servicesChoosenByUsers.find(service => service.id === id)
-    ) {
-      setIsPressed(false);
-    }
-  }, [servicesChoosenByUsers]);
-
-  useEffect(() => {
-    if (
-      type === 'workshop' &&
-      !servicesChoosenByWorkshops.find(service => service.id === id)
-    ) {
-      setIsPressed(false);
-    }
-  }, [servicesChoosenByWorkshops]);
-
   return (
-    <TouchableWithoutFeedback
-      onPressIn={handleOnPressIn}
-      accessible={true}
-      accessibilityLabel={title}
-      accessibilityRole="button"
-    >
+    <CrossPlatformButtonLayout onPress={onPress ?? handleOnPressIn}>
       <Card
         containerStyle={[
           styles.card,
@@ -192,7 +130,7 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
           </View>
         )}
       </Card>
-    </TouchableWithoutFeedback>
+    </CrossPlatformButtonLayout>
   );
 };
 

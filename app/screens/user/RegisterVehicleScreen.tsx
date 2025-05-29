@@ -15,10 +15,8 @@ import getCarModelsByCarMakeId from '@/services/http/requests/cars/getCarModelsB
 import CarDetailsByMakeAndModel from '@/components/cars/registration/CarDetailsByMakeAndModel';
 import CarContext from '@/stateManagement/contexts/car/CarContext';
 import BoldTitle1 from '@/components/ui/text/BoldTitle1';
-import useCarsMakes from '@/hooks/api/cars/useCarsMakes';
-import {useFocusEffect, useRoute} from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
-import {setAreServicesOn} from '@/stateManagement/redux/slices/servicesSlice';
 import isPlateNumber from '@/utils/car/isPlateNumber';
 import CarDetailsByPlate from '@/components/cars/registration/CarDetailsByPlate';
 import CarConfirmationDetails from '@/components/cars/registration/CarConfirmationDetails';
@@ -28,6 +26,9 @@ import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import useCustomerCars from '@/hooks/api/cars/useCustomerCars';
 import navigationReset from '@/services/navigation/reset';
 import {t} from 'i18next';
+import CarMake from '@/types/cars/CarMake';
+import getCarsMakes from '@/services/http/requests/cars/getCarsMakes';
+import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
 
 function RegisterVehicleScreen() {
   const [segmentedControlSelection, setSegmentedControlSelection] =
@@ -57,14 +58,12 @@ function RegisterVehicleScreen() {
     setCarSelectedByPlate: setCarSelectedByPlateCtx,
   } = useContext(CarContext);
 
-  const {carsMakes: makes, loadingCarsMakes} = useCarsMakes();
   const dispatch = useAppDispatch();
 
-  const selectedWorkshop = useAppSelector(
-    state => state.workshops.selectedWorkshop,
-  );
+  const selectedWorkshop = useAppSelector(state => state.booking.workshop);
 
   const token = useAppSelector(state => state.auth.token);
+  const {setErrorMessage} = useGlobalErrors();
 
   const route = useRoute();
   const {goToVehicles} = route.params as {
@@ -75,6 +74,23 @@ function RegisterVehicleScreen() {
   const navigation = useTicDriveNavigation();
 
   const {registerCustomerCar, loadingCustomerCars} = useCustomerCars();
+  const [makes, setMakes] = useState<CarMake[]>([]);
+  const [loadingCarsMakes, setLoadingCarsMakes] = useState(true);
+
+  useEffect(() => {
+    const fetchCarsMakes = async () => {
+      try {
+        setLoadingCarsMakes(true);
+        const data = await getCarsMakes();
+        setMakes(data);
+      } catch (e) {
+        setErrorMessage('Errore durante il caricamento delle marche.');
+      } finally {
+        setLoadingCarsMakes(false);
+      }
+    };
+    fetchCarsMakes();
+  }, []);
 
   const routeName = useMemo(() => {
     if (
@@ -257,21 +273,22 @@ function RegisterVehicleScreen() {
     }
   };
 
-  useFocusEffect(() => {
-    dispatch(setAreServicesOn(false));
-  });
-
   //todo: to remove it when plate option on car registration is added back
   useEffect(() => {
     setSegmentedControlSelection(options[0]); //make and model
-    console.log(selectedCar);
   }, []);
 
   return (
     <SafeAreaViewLayout styles={[backgroundStyle]}>
       <ToPreviousPage containerClassName="m-2 mb-7" />
       <View className="flex-1 justify-between">
-        <BoldTitle1 title={t('vehicles.registerVehicleForBookings')} />
+        <BoldTitle1
+          title={
+            makeAndModelConfirmation || plateConfirmation
+              ? t('vehicles.confirmCarInformation') // <-- Use a key like 'Confirm car details'
+              : t('vehicles.registerVehicleForBookings')
+          }
+        />
         {/* todo: to add it when plate option on car registration is added back
         <View className="m-3.5">
           <SegmentedControl
@@ -353,8 +370,8 @@ function RegisterVehicleScreen() {
                   <View>
                     <TicDriveInput
                       placeholder={segmentedControlSelection.placeholder ?? ''}
-                      isRightIcon={true}
-                      isTextUppercase={true}
+                      existsRightIcon
+                      isTextUppercase
                       onRightIcon={handleOnRightIcon}
                       onSubmit={value => fetchByPlate(value)}
                       containerStyle={{height: 85}}

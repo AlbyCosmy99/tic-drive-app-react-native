@@ -38,7 +38,6 @@ const ResetPasswordWithCodeScreen = () => {
         email,
         code,
       });
-      setLoading(false);
       navigationPush(navigation, 'ChangePasswordScreen', {email});
     } catch (e: any) {
       if (axios.isAxiosError(e)) {
@@ -57,6 +56,8 @@ const ResetPasswordWithCodeScreen = () => {
         console.error('Unknown error:', e.message);
         setErrorMessage(e.message);
       }
+    } finally {
+      setLoading(false);
     }
   };
 

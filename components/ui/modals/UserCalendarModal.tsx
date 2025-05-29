@@ -1,10 +1,11 @@
-import React, {
+import {
   useState,
   useRef,
   useContext,
   useMemo,
   forwardRef,
   useImperativeHandle,
+  useEffect,
 } from 'react';
 import {
   Modal,
@@ -17,103 +18,224 @@ import {
   Dimensions,
   GestureResponderEvent,
   PanResponderGestureState,
-  Pressable,
 } from 'react-native';
 import {Calendar} from 'react-native-calendars';
 import TicDriveButton from '../buttons/TicDriveButton';
 import {Colors} from '@/constants/Colors';
-import Day from '@/types/calendar/Day';
-import UserTimeSlot from '@/constants/temp/UserTimeSlots';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
 import useJwtToken from '@/hooks/auth/useJwtToken';
-import {useAppSelector} from '@/stateManagement/redux/hooks';
+import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import {useTranslation} from 'react-i18next';
+import generateTimeSlots from '@/utils/datetime/generateTimeSlots';
+import {ScrollView} from 'react-native-gesture-handler';
+import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
+import getWorkshopNotAvailableDates from '@/services/http/requests/datetime/getWorkshopNotAvailableDates';
+import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
+import ExtendedDay from '@/types/calendar/ExtendedDay';
+import {Day} from '@/types/calendar/Day';
+import {WorkshopWorkingHours} from '@/types/workshops/WorkshopWorkingHours';
+import getWorkshopWorkingHours from '@/services/http/requests/datetime/getWorkshopWorkingHours';
+import TicDriveSpinner from '../spinners/TicDriveSpinner';
+import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
+import Service from '@/types/Service';
+import {
+  addService,
+  setServices,
+  setTime,
+} from '@/stateManagement/redux/slices/bookingSlice';
 
 const {height} = Dimensions.get('window');
 
 export interface UserCalendarModalRef {
-  openModal: () => void;
+  openModal: (service?: Service) => void;
   closeModal: () => void;
 }
 
 interface UserCalendarModalProps {
   showButton?: boolean;
+  workshopId: string;
 }
 
 const UserCalendarModal = forwardRef<
   UserCalendarModalRef,
   UserCalendarModalProps
->(({showButton = true}, ref) => {
+>(({showButton = true, workshopId}, ref) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const slideAnim = useRef(new Animated.Value(height)).current;
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [loadinghours, setaLoadingHours] = useState(false);
+
   const token = useJwtToken();
+  const {setErrorMessage} = useGlobalErrors();
   const {setLoginRouteName, setLoginRouteParams} = useContext(AuthContext);
-  const workshop = useAppSelector(state => state.workshops.selectedWorkshop);
-  const service = useAppSelector(
-    state => state.services.servicesChoosenByUsers,
-  )[0];
-  const carSelected = useAppSelector(state => state.cars.selectedCar);
+  const workshop = useAppSelector(state => state.booking.workshop);
+  const servicesChoosen = useServiceChoosenByCustomer();
+  const car = useAppSelector(state => state.booking.car);
   const {t} = useTranslation();
+  const languageCode = useAppSelector(state => state.language.languageCode);
+  const [
+    serviceSelectedFromWorkshopDetails,
+    setServiceSelectedFromWorkshopDetails,
+  ] = useState<Service | undefined>(undefined);
 
-  const buttonText = useMemo(() => {
-    if (!service) {
-      return t('service.chooseService');
-    } else if (!carSelected) {
-      return 'Register car';
-    }
-    return 'Confirm ' + (!token ? 'and login' : '');
-  }, [token, service, carSelected]);
+  const hasService =
+    servicesChoosen.length > 0 || !!serviceSelectedFromWorkshopDetails;
 
-  const routeName = useMemo(() => {
-    if (!service) {
-      return 'ChooseServicesScreen';
-    }
-    return token
-      ? carSelected
+  const buttonText = !hasService
+    ? t('service.chooseService')
+    : token
+      ? car
+        ? 'Conferma prenotazione'
+        : 'Scegli veicolo'
+      : 'Confirm ' + (!token ? 'and login' : '');
+
+  const routeName = !hasService
+    ? 'ChooseServicesScreen'
+    : token
+      ? car
         ? 'ReviewBookingDetailsScreen'
-        : 'RegisterVehicleScreen'
+        : 'SelectVehicleScreen'
       : 'UserAuthenticationScreen';
-  }, [token, service]);
 
-  const openModal = (): void => {
+  const [workingDays, setWorkingDays] = useState<string[]>([]);
+  const [customDisabledDays, setCustomeDisabledDays] = useState<string[]>([]);
+  const [workingHours, setWorkingHours] = useState<WorkshopWorkingHours | null>(
+    null,
+  );
+
+  const serviceTreeLevel = useAppSelector(
+    state => state.booking.serviceTreeLevel,
+  );
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const workingDaysData: {
+          data: {
+            days: Day[];
+            dates: string[];
+          };
+        } = await getWorkshopNotAvailableDates(workshopId);
+
+        setWorkingDays(workingDaysData.data.days.map(day => day.name));
+        const mappedDisabledDays = workingDaysData.data.dates.map(
+          date => date.split('T')[0],
+        );
+        setCustomeDisabledDays(mappedDisabledDays);
+      } catch (error) {
+        setErrorMessage(t('errors.fetchWorkshopUnavailableDates'));
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const userTimeSlot = useMemo(() => {
+    let range = [];
+    if (
+      workingHours?.morning &&
+      workingHours?.morning.length === 2 &&
+      workingHours?.morning[0] &&
+      workingHours?.morning[1]
+    ) {
+      range.push({
+        label: 'morning',
+        slots: generateTimeSlots(
+          workingHours?.morning[0],
+          workingHours?.morning[1],
+        ),
+      });
+    }
+    if (
+      workingHours?.afternoon &&
+      workingHours?.afternoon.length === 2 &&
+      workingHours?.afternoon[0] &&
+      workingHours?.afternoon[1]
+    ) {
+      range.push({
+        label: 'afternoon',
+        slots: generateTimeSlots(
+          workingHours?.afternoon[0],
+          workingHours?.afternoon[1],
+        ),
+      });
+    }
+    return range;
+  }, [workingHours]);
+
+  const openModal = (service?: Service): void => {
     setModalVisible(true);
     Animated.timing(slideAnim, {
-      toValue: 0, // Bring to the top of the screen
+      toValue: 0,
       duration: 300,
       useNativeDriver: true,
     }).start();
+    if (service) {
+      setServiceSelectedFromWorkshopDetails(service);
+    }
   };
 
   const closeModal = (): void => {
     Animated.timing(slideAnim, {
-      toValue: height, // Slide it off the screen
+      toValue: height,
       duration: 300,
       useNativeDriver: true,
     }).start(() => setModalVisible(false));
   };
 
-  // Expose methods to parent components using the ref.
   useImperativeHandle(ref, () => ({
     openModal,
     closeModal,
   }));
 
   const onClick = () => {
-    if (token) {
-      closeModal();
-      return {};
+    if (!selectedDate || !selectedTime) {
+      setErrorMessage('Data o ora non selezionata.');
+      return;
     }
+
     closeModal();
     setLoginRouteName('ReviewBookingDetailsScreen');
     setLoginRouteParams({workshop, date: selectedDate, time: selectedTime});
+
+    if (serviceSelectedFromWorkshopDetails) {
+      dispatch(
+        addService({
+          service: serviceSelectedFromWorkshopDetails,
+          index: serviceTreeLevel - 1,
+        }),
+      );
+    }
+
+    const formattedDate = new Date(selectedDate).toLocaleDateString(
+      languageCode,
+      {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+      },
+    );
+
+    const capitalizedDate =
+      formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+
+    const formattedTime = `${capitalizedDate} - ${selectedTime}`;
+
+    dispatch(setTime(formattedTime));
   };
 
   const panResponder = useRef(
     PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-      onMoveShouldSetPanResponder: () => true,
+      onStartShouldSetPanResponder: (e, gestureState) => {
+        // Prevent intercepting touch events inside Calendar
+        const touchY = e.nativeEvent.pageY;
+        if (touchY < height * 0.3) return false;
+        return true;
+      },
+      onMoveShouldSetPanResponder: () => false,
       onPanResponderMove: (
         _: GestureResponderEvent,
         gestureState: PanResponderGestureState,
@@ -130,7 +252,7 @@ const UserCalendarModal = forwardRef<
           closeModal();
         } else {
           Animated.timing(slideAnim, {
-            toValue: 0, // Reset to its original position
+            toValue: 0,
             duration: 200,
             useNativeDriver: true,
           }).start();
@@ -139,33 +261,40 @@ const UserCalendarModal = forwardRef<
     }),
   ).current;
 
-  // Array of custom days to disable
-  const customDisabledDays = [
-    '2024-12-08',
-    '2024-12-10',
-    '2024-12-15',
-    '2025-04-16',
-  ];
+  const daysToCheck = 180;
+  const maxBookingDate = new Date(Date.now() + daysToCheck * 86400000);
 
-  // Generate disabled dates object
   const generateDisabledDates = () => {
-    const today = new Date();
     const disabledDates: Record<string, {disabled: boolean}> = {};
+    const today = new Date();
 
-    // Disable all past dates
+    for (let i = 0; i <= daysToCheck; i++) {
+      const date = new Date(today);
+      date.setDate(today.getDate() + i);
+      const dateStr = date.toISOString().split('T')[0];
+      const dayOfWeek = date
+        .toLocaleDateString('en-US', {weekday: 'long'})
+        .toLowerCase();
+
+      if (workingDays.includes(dayOfWeek)) {
+        disabledDates[dateStr] = {disabled: true};
+      }
+    }
+
+    customDisabledDays.forEach(day => {
+      disabledDates[day] = {disabled: true};
+    });
+
+    const pastLimit = new Date(today);
+    pastLimit.setDate(today.getDate() - 1);
     for (
-      let d = new Date(today.setDate(today.getDate() - 1));
+      let d = new Date(pastLimit);
       d >= new Date(2000, 0, 1);
       d.setDate(d.getDate() - 1)
     ) {
       const dateStr = d.toISOString().split('T')[0];
       disabledDates[dateStr] = {disabled: true};
     }
-
-    // Add custom disabled days
-    customDisabledDays.forEach(day => {
-      disabledDates[day] = {disabled: true};
-    });
 
     return disabledDates;
   };
@@ -177,8 +306,8 @@ const UserCalendarModal = forwardRef<
       {showButton && (
         <TicDriveButton
           text={
-            service?.title
-              ? t('service.bookTheService')
+            servicesChoosen.length > 0 || serviceSelectedFromWorkshopDetails
+              ? t('bookNow')
               : t('service.bookAService')
           }
           onClick={openModal}
@@ -189,7 +318,7 @@ const UserCalendarModal = forwardRef<
 
       {modalVisible && (
         <Modal
-          transparent={true}
+          transparent
           animationType="none"
           visible={modalVisible}
           onRequestClose={closeModal}
@@ -204,77 +333,183 @@ const UserCalendarModal = forwardRef<
               {...panResponder.panHandlers}
             >
               <View style={styles.dragHandle} />
-              <View className="mb-2" style={styles.scrollContent}>
-                <Text className="text-sm mt-2 mb-1 text-tic">
-                  {t('date.selectADate').toUpperCase()}
-                </Text>
-                <Calendar
-                  onDayPress={(day: Day) => {
-                    if (disabledDates[day.dateString]) return;
-                    if (selectedDate === day.dateString) {
-                      setSelectedDate(null);
-                      setSelectedTime(null);
-                    } else {
-                      setSelectedDate(day.dateString);
-                    }
-                  }}
-                  markedDates={{
-                    [selectedDate ?? '']: {
-                      selected: true,
-                      marked: false,
-                      selectedColor: Colors.light.green.drive,
-                    },
-                    ...disabledDates,
-                  }}
-                  theme={{
-                    selectedDayTextColor: 'white', // Text color for the selected day
-                    todayTextColor: Colors.light.green.drive, // Text color for today's date
-                    dayTextColor: 'black', // Default text color for all days
-                    textDisabledColor: '#b3b3b3', // Text color for disabled dates
-                  }}
-                />
-                {selectedDate && (
-                  <View className="mb-4">
-                    <Text className="text-sm text-tic mt-4">
-                      {t('date.chooseSlot').toUpperCase()}
-                    </Text>
-                    <View className="flex flex-row flex-wrap gap-x-2 gap-y-2 justify-center items-center mt-4">
-                      {UserTimeSlot.map((time, index) => (
-                        <Pressable
-                          onPress={() =>
-                            setSelectedTime(selectedTime === time ? null : time)
-                          }
-                          key={index}
-                          className={`border border-tic rounded-2xl p-1 px-2 ${
-                            selectedTime === time && 'bg-drive border-drive'
-                          }`}
-                          style={styles.timeSlotContainer}
-                        >
-                          <Text
-                            className={`text-tic text-base text-center ${
-                              selectedTime === time && 'text-black'
-                            }`}
-                          >
-                            {time}
-                          </Text>
-                        </Pressable>
-                      ))}
+              <SafeAreaViewLayout tailwindCss="mb-0">
+                <View className="justify-between flex-1 pb-1">
+                  {!selectedDate && !loadinghours ? (
+                    <View className="h-[420px]">
+                      <View className="mb-1">
+                        <Text style={styles.sectionTitle}>
+                          {t('date.selectADate').toUpperCase()}
+                        </Text>
+                      </View>
+                      <View style={styles.fixedCalendarContainer}>
+                        <Calendar
+                          onDayPress={async (day: ExtendedDay) => {
+                            const date = new Date(day.dateString);
+                            const dayOfWeek = new Date(day.dateString)
+                              .toLocaleDateString(languageCode, {
+                                weekday: 'long',
+                              })
+                              .toLowerCase();
+
+                            if (
+                              disabledDates[day.dateString] ||
+                              workingDays.includes(dayOfWeek)
+                            )
+                              return;
+                            const dayName = date.toLocaleDateString(
+                              languageCode,
+                              {
+                                weekday: 'long',
+                              },
+                            );
+                            setaLoadingHours(true);
+                            const workingHoursData =
+                              await getWorkshopWorkingHours(
+                                workshopId,
+                                dayName,
+                              );
+                            setaLoadingHours(false);
+                            setWorkingHours(workingHoursData.data);
+
+                            if (selectedDate === day.dateString) {
+                              setSelectedDate(null);
+                              setSelectedTime(null);
+                            } else {
+                              setSelectedDate(day.dateString);
+                              setSelectedTime(null);
+                            }
+                          }}
+                          markedDates={{
+                            [selectedDate ?? '']: {
+                              selected: true,
+                              marked: false,
+                              selectedColor: Colors.light.green.drive,
+                            },
+                            ...disabledDates,
+                          }}
+                          maxDate={maxBookingDate.toISOString().split('T')[0]}
+                          theme={{
+                            selectedDayTextColor: 'white',
+                            todayTextColor: Colors.light.green.drive,
+                            dayTextColor: 'black',
+                            textDisabledColor: '#b3b3b3',
+                          }}
+                        />
+                      </View>
                     </View>
-                  </View>
-                )}
-                <TicDriveButton
-                  text={buttonText}
-                  disabled={!selectedDate || !selectedTime}
-                  routeName={routeName}
-                  routeParams={
-                    token
-                      ? {workshop, date: selectedDate, time: selectedTime}
-                      : {isUser: true}
-                  }
-                  replace={token ? false : false}
-                  onClick={onClick}
-                />
-              </View>
+                  ) : (
+                    <View style={{alignItems: 'center'}} className="h-[420px]">
+                      {loadinghours ? (
+                        <View
+                          style={{marginBottom: 20}}
+                          className="h-44 flex-1"
+                        >
+                          <TicDriveSpinner />
+                        </View>
+                      ) : (
+                        selectedDate && (
+                          <>
+                            <Text
+                              style={{
+                                fontWeight: '600',
+                                color: Colors.light.green.drive,
+                              }}
+                              className="text-xl"
+                            >
+                              {new Date(selectedDate)
+                                .toLocaleDateString(languageCode, {
+                                  weekday: 'long',
+                                  month: 'long',
+                                  day: 'numeric',
+                                })
+                                .toUpperCase()}
+                            </Text>
+                            <TouchableOpacity
+                              onPress={() => setSelectedDate(null)}
+                              style={{marginTop: 4}}
+                            >
+                              <Text
+                                style={{
+                                  fontSize: 14,
+                                  color: '#999',
+                                  textDecorationLine: 'underline',
+                                }}
+                              >
+                                {t('date.changeDay')}
+                              </Text>
+                            </TouchableOpacity>
+                            <Text style={styles.sectionTitle}>
+                              {t('date.chooseSlot').toUpperCase()}
+                            </Text>
+                            <ScrollView
+                              style={{marginBottom: 20}}
+                              className="h-44"
+                            >
+                              {userTimeSlot.map(({label, slots}) => (
+                                <View
+                                  key={label}
+                                  style={styles.timeSlotSection}
+                                >
+                                  <Text style={styles.timeSlotLabel}>
+                                    {label === 'morning'
+                                      ? t('date.days.morning')
+                                      : t('date.days.afternoon')}
+                                  </Text>
+                                  <View style={styles.timeSlotGroup}>
+                                    {slots.map(time => (
+                                      <TouchableOpacity
+                                        key={time}
+                                        onPress={() =>
+                                          setSelectedTime(
+                                            selectedTime === time ? null : time,
+                                          )
+                                        }
+                                        style={[
+                                          styles.timeSlotButton,
+                                          selectedTime === time &&
+                                            styles.selectedSlot,
+                                        ]}
+                                      >
+                                        <Text
+                                          style={[
+                                            styles.timeSlotText,
+                                            selectedTime === time &&
+                                              styles.selectedSlotText,
+                                          ]}
+                                        >
+                                          {time}
+                                        </Text>
+                                      </TouchableOpacity>
+                                    ))}
+                                  </View>
+                                </View>
+                              ))}
+                            </ScrollView>
+                          </>
+                        )
+                      )}
+                    </View>
+                  )}
+
+                  {/* {isDateAfterMaxRange(selectedDate) && (
+                    <View style={styles.noticeWrapper}>
+                      <Text style={styles.noticeText}>
+                        You can book appointments up to 6 months in advance. For
+                        later dates, please contact the workshop directly.
+                      </Text>
+                    </View>
+                  )} */}
+
+                  <TicDriveButton
+                    text={buttonText}
+                    disabled={!selectedDate || !selectedTime}
+                    routeName={routeName}
+                    replace={false}
+                    onClick={onClick}
+                  />
+                </View>
+              </SafeAreaViewLayout>
             </Animated.View>
           </View>
         </Modal>
@@ -284,18 +519,6 @@ const UserCalendarModal = forwardRef<
 });
 
 const styles = StyleSheet.create({
-  button: {
-    backgroundColor: '#007BFF',
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-    margin: 20,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -313,7 +536,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     padding: 20,
     paddingTop: 0,
-    maxHeight: height * 0.9, // Allow up to 90% of screen height
+    maxHeight: height * 0.9,
   },
   dragHandle: {
     width: 60,
@@ -323,22 +546,69 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginVertical: 10,
   },
-  scrollContent: {
-    flexGrow: 1,
-  },
-  selectedDateText: {
-    marginTop: 10,
-    textAlign: 'center',
-    fontSize: 16,
-    color: '#007BFF',
-  },
   customButtonStyle: {
     height: 50,
     paddingHorizontal: 15,
   },
-  timeSlotContainer: {
-    width: '30%',
-    borderColor: '',
+  fixedCalendarContainer: {
+    height: 370,
+    overflow: 'hidden',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#ddd',
+  },
+  noticeWrapper: {
+    marginTop: 12,
+    paddingHorizontal: 10,
+  },
+  noticeText: {
+    textAlign: 'center',
+    color: '#666',
+    fontSize: 13,
+  },
+  sectionTitle: {
+    fontSize: 14,
+    fontWeight: '600',
+    marginTop: 16,
+    marginBottom: 8,
+    textAlign: 'center',
+    color: Colors.light.green.drive,
+  },
+  timeSlotSection: {
+    marginBottom: 8,
+  },
+  timeSlotLabel: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: Colors.light.green.drive,
+    marginBottom: 4,
+    marginTop: 12,
+    textAlign: 'center',
+  },
+  timeSlotGroup: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: 8,
+  },
+  timeSlotButton: {
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: Colors.light.green.drive,
+    margin: 4,
+  },
+  selectedSlot: {
+    backgroundColor: Colors.light.green.drive,
+    borderColor: Colors.light.green.drive,
+  },
+  timeSlotText: {
+    fontSize: 16,
+    color: Colors.light.green.drive,
+  },
+  selectedSlotText: {
+    color: '#fff',
   },
 });
 

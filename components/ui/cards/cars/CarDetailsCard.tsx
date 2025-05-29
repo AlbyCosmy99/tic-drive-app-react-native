@@ -7,19 +7,22 @@ import TicDriveModal from '@/components/ui/modals/TicDriveModal';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 import useCustomerCars from '@/hooks/api/cars/useCustomerCars';
 import {useState} from 'react';
+import {useAppDispatch} from '@/stateManagement/redux/hooks';
+import {setCustomerCarDeleted} from '@/stateManagement/redux/slices/carsSlice';
 
 interface CarDetailsCardProps {
   car: Car;
 }
 
 const CarDetailsCard: React.FC<CarDetailsCardProps> = ({car}) => {
-  const navigation = useTicDriveNavigation();
   const {deleteCustomerCar, loadingCustomerCars} = useCustomerCars();
+  const dispatch = useAppDispatch();
 
   const [showModal, setShowModal] = useState(false);
 
   const handleDelete = async () => {
     await deleteCustomerCar(car.id);
+    dispatch(setCustomerCarDeleted(true));
     setShowModal(false);
   };
 

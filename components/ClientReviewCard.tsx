@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View} from 'react-native';
-import {memo, useEffect} from 'react';
+import {memo} from 'react';
 import CircularUserAvatar from './ui/avatars/CircularUserAvatar';
 import FiveStarsGrade from './ui/grades/FiveStarsGrade';
 import Review from '@/types/workshops/Review';
@@ -9,9 +9,6 @@ type ClientReviewCardProps = {
 };
 
 function ClientReviewCard({review}: ClientReviewCardProps) {
-  useEffect(() => {
-    console.log('review', review);
-  }, []);
   function timeAgo(propDate: Date) {
     const date = new Date(propDate);
     const now = new Date();

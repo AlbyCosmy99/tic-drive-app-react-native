@@ -1,5 +1,5 @@
-import {ActivityIndicator, View} from 'react-native';
-import {useContext, useEffect} from 'react';
+import {View} from 'react-native';
+import {useContext, useEffect, useRef} from 'react';
 import {login, setToken} from '@/stateManagement/redux/slices/authSlice';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import * as SplashScreen from 'expo-splash-screen';
@@ -37,9 +37,9 @@ const Hub = () => {
               navigationReset(
                 navigation,
                 0,
-                user?.category === 'workshop' ? 'workshopTabs' : 'userTabs',
+                'userTabs',
                 {animation: 'fade'},
-                user?.category === 'workshop' ? 'Requests' : 'Home',
+                'Home',
               );
             } else {
               navigationReset(navigation, 0, 'ConfirmEmailScreen', {
@@ -49,13 +49,16 @@ const Hub = () => {
           } catch (err) {
             //if here, probably token is in secureStore but user is not registered in db - to solve, we make the user remove token from secureStore and retry
             console.error('error while getting user data.');
+            navigationReset(navigation, 0, 'userTabs', {animation: 'fade'});
             await removeSecureToken();
-            navigationPush(navigation, '/Hub');
           }
         } else {
           navigationReset(navigation, 0, 'userTabs', {animation: 'fade'});
         }
-        SplashScreen.hideAsync();
+
+        setTimeout(() => {
+          SplashScreen.hideAsync();
+        }, 200);
       } catch (error) {
         console.error('Error checking auth status: ', error);
       }

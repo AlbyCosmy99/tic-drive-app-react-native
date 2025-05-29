@@ -6,8 +6,8 @@ import LinearGradientViewLayout from '@/app/layouts/LinearGradientViewLayout';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
-import PlusIcon from '@/components/svgs/Plus';
-import MinusIcon from '@/components/svgs/Minus';
+import PlusIcon from '@/assets/svg/plus.svg';
+import MinusIcon from '@/assets/svg/minus.svg';
 import {useTranslation} from 'react-i18next';
 import {useMemo} from 'react';
 
@@ -63,8 +63,8 @@ export default function FAQScreen() {
 
         <View className="mx-4">
           <TicDriveInput
-            isLeftIcon
-            isRightIcon
+            existsLeftIcon
+            existsRightIcon
             placeholder={t('faq.search_placeholder')}
             customValue={searchText}
             onChange={setSearchText}

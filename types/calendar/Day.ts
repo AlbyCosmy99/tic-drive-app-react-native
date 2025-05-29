@@ -1,8 +1,4 @@
-interface Day {
-  dateString: string;
-  day: number;
-  month: number;
-  year: number;
+export interface Day {
+  id: number;
+  name: string;
 }
-
-export default Day;

@@ -4,7 +4,6 @@ import {
   TextInput,
   View,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
 import React, {useState} from 'react';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
@@ -23,18 +22,19 @@ import IconTextPair from '@/components/ui/IconTextPair';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
 
-import HeartIcon from '@/components/svgs/emotions/EmptyHeart';
-import CustomerServiceIcon from '@/components/svgs/Headphone';
-import Logout from '@/components/svgs/Logout';
-import AddressIcon from '@/components/svgs/Map';
-import MailIcon from '@/components/svgs/notifications/Mail';
-import Remove from '@/components/svgs/Remove';
-import FAQ from '@/components/svgs/Faq';
-import Translate from '@/components/svgs/Translate';
+import HeartIcon from '@/assets/svg/emotions/EmptyHeart.svg';
+import CustomerServiceIcon from '@/assets/svg/headphone.svg';
+import Logout from '@/assets/svg/logout.svg';
+import AddressIcon from '@/assets/svg/map.svg';
+import MailIcon from '@/assets/svg/notifications/mail.svg';
+import Remove from '@/assets/svg/remove.svg';
+import FAQ from '@/assets/svg/faq.svg';
+import Translate from '@/assets/svg/translate.svg';
+import VehicleIcon from '@/assets/svg/vehicles/car2.svg';
+import EditIcon from '@/assets/svg/writing/change.svg';
+import SaveIcon from '@/assets/svg/operations/save.svg';
+import DangerIcon from '@/assets/svg/danger.svg';
 
-import VehicleIcon from '@/components/svgs/vehicles/Car2';
-import EditIcon from '@/components/svgs/writing/Change';
-import SaveIcon from '@/components/svgs/operations/Save';
 import TicDriveModal from 'ticdrive-mobile/components/ui/modals/TicDriveModal';
 import {setLanguageCode} from '@/stateManagement/redux/slices/languageSlice';
 import i18n from '@/i18n';
@@ -58,6 +58,8 @@ const Section: React.FC<SectionProps> = ({title, children}) => (
 );
 
 export default function UserAccount() {
+  const DEFAULT_AVATAR =
+    'https://ticdrive.blob.core.windows.net/internal/defaultAvatar.png';
   const [isEditing, setIsEditing] = useState(false);
   const [loadingEditingUser, setLoadingEditingUser] = useState(false);
 
@@ -88,24 +90,36 @@ export default function UserAccount() {
   const handleFAQ = () => {
     navigationPush(navigation, 'FAQScreen');
   };
-
-  const handleOnEdit = async () => {
-    setIsEditing(!isEditing);
-    if (isEditing && editedUser.name !== user?.name) {
-      try {
-        setLoadingEditingUser(true);
-        await updateUser(editedUser, token ?? '');
-        dispatch(login({...user, name: editedUser.name}));
-      } catch (e: any) {
-        setErrorMessage(e.message);
-      } finally {
-        setLoadingEditingUser(false);
-      }
-    }
+  const handleDangerZone = () => {
+    navigationPush(navigation, 'DangerZoneScreen');
   };
 
-  const handleDeleteAccount = () => {
-    navigationPush(navigation, 'DeleteAccountScreen');
+  const handleSupport = () => {
+    navigationPush(navigation, 'SupportSectionScreen');
+  };
+  const handleOnEdit = async () => {
+    if (!isEditing) {
+      setEditedUser({name: user?.name?.trim() || ''});
+      setIsEditing(true);
+    } else {
+      if (editedUser.name !== user?.name) {
+        const rawName = editedUser.name || '';
+        const trimmedName = rawName.trim().replace(/\s+/g, ' ');
+
+        try {
+          setLoadingEditingUser(true);
+          await updateUser({...editedUser, name: trimmedName}, token ?? '');
+          dispatch(login({...user, name: trimmedName}));
+        } catch (e: any) {
+          setErrorMessage(e.message);
+        } finally {
+          setLoadingEditingUser(false);
+          setIsEditing(false);
+        }
+      } else {
+        setIsEditing(false);
+      }
+    }
   };
 
   if (!token)
@@ -129,19 +143,19 @@ export default function UserAccount() {
             </View>
           ) : (
             <View className="flex-row justify-between items-center h-[88px]">
-              <View className="flex-row items-center space-x-4 p-2">
+              <View className="flex-1 flex-row items-center space-x-4 p-2">
                 <CircularUserAvatar
-                  uri={user?.imageUrl}
+                  uri={user?.images?.[0]?.url || DEFAULT_AVATAR}
                   styles={{width: 70, height: 70}}
                 />
-                <View className="w-44">
+                <View className="flex-1">
                   {isEditing ? (
                     <TextInput
                       className="font-semibold text-lg border-b border-gray-300"
                       style={{lineHeight: 20}}
                       value={editedUser.name || ''}
                       onChangeText={text =>
-                        setEditedUser({...editedUser, name: text.trim()})
+                        setEditedUser({...editedUser, name: text})
                       }
                       placeholder={t('userAccount.enterYourName')}
                       placeholderTextColor="#888"
@@ -162,7 +176,7 @@ export default function UserAccount() {
                 </View>
               </View>
 
-              <View className="flex-row items-center">
+              <View className="flex-shrink-0 pr-2">
                 <CrossPlatformButtonLayout onPress={handleOnEdit}>
                   <View className="flex-row items-center">
                     {isEditing ? (
@@ -287,9 +301,7 @@ export default function UserAccount() {
 
               <HorizontalLine />
 
-              <CrossPlatformButtonLayout
-                onPress={() => alert(t('userAccount.customerSupport'))}
-              >
+              <CrossPlatformButtonLayout onPress={handleSupport}>
                 <IconTextPair
                   text={t('userAccount.customerSupport')}
                   icon={<CustomerServiceIcon />}
@@ -312,15 +324,15 @@ export default function UserAccount() {
               </CrossPlatformButtonLayout>
 
               <HorizontalLine />
-
-              <CrossPlatformButtonLayout onPress={handleDeleteAccount}>
+              <CrossPlatformButtonLayout onPress={handleDangerZone}>
                 <IconTextPair
-                  text="Delete account"
-                  icon={<Remove />}
-                  textTailwindCss="text-base font-medium pl-1"
+                  text={t('userAccount.dangerZone')}
+                  icon={<DangerIcon />}
+                  textTailwindCss="text-base font-medium pl-1 text-[#fc0600]"
                   containerTailwindCss="py-2 my-0 pt-1"
                 />
               </CrossPlatformButtonLayout>
+              <HorizontalLine />
             </Section>
           </ScrollView>
         </View>
@@ -350,8 +362,18 @@ export default function UserAccount() {
               : t('language.italian')) +
             '.'
           }
-          cancelText="Ok!"
-          confirmButtonStyle={{backgroundColor: '#E53935'}}
+          confirmText={t('common.ok')}
+          confirmButtonStyle={{
+            backgroundColor: '#4CAF50',
+            borderRadius: 12,
+            paddingVertical: 12,
+            paddingHorizontal: 24,
+            elevation: 5,
+            shadowColor: '#000',
+            shadowOffset: {width: 0, height: 2},
+            shadowOpacity: 0.2,
+            shadowRadius: 3.5,
+          }}
         />
       </SafeAreaViewLayout>
     </LinearGradientViewLayout>

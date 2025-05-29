@@ -2,7 +2,7 @@ import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import IconTextPair from '@/components/ui/IconTextPair';
 import {Text, View} from 'react-native';
-import AddIcon from '@/components/svgs/Add';
+import AddIcon from '@/assets/svg/add.svg';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import Car from '@/types/Car';
 import navigationPush from '@/services/navigation/push';
@@ -16,6 +16,9 @@ import CarDetailsCard from '@/components/ui/cards/cars/CarDetailsCard';
 import useOnRegisterVehicle from '@/hooks/cars/useOnRegisterVehicle';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 import {useTranslation} from 'react-i18next';
+import {useFocusEffect} from '@react-navigation/native';
+import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
+import {setCustomerCarDeleted} from '@/stateManagement/redux/slices/carsSlice';
 
 const UserVehiclesScreen = () => {
   const [cars, setCars] = useState<Car[]>([]);
@@ -23,15 +26,26 @@ const UserVehiclesScreen = () => {
   const {getCustomerCars, loadingCustomerCars} = useCustomerCars();
   const onRegisterVehicle = useOnRegisterVehicle();
   const {t} = useTranslation();
+  const customerCarDeleted = useAppSelector(
+    state => state.cars.customerCarDeleted,
+  );
+  const dispatch = useAppDispatch();
+
+  const fetchCars = async () => {
+    const customerCars = await getCustomerCars();
+    setCars(customerCars ?? []);
+  };
 
   useEffect(() => {
-    const getCars = async () => {
-      const customerCars = await getCustomerCars();
-      setCars(customerCars ?? []);
-    };
-
-    getCars();
+    fetchCars();
   }, []);
+
+  useFocusEffect(() => {
+    if (customerCarDeleted) {
+      fetchCars();
+      dispatch(setCustomerCarDeleted(false));
+    }
+  });
 
   const handleOnMiniCarCardPress = (car: Car) => {
     navigationPush(navigation, 'UserVehicleDetailsScreen', {car});
@@ -64,14 +78,20 @@ const UserVehiclesScreen = () => {
         ) : (
           <>
             {cars.length === 0 && (
-              <View>
-                <Text className="text-center text-base text-gray-500 mt-6">
-                  {t('vehicles.noVehiclesMessage')}{' '}
-                  <CrossPlatformButtonLayout onPress={onRegisterVehicle}>
-                    <Text className="text-drive font-semibold">
-                      {t('vehicles.registerVehicle')}
-                    </Text>
-                  </CrossPlatformButtonLayout>{' '}
+              <View className="mt-6 flex-row flex-wrap justify-center">
+                <Text className="text-base text-gray-500">
+                  {t('vehicles.noVehiclesMessage')}
+                </Text>
+                <CrossPlatformButtonLayout
+                  onPress={onRegisterVehicle}
+                  containerTailwindCss="ml-1 justify-center"
+                >
+                  <Text className="text-drive font-semibold">
+                    {t('vehicles.registerVehicle')}
+                  </Text>
+                </CrossPlatformButtonLayout>
+                <Text className="text-base text-gray-500">
+                  {' '}
                   {t('vehicles.addFirstCar')}
                 </Text>
               </View>

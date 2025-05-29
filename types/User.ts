@@ -1,4 +1,5 @@
 import {LatLng} from 'react-native-maps';
+import {TicDriveImage} from './files/TicDriveImage';
 
 export default interface User {
   userId?: string;
@@ -8,7 +9,7 @@ export default interface User {
   emailConfirmed?: boolean;
   password?: string;
   repeatedPassword?: string;
-  imageUrl?: string;
+  images?: TicDriveImage[];
   phoneNumber?: string;
   address?: string;
   coordinates?: LatLng;

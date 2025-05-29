@@ -7,19 +7,31 @@
   "other": "OTHER",
   "support": "Support",
   "feedback": "Feedback",
-  "deleteAccount": "Delete account",
+  "deleteAccount": "Delete Account",
   "termsAndPrivacy": "Terms of Service and Privacy Policy",
+  "change": "Change",
   "reminder": "Reminder",
-  "bookNow": "Book now",
-  "discoverNow": "Discover now",
-  "payNow": "Pay now",
-  "RemindMeLater": "Remind me later",
+  "bookNow": "Book Now",
+  "discoverNow": "Discover Now",
+  "payNow": "Pay Now",
+  "RemindMeLater": "Remind Me Later",
   "confirm": "Confirm",
   "services": "Services",
   "bookings": {
     "title": "Bookings",
-    "confirmed": "Booking confirmed"
+    "confirmed": "Booking Confirmed"
   },
+  "supports": {
+    "title": "Need help or have a question?",
+    "subtitle": "Our support team is here to assist you. Choose a contact option below.",
+    "email_us": "Email us",
+    "call_support": "Call support",
+    "footer_message": "We're always here for you! 🤗"
+  },
+  "logic": {
+    "or": "Or"
+  },
+  "noReviewsYet": "No reviews yet. Book a service to be the first to review.",
   "bookingsTabs": {
     "active": "Active",
     "past": "Past",
@@ -32,70 +44,128 @@
   "reviews": "Reviews",
   "account": "Profile",
   "location": "Location",
-  "notAvailable": "Not available",
+  "notAvailable": "Not Available",
   "service": {
-    "bookAService": "Book a service",
-    "bookTheService": "Book the service",
-    "chooseService": "Choose service",
-    "searchService": "Search service",
-    "oilChange": "Oil change"
+    "bookAService": "Book a Service",
+    "bookTheService": "Book the Service",
+    "chooseService": "Choose Service",
+    "searchService": "Search Service",
+    "oilChange": "Oil Change",
+    "chooseVehicle": "Choose the vehicle"
   },
   "continue": "Continue",
   "date": {
-    "selectADate": "Select a date",
-    "chooseSlot": "Choose from available slots"
+    "selectADate": "Select a Date",
+    "chooseSlot": "Choose from Available Slots"
   },
   "seeAll": {
-    "workshops": "See all workshops",
-    "services": "See all services",
-    "reviews": "See all reviews"
+    "workshops": "See All Workshops",
+    "services": "See All Services",
+    "reviews": "See All Reviews"
   },
   "vehicles": {
-    "registerVehicle": "Register vehicle",
-    "handleVehicles": "Manage vehicles",
+    "confirmCarInformation": "Confirm car informations",
+    "registerVehicle": "Register Vehicle",
+    "handleVehicles": "Manage Vehicles",
     "registerVehicleForBookings": "Register your vehicle to make a booking",
     "make": "Make",
     "model": "Model",
-    "makeAndModel": "Make and model",
-    "selectCarMake": "Select car make",
-    "searchMake": "Search make",
-    "selectCarModel": "Select car model",
-    "searchModel": "Search model",
+    "makeAndModel": "Make and Model",
+    "selectCarMake": "Select Car Make",
+    "searchMake": "Search Make",
+    "selectCarModel": "Select Car Model",
+    "searchModel": "Search Model",
     "invalidPlateFormat": "Enter a valid license plate. Format: AA123BB",
-    "myVehicles": "My vehicles",
-    "noVehiclesMessage": "You haven't registered any vehicles yet. Click on",
-    "addFirstCar": "to add your first car and get started!"
+    "myVehicles": "My Vehicles",
+    "noVehiclesMessage": "You haven’t registered any vehicles yet.",
+    "addFirstCar": "to add your first car and get started!",
+    "choose_car_year": "Choose car year",
+    "search_car_year": "Search car year",
+    "fuel": "Fuel",
+    "search_fuel_type": "Search fuel type",
+    "transmission": "Transmission",
+    "search_transmission": "Search transmission",
+    "engine_size": "Engine displacement",
+    "mileage": "Mileage",
+    "plate": "Plate number",
+    "year": "Year",
+    "orRegisterNewCar": "or register a new vehicle",
+    "name": "Name",
+    "cv": "Horsepower (HP)",
+    "plate_format_error": "Incorrect format. Targa must be in the format:\nEs. AB123CD",
+    "plate_placeholder": "E.g., AB123CD"
   },
+  "car_registration": {
+    "success_title": "Car Registered",
+    "success_subtitle": "Congratulations! Your car has been registered successfully. Continue to the profile, where you can see your vehicles."
+  },
+
   "home": {
     "notifications": {
       "first": "Last service: 12 months ago.\nSchedule now!",
-      "second": "Time to change your tires for the winter season. Check out the offers tailored for you!",
+      "second": "Time to change your tires for the winter season—check out your personalized offers!",
       "third": "Your car tax expires on 01/01/2025!"
     },
-    "findRightWorkshop": "Find the right workshop for you",
-    "discoverServicesAndBook": "Discover services and book"
+    "findRightWorkshop": "Find the Right Workshop for You",
+    "discoverServicesAndBook": "Discover Services and Book"
   },
   "workshops": {
-    "servicesOffered": "Services offered",
+    "servicesOffered": "Services Offered",
     "reviews": {
-      "whatPeopleSay": "What others are saying",
+      "whatPeopleSay": "What People Are Saying",
       "title": "reviews",
       "review": "review"
     },
-    "searchWorkshop": "Search workshop",
+    "workingHours": {
+      "weekdays": "Monday - Friday",
+      "saturday": "Saturday",
+      "closed": "Closed"
+    },
+    "startingFrom": "Starting from",
+    "order": "Order",
+    "filter": "Filter",
+    "map": "Map",
+    "ascending": "Ascending",
+    "descending": "Descending",
+    "price": "Price",
+    "rating": "Rating",
+    "searchWorkshop": "Search Workshop",
     "noWorkshopsWithFilter": "No workshops found with this filter.",
-    "noWorkshopsAvailable": "No workshops available at the moment."
+    "noWorkshopsAvailable": "No workshops available at the moment.",
+    "notFound": "No workshop found. Try with a different service, or go to the dashboard.",
+    "lookDifferentService": "Look for a different service",
+    "goBackDashboard": "Go back to dashboard"
   },
+  "days": {
+  "Monday": "Monday",
+  "Tuesday": "Tuesday",
+  "Wednesday": "Wednesday",
+  "Thursday": "Thursday",
+  "Friday": "Friday",
+  "Saturday": "Saturday",
+  "Sunday": "Sunday"
+},
+
+  "share": {
+    "intro": "🚗✨ Discover {{workshopName}} on TicDrive! ✨🚗",
+    "startingFrom": "Starting from",
+    "experienceReliable": "Experience reliable service tailored to your vehicle’s needs!",
+    "discount": "discount!",
+    "verified": "Verified by TicDrive",
+    "bookThroughApp": "Book through the TicDrive app"
+  },
+
+
   "bookingConfirmation": {
     "awaitingWorkshopConfirmation": "The service requires confirmation from the workshop.",
-    "bookingNumber": "Booking no. {{number}}",
-    "statusPending": "Pending confirmation",
-    "errorCarRegistration": "There was an issue while registering the car."
+    "bookingNumber": "Booking No. {{number}}",
+    "statusPending": "Awaiting Confirmation",
+    "errorCarRegistration": "There was a problem registering your car."
   },
   "language": {
-    "languageChanged": "Language changed",
+    "languageChanged": "Language Changed",
     "yourNewLanguageIs": "Your new language is",
-    "changeLanguage": "Change language",
+    "changeLanguage": "Change Language",
     "english": "English",
     "italian": "Italian"
   },
@@ -103,83 +173,85 @@
     "title": "Frequently Asked Questions",
     "subtitle": "How can we help you?",
     "search_placeholder": "Search by keyword",
-    "most_frequent": "Most popular",
+    "most_frequent": "Most asked",
     "see_all": "See all",
     "no_results": "No results found.",
     "question_1": "How can I book a service on TicDrive?",
-    "answer_1": "Open the TicDrive app or website, enter your vehicle details and location, then select the type of service and time slot. Booking is quick and easy.",
+    "answer_1": "Open the TicDrive app or website, enter your vehicle details and location, then select the service type and time. Booking is quick and easy.",
     "question_2": "How can I add or update a payment method?",
-    "answer_2": "Go to your profile and tap 'Payment methods' to add or update your preferred option.",
+    "answer_2": "Go to your profile and tap \"Payment Methods\" to add or update your preferred option.",
     "question_3": "Can I book a service during the weekend?",
-    "answer_3": "Yes, you can schedule services any day of the week, including weekends.",
+    "answer_3": "Yes, you can schedule services on any day of the week, including weekends.",
     "question_4": "Can I cancel or modify a booking?",
     "answer_4": "Yes, bookings can be canceled or modified at least 24 hours before the scheduled time."
   },
   "confirmEmail": {
     "welcome": "Welcome {{name}}!",
     "pleaseConfirm": "Please confirm your email address.",
-    "instructions": "We have sent a confirmation email to your registered address. Check your inbox (including spam) and click the confirmation link to activate your account.",
+    "instructions": "We have sent a confirmation email to your registered address. Check your inbox (including the spam folder) and click the confirmation link to activate your account.",
     "resendButton": "Resend confirmation email",
     "confirmedButton": "I have confirmed the email",
     "modal1Title": "Confirmation email sent",
     "modal1Content": "Check your email",
-    "modal1Confirm": "Perfect",
+    "modal1Confirm": "Got it",
     "modal2Title": "Check your email",
-    "modal2Content": "Your email is not yet confirmed. Check your inbox or resend it by pressing the 'Resend confirmation email' button.",
+    "modal2Content": "Your email is not yet confirmed. Check your inbox or resend using the 'Resend confirmation email' button.",
     "modal2Confirm": "Ok"
   },
   "payment": {
     "enter_details": "Enter payment details",
-    "cardholder_name": "Cardholder name *",
-    "cardholder_placeholder": "e.g., Mario Rossi",
-    "card_number": "Card number",
-    "expiration_date": "Expiration date",
+    "cardholder_name": "Cardholder Name *",
+    "cardholder_placeholder": "e.g. Mario Rossi",
+    "card_number": "Card Number",
+    "expiration_date": "Expiration Date",
     "expiration_date_placeholder": "MM/YY",
-    "security_code": "Security code (CVV)",
-    "security_code_placeholder": "e.g., 123",
+    "security_code": "Security Code (CVV)",
+    "security_code_placeholder": "e.g. 123",
     "security_code_hint": "The 3-digit number on the back of your card.",
-    "add_card": "Add card"
+    "add_card": "Add Card"
   },
   "common": {
     "save": "Save",
     "edit": "Edit",
     "cancel": "Cancel",
     "ok": "Ok",
-    "home": "Home"
+    "home": "Home",
+    "welcome": "Welcome"
   },
   "userAccount": {
     "enterYourName": "Enter your name",
     "sectionTitle": "Account Section",
-    "registeredVehicles": "Registered vehicles",
-    "favoriteWorkshops": "Favorite workshops",
-    "helpAndSupport": "Help and support",
-    "faq": "Frequently asked questions",
-    "customerSupport": "Customer support",
-    "logout": "Log out",
-    "deleteAccount": "Delete account",
+    "registeredVehicles": "Registered Vehicles",
+    "favoriteWorkshops": "Favorite Workshops",
+    "helpAndSupport": "Help & Support",
+    "faq": "FAQ",
+    "customerSupport": "Customer Support",
+    "logout": "Logout",
+    "deleteAccount": "Delete Account",
     "logoutConfirm": "Are you sure you want to log out?",
-    "deleteAccountTitle": "Delete account",
+    "deleteAccountTitle": "Delete Account",
     "deleteAccountConfirm": "Are you sure you want to delete your account? This action is irreversible.",
     "deletedMock": "Account deleted (mock)",
-    "delete": "Delete"
+    "delete": "Delete",
+    "dangerZone": "Danger zone"
   },
   "changePassword": {
     "setNewPassword": "Set a new password",
-    "description": "Create a new password. Make sure it's different from previous ones for better security.",
+    "description": "Create a new password. Make sure it’s different from the previous ones for better security.",
     "password": "Password",
     "repeatPassword": "Repeat password",
     "updatePassword": "Update password"
   },
   "forgotPassword": {
-    "title": "Forgot password?",
+    "title": "Forgot Password?",
     "description": "Enter your email to reset your password",
     "emailLabel": "Your email",
     "emailPlaceholder": "Enter your email",
-    "resetPasswordButton": "Reset password"
+    "resetPasswordButton": "Reset Password"
   },
   "resetPassword": {
     "checkYourEmail": "Check your email",
-    "sentResetLink": "We sent a reset link to {{email}}. Enter the 6-digit code mentioned in the email.",
+    "sentResetLink": "We've sent a reset link to {{email}}. Enter the 6-digit code mentioned in the email.",
     "enterCode": "Enter code",
     "verifyCode": "Verify code"
   },
@@ -192,17 +264,169 @@
     "unauthorized": "Unauthorized: check your credentials.",
     "serverError": "Server error. Please try again later.",
     "unexpected": "Unexpected error: {{code}}",
-    "general": "Something went wrong. Please try again."
+    "general": "Something went wrong. Please try again.",
+    "anErrorOccurred": "An error occurred",
+    "fetchWorkshopUnavailableDates": "Error while fetching workshop unavailable dates."
   },
   "reviewBooking": {
-    "reviewDetails": "Booking details",
+    "reviewDetails": "Booking Details",
     "subtotal": "SUBTOTAL",
     "serviceWithName": "Service ({{name}})",
-    "promoCode": "Promotional code",
+    "promoCode": "Promo Code",
     "apply": "Apply",
     "total": "Total",
     "paymentMethod": "PAYMENT METHOD",
-    "payInWorkshop": "Pay at workshop",
-    "bookNow": "Book now"
+    "payInWorkshop": "Pay at Workshop",
+    "bookNow": "Book Now",
+    "includesTaxesAndFees": "Includes taxes and fees"
+  },
+  "privacyPolicy": {
+    "title": "Privacy Policy",
+    "intro": "Thank you for your interest in this Privacy Policy and welcome to TicDrive, our mobile application for iOS and Android (our “App”). This policy aims to inform App users about the nature, scope, and purposes of collecting and using personal data by us.",
+    "whoIsController": {
+      "title": "WHO IS THE DATA CONTROLLER?",
+      "description": "A 'data controller' determines the purposes and means of processing personal data. TicDrive, Via Leonardo da Vinci, 12b, 35133 Padova PD, Italy, is the data controller. Contact us at mariancompany07@gmail.com."
+    },
+    "whatIsPersonalData": {
+      "title": "WHAT IS PERSONAL DATA?",
+      "description": "Personal Data is information that identifies a person, including name, date of birth, address, email, phone number, and IP address. Anonymous data is not identifiable."
+    },
+    "whatIsProcessing": {
+      "title": "WHAT IS PROCESSING?",
+      "description": "‘Processing’ means any operation performed with data—from collection to storage, use, and deletion."
+    },
+    "applicableLaw": {
+      "title": "WHAT LAWS APPLY?",
+      "description": "We comply with the Italian Personal Data Protection Code, the EU GDPR, and this Privacy Policy."
+    },
+    "legalBases": {
+      "title": "LEGAL BASES FOR PROCESSING",
+      "description": "We process your data based on: a) consent, b) contractual necessity, c) legal obligations, or d) legitimate interests."
+    },
+    "collectedData": {
+      "title": "WHAT PERSONAL DATA DO WE COLLECT?",
+      "description": "We collect name, email, phone, password, vehicle details, location, app activity, messages, and uploaded content. We also collect technical data and use services like Firebase, Stripe, Sentry, and others. Your data helps us operate and improve the App."
+    },
+    "locationAndDevice": {
+      "title": "LOCATION AND DEVICE DATA",
+      "description": "We may process your location (GPS, IP) and device info (OS, model, sensors). You can manage permissions in your device settings."
+    },
+    "thirdParties": {
+      "title": "THIRD-PARTY SERVICES",
+      "description": "We use services like Stripe, Google Maps, Railway, Azure, Firebase, and Sentry. These providers may process data independently and in third countries."
+    },
+    "otherUses": {
+      "title": "OTHER USES",
+      "description": "Your data is used to operate the App, provide support, improve services, and conduct marketing (if consented)."
+    },
+    "storageRetention": {
+      "title": "STORAGE AND RETENTION",
+      "description": "Data is securely stored in a PostgreSQL database on Railway. It is deleted when no longer needed, unless required by law."
+    },
+    "yourRights": {
+      "title": "YOUR RIGHTS",
+      "description": "You have the right to access, correct, delete, object, restrict processing, and data portability. Contact us to exercise your rights."
+    },
+    "dataBreaches": {
+      "title": "DATA BREACHES",
+      "description": "In case of a data breach, affected users will be promptly informed, along with the corrective measures taken."
+    },
+    "supervisoryAuthority": {
+      "title": "SUPERVISORY AUTHORITY",
+      "description": "The competent authority is the Italian Data Protection Authority (Rome, Italy). We prefer resolving issues directly: contact us first."
+    },
+    "policyChanges": {
+      "title": "CHANGES TO THIS POLICY",
+      "description": "This version is effective from April 30, 2025. We’ll notify you of any changes by updating this date."
+    }
+  },
+  "login": {
+    "welcome": "Welcome",
+    "dont_have_account": "Don't have an account?",
+    "already_have_account": "Already have an account?",
+    "register_here": "Register here",
+    "login_here": "Login here",
+    "forgot_password": "Forgot password?",
+    "or_continue_with": "Or continue with",
+    "by_clicking": "By clicking {{action}}, you agree to our",
+    "termsOfUse": "Terms of Use",
+    "and": "and",
+    "privacy_policy": "Privacy Policy",
+    "login": "Login",
+    "register": "Register"
+  },
+  "termsOfUse": {
+    "title": "Terms of Use",
+    "introduction": "These Terms of Use (the “Terms”) apply between you (“you”) and TicDrive, Via Leonardo da Vinci, 12b, 35133 Padova PD, Italy (“TicDrive”, “we”) for our iOS and Android mobile app (our “App”) and constitute a legal agreement governing your access to our App and Services.",
+    "sections": {
+      "general_terms": {
+        "title": "GENERAL TERMS",
+        "content": "We may update these Terms from time to time and will notify you. If you do not agree, do not use the App. We may modify, suspend, or discontinue any part of the App at any time. Access may be interrupted or face technical issues."
+      },
+      "license_grant": {
+        "title": "LICENSE GRANT",
+        "content": "As long as you comply with these Terms, the EULA, and our Privacy Policy, we grant you a non-transferable, non-exclusive license to use the App. All rights not expressly granted are reserved."
+      },
+      "account_and_password": {
+        "title": "ACCOUNT AND PASSWORD",
+        "content": "Services are provided via a personal account. You are responsible for your account's confidentiality. You must be at least 18 years old. Notify us immediately in case of unauthorized use."
+      },
+      "account_suspension_termination": {
+        "title": "ACCOUNT SUSPENSION AND TERMINATION",
+        "content": "We reserve the right to suspend or delete accounts for violations without notice. Actions may include access revocation, service removal, warnings, legal action, and reporting to authorities."
+      },
+      "end_of_life": {
+        "title": "END OF LIFE",
+        "content": "We reserve the right to discontinue the App with 3 months' notice. We will try to offer an alternative service or continued access under agreement."
+      },
+      "service_levels_and_support": {
+        "title": "SERVICE LEVELS AND SUPPORT",
+        "content": "We provide technical support on a fair-use basis. No obligation applies in cases such as your modifications or misuse. Response time will not exceed 72 hours."
+      },
+      "data_charges_and_mobile_devices": {
+        "title": "DATA CHARGES AND MOBILE DEVICES",
+        "content": "You are responsible for mobile data and SMS charges when using the App."
+      },
+      "technical_error": {
+        "title": "TECHNICAL ERROR",
+        "content": "In case of technical errors, contact us with details and screenshots to determine possible refunds."
+      },
+      "technical_requirements": {
+        "title": "TECHNICAL REQUIREMENTS",
+        "content": "The App is updated to support the latest devices. You are responsible for ensuring compatibility."
+      },
+      "uploading_content": {
+        "title": "UPLOADING CONTENT",
+        "content": "You are responsible for the content you upload and must comply with our Privacy Policy. We may use such content for analysis or AI improvements. Non-compliant content may be removed."
+      },
+      "warranties": {
+        "title": "WARRANTIES",
+        "content": "We provide the App and content 'as is'. We do not guarantee freedom from errors, viruses, or inaccuracies and disclaim all warranties."
+      },
+      "submissions": {
+        "title": "SUBMISSIONS",
+        "content": "Any suggestion, idea, or feedback you send becomes our exclusive property. You waive all moral rights to your submissions."
+      },
+      "limitation_of_liability": {
+        "title": "LIMITATION OF LIABILITY",
+        "content": "We are not liable for indirect or consequential losses from App use. Liability for death, personal injury, or fraud is not excluded."
+      },
+      "termination": {
+        "title": "TERMINATION",
+        "content": "We may suspend or terminate access for violations. You may terminate by uninstalling the App. No refunds will be issued."
+      },
+      "communication": {
+        "title": "COMMUNICATION",
+        "content": "Communication will be made via email to your provided address."
+      },
+      "events_outside_our_control": {
+        "title": "EVENTS OUTSIDE OUR CONTROL",
+        "content": "We are not liable for events beyond our control. Obligations are suspended during such events."
+      },
+      "other_important_terms": {
+        "title": "OTHER IMPORTANT TERMS",
+        "content": "We may transfer rights. Not enforcing a right does not waive it. Invalid clauses do not affect others. Terms are governed by Italian law. Italian courts have non-exclusive jurisdiction."
+      }
+    }
   }
 }

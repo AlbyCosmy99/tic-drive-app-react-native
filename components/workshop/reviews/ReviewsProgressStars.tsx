@@ -13,9 +13,7 @@ const ReviewsProgressStars: React.FC<ReviewsProgressStarsProps> = ({
   reviews,
   stars,
 }) => {
-  const selectedWorkshop = useAppSelector(
-    state => state.workshops.selectedWorkshop,
-  );
+  const selectedWorkshop = useAppSelector(state => state.booking.workshop);
   return (
     <View className="flex-row justify-between items-center">
       <Text className="text-base font-semibold text-tic">{reviews}</Text>

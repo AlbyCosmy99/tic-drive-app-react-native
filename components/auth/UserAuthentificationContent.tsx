@@ -7,29 +7,28 @@ import GoogleIcon from '@/assets/svg/OAuth2Icons/GoogleIcon';
 import AppleIcon from '@/assets/svg/OAuth2Icons/AppleIcon';
 import {Colors} from '@/constants/Colors';
 import React, {useState} from 'react';
-import {UserCategory} from '@/types/User';
 import AuthAction from '@/types/auth/Action';
 import CrossPlatformButtonLayout from '../ui/buttons/CrossPlatformButtonLayout';
 import navigationPush from '@/services/navigation/push';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
+import {useTranslation} from 'react-i18next';
+import isScreenSmall from '@/services/responsive/isScreenSmall';
 
 interface UserAuthenticationContentProps {
   action: AuthAction;
   isUserRegistering: boolean;
   setIsUserRegistering: (isUserRegistering: boolean) => void;
-  clientCategory?: UserCategory;
 }
 
 const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
   action,
   isUserRegistering,
   setIsUserRegistering,
-  clientCategory = 'user',
 }) => {
   const [loading, setLoading] = useState(false);
   const [onFormSubmit, setOnFormSubmit] = useState<(() => void) | null>(null);
-  const [forgotPasswordVisible, setForgotPasswordVisible] = useState(false);
   const navigation = useTicDriveNavigation();
+  const {t} = useTranslation();
 
   const handleLoginPressed = async () => {
     onFormSubmit && onFormSubmit();
@@ -48,33 +47,46 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
     </View>
   ) : (
     <>
-      <Text className="text-center text-3xl font-medium m-1.5 mb-3">
-        Welcome
+      <Text
+        className={`text-center ${isScreenSmall() ? 'text-2xl' : 'text-3xl'} font-medium m-1.5 mb-3`}
+      >
+        {t('common.welcome')}
       </Text>
       <View className="flex-row justify-center gap-1">
         {action === 'login' ? (
-          <Text>Don't have an account?</Text>
+          <Text className={`${isScreenSmall() && 'text-[13px]'}`}>
+            {t('login.dont_have_account')}
+          </Text>
         ) : (
-          <Text>Already have an account?</Text>
+          <Text className={`${isScreenSmall() && 'text-[13px]'}`}>
+            {t('login.already_have_account')}
+          </Text>
         )}
         <TouchableOpacity onPress={handleSwitchLoginRegister}>
-          <Text className="font-medium">
-            {action === 'login' ? 'Register' : 'Login'} here
+          <Text
+            className={`font-medium underline ${isScreenSmall() && 'text-[13px]'}`}
+          >
+            {action === 'login'
+              ? t('login.register_here')
+              : t('login.login_here')}
           </Text>
         </TouchableOpacity>
       </View>
-      <View className="flex-col mb-2">
+      <View className={`flex-col ${!isScreenSmall() && 'mb-2'}`}>
         <UserAuthenticationForm
           isUserRegistering={isUserRegistering}
           setOnFormSubmit={setOnFormSubmit}
-          clientCategory={clientCategory}
           setLoading={setLoading}
         />
         <CrossPlatformButtonLayout
           onPress={() => navigationPush(navigation, 'ForgotPasswordScreen')}
           containerTailwindCss="mx-8"
         >
-          <Text className="font-medium text-sm self-end">Forgot password?</Text>
+          <Text
+            className={`font-medium ${isScreenSmall() && 'text-[13px]'} self-end underline`}
+          >
+            {t('login.forgot_password')}
+          </Text>
         </CrossPlatformButtonLayout>
       </View>
       <View>
@@ -85,7 +97,7 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
         <View className="flex-row justify-center items-center my-3.5">
           <View style={styles.hr} />
           <Text className="text-center" style={styles.continueWithText}>
-            Or continue with
+            {t('login.or_continue_with')}
           </Text>
           <View style={styles.hr} />
         </View>
@@ -95,14 +107,30 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
         </View>
         <View className="flex-row justify-center gap-1 flex-wrap text-center mx-3.5 my-3 mb-8">
           <Text style={styles.footerText}>
-            By clicking {action}, you agree to our
+            {t('login.by_clicking', {action: t(`login.${action}`)})}
           </Text>
-          <TouchableOpacity>
-            <Text style={styles.link}>Terms of Service</Text>
+
+          {/* termsOfUse */}
+          <TouchableOpacity
+            onPress={() =>
+              navigationPush(navigation, 'LegalDocumentScreen', {
+                type: 'termsOfUse',
+              })
+            }
+          >
+            <Text style={styles.link}>{t('login.termsOfUse')}</Text>
           </TouchableOpacity>
-          <Text style={styles.footerText}>and</Text>
-          <TouchableOpacity>
-            <Text style={styles.link}>Privacy Policy</Text>
+
+          {/* privacyPolicy */}
+          <Text style={styles.footerText}>{t('login.and')}</Text>
+          <TouchableOpacity
+            onPress={() =>
+              navigationPush(navigation, 'LegalDocumentScreen', {
+                type: 'privacyPolicy',
+              })
+            }
+          >
+            <Text style={styles.link}>{t('login.privacy_policy')}</Text>
           </TouchableOpacity>
         </View>
       </View>

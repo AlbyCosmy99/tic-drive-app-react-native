@@ -1,4 +1,4 @@
-import Star from '@/components/svgs/Star';
+import Star from '@/assets/svg/star.svg';
 import IconTextPair from '@/components/ui/IconTextPair';
 import Workshop from '@/types/workshops/Workshop';
 import {useMemo} from 'react';

@@ -1,4 +1,4 @@
-import CheckIcon from '@/components/svgs/CheckCircle';
+import CheckIcon from '@/assets/svg/check_circle.svg';
 import {Text} from 'react-native';
 
 interface TicDriveSuccessCardProps {

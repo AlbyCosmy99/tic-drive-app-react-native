@@ -6,7 +6,6 @@ import TicDriveAuthButton from '@/components/ui/buttons/TicDriveAuthButton';
 import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
 import TicDriveModal from '@/components/ui/modals/TicDriveModal';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
-import useLogin from '@/hooks/auth/useLogin';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import isEmailConfirmed from '@/services/http/requests/auth/isEmailConfirmed';
 import sendConfirmationEmail from '@/services/http/requests/auth/sendConfirmationEmail';
@@ -24,7 +23,6 @@ const ConfirmEmailScreen = () => {
   const [confirmModalOpened, setConfirmModalOpened] = useState(false);
   const [emailCheckedModalOpened, setEmailCheckedModalOpened] = useState(false);
   const user = useAppSelector(state => state.auth.user);
-  const {login} = useLogin();
   const navigation = useTicDriveNavigation();
 
   const handleResendEmail = async () => {

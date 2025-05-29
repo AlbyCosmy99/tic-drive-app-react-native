@@ -1,22 +1,26 @@
-import React, {memo, useContext, useEffect} from 'react';
+import React, {memo, useContext, useEffect, useMemo} from 'react';
 import {Text, View} from 'react-native';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import navigationPush from '@/services/navigation/push';
-import {useServicesChoosenByUsers} from '@/hooks/user/useServiceChoosenByUsers';
 import TicDriveButton from './ui/buttons/TicDriveButton';
 import navigationReset from '@/services/navigation/reset';
-import {reset} from '@/stateManagement/redux/slices/servicesSlice';
-import {useAppDispatch} from '@/stateManagement/redux/hooks';
+import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import {useFocusEffect} from 'expo-router';
-import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import TicDriveInfinitePaginationList from './ui/Lists/TicDriveInfinitePaginationList';
 import {useState} from 'react';
 import Workshop from '@/types/workshops/Workshop';
 import WorkshopCard from './WorkshopCard';
 import CrossPlatformButtonLayout from './ui/buttons/CrossPlatformButtonLayout';
-import useNearbyWorkshops from '@/hooks/location/useNearbyWorkshops';
-import useWorkshops from '@/hooks/api/workshops/useWorkshops';
+import useJwtToken from '@/hooks/auth/useJwtToken';
+import getAllWorkshops from '@/services/http/requests/get/workshops/getAllWorkshops';
+import getFavoriteWorkshops from '@/services/http/requests/get/workshops/getFavoriteWorkshops';
+import getNearbyWorkshops from '@/services/http/requests/get/workshops/getNearbyWorkshops';
+import {useTranslation} from 'react-i18next';
+import {
+  setService,
+  setWorkshop,
+} from '@/stateManagement/redux/slices/bookingSlice';
 
 interface WorkshopCardsProps {
   setAreNoWorkshop?: (areNoWorkshops: boolean) => void;
@@ -31,31 +35,101 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
 }) => {
   const {workshopFilter, setWorkshopFilter} = useContext(GlobalContext);
   const navigation = useTicDriveNavigation();
+  const {t} = useTranslation();
 
-  const servicesChoosen = useServicesChoosenByUsers();
   const workshopsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
+  const [workshops, setWorkshops] = useState<Workshop[]>([]);
+  const [loadingWorkshops, setLoadingWorkshops] = useState(false);
+  const [count, setCount] = useState(0);
 
-  const commonOffset = (currentPage - 1) * workshopsPerPage;
+  const user = useAppSelector(state => state.auth.user);
 
-  const {workshops, loadingWorkshops, setLoadingWorkshops, count} = favorite
-    ? useWorkshops(
-        commonOffset,
-        workshopsPerPage,
-        servicesChoosen.length > 0 ? servicesChoosen[0]?.id : 0,
-        favorite,
-        {order, filter: workshopFilter},
-      )
-    : useNearbyWorkshops(commonOffset, workshopsPerPage, {
-        order,
-        filter: workshopFilter,
-      });
+  const commonOffset = useMemo(
+    () => (currentPage - 1) * workshopsPerPage,
+    [currentPage, workshopsPerPage],
+  );
+
+  const [debouncedFilter, setDebouncedFilter] = useState<string>(
+    workshopFilter ?? '',
+  );
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedFilter(workshopFilter ?? '');
+    }, 500);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [workshopFilter]);
 
   const dispatch = useAppDispatch();
+  const token = useJwtToken();
+  const services = useAppSelector(state => state.booking.services);
+
+  const fetchAllWorkshops = async () => {
+    setLoadingWorkshops(true);
+    const response = await getAllWorkshops(
+      token ?? '',
+      commonOffset,
+      workshopsPerPage,
+      debouncedFilter,
+      services[services.length - 1]?.id,
+      {order, filter: workshopFilter},
+    );
+    setWorkshops(response.data.workshops);
+    setCount(response.data.count);
+    setLoadingWorkshops(false);
+  };
+
+  const fetchFavoriteWorkshops = async () => {
+    setLoadingWorkshops(true);
+    const response = await getFavoriteWorkshops(
+      token ?? '',
+      commonOffset,
+      workshopsPerPage,
+      debouncedFilter,
+      {order, filter: workshopFilter},
+    );
+    setWorkshops(response.data.workshops);
+    setCount(response.data.count);
+    setLoadingWorkshops(false);
+  };
+
+  const fetchNearbyWorkshops = async () => {
+    setLoadingWorkshops(true);
+    const response = await getNearbyWorkshops(
+      token ?? '',
+      commonOffset,
+      workshopsPerPage,
+      debouncedFilter,
+      {
+        latitude: user?.coordinates?.latitude ?? 0,
+        longitude: user?.coordinates?.longitude ?? 0,
+      },
+      services[services.length - 1]?.id,
+      {order, filter: workshopFilter},
+    );
+    if (response.data.count > 0) {
+      setWorkshops(response.data.nearbyWorkshops);
+      setCount(response.data.count);
+      setLoadingWorkshops(false);
+    } else {
+      fetchAllWorkshops();
+    }
+  };
+
+  useEffect(() => {
+    if (favorite) {
+      fetchFavoriteWorkshops();
+    } else {
+      fetchNearbyWorkshops();
+    }
+  }, [token, commonOffset, debouncedFilter, order]);
 
   useEffect(() => {
     setCurrentPage(1);
-    console.log(servicesChoosen);
   }, [workshopFilter, order]);
 
   useEffect(() => {
@@ -63,17 +137,17 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
   }, [workshopFilter, setAreNoWorkshop]);
 
   useFocusEffect(() => {
-    dispatch(setSelectedWorkshop(null));
+    dispatch(setWorkshop(undefined));
   });
 
   const handleChooseDifferentService = () => {
-    dispatch(reset());
+    dispatch(setService(undefined));
     navigationPush(navigation, 'ChooseServicesScreen');
   };
 
   const handleCardPress = (workshop: Workshop) => {
-    dispatch(setSelectedWorkshop(workshop));
-    navigationPush(navigation, 'WorkshopDetails');
+    dispatch(setWorkshop(workshop));
+    navigationPush(navigation, 'WorkshopDetailsScreen');
   };
 
   return (
@@ -90,15 +164,14 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
       noDataContent={
         <View className="flex-1 justify-center items-center mx-2.5">
           <Text className="text-lg text-gray-600 text-center">
-            No workshop found. Try with a different service, or go to the
-            dashboard.
+            {t('workshops.notFound')}
           </Text>
           <TicDriveButton
-            text="Look for a different service"
+            text={t('workshops.lookDifferentService')}
             onClick={handleChooseDifferentService}
           />
           <TicDriveButton
-            text="Go back to dashboard"
+            text={t('workshops.goBackDashboard')}
             onClick={() => navigationReset(navigation, 0, 'Hub', 'Home')}
           />
         </View>

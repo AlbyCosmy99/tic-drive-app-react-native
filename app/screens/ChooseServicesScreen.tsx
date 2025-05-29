@@ -1,79 +1,131 @@
-import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
-import {View} from 'react-native';
+import {Text, View} from 'react-native';
 import {LinearGradient} from 'expo-linear-gradient';
-import ServicesCards from '@/components/ServicesCards';
-import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
-import {Colors} from '@/constants/Colors';
-import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
-import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
-import {useFocusEffect, useRoute} from '@react-navigation/native';
-import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
-import {
-  reset,
-  setAreServicesOn,
-  setLastServiceSelectedFromFilter,
-  setServicesChoosenByUsers,
-} from '@/stateManagement/redux/slices/servicesSlice';
+import {useCallback, useMemo, useRef, useState} from 'react';
+import {useRoute, RouteProp} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
-import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
-import {useCallback, useState} from 'react';
 import debounce from 'lodash.debounce';
-import Service from '@/types/Service';
-import axiosClient from '@/services/http/axiosClient';
+
+import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
+import TicDriveButton from '@/components/ui/buttons/TicDriveButton';
+import TicDriveInput from '@/components/ui/inputs/TicDriveInput';
+import ServicesCards from '@/components/ServicesCards';
 import FilterSearchModal from '@/components/modal/FilterSearchModal';
+import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
+import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
+
+import necessaryDeviceBottomInset from '@/utils/devices/necessaryDeviceBottomInset';
+import axiosClient from '@/services/http/axiosClient';
 import navigationPush from '@/services/navigation/push';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
+import useJwtToken from '@/hooks/auth/useJwtToken';
+import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
+import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
+import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
+import serviceHasChildren from '@/services/http/requests/get/services/serviceHasChildren';
+
+import {
+  addService,
+  setLastServiceSelectedFromFilter,
+  setServices,
+  setServiceTreeLevel,
+} from '@/stateManagement/redux/slices/bookingSlice';
+
+import {Colors} from '@/constants/Colors';
+import Service from '@/types/Service';
+import UserCalendarModal, {
+  UserCalendarModalRef,
+} from '@/components/ui/modals/UserCalendarModal';
+
+type ParamList = {
+  ChooseServicesScreen: {
+    buttonContainerTailwindCss?: string;
+    withSafeAreaView?: boolean;
+    fatherId?: number;
+    showCalendarModal?: boolean;
+  };
+};
 
 export default function ChooseServicesScreen() {
-  const route = useRoute();
+  const route = useRoute<RouteProp<ParamList, 'ChooseServicesScreen'>>();
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
+  const navigation = useTicDriveNavigation();
+  const token = useJwtToken();
+  const services = useServiceChoosenByCustomer();
+  const {setErrorMessage} = useGlobalErrors();
+
   const [filter, setFilter] = useState('');
   const [filteredServices, setFilteredServices] = useState<Service[]>([]);
-  const navigation = useTicDriveNavigation();
+  const [loading, setLoading] = useState(false);
+  const modalRef = useRef<UserCalendarModalRef>(null);
+  const workshop = useAppSelector(state => state.booking.workshop);
 
-  //@ts-ignore
-  const {category, buttonContainerTailwindCss, withSafeAreaView} =
-    route?.params ?? {
-      category: 'user',
-      buttonContainerTailwindCss: '',
-      withSafeAreaView: true,
-    };
+  const {
+    buttonContainerTailwindCss = '',
+    withSafeAreaView = true,
+    fatherId,
+    showCalendarModal = false,
+  } = route.params ?? {};
 
-  const isUserLookingForServices = () => {
-    return !(category === 'workshop');
-  };
-
+  const serviceTreeLevel = useAppSelector(
+    state => state.booking.serviceTreeLevel,
+  );
   const lastServiceSelectedFromFilter = useAppSelector(
-    state => state.services.lastServiceSelectedFromFilter,
+    state => state.booking.lastServiceSelectedFromFilter,
   );
 
   const onSearch = async (search: string) => {
     setFilter(search);
-
     if (!search.trim()) {
       setFilteredServices([]);
       return;
     }
-
-    const filteredServices = await axiosClient.get(
-      `services?take=5&filter=${search}`,
-    );
-    setFilteredServices(filteredServices.data);
+    try {
+      const response = await axiosClient.get(
+        `services?take=5&filter=${search}`,
+      );
+      setFilteredServices(response.data);
+    } catch (error) {
+      setErrorMessage('Error fetching services');
+    }
   };
 
-  const isButtonDisabled =
-    category === 'workshop'
-      ? useAppSelector(state => state.services.servicesChoosenByWorkshops)
-          .length === 0
-      : useAppSelector(state => state.services.servicesChoosenByUsers)
-          .length === 0;
+  const handleOnService = async (service?: Service) => {
+    if (showCalendarModal) {
+      modalRef.current?.openModal(service);
+    } else {
+      if (service) {
+        dispatch(addService({service, index: serviceTreeLevel - 1}));
+      }
+    }
+
+    try {
+      setLoading(true);
+      const currentService = services[serviceTreeLevel - 1];
+      const hasChildren = await serviceHasChildren(currentService?.id);
+      if (hasChildren) {
+        navigation.push('ChooseServicesScreen', {
+          fatherId: currentService.id,
+        });
+        dispatch(setServiceTreeLevel(serviceTreeLevel + 1));
+      } else if (!showCalendarModal) {
+        navigationPush(
+          navigation,
+          token ? 'SelectVehicleScreen' : 'RegisterVehicleScreen',
+        );
+      }
+    } catch (e: any) {
+      setErrorMessage(e.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const isButtonDisabled = useMemo(() => {
+    return services[serviceTreeLevel - 1] === undefined || loading;
+  }, [services, serviceTreeLevel, loading]);
 
   const debouncedOnHomeSearch = useCallback(debounce(onSearch, 500), []);
-
-  useFocusEffect(() => {
-    dispatch(setAreServicesOn(false));
-  });
 
   return (
     <View className={`flex-1 ${necessaryDeviceBottomInset()}`}>
@@ -84,62 +136,62 @@ export default function ChooseServicesScreen() {
         ]}
         className="flex-1 absolute w-full h-full"
       />
-      <SafeAreaViewLayout
-        disabled={withSafeAreaView !== undefined && !withSafeAreaView}
-      >
+      <SafeAreaViewLayout disabled={!withSafeAreaView}>
         <TicDriveNavbar />
         <View className="flex-1 justify-between">
-          <View className="flex-row items-center relative">
-            <TicDriveInput
-              isLeftIcon={true}
-              isRightIcon={true}
-              placeholder={t('service.searchService')}
-              containerViewStyleTailwind="flex-1 h-[60px]"
-              inputContainerStyle={{marginTop: 4, height: 48}}
-              onChange={text => debouncedOnHomeSearch(text)}
-              onRightIcon={() => dispatch(reset())}
-            />
-            {filter && (
-              <FilterSearchModal
-                elements={filteredServices}
-                idToCompareForClock={lastServiceSelectedFromFilter?.id}
-                emptyElementsMessage="No services with this filter."
-                onElementPress={(elem: any) => {
-                  navigationPush(navigation, 'RegisterVehicleScreen');
-                  dispatch(setServicesChoosenByUsers(elem));
-                  dispatch(setLastServiceSelectedFromFilter(elem));
-                }}
+          {fatherId ? (
+            <Text className="text-lg font-semibold text-center">
+              Scegli l'opzione desiderata
+            </Text>
+          ) : (
+            <View className="flex-row items-center relative">
+              <TicDriveInput
+                existsLeftIcon
+                existsRightIcon
+                placeholder={t('service.searchService')}
+                containerViewStyleTailwind="flex-1 h-[60px]"
+                inputContainerStyle={{marginTop: 4, height: 48}}
+                onChange={text => debouncedOnHomeSearch(text)}
+                onRightIcon={() => dispatch(setServices([]))}
               />
-            )}
-          </View>
-          {!filter && (
-            <ServicesCards
-              isSingleChoice={isUserLookingForServices() ? true : false}
-              type={isUserLookingForServices() ? 'user' : 'workshop'}
-            />
+              {filter && (
+                <FilterSearchModal
+                  elements={filteredServices}
+                  idToCompareForClock={lastServiceSelectedFromFilter?.id}
+                  emptyElementsMessage="No services with this filter."
+                  onElementPress={elem => {
+                    navigationPush(navigation, 'RegisterVehicleScreen');
+                    dispatch(setServices([elem]));
+                    dispatch(setLastServiceSelectedFromFilter(elem));
+                  }}
+                />
+              )}
+            </View>
           )}
+
+          {!filter &&
+            (loading ? (
+              <TicDriveSpinner />
+            ) : (
+              <ServicesCards fatherId={fatherId} />
+            ))}
         </View>
+
         {!filter && (
           <View className={`mb-2 ${buttonContainerTailwindCss}`}>
             <TicDriveButton
-              text={
-                isUserLookingForServices()
-                  ? t('service.bookAService')
-                  : t('continue')
-              }
-              routeName={
-                isUserLookingForServices()
-                  ? 'RegisterVehicleScreen'
-                  : 'UserAuthenticationScreen'
-              }
-              routeParams={
-                isUserLookingForServices()
-                  ? {}
-                  : {register: true, isUser: false}
-              }
+              text={t('bookNow')}
               disabled={isButtonDisabled}
+              onClick={() => handleOnService(services[serviceTreeLevel - 1])}
             />
           </View>
+        )}
+        {showCalendarModal && (
+          <UserCalendarModal
+            ref={modalRef}
+            workshopId={workshop?.id ?? ''}
+            showButton={false}
+          />
         )}
       </SafeAreaViewLayout>
     </View>

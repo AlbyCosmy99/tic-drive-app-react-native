@@ -10,16 +10,22 @@ import {
   ViewStyle,
 } from 'react-native';
 import {Image} from 'react-native-elements';
-import PinLocationIcon from '@/components/svgs/location/PinLocation';
-import GreenCheckIcon from '@/components/svgs/CheckGreen';
+import PinLocationIcon from '@/assets/svg/location/PinLocation.svg';
+import GreenCheckIcon from '@/assets/svg/check_green.svg';
 import IconTextPair from './ui/IconTextPair';
-import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
-import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
+import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
-import {setSelectedWorkshop} from '@/stateManagement/redux/slices/workshopsSlice';
 import WorkshopReviewinfo from './workshop/reviews/WorkshopReviewInfo';
 import Workshop from '@/types/workshops/Workshop';
+import getUserMainImage from '@/utils/files/getUserMainImage';
+import CrossPlatformButtonLayout from './ui/buttons/CrossPlatformButtonLayout';
+import isScreenSmall from '@/services/responsive/isScreenSmall';
+import {useTranslation} from 'react-i18next';
+import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
+import {setWorkshop} from '@/stateManagement/redux/slices/bookingSlice';
+import formatPrice from '@/utils/currency/formatPrice.';
+import getFullServiceName from '@/services/toString/getFullServiceName';
 
 interface WorkshopCardProps {
   workshop: Workshop;
@@ -30,6 +36,8 @@ interface WorkshopCardProps {
   iconTextPairContainerTailwindCss?: string;
   iconTextPairTextTailwindCss?: string;
   imageContainerStyle?: StyleProp<ViewStyle>;
+  titleTextTailwindCss?: string;
+  addressContainerTailwindCss?: string;
 }
 
 const WorkshopCard: React.FC<WorkshopCardProps> = ({
@@ -41,17 +49,20 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
   iconTextPairTextTailwindCss,
   imageContainerStyle,
   isServiceDetailsEnabled = true,
+  titleTextTailwindCss,
+  addressContainerTailwindCss,
 }) => {
-  const servicesChoosenByUsers = useAppSelector(
-    state => state.services.servicesChoosenByUsers,
-  );
+  const servicesChoosen = useServiceChoosenByCustomer();
   const {navigation} = useContext(NavigationContext);
   const dispatch = useAppDispatch();
+  const {t} = useTranslation();
 
   const handleCardPress = (workshop: Workshop) => {
-    navigationPush(navigation, 'WorkshopDetails');
-    dispatch(setSelectedWorkshop(workshop));
+    navigationPush(navigation, 'WorkshopDetailsScreen');
+    dispatch(setWorkshop(workshop));
   };
+
+  const workshopNameTextSize = isScreenSmall() ? 'text-lg' : 'text-xl';
 
   return (
     <Pressable
@@ -61,29 +72,43 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
     >
       <View
         className="border-2 rounded-2xl"
-        style={[styles.cardContainer, viewContainerStyle]}
+        style={[
+          styles.cardContainer,
+          viewContainerStyle,
+          {
+            shadowColor: '#000',
+            shadowOffset: {width: 0, height: 5},
+            shadowOpacity: 0.17,
+            shadowRadius: 5,
+            elevation: 8, // for Android
+            backgroundColor: 'white',
+          },
+        ]}
       >
-        <Image
-          source={{uri: workshop.profileImageUrl}}
-          containerStyle={[styles.image, imageContainerStyle]}
-          PlaceholderContent={
-            <ActivityIndicator
-              size="large"
-              color={Colors.light.bookingsOptionsText}
-            />
-          }
-        />
+        {workshop.images?.length && (
+          <Image
+            source={{uri: getUserMainImage(workshop.images)?.url}}
+            containerStyle={[styles.image, imageContainerStyle]}
+            PlaceholderContent={
+              <ActivityIndicator
+                size="large"
+                color={Colors.light.bookingsOptionsText}
+              />
+            }
+          />
+        )}
         <View
           className={`mb-1.5 px-3 pb-1 pt-2 ${iconTextPairsContainerTailwindCss}`}
         >
           <IconTextPair
-            containerTailwindCss={`py-1.5 ${iconTextPairContainerTailwindCss}`}
-            textTailwindCss={`text-xl font-semibold ${iconTextPairTextTailwindCss}`}
-            text={workshop.name}
+            containerTailwindCss={`${isScreenSmall() ? 'py-1' : 'py-1.5'} pr-1 ${iconTextPairContainerTailwindCss}`}
+            textTailwindCss={`${workshopNameTextSize} font-semibold ${iconTextPairTextTailwindCss} ${titleTextTailwindCss}`}
+            text={workshop.workshopName}
             icon={<GreenCheckIcon />}
           />
+
           <IconTextPair
-            containerTailwindCss={`py-1.5 ${iconTextPairContainerTailwindCss}`}
+            containerTailwindCss={`${isScreenSmall() ? 'py-1' : 'py-1.5'} pr-5 ${iconTextPairContainerTailwindCss} ${addressContainerTailwindCss}`}
             textTailwindCss={`text-sm font-medium underline ${iconTextPairTextTailwindCss}`}
             text={workshop.address}
             icon={<PinLocationIcon />}
@@ -91,35 +116,40 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
           <WorkshopReviewinfo
             meanStars={workshop?.meanStars}
             numberOfReviews={workshop?.numberOfReviews}
-            containerTailwindCss={`py-1.5 ${iconTextPairContainerTailwindCss}`}
+            containerTailwindCss={`${isScreenSmall() ? 'py-1' : 'py-1.5'} ${iconTextPairContainerTailwindCss}`}
             textTailwindCss={`text-sm font-medium underline ${iconTextPairTextTailwindCss}`}
           />
         </View>
-        {servicesChoosenByUsers.length > 0 && isServiceDetailsEnabled && (
-          // to-do: quando pressed vai a disponibilita
-          <Pressable
-            className="flex flex-row justify-between items-center border-2 border-grey-light m-2 p-3 mt-0 rounded-lg"
+        {servicesChoosen?.length > 0 && isServiceDetailsEnabled && (
+          <CrossPlatformButtonLayout
+            buttonTailwindCss="flex-row justify-between items-center border-2 border-grey-light m-2 p-3 mt-0 rounded-lg"
             onPress={() => alert('pressed')}
           >
-            <Text className="text-base font-medium">
-              {servicesChoosenByUsers[0].title}
-            </Text>
-            <View>
-              <View className="flex flex-row justify-between items-center">
-                <Text className="text-base font-medium">Total</Text>
+            <View className="flex-1 pr-4">
+              <Text className="text-base font-medium flex-shrink">
+                {getFullServiceName(servicesChoosen)}
+              </Text>
+            </View>
+
+            <View className="items-end justify-center">
+              <View className="flex-row justify-between items-center space-x-2">
                 <Text className="text-base font-medium">
-                  {workshop.currency + ' '}
-                  {calculateWorkshopDiscount(
+                  {' '}
+                  {t('reviewBooking.total')}
+                </Text>
+                <Text className="text-base font-medium">
+                  {workshop.currency}
+                  {formatPrice(
                     workshop.servicePrice ?? 0,
                     workshop.discount ?? 0,
                   )}
                 </Text>
               </View>
               <Text className="font-medium text-xs text-tic">
-                Includes taxes and fees
+                {t('reviewBooking.includesTaxesAndFees')}
               </Text>
             </View>
-          </Pressable>
+          </CrossPlatformButtonLayout>
         )}
       </View>
     </Pressable>
@@ -153,7 +183,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 160,
+    height: isScreenSmall() ? 110 : 150,
     borderRadius: 14,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,

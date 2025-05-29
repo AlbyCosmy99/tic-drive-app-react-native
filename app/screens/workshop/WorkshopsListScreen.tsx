@@ -1,8 +1,8 @@
 import LinearGradientViewLayout from '@/app/layouts/LinearGradientViewLayout';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
-import MapIcon from '@/components/svgs/location/Map';
-import FilterIcon from '@/components/svgs/operations/Filter';
-import OrderIcon from '@/components/svgs/operations/Order';
+import MapIcon from '@/assets/svg/location/map.svg';
+import FilterIcon from '@/assets/svg/operations/filter.svg';
+import OrderIcon from '@/assets/svg/operations/order.svg';
 import LocationPin from '@/components/modal/LocationPin';
 import MapModal from '@/components/modal/MapModal';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
@@ -14,10 +14,10 @@ import WorkshopCards from '@/components/WorkshopCards';
 import {Colors} from '@/constants/Colors';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import {RouteProp, useRoute} from '@react-navigation/native';
-import {useContext, useEffect, useState} from 'react';
+import {useContext, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Text, View} from 'react-native';
-import {LatLng, Region} from 'react-native-maps';
+import {LatLng} from 'react-native-maps';
 
 interface OrderOption {
   label: string;
@@ -37,16 +37,6 @@ interface POIMarker {
   id: number;
 }
 
-const orderOptions: OrderOption[] = [
-  {label: 'Ascending', value: 'asc'},
-  {label: 'Descending', value: 'desc'},
-];
-
-const filterOptions: FilterOption[] = [
-  {label: 'Price', value: 'price'},
-  {label: 'Rating', value: 'rating'},
-];
-
 type RootStackParamList = {
   WorkshopsListScreen: {favorite: boolean};
 };
@@ -58,6 +48,15 @@ export default function WorkshopsListScreen() {
   const {t} = useTranslation();
   const {favorite} = route.params;
 
+  const orderOptions: OrderOption[] = [
+    {label: t('workshops.ascending'), value: 'asc'},
+    {label: t('workshops.descending'), value: 'desc'},
+  ];
+
+  const filterOptions: FilterOption[] = [
+    {label: t('workshops.price'), value: 'price'},
+    {label: t('workshops.rating'), value: 'rating'},
+  ];
   const [orderDropdownVisible, setOrderDropdownVisible] = useState(false);
   const [filterDropdownVisible, setFilterDropdownVisible] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<OrderOption>({
@@ -118,8 +117,8 @@ export default function WorkshopsListScreen() {
 
         <View className="flex-col items-center h-[102px] relative">
           <TicDriveInput
-            isLeftIcon={true}
-            isRightIcon={true}
+            existsLeftIcon
+            existsRightIcon
             placeholder={t('workshops.searchWorkshop')}
             containerViewStyleTailwind="flex-1 items-center"
             inputContainerStyle={{marginTop: 4, height: 48}}
@@ -138,7 +137,7 @@ export default function WorkshopsListScreen() {
                 }}
               >
                 <IconTextPair
-                  text="Order"
+                  text={t('workshops.order')}
                   icon={<OrderIcon />}
                   textTailwindCss="text-base font-medium text-tic"
                   containerTailwindCss="border border-tic justify-center items-center gap-0 p-1 rounded-2xl mx-1"
@@ -162,14 +161,13 @@ export default function WorkshopsListScreen() {
                 }}
               >
                 <IconTextPair
-                  text="Filter"
+                  text={t('workshops.filter')}
                   icon={<FilterIcon />}
                   textTailwindCss="text-base font-medium text-tic"
                   containerTailwindCss="flex-1 border border-tic justify-center items-center gap-0 p-1 rounded-2xl mx-1"
                   iconContainerTailwindCss="mr-1"
                 />
               </CrossPlatformButtonLayout>
-              {/* Future filter dropdown here */}
             </View>
 
             <View className="flex-1">
@@ -178,7 +176,7 @@ export default function WorkshopsListScreen() {
                 onPress={onOpenMap}
               >
                 <IconTextPair
-                  text="Map"
+                  text={t('workshops.map')}
                   icon={<MapIcon />}
                   textTailwindCss="text-base font-medium text-tic"
                   containerTailwindCss="flex-1 border border-tic justify-center items-center gap-0 p-1 rounded-2xl mx-1"

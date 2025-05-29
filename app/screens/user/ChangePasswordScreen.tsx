@@ -9,8 +9,8 @@ import {RouteProp, useRoute} from '@react-navigation/native';
 import axios from 'axios';
 import {useMemo, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import VisibilityOffIcon from '@/components/svgs/access/VisibilityOff';
-import VisibilityOnIcon from '@/components/svgs/access/VisibilityOn';
+import VisibilityOffIcon from '@/assets/svg/access/visibility_off.svg';
+import VisibilityOnIcon from '@/assets/svg/access/visibility_on.svg';
 import isAcceptablePassword from '@/utils/auth/isAcceptablePassword';
 import navigationReset from '@/services/navigation/reset';
 import useLogin from '@/hooks/auth/useLogin';
@@ -105,7 +105,7 @@ const ChangePasswordScreen = () => {
             <TicDriveInput
               containerViewStyleTailwind="mt-4"
               placeholder={t('changePassword.password')}
-              isRightIcon={true}
+              existsRightIcon
               customValue={password}
               onChange={e => setPassword(e)}
               inputContainerStyle={styles.inputContainerStyle}
@@ -128,7 +128,7 @@ const ChangePasswordScreen = () => {
             <TicDriveInput
               containerViewStyleTailwind="mt-4"
               placeholder={t('changePassword.repeatPassword')}
-              isRightIcon={true}
+              existsRightIcon
               customValue={confirmPassword}
               onChange={e => setConfirmPassword(e)}
               inputContainerStyle={styles.inputContainerStyle}

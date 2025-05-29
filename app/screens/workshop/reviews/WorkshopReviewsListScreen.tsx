@@ -8,13 +8,11 @@ import useReviews from '@/hooks/api/workshops/useReviews';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
 import Review from '@/types/workshops/Review';
 import {t} from 'i18next';
-import {useEffect, useMemo, useState} from 'react';
+import {useMemo, useState} from 'react';
 import {Text, View} from 'react-native';
 
 const WorkshopReviewsListScreen = () => {
-  const selectedWorkshop = useAppSelector(
-    state => state.workshops.selectedWorkshop,
-  );
+  const selectedWorkshop = useAppSelector(state => state.booking.workshop);
   const take = 10;
   const [currentPage, setCurrentPage] = useState(1);
   const {reviews, loadingReviews, setLoadingReviews} = useReviews(
@@ -22,10 +20,6 @@ const WorkshopReviewsListScreen = () => {
     (currentPage - 1) * take,
     take,
   );
-
-  useEffect(() => {
-    console.log(reviews);
-  }, [reviews]);
 
   const fiveStarsReviews = useMemo(() => {
     return reviews.filter(review => review.stars === 5).length;

@@ -22,5 +22,23 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({addUtilities}) {
+      const newUtilities = {
+        '.elevation-1': {elevation: 1},
+        '.elevation-2': {elevation: 2},
+        '.elevation-3': {elevation: 3},
+        '.elevation-4': {elevation: 4},
+        '.elevation-5': {elevation: 5},
+        '.elevation-6': {elevation: 6},
+        '.elevation-8': {elevation: 8},
+        '.elevation-10': {elevation: 10},
+        '.elevation-12': {elevation: 12},
+        '.elevation-16': {elevation: 16},
+        '.elevation-24': {elevation: 24},
+      };
+
+      addUtilities(newUtilities);
+    },
+  ],
 };

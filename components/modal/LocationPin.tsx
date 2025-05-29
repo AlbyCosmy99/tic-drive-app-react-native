@@ -1,6 +1,6 @@
 import {View, Text} from 'react-native';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
-import PinLocation from '@/components/svgs/location/PinLocation';
+import PinLocation from '@/assets/svg/location/PinLocation.svg';
 
 export default function LocationPin() {
   const userAddress = useAppSelector(state => state.auth.user?.address);

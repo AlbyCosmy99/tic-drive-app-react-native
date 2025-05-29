@@ -10,24 +10,27 @@ import {
 } from 'react-native';
 import HorizontalLine from '../../HorizontalLine';
 import IconTextPair from '../../IconTextPair';
-import CalendarIcon from '@/components/svgs/calendar/EventAvailable';
-import CreditCardIcon from '@/components/svgs/payment/CreditCard';
-import PinIcon from '@/components/svgs/LocationOn';
-import DirectionIcon from '@/components/svgs/AssistantDirection';
-import BellIcon from '@/components/svgs/notifications/Bell1';
-import calculateWorkshopDiscount from '@/utils/workshops/calculateWorkshopDiscount';
+import CalendarIcon from '@/assets/svg/calendar/event_available.svg';
+import CreditCardIcon from '@/assets/svg/payment/creditCard.svg';
+import PinIcon from '@/assets/svg/location_on.svg';
+import DirectionIcon from '@/assets/svg/assistant_direction.svg';
+import BellIcon from '@/assets/svg/notifications/Bell1.svg';
 import TicDriveOptionButton from '../../buttons/TicDriveOptionButton';
 import Workshop from '@/types/workshops/Workshop';
 import openGoogleMaps from '@/services/map/openGoogleMaps';
 import { useEffect, useState } from 'react';
 import axiosClient from '@/services/http/axiosClient';
 import clsx from 'clsx';
+import getUserMainImage from '@/utils/files/getUserMainImage';
+import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
+import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
+import getFullServiceName from '@/services/toString/getFullServiceName';
 
 interface PaymentConfirmationCardProps {
   workshop: Workshop | null | undefined;
   timeDate: string;
   showDirectionsButton?: boolean;
-  type: 'Confirmed' | 'Pending confirmation';
+  type: string;
   showReminderBell?: boolean;
   service: string;
   showLocation?: boolean;  
@@ -36,7 +39,6 @@ interface PaymentConfirmationCardProps {
 
 const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
   workshop,
-  timeDate,
   showDirectionsButton = true,
   type,
   showReminderBell = false,
@@ -44,33 +46,39 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
   showLocation = true,  
   showPayment = true,   
 }) => {
-  const servicesChoosen = useServicesChoosenByUsers();
+  const servicesChoosen = useServiceChoosenByCustomer();
   const [loadingServiceOfferedDetails, setLoadingServiceOfferedDetails] =
     useState(false);
   const [workshopDetailed, setWorkshopDetailed] = useState(workshop);
-
+  const {setErrorMessage} = useGlobalErrors();
   useEffect(() => {
     const fetchServiceOfferedDetails = async () => {
       try {
-        setLoadingServiceOfferedDetails(true);
-        const response = await axiosClient.get(
-          `OfferedServices?WorkshopId=${workshop?.id}&ServiceId=${servicesChoosen[0].id}`,
-        );
+        if (servicesChoosen.length === 0) {
+          setErrorMessage(
+            'Errore: problema nel recuperare il servizio scelto. Riprovare.',
+          );
+        } else {
+          setLoadingServiceOfferedDetails(true);
+          const response = await axiosClient.get(
+            `OfferedServices?WorkshopId=${workshop?.id}&ServiceId=${servicesChoosen[servicesChoosen.length - 1].id}`,
+          );
 
-        const serviceOffered = response?.data?.length
-          ? response?.data[0]
-          : null;
+          const serviceOffered = response?.data?.length
+            ? response?.data[0]
+            : null;
 
-        setWorkshopDetailed(prev => {
-          if (!prev) return prev;
+          setWorkshopDetailed(prev => {
+            if (!prev) return prev;
 
-          return {
-            ...prev,
-            currency: serviceOffered?.currency || 'USD',
-            servicePrice: serviceOffered?.price || 0,
-            discount: serviceOffered?.discount || 0,
-          };
-        });
+            return {
+              ...prev,
+              currency: serviceOffered?.currency || 'USD',
+              servicePrice: serviceOffered?.price || 0,
+              discount: serviceOffered?.discount || 0,
+            };
+          });
+        }
       } catch (e) {
         console.error('Error fetching service offered details:', e);
       } finally {
@@ -87,16 +95,18 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
     <View className="rounded-lg border p-4 pt-0 border-grey-light w-full">
       <View className="flex flex-row my-4 justify-between items-start">
         <View className="flex-row">
-          <Image
-            source={{ uri: workshopDetailed?.profileImageUrl }}
-            containerStyle={styles.image}
-            PlaceholderContent={
-              <ActivityIndicator
-                size="large"
-                color={Colors.light.bookingsOptionsText}
-              />
-            }
-          />
+          {workshopDetailed?.images?.length && (
+            <Image
+              source={{uri: getUserMainImage(workshopDetailed.images)?.url}}
+              containerStyle={styles.image}
+              PlaceholderContent={
+                <ActivityIndicator
+                  size="large"
+                  color={Colors.light.bookingsOptionsText}
+                />
+              }
+            />
+          )}
           <View>
             <Text
               className={clsx(
@@ -107,12 +117,12 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
               {type}
             </Text>
             <Text className="font-medium text-xl">
-              {workshopDetailed?.name}
+              {workshopDetailed?.workshopName}
             </Text>
             {(service || servicesChoosen.length > 0) && (
               <View className="bg-green-light p-1.5 rounded self-start mt-1">
                 <Text className="text-green-dark font-semibold">
-                  {service || servicesChoosen[0].title}
+                  {service || getFullServiceName(servicesChoosen)}
                 </Text>
               </View>
             )}
@@ -133,7 +143,7 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
 
       <HorizontalLine />
 
-      <View>
+      <View className="mb-4">
         {loadingServiceOfferedDetails ? (
           <View className="justify-center items-center w-full h-full">
             <ActivityIndicator
@@ -143,19 +153,12 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
           </View>
         ) : (
           <View className="mb-2">
-            <IconTextPair icon={<CalendarIcon />} text={timeDate} />
-
-            {showPayment && workshopDetailed?.servicePrice && (
-              <IconTextPair
-                icon={<CreditCardIcon />}
-                text={`${workshopDetailed?.currency}${calculateWorkshopDiscount(
-                  workshopDetailed?.servicePrice ?? 0,
-                  workshopDetailed?.discount ?? 0,
-                )} total to pay`}
-              />
-            )}
-
-            {showLocation && workshopDetailed?.address && (
+            <IconTextPair
+              icon={<CalendarIcon />}
+              text={'Lunedì 12 Maggio - 10:30'}
+            />
+            <IconTextPair icon={<CreditCardIcon />} text="€120 da pagare" />
+            {workshopDetailed?.address && (
               <IconTextPair
                 icon={<PinIcon fill={Colors.light.ticText} />}
                 text={workshopDetailed.address}
@@ -166,18 +169,20 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
       </View>
 
       {showDirectionsButton && (
-        <TicDriveOptionButton
-          icon={<DirectionIcon />}
-          text="Directions"
-          textTailwindCss="font-medium text-base"
-          onPress={() =>
-            openGoogleMaps(
-              workshopDetailed?.address,
-              workshopDetailed?.latitude,
-              workshopDetailed?.longitude,
-            )
-          }
-        />
+        <View className="mt-5">
+          <TicDriveOptionButton
+            icon={<DirectionIcon />}
+            text="Directions"
+            textTailwindCss="font-medium text-base"
+            onPress={() =>
+              openGoogleMaps(
+                workshopDetailed?.address,
+                workshopDetailed?.latitude,
+                workshopDetailed?.longitude,
+              )
+            }
+          />
+        </View>
       )}
     </View>
   );

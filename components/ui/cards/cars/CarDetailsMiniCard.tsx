@@ -1,5 +1,5 @@
 import {Text, View} from 'react-native';
-import NissanLogo from '@/components/svgs/carLogos/Nissan';
+import NissanLogo from '@/assets/svg/carLogos/nissan.svg';
 import {FuelType} from '@/types/Car';
 
 interface CarDetailsMiniCardProps {
@@ -20,7 +20,16 @@ const CarDetailsMiniCard: React.FC<CarDetailsMiniCardProps> = ({
   plateNumber,
 }) => {
   return (
-    <View className="mx-2.5 my-3 px-6 py-2 bg-white rounded-2xl shadow-md flex-row justify-between items-center">
+    <View
+      className="bg-white rounded-2xl shadow-md flex-row justify-between items-center mx-2.5 my-3 px-6 py-2"
+      style={{
+        elevation: 4,
+        shadowColor: '#000', // iOS
+        shadowOffset: {width: 0, height: 2},
+        shadowOpacity: 0.2,
+        shadowRadius: 3.84,
+      }}
+    >
       <View>
         <Text className="text-sm font-medium">
           {make} {model}

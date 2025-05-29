@@ -8,7 +8,7 @@ import {useContext} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Text, View, StyleSheet} from 'react-native';
 
-const SeeAllReviewsCards = ({workshopId}: {workshopId: number}) => {
+const SeeAllReviewsCards = ({workshopId}: {workshopId: string}) => {
   const {reviews, loadingReviews} = useReviews(workshopId, 0, 10);
   const {navigation} = useContext(NavigationContext);
   const handleOnSeeAllReviews = () => {
@@ -17,7 +17,15 @@ const SeeAllReviewsCards = ({workshopId}: {workshopId: number}) => {
   const {t} = useTranslation();
 
   if (loadingReviews) return <TicDriveSpinner />;
-  if (!reviews?.length) return null;
+  if (!reviews?.length) {
+    return (
+      <View>
+        <Text className="text-base text-gray-500 mt-2">
+          {t('noReviewsYet')}
+        </Text>
+      </View>
+    );
+  }
 
   return (
     <View>

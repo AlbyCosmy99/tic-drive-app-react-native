@@ -1,8 +1,8 @@
 import {FC, ReactNode, useEffect, useState} from 'react';
 import GlobalContext from './GlobalContext';
-import ApplePayIcon from '@/components/svgs/payment/ApplePay';
-import GooglePayIcon from '@/components/svgs/payment/GooglePay';
-import CashIcon from '@/components/svgs/payment/Cash';
+import ApplePayIcon from '@/assets/svg/payment/apple_pay.svg';
+import GooglePayIcon from '@/assets/svg/payment/google_pay.svg';
+import CashIcon from '@/assets/svg/payment/cash.svg';
 import {Colors} from '@/constants/Colors';
 import UserPaymentInfo, {PaymentCard} from '@/types/payment/UserPaymentInfo';
 import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';

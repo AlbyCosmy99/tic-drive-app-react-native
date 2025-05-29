@@ -14,9 +14,9 @@ import Hub from './hub/_layout';
 import ChooseServicesScreen from './screens/ChooseServicesScreen';
 import UserAuthenticationScreen from './screens/UserAuthenticationScreen';
 import RegisterVehicleScreen from './screens/user/RegisterVehicleScreen';
-import WorkshopTabLayout from './(workshopTabs)/_layout';
+import SelectVehicleScreen from './screens/user/SelectVehicleScreen';
 import userTabLayout from './(userTabs)//_layout';
-import WorkshopDetails from './screens/user/WorkshopDetails';
+import WorkshopDetailsScreen from './screens/user/WorkshopDetailsScreen';
 import BookingConfirmationScreen from './screens/user/BookingConfirmationScreen';
 import NotFoundScreen from './+not-found';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
@@ -34,6 +34,7 @@ import SendAreviewScreen from './screens/workshop/reviews/SendAreviewScreen';
 
 import ChatScreen from './screens/chat/ChatScreen';
 import FAQScreen from './screens/chat/FAQScreen';
+import SupportSectionScreen from './screens/chat/SupportSectionScreen';
 
 import '@/i18n';
 import ForgotPasswordScreen from './screens/user/ForgotPasswordScreen';
@@ -44,6 +45,9 @@ import UserVehiclesScreen from './screens/vehicles/UserVehiclesScreen';
 import UserVehicleDetailsScreen from './screens/vehicles/UserVehicleDetailsScreen';
 import CarRegistrationSuccessScreen from './screens/success/CarRegistrationSuccessScreen';
 import DeleteAccountScreen from './screens/user/DeleteAccountScreen';
+import DangerZoneScreen from './screens/user/DangerZoneScreen';
+import LegalDocumentScreen from './screens/legal/LegalDocumentScreen';
+
 SplashScreen.preventAutoHideAsync();
 
 const Stack = createNativeStackNavigator();
@@ -98,7 +102,6 @@ export default function RootLayout() {
                         options={({route}) => ({
                           title: 'UserAuthenticationScreen',
                           headerShown: false,
-                          presentation: 'modal',
                           animation: getAnimation(route),
                         })}
                       />
@@ -130,15 +133,6 @@ export default function RootLayout() {
                         })}
                       />
                       <Stack.Screen
-                        name="workshopTabs"
-                        component={WorkshopTabLayout}
-                        options={({route}) => ({
-                          title: 'workshopTabs',
-                          headerShown: false,
-                          animation: getAnimation(route),
-                        })}
-                      />
-                      <Stack.Screen
                         name="userTabs"
                         component={userTabLayout}
                         options={({route}) => ({
@@ -148,10 +142,10 @@ export default function RootLayout() {
                         })}
                       />
                       <Stack.Screen
-                        name="WorkshopDetails"
-                        component={WorkshopDetails}
+                        name="WorkshopDetailsScreen"
+                        component={WorkshopDetailsScreen}
                         options={({route}) => ({
-                          title: 'WorkshopDetails',
+                          title: 'WorkshopDetailsScreen',
                           headerShown: false,
                           animation: getAnimation(route),
                         })}
@@ -171,7 +165,7 @@ export default function RootLayout() {
                         options={({route}) => ({
                           title: 'WorkshopReviewsListScreen',
                           headerShown: false,
-                          presentation: 'modal',
+                          presentation: 'containedModal',
                           animation: getAnimation(route),
                         })}
                       />
@@ -217,7 +211,7 @@ export default function RootLayout() {
                         options={({route}) => ({
                           title: 'AddNewPaymentMethodScreen',
                           headerShown: false,
-                          presentation: 'modal',
+                          presentation: 'containedModal',
                           animation: getAnimation(route),
                         })}
                       />
@@ -226,6 +220,15 @@ export default function RootLayout() {
                         component={ConfirmEmailScreen}
                         options={({route}) => ({
                           title: 'ConfirmEmailScreen',
+                          headerShown: false,
+                          animation: getAnimation(route),
+                        })}
+                      />
+                      <Stack.Screen
+                        name="LegalDocumentScreen"
+                        component={LegalDocumentScreen}
+                        options={({route}) => ({
+                          title: 'LegalDocumentScreen',
                           headerShown: false,
                           animation: getAnimation(route),
                         })}
@@ -244,6 +247,15 @@ export default function RootLayout() {
                         component={FAQScreen}
                         options={({route}) => ({
                           title: 'FAQScreen',
+                          headerShown: false,
+                          animation: getAnimation(route),
+                        })}
+                      />
+                      <Stack.Screen
+                        name="SupportSectionScreen"
+                        component={SupportSectionScreen}
+                        options={({route}) => ({
+                          title: 'SupportSectionScreen',
                           headerShown: false,
                           animation: getAnimation(route),
                         })}
@@ -308,6 +320,24 @@ export default function RootLayout() {
                         component={CarRegistrationSuccessScreen}
                         options={({route}) => ({
                           title: 'CarRegistrationSuccessScreen',
+                          headerShown: false,
+                          animation: getAnimation(route),
+                        })}
+                      />
+                      <Stack.Screen
+                        name="SelectVehicleScreen"
+                        component={SelectVehicleScreen}
+                        options={({route}) => ({
+                          title: 'SelectVehicleScreen',
+                          headerShown: false,
+                          animation: getAnimation(route),
+                        })}
+                      />
+                      <Stack.Screen
+                        name="DangerZoneScreen"
+                        component={DangerZoneScreen}
+                        options={({route}) => ({
+                          title: 'DangerZoneScreen',
                           headerShown: false,
                           animation: getAnimation(route),
                         })}

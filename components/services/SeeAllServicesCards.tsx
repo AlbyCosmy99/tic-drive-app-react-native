@@ -1,18 +1,14 @@
 import {Image, Text, View} from 'react-native';
 import navigationPush from '@/services/navigation/push';
-import {useAppDispatch} from '@/stateManagement/redux/hooks';
+import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import Service from '@/types/Service';
-import {setServicesChoosenByUsers} from '@/stateManagement/redux/slices/servicesSlice';
 import {
   forwardRef,
-  useContext,
   useEffect,
   useImperativeHandle,
   useRef,
   useState,
 } from 'react';
-import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
-import useServices from '@/hooks/api/useServices';
 import CrossPlatformButtonLayout from '../ui/buttons/CrossPlatformButtonLayout';
 import HorizontalLine from '../ui/HorizontalLine';
 import {useTranslation} from 'react-i18next';
@@ -20,9 +16,18 @@ import UserCalendarModal, {
   UserCalendarModalRef,
 } from '../ui/modals/UserCalendarModal';
 import TicDriveSpinner from '../ui/spinners/TicDriveSpinner';
+import useJwtToken from '@/hooks/auth/useJwtToken';
+import getServices from '@/services/http/requests/get/services/getServices';
+import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
+import {
+  addService,
+  setServiceTreeLevel,
+} from '@/stateManagement/redux/slices/bookingSlice';
+import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
+import serviceHasChildren from '@/services/http/requests/get/services/serviceHasChildren';
 
 interface SeeAllServicesCardsProps {
-  workshopId?: number;
+  workshopId?: string;
   topHorizontalLine?: boolean;
   bottomHorizontalLine?: boolean;
   showSubtitle?: boolean;
@@ -41,54 +46,107 @@ const SeeAllServicesCards = forwardRef(
     ref,
   ) => {
     const dispatch = useAppDispatch();
-    const {navigation} = useContext(NavigationContext);
-    const {services, loadingServices, setLoadingServices} =
-      useServices(workshopId);
+    const navigation = useTicDriveNavigation();
+    const [services, setServices] = useState<Service[]>([]);
+    const [loadingServices, setLoadingServices] = useState(true);
     const {t} = useTranslation();
     const modalRef = useRef<UserCalendarModalRef>(null);
+    const token = useJwtToken();
+    const languageCode = useAppSelector(state => state.language.languageCode);
+    const {setErrorMessage} = useGlobalErrors();
+    const serviceTreeLevel = useAppSelector(
+      state => state.booking.serviceTreeLevel,
+    );
+    const [loading, setLoading] = useState(false);
 
     useImperativeHandle(ref, () => ({
       loadingServices,
       setLoadingServices,
     }));
 
+    useEffect(() => {
+      const fetchServices = async () => {
+        try {
+          setLoadingServices(true);
+          const data = await getServices(
+            workshopId ?? '',
+            languageCode,
+            undefined,
+            true,
+          );
+          setServices(data);
+        } catch (e) {
+        } finally {
+          setLoadingServices(false);
+        }
+      };
+
+      if (loadingServices) {
+        fetchServices();
+      }
+    }, [workshopId, languageCode, loadingServices]);
+
     const handleOnSeeAllServices = () => {
       navigationPush(navigation, 'ChooseServicesScreen');
     };
 
-    const handleOnSelectService = (service: Service) => {
-      if (showCalendarModal) {
-        modalRef.current?.openModal();
-      } else {
-        navigationPush(navigation, 'RegisterVehicleScreen');
+    const handleOnSelectService = async (service?: Service) => {
+      if (service) {
+        try {
+          setLoading(true);
+          const hasChildren = await serviceHasChildren(service?.id);
+
+          if (hasChildren) {
+            navigation.push('ChooseServicesScreen', {
+              fatherId: service.id,
+              showCalendarModal,
+            });
+            dispatch(setServiceTreeLevel(serviceTreeLevel + 1));
+            dispatch(addService({service, index: serviceTreeLevel - 1}));
+          } else {
+            if (showCalendarModal) {
+              modalRef.current?.openModal(service);
+            } else {
+              dispatch(addService({service, index: serviceTreeLevel - 1}));
+              navigationPush(
+                navigation,
+                token ? 'SelectVehicleScreen' : 'RegisterVehicleScreen',
+              );
+            }
+          }
+        } catch (e: any) {
+          setErrorMessage(e.message);
+        } finally {
+          setLoading(false);
+        }
       }
-      dispatch(setServicesChoosenByUsers(service));
     };
 
     return loadingServices ? (
-      <TicDriveSpinner />
+      <View className=" h-28">
+        <TicDriveSpinner />
+      </View>
     ) : services.length > 0 ? (
       <View>
         {topHorizontalLine && <HorizontalLine />}
-        <View className="flex justify-center items-center flex-1 mt-2">
-          <UserCalendarModal showButton={false} ref={modalRef} />
-        </View>
-        <View className="flex flex-wrap flex-row justify-between px-2">
+        <View className="flex flex-wrap flex-row justify-between px-2 mt-2">
           {services.slice(0, 4).map(service => (
             <View key={service.id} className="w-[48%] mb-2">
               <CrossPlatformButtonLayout
                 removeAllStyles={false}
                 onPress={() => handleOnSelectService(service)}
-                styleContainer={{height: 40}}
+                styleContainer={{minHeight: 40}}
                 containerTailwindCss="border border-gray-300 flex-row items-center justify-start p-2 rounded-xl"
                 buttonTailwindCss="justify-start"
               >
                 {service?.icon && (
                   <Image source={{uri: service.icon}} width={24} height={24} />
                 )}
-                <Text className="text-sm font-medium ml-2">
-                  {service.title}
-                </Text>
+                <View className="h-10 items-center justify-center w-full">
+                  <Text className="text-sm font-medium text-center">
+                    {service.title}
+                  </Text>
+                </View>
               </CrossPlatformButtonLayout>
             </View>
           ))}
@@ -97,7 +155,7 @@ const SeeAllServicesCards = forwardRef(
               <CrossPlatformButtonLayout
                 removeAllStyles={false}
                 onPress={handleOnSeeAllServices}
-                containerTailwindCss="border-2 border-grey-light items-center justify-center p-2 rounded-xl"
+                containerTailwindCss="border-2 border-grey-light items-center justify-center p-1.5 rounded-xl bg-white shadow-sm shadow-black/20"
               >
                 <Text className="text-base font-medium">
                   {t('seeAll.services')}
@@ -106,6 +164,13 @@ const SeeAllServicesCards = forwardRef(
             </View>
           )}
         </View>
+        {showCalendarModal && (
+          <UserCalendarModal
+            ref={modalRef}
+            workshopId={workshopId ?? ''}
+            showButton={false}
+          />
+        )}
 
         {bottomHorizontalLine && <HorizontalLine tailwindCssContainer="mt-2" />}
       </View>

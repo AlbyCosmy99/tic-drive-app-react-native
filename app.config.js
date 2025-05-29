@@ -4,13 +4,13 @@ export default {
   expo: {
     name: isDev ? 'TicDrive Dev' : 'TicDrive',
     slug: 'tic-drive',
-    version: '1.0.7',
+    version: '1.1.4',
     orientation: 'portrait',
     icon: './assets/images/png/ticDriveLogo.png',
     scheme: 'ticdrive',
     userInterfaceStyle: 'automatic',
     splash: {
-      image: './assets/images/png/ticDriveLogo.png',
+      image: './assets/images/png/ticDriveSplash.png',
       resizeMode: 'contain',
       backgroundColor: '#ffffff',
     },
@@ -51,7 +51,7 @@ export default {
         backgroundColor: '#ffffff',
       },
       package: isDev ? 'com.ticdrive.app.dev' : 'com.ticdrive.app',
-      versionCode: 2,
+      versionCode: 4,
       intentFilters: [
         {
           action: 'VIEW',
@@ -71,7 +71,7 @@ export default {
     web: {
       bundler: 'metro',
       output: 'static',
-      favicon: './assets/images/favicon.png',
+      favicon: './assets/images/ticDriveLogo.png',
     },
     plugins: [
       'expo-router',

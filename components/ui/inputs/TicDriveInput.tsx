@@ -11,11 +11,12 @@ import {Icon, Input} from '@rneui/themed';
 import {Colors} from '@/constants/Colors';
 import React, {memo, useState} from 'react';
 import CrossPlatformButtonLayout from '../buttons/CrossPlatformButtonLayout';
+import isScreenSmall from '@/services/responsive/isScreenSmall';
 
 interface TicDriveInputProps {
   placeholder?: string;
-  isLeftIcon?: boolean;
-  isRightIcon?: boolean;
+  existsLeftIcon?: boolean;
+  existsRightIcon?: boolean;
   onRightIcon?: () => void;
   onSubmit?: (value: string) => void;
   isTextUppercase?: boolean;
@@ -34,8 +35,8 @@ interface TicDriveInputProps {
 }
 
 const TicDriveInput: React.FC<TicDriveInputProps> = ({
-  isLeftIcon = false,
-  isRightIcon = false,
+  existsLeftIcon = false,
+  existsRightIcon = false,
   onRightIcon,
   placeholder,
   onSubmit,
@@ -73,12 +74,16 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
         textContentType={textContentType}
         maxLength={maxLength}
         leftIcon={
-          isLeftIcon ? (
-            <Icon name="search" size={24} color={Colors.light.ticText} />
+          existsLeftIcon ? (
+            <Icon
+              name="search"
+              size={isScreenSmall() ? 22 : 24}
+              color={Colors.light.ticText}
+            />
           ) : undefined
         }
         rightIcon={
-          isRightIcon ? (
+          existsRightIcon ? (
             rightIcon ? (
               <CrossPlatformButtonLayout
                 containerTailwindCss="justify-center items-center"
@@ -138,12 +143,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderBottomWidth: 0,
     marginTop: 20,
-    height: 55,
+    height: isScreenSmall() ? 50 : 55,
     width: '100%',
   },
   inputText: {
     color: Colors.light.text,
-    fontSize: 18,
+    fontSize: isScreenSmall() ? 16 : 18,
     marginLeft: 8,
   },
 });
