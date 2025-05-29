@@ -155,6 +155,15 @@
   "Sunday": "Domenica"
 },
 
+  "share": {
+    "intro": "🚗✨ Scopri {{workshopName}} su TicDrive! ✨🚗",
+    "startingFrom": "A partire da",
+    "experienceReliable": "Esperienza di servizio affidabile su misura per il tuo veicolo!",
+    "discount": "sconto",
+    "verified": "Verificato da TicDrive",
+    "bookThroughApp": "Prenota tramite l'app TicDrive"
+  },
+
   "bookingConfirmation": {
     "awaitingWorkshopConfirmation": "Il servizio necessita la conferma da parte dell'officina.",
     "bookingNumber": "Prenotazione n. {{number}}",
