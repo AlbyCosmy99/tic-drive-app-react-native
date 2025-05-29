@@ -1,5 +1,4 @@
 import { Colors } from '@/constants/Colors';
-import { useServicesChoosenByUsers } from '@/hooks/user/useServiceChoosenByUsers';
 import { Image } from '@rneui/themed';
 import {
   ActivityIndicator,
