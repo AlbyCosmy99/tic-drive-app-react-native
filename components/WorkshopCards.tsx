@@ -108,7 +108,7 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
         latitude: user?.coordinates?.latitude ?? 0,
         longitude: user?.coordinates?.longitude ?? 0,
       },
-      services[services.length -1]?.id,
+      services[services.length - 1]?.id,
       {order, filter: workshopFilter},
     );
     if (response.data.count > 0) {

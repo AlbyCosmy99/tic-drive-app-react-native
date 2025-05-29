@@ -107,7 +107,9 @@ export default function BookingConfirmationScreen() {
                 <Text className="text-sm text-tic">
                   {t('bookingConfirmation.bookingNumber', {number: '00806835'})}
                 </Text>
-                <Text className="text-sm text-tic">{formatCurrentDate(languageCode)}</Text>
+                <Text className="text-sm text-tic">
+                  {formatCurrentDate(languageCode)}
+                </Text>
               </View>
               <BookingCard type={t('bookingConfirmation.statusPending')} />
             </View>

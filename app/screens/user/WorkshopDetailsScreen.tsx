@@ -300,7 +300,7 @@ export default function WorkshopDetailsScreen() {
             style={styles.bottom}
             className="flex-row justify-between items-center mx-2.5 border-t"
           >
-            {servicesChoosen && workshop.servicePrice && (
+            {servicesChoosen && !!workshop.servicePrice && (
               <View className="flex-1 flex-col mt-2.5">
                 <Text className="text-base" style={styles.startingFrom}>
                   {t('workshops.startingFrom')}

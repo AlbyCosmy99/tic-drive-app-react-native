@@ -3,7 +3,7 @@ import axiosClient from '../../../axiosClient';
 const getServices = async (
   workshopId?: string,
   languageCode?: string,
-  fatherId?: number
+  fatherId?: number,
 ) => {
   const queryParams = new URLSearchParams({
     workshopId: workshopId ?? '',

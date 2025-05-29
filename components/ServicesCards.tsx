@@ -11,9 +11,7 @@ import getServices from '@/services/http/requests/get/services/getServices';
 import serviceHasChildren from '@/services/http/requests/get/services/serviceHasChildren';
 
 import {useAppSelector} from '@/stateManagement/redux/hooks';
-import {
-  setServiceTreeLevel,
-} from '@/stateManagement/redux/slices/bookingSlice';
+import {setServiceTreeLevel} from '@/stateManagement/redux/slices/bookingSlice';
 import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
 
 import Service from '@/types/Service';
