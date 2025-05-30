@@ -18,6 +18,7 @@ export default function DeleteAccountScreen() {
     if (password !== 'correctPassword') {
       setErrorMessage('Wrong password.');
     } else {
+      // Proceed with deletion
     }
   };
 
@@ -30,12 +31,18 @@ export default function DeleteAccountScreen() {
           <View>
             <View className="flex-row items-center justify-center mt-8 mb-3 space-x-2">
               <RemoveIcon width={28} height={28} />
-              <Text className="text-2xl font-bold text-tic font-poppins">
+              <Text
+                allowFontScaling={false}
+                className="text-2xl font-bold text-tic font-poppins"
+              >
                 Elimina Account
               </Text>
             </View>
 
-            <Text className="text-lg text-tic font-normal mt-6 mx-2.5">
+            <Text
+              allowFontScaling={false}
+              className="text-lg text-tic font-normal mt-6 mx-2.5"
+            >
               Motivo dell'eliminazione
             </Text>
             <TicDriveInput
@@ -44,7 +51,10 @@ export default function DeleteAccountScreen() {
               customValue={reason}
               onChange={setReason}
             />
-            <Text className="text-lg text-tic font-normal mt-6 mx-2.5">
+            <Text
+              allowFontScaling={false}
+              className="text-lg text-tic font-normal mt-6 mx-2.5"
+            >
               Inserisci la tua password attuale per procedere con l'eliminazione
               dell'account.
             </Text>
@@ -64,13 +74,19 @@ export default function DeleteAccountScreen() {
               onPress={handleDelete}
               disabled={!reason || !password}
             >
-              <Text className="text-xl leading-[20px] text-white text-center font-bold font-poppins">
+              <Text
+                allowFontScaling={false}
+                className="text-xl leading-[20px] text-white text-center font-bold font-poppins"
+              >
                 Elimina account
               </Text>
             </CrossPlatformButtonLayout>
           </View>
 
-          <Text className="text-xs text-[#FF0000] font-normal">
+          <Text
+            allowFontScaling={false}
+            className="text-xs text-[#FF0000] font-normal"
+          >
             L'eliminazione del tuo account è permanente e non può essere
             annullata. Assicurati di aver salvato tutti i dati importanti prima
             di procedere. Se hai dubbi, puoi sempre annullare il processo di

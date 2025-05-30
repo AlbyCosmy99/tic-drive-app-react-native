@@ -53,10 +53,16 @@ export default function FAQScreen() {
       <SafeAreaViewLayout>
         <TicDriveNavbar />
         <View className="items-center mt-6 px-4">
-          <Text className="text-2xl leading-6 font-semibold text-center font-poppins">
+          <Text
+            allowFontScaling={false}
+            className="text-2xl leading-6 font-semibold text-center font-poppins"
+          >
             {t('faq.title')}
           </Text>
-          <Text className="text-lg leading-[24px] font-semibold font-poppins text-center">
+          <Text
+            allowFontScaling={false}
+            className="text-lg leading-[24px] font-semibold font-poppins text-center"
+          >
             {t('faq.subtitle')}
           </Text>
         </View>
@@ -73,11 +79,17 @@ export default function FAQScreen() {
           />
         </View>
 
-        <View className="flex-row justify-between items-center px-4  mb-2">
-          <Text className="text-base font-semibold text-black font-poppins">
+        <View className="flex-row justify-between items-center px-4 mb-2">
+          <Text
+            allowFontScaling={false}
+            className="text-base font-semibold text-black font-poppins"
+          >
             {t('faq.most_frequent')}
           </Text>
-          <Text className="text-sm font-semibold text-green-600 font-poppins">
+          <Text
+            allowFontScaling={false}
+            className="text-sm font-semibold text-green-600 font-poppins"
+          >
             {t('faq.see_all')}
           </Text>
         </View>
@@ -95,7 +107,10 @@ export default function FAQScreen() {
                   onPress={() => toggleExpand(index)}
                   buttonTailwindCss="flex-row justify-between items-center"
                 >
-                  <Text className="text-base font-medium text-black flex-1 pr-2">
+                  <Text
+                    allowFontScaling={false}
+                    className="text-base font-medium text-black flex-1 pr-2"
+                  >
                     {item.question}
                   </Text>
 
@@ -109,7 +124,10 @@ export default function FAQScreen() {
                 </CrossPlatformButtonLayout>
 
                 {isExpanded && (
-                  <Text className="mt-3 text-[12px] leading-[20px] text-[#737373] font-poppins">
+                  <Text
+                    allowFontScaling={false}
+                    className="mt-3 text-[12px] leading-[20px] text-[#737373] font-poppins"
+                  >
                     {item.answer}
                   </Text>
                 )}
@@ -118,7 +136,10 @@ export default function FAQScreen() {
           })}
 
           {filteredFAQs.length === 0 && (
-            <Text className="text-center text-gray-500 mt-6 font-poppins">
+            <Text
+              allowFontScaling={false}
+              className="text-center text-gray-500 mt-6 font-poppins"
+            >
               {t('faq.no_results')}
             </Text>
           )}

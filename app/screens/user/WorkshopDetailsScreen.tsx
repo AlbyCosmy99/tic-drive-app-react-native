@@ -103,31 +103,27 @@ export default function WorkshopDetailsScreen() {
   };
 
   const onShare = async () => {
-  try {
-    const message = `${t('share.intro', { workshopName: workshop?.workshopName })}
+    try {
+      const message = `${t('share.intro', {workshopName: workshop?.workshopName})}
 
 📍 ${t('location')}: ${workshop?.address}
 ⭐ ${t('workshops.rating')}: ${workshop?.meanStars?.toFixed(1)} (${workshop?.numberOfReviews} ${t('reviews')})
 💰 ${
         workshop?.servicePrice
-         ? `${t('share.startingFrom')}: ${formatPrice(workshop.servicePrice, workshop.discount ?? 0)} ${workshop.currency}`
-         : t('share.experienceReliable')
-     }
-      ${workshop?.discount ? `🔥 ${workshop.discount}% ${t('share.discount')}\n` : ''}
-      ${workshop?.isVerified ? `✅ ${t('share.verified')}\n` : ''}
+          ? `${t('share.startingFrom')}: ${formatPrice(workshop.servicePrice, workshop.discount ?? 0)} ${workshop.currency}`
+          : t('share.experienceReliable')
+      }
+${workshop?.discount ? `🔥 ${workshop.discount}% ${t('share.discount')}\n` : ''}
+${workshop?.isVerified ? `✅ ${t('share.verified')}\n` : ''}
 📲 ${t('share.bookThroughApp')}:
-    iOS: https://apps.apple.com/it/app/ticdrive/id6740627366?l=en-GB
-   Android: https://play.google.com/store/apps/details?id=com.NOTyetonPlayStore.ticdrive`;
+iOS: https://apps.apple.com/it/app/ticdrive/id6740627366?l=en-GB
+Android: https://play.google.com/store/apps/details?id=com.NOTyetonPlayStore.ticdrive`;
 
-    const result = await Share.share({ message });
-
-    if (result.action === Share.dismissedAction) {
-      console.log('Share dismissed');
+      await Share.share({message});
+    } catch (error) {
+      console.error('Share error:', error);
     }
-   } catch (error) {
-    console.error('Share error:', error);
-  }
-};
+  };
 
   useEffect(() => {
     if (!workshop?.id) return;
@@ -181,7 +177,7 @@ export default function WorkshopDetailsScreen() {
 
       {!workshop ? (
         <View className="flex-1 justify-center items-center">
-          <Text className="text-red-600 text-xl">
+          <Text className="text-red-600 text-xl" allowFontScaling={false}>
             {t('workshops.errors.notFound')}
           </Text>
         </View>
@@ -201,7 +197,11 @@ export default function WorkshopDetailsScreen() {
                   />
                 )}
                 <View className="flex-row items-center gap-x-1.5 mt-2">
-                  <Text className="text-2xl font-semibold">
+                  <Text
+                    className="text-2xl font-semibold"
+                    allowFontScaling={false}
+                    numberOfLines={1}
+                  >
                     {workshop.workshopName}
                   </Text>
                   {workshop.isVerified && (
@@ -218,21 +218,33 @@ export default function WorkshopDetailsScreen() {
                     <View className="flex-row flex-wrap justify-between gap-y-2">
                       {groupDaysByTime(workingHours).map((group, index) => (
                         <View key={index} className="w-[48%] px-2">
-                          <Text className="text-sm font-medium text-gray-700">
+                          <Text
+                            className="text-sm font-medium text-gray-700"
+                            allowFontScaling={false}
+                          >
                             {formatDayRange(group.days, t)}
                           </Text>
                           {group.morning && (
-                            <Text className="text-sm text-gray-600">
+                            <Text
+                              className="text-sm text-gray-600"
+                              allowFontScaling={false}
+                            >
                               {group.morning}
                             </Text>
                           )}
                           {group.afternoon && (
-                            <Text className="text-sm text-gray-600">
+                            <Text
+                              className="text-sm text-gray-600"
+                              allowFontScaling={false}
+                            >
                               {group.afternoon}
                             </Text>
                           )}
                           {!group.morning && !group.afternoon && (
-                            <Text className="text-sm text-gray-600">
+                            <Text
+                              className="text-sm text-gray-600"
+                              allowFontScaling={false}
+                            >
                               {t('workshops.workingHours.closed')}
                             </Text>
                           )}
@@ -250,14 +262,23 @@ export default function WorkshopDetailsScreen() {
               />
 
               <View className="mt-2">
-                <Text className="text-xl font-semibold">{t('location')}</Text>
+                <Text
+                  className="text-xl font-semibold"
+                  allowFontScaling={false}
+                >
+                  {t('location')}
+                </Text>
                 <CrossPlatformButtonLayout
                   onPress={() => openGoogleMaps(workshop.address, lat, lng)}
                 >
-                  <Text className="text-base font-medium underline text-tic">
+                  <Text
+                    className="text-base font-medium underline text-tic"
+                    allowFontScaling={false}
+                  >
                     {workshop.address}
                   </Text>
                 </CrossPlatformButtonLayout>
+
                 {lat && lng && (
                   <View
                     className="mt-2"
@@ -297,7 +318,10 @@ export default function WorkshopDetailsScreen() {
               </View>
 
               <View className="mt-3.5">
-                <Text className="text-xl font-semibold">
+                <Text
+                  className="text-xl font-semibold"
+                  allowFontScaling={false}
+                >
                   {t('workshops.reviews.whatPeopleSay')}
                 </Text>
                 <WorkshopReviewinfo
@@ -317,24 +341,30 @@ export default function WorkshopDetailsScreen() {
           >
             {servicesChoosen && !!workshop.servicePrice && (
               <View className="flex-1 flex-col mt-2.5">
-                <Text className="text-base" style={styles.startingFrom}>
+                <Text
+                  className="text-base"
+                  style={styles.startingFrom}
+                  allowFontScaling={false}
+                >
                   {t('workshops.startingFrom')}
                 </Text>
                 <View className="flex-row items-center">
                   <Text
-                    className={[
-                      workshop.discount !== 0 ? 'text-red-500' : '',
-                      'font-semibold text-xl mx-1',
-                    ].join(' ')}
+                    className="font-semibold text-xl mx-1 text-red-500"
+                    allowFontScaling={false}
                   >
-                    {workshop.currency + formatPrice(workshop.servicePrice)}
+                    {workshop.currency}
+                    {formatPrice(workshop.servicePrice, workshop.discount ?? 0)}
                   </Text>
                   {workshop.discount !== 0 && (
                     <>
                       <View style={styles.strikethroughLine} />
-                      <Text className="font-semibold text-xl mx-1">
+                      <Text
+                        className="font-semibold text-xl mx-1"
+                        allowFontScaling={false}
+                      >
                         {workshop.currency}
-                        {formatPrice(workshop.servicePrice, workshop.discount)}
+                        {formatPrice(workshop.servicePrice)}
                       </Text>
                     </>
                   )}

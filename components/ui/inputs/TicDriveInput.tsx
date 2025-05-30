@@ -4,6 +4,7 @@ import {
   StyleSheet,
   TextInputIOSProps,
   TextInputProps,
+  TextInput,
   View,
   ViewStyle,
 } from 'react-native';
@@ -70,6 +71,8 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
   return (
     <View className={containerViewStyleTailwind && containerViewStyleTailwind}>
       <Input
+        InputComponent={TextInput}
+        allowFontScaling={false}
         placeholder={placeholder}
         textContentType={textContentType}
         maxLength={maxLength}
@@ -114,8 +117,8 @@ const TicDriveInput: React.FC<TicDriveInputProps> = ({
           if (itHandlesPassword) {
             onChange?.(formatted.trim());
           } else {
-            setValue(isTextUppercase ? text.toUpperCase() : text);
-            onChange && onChange(text.trim());
+            setValue(formatted);
+            onChange && onChange(formatted.trim());
           }
         }}
         onSubmitEditing={() => {

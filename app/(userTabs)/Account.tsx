@@ -27,7 +27,6 @@ import CustomerServiceIcon from '@/assets/svg/headphone.svg';
 import Logout from '@/assets/svg/logout.svg';
 import AddressIcon from '@/assets/svg/map.svg';
 import MailIcon from '@/assets/svg/notifications/mail.svg';
-import Remove from '@/assets/svg/remove.svg';
 import FAQ from '@/assets/svg/faq.svg';
 import Translate from '@/assets/svg/translate.svg';
 import VehicleIcon from '@/assets/svg/vehicles/car2.svg';
@@ -52,7 +51,9 @@ interface SectionProps {
 
 const Section: React.FC<SectionProps> = ({title, children}) => (
   <View className="my-2">
-    <Text className="font-medium text-2xl">{title}</Text>
+    <Text className="font-medium text-2xl" allowFontScaling={false}>
+      {title}
+    </Text>
     {children}
   </View>
 );
@@ -87,16 +88,11 @@ export default function UserAccount() {
     setShowLanguageChangedModal(true);
   };
 
-  const handleFAQ = () => {
-    navigationPush(navigation, 'FAQScreen');
-  };
-  const handleDangerZone = () => {
-    navigationPush(navigation, 'DangerZoneScreen');
-  };
-
-  const handleSupport = () => {
+  const handleFAQ = () => navigationPush(navigation, 'FAQScreen');
+  const handleDangerZone = () => navigationPush(navigation, 'DangerZoneScreen');
+  const handleSupport = () =>
     navigationPush(navigation, 'SupportSectionScreen');
-  };
+
   const handleOnEdit = async () => {
     if (!isEditing) {
       setEditedUser({name: user?.name?.trim() || ''});
@@ -122,7 +118,7 @@ export default function UserAccount() {
     }
   };
 
-  if (!token)
+  if (!token) {
     return (
       <LinearGradientViewLayout>
         <SafeAreaViewLayout disabled={!isAndroidPlatform()}>
@@ -131,6 +127,7 @@ export default function UserAccount() {
         </SafeAreaViewLayout>
       </LinearGradientViewLayout>
     );
+  }
 
   return (
     <LinearGradientViewLayout>
@@ -160,16 +157,23 @@ export default function UserAccount() {
                       placeholder={t('userAccount.enterYourName')}
                       placeholderTextColor="#888"
                       autoFocus
+                      allowFontScaling={false}
                       accessibilityLabel="Name Input"
                     />
                   ) : user?.name ? (
-                    <Text className="font-semibold text-xl text-gray-800">
-                      {user?.name}
+                    <Text
+                      className="font-semibold text-xl text-gray-800"
+                      allowFontScaling={false}
+                    >
+                      {user.name}
                     </Text>
                   ) : (
                     <CrossPlatformButtonLayout onPress={handleOnEdit}>
-                      <Text className="font-normal text-lg text-gray-800">
-                        {t('useraccount.editYourName')}
+                      <Text
+                        className="font-normal text-lg text-gray-800"
+                        allowFontScaling={false}
+                      >
+                        {t('userAccount.editYourName')}
                       </Text>
                     </CrossPlatformButtonLayout>
                   )}
@@ -184,7 +188,10 @@ export default function UserAccount() {
                     ) : (
                       <EditIcon width={20} height={20} />
                     )}
-                    <Text className="text-green-600 font-medium ml-1">
+                    <Text
+                      className="text-green-600 font-medium ml-1"
+                      allowFontScaling={false}
+                    >
                       {isEditing ? t('common.save') : t('common.edit')}
                     </Text>
                   </View>
@@ -202,7 +209,10 @@ export default function UserAccount() {
             <Section title={t('userAccount.sectionTitle')}>
               <View className="flex-row items-center py-2">
                 <MailIcon />
-                <Text className="text-base font-medium pl-1">
+                <Text
+                  className="text-base font-medium pl-1"
+                  allowFontScaling={false}
+                >
                   {user?.email || t('notAvailable')}
                 </Text>
               </View>
@@ -211,7 +221,10 @@ export default function UserAccount() {
 
               <View className="flex-row items-center py-2">
                 <AddressIcon />
-                <Text className="text-base font-medium pl-1">
+                <Text
+                  className="text-base font-medium pl-1"
+                  allowFontScaling={false}
+                >
                   {user?.address || t('notAvailable')}
                 </Text>
               </View>
@@ -260,27 +273,23 @@ export default function UserAccount() {
               {languageOptionsVisible && (
                 <View className="ml-8">
                   <TouchableOpacity
-                    className="py-2 pb-1 pt-3"
-                    onPress={() => {
-                      handleChangeLanguage('it');
-                      setLanguageOptionsVisible(false);
-                    }}
+                    className="py-2 pt-3"
+                    onPress={() => handleChangeLanguage('it')}
                   >
                     <Text
                       className={`text-base ${languageCode === 'it' ? 'font-bold text-blue-600' : 'text-black'}`}
+                      allowFontScaling={false}
                     >
                       🇮🇹 {t('language.italian')}
                     </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     className="py-2"
-                    onPress={() => {
-                      handleChangeLanguage('en');
-                      setLanguageOptionsVisible(false);
-                    }}
+                    onPress={() => handleChangeLanguage('en')}
                   >
                     <Text
                       className={`text-base ${languageCode === 'en' ? 'font-bold text-blue-600' : 'text-black'}`}
+                      allowFontScaling={false}
                     >
                       🇬🇧 {t('language.english')}
                     </Text>
@@ -324,6 +333,7 @@ export default function UserAccount() {
               </CrossPlatformButtonLayout>
 
               <HorizontalLine />
+
               <CrossPlatformButtonLayout onPress={handleDangerZone}>
                 <IconTextPair
                   text={t('userAccount.dangerZone')}
@@ -332,11 +342,13 @@ export default function UserAccount() {
                   containerTailwindCss="py-2 my-0 pt-1"
                 />
               </CrossPlatformButtonLayout>
+
               <HorizontalLine />
             </Section>
           </ScrollView>
         </View>
 
+        {/* Modals */}
         <TicDriveModal
           visible={showLogoutModal}
           onClose={() => setShowLogoutModal(false)}
@@ -350,18 +362,16 @@ export default function UserAccount() {
           cancelText={t('common.cancel')}
           confirmButtonStyle={{backgroundColor: '#E53935'}}
         />
+
         <TicDriveModal
           visible={showLanguageChangedModal}
           onClose={() => setShowLanguageChangedModal(false)}
-          title={t('language.languageChanged') + '!'}
-          content={
-            t('language.yourNewLanguageIs') +
-            ': ' +
-            (languageCode === 'en'
+          title={`${t('language.languageChanged')}!`}
+          content={`${t('language.yourNewLanguageIs')}: ${
+            languageCode === 'en'
               ? t('language.english')
-              : t('language.italian')) +
-            '.'
-          }
+              : t('language.italian')
+          }.`}
           confirmText={t('common.ok')}
           confirmButtonStyle={{
             backgroundColor: '#4CAF50',

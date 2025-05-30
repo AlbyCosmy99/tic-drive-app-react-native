@@ -11,16 +11,18 @@ import {Text, View, StyleSheet} from 'react-native';
 const SeeAllReviewsCards = ({workshopId}: {workshopId: string}) => {
   const {reviews, loadingReviews} = useReviews(workshopId, 0, 10);
   const {navigation} = useContext(NavigationContext);
+  const {t} = useTranslation();
+
   const handleOnSeeAllReviews = () => {
     navigationPush(navigation, 'WorkshopReviewsListScreen');
   };
-  const {t} = useTranslation();
 
   if (loadingReviews) return <TicDriveSpinner />;
-  if (!reviews?.length) {
+
+  if (!reviews || reviews.length === 0) {
     return (
-      <View>
-        <Text className="text-base text-gray-500 mt-2">
+      <View className="mt-2">
+        <Text className="text-base text-gray-500" allowFontScaling={false}>
           {t('noReviewsYet')}
         </Text>
       </View>
@@ -30,13 +32,17 @@ const SeeAllReviewsCards = ({workshopId}: {workshopId: string}) => {
   return (
     <View>
       <ClientReviewCard review={reviews[0]} key={reviews[0].id} />
+
       {reviews.length > 1 && (
         <CrossPlatformButtonLayout
           containerTailwindCss="mt-4 border-grey-light"
           styleContainer={styles.button}
           onPress={handleOnSeeAllReviews}
         >
-          <Text className="my-0.5 text-base font-medium">
+          <Text
+            className="my-0.5 text-base font-medium"
+            allowFontScaling={false}
+          >
             {t('seeAll.reviews')}
           </Text>
         </CrossPlatformButtonLayout>

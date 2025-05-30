@@ -36,7 +36,12 @@ const TicDriveOptionButton: React.FC<TicDriveOptionButtonProps> = ({
       accessibilityLabel={accessibilityLabel}
     >
       <View>{icon}</View>
-      <Text className={`font-medium ${textTailwindCss}`}>{text}</Text>
+      <Text
+        allowFontScaling={false}
+        className={`font-medium ${textTailwindCss}`}
+      >
+        {text}
+      </Text>
     </TouchableOpacity>
   );
 };

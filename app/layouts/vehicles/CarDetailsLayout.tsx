@@ -16,51 +16,58 @@ const CarDetailsLayout: React.FC<CarDetailsGeneralProps> = ({
 }) => {
   const {t} = useTranslation();
 
-  return carSelected ? (
+  if (!carSelected) {
+    return (
+      <ActivityIndicator
+        size="large"
+        color={Colors.light.bookingsOptionsText}
+      />
+    );
+  }
+
+  return (
     <View className="mx-3 p-4 border-2 border-grey-light rounded-xl">
-      <View className="mb-2">
+      <View className="mb-2 space-y-1">
         <RegistrationCarDetailCard
           title={t('vehicles.make')}
-          value={carSelected?.make}
+          value={carSelected.make || '-'}
         />
         <RegistrationCarDetailCard
           title={t('vehicles.model')}
-          value={carSelected?.model}
+          value={carSelected.model || '-'}
         />
         <RegistrationCarDetailCard
           title={t('vehicles.plate')}
-          value={carSelected.plateNumber?.toUpperCase() ?? ''}
+          value={carSelected.plateNumber?.toUpperCase() || '-'}
         />
         <RegistrationCarDetailCard
           title={t('vehicles.year')}
-          value={carSelected.year?.toString() ?? ''}
+          value={carSelected.year?.toString() || '-'}
         />
         <RegistrationCarDetailCard
           title={t('vehicles.engine_size')}
-          value={carSelected.engineDisplacement!}
+          value={carSelected.engineDisplacement?.toString() || '-'}
         />
         <RegistrationCarDetailCard
           title={t('vehicles.fuel')}
-          value={carSelected.fuel}
+          value={carSelected.fuel || '-'}
         />
         <RegistrationCarDetailCard
           title={t('vehicles.mileage')}
-          value={carSelected.mileage?.toString() ?? ''}
+          value={carSelected.mileage?.toString() || '-'}
         />
         <RegistrationCarDetailCard
           title={t('vehicles.name')}
-          value={carSelected.name}
+          value={carSelected.name || '-'}
         />
         <RegistrationCarDetailCard
           title={t('vehicles.cv')}
-          value={carSelected.powerCV?.toString() ?? ''}
+          value={carSelected.powerCV?.toString() || '-'}
         />
       </View>
       <HorizontalLine />
       {children}
     </View>
-  ) : (
-    <ActivityIndicator size="large" color={Colors.light.bookingsOptionsText} />
   );
 };
 
