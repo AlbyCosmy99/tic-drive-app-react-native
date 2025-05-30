@@ -31,6 +31,8 @@ import Remove from '@/assets/svg/remove.svg';
 import FAQ from '@/assets/svg/faq.svg';
 import Translate from '@/assets/svg/translate.svg';
 import VehicleIcon from '@/assets/svg/vehicles/car2.svg';
+import ChangepasswordIcon from '@/assets/svg/changepassword.svg';
+
 import EditIcon from '@/assets/svg/writing/change.svg';
 import SaveIcon from '@/assets/svg/operations/save.svg';
 import DangerIcon from '@/assets/svg/danger.svg';
@@ -230,6 +232,19 @@ export default function UserAccount() {
               </CrossPlatformButtonLayout>
 
               <HorizontalLine />
+             <CrossPlatformButtonLayout
+                onPress={() => navigationPush(navigation, 'AuthenticatedChangePasswordScreen')}
+              >
+                <IconTextPair
+                  text={t('changePassword.title')}
+                  icon={<ChangepasswordIcon />}
+                  textTailwindCss="text-base font-medium pl-1"
+                  containerTailwindCss="py-2 my-0 pt-1"
+                />
+              </CrossPlatformButtonLayout>
+
+                <HorizontalLine />
+
 
               <CrossPlatformButtonLayout onPress={onFavoriteWorkshops}>
                 <IconTextPair

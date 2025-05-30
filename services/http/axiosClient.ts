@@ -1,4 +1,6 @@
 import axios from 'axios';
+import store from '@/stateManagement/redux/store/store';  
+
 
 const PROD_BACKEND_URL = 'https://ticdrivebackend.onrender.com';
 const DEV_BACKEND_URL = 'https://ticdrivebackenddevelopment.onrender.com'; //local
@@ -20,6 +22,16 @@ axiosClient.interceptors.request.use(
   error => {
     return Promise.reject(error);
   },
+);
+axiosClient.interceptors.request.use(
+  (config) => {
+    const token = store.getState().auth.token;  
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error),
 );
 
 axiosClient.interceptors.response.use(
