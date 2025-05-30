@@ -18,7 +18,7 @@ import navigationPush from '@/services/navigation/push';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import CrossPlatformButtonLayout from '../ui/buttons/CrossPlatformButtonLayout';
 import isScreenSmall from '@/services/responsive/isScreenSmall';
-import {setService} from '@/stateManagement/redux/slices/bookingSlice';
+import { setServices } from '@/stateManagement/redux/slices/bookingSlice';
 
 interface TicDriveNavbarProps {
   isLoginAvailable?: boolean;
@@ -61,7 +61,7 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
             if (navigation?.canGoBack()) {
               navigation.dispatch(StackActions.popToTop());
             }
-            dispatch(setService(undefined));
+            dispatch(setServices([]));
             navigationReplace(navigation, 'Hub');
           }}
           className="flex-row flex-1 justify-center items-center"
