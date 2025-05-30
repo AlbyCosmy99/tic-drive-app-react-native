@@ -7,7 +7,7 @@ import {useContext, useEffect, useMemo, useState} from 'react';
 import options from '../../../constants/VehicleRegistrationOptions';
 import ToPreviousPage from '@/components/navigation/ToPreviousPage';
 import SegmentedControlSelection from '@/types/SegmentedControlSelection';
-import Car, {FuelType} from '@/types/Car';
+import Car from '@/types/Car';
 import SafeAreaViewLayout from '@/app/layouts/SafeAreaViewLayout';
 import TicDriveDropdown from '@/components/ui/dropdowns/TicDriveDropdown';
 import TicDriveDropdownData from '@/types/ui/dropdown/TicDriveDropdownData';
@@ -20,7 +20,6 @@ import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import isPlateNumber from '@/utils/car/isPlateNumber';
 import CarDetailsByPlate from '@/components/cars/registration/CarDetailsByPlate';
 import CarConfirmationDetails from '@/components/cars/registration/CarConfirmationDetails';
-import {setSelectedCar} from '@/stateManagement/redux/slices/carsSlice';
 import navigationPush from '@/services/navigation/push';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import useCustomerCars from '@/hooks/api/cars/useCustomerCars';
@@ -29,6 +28,7 @@ import {t} from 'i18next';
 import CarMake from '@/types/cars/CarMake';
 import getCarsMakes from '@/services/http/requests/cars/getCarsMakes';
 import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
+import {setCar} from '@/stateManagement/redux/slices/bookingSlice';
 
 function RegisterVehicleScreen() {
   const [segmentedControlSelection, setSegmentedControlSelection] =
@@ -166,59 +166,11 @@ function RegisterVehicleScreen() {
   const fetchByPlate = (plate: string) => {
     if (isPlateNumber(plate)) {
       setIsPlateError(false);
-      const response = {
-        ABS: '',
-        AirBag: '',
-        CarMake: 'MAZDA',
-        CarModel: 'CX-5 2ª serie',
-        Description: 'MAZDA CX-5 2ª serie',
-        EngineSize: '2191',
-        FuelType: 'Diesel',
-        Immobiliser: '',
-        KType: '',
-        LicensePlate: 'FV181EX',
-        MakeDescription: 'MAZDA',
-        ModelDescription: 'CX-5 2ª serie',
-        NumberOfDoors: '',
-        PowerCV: 184,
-        PowerFiscal: 21,
-        PowerKW: 135,
-        RegistrationYear: '2019',
-        TimeStamp: 1739716456,
-        Version: 'MAZDA CX-5 2.2L Skyactiv-D 184 CV aut. AWD Exceed ( 1/2019 )',
-        Vin: '',
-      };
-      const car = {
-        id: response['TimeStamp'],
-        make: response['CarMake'],
-        model: response['CarModel'],
-        year: Number(response['RegistrationYear']),
-        plateNumber: response['LicensePlate'],
-        fuel: response['FuelType'] as FuelType,
-        vin: response['Vin'],
-        engineDisplacement: response['EngineSize'],
-        name: response['Description'],
-        powerCV: response['PowerCV'],
-      };
-      setCarSelectedByPlate(car);
-      // axios.get("https://automotive.openapi.com/IT-car/FV181EX", {
-      //   headers: {
-      //     "accept": "application/json",
-      //     "Authorization": "Bearer 67b1f7439ad74bab6d03ae1a"
-      //   }
-      // })
-      //   .then(response => setCarSelectedByPlate(response.data.data))
-      //   .catch(error => {
-      //     console.error('Error:', error)
-      //     setIsPlateError(true)
-      //   });
+      //todo: add code here when will be the case
     } else {
       setIsPlateError(true);
     }
   };
-  // {"data": {"ABS": "", "AirBag": "", "CarMake": "MAZDA", "CarModel": "CX-5 2ª serie", "Description": "MAZDA CX-5 2ª serie", "EngineSize": "2191", "FuelType": "Diesel", "Immobiliser": "", "KType": "", "LicensePlate": "FV181EX", "MakeDescription": "MAZDA", "ModelDescription": "CX-5 2ª serie", "NumberOfDoors": "", "PowerCV": 184, "PowerFiscal": 21, "PowerKW": 135, "RegistrationYear": "2019", "TimeStamp": 1739716456, "Version": "MAZDA CX-5 2.2L Skyactiv-D 184 CV aut. AWD Exceed ( 1/2019 )", "Vin": ""}, "error": null, "message": "", "success": true}
-
-  const selectedCar = useAppSelector(state => state.cars.selectedCar);
 
   const confirmCarSelected = async () => {
     const carSelected =
@@ -226,7 +178,7 @@ function RegisterVehicleScreen() {
         ? carSelectedByMakeAndModel
         : carSelectedByPlateCtx;
 
-    dispatch(setSelectedCar(carSelected));
+    dispatch(setCar(carSelected));
     if (goToVehicles) navigationReset(navigation, 0, routeName);
     else navigationPush(navigation, routeName);
     if (goToVehicles && carSelectedByMakeAndModel) {
@@ -285,7 +237,7 @@ function RegisterVehicleScreen() {
         <BoldTitle1
           title={
             makeAndModelConfirmation || plateConfirmation
-              ? t('vehicles.confirmCarInformation') // <-- Use a key like 'Confirm car details'
+              ? t('vehicles.confirmCarInformation')
               : t('vehicles.registerVehicleForBookings')
           }
         />
