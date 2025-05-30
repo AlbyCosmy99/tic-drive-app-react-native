@@ -33,11 +33,7 @@ import MapModal from '@/components/modal/MapModal';
 import getAllWorkshops from '@/services/http/requests/get/workshops/getAllWorkshops';
 import getNearbyWorkshops from '@/services/http/requests/get/workshops/getNearbyWorkshops';
 import isScreenSmall from '@/services/responsive/isScreenSmall';
-import {
-  reset,
-  setService,
-  setWorkshop,
-} from '@/stateManagement/redux/slices/bookingSlice';
+import {reset, setWorkshop} from '@/stateManagement/redux/slices/bookingSlice';
 import {setLastWorkshopSelectedFromFilter} from '@/stateManagement/redux/slices/workshopsSlice';
 
 export default function UserHome() {
@@ -185,7 +181,9 @@ export default function UserHome() {
             existsLeftIcon
             existsRightIcon
             placeholder={t('workshops.searchWorkshop')}
-            containerViewStyleTailwind={`flex-1 ${isScreenSmall() ? 'h-[50px]' : 'h-[60px]'}`}
+            containerViewStyleTailwind={`flex-1 ${
+              isScreenSmall() ? 'h-[50px]' : 'h-[60px]'
+            }`}
             inputContainerStyle={{
               marginTop: 4,
               height: isScreenSmall() ? 44 : 48,
@@ -220,48 +218,60 @@ export default function UserHome() {
           >
             <View>
               <Text
-                className={`font-semibold ${isScreenSmall() ? 'text-lg' : 'text-xl'} m-2.5 mt-1`}
+                className={`font-semibold ${
+                  isScreenSmall() ? 'text-lg' : 'text-xl'
+                } m-2.5 mt-1`}
+                allowFontScaling={false}
+                numberOfLines={1}
               >
                 {t('home.findRightWorkshop')}
               </Text>
-              <View>
-                <View className="flex-row mx-2.5 justify-start items-start">
-                  {loadingWorkshops ? (
-                    <TicDriveSpinner />
-                  ) : (
-                    <View className="flex-column w-full">
-                      <View className="flex-row justify-start items-start mb-2.5">
-                        {workshops.map(workshop => (
-                          <WorkshopCardMini
-                            key={workshop.id}
-                            workshop={workshop}
-                          />
-                        ))}
-                      </View>
-                      {workshops.length === 0 && (
-                        <Text className="font-medium mb-2">
-                          {t('workshops.noWorkshopsAvailable')}
-                        </Text>
-                      )}
-                      {workshops.length > 0 && (
-                        <CrossPlatformButtonLayout
-                          removeAllStyles={false}
-                          onPress={handleOnSeeAllWorkshops}
-                          containerTailwindCss="border-2 border-grey-light items-center justify-center p-1.5 rounded-xl bg-white shadow-sm shadow-black/20"
-                        >
-                          <Text className="text-base font-medium">
-                            {t('seeAll.workshops')}
-                          </Text>
-                        </CrossPlatformButtonLayout>
-                      )}
+              <View className="flex-row mx-2.5 justify-start items-start">
+                {loadingWorkshops ? (
+                  <TicDriveSpinner />
+                ) : (
+                  <View className="flex-column w-full">
+                    <View className="flex-row justify-start items-start mb-2.5">
+                      {workshops.map(workshop => (
+                        <WorkshopCardMini
+                          key={workshop.id}
+                          workshop={workshop}
+                        />
+                      ))}
                     </View>
-                  )}
-                </View>
+                    {workshops.length === 0 && (
+                      <Text
+                        className="font-medium mb-2"
+                        allowFontScaling={false}
+                      >
+                        {t('workshops.noWorkshopsAvailable')}
+                      </Text>
+                    )}
+                    {workshops.length > 0 && (
+                      <CrossPlatformButtonLayout
+                        removeAllStyles={false}
+                        onPress={handleOnSeeAllWorkshops}
+                        containerTailwindCss="border-2 border-grey-light items-center justify-center p-1.5 rounded-xl bg-white shadow-sm shadow-black/20"
+                      >
+                        <Text
+                          className="text-base font-medium"
+                          allowFontScaling={false}
+                        >
+                          {t('seeAll.workshops')}
+                        </Text>
+                      </CrossPlatformButtonLayout>
+                    )}
+                  </View>
+                )}
               </View>
             </View>
+
             <View className="mt-2.5 mb-3">
               <Text
-                className={`font-semibold ${isScreenSmall() ? 'text-lg' : 'text-xl'} m-2.5 mb-0 mt-1`}
+                className={`font-semibold ${
+                  isScreenSmall() ? 'text-lg' : 'text-xl'
+                } m-2.5 mb-0 mt-1`}
+                allowFontScaling={false}
               >
                 {t('home.discoverServicesAndBook')}
               </Text>
@@ -270,9 +280,13 @@ export default function UserHome() {
                 topHorizontalLine={false}
               />
             </View>
+
             <View className="mx-3 p-1 rounded-xl">
               <Text
-                className={`font-semibold ${isScreenSmall() ? 'text-lg' : 'text-xl'} m-2.5 mx-0 mt-1`}
+                className={`font-semibold ${
+                  isScreenSmall() ? 'text-lg' : 'text-xl'
+                } m-2.5 mx-0 mt-1`}
+                allowFontScaling={false}
               >
                 {t('reminder')}
               </Text>
@@ -300,16 +314,21 @@ export default function UserHome() {
                   text={t('home.notifications.third')}
                 />
               </View>
+
               <CrossPlatformButtonLayout
                 removeAllStyles={false}
                 containerTailwindCss="border-2 border-grey-light items-center justify-center p-1 m-2.5 rounded-xl bg-white shadow-sm shadow-black/20"
-                onPress={() => handleVehicles()}
+                onPress={handleVehicles}
               >
-                <Text className="text-base font-semibold">
+                <Text
+                  className="text-base font-semibold"
+                  allowFontScaling={false}
+                >
                   {t('vehicles.handleVehicles')}
                 </Text>
               </CrossPlatformButtonLayout>
             </View>
+
             {isMapVisible && <MapModal setIsMapVisible={setIsMapVisible} />}
           </ScrollView>
         )}

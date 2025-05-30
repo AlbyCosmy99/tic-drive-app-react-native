@@ -39,10 +39,8 @@ const BookingCard: React.FC<BookingCardProps> = ({
 }) => {
   const [loadingServiceOfferedDetails, setLoadingServiceOfferedDetails] =
     useState(false);
-
   const workshop = useAppSelector(state => state.booking.workshop);
   const [workshopDetailed, setWorkshopDetailed] = useState(workshop);
-
   const services = useServiceChoosenByCustomer();
   const time = useAppSelector(state => state.booking.time);
 
@@ -54,6 +52,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
   }, []);
 
   const {setErrorMessage} = useGlobalErrors();
+
   useEffect(() => {
     const fetchServiceOfferedDetails = async () => {
       try {
@@ -112,6 +111,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
           )}
           <View>
             <Text
+              allowFontScaling={false}
               className={clsx(
                 'text-xs font-medium',
                 type === 'Confirmed' ? 'text-drive' : 'text-[#D28B30]',
@@ -119,12 +119,15 @@ const BookingCard: React.FC<BookingCardProps> = ({
             >
               {type}
             </Text>
-            <Text className="font-medium text-xl">
+            <Text allowFontScaling={false} className="font-medium text-xl">
               {workshopDetailed?.workshopName}
             </Text>
             {services.length > 0 && (
               <View className="bg-green-light p-1.5 rounded self-start mt-1 max-w-[260px]">
-                <Text className="text-green-dark font-semibold">
+                <Text
+                  allowFontScaling={false}
+                  className="text-green-dark font-semibold"
+                >
                   {getFullServiceName(services)}
                 </Text>
               </View>
@@ -159,7 +162,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
             <IconTextPair icon={<CalendarIcon />} text={time} />
             <IconTextPair
               icon={<CreditCardIcon />}
-              text={price + ' da pagare'}
+              text={`${price} da pagare`}
             />
             {workshopDetailed?.address && (
               <IconTextPair

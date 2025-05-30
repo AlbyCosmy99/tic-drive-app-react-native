@@ -31,7 +31,7 @@ export default function SelectVehicleScreen() {
   const services = useServiceChoosenByCustomer();
   const workshop = useAppSelector(state => state.booking.workshop);
 
-  //@ts-ignore
+  // @ts-ignore
   const {category, buttonContainerTailwindCss, withSafeAreaView} =
     route?.params ?? {
       category: 'user',
@@ -73,7 +73,10 @@ export default function SelectVehicleScreen() {
       >
         <TicDriveNavbar />
         <View className="flex-1 justify-between mx-2.5">
-          <Text className="text-2xl font-medium text-center mb-4">
+          <Text
+            allowFontScaling={false}
+            className="text-2xl font-medium text-center mb-4"
+          >
             {t('service.chooseVehicle')}
           </Text>
 
@@ -81,7 +84,10 @@ export default function SelectVehicleScreen() {
             {loadingCustomerCars ? (
               <TicDriveSpinner />
             ) : registeredCars?.length === 0 ? (
-              <Text className="text-center text-base text-gray-500">
+              <Text
+                allowFontScaling={false}
+                className="text-center text-base text-gray-500"
+              >
                 {t('vehicles.noVehiclesMessage')}
               </Text>
             ) : (
@@ -103,9 +109,13 @@ export default function SelectVehicleScreen() {
             )}
           </ScrollView>
 
-          <Text className="text-center text-gray-600 text-base mt-6 mb-2">
+          <Text
+            allowFontScaling={false}
+            className="text-center text-gray-600 text-base mt-6 mb-2"
+          >
             {t('logic.or')}
           </Text>
+
           {registeredCars && registeredCars.length === 0 && (
             <View className="absolute top-0 left-0 right-0 bottom-0 justify-center items-center">
               <Image

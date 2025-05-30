@@ -9,7 +9,7 @@ import navigationPush from '@/services/navigation/push';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
 import useCustomerCars from '@/hooks/api/cars/useCustomerCars';
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useCallback} from 'react';
 import CarDetailsMiniCard from '@/components/ui/cards/cars/CarDetailsMiniCard';
 import {ScrollView} from 'react-native-gesture-handler';
 import CarDetailsCard from '@/components/ui/cards/cars/CarDetailsCard';
@@ -40,12 +40,14 @@ const UserVehiclesScreen = () => {
     fetchCars();
   }, []);
 
-  useFocusEffect(() => {
-    if (customerCarDeleted) {
-      fetchCars();
-      dispatch(setCustomerCarDeleted(false));
-    }
-  });
+  useFocusEffect(
+    useCallback(() => {
+      if (customerCarDeleted) {
+        fetchCars();
+        dispatch(setCustomerCarDeleted(false));
+      }
+    }, [customerCarDeleted]),
+  );
 
   const handleOnMiniCarCardPress = (car: Car) => {
     navigationPush(navigation, 'UserVehicleDetailsScreen', {car});
@@ -56,7 +58,7 @@ const UserVehiclesScreen = () => {
       <TicDriveNavbar />
       <View className="mx-2.5 flex-1">
         <View className="mx-2.5">
-          <Text className="font-medium text-2xl mb-2">
+          <Text className="font-medium text-2xl mb-2" allowFontScaling={false}>
             {t('vehicles.myVehicles')}
           </Text>
           <CrossPlatformButtonLayout
@@ -79,18 +81,27 @@ const UserVehiclesScreen = () => {
           <>
             {cars.length === 0 && (
               <View className="mt-6 flex-row flex-wrap justify-center">
-                <Text className="text-base text-gray-500">
+                <Text
+                  className="text-base text-gray-500"
+                  allowFontScaling={false}
+                >
                   {t('vehicles.noVehiclesMessage')}
                 </Text>
                 <CrossPlatformButtonLayout
                   onPress={onRegisterVehicle}
                   containerTailwindCss="ml-1 justify-center"
                 >
-                  <Text className="text-drive font-semibold">
+                  <Text
+                    className="text-drive font-semibold"
+                    allowFontScaling={false}
+                  >
                     {t('vehicles.registerVehicle')}
                   </Text>
                 </CrossPlatformButtonLayout>
-                <Text className="text-base text-gray-500">
+                <Text
+                  className="text-base text-gray-500"
+                  allowFontScaling={false}
+                >
                   {' '}
                   {t('vehicles.addFirstCar')}
                 </Text>

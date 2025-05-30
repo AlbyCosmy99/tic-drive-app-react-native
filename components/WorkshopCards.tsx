@@ -1,26 +1,31 @@
-import React, {memo, useContext, useEffect, useMemo} from 'react';
+import React, {memo, useContext, useEffect, useMemo, useState} from 'react';
 import {Text, View} from 'react-native';
-import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
-import navigationPush from '@/services/navigation/push';
-import TicDriveButton from './ui/buttons/TicDriveButton';
-import navigationReset from '@/services/navigation/reset';
+import {useTranslation} from 'react-i18next';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import {useFocusEffect} from 'expo-router';
+
+import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
-import TicDriveInfinitePaginationList from './ui/Lists/TicDriveInfinitePaginationList';
-import {useState} from 'react';
-import Workshop from '@/types/workshops/Workshop';
-import WorkshopCard from './WorkshopCard';
-import CrossPlatformButtonLayout from './ui/buttons/CrossPlatformButtonLayout';
 import useJwtToken from '@/hooks/auth/useJwtToken';
+
+import TicDriveInfinitePaginationList from './ui/Lists/TicDriveInfinitePaginationList';
+import CrossPlatformButtonLayout from './ui/buttons/CrossPlatformButtonLayout';
+import TicDriveButton from './ui/buttons/TicDriveButton';
+import WorkshopCard from './WorkshopCard';
+
+import navigationPush from '@/services/navigation/push';
+import navigationReset from '@/services/navigation/reset';
+
 import getAllWorkshops from '@/services/http/requests/get/workshops/getAllWorkshops';
 import getFavoriteWorkshops from '@/services/http/requests/get/workshops/getFavoriteWorkshops';
 import getNearbyWorkshops from '@/services/http/requests/get/workshops/getNearbyWorkshops';
-import {useTranslation} from 'react-i18next';
+
 import {
   setService,
   setWorkshop,
 } from '@/stateManagement/redux/slices/bookingSlice';
+
+import Workshop from '@/types/workshops/Workshop';
 
 interface WorkshopCardsProps {
   setAreNoWorkshop?: (areNoWorkshops: boolean) => void;
@@ -40,37 +45,43 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
   const workshopsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
   const [workshops, setWorkshops] = useState<Workshop[]>([]);
-  const [loadingWorkshops, setLoadingWorkshops] = useState(false);
   const [count, setCount] = useState(0);
+  const [loadingWorkshops, setLoadingWorkshops] = useState(false);
 
+  const token = useJwtToken();
+  const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.auth.user);
+  const services = useAppSelector(state => state.booking.services);
 
   const commonOffset = useMemo(
     () => (currentPage - 1) * workshopsPerPage,
-    [currentPage, workshopsPerPage],
+    [currentPage],
   );
 
-  const [debouncedFilter, setDebouncedFilter] = useState<string>(
-    workshopFilter ?? '',
-  );
+  const [debouncedFilter, setDebouncedFilter] = useState(workshopFilter ?? '');
 
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedFilter(workshopFilter ?? '');
     }, 500);
-
-    return () => {
-      clearTimeout(handler);
-    };
+    return () => clearTimeout(handler);
   }, [workshopFilter]);
 
-  const dispatch = useAppDispatch();
-  const token = useJwtToken();
-  const services = useAppSelector(state => state.booking.services);
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [workshopFilter, order]);
+
+  useEffect(() => {
+    setAreNoWorkshop(false);
+  }, [workshopFilter]);
+
+  useFocusEffect(() => {
+    dispatch(setWorkshop(undefined));
+  });
 
   const fetchAllWorkshops = async () => {
     setLoadingWorkshops(true);
-    const response = await getAllWorkshops(
+    const res = await getAllWorkshops(
       token ?? '',
       commonOffset,
       workshopsPerPage,
@@ -78,28 +89,28 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
       services[services.length - 1]?.id,
       {order, filter: workshopFilter},
     );
-    setWorkshops(response.data.workshops);
-    setCount(response.data.count);
+    setWorkshops(res.data.workshops);
+    setCount(res.data.count);
     setLoadingWorkshops(false);
   };
 
   const fetchFavoriteWorkshops = async () => {
     setLoadingWorkshops(true);
-    const response = await getFavoriteWorkshops(
+    const res = await getFavoriteWorkshops(
       token ?? '',
       commonOffset,
       workshopsPerPage,
       debouncedFilter,
       {order, filter: workshopFilter},
     );
-    setWorkshops(response.data.workshops);
-    setCount(response.data.count);
+    setWorkshops(res.data.workshops);
+    setCount(res.data.count);
     setLoadingWorkshops(false);
   };
 
   const fetchNearbyWorkshops = async () => {
     setLoadingWorkshops(true);
-    const response = await getNearbyWorkshops(
+    const res = await getNearbyWorkshops(
       token ?? '',
       commonOffset,
       workshopsPerPage,
@@ -111,13 +122,15 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
       services[services.length - 1]?.id,
       {order, filter: workshopFilter},
     );
-    if (response.data.count > 0) {
-      setWorkshops(response.data.nearbyWorkshops);
-      setCount(response.data.count);
-      setLoadingWorkshops(false);
+
+    if (res.data.count > 0) {
+      setWorkshops(res.data.nearbyWorkshops);
+      setCount(res.data.count);
     } else {
-      fetchAllWorkshops();
+      await fetchAllWorkshops(); // fallback
     }
+
+    setLoadingWorkshops(false);
   };
 
   useEffect(() => {
@@ -127,18 +140,6 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
       fetchNearbyWorkshops();
     }
   }, [token, commonOffset, debouncedFilter, order]);
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [workshopFilter, order]);
-
-  useEffect(() => {
-    setAreNoWorkshop(false);
-  }, [workshopFilter, setAreNoWorkshop]);
-
-  useFocusEffect(() => {
-    dispatch(setWorkshop(undefined));
-  });
 
   const handleChooseDifferentService = () => {
     dispatch(setService(undefined));
@@ -163,9 +164,13 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
       setCurrentPage={setCurrentPage}
       noDataContent={
         <View className="flex-1 justify-center items-center mx-2.5">
-          <Text className="text-lg text-gray-600 text-center">
+          <Text
+            className="text-lg text-gray-600 text-center"
+            allowFontScaling={false}
+          >
             {t('workshops.notFound')}
           </Text>
+
           <TicDriveButton
             text={t('workshops.lookDifferentService')}
             onClick={handleChooseDifferentService}

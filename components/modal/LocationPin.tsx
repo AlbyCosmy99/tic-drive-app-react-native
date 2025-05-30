@@ -7,17 +7,23 @@ export default function LocationPin() {
 
   return (
     <View className="flex-row items-center px-4 pt-1 pb-1">
-      <PinLocation width={16} height={16} />
+      <PinLocation width={16} height={16} accessibilityLabel="Location icon" />
       {userAddress ? (
         <Text
           className="ml-1 text-sm font-medium text-gray-700"
           numberOfLines={1}
           ellipsizeMode="tail"
+          allowFontScaling={false}
         >
           {userAddress}
         </Text>
       ) : (
-        <Text>Share location to display your address</Text>
+        <Text
+          className="ml-1 text-sm font-medium text-gray-500"
+          allowFontScaling={false}
+        >
+          Share location to display your address
+        </Text>
       )}
     </View>
   );

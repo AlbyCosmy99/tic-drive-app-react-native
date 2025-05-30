@@ -110,7 +110,10 @@ export default function UserBookings() {
       <SafeAreaViewLayout disabled={!isAndroidPlatform()}>
         {token ? (
           <View className="mx-2.5 flex-1 mb-4">
-            <Text className="font-medium text-2xl text-center">
+            <Text
+              allowFontScaling={false}
+              className="font-medium text-2xl text-center"
+            >
               {t('bookings.title')}
             </Text>
 
@@ -123,9 +126,12 @@ export default function UserBookings() {
                   }
                   className={`flex-1 items-center py-2 rounded-full ${activeTab === tab ? 'bg-white' : ''}`}
                 >
-                  <Text className="font-medium capitalize">
+                  <Text
+                    allowFontScaling={false}
+                    className="font-medium capitalize"
+                  >
                     {tab === 'active'
-                      ? t('bookingsTabs.active', 'Attiv')
+                      ? t('bookingsTabs.active', 'Attivi')
                       : tab === 'past'
                         ? t('bookingsTabs.past', 'Passati')
                         : t('bookingsTabs.cancelled', 'Cancellati')}
@@ -138,7 +144,10 @@ export default function UserBookings() {
               <TicDriveSpinner />
             ) : cars.length === 0 ? (
               <CrossPlatformButtonLayout onPress={onRegisterVehicle}>
-                <Text className="text-center text-lg font-semibold mt-6 underline">
+                <Text
+                  allowFontScaling={false}
+                  className="text-center text-lg font-semibold mt-6 underline"
+                >
                   {t('vehicles.registerVehicleForBookings')}
                 </Text>
               </CrossPlatformButtonLayout>
@@ -146,7 +155,10 @@ export default function UserBookings() {
               <ScrollView showsVerticalScrollIndicator={false}>
                 {cars.map(car => (
                   <View key={car.id} className="mt-6">
-                    <Text className="text-xl font-semibold text-center mb-2">
+                    <Text
+                      allowFontScaling={false}
+                      className="text-xl font-semibold text-center mb-2"
+                    >
                       {car.make} {car.model} ({car.plateNumber})
                     </Text>
                     <CarDetailsMiniCard
@@ -157,7 +169,6 @@ export default function UserBookings() {
                       CV={car.powerCV}
                       plateNumber={car.plateNumber}
                     />
-
                     {appointments.map(appointment => (
                       <PaymentConfirmationCard
                         key={appointment.id}

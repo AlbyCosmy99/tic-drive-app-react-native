@@ -118,7 +118,7 @@ export default function ReviewBookingDetailsScreen() {
       <SafeAreaViewLayout styles={[styles.container]}>
         <TicDriveNavbar
           topContent={
-            <Text className="font-semibold text-lg">
+            <Text allowFontScaling={false} className="font-semibold text-lg">
               {t('reviewBooking.details')}
             </Text>
           }
@@ -148,7 +148,10 @@ export default function ReviewBookingDetailsScreen() {
                 )}
                 <View>
                   <View className="flex flex-row items-center gap-1">
-                    <Text className="text-xl font-medium">
+                    <Text
+                      allowFontScaling={false}
+                      className="text-xl font-medium"
+                    >
                       {workshop?.workshopName}
                     </Text>
                     {workshop?.isVerified && <Verified width={24} />}
@@ -191,17 +194,20 @@ export default function ReviewBookingDetailsScreen() {
               </View>
             </View>
             <View className="my-3">
-              <Text className="text-tic text-sm font-medium mb-3">
+              <Text
+                allowFontScaling={false}
+                className="text-tic text-sm font-medium mb-3"
+              >
                 {t('reviewBooking.subtotal')}
               </Text>
               <View className="border rounded-xl border-slate-200 p-4">
                 <View className="flex flex-column justify-between items-end gap-y-1">
-                  <Text className="text-sm text-tic">
+                  <Text allowFontScaling={false} className="text-sm text-tic">
                     {t('reviewBooking.serviceWithName', {
                       name: getFullServiceName(servicesChoosen),
                     })}
                   </Text>
-                  <Text>{price}</Text>
+                  <Text allowFontScaling={false}>{price}</Text>
                 </View>
                 <View
                   style={styles.promoCodeContainer}
@@ -209,26 +215,35 @@ export default function ReviewBookingDetailsScreen() {
                 >
                   <TextInput
                     placeholder={t('reviewBooking.promoCode')}
+                    allowFontScaling={false}
                     style={{flex: 1}}
                   />
                   <Pressable>
-                    <Text className="text-drive">
+                    <Text allowFontScaling={false} className="text-drive">
                       {t('reviewBooking.apply')}
                     </Text>
                   </Pressable>
                 </View>
                 <HorizontalLine />
                 <View className="flex flex-row justify-between items-center mt-2">
-                  <Text className="text-base text-tic">
+                  <Text allowFontScaling={false} className="text-base text-tic">
                     {t('reviewBooking.total')}
                   </Text>
-                  <Text className="text-lg font-medium">{price}</Text>
+                  <Text
+                    allowFontScaling={false}
+                    className="text-lg font-medium"
+                  >
+                    {price}
+                  </Text>
                 </View>
               </View>
             </View>
             <View>
               <View className="flex flex-row justify-between items-center mb-3">
-                <Text className="text-tic text-sm font-medium">
+                <Text
+                  allowFontScaling={false}
+                  className="text-tic text-sm font-medium"
+                >
                   {t('reviewBooking.paymentMethod')}
                 </Text>
               </View>
@@ -245,10 +260,12 @@ export default function ReviewBookingDetailsScreen() {
         <HorizontalLine />
         <View>
           <View className="flex flex-row justify-between items-center mt-2 px-4">
-            <Text className="text-base text-tic">
+            <Text allowFontScaling={false} className="text-base text-tic">
               {t('reviewBooking.total')}
             </Text>
-            <Text className="text-xl font-medium">{price}</Text>
+            <Text allowFontScaling={false} className="text-xl font-medium">
+              {price}
+            </Text>
           </View>
           <View className="flex flex-row">
             {!navigation?.canGoBack?.() && (
