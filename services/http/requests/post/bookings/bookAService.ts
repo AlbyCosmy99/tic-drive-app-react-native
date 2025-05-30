@@ -9,7 +9,7 @@ const bookAService = (
   appointmentDate: Date
 ) => {
   return axiosClient.post(
-    "/api/bookings",
+    "bookings",
     {
       workshopId,
       serviceId,

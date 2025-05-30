@@ -39,6 +39,8 @@ import {setWorkshop} from '@/stateManagement/redux/slices/bookingSlice';
 import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 import bookAService from '@/services/http/requests/post/bookings/bookAService';
+import parseStringTimeToDate from '@/utils/dates/parseStringTimeToDate';
+import navigationReset from '@/services/navigation/reset';
 
 export default function ReviewBookingDetailsScreen() {
   const {t} = useTranslation();
@@ -100,8 +102,12 @@ export default function ReviewBookingDetailsScreen() {
         Number(
           formatPrice(workshop?.servicePrice ?? 0, workshop?.discount ?? 0),
         ),
-        new Date(time),
+        parseStringTimeToDate(time),
       );
+
+      navigationReset(navigation, 0, 'BookingConfirmationScreen', {
+        workshop,
+      });
     } catch (e: any) {
       setErrorMessage(e.message);
     }
@@ -271,9 +277,6 @@ export default function ReviewBookingDetailsScreen() {
                 toTop={true}
                 customContainerStyle={{marginLeft: 7}}
                 text={t('reviewBooking.bookNow')}
-                routeName="userTabs"
-                routeParams={{animation: 'fade'}}
-                stateRouteName="Home"
                 onClick={onbookAService}
               />
             </View>
