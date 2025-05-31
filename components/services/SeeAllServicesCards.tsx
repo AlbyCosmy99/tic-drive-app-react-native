@@ -156,7 +156,7 @@ const SeeAllServicesCards = forwardRef(
                   <Text
                     className="text-sm font-medium text-center"
                     allowFontScaling={false}
-                    numberOfLines={1}
+                    numberOfLines={2}
                     ellipsizeMode="tail"
                   >
                     {service.title}
