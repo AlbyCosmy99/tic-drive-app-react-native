@@ -1,6 +1,7 @@
 import {Text, View} from 'react-native';
 import NissanLogo from '@/assets/svg/carLogos/nissan.svg'; // Fallback default
 import {FuelType} from '@/types/Car';
+import SvgFromUrl from '../../svg/SvgFromUrl';
 
 interface CarDetailsMiniCardProps {
   make: string;
@@ -9,6 +10,7 @@ interface CarDetailsMiniCardProps {
   fuel: FuelType;
   CV?: number;
   plateNumber?: string;
+  imageUrl?: string;
 }
 
 const CarDetailsMiniCard: React.FC<CarDetailsMiniCardProps> = ({
@@ -18,10 +20,8 @@ const CarDetailsMiniCard: React.FC<CarDetailsMiniCardProps> = ({
   fuel,
   CV,
   plateNumber,
+  imageUrl,
 }) => {
-  // Optional: dynamic logo resolution based on make
-  const CarLogo = NissanLogo; // Replace with a switch or dynamic import logic
-
   return (
     <View
       className="bg-white rounded-2xl shadow-md flex-row justify-between items-center mx-2.5 my-3 px-6 py-2"
@@ -53,9 +53,11 @@ const CarDetailsMiniCard: React.FC<CarDetailsMiniCardProps> = ({
           </Text>
         )}
       </View>
-      <View className="items-end">
-        <CarLogo width={36} height={36} />
-      </View>
+      {imageUrl && (
+        <View>
+          <SvgFromUrl url={imageUrl} size={60} />
+        </View>
+      )}
     </View>
   );
 };

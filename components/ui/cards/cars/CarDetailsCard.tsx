@@ -1,6 +1,6 @@
 import CarDetailsLayout from '@/app/layouts/vehicles/CarDetailsLayout';
 import Car from '@/types/Car';
-import {Text, View} from 'react-native';
+import {Image, Text, View} from 'react-native';
 import CrossPlatformButtonLayout from '../../buttons/CrossPlatformButtonLayout';
 import TicDriveModal from '@/components/ui/modals/TicDriveModal';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
@@ -54,12 +54,12 @@ const CarDetailsCard: React.FC<CarDetailsCardProps> = ({car}) => {
       </View>
 
       <TicDriveModal
-        title={t('vehicles.deleteVehicle')}
-        content={t('vehicles.deleteConfirmation')}
+        title="Elimina veicolo"
+        content="Sei sicuro di voler eliminare il veicolo?"
         visible={showModal}
         onClose={() => setShowModal(false)}
         onConfirm={handleDelete}
-        confirmText={t('vehicles.confirmDelete')}
+        confirmText="Elimina"
         cancelText={t('common.cancel')}
         confirmButtonStyle={{backgroundColor: '#E53935'}}
       />

@@ -124,6 +124,7 @@ const UserVehiclesScreen = () => {
                       fuel={car.fuel}
                       CV={car.powerCV}
                       plateNumber={car.plateNumber}
+                      imageUrl={car.logoUrl}
                     />
                   </CrossPlatformButtonLayout>
                 ))}

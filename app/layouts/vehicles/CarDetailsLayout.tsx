@@ -1,9 +1,10 @@
-import {ActivityIndicator, View} from 'react-native';
+import {ActivityIndicator, Image, Text, View} from 'react-native';
 import Car from '@/types/Car';
 import RegistrationCarDetailCard from '@/components/ui/cards/cars/RegistrationCarDetailCard';
 import HorizontalLine from '@/components/ui/HorizontalLine';
 import {Colors} from '@/constants/Colors';
 import {useTranslation} from 'react-i18next';
+import SvgFromUrl from '@/components/ui/svg/SvgFromUrl';
 
 interface CarDetailsGeneralProps {
   carSelected: Car;
@@ -24,9 +25,12 @@ const CarDetailsLayout: React.FC<CarDetailsGeneralProps> = ({
       />
     );
   }
+  console.log(carSelected);
 
   return (
     <View className="mx-3 p-4 border-2 border-grey-light rounded-xl">
+      <Text>{carSelected.logoUrl}</Text>
+
       <View className="mb-2 space-y-1">
         <RegistrationCarDetailCard
           title={t('vehicles.make')}

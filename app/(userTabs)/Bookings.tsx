@@ -168,6 +168,7 @@ export default function UserBookings() {
                       fuel={car.fuel}
                       CV={car.powerCV}
                       plateNumber={car.plateNumber}
+                      imageUrl={car.logoUrl}
                     />
                     {appointments.map(appointment => (
                       <PaymentConfirmationCard
