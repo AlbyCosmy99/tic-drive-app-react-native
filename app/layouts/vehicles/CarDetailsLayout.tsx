@@ -28,8 +28,10 @@ const CarDetailsLayout: React.FC<CarDetailsGeneralProps> = ({
   console.log(carSelected);
 
   return (
-    <View className="mx-3 p-4 border-2 border-grey-light rounded-xl">
-      <Text>{carSelected.logoUrl}</Text>
+    <View className="mx-3 mt-4 p-4 pt-0 border-2 border-grey-light rounded-xl">
+      <View className="h-28 flex items-center justify-center mb-1">
+        {carSelected.logoUrl && <SvgFromUrl url={carSelected.logoUrl} />}
+      </View>
 
       <View className="mb-2 space-y-1">
         <RegistrationCarDetailCard

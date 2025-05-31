@@ -9,6 +9,7 @@ import {useState} from 'react';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import {setCustomerCarDeleted} from '@/stateManagement/redux/slices/carsSlice';
 import {useTranslation} from 'react-i18next';
+import SvgFromUrl from '../../svg/SvgFromUrl';
 
 interface CarDetailsCardProps {
   car: Car;
