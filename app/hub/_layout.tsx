@@ -1,6 +1,10 @@
 import {View} from 'react-native';
 import {useContext, useEffect, useRef} from 'react';
-import {login, logout, setToken} from '@/stateManagement/redux/slices/authSlice';
+import {
+  login,
+  logout,
+  setToken,
+} from '@/stateManagement/redux/slices/authSlice';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import * as SplashScreen from 'expo-splash-screen';
 import {useNavigation} from '@react-navigation/native';
@@ -47,13 +51,13 @@ const Hub = () => {
               });
             }
           } catch (err) {
-            console.error(err)
-            console.log(err)
+            console.error(err);
+            console.log(err);
             //if here, probably token is in secureStore but user is not registered in db - to solve, we make the user remove token from secureStore and retry
             console.error('error while getting user data.');
             navigationReset(navigation, 0, 'userTabs', {animation: 'fade'});
             await removeSecureToken();
-            dispatch(logout())
+            dispatch(logout());
           }
         } else {
           navigationReset(navigation, 0, 'userTabs', {animation: 'fade'});

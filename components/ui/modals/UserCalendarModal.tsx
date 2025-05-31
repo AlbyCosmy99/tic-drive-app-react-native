@@ -338,7 +338,10 @@ const UserCalendarModal = forwardRef<
                   {!selectedDate && !loadinghours ? (
                     <View className="h-[420px]">
                       <View className="mb-1">
-                        <Text style={styles.sectionTitle}>
+                        <Text
+                          style={styles.sectionTitle}
+                          allowFontScaling={false}
+                        >
                           {t('date.selectADate').toUpperCase()}
                         </Text>
                       </View>
@@ -415,6 +418,7 @@ const UserCalendarModal = forwardRef<
                                 fontWeight: '600',
                                 color: Colors.light.green.drive,
                               }}
+                              allowFontScaling={false}
                               className="text-xl"
                             >
                               {new Date(selectedDate)
@@ -435,11 +439,15 @@ const UserCalendarModal = forwardRef<
                                   color: '#999',
                                   textDecorationLine: 'underline',
                                 }}
+                                allowFontScaling={false}
                               >
                                 {t('date.changeDay')}
                               </Text>
                             </TouchableOpacity>
-                            <Text style={styles.sectionTitle}>
+                            <Text
+                              style={styles.sectionTitle}
+                              allowFontScaling={false}
+                            >
                               {t('date.chooseSlot').toUpperCase()}
                             </Text>
                             <ScrollView
@@ -451,7 +459,10 @@ const UserCalendarModal = forwardRef<
                                   key={label}
                                   style={styles.timeSlotSection}
                                 >
-                                  <Text style={styles.timeSlotLabel}>
+                                  <Text
+                                    style={styles.timeSlotLabel}
+                                    allowFontScaling={false}
+                                  >
                                     {label === 'morning'
                                       ? t('date.days.morning')
                                       : t('date.days.afternoon')}
@@ -477,6 +488,7 @@ const UserCalendarModal = forwardRef<
                                             selectedTime === time &&
                                               styles.selectedSlotText,
                                           ]}
+                                          allowFontScaling={false}
                                         >
                                           {time}
                                         </Text>

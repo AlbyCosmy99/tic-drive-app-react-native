@@ -1,4 +1,3 @@
-import {Text, View} from 'react-native';
 import {WebView} from 'react-native-webview';
 
 interface SvgFromUrlProps {

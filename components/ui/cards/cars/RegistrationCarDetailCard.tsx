@@ -11,12 +11,22 @@ const RegistrationCarDetailCard: React.FC<RegistrationCarDetailCardProps> = ({
   value,
 }) => {
   return (
-    <View className="flex flex-row mb-1">
-      <View className="flex-1">
-        <Text className="text-base font-medium text-tic ">{title}:</Text>
+    <View className="flex flex-row mb-1 items-start">
+      <View className="flex-1 pr-1">
+        <Text
+          className="text-base font-medium text-tic"
+          allowFontScaling={false}
+        >
+          {title}:
+        </Text>
       </View>
-      <View className="flex-1">
-        <Text className="text-base font-medium">{value}</Text>
+      <View className="flex-1 pl-1">
+        <Text
+          className="text-base font-medium text-gray-800"
+          allowFontScaling={false}
+        >
+          {value?.trim() ? value : '—'}
+        </Text>
       </View>
     </View>
   );

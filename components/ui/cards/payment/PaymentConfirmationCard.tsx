@@ -46,6 +46,7 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
     useState(false);
   const [workshopDetailed, setWorkshopDetailed] = useState(workshop);
   const {setErrorMessage} = useGlobalErrors();
+
   useEffect(() => {
     const fetchServiceOfferedDetails = async () => {
       try {
@@ -90,7 +91,7 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
     <View className="rounded-lg border p-4 pt-0 border-grey-light w-full">
       <View className="flex flex-row my-4 justify-between items-start">
         <View className="flex-row">
-          {workshopDetailed?.images?.length && (
+          {workshopDetailed?.images?.length ? (
             <Image
               source={{uri: getUserMainImage(workshopDetailed.images)?.url}}
               containerStyle={styles.image}
@@ -101,9 +102,11 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
                 />
               }
             />
-          )}
+          ) : null}
+
           <View>
             <Text
+              allowFontScaling={false}
               className={clsx(
                 'text-xs font-medium',
                 type === 'Confirmed' ? 'text-drive' : 'text-[#D28B30]',
@@ -111,12 +114,15 @@ const PaymentConfirmationCard: React.FC<PaymentConfirmationCardProps> = ({
             >
               {type}
             </Text>
-            <Text className="font-medium text-xl">
+            <Text allowFontScaling={false} className="font-medium text-xl">
               {workshopDetailed?.workshopName}
             </Text>
             {(service || servicesChoosen.length > 0) && (
               <View className="bg-green-light p-1.5 rounded self-start mt-1">
-                <Text className="text-green-dark font-semibold">
+                <Text
+                  allowFontScaling={false}
+                  className="text-green-dark font-semibold"
+                >
                   {service || getFullServiceName(servicesChoosen)}
                 </Text>
               </View>

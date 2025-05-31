@@ -1,5 +1,4 @@
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
-import {PaymentType} from '@/types/payment/UserPaymentInfo';
 import {useContext, useEffect, useState} from 'react';
 import {Pressable, Text, View} from 'react-native';
 
@@ -21,10 +20,9 @@ const PaymentCard: React.FC<PaymentCardProps> = ({
   const [isDefault, setIsDefault] = useState(false);
   const {userPaymentInfo, setUserPaymentInfo} = useContext(GlobalContext);
   const [isCustomCard, setIsCustomCard] = useState(false);
+
   useEffect(() => {
-    userPaymentInfo?.choosenCard?.id === id
-      ? setIsDefault(true)
-      : setIsDefault(false);
+    setIsDefault(userPaymentInfo?.choosenCard?.id === id);
     setIsCustomCard(
       !!userPaymentInfo?.customPaymentTypes.find(type => type.id === id),
     );
@@ -50,22 +48,35 @@ const PaymentCard: React.FC<PaymentCardProps> = ({
       </View>
       <View className="mx-3">
         <View className="mb-2">
-          <Text className="text-base font-medium">{paymentType}</Text>
-          {/* todo: da rimettere appena si abilita la possibilita di pagare in app */}
-          {/* <Text className="text-tic text-sm">{userName}</Text> */}
+          <Text allowFontScaling={false} className="text-base font-medium">
+            {paymentType}
+          </Text>
+          {/* <Text allowFontScaling={false} className="text-tic text-sm">
+            {userName}
+          </Text> */}
         </View>
         {optionsVisible && isCustomCard && (
           <View className="flex flex-row gap-8">
             <Pressable onPress={() => onDeleteCard(id)}>
-              <Text className="font-semibold text-sm text-tic">Delete</Text>
+              <Text
+                allowFontScaling={false}
+                className="font-semibold text-sm text-tic"
+              >
+                Delete
+              </Text>
             </Pressable>
-            <Text className="font-semibold text-sm text-drive">Edit</Text>
+            <Text
+              allowFontScaling={false}
+              className="font-semibold text-sm text-drive"
+            >
+              Edit
+            </Text>
           </View>
         )}
       </View>
-      {/* todo: da rimettere appena si abilita la possibilita di pagare in app */}
+
       {/* {isDefault && (
-        <Text className="absolute bg-green-light text-tic p-2 py-1 rounded-md top-3 right-3">
+        <Text allowFontScaling={false} className="absolute bg-green-light text-tic p-2 py-1 rounded-md top-3 right-3">
           Default
         </Text>
       )} */}
