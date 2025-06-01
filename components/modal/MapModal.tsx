@@ -7,7 +7,6 @@ import {
   Platform,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  Image,
 } from 'react-native';
 import MapView from 'react-native-map-clustering';
 import {Marker, Region, PROVIDER_DEFAULT} from 'react-native-maps';
@@ -24,6 +23,7 @@ import useJwtToken from '@/hooks/auth/useJwtToken';
 import getAllWorkshops from '@/services/http/requests/get/workshops/getAllWorkshops';
 import {setWorkshop} from '@/stateManagement/redux/slices/bookingSlice';
 import formatPrice from '@/utils/currency/formatPrice.';
+import WorkshopCard from '../WorkshopCard';
 
 interface MapModalProps {
   setIsMapVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -33,9 +33,7 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
   const navigation = useTicDriveNavigation();
   const dispatch = useAppDispatch();
 
-  const [initialRegion, setInitialRegion] = useState<Region | undefined>(
-    undefined,
-  );
+  const [initialRegion, setInitialRegion] = useState<Region | undefined>();
   const [poiMarkers, setPoiMarkers] = useState<POIMarker[]>([]);
   const [selectedPOI, setSelectedPOI] = useState<POIMarker | null>(null);
   const [workshops, setWorkshops] = useState<Workshop[]>([]);
@@ -45,7 +43,6 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
   const user = useAppSelector(state => state.auth.user);
   const token = useJwtToken();
   const services = useAppSelector(state => state.booking.services);
-
   const {loading: loadingLocation, userLocation} = useUserLocation();
   const hasFetchedNearby = useRef(false);
 
@@ -70,7 +67,6 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
     }
 
     setLoadingWorkshops(true);
-
     try {
       const response = await getNearbyWorkshops(
         token ?? '',
@@ -105,7 +101,6 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
       const latitudeDelta = (radiusInKm * 2) / 111;
       const longitudeDelta =
         (radiusInKm * 2) / (111 * Math.cos((lat * Math.PI) / 180));
-
       setInitialRegion({
         latitude: lat,
         longitude: user.coordinates.longitude,
@@ -206,7 +201,7 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
 
         {selectedPOI && (
           <Modal
-            animationType="slide"
+            animationType="fade"
             transparent
             visible
             onRequestClose={() => setSelectedPOI(null)}
@@ -215,31 +210,17 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
               <View style={styles.previewBackdrop}>
                 <TouchableWithoutFeedback>
                   <View style={styles.previewCard}>
-                    <View style={styles.imageContainer}>
-                      {selectedPOI.workshop.images[0].url && (
-                        <Image
-                          source={{uri: selectedPOI.workshop.images[0].url}}
-                          style={styles.workshopImage}
-                        />
-                      )}
-                      <TouchableOpacity
-                        onPress={() => setSelectedPOI(null)}
-                        style={styles.modalCloseButton}
-                      >
-                        <Ionicons name="close" size={22} color="#fff" />
-                      </TouchableOpacity>
-                    </View>
-                    <View style={styles.previewHeader}>
-                      <Text style={styles.previewTitle}>
-                        {selectedPOI.workshopName}
-                      </Text>
-                    </View>
-                    <Text style={styles.previewPrice}>
-                      {selectedPOI.price > 0
-                        ? `${selectedPOI.price}${selectedPOI.currency}`
-                        : 'Prezzo non disponibile'}
-                    </Text>
+                    <WorkshopCard workshop={selectedPOI.workshop} />
+
                     <TouchableOpacity
+                      onPress={() => setSelectedPOI(null)}
+                      style={styles.modalCloseButton}
+                    >
+                      <Ionicons name="close" size={22} color="#fff" />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      activeOpacity={0.85}
                       style={styles.viewDetailsButton}
                       onPress={() => {
                         handlePOISelect(selectedPOI);
@@ -286,18 +267,6 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 3,
   },
-  pinLabel: {
-    marginTop: 2,
-    fontSize: 10,
-    fontWeight: '500',
-    color: '#333',
-    paddingHorizontal: 4,
-    borderRadius: 4,
-    overflow: 'hidden',
-    maxWidth: 100,
-    textAlign: 'center',
-    backgroundColor: 'white',
-  },
   closeButton: {
     position: 'absolute',
     top: Platform.OS === 'ios' ? 60 : 40,
@@ -312,17 +281,6 @@ const styles = StyleSheet.create({
     elevation: 4,
     zIndex: 30,
   },
-  noResultsContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 20,
-  },
-  noResultsText: {
-    fontSize: 16,
-    color: '#666',
-    textAlign: 'center',
-  },
   loadingOverlay: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
@@ -333,66 +291,41 @@ const styles = StyleSheet.create({
   previewBackdrop: {
     flex: 1,
     justifyContent: 'flex-end',
-    backgroundColor: 'transparent',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
   },
   previewCard: {
     backgroundColor: '#fff',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    paddingBottom: 20,
+    paddingBottom: 24,
     paddingHorizontal: 24,
-    paddingTop: 10,
+    paddingTop: 16,
     shadowColor: '#000',
     shadowOffset: {width: 0, height: -2},
     shadowOpacity: 0.08,
     shadowRadius: 8,
-    elevation: 6,
-  },
-  imageContainer: {
-    position: 'relative',
+    elevation: 10,
+    height: 400,
   },
   modalCloseButton: {
     position: 'absolute',
     top: 10,
     right: 10,
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: 'rgba(0,0,0,0.6)',
     borderRadius: 20,
-    padding: 4,
+    padding: 6,
     zIndex: 10,
-  },
-  workshopImage: {
-    width: '100%',
-    height: 150,
-    borderRadius: 10,
-    marginBottom: 15,
-  },
-  previewHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  previewTitle: {
-    fontSize: 17,
-    fontWeight: '600',
-    color: '#333',
-    flex: 1,
-    paddingRight: 10,
-  },
-  previewPrice: {
-    fontSize: 15,
-    color: '#4CAF50',
-    marginBottom: 20,
   },
   viewDetailsButton: {
     backgroundColor: '#4CAF50',
     borderRadius: 8,
     paddingVertical: 12,
     alignItems: 'center',
+    marginTop: 16,
   },
   viewDetailsText: {
     color: '#fff',
     fontWeight: '600',
-    fontSize: 15,
+    fontSize: 16,
   },
 });
