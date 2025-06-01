@@ -25,6 +25,7 @@ interface Car {
   vin?: string;
   powerCV?: number;
   transmission: transmissionType;
+  logoUrl?: string;
 }
 
 export default Car;

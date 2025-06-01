@@ -140,7 +140,10 @@ export default function ChooseServicesScreen() {
         <TicDriveNavbar />
         <View className="flex-1 justify-between">
           {fatherId ? (
-            <Text className="text-lg font-semibold text-center">
+            <Text
+              className="text-lg font-semibold text-center"
+              allowFontScaling={false}
+            >
               Scegli l'opzione desiderata
             </Text>
           ) : (

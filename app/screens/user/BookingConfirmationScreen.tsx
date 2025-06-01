@@ -17,15 +17,16 @@ import BookingCard from '@/components/ui/cards/bookings/BookingCard';
 
 export default function BookingConfirmationScreen() {
   const dispatch = useAppDispatch();
-
   const {setCarSelectedByMakeAndModel} = useContext(CarContext);
-
   const carSelected = useAppSelector(state => state.booking.car);
-
   const [
     loadingCarRegistrationConfirmation,
     setLoadingCarRegistrationConfirmation,
   ] = useState(true);
+  const user = useAppSelector(state => state.auth.user);
+  const languageCode = useAppSelector(state => state.language.languageCode);
+  const token = useAppSelector(state => state.auth.token);
+  const {setErrorMessage} = useContext(GlobalContext);
 
   const onConfirmToHome = () => {
     dispatch(reset());
@@ -33,12 +34,6 @@ export default function BookingConfirmationScreen() {
       setCarSelectedByMakeAndModel(undefined);
     }
   };
-
-  const user = useAppSelector(state => state.auth.user);
-  const languageCode = useAppSelector(state => state.language.languageCode);
-  const token = useAppSelector(state => state.auth.token);
-
-  const {setErrorMessage} = useContext(GlobalContext);
 
   const confirmCarSelected = async () => {
     try {
@@ -97,17 +92,23 @@ export default function BookingConfirmationScreen() {
           <>
             <View className="flex-1 justify-center items-center mx-2.5">
               <CheckIcon height={60} width={60} />
-              <Text className="font-bold text-2xl mt-2">
+              <Text
+                allowFontScaling={false}
+                className="font-bold text-2xl mt-2"
+              >
                 {t('bookings.confirmed')}!
               </Text>
-              <Text className="text-tic text-base text-center">
+              <Text
+                allowFontScaling={false}
+                className="text-tic text-base text-center"
+              >
                 {t('bookingConfirmation.awaitingWorkshopConfirmation')}
               </Text>
               <View className="flex flex-col items-center justify-center mt-4 mb-6">
-                <Text className="text-sm text-tic">
+                <Text allowFontScaling={false} className="text-sm text-tic">
                   {t('bookingConfirmation.bookingNumber', {number: '00806835'})}
                 </Text>
-                <Text className="text-sm text-tic">
+                <Text allowFontScaling={false} className="text-sm text-tic">
                   {formatCurrentDate(languageCode)}
                 </Text>
               </View>

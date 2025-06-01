@@ -80,7 +80,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
             shadowOffset: {width: 0, height: 5},
             shadowOpacity: 0.17,
             shadowRadius: 5,
-            elevation: 8, // for Android
+            elevation: 8,
             backgroundColor: 'white',
           },
         ]}
@@ -105,6 +105,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
             textTailwindCss={`${workshopNameTextSize} font-semibold ${iconTextPairTextTailwindCss} ${titleTextTailwindCss}`}
             text={workshop.workshopName}
             icon={<GreenCheckIcon />}
+            textProps={{allowFontScaling: false}}
           />
 
           <IconTextPair
@@ -112,32 +113,44 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
             textTailwindCss={`text-sm font-medium underline ${iconTextPairTextTailwindCss}`}
             text={workshop.address}
             icon={<PinLocationIcon />}
+            textProps={{allowFontScaling: false}}
           />
+
           <WorkshopReviewinfo
             meanStars={workshop?.meanStars}
             numberOfReviews={workshop?.numberOfReviews}
             containerTailwindCss={`${isScreenSmall() ? 'py-1' : 'py-1.5'} ${iconTextPairContainerTailwindCss}`}
             textTailwindCss={`text-sm font-medium underline ${iconTextPairTextTailwindCss}`}
+            textProps={{allowFontScaling: false}}
           />
         </View>
+
         {servicesChoosen?.length > 0 && isServiceDetailsEnabled && (
           <CrossPlatformButtonLayout
             buttonTailwindCss="flex-row justify-between items-center border-2 border-grey-light m-2 p-3 mt-0 rounded-lg"
             onPress={() => alert('pressed')}
           >
             <View className="flex-1 pr-4">
-              <Text className="text-base font-medium flex-shrink">
+              <Text
+                allowFontScaling={false}
+                className="text-base font-medium flex-shrink"
+              >
                 {getFullServiceName(servicesChoosen)}
               </Text>
             </View>
 
             <View className="items-end justify-center">
               <View className="flex-row justify-between items-center space-x-2">
-                <Text className="text-base font-medium">
-                  {' '}
+                <Text
+                  allowFontScaling={false}
+                  className="text-base font-medium"
+                >
                   {t('reviewBooking.total')}
                 </Text>
-                <Text className="text-base font-medium">
+                <Text
+                  allowFontScaling={false}
+                  className="text-base font-medium"
+                >
                   {workshop.currency}
                   {formatPrice(
                     workshop.servicePrice ?? 0,
@@ -145,7 +158,10 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
                   )}
                 </Text>
               </View>
-              <Text className="font-medium text-xs text-tic">
+              <Text
+                allowFontScaling={false}
+                className="font-medium text-xs text-tic"
+              >
                 {t('reviewBooking.includesTaxesAndFees')}
               </Text>
             </View>
@@ -162,20 +178,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
   },
-  cardOptionContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 2,
-    borderWidth: 1,
-    borderColor: Colors.light.green.drive,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 50,
-  },
-  cardOption: {
-    fontWeight: '500',
-    fontSize: 16,
-  },
   cardContainer: {
     position: 'relative',
     width: '100%',
@@ -187,58 +189,6 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
-  },
-  heartIcon: {
-    position: 'absolute',
-    top: 20,
-    right: 25,
-    zIndex: 1,
-  },
-  servicePositionContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 3,
-    marginTop: 10,
-  },
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 3,
-    marginTop: 8,
-  },
-  serviceInfo: {
-    color: Colors.light.placeholderText,
-  },
-  expressServiceContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 3,
-  },
-  extraService: {
-    fontSize: 16,
-  },
-  priceContainer: {
-    flexDirection: 'row',
-    gap: 5,
-    marginTop: 10,
-  },
-  strikethroughLine: {
-    position: 'absolute',
-    top: '50%',
-    left: 0,
-    right: 0,
-    height: 2,
-    backgroundColor: 'red',
-  },
-  priceWithDiscount: {
-    color: 'red',
-  },
-  cardOptionsContainer: {
-    flexDirection: 'row',
-    gap: 10,
-    marginTop: 10,
-    marginBottom: 15,
   },
 });
 

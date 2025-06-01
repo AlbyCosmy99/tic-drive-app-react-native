@@ -9,9 +9,10 @@ import {
   View,
   ViewStyle,
   Dimensions,
+  AccessibilityProps,
 } from 'react-native';
 import CheckCircle from '@/assets/svg/check_circle.svg';
-import CarRepair from '@/assets/svg/servicesIcons/car_repair.svg'; // default icon
+import CarRepair from '@/assets/svg/servicesIcons/car_repair.svg';
 import smallDevicebreakpointHeight from '@/constants/dimensions/smallDevicebreakpointHeight';
 import LottieView from 'lottie-react-native';
 import {UserCategory} from '@/types/User';
@@ -27,7 +28,7 @@ import CrossPlatformButtonLayout from './ui/buttons/CrossPlatformButtonLayout';
 
 const {height} = Dimensions.get('window');
 
-interface ServicesCardProps {
+interface ServicesCardProps extends AccessibilityProps {
   id: number;
   title?: string;
   description?: string;
@@ -81,8 +82,29 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
     }
   };
 
+  const RenderedIcon = useMemo(() => {
+    if (!isIconVisible || !icon) return null;
+
+    return typeof icon === 'string' ? (
+      <Image
+        source={{uri: icon}}
+        style={{width: iconWidth, height: iconHeight}}
+        resizeMode="contain"
+      />
+    ) : (
+      React.createElement(icon, {
+        width: iconWidth,
+        height: iconHeight,
+      })
+    );
+  }, [icon, isIconVisible, iconWidth, iconHeight]);
+
   return (
-    <CrossPlatformButtonLayout onPress={onPress ?? handleOnPressIn}>
+    <CrossPlatformButtonLayout
+      onPress={onPress ?? handleOnPressIn}
+      accessibilityRole="button"
+      accessibilityLabel={`Service: ${title}`}
+    >
       <Card
         containerStyle={[
           styles.card,
@@ -101,23 +123,12 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
           </View>
         ) : (
           <View className="flex justify-center items-center relative w-full h-full">
+            {/* Left Icon */}
             <View style={styles.cardIcons} className="absolute left-0 top-0">
-              {isIconVisible && icon && (
-                <View style={iconStyle}>
-                  {typeof icon === 'string' ? (
-                    <Image
-                      source={{uri: icon}}
-                      style={{width: iconWidth, height: iconHeight}}
-                    />
-                  ) : (
-                    React.createElement(icon, {
-                      width: iconWidth,
-                      height: iconHeight,
-                    })
-                  )}
-                </View>
-              )}
+              {RenderedIcon && <View style={iconStyle}>{RenderedIcon}</View>}
             </View>
+
+            {/* Check Icon */}
             {isCheckIconAvailable && (
               <View
                 style={styles.iconContainer}
@@ -126,7 +137,16 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
                 {isPressed && <CheckCircle width={20} height={20} />}
               </View>
             )}
-            <Text style={[styles.serviceTitle, titleStyle]}>{title}</Text>
+
+            {/* Title */}
+            <Text
+              allowFontScaling={false}
+              numberOfLines={2}
+              ellipsizeMode="tail"
+              style={[styles.serviceTitle, titleStyle]}
+            >
+              {title}
+            </Text>
           </View>
         )}
       </Card>

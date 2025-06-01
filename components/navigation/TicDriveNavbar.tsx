@@ -18,7 +18,7 @@ import navigationPush from '@/services/navigation/push';
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import CrossPlatformButtonLayout from '../ui/buttons/CrossPlatformButtonLayout';
 import isScreenSmall from '@/services/responsive/isScreenSmall';
-import {setService} from '@/stateManagement/redux/slices/bookingSlice';
+import {setServices} from '@/stateManagement/redux/slices/bookingSlice';
 
 interface TicDriveNavbarProps {
   isLoginAvailable?: boolean;
@@ -50,29 +50,34 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
       className={`flex-row items-center ${!isLoginAvailable ? 'justify-center' : 'justify-between'} px-2.5 h-14 ${containerTailwindCss}`}
       style={backgroundStyle}
     >
+      {/* Left section (Back button) */}
       <View className="flex-1 justify-start flex-row">
         {navigation?.canGoBack() && (canGoBack || canGoBack === null) && (
           <ToPreviousPage />
         )}
       </View>
+
+      {/* Center logo or top content */}
       {!topContent ? (
         <TouchableWithoutFeedback
           onPress={() => {
             if (navigation?.canGoBack()) {
               navigation.dispatch(StackActions.popToTop());
             }
-            dispatch(setService(undefined));
+            dispatch(setServices([]));
             navigationReplace(navigation, 'Hub');
           }}
           className="flex-row flex-1 justify-center items-center"
         >
           <Text
+            allowFontScaling={false}
             className={`font-bold ${isScreenSmall() ? 'text-2xl' : 'text-3xl'}`}
             style={[styles.title, styles.ticText]}
           >
             Tic
           </Text>
           <Text
+            allowFontScaling={false}
             className={`font-bold ${isScreenSmall() ? 'text-2xl' : 'text-3xl'}`}
             style={[styles.title, styles.driveText]}
           >
@@ -82,7 +87,9 @@ const TicDriveNavbar: React.FC<TicDriveNavbarProps> = ({
       ) : (
         topContent
       )}
-      <View className="flex-1 justify-end flex-row">
+
+      {/* Right section (login/logout or custom button) */}
+      <View className="flex-1 justify-end flex-row flex-wrap">
         {!rightContent ? (
           isLoginAvailable &&
           (token ? (
@@ -114,9 +121,6 @@ const styles = StyleSheet.create({
   },
   driveText: {
     color: Colors.light.green.drive,
-  },
-  login: {
-    color: Colors.light.text,
   },
 });
 

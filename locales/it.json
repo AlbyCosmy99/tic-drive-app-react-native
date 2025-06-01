@@ -146,14 +146,14 @@
     "goBackDashboard": "Torna alla dashboard"
   },
   "days": {
-  "Monday": "Lunedì",
-  "Tuesday": "Martedì",
-  "Wednesday": "Mercoledì",
-  "Thursday": "Giovedì",
-  "Friday": "Venerdì",
-  "Saturday": "Sabato",
-  "Sunday": "Domenica"
-},
+    "Monday": "Lunedì",
+    "Tuesday": "Martedì",
+    "Wednesday": "Mercoledì",
+    "Thursday": "Giovedì",
+    "Friday": "Venerdì",
+    "Saturday": "Sabato",
+    "Sunday": "Domenica"
+  },
 
   "share": {
     "intro": "🚗✨ Scopri {{workshopName}} su TicDrive! ✨🚗",

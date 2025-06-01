@@ -22,11 +22,14 @@ export default function DangerZoneScreen() {
       <SafeAreaViewLayout>
         <TicDriveNavbar canGoBack />
         <View className="p-4">
-          <Text className="text-2xl font-bold mb-4">
+          <Text allowFontScaling={false} className="text-2xl font-bold mb-4">
             {t('dangerZone.title')}
           </Text>
 
-          <Text className="text-base text-400 mb-6 text-[#fc0600]">
+          <Text
+            allowFontScaling={false}
+            className="text-base text-400 mb-6 text-[#fc0600]"
+          >
             {t('dangerZone.warningMessage')}
           </Text>
 

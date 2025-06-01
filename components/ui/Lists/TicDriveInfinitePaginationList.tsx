@@ -1,13 +1,9 @@
 import useJwtToken from '@/hooks/auth/useJwtToken';
 import {useEffect, useMemo, useRef, useState} from 'react';
-import {ActivityIndicator, Text, View} from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
-import Workshop from '@/types/workshops/Workshop';
-import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
-import {useAppDispatch} from '@/stateManagement/redux/hooks';
+import {ActivityIndicator, FlatList, Text, View} from 'react-native';
 import TicDriveSpinner from '../spinners/TicDriveSpinner';
 
-interface TicDriveInfinitePaginationListProps {
+interface TicDriveInfinitePaginationListProps<T = any> {
   loading: boolean;
   tailwindContainerCss?: string;
   filter?: string;
@@ -15,16 +11,14 @@ interface TicDriveInfinitePaginationListProps {
   count: number;
   dataPerPage: number;
   setLoadingData: (loading: boolean) => void;
-  data: any[];
-  children?: (item: any) => React.ReactNode;
+  data: T[];
+  children?: (item: T) => React.ReactNode;
   noDataContent?: React.ReactNode;
   currentPage: number;
   setCurrentPage: (page: number) => void;
 }
 
-const TicDriveInfinitePaginationList: React.FC<
-  TicDriveInfinitePaginationListProps
-> = ({
+const TicDriveInfinitePaginationList = <T,>({
   loading = false,
   tailwindContainerCss = '',
   filter = '',
@@ -37,14 +31,14 @@ const TicDriveInfinitePaginationList: React.FC<
   noDataContent = <Text>No data found</Text>,
   currentPage,
   setCurrentPage,
-}) => {
+}: TicDriveInfinitePaginationListProps<T>) => {
   const token = useJwtToken();
-
-  const [accData, setAccData] = useState<Workshop[]>([]);
+  const [accData, setAccData] = useState<T[]>([]);
   const onEndReachedCalledDuringMomentum = useRef(false);
 
   const pages = Math.ceil(count / dataPerPage);
 
+  // Reset accData on first page
   useEffect(() => {
     if (!loading) {
       if (currentPage === 1) {
@@ -55,27 +49,27 @@ const TicDriveInfinitePaginationList: React.FC<
     }
   }, [data, loading, currentPage]);
 
-  const filteredData = useMemo(
-    () =>
-      accData.filter(
-        item =>
-          filter.length === 0 ||
-          item.name?.toLowerCase().trim().includes(filter.toLowerCase().trim()),
-      ),
-    [accData, filter],
-  );
+  const filteredData = useMemo(() => {
+    if (!filter.trim()) return accData;
+    return accData.filter(item =>
+      (item as any)?.name
+        ?.toLowerCase?.()
+        .includes(filter.toLowerCase().trim()),
+    );
+  }, [accData, filter]);
 
   useEffect(() => {
     return () => {
-      if (setFilter) {
-        setFilter('');
-      }
+      if (setFilter) setFilter('');
     };
   }, [setFilter]);
 
-  return ((filter.length > 0 && filteredData.length === 0) ||
-    data?.length === 0) &&
-    !loading ? (
+  const showNoData =
+    ((filter.length > 0 && filteredData.length === 0) ||
+      (!loading && data.length === 0)) &&
+    !loading;
+
+  return showNoData ? (
     noDataContent
   ) : (
     <View className={`${!token ? 'mb-2' : ''} ${tailwindContainerCss}`}>
@@ -86,8 +80,10 @@ const TicDriveInfinitePaginationList: React.FC<
       ) : (
         <FlatList
           data={filteredData}
-          keyExtractor={item => item.id.toString()}
-          renderItem={({item}) => <View>{children && children(item)}</View>}
+          keyExtractor={(item, index) =>
+            (item as any)?.id?.toString() || index.toString()
+          }
+          renderItem={({item}) => <View>{children?.(item)}</View>}
           onMomentumScrollBegin={() => {
             onEndReachedCalledDuringMomentum.current = false;
           }}
@@ -102,8 +98,8 @@ const TicDriveInfinitePaginationList: React.FC<
               setLoadingData(true);
             }
           }}
-          onEndReachedThreshold={0.5}
-          ListFooterComponent={() =>
+          onEndReachedThreshold={0.4}
+          ListFooterComponent={
             loading && currentPage < pages ? (
               <ActivityIndicator
                 size="large"

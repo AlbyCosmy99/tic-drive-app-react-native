@@ -76,6 +76,7 @@ const SeeAllServicesCards = forwardRef(
           );
           setServices(data);
         } catch (e) {
+          setErrorMessage('Failed to fetch services');
         } finally {
           setLoadingServices(false);
         }
@@ -91,42 +92,47 @@ const SeeAllServicesCards = forwardRef(
     };
 
     const handleOnSelectService = async (service?: Service) => {
-      if (service) {
-        try {
-          setLoading(true);
-          const hasChildren = await serviceHasChildren(service?.id);
+      if (!service) return;
+      try {
+        setLoading(true);
+        const hasChildren = await serviceHasChildren(service.id);
 
-          if (hasChildren) {
-            navigation.push('ChooseServicesScreen', {
-              fatherId: service.id,
-              showCalendarModal,
-            });
-            dispatch(setServiceTreeLevel(serviceTreeLevel + 1));
-            dispatch(addService({service, index: serviceTreeLevel - 1}));
+        if (hasChildren) {
+          navigation.push('ChooseServicesScreen', {
+            fatherId: service.id,
+            showCalendarModal,
+          });
+          dispatch(setServiceTreeLevel(serviceTreeLevel + 1));
+          dispatch(addService({service, index: serviceTreeLevel - 1}));
+        } else {
+          if (showCalendarModal) {
+            modalRef.current?.openModal(service);
           } else {
-            if (showCalendarModal) {
-              modalRef.current?.openModal(service);
-            } else {
-              dispatch(addService({service, index: serviceTreeLevel - 1}));
-              navigationPush(
-                navigation,
-                token ? 'SelectVehicleScreen' : 'RegisterVehicleScreen',
-              );
-            }
+            dispatch(addService({service, index: serviceTreeLevel - 1}));
+            navigationPush(
+              navigation,
+              token ? 'SelectVehicleScreen' : 'RegisterVehicleScreen',
+            );
           }
-        } catch (e: any) {
-          setErrorMessage(e.message);
-        } finally {
-          setLoading(false);
         }
+      } catch (e: any) {
+        setErrorMessage(
+          e.message ?? 'An error occurred while selecting service',
+        );
+      } finally {
+        setLoading(false);
       }
     };
 
-    return loadingServices ? (
-      <View className=" h-28">
-        <TicDriveSpinner />
-      </View>
-    ) : services.length > 0 ? (
+    if (loadingServices) {
+      return (
+        <View className="h-28 justify-center items-center">
+          <TicDriveSpinner />
+        </View>
+      );
+    }
+
+    return services.length > 0 ? (
       <View>
         {topHorizontalLine && <HorizontalLine />}
         <View className="flex flex-wrap flex-row justify-between px-2 mt-2">
@@ -140,16 +146,26 @@ const SeeAllServicesCards = forwardRef(
                 buttonTailwindCss="justify-start"
               >
                 {service?.icon && (
-                  <Image source={{uri: service.icon}} width={24} height={24} />
+                  <Image
+                    source={{uri: service.icon}}
+                    style={{width: 24, height: 24}}
+                    resizeMode="contain"
+                  />
                 )}
-                <View className="h-10 items-center justify-center w-full">
-                  <Text className="text-sm font-medium text-center">
+                <View className="h-10 items-center justify-center w-full px-1">
+                  <Text
+                    className="text-sm font-medium text-center"
+                    allowFontScaling={false}
+                    numberOfLines={2}
+                    ellipsizeMode="tail"
+                  >
                     {service.title}
                   </Text>
                 </View>
               </CrossPlatformButtonLayout>
             </View>
           ))}
+
           {services.length > 4 && (
             <View className="mb-2 w-full">
               <CrossPlatformButtonLayout
@@ -157,13 +173,17 @@ const SeeAllServicesCards = forwardRef(
                 onPress={handleOnSeeAllServices}
                 containerTailwindCss="border-2 border-grey-light items-center justify-center p-1.5 rounded-xl bg-white shadow-sm shadow-black/20"
               >
-                <Text className="text-base font-medium">
+                <Text
+                  className="text-base font-medium"
+                  allowFontScaling={false}
+                >
                   {t('seeAll.services')}
                 </Text>
               </CrossPlatformButtonLayout>
             </View>
           )}
         </View>
+
         {showCalendarModal && (
           <UserCalendarModal
             ref={modalRef}
@@ -175,7 +195,14 @@ const SeeAllServicesCards = forwardRef(
         {bottomHorizontalLine && <HorizontalLine tailwindCssContainer="mt-2" />}
       </View>
     ) : (
-      <Text className="font-medium mb-2">No services available yet.</Text>
+      <View className="px-2 py-4">
+        <Text
+          className="font-medium text-base text-center"
+          allowFontScaling={false}
+        >
+          {t('services.noServicesAvailable')}
+        </Text>
+      </View>
     );
   },
 );

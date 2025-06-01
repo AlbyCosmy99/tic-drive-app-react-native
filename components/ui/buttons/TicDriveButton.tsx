@@ -7,6 +7,7 @@ import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext'
 import navigationPush from '@/services/navigation/push';
 import navigationReplace from '@/services/navigation/replace';
 import navigationReset from '@/services/navigation/reset';
+import {Text} from 'react-native';
 
 interface TicDriveButtonProps {
   text: string;
@@ -44,11 +45,18 @@ const TicDriveButton: React.FC<TicDriveButtonProps> = ({
 
   return (
     <Button
-      title={text}
+      title={
+        <Text
+          className="text-white text-lg"
+          allowFontScaling={false}
+          style={customTitleStyle}
+        >
+          {text}
+        </Text>
+      }
       disabled={disabled}
       disabledStyle={customDisabledStyle}
       disabledTitleStyle={{color: 'white'}}
-      titleStyle={customTitleStyle}
       buttonStyle={[
         {
           borderRadius: 40,
