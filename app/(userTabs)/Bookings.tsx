@@ -113,7 +113,7 @@ export default function UserBookings() {
 
             {loadingCustomerCars || loading ? (
               <TicDriveSpinner />
-            ) : cars.length === 0 ? (
+            ) : Object.entries(bookings).length === 0 ? (
               <>
                 <CrossPlatformButtonLayout onPress={onRegisterVehicle}>
                   <Text
