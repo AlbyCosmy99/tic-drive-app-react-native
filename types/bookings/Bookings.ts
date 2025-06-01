@@ -1,4 +1,4 @@
-import { BookingStatus } from "./BookingStatus";
+import {BookingStatus} from './BookingStatus';
 
 export type Booking = {
   id: number;
@@ -10,7 +10,12 @@ export type Booking = {
   workshopId: string;
   workshopName: string;
   workshopAddress: string;
-  workshopImage: {id: number, userId: string, url: string, isMainImage: boolean}
+  workshopImage: {
+    id: number;
+    userId: string;
+    url: string;
+    isMainImage: boolean;
+  };
   finalPrice: number;
   status: BookingStatus;
   serviceId: number;
@@ -25,4 +30,3 @@ export type Booking = {
 };
 
 export type Bookings = Record<number, Booking[]>;
-

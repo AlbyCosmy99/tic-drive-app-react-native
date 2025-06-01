@@ -1,1 +1,6 @@
-export type BookingStatus = 'Waiting' | 'Accepted' | 'Rejected' | 'Completed' | 'RescheduleProposed'
+export type BookingStatus =
+  | 'Waiting'
+  | 'Accepted'
+  | 'Rejected'
+  | 'Completed'
+  | 'RescheduleProposed';

@@ -96,7 +96,9 @@ const BookingCard: React.FC<BookingCardProps> = ({
   }, [workshop?.id, services]);
 
   return (
-    <View className={`rounded-lg border p-4 pt-0 border-grey-light w-full ${!showDirectionsButton && 'pb-0'}`}>
+    <View
+      className={`rounded-lg border p-4 pt-0 border-grey-light w-full ${!showDirectionsButton && 'pb-0'}`}
+    >
       <View className="flex flex-row my-4 justify-between items-start">
         <View className="flex-row">
           {workshopImageUrl && (
@@ -160,16 +162,16 @@ const BookingCard: React.FC<BookingCardProps> = ({
             />
           </View>
         ) : (
-          <View className={showDirectionsButton ? "mb-2" : ""}>
+          <View className={showDirectionsButton ? 'mb-2' : ''}>
             <IconTextPair icon={<CalendarIcon />} text={time} />
             <IconTextPair
               icon={<CreditCardIcon />}
               text={`${price} da pagare`}
             />
             <IconTextPair
-                icon={<PinIcon fill={Colors.light.ticText} />}
-                text={workshopAddress}
-              />
+              icon={<PinIcon fill={Colors.light.ticText} />}
+              text={workshopAddress}
+            />
           </View>
         )}
       </View>

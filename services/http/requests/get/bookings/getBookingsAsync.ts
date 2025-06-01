@@ -8,4 +8,4 @@ const getBookingsAsync = async (token: string) => {
   });
 };
 
-export default getBookingsAsync
+export default getBookingsAsync;
