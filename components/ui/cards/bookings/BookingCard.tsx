@@ -52,14 +52,6 @@ const BookingCard: React.FC<BookingCardProps> = ({
   const workshop = useAppSelector(state => state.booking.workshop);
   const [workshopDetailed, setWorkshopDetailed] = useState(workshop);
   const services = useServiceChoosenByCustomer();
-  // const time = useAppSelector(state => state.booking.time);
-
-  // const price = useMemo(() => {
-  //   return (
-  //     workshop?.currency! +
-  //     formatPrice(workshop?.servicePrice ?? 0, workshop?.discount ?? 0)
-  //   );
-  // }, []);
 
   const {setErrorMessage} = useGlobalErrors();
 
@@ -104,7 +96,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
   }, [workshop?.id, services]);
 
   return (
-    <View className="rounded-lg border p-4 pt-0 border-grey-light w-full">
+    <View className={`rounded-lg border p-4 pt-0 border-grey-light w-full ${!showDirectionsButton && 'pb-0'}`}>
       <View className="flex flex-row my-4 justify-between items-start">
         <View className="flex-row">
           {workshopImageUrl && (
@@ -168,18 +160,16 @@ const BookingCard: React.FC<BookingCardProps> = ({
             />
           </View>
         ) : (
-          <View className="mb-2">
+          <View className={showDirectionsButton ? "mb-2" : ""}>
             <IconTextPair icon={<CalendarIcon />} text={time} />
             <IconTextPair
               icon={<CreditCardIcon />}
               text={`${price} da pagare`}
             />
-            {workshopDetailed?.address && (
-              <IconTextPair
+            <IconTextPair
                 icon={<PinIcon fill={Colors.light.ticText} />}
                 text={workshopAddress}
               />
-            )}
           </View>
         )}
       </View>

@@ -16,6 +16,7 @@ import useOnRegisterVehicle from '@/hooks/cars/useOnRegisterVehicle';
 import getBookingsAsync from '@/services/http/requests/get/bookings/getBookingsAsync';
 import {Booking, Bookings} from '@/types/bookings/Bookings';
 import {BookingStatus} from '@/types/bookings/BookingStatus';
+import BookingCard from '@/components/ui/cards/bookings/BookingCard';
 
 export default function UserBookings() {
   const {t} = useTranslation();
@@ -139,50 +140,25 @@ export default function UserBookings() {
                       </Text>
 
                       <CarDetailsMiniCard
-                        make={firstBooking?.customerCarName}
-                        model={firstBooking?.customerCarPlate}
+                        make={firstBooking?.customerCarMake}
+                        model={firstBooking?.customerCarModel}
                         year={firstBooking?.customerCarYear}
                         plateNumber={firstBooking?.customerCarPlate}
                         imageUrl={firstBooking?.customerCarLogoUrl}
                       />
 
                       {filteredAppointments.map(appointment => (
-                        <View className="space-y-1 mx-2.5" key={appointment.id}>
-                          <Text
-                            className="text-sm text-gray-800"
-                            allowFontScaling={false}
-                          >
-                            {appointment.status}
-                          </Text>
-                          <Text
-                            className="text-sm text-gray-800"
-                            allowFontScaling={false}
-                          >
-                            {appointment.workshopName}
-                          </Text>
-                          <Image
-                            source={{uri: appointment.workshopImage.url}}
-                            width={60}
-                            height={60}
+                        <View key={appointment.id} className="my-1">
+                          <BookingCard
+                            showDirectionsButton={false}
+                            type={appointment.status}
+                            workshopName={appointment.workshopName}
+                            workshopAddress={appointment.workshopAddress}
+                            workshopImageUrl={appointment.workshopImage.url}
+                            serviceName={appointment.serviceName}
+                            time={appointment.appointmentDate}
+                            price={'€' + appointment.finalPrice}
                           />
-                          <Text
-                            className="text-sm text-gray-800"
-                            allowFontScaling={false}
-                          >
-                            {appointment.appointmentDate}
-                          </Text>
-                          <Text
-                            className="text-sm text-gray-800"
-                            allowFontScaling={false}
-                          >
-                            €{appointment.finalPrice}
-                          </Text>
-                          <Text
-                            className="text-sm text-gray-800"
-                            allowFontScaling={false}
-                          >
-                            {appointment.workshopAddress}
-                          </Text>
                         </View>
                       ))}
                     </View>

@@ -1,3 +1,5 @@
+import { BookingStatus } from "./BookingStatus";
+
 export type Booking = {
   id: number;
   bookingDate: string;
@@ -10,11 +12,13 @@ export type Booking = {
   workshopAddress: string;
   workshopImage: {id: number, userId: string, url: string, isMainImage: boolean}
   finalPrice: number;
-  status: string;
+  status: BookingStatus;
   serviceId: number;
   serviceName: string;
   customerCarId: number;
   customerCarName: string;
+  customerCarMake: string;
+  customerCarModel: string;
   customerCarPlate: string;
   customerCarYear: number;
   customerCarLogoUrl: string;
