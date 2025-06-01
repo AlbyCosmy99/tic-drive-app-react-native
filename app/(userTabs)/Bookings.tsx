@@ -1,11 +1,9 @@
 import NotLogged from '@/components/auth/NotLogged';
 import useJwtToken from '@/hooks/auth/useJwtToken';
-import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
-import PaymentConfirmationCard from '@/components/ui/cards/payment/PaymentConfirmationCard';
-import Workshop from '@/types/workshops/Workshop';
 import {useEffect, useState} from 'react';
 import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import CarDetailsMiniCard from '@/components/ui/cards/cars/CarDetailsMiniCard';
@@ -15,101 +13,71 @@ import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 import {useTranslation} from 'react-i18next';
 import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButtonLayout';
 import useOnRegisterVehicle from '@/hooks/cars/useOnRegisterVehicle';
+import getBookingsAsync from '@/services/http/requests/get/bookings/getBookingsAsync';
+import {Booking, Bookings} from '@/types/bookings/Bookings';
+import {BookingStatus} from '@/types/bookings/BookingStatus';
+import BookingCard from '@/components/ui/cards/bookings/BookingCard';
 
 export default function UserBookings() {
   const {t} = useTranslation();
   const token = useJwtToken();
   const {getCustomerCars, loadingCustomerCars} = useCustomerCars();
+  const [loading, setLoading] = useState(false);
   const [cars, setCars] = useState<Car[]>([]);
-  const [activeTab, setActiveTab] = useState<'active' | 'past' | 'cancelled'>(
+  const [bookings, setBookings] = useState<Bookings>({});
+  const [activeTab, setActiveTab] = useState<'active' | 'past' | 'rejected'>(
     'active',
   );
   const onRegisterVehicle = useOnRegisterVehicle();
 
-  useEffect(() => {
-    const fetchCars = async () => {
-      const customerCars = await getCustomerCars();
-      setCars(customerCars ?? []);
-    };
-    if (token) {
-      fetchCars();
-    }
-  }, []);
+  type TabStatus = 'active' | 'past' | 'rejected';
 
-  const activeAppointments: Workshop[] = [
-    {
-      id: 1,
-      name: 'Autofficina Futura',
-      address: 'Via Giulio Zanon, 8, 35133 Pontevigodarzere PD',
-      longitude: 9.19,
-      latitude: 45.4642,
-      profileImageUrl:
-        'https://img.freepik.com/free-photo/car-being-taking-care-workshop_23-2149580532.jpg',
-      meanStars: 4.5,
-      service: 'Cambio Olio',
-      numberOfReviews: 87,
-      servicePrice: 157,
-      currency: '€',
-      discount: 0,
-      isFavorite: true,
-      isVerified: true,
-    },
-  ];
-
-  const pastAppointments: Workshop[] = [
-    {
-      id: 2,
-      name: 'Autofficina Vecchia',
-      address: 'Via Milano, 10, 35100 Padova PD',
-      longitude: 9.19,
-      latitude: 45.4642,
-      profileImageUrl:
-        'https://img.freepik.com/free-photo/car-being-taking-care-workshop_23-2149580532.jpg',
-      meanStars: 4.0,
-      numberOfReviews: 100,
-      service: 'Cambio Olio',
-      servicePrice: 120,
-      currency: '€',
-      discount: 0,
-      isFavorite: false,
-      isVerified: true,
-    },
-  ];
-
-  const cancelledAppointments: Workshop[] = [
-    {
-      id: 3,
-      name: 'Garage Annullato',
-      address: 'Via Cancellata, 5, Venezia VE',
-      longitude: 9.19,
-      latitude: 45.4642,
-      profileImageUrl:
-        'https://img.freepik.com/free-photo/car-being-taking-care-workshop_23-2149580532.jpg',
-      meanStars: 3.5,
-      numberOfReviews: 50,
-      service: 'Cambio Olio',
-      servicePrice: 100,
-      currency: '€',
-      discount: 0,
-      isFavorite: false,
-      isVerified: false,
-    },
-  ];
-
-  const getAppointments = () => {
-    if (activeTab === 'active') return activeAppointments;
-    if (activeTab === 'past') return pastAppointments;
-    if (activeTab === 'cancelled') return cancelledAppointments;
-    return [];
+  const statusMap: Record<TabStatus, BookingStatus[]> = {
+    active: ['Waiting', 'Accepted', 'RescheduleProposed'],
+    past: ['Completed'],
+    rejected: ['Rejected'],
   };
 
-  const appointments = getAppointments();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+
+        const customerCars = await getCustomerCars();
+        setCars(customerCars ?? []);
+
+        const res = await getBookingsAsync(token ?? '');
+        const bookingsArray = res.data ?? [];
+
+        const groupedByCustomerCarId = bookingsArray.reduce(
+          (acc: Bookings, booking: Booking) => {
+            const carId = booking.customerCarId;
+            if (!acc[carId]) acc[carId] = [];
+            acc[carId].push(booking);
+            return acc;
+          },
+          {} as Bookings,
+        );
+
+        setBookings(groupedByCustomerCarId);
+      } catch (error) {
+        console.error('Failed to fetch cars or bookings:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (token) {
+      fetchData();
+    }
+  }, [token]);
 
   return (
     <LinearGradientViewLayout>
       <SafeAreaViewLayout disabled={!isAndroidPlatform()}>
         {token ? (
           <View className="mx-2.5 flex-1 mb-4">
+            <TicDriveNavbar />
             <Text
               allowFontScaling={false}
               className="font-medium text-2xl text-center"
@@ -117,78 +85,97 @@ export default function UserBookings() {
               {t('bookings.title')}
             </Text>
 
-            <View className="flex-row bg-gray-100 rounded-full p-1 mt-4 mx-4">
-              {['active', 'past', 'cancelled'].map(tab => (
-                <TouchableOpacity
-                  key={tab}
-                  onPress={() =>
-                    setActiveTab(tab as 'active' | 'past' | 'cancelled')
-                  }
-                  className={`flex-1 items-center py-2 rounded-full ${activeTab === tab ? 'bg-white' : ''}`}
-                >
-                  <Text
-                    allowFontScaling={false}
-                    className="font-medium capitalize"
+            {/* todo: move the slide in a component */}
+            {cars.length !== 0 && (
+              <View className="flex-row bg-gray-100 rounded-full p-1 mt-4 mx-4">
+                {['active', 'past', 'rejected'].map(tab => (
+                  <TouchableOpacity
+                    key={tab}
+                    onPress={() =>
+                      setActiveTab(tab as 'active' | 'past' | 'rejected')
+                    }
+                    className={`flex-1 items-center py-2 rounded-full ${activeTab === tab ? 'bg-white' : ''}`}
                   >
-                    {tab === 'active'
-                      ? t('bookingsTabs.active', 'Attivi')
-                      : tab === 'past'
-                        ? t('bookingsTabs.past', 'Passati')
-                        : t('bookingsTabs.cancelled', 'Cancellati')}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-
-            {loadingCustomerCars ? (
-              <TicDriveSpinner />
-            ) : cars.length === 0 ? (
-              <CrossPlatformButtonLayout onPress={onRegisterVehicle}>
-                <Text
-                  allowFontScaling={false}
-                  className="text-center text-lg font-semibold mt-6 underline"
-                >
-                  {t('vehicles.registerVehicleForBookings')}
-                </Text>
-              </CrossPlatformButtonLayout>
-            ) : (
-              <ScrollView showsVerticalScrollIndicator={false}>
-                {cars.map(car => (
-                  <View key={car.id} className="mt-6">
                     <Text
                       allowFontScaling={false}
-                      className="text-xl font-semibold text-center mb-2"
+                      className="font-medium capitalize"
                     >
-                      {car.make} {car.model} ({car.plateNumber})
+                      {tab === 'active'
+                        ? t('bookingsTabs.active')
+                        : tab === 'past'
+                          ? t('bookingsTabs.past')
+                          : t('bookingsTabs.rejected')}
                     </Text>
-                    <CarDetailsMiniCard
-                      make={car.make}
-                      model={car.model}
-                      year={car.year}
-                      fuel={car.fuel}
-                      CV={car.powerCV}
-                      plateNumber={car.plateNumber}
-                      imageUrl={car.logoUrl}
-                    />
-                    {appointments.map(appointment => (
-                      <PaymentConfirmationCard
-                        key={appointment.id}
-                        showDirectionsButton={false}
-                        showReminderBell={activeTab === 'active'}
-                        workshop={appointment}
-                        service={appointment.service}
-                        timeDate={'Martedì, 24 gennaio ore 10:00'}
-                        type={
-                          activeTab === 'active'
-                            ? t('bookings.confirmed')
-                            : activeTab === 'past'
-                              ? t('status.completed', 'Completato')
-                              : t('status.cancelled', 'Cancellato')
-                        }
-                      />
-                    ))}
-                  </View>
+                  </TouchableOpacity>
                 ))}
+              </View>
+            )}
+
+            {loadingCustomerCars || loading ? (
+              <TicDriveSpinner />
+            ) : cars.length === 0 ? (
+              <>
+                <CrossPlatformButtonLayout onPress={onRegisterVehicle}>
+                  <Text
+                    allowFontScaling={false}
+                    className="text-center text-base text-gray-500 mt-2"
+                  >
+                    Non hai ancora prenotato un servizio.
+                  </Text>
+                </CrossPlatformButtonLayout>
+                <View className="flex-1 justify-center items-center">
+                  <Image
+                    source={require('@/assets/images/png/booking.png')}
+                    className="w-32 h-32"
+                    resizeMode="contain"
+                  />
+                </View>
+              </>
+            ) : (
+              <ScrollView showsVerticalScrollIndicator={false}>
+                {Object.entries(bookings).map(([carId, appointments]) => {
+                  const filteredAppointments = appointments.filter(
+                    appointment =>
+                      statusMap[activeTab].includes(appointment.status),
+                  );
+                  if (filteredAppointments.length === 0) return null;
+                  const firstBooking = filteredAppointments[0]; // Use first booking to show car info
+
+                  return (
+                    <View key={carId} className="mt-6">
+                      <Text
+                        allowFontScaling={false}
+                        className="text-xl font-semibold text-center mb-2"
+                      >
+                        {firstBooking?.customerCarName} (
+                        {firstBooking?.customerCarPlate})
+                      </Text>
+
+                      <CarDetailsMiniCard
+                        make={firstBooking?.customerCarMake}
+                        model={firstBooking?.customerCarModel}
+                        year={firstBooking?.customerCarYear}
+                        plateNumber={firstBooking?.customerCarPlate}
+                        imageUrl={firstBooking?.customerCarLogoUrl}
+                      />
+
+                      {filteredAppointments.map(appointment => (
+                        <View key={appointment.id} className="my-1">
+                          <BookingCard
+                            showDirectionsButton={false}
+                            type={appointment.status}
+                            workshopName={appointment.workshopName}
+                            workshopAddress={appointment.workshopAddress}
+                            workshopImageUrl={appointment.workshopImage.url}
+                            serviceName={appointment.serviceName}
+                            time={appointment.appointmentDate}
+                            price={'€' + appointment.finalPrice}
+                          />
+                        </View>
+                      ))}
+                    </View>
+                  );
+                })}
               </ScrollView>
             )}
           </View>
