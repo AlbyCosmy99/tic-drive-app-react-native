@@ -8,8 +8,9 @@ export type Booking = {
   workshopId: string;
   workshopName: string;
   workshopAddress: string;
+  workshopImage: {id: number, userId: string, url: string, isMainImage: boolean}
   finalPrice: number;
-  status: number;
+  status: string;
   serviceId: number;
   serviceName: string;
   customerCarId: number;

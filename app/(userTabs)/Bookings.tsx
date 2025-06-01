@@ -1,6 +1,6 @@
 import NotLogged from '@/components/auth/NotLogged';
 import useJwtToken from '@/hooks/auth/useJwtToken';
-import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
 import LinearGradientViewLayout from '../layouts/LinearGradientViewLayout';
 import SafeAreaViewLayout from '../layouts/SafeAreaViewLayout';
 import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
@@ -15,6 +15,7 @@ import CrossPlatformButtonLayout from '@/components/ui/buttons/CrossPlatformButt
 import useOnRegisterVehicle from '@/hooks/cars/useOnRegisterVehicle';
 import getBookingsAsync from '@/services/http/requests/get/bookings/getBookingsAsync';
 import {Booking, Bookings} from '@/types/bookings/Bookings';
+import {BookingStatus} from '@/types/bookings/BookingStatus';
 
 export default function UserBookings() {
   const {t} = useTranslation();
@@ -23,10 +24,18 @@ export default function UserBookings() {
   const [loading, setLoading] = useState(false);
   const [cars, setCars] = useState<Car[]>([]);
   const [bookings, setBookings] = useState<Bookings>({});
-  const [activeTab, setActiveTab] = useState<'active' | 'past' | 'cancelled'>(
+  const [activeTab, setActiveTab] = useState<'active' | 'past' | 'rejected'>(
     'active',
   );
   const onRegisterVehicle = useOnRegisterVehicle();
+
+  type TabStatus = 'active' | 'past' | 'rejected';
+
+  const statusMap: Record<TabStatus, BookingStatus[]> = {
+    active: ['Waiting', 'Accepted', 'RescheduleProposed'],
+    past: ['Completed'],
+    rejected: ['Rejected'],
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,11 +85,11 @@ export default function UserBookings() {
             </Text>
 
             <View className="flex-row bg-gray-100 rounded-full p-1 mt-4 mx-4">
-              {['active', 'past', 'cancelled'].map(tab => (
+              {['active', 'past', 'rejected'].map(tab => (
                 <TouchableOpacity
                   key={tab}
                   onPress={() =>
-                    setActiveTab(tab as 'active' | 'past' | 'cancelled')
+                    setActiveTab(tab as 'active' | 'past' | 'rejected')
                   }
                   className={`flex-1 items-center py-2 rounded-full ${activeTab === tab ? 'bg-white' : ''}`}
                 >
@@ -89,10 +98,10 @@ export default function UserBookings() {
                     className="font-medium capitalize"
                   >
                     {tab === 'active'
-                      ? t('bookingsTabs.active', 'Attivi')
+                      ? t('bookingsTabs.active')
                       : tab === 'past'
-                        ? t('bookingsTabs.past', 'Passati')
-                        : t('bookingsTabs.cancelled', 'Cancellati')}
+                        ? t('bookingsTabs.past')
+                        : t('bookingsTabs.rejected')}
                   </Text>
                 </TouchableOpacity>
               ))}
@@ -112,8 +121,12 @@ export default function UserBookings() {
             ) : (
               <ScrollView showsVerticalScrollIndicator={false}>
                 {Object.entries(bookings).map(([carId, appointments]) => {
-                  if (appointments.length === 0) return null;
-                  const firstBooking = appointments[0]; // Use first booking to show car info
+                  const filteredAppointments = appointments.filter(
+                    appointment =>
+                      statusMap[activeTab].includes(appointment.status),
+                  );
+                  if (filteredAppointments.length === 0) return null;
+                  const firstBooking = filteredAppointments[0]; // Use first booking to show car info
 
                   return (
                     <View key={carId} className="mt-6">
@@ -133,8 +146,8 @@ export default function UserBookings() {
                         imageUrl={firstBooking?.customerCarLogoUrl}
                       />
 
-                      {appointments.map(appointment => (
-                        <View className="space-y-1 mx-2.5">
+                      {filteredAppointments.map(appointment => (
+                        <View className="space-y-1 mx-2.5" key={appointment.id}>
                           <Text
                             className="text-sm text-gray-800"
                             allowFontScaling={false}
@@ -147,6 +160,11 @@ export default function UserBookings() {
                           >
                             {appointment.workshopName}
                           </Text>
+                          <Image
+                            source={{uri: appointment.workshopImage.url}}
+                            width={60}
+                            height={60}
+                          />
                           <Text
                             className="text-sm text-gray-800"
                             allowFontScaling={false}
