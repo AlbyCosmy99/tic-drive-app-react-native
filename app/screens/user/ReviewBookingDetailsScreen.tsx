@@ -38,9 +38,10 @@ import getWorkshopWithServiceDetails from '@/services/http/requests/get/workshop
 import {setWorkshop} from '@/stateManagement/redux/slices/bookingSlice';
 import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
-import bookAService from '@/services/http/requests/post/bookings/bookAService';
 import parseStringTimeToDate from '@/utils/dates/parseStringTimeToDate';
 import navigationReset from '@/services/navigation/reset';
+import registerCarAsync from '@/services/http/requests/post/cars/registerCarAsync';
+import bookAServiceAsync from '@/services/http/requests/post/bookings/bookAServiceAsync';
 
 export default function ReviewBookingDetailsScreen() {
   const {t} = useTranslation();
@@ -52,8 +53,9 @@ export default function ReviewBookingDetailsScreen() {
   const workshop = useAppSelector(state => state.booking.workshop);
   const time = useAppSelector(state => state.booking.time);
   const car = useAppSelector(state => state.booking.car);
-
   const token = useAppSelector(state => state.auth.token);
+  const user = useAppSelector(state => state.auth.user);
+  const languageCode = useAppSelector(state => state.language.languageCode);
 
   const [loading, setLoading] = useState(false);
 
@@ -94,11 +96,18 @@ export default function ReviewBookingDetailsScreen() {
 
   const onbookAService = async () => {
     try {
-      await bookAService(
+      setLoading(true);
+      const res = await registerCarAsync(
+        token ?? '',
+        languageCode,
+        car,
+        user?.name,
+      );
+      await bookAServiceAsync(
         token ?? '',
         workshop?.id ?? '',
         servicesChoosen[servicesChoosen.length - 1].id,
-        car?.id ?? 0,
+        res?.data.customerCarId ?? 0,
         Number(
           formatPrice(workshop?.servicePrice ?? 0, workshop?.discount ?? 0),
         ),
@@ -110,6 +119,8 @@ export default function ReviewBookingDetailsScreen() {
       });
     } catch (e: any) {
       setErrorMessage(e.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -293,6 +304,7 @@ export default function ReviewBookingDetailsScreen() {
                 replace={true}
                 toTop={true}
                 customContainerStyle={{marginLeft: 7}}
+                disabled={loading}
                 text={t('reviewBooking.bookNow')}
                 onClick={onbookAService}
               />

@@ -1,15 +1,15 @@
-import axiosClient from "@/services/http/axiosClient"
+import axiosClient from '@/services/http/axiosClient';
 
-const bookAService = (
+const bookAServiceAsync = (
   token: string,
   workshopId: string,
   serviceId: number,
   carId: number,
   price: number,
-  appointmentDate: Date
+  appointmentDate: Date,
 ) => {
   return axiosClient.post(
-    "bookings",
+    'bookings',
     {
       workshopId,
       serviceId,
@@ -21,8 +21,8 @@ const bookAService = (
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    }
+    },
   );
 };
 
-export default bookAService;
+export default bookAServiceAsync;

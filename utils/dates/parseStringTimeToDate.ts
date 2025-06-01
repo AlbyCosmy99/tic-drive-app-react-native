@@ -24,14 +24,8 @@ const parseStringTimeToDate = (time: string) => {
   const monthIndex = months[monthStr.toLowerCase()];
 
   const now = new Date();
-  const date = new Date(
-    now.getFullYear(),
-    monthIndex,
-    day,
-    hour,
-    minute,
-  );
-  return date
+  const date = new Date(now.getFullYear(), monthIndex, day, hour, minute);
+  return date;
 };
 
-export default parseStringTimeToDate
+export default parseStringTimeToDate;
