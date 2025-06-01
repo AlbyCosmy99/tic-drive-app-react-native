@@ -7,7 +7,7 @@ interface CarDetailsMiniCardProps {
   make: string;
   model: string;
   year?: number;
-  fuel: FuelType;
+  fuel?: FuelType;
   CV?: number;
   plateNumber?: string;
   imageUrl?: string;
@@ -49,7 +49,7 @@ const CarDetailsMiniCard: React.FC<CarDetailsMiniCardProps> = ({
         )}
         {CV && (
           <Text className="text-sm text-gray-600" allowFontScaling={false}>
-            {CV} CV • {fuel}
+            {CV} CV{fuel ? ` • ${fuel}` : ''}
           </Text>
         )}
       </View>

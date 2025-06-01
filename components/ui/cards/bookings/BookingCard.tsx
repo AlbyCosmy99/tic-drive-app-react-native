@@ -30,6 +30,7 @@ interface BookingCardProps {
   showDirectionsButton?: boolean;
   type: string;
   showReminderBell?: boolean;
+  
 }
 
 const BookingCard: React.FC<BookingCardProps> = ({
