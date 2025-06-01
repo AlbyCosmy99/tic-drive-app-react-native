@@ -245,8 +245,13 @@ export default function UserAccount() {
               </CrossPlatformButtonLayout>
 
               <HorizontalLine />
-             <CrossPlatformButtonLayout
-                onPress={() => navigationPush(navigation, 'AuthenticatedChangePasswordScreen')}
+              <CrossPlatformButtonLayout
+                onPress={() =>
+                  navigationPush(
+                    navigation,
+                    'AuthenticatedChangePasswordScreen',
+                  )
+                }
               >
                 <IconTextPair
                   text={t('changePassword.title')}
@@ -256,8 +261,7 @@ export default function UserAccount() {
                 />
               </CrossPlatformButtonLayout>
 
-                <HorizontalLine />
-
+              <HorizontalLine />
 
               <CrossPlatformButtonLayout onPress={onFavoriteWorkshops}>
                 <IconTextPair

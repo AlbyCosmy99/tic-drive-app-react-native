@@ -5,9 +5,11 @@ import TicDriveNavbar from '@/components/navigation/TicDriveNavbar';
 import PhoneIcon from '@/assets/svg/notifications/phone.svg';
 import MailIcon from '@/assets/svg/notifications/mail.svg';
 import {useTranslation} from 'react-i18next';
+import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
 
 export default function SupportScreen() {
   const {t} = useTranslation();
+  const {setErrorMessage} = useGlobalErrors();
 
   const handleOpenLink = async (url: string) => {
     try {
@@ -15,10 +17,10 @@ export default function SupportScreen() {
       if (supported) {
         await Linking.openURL(url);
       } else {
-        Alert.alert(t('errors.cannotOpenURL'), url);
+        setErrorMessage(t('errors.cannotOpenURL'));
       }
-    } catch (error) {
-      Alert.alert(t('errors.linkError'), error?.message || 'Unknown error');
+    } catch (error: any) {
+      setErrorMessage(error?.message || 'Unknown error');
     }
   };
 
