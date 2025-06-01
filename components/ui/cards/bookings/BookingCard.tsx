@@ -16,41 +16,50 @@ import DirectionIcon from '@/assets/svg/assistant_direction.svg';
 import BellIcon from '@/assets/svg/notifications/Bell1.svg';
 import TicDriveOptionButton from '../../buttons/TicDriveOptionButton';
 import openGoogleMaps from '@/services/map/openGoogleMaps';
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useState} from 'react';
 import axiosClient from '@/services/http/axiosClient';
 import clsx from 'clsx';
-import getUserMainImage from '@/utils/files/getUserMainImage';
+
 import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
 import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
 import {useAppSelector} from '@/stateManagement/redux/hooks';
-import formatPrice from '@/utils/currency/formatPrice.';
-import getFullServiceName from '@/services/toString/getFullServiceName';
 
 interface BookingCardProps {
   showDirectionsButton?: boolean;
   type: string;
   showReminderBell?: boolean;
-  
+  workshopName: string;
+  workshopAddress: string;
+  workshopImageUrl?: string;
+  serviceName: string;
+  time: string;
+  price: string;
 }
 
 const BookingCard: React.FC<BookingCardProps> = ({
   showDirectionsButton = true,
   type,
   showReminderBell = false,
+  workshopName,
+  serviceName,
+  workshopAddress,
+  workshopImageUrl,
+  time,
+  price,
 }) => {
   const [loadingServiceOfferedDetails, setLoadingServiceOfferedDetails] =
     useState(false);
   const workshop = useAppSelector(state => state.booking.workshop);
   const [workshopDetailed, setWorkshopDetailed] = useState(workshop);
   const services = useServiceChoosenByCustomer();
-  const time = useAppSelector(state => state.booking.time);
+  // const time = useAppSelector(state => state.booking.time);
 
-  const price = useMemo(() => {
-    return (
-      workshop?.currency! +
-      formatPrice(workshop?.servicePrice ?? 0, workshop?.discount ?? 0)
-    );
-  }, []);
+  // const price = useMemo(() => {
+  //   return (
+  //     workshop?.currency! +
+  //     formatPrice(workshop?.servicePrice ?? 0, workshop?.discount ?? 0)
+  //   );
+  // }, []);
 
   const {setErrorMessage} = useGlobalErrors();
 
@@ -98,9 +107,9 @@ const BookingCard: React.FC<BookingCardProps> = ({
     <View className="rounded-lg border p-4 pt-0 border-grey-light w-full">
       <View className="flex flex-row my-4 justify-between items-start">
         <View className="flex-row">
-          {workshopDetailed?.images?.length && (
+          {workshopImageUrl && (
             <Image
-              source={{uri: getUserMainImage(workshopDetailed.images)?.url}}
+              source={{uri: workshopImageUrl}}
               containerStyle={styles.image}
               PlaceholderContent={
                 <ActivityIndicator
@@ -121,7 +130,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
               {type}
             </Text>
             <Text allowFontScaling={false} className="font-medium text-xl">
-              {workshopDetailed?.workshopName}
+              {workshopName}
             </Text>
             {services.length > 0 && (
               <View className="bg-green-light p-1.5 rounded self-start mt-1 max-w-[260px]">
@@ -129,7 +138,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
                   allowFontScaling={false}
                   className="text-green-dark font-semibold"
                 >
-                  {getFullServiceName(services)}
+                  {serviceName}
                 </Text>
               </View>
             )}
@@ -150,7 +159,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
 
       <HorizontalLine />
 
-      <View className="mb-4">
+      <View className="mb-2">
         {loadingServiceOfferedDetails ? (
           <View className="justify-center items-center w-full h-full">
             <ActivityIndicator
@@ -168,7 +177,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
             {workshopDetailed?.address && (
               <IconTextPair
                 icon={<PinIcon fill={Colors.light.ticText} />}
-                text={workshopDetailed.address}
+                text={workshopAddress}
               />
             )}
           </View>
