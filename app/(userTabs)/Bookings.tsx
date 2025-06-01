@@ -85,40 +85,52 @@ export default function UserBookings() {
               {t('bookings.title')}
             </Text>
 
-            <View className="flex-row bg-gray-100 rounded-full p-1 mt-4 mx-4">
-              {['active', 'past', 'rejected'].map(tab => (
-                <TouchableOpacity
-                  key={tab}
-                  onPress={() =>
-                    setActiveTab(tab as 'active' | 'past' | 'rejected')
-                  }
-                  className={`flex-1 items-center py-2 rounded-full ${activeTab === tab ? 'bg-white' : ''}`}
-                >
-                  <Text
-                    allowFontScaling={false}
-                    className="font-medium capitalize"
+            {/* todo: move the slide in a component */}
+            {cars.length !== 0 && (
+              <View className="flex-row bg-gray-100 rounded-full p-1 mt-4 mx-4">
+                {['active', 'past', 'rejected'].map(tab => (
+                  <TouchableOpacity
+                    key={tab}
+                    onPress={() =>
+                      setActiveTab(tab as 'active' | 'past' | 'rejected')
+                    }
+                    className={`flex-1 items-center py-2 rounded-full ${activeTab === tab ? 'bg-white' : ''}`}
                   >
-                    {tab === 'active'
-                      ? t('bookingsTabs.active')
-                      : tab === 'past'
-                        ? t('bookingsTabs.past')
-                        : t('bookingsTabs.rejected')}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
+                    <Text
+                      allowFontScaling={false}
+                      className="font-medium capitalize"
+                    >
+                      {tab === 'active'
+                        ? t('bookingsTabs.active')
+                        : tab === 'past'
+                          ? t('bookingsTabs.past')
+                          : t('bookingsTabs.rejected')}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
 
             {loadingCustomerCars || loading ? (
               <TicDriveSpinner />
             ) : cars.length === 0 ? (
-              <CrossPlatformButtonLayout onPress={onRegisterVehicle}>
-                <Text
-                  allowFontScaling={false}
-                  className="text-center text-lg font-semibold mt-6 underline"
-                >
-                  {t('vehicles.registerVehicleForBookings')}
-                </Text>
-              </CrossPlatformButtonLayout>
+              <>
+                <CrossPlatformButtonLayout onPress={onRegisterVehicle}>
+                  <Text
+                    allowFontScaling={false}
+                    className="text-center text-base text-gray-500 mt-2"
+                  >
+                    Non hai ancora prenotato un servizio.
+                  </Text>
+                </CrossPlatformButtonLayout>
+                <View className="flex-1 justify-center items-center">
+                  <Image
+                    source={require('@/assets/images/png/booking.png')}
+                    className="w-32 h-32"
+                    resizeMode="contain"
+                  />
+                </View>
+              </>
             ) : (
               <ScrollView showsVerticalScrollIndicator={false}>
                 {Object.entries(bookings).map(([carId, appointments]) => {
