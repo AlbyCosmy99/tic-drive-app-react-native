@@ -280,39 +280,60 @@ Android: https://play.google.com/store/apps/details?id=com.NOTyetonPlayStore.tic
                 </CrossPlatformButtonLayout>
 
                 {lat && lng && (
-                  <View
-                    className="mt-2"
-                    style={{
-                      elevation: 6,
-                      backgroundColor: 'white',
-                      borderRadius: 8,
-                    }}
-                  >
-                    <View
-                      style={{borderRadius: 8, overflow: 'hidden', height: 140}}
-                    >
-                      <MapView
-                        style={StyleSheet.absoluteFillObject}
-                        initialRegion={{
-                          latitude: lat,
-                          longitude: lng,
-                          latitudeDelta: 0.0922,
-                          longitudeDelta: 0.0421,
+                  <View className="mt-2">
+                    {workshop.latitude && workshop.longitude && (
+                      <View
+                        style={{
+                          shadowColor: '#000',
+                          shadowOffset: {width: 0, height: 4},
+                          shadowOpacity: 0.35,
+                          shadowRadius: 3,
+                          elevation: 6,
+                          backgroundColor: 'white',
+                          borderRadius: 8,
+                          overflow: 'visible',
                         }}
-                        scrollEnabled={false}
-                        zoomEnabled={false}
                       >
-                        <Marker coordinate={{latitude: lat, longitude: lng}}>
-                          <CrossPlatformButtonLayout
-                            onPress={() =>
-                              openGoogleMaps(workshop.address, lat, lng)
-                            }
+                        <View
+                          style={{
+                            borderRadius: 8,
+                            overflow: 'hidden',
+                            height: 140,
+                          }}
+                        >
+                          <MapView
+                            style={StyleSheet.absoluteFillObject}
+                            initialRegion={{
+                              latitude: workshop.latitude,
+                              longitude: workshop.longitude,
+                              latitudeDelta: 0.0922,
+                              longitudeDelta: 0.0421,
+                            }}
+                            scrollEnabled={false}
+                            zoomEnabled={false}
                           >
-                            <CarPinIcon />
-                          </CrossPlatformButtonLayout>
-                        </Marker>
-                      </MapView>
-                    </View>
+                            <Marker
+                              coordinate={{
+                                latitude: workshop.latitude,
+                                longitude: workshop.longitude,
+                              }}
+                            >
+                              <CrossPlatformButtonLayout
+                                onPress={() =>
+                                  openGoogleMaps(
+                                    workshop?.address,
+                                    workshop?.latitude,
+                                    workshop?.longitude,
+                                  )
+                                }
+                              >
+                                <CarPinIcon />
+                              </CrossPlatformButtonLayout>
+                            </Marker>
+                          </MapView>
+                        </View>
+                      </View>
+                    )}
                   </View>
                 )}
               </View>
