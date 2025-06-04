@@ -166,7 +166,7 @@ export default function UserBookings() {
                             type={appointment.status}
                             workshopName={appointment.workshopName}
                             workshopAddress={appointment.workshopAddress}
-                            workshopImageUrl={appointment.workshopImage.url}
+                            workshopImageUrl={appointment.workshopImage?.url}
                             serviceName={appointment.serviceName}
                             time={appointment.appointmentDate}
                             price={'€' + appointment.finalPrice}
