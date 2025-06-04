@@ -31,6 +31,7 @@ interface BookingCardProps {
   serviceName: string;
   time: string;
   price: string;
+  pinCode: string;
 }
 
 const BookingCard: React.FC<BookingCardProps> = ({
@@ -45,6 +46,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
   workshopImageUrl,
   time,
   price,
+  pinCode,
 }) => {
   const onOpenMaps = () =>
     openGoogleMaps(workshopAddress, workshopLatitude, workshopLongitude);
@@ -53,8 +55,16 @@ const BookingCard: React.FC<BookingCardProps> = ({
     <View
       className={`rounded-lg border p-4 pt-0 border-grey-light w-full ${!showDirectionsButton && 'pb-0'}`}
     >
-      <View className="flex flex-row my-4 justify-between items-start">
-        <View className="flex-row">
+      <View className="flex flex-row my-4 justify-between items-start relative">
+        <View className="flex-row w-full">
+          <View className="bg-gray-100 px-2 py-1 rounded flex-row items-center absolute right-[-6] top-[-8]">
+            <Text
+              allowFontScaling={false}
+              className="ml-1 text-sm font-medium text-gray-800"
+            >
+              PIN: {pinCode}
+            </Text>
+          </View>
           {workshopImageUrl && (
             <Image
               source={{uri: workshopImageUrl}}
@@ -77,7 +87,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
             >
               {type}
             </Text>
-            <Text allowFontScaling={false} className="font-medium text-xl">
+            <Text allowFontScaling={false} className="font-medium text-xl mt-1">
               {workshopName}
             </Text>
             <View className="bg-green-light p-1.5 rounded self-start mt-1 max-w-[260px]">

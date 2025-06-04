@@ -170,6 +170,7 @@ export default function UserBookings() {
                             serviceName={appointment.serviceName}
                             time={appointment.appointmentDate}
                             price={'€' + appointment.finalPrice}
+                            pinCode={appointment.pinCode}
                           />
                         </View>
                       ))}

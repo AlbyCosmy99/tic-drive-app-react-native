@@ -27,6 +27,7 @@ export type Booking = {
   customerCarPlate: string;
   customerCarYear: number;
   customerCarLogoUrl: string;
+  pinCode: string;
 };
 
 export type Bookings = Record<number, Booking[]>;
