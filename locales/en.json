@@ -35,7 +35,7 @@
   "bookingsTabs": {
     "active": "Active",
     "past": "Past",
-    "cancelled": "Cancelled"
+    "rejected": "Rejected"
   },
   "status": {
     "completed": "Completed",

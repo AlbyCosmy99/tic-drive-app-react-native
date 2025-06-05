@@ -207,7 +207,8 @@ function RegisterVehicleScreen() {
           ...car,
           make: carMakeDropdownData?.value,
           model: carModelDropdownData?.value,
-          year: null, //todo: ignorando l'year preso dal db e lo stiamo chiedendo sempre all'utente. Controllare se e' cio che desideriamo
+          logoUrl: carMakeDropdownData?.icon,
+          year: undefined, //todo: ignorando l'year preso dal db e lo stiamo chiedendo sempre all'utente. Controllare se e' cio che desideriamo
         });
       }
     }
@@ -369,6 +370,7 @@ function RegisterVehicleScreen() {
               setCarSelectedByMakeAndModel({
                 ...carSelectedByMakeAndModel,
                 make: carMakeDropdownData?.value,
+                logoUrl: carMakeDropdownData?.icon,
                 model: carModelDropdownData?.value,
               });
             }
@@ -378,6 +380,7 @@ function RegisterVehicleScreen() {
               setCarSelectedByPlateCtx({
                 ...carSelectedByPlateCtx,
                 make: carMakeDropdownData?.value,
+                logoUrl: carMakeDropdownData?.icon,
                 model: carModelDropdownData?.value,
               });
             }

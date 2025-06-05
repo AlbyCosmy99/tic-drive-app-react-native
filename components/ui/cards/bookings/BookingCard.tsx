@@ -16,90 +16,58 @@ import DirectionIcon from '@/assets/svg/assistant_direction.svg';
 import BellIcon from '@/assets/svg/notifications/Bell1.svg';
 import TicDriveOptionButton from '../../buttons/TicDriveOptionButton';
 import openGoogleMaps from '@/services/map/openGoogleMaps';
-import {useEffect, useMemo, useState} from 'react';
-import axiosClient from '@/services/http/axiosClient';
 import clsx from 'clsx';
-import getUserMainImage from '@/utils/files/getUserMainImage';
-import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCustomer';
-import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
-import {useAppSelector} from '@/stateManagement/redux/hooks';
-import formatPrice from '@/utils/currency/formatPrice.';
-import getFullServiceName from '@/services/toString/getFullServiceName';
+import CrossPlatformButtonLayout from '../../buttons/CrossPlatformButtonLayout';
 
 interface BookingCardProps {
   showDirectionsButton?: boolean;
   type: string;
   showReminderBell?: boolean;
+  workshopName: string;
+  workshopAddress: string;
+  workshopLatitude: number;
+  workshopLongitude: number;
+  workshopImageUrl?: string;
+  serviceName: string;
+  time: string;
+  price: string;
+  pinCode: string;
 }
 
 const BookingCard: React.FC<BookingCardProps> = ({
   showDirectionsButton = true,
   type,
   showReminderBell = false,
+  workshopName,
+  serviceName,
+  workshopAddress,
+  workshopLatitude,
+  workshopLongitude,
+  workshopImageUrl,
+  time,
+  price,
+  pinCode,
 }) => {
-  const [loadingServiceOfferedDetails, setLoadingServiceOfferedDetails] =
-    useState(false);
-  const workshop = useAppSelector(state => state.booking.workshop);
-  const [workshopDetailed, setWorkshopDetailed] = useState(workshop);
-  const services = useServiceChoosenByCustomer();
-  const time = useAppSelector(state => state.booking.time);
-
-  const price = useMemo(() => {
-    return (
-      workshop?.currency! +
-      formatPrice(workshop?.servicePrice ?? 0, workshop?.discount ?? 0)
-    );
-  }, []);
-
-  const {setErrorMessage} = useGlobalErrors();
-
-  useEffect(() => {
-    const fetchServiceOfferedDetails = async () => {
-      try {
-        if (services.length === 0) {
-          setErrorMessage(
-            'Errore: problema nel recuperare il servizio scelto. Riprovare.',
-          );
-        } else {
-          setLoadingServiceOfferedDetails(true);
-          const response = await axiosClient.get(
-            `OfferedServices?WorkshopId=${workshop?.id}&ServiceId=${services[services.length - 1].id}`,
-          );
-
-          const serviceOffered = response?.data?.length
-            ? response?.data[0]
-            : null;
-
-          setWorkshopDetailed(prev => {
-            if (!prev) return prev;
-
-            return {
-              ...prev,
-              currency: serviceOffered?.currency || 'USD',
-              servicePrice: serviceOffered?.price || 0,
-              discount: serviceOffered?.discount || 0,
-            };
-          });
-        }
-      } catch (e) {
-        console.error('Error fetching service offered details:', e);
-      } finally {
-        setLoadingServiceOfferedDetails(false);
-      }
-    };
-
-    if (workshop?.id && services.length > 0) {
-      fetchServiceOfferedDetails();
-    }
-  }, [workshop?.id, services]);
+  const onOpenMaps = () =>
+    openGoogleMaps(workshopAddress, workshopLatitude, workshopLongitude);
 
   return (
-    <View className="rounded-lg border p-4 pt-0 border-grey-light w-full">
-      <View className="flex flex-row my-4 justify-between items-start">
-        <View className="flex-row">
-          {workshopDetailed?.images?.length && (
+    <View
+      className={`rounded-lg border p-4 pt-0 border-grey-light w-full ${!showDirectionsButton && 'pb-0'}`}
+    >
+      <View className="flex flex-row my-4 justify-between items-start relative">
+        <View className="flex-row w-full">
+          <View className="bg-gray-100 px-2 py-1 rounded flex-row items-center absolute right-[-6] top-[-8]">
+            <Text
+              allowFontScaling={false}
+              className="ml-1 text-sm font-medium text-gray-800"
+            >
+              PIN: {pinCode}
+            </Text>
+          </View>
+          {workshopImageUrl && (
             <Image
-              source={{uri: getUserMainImage(workshopDetailed.images)?.url}}
+              source={{uri: workshopImageUrl}}
               containerStyle={styles.image}
               PlaceholderContent={
                 <ActivityIndicator
@@ -119,19 +87,17 @@ const BookingCard: React.FC<BookingCardProps> = ({
             >
               {type}
             </Text>
-            <Text allowFontScaling={false} className="font-medium text-xl">
-              {workshopDetailed?.workshopName}
+            <Text allowFontScaling={false} className="font-medium text-xl mt-1">
+              {workshopName}
             </Text>
-            {services.length > 0 && (
-              <View className="bg-green-light p-1.5 rounded self-start mt-1 max-w-[260px]">
-                <Text
-                  allowFontScaling={false}
-                  className="text-green-dark font-semibold"
-                >
-                  {getFullServiceName(services)}
-                </Text>
-              </View>
-            )}
+            <View className="bg-green-light p-1.5 rounded self-start mt-1 max-w-[260px]">
+              <Text
+                allowFontScaling={false}
+                className="text-green-dark font-semibold"
+              >
+                {serviceName}
+              </Text>
+            </View>
           </View>
         </View>
 
@@ -149,29 +115,18 @@ const BookingCard: React.FC<BookingCardProps> = ({
 
       <HorizontalLine />
 
-      <View className="mb-4">
-        {loadingServiceOfferedDetails ? (
-          <View className="justify-center items-center w-full h-full">
-            <ActivityIndicator
-              size="large"
-              color={Colors.light.bookingsOptionsText}
-            />
-          </View>
-        ) : (
-          <View className="mb-2">
-            <IconTextPair icon={<CalendarIcon />} text={time} />
+      <View className="mb-2">
+        <View className={showDirectionsButton ? 'mb-2' : ''}>
+          <IconTextPair icon={<CalendarIcon />} text={time} />
+          <IconTextPair icon={<CreditCardIcon />} text={`${price} da pagare`} />
+          <CrossPlatformButtonLayout onPress={onOpenMaps}>
             <IconTextPair
-              icon={<CreditCardIcon />}
-              text={`${price} da pagare`}
+              icon={<PinIcon fill={Colors.light.ticText} />}
+              text={workshopAddress}
+              textTailwindCss="underline"
             />
-            {workshopDetailed?.address && (
-              <IconTextPair
-                icon={<PinIcon fill={Colors.light.ticText} />}
-                text={workshopDetailed.address}
-              />
-            )}
-          </View>
-        )}
+          </CrossPlatformButtonLayout>
+        </View>
       </View>
 
       {showDirectionsButton && (
@@ -179,13 +134,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
           icon={<DirectionIcon />}
           text="Directions"
           textTailwindCss="font-medium text-base"
-          onPress={() =>
-            openGoogleMaps(
-              workshopDetailed?.address,
-              workshopDetailed?.latitude,
-              workshopDetailed?.longitude,
-            )
-          }
+          onPress={onOpenMaps}
         />
       )}
     </View>
