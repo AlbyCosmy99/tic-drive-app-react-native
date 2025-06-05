@@ -245,7 +245,10 @@
     "descriptionforAuthchnagepassword": "For your account security, use a strong new password.",
     "currentPassword": "Current password",
     "newPassword": "New password",
-    "confirmPassword": "Confirm new password"
+    "confirmPassword": "Confirm new password",
+    "passwordsDoNotMatch": "Passwords do not match.",
+    "passwordValidationMessage": "Password must be at least 8 characters and include upper and lower case letters, a number, and a symbol.",
+    "ValidEmail": "Please enter a valid email address"
   },
   "forgotPassword": {
     "title": "Forgot Password?",

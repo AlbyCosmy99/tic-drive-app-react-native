@@ -13,6 +13,8 @@ import {useTranslation} from 'react-i18next';
 import {useState, useMemo} from 'react';
 import {View, Text} from 'react-native';
 import changePasswordAsync from '@/services/http/requests/post/auth/changePasswordAsync';
+import isAcceptablePassword from '@/utils/auth/isAcceptablePassword';
+
 
 const AuthenticatedChangePasswordScreen = () => {
   const {t} = useTranslation();
@@ -27,13 +29,15 @@ const AuthenticatedChangePasswordScreen = () => {
   const [loading, setLoading] = useState(false);
 
   const buttonDisabled = useMemo(() => {
-    return (
-      !currentPassword ||
-      !newPassword ||
-      !confirmPassword ||
-      newPassword !== confirmPassword
-    );
-  }, [currentPassword, newPassword, confirmPassword]);
+  return (
+    !currentPassword ||
+    !newPassword ||
+    !confirmPassword ||
+    newPassword !== confirmPassword ||
+    !isAcceptablePassword(newPassword)
+  );
+}, [currentPassword, newPassword, confirmPassword]);
+
 
   const onSubmit = async () => {
     try {
@@ -87,12 +91,14 @@ const AuthenticatedChangePasswordScreen = () => {
                 onChange={setCurrentPassword}
                 isPassword={!isPasswordVisible}
                 rightIcon={
-                  isPasswordVisible ? (
+                isPasswordVisible ? (
+                  <View className="mt-1">
                     <VisibilityOffIcon />
-                  ) : (
-                    <VisibilityOnIcon />
-                  )
-                }
+                  </View>
+                ) : (
+                  <VisibilityOnIcon />
+                )
+              }
                 onRightIcon={() => setIsPasswordVisible(prev => !prev)}
                 inputContainerStyle={{marginTop: 10}}
               />
@@ -103,31 +109,50 @@ const AuthenticatedChangePasswordScreen = () => {
                 onChange={setNewPassword}
                 isPassword={!isPasswordVisible}
                 rightIcon={
-                  isPasswordVisible ? (
+                isPasswordVisible ? (
+                  <View className="mt-1">
                     <VisibilityOffIcon />
-                  ) : (
-                    <VisibilityOnIcon />
-                  )
-                }
+                  </View>
+                ) : (
+                  <VisibilityOnIcon />
+                )
+              }
                 onRightIcon={() => setIsPasswordVisible(prev => !prev)}
-                inputContainerStyle={{marginTop: 10}}
+                inputContainerStyle={{marginTop: 10,}}
               />
+              {newPassword.length > 0 && !isAcceptablePassword(newPassword) && (
+              <Text className="text-red-600 font-bold text-sm bg-red-100 px-3 py-1 mx-2  mb-2.5 rounded">
+
+              {t(
+              'changePassword.passwordValidationMessage'
+               )}
+               </Text>
+               )}
               <TicDriveInput
                 existsRightIcon
                 placeholder={t('changePassword.confirmPassword')}
                 customValue={confirmPassword}
                 onChange={setConfirmPassword}
                 isPassword={!isPasswordVisible}
-                rightIcon={
-                  isPasswordVisible ? (
+                 rightIcon={
+                isPasswordVisible ? (
+                  <View className="mt-1">
                     <VisibilityOffIcon />
-                  ) : (
-                    <VisibilityOnIcon />
-                  )
-                }
+                  </View>
+                ) : (
+                  <VisibilityOnIcon />
+                )
+              }
                 onRightIcon={() => setIsPasswordVisible(prev => !prev)}
                 inputContainerStyle={{marginTop: 10}}
               />
+               {confirmPassword.length > 0 && newPassword !== confirmPassword && (
+             <Text className="text-red-600 font-bold text-sm bg-red-100 px-3 py-1 mx-2  mb-2 rounded">
+              {t(
+              'changePassword.passwordsDoNotMatch'
+             )}
+            </Text>
+             )}
             </View>
           </View>
 

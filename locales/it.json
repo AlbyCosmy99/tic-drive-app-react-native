@@ -262,7 +262,11 @@
     "descriptionforAuthchnagepassword": "Per la sicurezza del tuo account, usa una nuova password forte.",
     "currentPassword": "Password attuale",
     "newPassword": "Nuova password",
-    "confirmPassword": "Conferma nuova password"
+    "confirmPassword": "Conferma nuova password",
+    "passwordsDoNotMatch": "Le password non corrispondono.",
+    "passwordValidationMessage": "La password deve essere di almeno 8 caratteri, con maiuscole, minuscole, numeri e simboli.",
+    "ValidEmail": "Inserisci un indirizzo email valido"
+
   
   },
   "forgotPassword": {
