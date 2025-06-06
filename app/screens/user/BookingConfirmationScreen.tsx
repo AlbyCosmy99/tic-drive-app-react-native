@@ -25,7 +25,7 @@ export default function BookingConfirmationScreen() {
   const workshop = useAppSelector(state => state.booking.workshop);
   const services = useServiceChoosenByCustomer();
   const time = useAppSelector(state => state.booking.time);
-  const pinCode = useAppSelector(state => state.booking.pinCode)
+  const pinCode = useAppSelector(state => state.booking.pinCode);
 
   const price = useMemo(() => {
     return (
@@ -74,6 +74,8 @@ export default function BookingConfirmationScreen() {
               type={t('bookingConfirmation.statusPending')}
               workshopName={workshop?.workshopName || 'Nome non disponibile'}
               workshopAddress={workshop?.address || 'Indirizzo non disponibile'}
+              workshopLatitude={Number(workshop?.latitude) || 0}
+              workshopLongitude={Number(workshop?.longitude) || 0}
               workshopImageUrl={
                 workshop?.images.length
                   ? getUserMainImage(workshop.images)?.url
