@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Text, StyleSheet, View} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import TicDriveInput from '../ui/inputs/TicDriveInput';
-import User, {UserCategory} from '@/types/User';
+import User from '@/types/User';
 import {useAppDispatch} from '@/stateManagement/redux/hooks';
 import AuthContext from '@/stateManagement/contexts/auth/AuthContext';
 import {login, setToken} from '@/stateManagement/redux/slices/authSlice';
