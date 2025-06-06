@@ -38,6 +38,8 @@ import '@/i18n';
 import ForgotPasswordScreen from './screens/user/ForgotPasswordScreen';
 import ResetPasswordWithCodeScreen from './screens/user/ResetPasswordWithCodeScreen';
 import ChangePasswordScreen from './screens/user/ChangePasswordScreen';
+import AuthenticatedChangePasswordScreen from './screens/user/AuthenticatedChangePasswordScreen';
+
 import SuccessfullyPasswordChangedScreen from './screens/user/SuccessfullyPasswordChangedScreen';
 import UserVehiclesScreen from './screens/vehicles/UserVehiclesScreen';
 import UserVehicleDetailsScreen from './screens/vehicles/UserVehicleDetailsScreen';
@@ -273,6 +275,15 @@ export default function RootLayout() {
                         component={ChangePasswordScreen}
                         options={({route}) => ({
                           title: 'ChangePasswordScreen',
+                          headerShown: false,
+                          animation: getAnimation(route),
+                        })}
+                      />
+                      <Stack.Screen
+                        name="AuthenticatedChangePasswordScreen"
+                        component={AuthenticatedChangePasswordScreen}
+                        options={({route}) => ({
+                          title: 'AuthenticatedChangePasswordScreenn',
                           headerShown: false,
                           animation: getAnimation(route),
                         })}

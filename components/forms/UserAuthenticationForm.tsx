@@ -16,6 +16,9 @@ import VisibilityOffIcon from '@/assets/svg/access/visibility_off.svg';
 import VisibilityOnIcon from '@/assets/svg/access/visibility_on.svg';
 import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
 import useLogin from '@/hooks/auth/useLogin';
+import isAcceptablePassword from '@/utils/auth/isAcceptablePassword';
+import isEmailValid from '@/utils/auth/isEmailValid';
+import {useTranslation} from 'react-i18next';
 
 type FormData = {
   email: string;
@@ -42,6 +45,7 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
     watch,
     formState: {errors},
   } = useForm<FormData>();
+  const {t} = useTranslation();
 
   const {loginRouteName, setLoginRouteName, loginRouteParams} =
     React.useContext(AuthContext);
@@ -151,13 +155,10 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
       <Controller
         control={control}
         name="email"
-        rules={{
-          required: 'Email is required',
-          pattern: {
-            value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-            message: 'Please enter a valid email address',
-          },
-        }}
+       rules={{
+  required: 'Email is required',
+  validate: value => isEmailValid(value) || t('changePassword.ValidEmail'),
+}}
         render={({field: {onChange, value}}) => (
           <TicDriveInput
             placeholder="Email"
@@ -174,14 +175,12 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
       <Controller
         control={control}
         name="password"
-        rules={{
-          required: 'Password is required',
-          pattern: {
-            value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/,
-            message:
-              'Password must be at least 8 characters long, include at least one uppercase letter, one lowercase letter, and one number.',
-          },
-        }}
+       rules={{
+    required: 'Password is required',
+    validate: value =>
+      isAcceptablePassword(value) ||
+      t( 'changePassword.passwordValidationMessage')
+  }}
         render={({field: {onChange, value}}) => (
           <TicDriveInput
             placeholder="Password"

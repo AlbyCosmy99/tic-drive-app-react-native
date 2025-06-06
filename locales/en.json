@@ -240,7 +240,15 @@
     "description": "Create a new password. Make sure it’s different from the previous ones for better security.",
     "password": "Password",
     "repeatPassword": "Repeat password",
-    "updatePassword": "Update password"
+    "updatePassword": "Update password",
+     "title": "Change Password",
+    "descriptionforAuthchnagepassword": "For your account security, use a strong new password.",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "passwordsDoNotMatch": "Passwords do not match.",
+    "passwordValidationMessage": "Password must be at least 8 characters and include upper and lower case letters, a number, and a symbol.",
+    "ValidEmail": "Please enter a valid email address"
   },
   "forgotPassword": {
     "title": "Forgot Password?",
@@ -257,7 +265,8 @@
   },
   "successPasswordChange": {
     "success": "Success",
-    "subtitle": "Congratulations! Your password has been changed. Continue to Home."
+    "subtitle": "Congratulations! Your password has been changed. Continue to Home.",
+    "successTitle": "Password Changed"
   },
   "errors": {
     "badRequest": "Bad request: {{message}}",
@@ -266,7 +275,9 @@
     "unexpected": "Unexpected error: {{code}}",
     "general": "Something went wrong. Please try again.",
     "anErrorOccurred": "An error occurred",
-    "fetchWorkshopUnavailableDates": "Error while fetching workshop unavailable dates."
+    "fetchWorkshopUnavailableDates": "Error while fetching workshop unavailable dates.",
+    "generic": "An error occurred while changing the password. Please try again."
+
   },
   "reviewBooking": {
     "reviewDetails": "Booking Details",

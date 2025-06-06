@@ -257,7 +257,17 @@
     "description": "Crea una nuova password. Assicurati che sia diversa da quelle precedenti per maggiore sicurezza.",
     "password": "Password",
     "repeatPassword": "Ripeti password",
-    "updatePassword": "Aggiorna password"
+    "updatePassword": "Aggiorna password",
+    "title": "Cambia password",
+    "descriptionforAuthchnagepassword": "Per la sicurezza del tuo account, usa una nuova password forte.",
+    "currentPassword": "Password attuale",
+    "newPassword": "Nuova password",
+    "confirmPassword": "Conferma nuova password",
+    "passwordsDoNotMatch": "Le password non corrispondono.",
+    "passwordValidationMessage": "La password deve essere di almeno 8 caratteri, con maiuscole, minuscole, numeri e simboli.",
+    "ValidEmail": "Inserisci un indirizzo email valido"
+
+  
   },
   "forgotPassword": {
     "title": "Password dimenticata?",
@@ -274,7 +284,9 @@
   },
   "successPasswordChange": {
     "success": "Successo",
-    "subtitle": "Congratulazioni! La tua password è stata cambiata. Continua alla Home."
+    "subtitle": "Congratulazioni! La tua password è stata cambiata. Continua alla Home.",
+    "successTitle": "Password cambiata"
+
   },
   "errors": {
     "badRequest": "Richiesta non valida: {{message}}",
@@ -283,7 +295,8 @@
     "unexpected": "Errore imprevisto: {{code}}",
     "general": "Qualcosa è andato storto. Riprova.",
     "anErrorOccurred": "Si è verificato un errore",
-    "fetchWorkshopUnavailableDates": "Errore nel recupero delle date in cui l'officina non è disponibile."
+    "fetchWorkshopUnavailableDates": "Errore nel recupero delle date in cui l'officina non è disponibile.",
+    "generic": "Si è verificato un errore durante il cambio della password. Riprova."
   },
   "reviewBooking": {
     "details": "Dettagli della prenotazione",
