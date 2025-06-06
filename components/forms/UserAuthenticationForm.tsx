@@ -155,10 +155,11 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
       <Controller
         control={control}
         name="email"
-       rules={{
-  required: 'Email is required',
-  validate: value => isEmailValid(value) || t('changePassword.ValidEmail'),
-}}
+        rules={{
+          required: 'Email is required',
+          validate: value =>
+            isEmailValid(value) || t('changePassword.ValidEmail'),
+        }}
         render={({field: {onChange, value}}) => (
           <TicDriveInput
             placeholder="Email"
@@ -175,12 +176,12 @@ const UserAuthenticationForm: React.FC<UserAuthenticationFormProps> = ({
       <Controller
         control={control}
         name="password"
-       rules={{
-    required: 'Password is required',
-    validate: value =>
-      isAcceptablePassword(value) ||
-      t( 'changePassword.passwordValidationMessage')
-  }}
+        rules={{
+          required: 'Password is required',
+          validate: value =>
+            isAcceptablePassword(value) ||
+            t('changePassword.passwordValidationMessage'),
+        }}
         render={({field: {onChange, value}}) => (
           <TicDriveInput
             placeholder="Password"
