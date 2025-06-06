@@ -22,10 +22,7 @@ import IconTextPair from '@/components/ui/IconTextPair';
 import PaymentCard from '@/components/ui/payment/PaymentCard';
 import {useContext, useEffect, useMemo, useState} from 'react';
 import GlobalContext from '@/stateManagement/contexts/global/GlobalContext';
-import isAndroidPlatform from '@/utils/devices/isAndroidPlatform';
-import navigationPush from '@/services/navigation/push';
 import NavigationContext from '@/stateManagement/contexts/nav/NavigationContext';
-import navigationReset from '@/services/navigation/reset';
 import {useAppDispatch, useAppSelector} from '@/stateManagement/redux/hooks';
 import WorkshopReviewinfo from '@/components/workshop/reviews/WorkshopReviewInfo';
 import CashIcon from '@/assets/svg/payment/cash.svg';
@@ -41,16 +38,25 @@ import getWorkshopWithServiceDetails from '@/services/http/requests/get/workshop
 import {setWorkshop} from '@/stateManagement/redux/slices/bookingSlice';
 import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
+import parseStringTimeToDate from '@/utils/dates/parseStringTimeToDate';
+import navigationReset from '@/services/navigation/reset';
+import registerCarAsync from '@/services/http/requests/post/cars/registerCarAsync';
+import bookAServiceAsync from '@/services/http/requests/post/bookings/bookAServiceAsync';
 
 export default function ReviewBookingDetailsScreen() {
   const {t} = useTranslation();
-  const {userPaymentInfo, setUserPaymentInfo} = useContext(GlobalContext);
+  const {userPaymentInfo} = useContext(GlobalContext);
   const {navigation} = useContext(NavigationContext);
   const dispatch = useAppDispatch();
 
   const servicesChoosen = useServiceChoosenByCustomer();
   const workshop = useAppSelector(state => state.booking.workshop);
   const time = useAppSelector(state => state.booking.time);
+  const car = useAppSelector(state => state.booking.car);
+  const token = useAppSelector(state => state.auth.token);
+  const user = useAppSelector(state => state.auth.user);
+  const languageCode = useAppSelector(state => state.language.languageCode);
+
   const [loading, setLoading] = useState(false);
 
   const {setErrorMessage} = useGlobalErrors();
@@ -88,23 +94,34 @@ export default function ReviewBookingDetailsScreen() {
     }
   }, [servicesChoosen]);
 
-  useEffect(() => {
-    if (!userPaymentInfo?.choosenCard) {
-      setUserPaymentInfo({
-        ...userPaymentInfo,
-        choosenCard: isAndroidPlatform()
-          ? userPaymentInfo?.defaultPaymentTypes?.find(
-              type => type.paymentType === 'Google Pay',
-            )
-          : userPaymentInfo?.defaultPaymentTypes?.find(
-              type => type.paymentType === 'Apple Pay',
-            ),
-      });
-    }
-  }, []);
+  const onbookAService = async () => {
+    try {
+      setLoading(true);
+      const res = await registerCarAsync(
+        token ?? '',
+        languageCode,
+        car,
+        user?.name,
+      );
+      await bookAServiceAsync(
+        token ?? '',
+        workshop?.id ?? '',
+        servicesChoosen[servicesChoosen.length - 1].id,
+        res?.data.customerCarId ?? 0,
+        Number(
+          formatPrice(workshop?.servicePrice ?? 0, workshop?.discount ?? 0),
+        ),
+        parseStringTimeToDate(time),
+      );
 
-  const handlePaymentTypeChange = () => {
-    navigationPush(navigation, 'PaymentCardsScreen');
+      navigationReset(navigation, 0, 'BookingConfirmationScreen', {
+        workshop,
+      });
+    } catch (e: any) {
+      setErrorMessage(e.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -287,15 +304,9 @@ export default function ReviewBookingDetailsScreen() {
                 replace={true}
                 toTop={true}
                 customContainerStyle={{marginLeft: 7}}
+                disabled={loading}
                 text={t('reviewBooking.bookNow')}
-                routeName="userTabs"
-                routeParams={{animation: 'fade'}}
-                stateRouteName="Home"
-                onClick={() => {
-                  navigationReset(navigation, 0, 'BookingConfirmationScreen', {
-                    workshop,
-                  });
-                }}
+                onClick={onbookAService}
               />
             </View>
           </View>
