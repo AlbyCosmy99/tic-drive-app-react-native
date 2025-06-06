@@ -11,6 +11,7 @@ interface BookingState {
   lastWorkshopSelectedFromFilter: Workshop | undefined;
   car: Car | undefined;
   time: string;
+  pinCode: string;
 }
 
 const initialState: BookingState = {
@@ -21,6 +22,7 @@ const initialState: BookingState = {
   lastWorkshopSelectedFromFilter: undefined,
   car: undefined,
   time: '',
+  pinCode: '',
 };
 
 const bookingSlice = createSlice({
@@ -70,11 +72,15 @@ const bookingSlice = createSlice({
     setTime(state: BookingState, action: PayloadAction<string>) {
       state.time = action.payload;
     },
+    setPinCode(state: BookingState, action: PayloadAction<string>) {
+      state.pinCode = action.payload;
+    },
     reset(state: BookingState) {
       state.services = [];
       state.workshop = undefined;
       state.car = undefined;
       state.time = '';
+      state.pinCode = ''
     },
   },
 });
@@ -88,6 +94,7 @@ export const {
   setServiceTreeLevel,
   removeService,
   setServices,
+  setPinCode,
   reset,
 } = bookingSlice.actions;
 

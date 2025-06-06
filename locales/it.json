@@ -166,7 +166,6 @@
 
   "bookingConfirmation": {
     "awaitingWorkshopConfirmation": "Il servizio necessita la conferma da parte dell'officina.",
-    "bookingNumber": "Prenotazione n. {{number}}",
     "statusPending": "In attesa di conferma",
     "errorCarRegistration": "Si è verificato un problema durante la registrazione dell'auto."
   },

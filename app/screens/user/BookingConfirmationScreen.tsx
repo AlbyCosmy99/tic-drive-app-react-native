@@ -25,6 +25,7 @@ export default function BookingConfirmationScreen() {
   const workshop = useAppSelector(state => state.booking.workshop);
   const services = useServiceChoosenByCustomer();
   const time = useAppSelector(state => state.booking.time);
+  const pinCode = useAppSelector(state => state.booking.pinCode)
 
   const price = useMemo(() => {
     return (
@@ -63,7 +64,7 @@ export default function BookingConfirmationScreen() {
             </Text>
             <View className="flex flex-col items-center justify-center mt-4 mb-6">
               <Text allowFontScaling={false} className="text-sm text-tic">
-                {t('bookingConfirmation.bookingNumber', {number: '00806835'})}
+                PIN prenotazione: {pinCode}
               </Text>
               <Text allowFontScaling={false} className="text-sm text-tic">
                 {formatCurrentDate(languageCode)}

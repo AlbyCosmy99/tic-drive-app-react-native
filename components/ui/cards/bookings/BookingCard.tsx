@@ -31,7 +31,7 @@ interface BookingCardProps {
   serviceName: string;
   time: string;
   price: string;
-  pinCode: string;
+  pinCode?: string;
 }
 
 const BookingCard: React.FC<BookingCardProps> = ({
@@ -57,14 +57,16 @@ const BookingCard: React.FC<BookingCardProps> = ({
     >
       <View className="flex flex-row my-4 justify-between items-start relative">
         <View className="flex-row w-full">
-          <View className="bg-gray-100 px-2 py-1 rounded flex-row items-center absolute right-[-6] top-[-8]">
-            <Text
-              allowFontScaling={false}
-              className="ml-1 text-sm font-medium text-gray-800"
-            >
-              PIN: {pinCode}
-            </Text>
-          </View>
+          {pinCode && (
+            <View className="bg-gray-100 px-2 py-1 rounded flex-row items-center absolute right-[-6] top-[-8]">
+              <Text
+                allowFontScaling={false}
+                className="ml-1 text-sm font-medium text-gray-800"
+              >
+                PIN: {pinCode}
+              </Text>
+            </View>
+          )}
           {workshopImageUrl && (
             <Image
               source={{uri: workshopImageUrl}}
