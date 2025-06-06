@@ -49,7 +49,7 @@ const AuthenticatedChangePasswordScreen = () => {
     } catch (error: any) {
       setLoading(false);
       if (error?.status === 400 || error?.status === 401) {
-        setErrorMessage(error.message?.message || t('errors.badRequest'));
+        setErrorMessage(error.message?.errors[0] || t('errors.badRequest'));
       } else {
         setErrorMessage(t('errors.generic'));
       }
