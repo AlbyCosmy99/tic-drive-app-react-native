@@ -280,7 +280,7 @@ export default function UserHome() {
                 topHorizontalLine={false}
               />
             </View>
-
+            {/* reminder section */}
             <View className="mx-3 p-1 rounded-xl">
               <Text
                 className={`font-semibold ${
@@ -295,7 +295,12 @@ export default function UserHome() {
                 style={{backgroundColor: '#FFFBE5'}}
                 className="py-2 rounded-xl"
               >
-                <TicDriveReminderCard
+                <Text className="text-sm text-gray-700 text-center">
+                  Nessun promemoria disponibile al momento. Ti avviseremo appena
+                  ne avrai uno!
+                </Text>
+
+                {/* <TicDriveReminderCard
                   leftButtonText={t('bookNow')}
                   rightButtonText={t('RemindMeLater')}
                   logo={<NissanIcon />}
@@ -312,22 +317,21 @@ export default function UserHome() {
                   rightButtonText={t('RemindMeLater')}
                   logo={<NissanIcon />}
                   text={t('home.notifications.third')}
-                />
+                /> */}
               </View>
-
-              <CrossPlatformButtonLayout
-                removeAllStyles={false}
-                containerTailwindCss="border-2 border-grey-light items-center justify-center p-1 m-2.5 rounded-xl bg-white shadow-sm shadow-black/20"
-                onPress={handleVehicles}
-              >
-                <Text
-                  className="text-base font-semibold"
-                  allowFontScaling={false}
-                >
-                  {t('vehicles.handleVehicles')}
-                </Text>
-              </CrossPlatformButtonLayout>
             </View>
+            <CrossPlatformButtonLayout
+              removeAllStyles={false}
+              containerTailwindCss="border-2 border-grey-light items-center justify-center p-1 m-2.5 rounded-xl bg-white shadow-sm shadow-black/20"
+              onPress={handleVehicles}
+            >
+              <Text
+                className="text-base font-semibold"
+                allowFontScaling={false}
+              >
+                {t('vehicles.handleVehicles')}
+              </Text>
+            </CrossPlatformButtonLayout>
 
             {isMapVisible && <MapModal setIsMapVisible={setIsMapVisible} />}
           </ScrollView>
