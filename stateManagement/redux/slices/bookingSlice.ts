@@ -42,7 +42,6 @@ const bookingSlice = createSlice({
       state: BookingState,
       action: PayloadAction<{service: Service; index?: number}>,
     ) {
-      console.log(action.payload);
       if (typeof action.payload.index === 'number') {
         state.services[action.payload.index] = action.payload.service;
       } else {

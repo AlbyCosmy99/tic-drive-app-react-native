@@ -363,7 +363,7 @@ Android: https://play.google.com/store/apps/details?id=com.NOTyetonPlayStore.tic
             {servicesChoosen && !!workshop.servicePrice && (
               <View className="flex-1 flex-col mt-2.5">
                 <Text
-                  className="text-base"
+                  className="text-base mx-2"
                   style={styles.startingFrom}
                   allowFontScaling={false}
                 >
@@ -371,11 +371,10 @@ Android: https://play.google.com/store/apps/details?id=com.NOTyetonPlayStore.tic
                 </Text>
                 <View className="flex-row items-center">
                   <Text
-                    className="font-semibold text-xl mx-1 text-red-500"
+                    className={`font-semibold text-xl mx-1 ${workshop.discount !== 0 && 'text-red-500'}`}
                     allowFontScaling={false}
                   >
-                    {workshop.currency}
-                    {formatPrice(workshop.servicePrice)}
+                    € {formatPrice(workshop.servicePrice)}
                   </Text>
                   {workshop.discount !== 0 && (
                     <>
@@ -384,8 +383,7 @@ Android: https://play.google.com/store/apps/details?id=com.NOTyetonPlayStore.tic
                         className="font-semibold text-xl mx-1"
                         allowFontScaling={false}
                       >
-                        {workshop.currency}
-
+                        €{' '}
                         {formatPrice(
                           workshop.servicePrice,
                           workshop.discount ?? 0,

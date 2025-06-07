@@ -151,7 +151,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
                   allowFontScaling={false}
                   className="text-base font-medium"
                 >
-                  {workshop.currency}
+                  €{' '}
                   {formatPrice(
                     workshop.servicePrice ?? 0,
                     workshop.discount ?? 0,

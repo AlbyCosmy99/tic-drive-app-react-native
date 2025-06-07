@@ -73,6 +73,8 @@ export default function ChooseServicesScreen() {
     state => state.booking.lastServiceSelectedFromFilter,
   );
 
+  const languageCode = useAppSelector(state => state.language.languageCode)
+
   const showCalendarModal = useMemo(() => {
     return !time && workshop;
   }, [time]);
@@ -85,7 +87,7 @@ export default function ChooseServicesScreen() {
     }
     try {
       const response = await axiosClient.get(
-        `services?take=5&filter=${search}`,
+        `services?take=5&filter=${search}&languageCode=${languageCode}`,
       );
       setFilteredServices(response.data);
     } catch (error) {
@@ -104,11 +106,10 @@ export default function ChooseServicesScreen() {
 
     try {
       setLoading(true);
-      const currentService = services[serviceTreeLevel - 1];
-      const hasChildren = await serviceHasChildren(currentService?.id);
+      const hasChildren = await serviceHasChildren(service?.id);
       if (hasChildren) {
         navigation.push('ChooseServicesScreen', {
-          fatherId: currentService.id,
+          fatherId: service?.id,
         });
         dispatch(setServiceTreeLevel(serviceTreeLevel + 1));
       } else if (!showCalendarModal) {
@@ -166,8 +167,7 @@ export default function ChooseServicesScreen() {
                   idToCompareForClock={lastServiceSelectedFromFilter?.id}
                   emptyElementsMessage="No services with this filter."
                   onElementPress={elem => {
-                    navigationPush(navigation, 'RegisterVehicleScreen');
-                    dispatch(setServices([elem]));
+                    handleOnService(elem)
                     dispatch(setLastServiceSelectedFromFilter(elem));
                   }}
                 />
