@@ -48,6 +48,10 @@ export default function SelectVehicleScreen() {
     fetchCars();
   }, []);
 
+  useEffect(() => {
+    console.log('services at mount:', services);
+  }, []);
+
   const handleCarSelect = (car: Car) => {
     if (services?.length === 0) {
       navigationPush(navigation, 'ChooseServicesScreen');
