@@ -74,7 +74,7 @@ export default function ChooseServicesScreen() {
   );
 
   const showCalendarModal = useMemo(() => {
-    return !time;
+    return !time && workshop;
   }, [time]);
 
   const onSearch = async (search: string) => {
