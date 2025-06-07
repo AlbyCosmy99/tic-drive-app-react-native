@@ -130,7 +130,6 @@
       "saturday": "Sabato",
       "closed": "Chiuso"
     },
-    "startingFrom": "A partire da",
     "order": "Ordina",
     "filter": "Filtra",
     "map": "Mappa",
@@ -157,7 +156,6 @@
 
   "share": {
     "intro": "🚗✨ Scopri {{workshopName}} su TicDrive! ✨🚗",
-    "startingFrom": "A partire da",
     "experienceReliable": "Esperienza di servizio affidabile su misura per il tuo veicolo!",
     "discount": "sconto",
     "verified": "Verificato da TicDrive",

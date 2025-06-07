@@ -41,7 +41,6 @@ type ParamList = {
     buttonContainerTailwindCss?: string;
     withSafeAreaView?: boolean;
     fatherId?: number;
-    showCalendarModal?: boolean;
   };
 };
 
@@ -59,12 +58,12 @@ export default function ChooseServicesScreen() {
   const [loading, setLoading] = useState(false);
   const modalRef = useRef<UserCalendarModalRef>(null);
   const workshop = useAppSelector(state => state.booking.workshop);
+  const time = useAppSelector(state => state.booking.time)
 
   const {
     buttonContainerTailwindCss = '',
     withSafeAreaView = true,
     fatherId,
-    showCalendarModal = false,
   } = route.params ?? {};
 
   const serviceTreeLevel = useAppSelector(
@@ -73,6 +72,10 @@ export default function ChooseServicesScreen() {
   const lastServiceSelectedFromFilter = useAppSelector(
     state => state.booking.lastServiceSelectedFromFilter,
   );
+
+  const showCalendarModal = useMemo(() => {
+    return !time
+  }, [time])
 
   const onSearch = async (search: string) => {
     setFilter(search);

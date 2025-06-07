@@ -63,7 +63,7 @@ export default function ReviewBookingDetailsScreen() {
 
   const price = useMemo(() => {
     return (
-      (workshop?.currency ?? '') +
+      (workshop?.currency ?? '€') +
       formatPrice(workshop?.servicePrice ?? 0, workshop?.discount ?? 0)
     );
   }, [workshop]);
@@ -103,6 +103,7 @@ export default function ReviewBookingDetailsScreen() {
         car,
         user?.name,
       );
+      console.log('time',time)
       const res2 = await bookAServiceAsync(
         token ?? '',
         workshop?.id ?? '',

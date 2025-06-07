@@ -367,7 +367,7 @@ Android: https://play.google.com/store/apps/details?id=com.NOTyetonPlayStore.tic
                   style={styles.startingFrom}
                   allowFontScaling={false}
                 >
-                  {t('workshops.startingFrom')}
+                  Totale
                 </Text>
                 <View className="flex-row items-center">
                   <Text
@@ -375,7 +375,7 @@ Android: https://play.google.com/store/apps/details?id=com.NOTyetonPlayStore.tic
                     allowFontScaling={false}
                   >
                     {workshop.currency}
-                    {formatPrice(workshop.servicePrice, workshop.discount ?? 0)}
+                    {formatPrice(workshop.servicePrice)}
                   </Text>
                   {workshop.discount !== 0 && (
                     <>
@@ -385,7 +385,11 @@ Android: https://play.google.com/store/apps/details?id=com.NOTyetonPlayStore.tic
                         allowFontScaling={false}
                       >
                         {workshop.currency}
-                        {formatPrice(workshop.servicePrice)}
+
+                        {formatPrice(
+                          workshop.servicePrice,
+                          workshop.discount ?? 0,
+                        )}
                       </Text>
                     </>
                   )}
