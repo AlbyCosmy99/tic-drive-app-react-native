@@ -13,7 +13,7 @@ import navigationPush from '@/services/navigation/push';
 import useTicDriveNavigation from '@/hooks/navigation/useTicDriveNavigation';
 import {useTranslation} from 'react-i18next';
 import isScreenSmall from '@/services/responsive/isScreenSmall';
-import { useGoogleAuth } from '@/hooks/auth/useGoogleAuth';
+import {useGoogleAuth} from '@/hooks/auth/useGoogleAuth';
 import axiosClient from '@/services/http/axiosClient';
 
 interface UserAuthenticationContentProps {
@@ -40,22 +40,22 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
     setIsUserRegistering(!isUserRegistering);
   };
 
-  const { signInWithGoogle } = useGoogleAuth(async (googleIdToken) => {
-  setLoading(true);
-  try {
-    const { data } = await axiosClient.post('auth/google', {
-      idToken: googleIdToken,
-    });
+  const {signInWithGoogle} = useGoogleAuth(async googleIdToken => {
+    setLoading(true);
+    try {
+      const {data} = await axiosClient.post('auth/google', {
+        idToken: googleIdToken,
+      });
 
-    // // save JWT from backend
-    // await SecureStore.setItemAsync('token', data.jwt);
-    // // Redirect or update UI
-  } catch (error) {
-    console.error('Google Login failed:', error);
-  } finally {
-    setLoading(false);
-  }
-});
+      // // save JWT from backend
+      // await SecureStore.setItemAsync('token', data.jwt);
+      // // Redirect or update UI
+    } catch (error) {
+      console.error('Google Login failed:', error);
+    } finally {
+      setLoading(false);
+    }
+  });
 
   return loading ? (
     <View className="mt-40 flex-1 justify-center items-center">
@@ -121,7 +121,11 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
           <View style={styles.hr} />
         </View>
         <View className="flex-row mx-3.5">
-          <OAuth2Button text="Google" icon={<GoogleIcon />} onPress={signInWithGoogle} />
+          <OAuth2Button
+            text="Google"
+            icon={<GoogleIcon />}
+            onPress={signInWithGoogle}
+          />
         </View>
         <View className="flex-row justify-center gap-1 flex-wrap text-center mx-3.5 my-3 mb-8">
           <Text style={styles.footerText}>

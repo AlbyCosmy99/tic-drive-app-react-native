@@ -73,7 +73,7 @@ export default function ChooseServicesScreen() {
     state => state.booking.lastServiceSelectedFromFilter,
   );
 
-  const languageCode = useAppSelector(state => state.language.languageCode)
+  const languageCode = useAppSelector(state => state.language.languageCode);
 
   const showCalendarModal = useMemo(() => {
     return !time && workshop;
@@ -167,7 +167,7 @@ export default function ChooseServicesScreen() {
                   idToCompareForClock={lastServiceSelectedFromFilter?.id}
                   emptyElementsMessage="No services with this filter."
                   onElementPress={elem => {
-                    handleOnService(elem)
+                    handleOnService(elem);
                     dispatch(setLastServiceSelectedFromFilter(elem));
                   }}
                 />

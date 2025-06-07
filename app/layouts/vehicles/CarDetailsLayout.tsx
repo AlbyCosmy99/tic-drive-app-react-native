@@ -36,45 +36,45 @@ const CarDetailsLayout: React.FC<CarDetailsGeneralProps> = ({
       <View className="mb-2 space-y-1">
         <RegistrationCarDetailCard
           title={t('vehicles.make')}
-          value={carSelected.make.toUpperCase() || '-'}
+          value={carSelected.make?.toUpperCase() || '-'}
         />
         <RegistrationCarDetailCard
           title={t('vehicles.model')}
-          value={carSelected.model.toUpperCase() || '-'}
+          value={carSelected.model?.toUpperCase() || '-'}
         />
         <RegistrationCarDetailCard
           title={t('vehicles.plate')}
-          value={carSelected.plateNumber?.toUpperCase().toUpperCase() || '-'}
+          value={carSelected.plateNumber?.toUpperCase()?.toUpperCase() || '-'}
         />
         <RegistrationCarDetailCard
           title={t('vehicles.year')}
-          value={carSelected.year?.toString().toUpperCase() || '-'}
+          value={carSelected.year?.toString()?.toUpperCase() || '-'}
         />
         <RegistrationCarDetailCard
           title={t('vehicles.engine_size')}
           value={
-            carSelected.engineDisplacement?.toString().toUpperCase() || '-'
+            carSelected.engineDisplacement?.toString()?.toUpperCase() || '-'
           }
         />
         <RegistrationCarDetailCard
           title={t('vehicles.fuel')}
-          value={carSelected.fuel.toUpperCase() || '-'}
+          value={carSelected.fuel?.toUpperCase() || '-'}
         />
         <RegistrationCarDetailCard
           title={t('vehicles.mileage')}
-          value={carSelected.mileage?.toString().toUpperCase() || '-'}
+          value={carSelected.mileage?.toString()?.toUpperCase() || '-'}
         />
         <RegistrationCarDetailCard
           title={t('vehicles.name')}
-          value={carSelected.name.toUpperCase() || '-'}
+          value={carSelected.name?.toUpperCase() || '-'}
         />
         <RegistrationCarDetailCard
           title={t('vehicles.cv')}
-          value={carSelected.powerCV?.toString().toUpperCase() || '-'}
+          value={carSelected.powerCV?.toString()?.toUpperCase() || '-'}
         />
         <RegistrationCarDetailCard
           title="Trasmissione"
-          value={carSelected.transmission.toUpperCase() || '-'}
+          value={carSelected.transmission?.toUpperCase() || '-'}
         />
       </View>
       <HorizontalLine />

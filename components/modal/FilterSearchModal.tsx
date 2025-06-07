@@ -27,7 +27,11 @@ const FilterSearchModal: React.FC<FilterSearchModalProps> = ({
               >
                 <View className="flex flex-row justify-between items-center mx-2.5">
                   <Text className="mt-1 font-normal text-xl p-1 px-2.5 text-tic">
-                    {elem.workshopName ? elem.workshopName : elem.title ? elem.title : ''}
+                    {elem.workshopName
+                      ? elem.workshopName
+                      : elem.title
+                        ? elem.title
+                        : ''}
                   </Text>
                   {idToCompareForClock && idToCompareForClock === elem.id && (
                     <ClockIcon />

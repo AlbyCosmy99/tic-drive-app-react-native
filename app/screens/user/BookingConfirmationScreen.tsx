@@ -29,8 +29,7 @@ export default function BookingConfirmationScreen() {
 
   const price = useMemo(() => {
     return (
-      '€' +
-      formatPrice(workshop?.servicePrice ?? 0, workshop?.discount ?? 0)
+      '€' + formatPrice(workshop?.servicePrice ?? 0, workshop?.discount ?? 0)
     );
   }, []);
 
