@@ -29,19 +29,31 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
 
   const {t} = useTranslation();
 
+  const fuelTranslations: Record<FuelType, string> = {
+    Petrol: 'Benzina',
+    Diesel: 'Diesel',
+    Electric: 'Elettrica',
+    Hybrid: 'Ibrida',
+    'Plug-in Hybrid': 'Ibrida Plug-in',
+    'Compressed Natural Gas': 'Metano (CNG)',
+    'Liquefied Petroleum Gas': 'GPL',
+    Hydrogen: 'Idrogeno',
+    Biofuel: 'Biocarburante',
+  };
+
   const fuelOptions: TicDriveDropdownData[] = fuels.map((fuel, index) => ({
     id: index,
     value: fuel,
+    label: fuelTranslations[fuel],
   }));
 
   const transmissionsOptions: TicDriveDropdownData[] = [
-    {id: 1, value: 'manual'},
-    {id: 2, value: 'automatic'},
+    {id: 1, value: 'manual', label: 'Manuale'},
+    {id: 2, value: 'automatic', label: 'Automatico'},
   ];
 
   const plateRegex = /^[A-Z]{2}[0-9]{3}[A-Z]{2}$/;
 
-  // Only update context on mount (or when carSelected.model changes)
   useEffect(() => {
     if (setCarSelectedByMakeAndModel) {
       setCarSelectedByMakeAndModel(prev => ({
@@ -57,7 +69,11 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
         const response = await getCarModelVersionsByModelId(modelId ?? 0);
         if (response) {
           setYearOptions(
-            response.map(data => ({id: data.id, value: data.year.toString()})),
+            response.map(data => ({
+              id: data.id,
+              value: data.year.toString(),
+              label: data.year.toString(),
+            })),
           );
         }
       } catch (err) {
@@ -96,20 +112,20 @@ const CarDetailsByMakeAndModel: React.FC<CarDetailsByMakeAndModelProps> = ({
   const setPlateNumber = (plate: string) => {
     const formattedPlate = plate.toUpperCase();
     updateCarField({plateNumber: formattedPlate});
-    setPlateError(!plateRegex.test(formattedPlate)); // true if invalid
+    setPlateError(!plateRegex.test(formattedPlate));
   };
 
   const selectedFuel = fuelOptions.find(
     item => item.value === carSelectedByMakeAndModel?.fuel,
-  ) || {id: -1, value: ''};
+  ) ?? {id: -1, value: '', label: ''};
 
   const selectedTransmission = transmissionsOptions.find(
     item => item.value === carSelectedByMakeAndModel?.transmission,
-  ) || {id: -1, value: ''};
+  ) ?? {id: -1, value: '', label: ''};
 
   const selectedYear = yearOptions.find(
     item => item.value === carSelectedByMakeAndModel?.year?.toString(),
-  ) || {id: -1, value: ''};
+  ) ?? {id: -1, value: '', label: ''};
 
   return (
     <>

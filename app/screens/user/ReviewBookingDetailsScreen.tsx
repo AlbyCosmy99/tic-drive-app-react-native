@@ -35,7 +35,10 @@ import {useServiceChoosenByCustomer} from '@/hooks/user/useServiceChoosenByCusto
 import formatPrice from '@/utils/currency/formatPrice.';
 import getFullServiceName from '@/services/toString/getFullServiceName';
 import getWorkshopWithServiceDetails from '@/services/http/requests/get/workshops/getWorkshopWithServiceDetails';
-import {setPinCode, setWorkshop} from '@/stateManagement/redux/slices/bookingSlice';
+import {
+  setPinCode,
+  setWorkshop,
+} from '@/stateManagement/redux/slices/bookingSlice';
 import useGlobalErrors from '@/hooks/errors/useGlobalErrors';
 import TicDriveSpinner from '@/components/ui/spinners/TicDriveSpinner';
 import parseStringTimeToDate from '@/utils/dates/parseStringTimeToDate';
@@ -103,7 +106,7 @@ export default function ReviewBookingDetailsScreen() {
         car,
         user?.name,
       );
-      console.log('time',time)
+      console.log('time', time);
       const res2 = await bookAServiceAsync(
         token ?? '',
         workshop?.id ?? '',
@@ -114,7 +117,7 @@ export default function ReviewBookingDetailsScreen() {
         ),
         parseStringTimeToDate(time),
       );
-      dispatch(setPinCode(res2.data.bookingPinCode))
+      dispatch(setPinCode(res2.data.bookingPinCode));
 
       navigationReset(navigation, 0, 'BookingConfirmationScreen', {
         workshop,

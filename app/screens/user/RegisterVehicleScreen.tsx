@@ -59,9 +59,7 @@ function RegisterVehicleScreen() {
   } = useContext(CarContext);
 
   const dispatch = useAppDispatch();
-
   const selectedWorkshop = useAppSelector(state => state.booking.workshop);
-
   const token = useAppSelector(state => state.auth.token);
   const {setErrorMessage} = useGlobalErrors();
 
@@ -72,8 +70,8 @@ function RegisterVehicleScreen() {
   };
 
   const navigation = useTicDriveNavigation();
+  const {registerCustomerCar} = useCustomerCars();
 
-  const {registerCustomerCar, loadingCustomerCars} = useCustomerCars();
   const [makes, setMakes] = useState<CarMake[]>([]);
   const [loadingCarsMakes, setLoadingCarsMakes] = useState(true);
 
@@ -101,14 +99,10 @@ function RegisterVehicleScreen() {
         carSelectedByPlateCtx &&
         plateConfirmation)
     ) {
-      if (goToVehicles) {
-        return 'CarRegistrationSuccessScreen';
-      } else {
-        if (selectedWorkshop) {
-          return `${token ? 'ReviewBookingDetailsScreen' : 'UserAuthenticationScreen'}`;
-        }
-        return 'WorkshopsListScreen';
-      }
+      if (goToVehicles) return 'CarRegistrationSuccessScreen';
+      if (selectedWorkshop)
+        return `${token ? 'ReviewBookingDetailsScreen' : 'UserAuthenticationScreen'}`;
+      return 'WorkshopsListScreen';
     }
     return '';
   }, [
@@ -166,7 +160,6 @@ function RegisterVehicleScreen() {
   const fetchByPlate = (plate: string) => {
     if (isPlateNumber(plate)) {
       setIsPlateError(false);
-      //todo: add code here when will be the case
     } else {
       setIsPlateError(true);
     }
@@ -177,7 +170,6 @@ function RegisterVehicleScreen() {
       segmentedControlSelection?.index === 0
         ? carSelectedByMakeAndModel
         : carSelectedByPlateCtx;
-
     dispatch(setCar(carSelected));
     if (goToVehicles) navigationReset(navigation, 0, routeName);
     else navigationPush(navigation, routeName);
@@ -208,7 +200,7 @@ function RegisterVehicleScreen() {
           make: carMakeDropdownData?.value,
           model: carModelDropdownData?.value,
           logoUrl: carMakeDropdownData?.icon,
-          year: undefined, //todo: ignorando l'year preso dal db e lo stiamo chiedendo sempre all'utente. Controllare se e' cio che desideriamo
+          year: undefined,
         });
       }
     }
@@ -226,9 +218,8 @@ function RegisterVehicleScreen() {
     }
   };
 
-  //todo: to remove it when plate option on car registration is added back
   useEffect(() => {
-    setSegmentedControlSelection(options[0]); //make and model
+    setSegmentedControlSelection(options[0]);
   }, []);
 
   return (
@@ -242,14 +233,6 @@ function RegisterVehicleScreen() {
               : t('vehicles.registerVehicleForBookings')
           }
         />
-        {/* todo: to add it when plate option on car registration is added back
-        <View className="m-3.5">
-          <SegmentedControl
-            options={options}
-            segmentedControlSelection={segmentedControlSelection}
-            setSegmentedControlSelection={setSegmentedControlSelection}
-          />
-        </View> */}
         <View
           style={styles.bookingDetailsContainer}
           className="flex-1 m-3.5 border-2 rounded-xl"
@@ -267,6 +250,7 @@ function RegisterVehicleScreen() {
                       data={makes.map(make => ({
                         id: make.id,
                         value: make.name,
+                        label: make.name,
                         icon: make.logoUrl,
                       }))}
                       value={carMakeDropdownData}
@@ -276,14 +260,11 @@ function RegisterVehicleScreen() {
                     />
                     <TicDriveDropdown
                       title={t('vehicles.model')}
-                      data={
-                        models
-                          ? models.map(model => ({
-                              id: model.id,
-                              value: model.name,
-                            }))
-                          : []
-                      }
+                      data={models.map(model => ({
+                        id: model.id,
+                        value: model.name,
+                        label: model.name,
+                      }))}
                       value={carModelDropdownData}
                       setValue={setCarModelDropdownData}
                       placeholder={t('vehicles.selectCarModel')}
@@ -295,7 +276,7 @@ function RegisterVehicleScreen() {
                         key={carModelDropdownData?.id}
                         carSelected={carSelectedByMakeAndModel}
                         modelId={
-                          models?.find(
+                          models.find(
                             model =>
                               model.name === carSelectedByMakeAndModel.name,
                           )?.id
@@ -366,24 +347,20 @@ function RegisterVehicleScreen() {
           }
           if (segmentedControlSelection?.index === 0) {
             setMakeAndModelConfirmation(true);
-            if (setCarSelectedByMakeAndModel) {
-              setCarSelectedByMakeAndModel({
-                ...carSelectedByMakeAndModel,
-                make: carMakeDropdownData?.value,
-                logoUrl: carMakeDropdownData?.icon,
-                model: carModelDropdownData?.value,
-              });
-            }
+            setCarSelectedByMakeAndModel?.({
+              ...carSelectedByMakeAndModel,
+              make: carMakeDropdownData?.value,
+              logoUrl: carMakeDropdownData?.icon,
+              model: carModelDropdownData?.value,
+            });
           } else if (segmentedControlSelection?.index === 1) {
             setPlateConfirmation(true);
-            if (setCarSelectedByPlateCtx) {
-              setCarSelectedByPlateCtx({
-                ...carSelectedByPlateCtx,
-                make: carMakeDropdownData?.value,
-                logoUrl: carMakeDropdownData?.icon,
-                model: carModelDropdownData?.value,
-              });
-            }
+            setCarSelectedByPlateCtx?.({
+              ...carSelectedByPlateCtx,
+              make: carMakeDropdownData?.value,
+              logoUrl: carMakeDropdownData?.icon,
+              model: carModelDropdownData?.value,
+            });
           }
         }}
         disabled={!buttonIsEnabled}
@@ -396,9 +373,6 @@ const styles = StyleSheet.create({
   bookingDetailsContainer: {
     backgroundColor: Colors.light.background,
     borderColor: Colors.light.extremelyLightGrey,
-  },
-  carDetailContainer: {
-    borderBottomColor: Colors.light.extremelyLightGrey,
   },
 });
 

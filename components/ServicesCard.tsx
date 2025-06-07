@@ -77,7 +77,7 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
       dispatch(setServices(servicesChoosen.slice(0, serviceTreeLevel - 1)));
       dispatch(removeService());
     } else {
-      console.log('serviceTreeLevel', serviceTreeLevel)
+      console.log('serviceTreeLevel', serviceTreeLevel);
       const service = {id, title, description, icon};
       dispatch(addService({service, index: serviceTreeLevel - 1}));
     }

@@ -27,10 +27,8 @@ const DropdownItem = React.memo(
       className="flex flex-row justify-between items-center h-14"
     >
       <Text style={[styles.itemText, {fontWeight: selected ? '600' : '400'}]}>
-        {item.value}
+        {item.label}
       </Text>
-
-      <View>{item.icon && <SvgFromUrl url={item.icon} size={32} />}</View>
     </View>
   ),
 );
@@ -88,7 +86,7 @@ const TicDriveDropdown: React.FC<TicDriveDropdownProps> = ({
         search
         disable={disabled}
         searchPlaceholder={searchPlaceholder}
-        labelField="value"
+        labelField="label"
         valueField="value"
         placeholder={!search ? placeholder : 'Searching...'}
         value={value}

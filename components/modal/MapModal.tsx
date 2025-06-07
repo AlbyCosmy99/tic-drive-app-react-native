@@ -210,7 +210,10 @@ export default function MapModal({setIsMapVisible}: MapModalProps) {
               <View style={styles.previewBackdrop}>
                 <TouchableWithoutFeedback>
                   <View style={styles.previewCard}>
-                    <WorkshopCard workshop={selectedPOI.workshop} isServiceDetailsEnabled={false}/>
+                    <WorkshopCard
+                      workshop={selectedPOI.workshop}
+                      isServiceDetailsEnabled={false}
+                    />
 
                     <TouchableOpacity
                       onPress={() => setSelectedPOI(null)}

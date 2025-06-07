@@ -58,7 +58,7 @@ export default function ChooseServicesScreen() {
   const [loading, setLoading] = useState(false);
   const modalRef = useRef<UserCalendarModalRef>(null);
   const workshop = useAppSelector(state => state.booking.workshop);
-  const time = useAppSelector(state => state.booking.time)
+  const time = useAppSelector(state => state.booking.time);
 
   const {
     buttonContainerTailwindCss = '',
@@ -74,8 +74,8 @@ export default function ChooseServicesScreen() {
   );
 
   const showCalendarModal = useMemo(() => {
-    return !time
-  }, [time])
+    return !time;
+  }, [time]);
 
   const onSearch = async (search: string) => {
     setFilter(search);
