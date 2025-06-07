@@ -152,7 +152,7 @@ export default function WorkshopsListScreen() {
                 )}
             </View>
 
-            <View className="flex-1 relative">
+            {/* <View className="flex-1 relative">
               <CrossPlatformButtonLayout
                 containerTailwindCss="flex-1"
                 onPress={() => {
@@ -168,7 +168,7 @@ export default function WorkshopsListScreen() {
                   iconContainerTailwindCss="mr-1"
                 />
               </CrossPlatformButtonLayout>
-            </View>
+            </View> */}
 
             <View className="flex-1">
               <CrossPlatformButtonLayout
