@@ -21,7 +21,7 @@ import getFavoriteWorkshops from '@/services/http/requests/get/workshops/getFavo
 import getNearbyWorkshops from '@/services/http/requests/get/workshops/getNearbyWorkshops';
 
 import {
-  setService,
+  setServices,
   setWorkshop,
 } from '@/stateManagement/redux/slices/bookingSlice';
 
@@ -142,7 +142,7 @@ const WorkshopCards: React.FC<WorkshopCardsProps> = ({
   }, [token, commonOffset, debouncedFilter, order]);
 
   const handleChooseDifferentService = () => {
-    dispatch(setService(undefined));
+    dispatch(setServices([]));
     navigationPush(navigation, 'ChooseServicesScreen');
   };
 
