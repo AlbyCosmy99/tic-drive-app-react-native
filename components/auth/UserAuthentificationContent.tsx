@@ -113,21 +113,7 @@ const UserAuthenticationContent: React.FC<UserAuthenticationContentProps> = ({
           text={t(`login.${action}`)}
           onClick={handleLoginPressed}
         />
-        <View className="flex-row justify-center items-center my-3.5">
-          <View style={styles.hr} />
-          <Text className="text-center" style={styles.continueWithText}>
-            {t('login.or_continue_with')}
-          </Text>
-          <View style={styles.hr} />
-        </View>
-        <View className="flex-row mx-3.5">
-          <OAuth2Button
-            text="Google"
-            icon={<GoogleIcon />}
-            onPress={signInWithGoogle}
-          />
-        </View>
-        <View className="flex-row justify-center gap-1 flex-wrap text-center mx-3.5 my-3 mb-8">
+        <View className="flex-row justify-center gap-1 flex-wrap text-center mx-3.5 my-3 mb-8 mt-12">
           <Text style={styles.footerText}>
             {t('login.by_clicking', {action: t(`login.${action}`)})}
           </Text>
