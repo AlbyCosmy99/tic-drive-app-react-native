@@ -128,7 +128,7 @@ const WorkshopCard: React.FC<WorkshopCardProps> = ({
         {servicesChoosen?.length > 0 && isServiceDetailsEnabled && (
           <CrossPlatformButtonLayout
             buttonTailwindCss="flex-row justify-between items-center border-2 border-grey-light m-2 p-3 mt-0 rounded-lg"
-            onPress={() => alert('pressed')}
+            // onPress={() => alert('pressed')}
           >
             <View className="flex-1 pr-4">
               <Text
