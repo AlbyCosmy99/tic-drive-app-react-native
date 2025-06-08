@@ -47,7 +47,7 @@ export default function UserBookings() {
         setCars(customerCars ?? []);
 
         const res = await getBookingsAsync(token ?? '');
-        const bookingsArray = res.data ?? [];
+        const bookingsArray = res.data.bookings ?? [];
 
         const groupedByCustomerCarId = bookingsArray.reduce(
           (acc: Bookings, booking: Booking) => {
