@@ -1,3 +1,5 @@
+import withTargetSdk35 from './plugins/withTargetSdk35';
+
 const isDev = process.env.APP_VARIANT === 'development';
 
 export default {
@@ -79,6 +81,7 @@ export default {
       'expo-updates',
       'expo-font',
       'expo-localization',
+      './plugins/withTargetSdk35',
     ],
     experiments: {
       typedRoutes: true,
