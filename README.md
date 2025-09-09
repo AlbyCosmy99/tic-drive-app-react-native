@@ -41,13 +41,21 @@ It was built as part of a startup project idea to help users **save time, compar
 ---
 
 ## 📸 Screenshots
-<div style="display:flex;flex-direction:row; justify-content:space-between">
-<img src="./assets/images/screenshots/1.jpeg" width="250" />
-<img src="./assets/images/screenshots/2.jpeg" width="250" />
-<img src="./assets/images/screenshots/3.jpeg" width="250" />
-<img src="./assets/images/screenshots/4.jpeg" width="250" />
-<img src="./assets/images/screenshots/5.jpeg" width="250" />
-<img src="./assets/images/screenshots/6.jpeg" width="250" />
-<img src="./assets/images/screenshots/7.jpeg" width="250" />
-<img src="./assets/images/screenshots/8.jpeg" width="250" />
-</div>
+## 📸 Screenshots
+
+<table>
+  <tr>
+    <td><img src="./assets/images/screenshots/1.jpg" width="250" /></td>
+    <td><img src="./assets/images/screenshots/2.jpg" width="250" /></td>
+    <td><img src="./assets/images/screenshots/3.jpg" width="250" /></td>
+  </tr>
+  <tr>
+    <td><img src="./assets/images/screenshots/4.jpg" width="250" /></td>
+    <td><img src="./assets/images/screenshots/5.jpg" width="250" /></td>
+    <td><img src="./assets/images/screenshots/6.jpg" width="250" /></td>
+  </tr>
+  <tr>
+    <td><img src="./assets/images/screenshots/7.jpg" width="250" /></td>
+    <td><img src="./assets/images/screenshots/8.jpg" width="250" /></td>
+  </tr>
+</table>
