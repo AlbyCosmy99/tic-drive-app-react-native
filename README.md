@@ -36,7 +36,7 @@ The app connects users with local auto repair shops, allowing them to **browse s
 
 This project was mainly developed by myself (**Andrei Albu**) with final contributions and support from **Hilina Mengesha**.  
 
-It was built as part of a startup project idea to help users **save time, compare reviews and prices and book car services from the comfort of their home**:
+It was built as part of a startup project idea to help users **save time, compare reviews and prices and book car services from the comfort of their home**.
 
 ---
 
