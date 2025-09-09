@@ -1,50 +1,52 @@
-# Welcome to your Expo app 👋
+# 🚗 TicDrive - Car Service Booking App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+TicDrive is a **React Native mobile application** (iOS & Android) developed for a startup that aimed to simplify how users book car services directly from their homes.  
+The app connects users with local auto repair shops, allowing them to **browse services, book appointments, and manage reservations** from their phone.
 
-## Get started
+---
 
-1. Install dependencies
+## 📱 Features
 
-   ```bash
-   npm install
-   ```
+- 🔍 **Search workshops** by location and availability  
+- 🗺️ **Interactive map** to find nearby workshops  
+- 🛠️ **Browse car services** (oil change, battery replacement, tire rotation, AC recharge, etc.)  
+- 📅 **Book appointments online** with local workshops  
+- ⭐ **Review & rating system** for workshops  
+- 📷 **Image upload and management** via Azure Blob Storage  
+- 🌐 **Multi-platform support** (iOS & Android)  
 
-2. Start the app
+---
 
-   ```bash
-    npx expo start
-   ```
+## 🛠️ Tech Stack
 
-In the output, you'll find options to open the app in a
+### Frontend (Mobile App)
+- [React Native](https://reactnative.dev/) – cross-platform mobile development  
+- [Expo](https://expo.dev/) – build & deploy tools  
+- [React Navigation](https://reactnavigation.org/) – routing and navigation  
+- [Redux / Context API] – state management  
+- [Maps Integration] – interactive geolocation features  
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### Backend
+- [.NET Core 8](https://learn.microsoft.com/en-us/aspnet/core/?view=aspnetcore-8.0) – RESTful API  
+- [Azure Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/) – image storage and management  
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+## 👨‍💻 Development
 
-When you're ready, run:
+This project was mainly developed by **Andrei Albu**, with final contributions and support from **Hilina Mengesha**.  
 
-```bash
-npm run reset-project
-```
+It was built as part of a startup project idea to help users **save time, reduce hassle, and streamline car maintenance**.
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
+## 📸 Screenshots
 
-To learn more about developing your project with Expo, look at the following resources:
+### Home & Workshop Search
+<img src="./screenshots/home.png" width="250" /> <img src="./screenshots/workshops.png" width="250" />
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Map Integration
+<img src="./screenshots/map.png" width="250" />
 
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### Services & Booking
+<img src="./screenshots/services.png" width="250" />
