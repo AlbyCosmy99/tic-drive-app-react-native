@@ -23,8 +23,8 @@ The app connects users with local auto repair shops, allowing them to **browse s
 - [React Native](https://reactnative.dev/) – cross-platform mobile development  
 - [Expo](https://expo.dev/) – build & deploy tools  
 - [React Navigation](https://reactnavigation.org/) – routing and navigation  
-- [Redux / Context API] – state management  
-- [Maps Integration] – interactive geolocation features  
+- Redux / Context API – state management  
+- Maps Integration – interactive geolocation features  
 
 ### Backend
 - [.NET Core 8](https://learn.microsoft.com/en-us/aspnet/core/?view=aspnetcore-8.0) – RESTful API  
