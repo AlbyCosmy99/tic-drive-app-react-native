@@ -41,7 +41,6 @@ It was built as part of a startup project idea to help users **save time, compar
 ---
 
 ## 📸 Screenshots
-## 📸 Screenshots
 
 <table>
   <tr>
