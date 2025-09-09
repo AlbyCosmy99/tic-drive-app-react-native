@@ -41,4 +41,5 @@ It was built as part of a startup project idea to help users **save time, compar
 ---
 
 ## 📸 Screenshots
+<img src="./assets/images/screenshots/1.jpeg" width="250" />
 ![Screenshot1](assets/images/screenshots/1.jpeg)
