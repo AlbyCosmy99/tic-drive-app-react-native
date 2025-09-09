@@ -41,10 +41,4 @@ It was built as part of a startup project idea to help users **save time, compar
 ---
 
 ## 📸 Screenshots
-![Screenshot1](assets/images/screenshots/1.png)
-
-### Map Integration
-<img src="./screenshots/map.png" width="250" />
-
-### Services & Booking
-<img src="./screenshots/services.png" width="250" />
+![Screenshot1](assets/images/screenshots/1.jpeg)
