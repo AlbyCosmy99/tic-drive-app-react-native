@@ -45,7 +45,7 @@ It was built as part of a startup project idea to help users **save time, compar
 
 <table>
   <tr>
-    <td><img src="./assets/images/screenshots/1.jpg" width="250" /></td>
+    <td><img src="./assets/images/screenshots/1.jpeg" width="250" /></td>
     <td><img src="./assets/images/screenshots/2.jpg" width="250" /></td>
     <td><img src="./assets/images/screenshots/3.jpg" width="250" /></td>
   </tr>
