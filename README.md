@@ -3,6 +3,8 @@
 TicDrive is a **React Native mobile application** (iOS & Android) developed for a startup that aimed to simplify how users book car services directly from their homes.  
 The app connects users with local auto repair shops, allowing them to **browse services, book appointments and manage reservations** from their phone.
 
+Download the [IOS](https://apps.apple.com/it/app/ticdrive/id6740627366?l=en-GB) and [Android](https://play.google.com/store/apps/details?id=com.ticdrive.app&pcampaignid=web_share) version of TicDrive app.
+
 ---
 
 ## 📱 Features
