@@ -41,9 +41,7 @@ It was built as part of a startup project idea to help users **save time, compar
 ---
 
 ## 📸 Screenshots
-
-### Home & Workshop Search
-<img src="./screenshots/home.png" width="250" /> <img src="./screenshots/workshops.png" width="250" />
+![Screenshot1](assets/images/screenshots/1.png)
 
 ### Map Integration
 <img src="./screenshots/map.png" width="250" />
