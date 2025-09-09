@@ -41,6 +41,7 @@ It was built as part of a startup project idea to help users **save time, compar
 ---
 
 ## 📸 Screenshots
+<span>
 <img src="./assets/images/screenshots/1.jpeg" width="250" />
 <img src="./assets/images/screenshots/2.jpeg" width="250" />
 <img src="./assets/images/screenshots/3.jpeg" width="250" />
@@ -49,3 +50,4 @@ It was built as part of a startup project idea to help users **save time, compar
 <img src="./assets/images/screenshots/6.jpeg" width="250" />
 <img src="./assets/images/screenshots/7.jpeg" width="250" />
 <img src="./assets/images/screenshots/8.jpeg" width="250" />
+</span>
