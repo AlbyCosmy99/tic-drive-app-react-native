@@ -36,7 +36,7 @@ Download the [IOS](https://apps.apple.com/it/app/ticdrive/id6740627366?l=en-GB) 
 
 ## 👨‍💻 Development
 
-This project was mainly developed by myself (**Andrei Albu**) with important final contributions and support from **Hilina Mengesha**.  
+This project was mainly developed by myself (**Andrei Albu**) with important final contributions and support from **[Hilina Mengesha](https://github.com/HilinaBI)**.  
 
 It was built as part of a startup project idea to help users **save time, compare reviews and prices and book car services from the comfort of their home**.
 
