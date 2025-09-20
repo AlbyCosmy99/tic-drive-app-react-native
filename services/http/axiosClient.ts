@@ -1,8 +1,8 @@
 import axios from 'axios';
 import store from '@/stateManagement/redux/store/store';
 
-const PROD_BACKEND_URL = 'https://ticdrivebackend.onrender.com';
-const DEV_BACKEND_URL = 'https://ticdrivebackend.onrender.com'; //local
+const PROD_BACKEND_URL = 'https://ticdrive-backend-net-core-8-production.up.railway.app';
+const DEV_BACKEND_URL = 'https://ticdrive-backend-net-core-8-production.up.railway.app'; //local
 
 const backendUrl = __DEV__ ? DEV_BACKEND_URL : PROD_BACKEND_URL;
 
